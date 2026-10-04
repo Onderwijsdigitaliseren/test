@@ -98,7 +98,7 @@ input[type=range]{width:100%;accent-color:var(--blood)}
 :root{--night:#0c0a0b;--night2:#171214;--street:#3d2f2b;--fog:#b8aca0;--paper:#ddd5c6;--paper2:#cfc6b4;--ink:#1a1614;--ink2:#63584c;--rule:#b5a994;
   --lamp:#f0963c;--spook:#f3c9a0;--blood:#c2262e;--violet:#e8a27a;--f-title:'IM Fell English SC','Special Elite',Georgia,serif;--f-hand:'Caveat','Segoe Script',cursive}
 /* startscherm: titel boven in de lucht, de vermiste loopt weg over de kade, daaronder de zaak */
-#home{background:linear-gradient(180deg,rgba(12,10,11,.7) 0%,rgba(12,10,11,.25) 16%,rgba(12,10,11,0) 26%,rgba(12,10,11,0) 60%,rgba(12,10,11,.85) 76%,var(--night) 86%),url("hero.webp") 60% top/cover no-repeat,var(--night)}
+#home{background:linear-gradient(180deg,rgba(12,10,11,.6) 0%,rgba(12,10,11,.15) 14%,rgba(12,10,11,0) 24%,rgba(12,10,11,0) 52%,rgba(12,10,11,.8) 70%,var(--night) 84%),url("hero.webp") center top/cover no-repeat,var(--night)}
 @media (min-aspect-ratio:4/5){#home{background:linear-gradient(90deg,var(--night) 0%,rgba(12,10,11,0) 30%,rgba(12,10,11,0) 70%,var(--night) 100%),linear-gradient(180deg,rgba(12,10,11,.82) 0%,rgba(12,10,11,0) 34%,rgba(12,10,11,0) 52%,rgba(12,10,11,.85) 68%,var(--night) 78%),url("hero.webp") center top/auto 100vh no-repeat,var(--night)}}
 #home::after{content:"";position:fixed;inset:0;pointer-events:none;box-shadow:inset 0 0 120px rgba(0,0,0,.8)}
 .row0{justify-content:center}
@@ -107,7 +107,7 @@ input[type=range]{width:100%;accent-color:var(--blood)}
 .masthead .brand::before,.masthead .brand::after{content:"";flex:1;height:1px;background:rgba(221,213,198,.45)}
 #ttl{font-family:var(--f-title);font-size:clamp(34px,10.4vw,52px);line-height:1;letter-spacing:.01em;color:#e9e2d6;text-shadow:0 2px 2px #000,0 0 30px rgba(0,0,0,.9)}
 .masthead .redline{width:78%;height:3px;border-radius:2px;background:linear-gradient(90deg,rgba(194,38,46,0),#c2262e 18%,#c2262e 82%,rgba(194,38,46,0));box-shadow:0 0 12px rgba(194,38,46,.6)}
-.gap{min-height:clamp(300px,50vh,460px)}
+.gap{min-height:clamp(150px,27vh,260px)}
 #home .lead{font-family:var(--f-type);font-size:19px;line-height:1.5;color:#f1e9dc;text-align:center;max-width:none}
 .tasks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font-family:var(--f-type);font-size:15px;color:#d9d0c2;text-align:center;text-shadow:0 1px 6px #000}
 .tasks li:last-child{margin-top:8px;color:var(--spook)}
@@ -168,3 +168,25 @@ input[type=range]{width:100%;accent-color:var(--blood)}
 #ar video{filter:saturate(.7) brightness(.75) contrast(1.15) sepia(.25)}
 #ar::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,rgba(12,10,11,0) 35%,rgba(3,2,3,.82) 100%)}
 #arH,#arX{z-index:1}
+
+/* startscherm: de telefoon met het laatste gesprek, zoals op de sfeerfoto (teksten in de taal van de pagina) */
+.gsm{align-self:center;width:min(300px,86%);background:linear-gradient(160deg,#1c1819,#0b090a);border:3px solid #2e2729;border-radius:34px;padding:12px 12px 18px;box-shadow:0 0 0 1px #4a4043,0 24px 50px rgba(0,0,0,.75),0 0 60px rgba(240,150,60,.12);transform:rotate(-3deg);position:relative;font-family:var(--f-body)}
+.gsm::before{content:"";display:block;width:74px;height:18px;border-radius:12px;background:#000;margin:0 auto 8px}
+.gsm::after{content:"";position:absolute;inset:3px;border-radius:30px;pointer-events:none;background:linear-gradient(120deg,rgba(255,255,255,.10) 0%,rgba(255,255,255,0) 28%)}
+.gsm .bar{display:flex;justify-content:space-between;font-size:11px;color:#b8aca0;padding:0 10px;margin-top:-22px;margin-bottom:10px}
+.gsm .who{display:flex;align-items:center;gap:10px;padding:8px 6px 10px;border-bottom:1px solid #2e2729;margin-bottom:10px}
+.gsm .av{width:34px;height:34px;border-radius:50%;background:#3a3033;position:relative;overflow:hidden;flex:none}
+.gsm .av::before{content:"";position:absolute;left:50%;top:7px;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:#6b5e60}
+.gsm .av::after{content:"";position:absolute;left:50%;bottom:-8px;width:26px;height:18px;margin-left:-13px;border-radius:13px 13px 0 0;background:#6b5e60}
+.gsm .who b{display:block;font-weight:600;font-size:15px;color:#f1e9dc;line-height:1.1}
+.gsm .who small{font-size:12px;color:#9a8d80}
+.gsm .chat{display:flex;flex-direction:column;gap:8px;align-items:flex-start;padding:0 4px}
+.gsm .chat p{margin:0;background:#e9e6e1;color:#1a1614;font-size:15px;line-height:1.3;padding:8px 12px;border-radius:16px 16px 16px 4px;display:flex;gap:10px;align-items:flex-end;opacity:0;animation:pop .5s ease-out forwards}
+.gsm .chat p i{font-style:normal;font-size:10.5px;color:#6b6058;white-space:nowrap}
+.gsm .chat p:nth-child(1){animation-delay:.5s}.gsm .chat p:nth-child(2){animation-delay:1.9s}.gsm .chat p:nth-child(3){animation-delay:3.3s}
+.gsm .chat .dots{background:#3a3436;padding:11px 14px;gap:5px;animation-delay:4.9s}
+.gsm .chat .dots span{width:7px;height:7px;border-radius:50%;background:#cfc6b8;animation:blink 1.3s infinite}
+.gsm .chat .dots span:nth-child(2){animation-delay:.2s}.gsm .chat .dots span:nth-child(3){animation-delay:.4s}
+.gsm .off{align-self:center;margin-top:10px;font-size:11.5px;color:#e0545f;letter-spacing:.04em;opacity:0;animation:pop .6s ease-out 7s forwards}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes blink{0%,60%,100%{opacity:.25}30%{opacity:1}}

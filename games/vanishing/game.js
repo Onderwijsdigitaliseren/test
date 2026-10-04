@@ -54,7 +54,7 @@ var FP={},fp=function(d){return FP[d]||(FP[d]=new Path2D(d))};
 function figBox(c,x,y,s,al,fn){c.save();c.globalAlpha=al;c.translate(x,y);c.scale(s/150,s/150);c.translate(-60,-80);c.lineJoin="round";c.lineCap="round";fn();c.restore()}
 function wet(c,rx,a){var g=c.createRadialGradient(60,152,2,60,152,rx);g.addColorStop(0,"rgba(240,150,60,"+a+")");g.addColorStop(1,"rgba(240,150,60,0)");c.save();c.translate(0,152);c.scale(1,.26);c.translate(0,-152);c.fillStyle=g;c.beginPath();c.arc(60,152,rx,0,7);c.fill();c.restore();
   var r=c.createLinearGradient(0,152,0,176);r.addColorStop(0,"rgba(5,4,5,.7)");r.addColorStop(1,"rgba(5,4,5,0)");c.fillStyle=r;c.fillRect(46,152,30,24)}
-/* de vermiste: op de rug gezien, lopend, rugzak om, tegen het laatste avondlicht */
+/* de vermiste: op de rug gezien, lopend, capuchon op en rugzak om (bewust geen man of vrouw), tegen het laatste avondlicht */
 function walker(c,x,y,s,col,al){figBox(c,x,y,s,al,function(){
   var h=c.createRadialGradient(60,60,6,60,70,100);h.addColorStop(0,"rgba(232,120,70,.30)");h.addColorStop(1,"rgba(232,120,70,0)");c.fillStyle=h;c.beginPath();c.arc(60,70,100,0,7);c.fill();
   wet(c,70,.5);
@@ -62,11 +62,10 @@ function walker(c,x,y,s,col,al){figBox(c,x,y,s,al,function(){
   c.fill(fp("M45 86 H61 L56 120 L51 152 H41 L45 120 Z M58 86 H76 L74 116 L82 146 L73 152 L65 122 L60 98 Z"));
   c.fill(fp("M45 44 C52 39 68 39 75 44 L78 88 H42 Z"));
   c.strokeStyle="#070506";c.lineWidth=7;c.stroke(fp("M46 47 C39 60 39 74 41 90 M74 47 C81 60 82 72 80 88"));
-  c.fill(fp("M50 21 C49 9 71 9 70 21 C73 30 72 40 67 46 H53 C48 40 47 30 50 21 Z"));
-  c.strokeStyle="#070506";c.lineWidth=1.6;c.stroke(fp("M49 30 C45 34 46 40 43 44 M71 30 C76 35 74 40 78 43 M52 12 C50 8 54 6 53 3"));
+  c.fill(fp("M50 25 C47 7 73 7 70 25 C71 35 69 42 66 46 H54 C51 42 49 35 50 25 Z"));
   c.fillStyle="#1c1616";c.strokeStyle="rgba(240,150,60,.55)";c.lineWidth=1.1;var bp=fp("M50 52 Q50 47 55 47 H65 Q70 47 70 52 V78 Q70 83 65 83 H55 Q50 83 50 78 Z");c.fill(bp);c.stroke(bp);
   c.stroke(fp("M53 62 H67 M55 47 C54 44 54 42 55 41 M65 47 C66 44 66 42 65 41"));
-  c.strokeStyle=col;c.lineWidth=1.7;c.stroke(fp("M70 21 C73 30 72 40 67 46 M75 44 L78 88 M76 86 L74 116 L82 146 M80.5 60 C82 70 81.5 80 80 88"));
+  c.strokeStyle=col;c.lineWidth=1.7;c.stroke(fp("M70 25 C71 35 69 42 66 46 M75 44 L78 88 M76 86 L74 116 L82 146 M80.5 60 C82 70 81.5 80 80 88"));
   c.fillStyle="#d9d2c4";c.fill(fp("M73 152 L82 146 L84 150 L76 155 Z"))})}
 /* getuigen: voorbijgangers in het lantaarnlicht. Drie types: met paraplu, met capuchon, met hond */
 var WIT=[
