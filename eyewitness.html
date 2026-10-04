@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Eyewitness – a thriller you walk, in your own streets</title>
+<meta name="description" content="You saw something you were never meant to see. At eight places in your own neighbourhood a message from ‘Unknown’ is waiting, and someone is walking behind you. Find out who is following you and who you can trust. First night free.">
+<link rel="canonical" href="https://murderwalk.com/eyewitness.html">
+<link rel="alternate" hreflang="en" href="https://murderwalk.com/eyewitness.html">
+<link rel="alternate" hreflang="nl" href="https://moordwandeling.nl/nl/ooggetuige.html">
+<link rel="alternate" hreflang="x-default" href="https://murderwalk.com/eyewitness.html">
+<meta property="og:site_name" content="Murder Walk">
+<meta property="og:title" content="Murder Walk – Eyewitness">
+<meta property="og:description" content="Don't go home. They know who you are.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://murderwalk.com/eyewitness.html">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#070708">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600&family=IM+Fell+English+SC&display=swap">
+<link rel="stylesheet" href="shared/platform.css?v=1">
+<link rel="stylesheet" href="games/witness/game.css?v=1">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Eyewitness","url":"https://murderwalk.com/eyewitness.html","description":"You saw something you were never meant to see. At eight places in your own neighbourhood a message from ‘Unknown’ is waiting, and someone is walking behind you. Find out who is following you and who you can trust. First night free.","inLanguage":"en","gamePlatform":"Web browser","genre":["Thriller","Location-based game"],"isAccessibleForFree":true,"offers":{"@type":"Offer","price":"3.99","priceCurrency":"EUR","description":"Pro"}}</script>
+</head>
+<body>
+<div id="app">
+  <canvas id="hero" aria-hidden="true"></canvas>
+  <section class="screen" id="home">
+    <div class="wrap">
+      <div class="row0"><div class="pills"><a class="pill" id="hub" href="./">◂ All walks</a><button type="button" class="pill" id="lang">Nederlands</button></div></div>
+      <div class="masthead"><div class="brand">Murder Walk</div><h1 id="ttl">Eyewitness</h1><div class="redline"></div></div>
+      <div class="gap"></div>
+      <div class="gsm" aria-label="Unknown"><div class="bar"><span>21:18</span><span>▂▄▆</span></div><div class="who"><span class="av"></span><span><b>Unknown</b><small>online</small></span></div><div class="chat"><p>Don't go home.<i>21:16</i></p><p>They know who you are.<i>21:16</i></p><p>Look around you.<i>21:17</i></p><p>Go to the next point.<i>21:18</i></p><p class="dots"><span></span><span></span><span></span></p></div></div>
+      <p class="lead">You saw something<br>you were never meant to see.</p>
+      <ul class="tasks"><li>Find out who is following you.</li><li>Find out who you can trust.</li><li>Keep walking.</li></ul>
+      <div class="pline"><b id="pRank">–</b><span><b id="pStreak">0</b> Day streak</span><span><b id="pSolved">0</b> Solved</span></div>
+      <div hidden><div class="xp"><i id="pXp" style="width:0%"></i></div><p class="note" id="pNext"></p></div>
+      <div class="seg" id="len">
+        <button type="button" data-r="380" data-par="40" aria-pressed="false">Short · 40 min</button>
+        <button type="button" data-r="650" data-par="75" aria-pressed="true">Full · 75 min</button>
+      </div>
+      <button class="btn" id="bResume" hidden>Continue your night</button>
+      <button class="btn" id="bGps">Start today's case</button>
+      <button class="btn ghost" id="bRandom">Extra case here</button>
+      <button class="btn ghost" id="bCode">Enter a case code</button>
+      <button class="btn ghost sm" id="bDemo">Practice round in a fictional London</button>
+      <button class="btn ghost" id="bPro" hidden></button>
+      <p class="note" id="status"></p>
+      <ol class="how"><li>The map lays eight points on real places around you. At each one a message is waiting, from someone who calls themselves ‘Unknown’.</li><li>Keep moving. Someone is walking behind you, and closes in when you stand still.</li><li>Find out who is following you and who you can trust. Call the right one.</li></ol>
+      <button class="btn ghost" id="bEcho">What he dropped</button>
+      <button class="btn ghost" id="bArch">Archive</button>
+      <button class="btn ghost sm" id="bWipe">Erase</button>
+      <p class="note">Stay on public roads and mind the traffic. You never need to go inside, and you never need to run.</p>
+    </div>
+  </section>
+
+  <section class="screen" id="brief" hidden>
+    <div class="wrap">
+      <div class="paper">
+        <div class="eyebrow" id="bfNo"></div>
+        <div class="phead"><div class="sil" aria-hidden="true"></div><div><span class="stamp2" id="bfSub"></span><h2 id="bfTitle"></h2></div></div>
+        <p id="bfText"></p>
+        <div class="msgcard"><small id="bfMsgH"></small><span id="bfMsg"></span></div>
+        <div class="eyebrow" id="bfConH"></div>
+        <p class="note" id="bfLie"></p>
+        <div class="list" id="bfCon"></div>
+      </div>
+      <button class="btn" id="bGo">Keep walking</button>
+      <button class="btn ghost" id="bBack">Back</button>
+    </div>
+  </section>
+
+  <section class="screen" id="play" hidden>
+    <canvas id="map"></canvas>
+    <div id="hud">
+      <div><b id="hT">0:00</b><span>Time</span></div>
+      <div><b id="hS">0/8</b><span>Points</span></div>
+      <div><b id="hG">0/3</b><span>Found</span></div>
+      <div><b id="hD">–</b><span>Behind you</span></div>
+    </div>
+    <div id="zoom">
+      <button type="button" id="zM" aria-label="Menu">☰</button>
+      <button type="button" id="zIn" aria-label="Zoom in">+</button>
+      <button type="button" id="zOut" aria-label="Zoom out">−</button>
+      <button type="button" id="zMe" aria-label="Centre on me">◎</button>
+      <button type="button" id="zS" aria-label="Sound on or off">♪</button>
+    </div>
+    <div id="low">
+      <div id="radar">Go to the first point</div>
+      <div id="chip" hidden>
+        <div class="row"><b id="cName"></b><span id="cDist"></span></div>
+        <span id="cHint" class="note"></span>
+        <button class="btn" id="cAct"></button>
+      </div>
+      <div id="bar">
+        <button type="button" id="bNote">Messages</button>
+        <button type="button" id="bPeople">People</button>
+        <button type="button" id="bAcc" class="red">Call someone</button>
+      </div>
+    </div>
+  </section>
+
+  <div id="ar" hidden><video id="arV" playsinline muted autoplay></video><canvas id="arC"></canvas><div id="arH"></div><button type="button" class="btn ghost" id="arX">Camera off</button></div>
+  <div class="sheet" id="sheet" hidden><div class="paper" id="sheetBody"></div></div>
+  <div id="load" hidden role="status"><div class="spin"></div><b id="loadT"></b><span>This usually takes 5 to 30 seconds. Stay on this page.</span></div>
+  <div id="toast" hidden></div>
+</div>
+<script src="shared/platform.js?v=1"></script>
+<script src="shared/catalog.js?v=1"></script>
+<script src="shared/walk.js?v=2"></script>
+<script src="games/witness/data-en.js?v=1"></script>
+<script src="games/vanishing/puzzles.js?v=1"></script>
+<script src="games/witness/game.js?v=1"></script>
+</body>
+</html>

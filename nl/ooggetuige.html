@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Ooggetuige – een thriller die je loopt, in je eigen straten</title>
+<meta name="description" content="Jij hebt iets gezien wat je niet had mogen zien. Op acht plekken in je eigen buurt wacht een bericht van ‘Onbekend’, en iemand loopt achter je. Ontdek wie je volgt en wie je kunt vertrouwen. Eerste avond gratis.">
+<link rel="canonical" href="https://moordwandeling.nl/nl/ooggetuige.html">
+<link rel="alternate" hreflang="en" href="https://murderwalk.com/eyewitness.html">
+<link rel="alternate" hreflang="nl" href="https://moordwandeling.nl/nl/ooggetuige.html">
+<link rel="alternate" hreflang="x-default" href="https://murderwalk.com/eyewitness.html">
+<meta property="og:site_name" content="Moordwandeling">
+<meta property="og:title" content="Moordwandeling – Ooggetuige">
+<meta property="og:description" content="Ga niet naar huis. Ze weten wie je bent.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://moordwandeling.nl/nl/ooggetuige.html">
+<meta property="og:locale" content="nl_NL">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#070708">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600&family=IM+Fell+English+SC&display=swap">
+<link rel="stylesheet" href="../shared/platform.css?v=1">
+<link rel="stylesheet" href="../games/witness/game.css?v=1">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Ooggetuige","url":"https://moordwandeling.nl/nl/ooggetuige.html","description":"Jij hebt iets gezien wat je niet had mogen zien. Op acht plekken in je eigen buurt wacht een bericht van ‘Onbekend’, en iemand loopt achter je. Ontdek wie je volgt en wie je kunt vertrouwen. Eerste avond gratis.","inLanguage":"nl","gamePlatform":"Webbrowser","genre":["Thriller","Locatiespel"],"isAccessibleForFree":true,"offers":{"@type":"Offer","price":"3.99","priceCurrency":"EUR","description":"Pro"}}</script>
+</head>
+<body>
+<div id="app">
+  <canvas id="hero" aria-hidden="true"></canvas>
+  <section class="screen" id="home">
+    <div class="wrap">
+      <div class="row0"><div class="pills"><a class="pill" id="hub" href="./">◂ Alle wandelingen</a><button type="button" class="pill" id="lang">English</button></div></div>
+      <div class="masthead"><div class="brand">Moordwandeling</div><h1 id="ttl">Ooggetuige</h1><div class="redline"></div></div>
+      <div class="gap"></div>
+      <div class="gsm" aria-label="Onbekend"><div class="bar"><span>21:18</span><span>▂▄▆</span></div><div class="who"><span class="av"></span><span><b>Onbekend</b><small>online</small></span></div><div class="chat"><p>Ga niet naar huis.<i>21:16</i></p><p>Ze weten wie je bent.<i>21:16</i></p><p>Kijk om je heen.<i>21:17</i></p><p>Ga naar het volgende punt.<i>21:18</i></p><p class="dots"><span></span><span></span><span></span></p></div></div>
+      <p class="lead">Jij hebt iets gezien<br>wat je niet had mogen zien.</p>
+      <ul class="tasks"><li>Ontdek wie je volgt.</li><li>Ontdek wie je kunt vertrouwen.</li><li>Blijf lopen.</li></ul>
+      <div class="pline"><b id="pRank">–</b><span><b id="pStreak">0</b> Dagen op rij</span><span><b id="pSolved">0</b> Opgelost</span></div>
+      <div hidden><div class="xp"><i id="pXp" style="width:0%"></i></div><p class="note" id="pNext"></p></div>
+      <div class="seg" id="len">
+        <button type="button" data-r="380" data-par="40" aria-pressed="false">Kort · 40 min</button>
+        <button type="button" data-r="650" data-par="75" aria-pressed="true">Volledig · 75 min</button>
+      </div>
+      <button class="btn" id="bResume" hidden>Ga verder met je avond</button>
+      <button class="btn" id="bGps">Start de zaak van vandaag</button>
+      <button class="btn ghost" id="bRandom">Extra zaak op deze plek</button>
+      <button class="btn ghost" id="bCode">Zaakcode invoeren</button>
+      <button class="btn ghost sm" id="bDemo">Proefronde in fictief Londen</button>
+      <button class="btn ghost" id="bPro" hidden></button>
+      <p class="note" id="status"></p>
+      <ol class="how"><li>De kaart legt acht punten op echte plekken om je heen. Op elk punt wacht een bericht van iemand die zich ‘Onbekend’ noemt.</li><li>Blijf in beweging. Iemand loopt achter je, en komt dichterbij als je stilstaat.</li><li>Ontdek wie je volgt en wie je kunt vertrouwen. Bel de juiste.</li></ol>
+      <button class="btn ghost" id="bEcho">Wat hij liet vallen</button>
+      <button class="btn ghost" id="bArch">Archief</button>
+      <button class="btn ghost sm" id="bWipe">Wissen</button>
+      <p class="note">Blijf op de openbare weg en let op het verkeer. Je hoeft nergens naar binnen, en je hoeft nooit te rennen.</p>
+    </div>
+  </section>
+
+  <section class="screen" id="brief" hidden>
+    <div class="wrap">
+      <div class="paper">
+        <div class="eyebrow" id="bfNo"></div>
+        <div class="phead"><div class="sil" aria-hidden="true"></div><div><span class="stamp2" id="bfSub"></span><h2 id="bfTitle"></h2></div></div>
+        <p id="bfText"></p>
+        <div class="msgcard"><small id="bfMsgH"></small><span id="bfMsg"></span></div>
+        <div class="eyebrow" id="bfConH"></div>
+        <p class="note" id="bfLie"></p>
+        <div class="list" id="bfCon"></div>
+      </div>
+      <button class="btn" id="bGo">Loop door</button>
+      <button class="btn ghost" id="bBack">Terug</button>
+    </div>
+  </section>
+
+  <section class="screen" id="play" hidden>
+    <canvas id="map"></canvas>
+    <div id="hud">
+      <div><b id="hT">0:00</b><span>Tijd</span></div>
+      <div><b id="hS">0/8</b><span>Punten</span></div>
+      <div><b id="hG">0/3</b><span>Gevonden</span></div>
+      <div><b id="hD">–</b><span>Achter je</span></div>
+    </div>
+    <div id="zoom">
+      <button type="button" id="zM" aria-label="Menu">☰</button>
+      <button type="button" id="zIn" aria-label="Inzoomen">+</button>
+      <button type="button" id="zOut" aria-label="Uitzoomen">−</button>
+      <button type="button" id="zMe" aria-label="Centreer op mij">◎</button>
+      <button type="button" id="zS" aria-label="Geluid aan of uit">♪</button>
+    </div>
+    <div id="low">
+      <div id="radar">Ga naar het eerste punt</div>
+      <div id="chip" hidden>
+        <div class="row"><b id="cName"></b><span id="cDist"></span></div>
+        <span id="cHint" class="note"></span>
+        <button class="btn" id="cAct"></button>
+      </div>
+      <div id="bar">
+        <button type="button" id="bNote">Berichten</button>
+        <button type="button" id="bPeople">Mensen</button>
+        <button type="button" id="bAcc" class="red">Bel iemand</button>
+      </div>
+    </div>
+  </section>
+
+  <div id="ar" hidden><video id="arV" playsinline muted autoplay></video><canvas id="arC"></canvas><div id="arH"></div><button type="button" class="btn ghost" id="arX">Camera uit</button></div>
+  <div class="sheet" id="sheet" hidden><div class="paper" id="sheetBody"></div></div>
+  <div id="load" hidden role="status"><div class="spin"></div><b id="loadT"></b><span>Dit duurt meestal 5 tot 30 seconden. Blijf even op deze pagina.</span></div>
+  <div id="toast" hidden></div>
+</div>
+<script src="../shared/platform.js?v=1"></script>
+<script src="../shared/catalog.js?v=1"></script>
+<script src="../shared/walk.js?v=2"></script>
+<script src="../games/witness/data-nl.js?v=1"></script>
+<script src="../games/vanishing/puzzles.js?v=1"></script>
+<script src="../games/witness/game.js?v=1"></script>
+</body>
+</html>

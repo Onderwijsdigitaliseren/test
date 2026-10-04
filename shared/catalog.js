@@ -9,8 +9,8 @@ window.MW_CATALOG={
                             en:{n:"Missing person",t:"Someone is gone. Everything you find is true, but nobody knows the whole story."}},
     {id:"cold",   icon:"📁", nl:{n:"Cold case",   t:"Een oud dossier, nieuwe ogen. De plekken zijn er nog; de getuigen ook, ouder."},
                             en:{n:"Cold case",    t:"An old file, fresh eyes. The places are still there; so are the witnesses, older now."}},
-    {id:"night",  icon:"🌑", nl:{n:"Nachtzaak",   t:"Geen misdaad, wel iets dat niet klopt. Thriller met een paranormaal randje."},
-                            en:{n:"Night case",   t:"No crime, but something is wrong. A thriller with a paranormal edge."}}
+    {id:"night",  icon:"🌑", nl:{n:"Nachtzaak",   t:"Jij bent geen speurder maar doelwit. Thriller: blijf lopen en kijk om je heen."},
+                            en:{n:"Night case",   t:"You are not the detective but the target. A thriller: keep walking and look around you."}}
   ],
   games:[
     {id:"mw", cat:"murder", status:"live", access:"trial", minutes:"45–90", km:"2–4", group:true,
@@ -31,8 +31,10 @@ window.MW_CATALOG={
     {id:"cc", cat:"cold", status:"soon", access:"trial", minutes:"60", km:"3",
       en:{slug:"", title:"Cold Case", tag:"Coming later this season.", desc:"A dossier from decades ago. The places have changed; the truth has not."},
       nl:{slug:"", title:"Cold Case", tag:"Komt later dit seizoen.", desc:"Een dossier van tientallen jaren terug. De plekken zijn veranderd; de waarheid niet."}},
-    {id:"nw", cat:"night", status:"soon", access:"trial", minutes:"45", km:"2",
-      en:{slug:"", title:"Night Case", tag:"Coming later this season.", desc:"Lights that should be off. Footsteps with no feet. A night you walk alone."},
-      nl:{slug:"", title:"Nachtzaak", tag:"Komt later dit seizoen.", desc:"Lampen die uit hadden moeten zijn. Voetstappen zonder voeten. Een nacht die je alleen loopt."}}
+    {id:"og", cat:"night", status:"new", access:"trial", minutes:"40–75", km:"2–3", group:false,
+      en:{slug:"eyewitness.html", title:"Eyewitness", tag:"You saw something you were never meant to see.",
+          desc:"Not a whodunit: a thriller. At eight points a message from ‘Unknown’ is waiting, and someone is walking behind you. Who is following you, and who can you trust?"},
+      nl:{slug:"nl/ooggetuige.html", title:"Ooggetuige", tag:"Jij hebt iets gezien wat je niet had mogen zien.",
+          desc:"Geen detective maar een thriller. Op acht punten wacht een bericht van ‘Onbekend’, en iemand loopt achter je. Wie volgt je, en wie kun je vertrouwen?"}}
   ]
 };
