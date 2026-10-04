@@ -277,3 +277,13 @@ body,.btn.ghost,.pill,#zoom button,#bar button{color:#ecebe8}
 .btn.ghost.dk,.btn.dk{color:#ecebe8}
 #bar button.red{color:#1a1208}
 .pill{background:rgba(7,7,8,.7);border-color:rgba(236,235,232,.35)}
+/* achtervolger: gevarenbalk onder de bovenrand, rode flits als hij je ziet */
+#fbar{position:absolute;left:0;right:0;top:calc(52px + env(safe-area-inset-top,0px));height:4px;background:rgba(255,255,255,.06);z-index:2}
+#fbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#f0963c,#e0545f 60%,#ff2d3d);box-shadow:0 0 12px rgba(224,84,95,.8);transition:width .5s linear}
+#fbar.hot i{animation:blink .5s infinite}
+#hud div.danger{background:rgba(160,16,26,.28)}
+#hud div.danger b{font-size:20px}
+#fflash{position:absolute;inset:0;z-index:4;pointer-events:none;background:radial-gradient(ellipse at center,rgba(255,45,61,.15),rgba(160,16,26,.75));opacity:0}
+#fflash.on{animation:fflash 1.4s ease-out}
+@keyframes fflash{0%{opacity:1}12%{opacity:.25}24%{opacity:.9}100%{opacity:0}}
+@media(prefers-reduced-motion:reduce){#fflash.on{animation:none}#fbar.hot i{animation:none}}

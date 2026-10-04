@@ -158,12 +158,21 @@ window.OG_DATA={
   "behind": "Achter je",
   "fHint": "Iemand loopt achter je. Blijf in beweging.",
   "closeIn": [
-   "Niet stilstaan.",
-   "Achter je. Loop door.",
-   "Je staat te lang stil. Hij ziet je."
+   "HIJ ZIET JE. LOOP.",
+   "Vlak achter je. Loop door, nu.",
+   "Je stond te lang stil. Hij heeft je."
   ],
   "lost": "Je bent hem kwijt. Voor nu.",
-  "att": "Bijlage"
+  "att": "Bijlage",
+  "fMsg": [
+   "Ik zie hem. Hij loopt achter je.",
+   "Hij is vlakbij. Niet omkijken, doorlopen."
+  ],
+  "rush": [
+   "Hij versnelt.",
+   "Hij is de hoek al om. Sneller.",
+   "Hij loopt nu harder dan jij."
+  ]
  },
  "PZ": {
   "lamp": [

@@ -151,14 +151,33 @@ function parseCode(v){var c=MW.norm(v);if(!/^OG[SL]/.test(c)||c.length<4||c.leng
 
 /* ---------- spelen ---------- */
 var dTo=function(t){return Math.hypot(t.x-P.x,t.y-P.y)},inRange=function(t){return dTo(t)<=Math.max(35,Math.min(P.acc||0,60))||G.force===t};
+/* hartslag: twee doffe tikken; interval 1,5 s (ver) tot 0,45 s (vlakbij). Geeft 0..1 terug voor de pulserende beelden. */
+var HB={t:0,p:0};
+function heart(t){if(!G||G.won||G.fd>=110)return 0;var iv=450+Math.max(0,G.fd-30)*13;if(t-HB.t>iv){HB.t=t;
+    if($("#sheet").hidden&&$("#ar").hidden){beep(64,.09);setTimeout(function(){beep(52,.11)},150);if(G.fd<70)buzz(G.fd<45?[35,110,45]:25)}}
+  var d=t-HB.t;return d<120?1-d/120:d>150&&d<300?.7*(1-(d-150)/150):0}
 /* achtervolger: loopt over jouw eigen spoor, G.fd meter achter je */
+function flash(){var e=document.getElementById("fflash");if(!e){e=document.createElement("div");e.id="fflash";$("#play").appendChild(e)}e.classList.remove("on");void e.offsetWidth;e.classList.add("on")}
 function fpos(){var tr=G.trail||[],d=G.fd,x=P.x,y=P.y;for(var i=tr.length-1;i>=0;i--){var dx=tr[i][0]-x,dy=tr[i][1]-y,l=Math.hypot(dx,dy);if(l>=d&&l>0)return[x+dx/l*d,y+dy/l*d];d-=l;x=tr[i][0];y=tr[i][1]}
   var a=(G.seed%628)/100;return[x+Math.cos(a)*d,y+Math.sin(a)*d]}
 function items(){var it=[];
-  it.push({x:P.x,y:P.y,tap:false,draw:function(cx,X,Y,t,api){var tr=G.trail||[];
-    if(tr.length>1){cx.save();cx.strokeStyle="rgba(240,150,60,.35)";cx.lineWidth=2;cx.setLineDash([2,6]);cx.beginPath();tr.forEach(function(p,k){var x=api.sx(p[0]),y=api.sy(p[1]);k?cx.lineTo(x,y):cx.moveTo(x,y)});cx.lineTo(X,Y);cx.stroke();cx.restore()}
-    if(!G.won){var f=fpos(),fx=api.sx(f[0]),fy=api.sy(f[1]),near=G.fd<60;stalker(cx,fx,fy-6,near?52:44,near?"#e0545f":"#8fa3b8",api.still?.8:(near?.75+.25*Math.abs(Math.sin(t/200)):.45+.2*Math.abs(Math.sin(t/900))))}
-    if(!api.still){var sz=api.size(),w=sz[0],h=sz[1];cx.save();cx.strokeStyle="rgba(200,205,215,.10)";cx.lineWidth=1;cx.beginPath();for(var i=0;i<30;i++){var rx=(i*173.3+t*.05)%w,ry=(i*97.7+t*.5*(1+(i%3)*.2))%h;cx.moveTo(rx,ry);cx.lineTo(rx-3,ry+17)}cx.stroke();cx.restore()}}});
+  it.push({x:P.x,y:P.y,tap:false,draw:function(cx,X,Y,t,api){var tr=G.trail||[],sz=api.size(),w=sz[0],h=sz[1],i;
+    if(tr.length>1){cx.save();cx.strokeStyle="rgba(240,150,60,.3)";cx.lineWidth=2;cx.setLineDash([2,6]);cx.beginPath();tr.forEach(function(p,k){var x=api.sx(p[0]),y=api.sy(p[1]);k?cx.lineTo(x,y):cx.moveTo(x,y)});cx.lineTo(X,Y);cx.stroke();cx.restore()}
+    if(!api.still){cx.save();cx.strokeStyle="rgba(200,205,215,.10)";cx.lineWidth=1;cx.beginPath();for(i=0;i<30;i++){var rx=(i*173.3+t*.05)%w,ry=(i*97.7+t*.5*(1+(i%3)*.2))%h;cx.moveTo(rx,ry);cx.lineTo(rx-3,ry+17)}cx.stroke();cx.restore()}
+    if(G.won)return;
+    var f=fpos(),fx=api.sx(f[0]),fy=api.sy(f[1]),k=Math.max(0,Math.min(1,(110-G.fd)/80)),near=G.fd<60,beat=heart(t),pulse=api.still?0:beat;
+    // voetstappen van hem naar jou: hoe dichterbij, hoe roder
+    var dx=X-fx,dy=Y-fy,len=Math.hypot(dx,dy)||1,n=Math.max(2,Math.floor(len/16));cx.save();cx.fillStyle=near?"rgba(224,84,95,.85)":"rgba(143,163,184,.55)";
+    for(i=1;i<n;i++){var u=((i+(api.still?0:(t/600)%1))/n),px=fx+dx*u,py=fy+dy*u,sd=i%2?4:-4;cx.beginPath();cx.ellipse(px-dy/len*sd,py+dx/len*sd,3.2,1.8,Math.atan2(dy,dx),0,7);cx.fill()}cx.restore();
+    // rode ringen om hem heen
+    cx.save();for(i=0;i<3;i++){var q=api.still?.5:((t/1400+i/3)%1);cx.strokeStyle="rgba(224,84,95,"+((.25+.5*k)*(1-q))+")";cx.lineWidth=2;cx.beginPath();cx.arc(fx,fy,18+q*(30+50*k),0,7);cx.stroke()}cx.restore();
+    stalker(cx,fx,fy-8,64+12*k+pulse*6,near?"#ff6b74":"#b9c6d6",1);
+    cx.save();cx.font="600 13px 'Barlow Condensed','Arial Narrow',sans-serif";cx.textAlign="center";cx.shadowColor="#000";cx.shadowBlur=6;cx.fillStyle=near?"#ff6b74":"#d5dbe4";cx.fillText(T.behind.toUpperCase()+" · "+Math.round(G.fd)+" M",fx,fy+46);cx.restore();
+    // buiten beeld? pijl aan de rand
+    if(fx<16||fx>w-16||fy<70||fy>h-150){var ax=Math.max(26,Math.min(w-26,fx)),ay=Math.max(86,Math.min(h-170,fy)),an=Math.atan2(fy-ay,fx-ax);cx.save();cx.translate(ax,ay);cx.rotate(an);cx.fillStyle="rgba(224,84,95,"+(.7+.3*pulse)+")";cx.beginPath();cx.moveTo(14,0);cx.lineTo(-8,-10);cx.lineTo(-3,0);cx.lineTo(-8,10);cx.closePath();cx.fill();cx.restore();
+      cx.save();cx.font="600 12px 'Barlow Condensed','Arial Narrow',sans-serif";cx.textAlign="center";cx.fillStyle="#ff6b74";cx.shadowColor="#000";cx.shadowBlur=6;cx.fillText(Math.round(G.fd)+" M",ax,ay+24);cx.restore()}
+    // rode waas vanaf de rand, klopt mee met de hartslag
+    if(k>0){var vg=cx.createRadialGradient(w/2,h/2,Math.min(w,h)*(.55-.25*k),w/2,h/2,Math.max(w,h)*.75);vg.addColorStop(0,"rgba(160,16,26,0)");vg.addColorStop(1,"rgba(160,16,26,"+(k*(.35+.3*pulse))+")");cx.fillStyle=vg;cx.fillRect(0,0,w,h)}}});
   G.st.forEach(function(s){it.push({x:s.x,y:s.y,ref:s,tap:!s.done,draw:function(cx,X,Y,t,api){var f=G.c.frags[s.fi],bob=api.still?0:Math.sin(t/500)*3,col=KCOL[f.k]||"#f0963c";
     if(s.done)pin(cx,X,Y,f.k,col,true,s.fi+1);
     else if(f.k==="wit")witness(cx,X,Y-6,54,"#f0963c",1,s.fi);
@@ -178,7 +197,7 @@ function enter(){
     if(hit&&!hit.ref.done){sel=hit.ref;chip()}else if(G.mode==="demo"){walkTo=w;sel=null;map.follow();chip()}else{sel=null;chip()}}});
   map.resize();map.fit(G.R);sel=null;walkTo=null;arrived=null;$("#chip").hidden=true;
   Wk.stopWatch();if(G.mode==="gps")Wk.watch(G.origin,P,function(d){if(d>3&&d<80)G.dist+=d});
-  tick.d=null;toast(G.mode==="demo"?T.demoTip:T.fHint);if(G.mode==="demo")setTimeout(function(){if(G&&!G.won)toast(T.fHint)},3200);
+  tick.q=null;HB.t=0;if(!document.getElementById("fbar")){var fbE=document.createElement("div");fbE.id="fbar";fbE.innerHTML="<i></i>";$("#play").appendChild(fbE)}toast(G.mode==="demo"?T.demoTip:T.fHint);if(G.mode==="demo")setTimeout(function(){if(G&&!G.won)toast(T.fHint)},3200);
   requestAnimationFrame(loop)}
 function loop(t){if($("#play").hidden||!G)return;var dt=Math.min(.1,(t-lastT)/1000)||0;lastT=t;
   if(G.mode==="demo"&&walkTo){var d=Math.hypot(walkTo.x-P.x,walkTo.y-P.y),step=90*dt;if(d<=step){P.x=walkTo.x;P.y=walkTo.y;G.dist+=d;walkTo=null}else{P.x+=(walkTo.x-P.x)/d*step;P.y+=(walkTo.y-P.y)/d*step;G.dist+=step}}
@@ -186,12 +205,21 @@ function loop(t){if($("#play").hidden||!G)return;var dt=Math.min(.1,(t-lastT)/10
 function tick(){
   var el=Math.floor((Date.now()-G.t0)/1000),done=G.st.filter(function(s){return s.done}).length;
   // de achtervolger: komt dichterbij als je stilstaat (niet terwijl je leest), raakt achterop als je doorloopt
-  var mv=G.dist-(tick.d==null?G.dist:tick.d);tick.d=G.dist;
-  if(!G.won){var tr=G.trail,l=tr[tr.length-1];if(!l||Math.hypot(P.x-l[0],P.y-l[1])>8){tr.push([Math.round(P.x),Math.round(P.y)]);if(tr.length>70)tr.shift()}
-    if($("#sheet").hidden&&$("#ar").hidden){if(mv<1)G.fd=Math.max(24,G.fd-.6);else G.fd=Math.min(140,G.fd+.5+mv*.4)}
-    if(G.fd<=30&&!G.warn){G.warn=1;G.seen=true;toast(T.closeIn[Math.floor(Math.random()*T.closeIn.length)]);buzz([220,90,220]);beep(140,.5)}
-    else if(G.fd>=70&&G.warn){G.warn=0;toast(T.lost)}
-    $("#hD").parentNode.classList.toggle("danger",G.fd<60)}
+  if(!G.won){var now=Date.now(),tr=G.trail,l=tr[tr.length-1];if(!l||Math.hypot(P.x-l[0],P.y-l[1])>8){tr.push([Math.round(P.x),Math.round(P.y)]);if(tr.length>70)tr.shift()}
+    // gps komt met horten: reken met je snelheid over de laatste 8 seconden
+    var q=tick.q||(tick.q=[]);q.push([now,G.dist]);while(q.length>1&&now-q[0][0]>8000)q.shift();var sp=q.length>1?(G.dist-q[0][1])/Math.max(1,(now-q[0][0])/1000):0;
+    var busy=!$("#sheet").hidden||!$("#ar").hidden;
+    if(!busy){if(sp>.55)G.fd=Math.min(140,G.fd+(G.mode==="demo"?1.2:.45));else G.fd=Math.max(22,G.fd-.8);
+      // af en toe versnelt hij, ook als je doorloopt
+      if(!G.nextRush)G.nextRush=now+45000+Math.random()*40000;
+      if(now>G.nextRush){G.nextRush=now+50000+Math.random()*45000;if(G.fd>58){G.fd=Math.max(48,G.fd-32);toast(T.rush[Math.floor(Math.random()*T.rush.length)]);buzz([60,60,60,60,160]);beep(110,.35)}}}
+    else G.nextRush=Math.max(G.nextRush||0,now+15000);
+    // berichten van Onbekend als hij een grens passeert
+    var lv=G.fd<=30?3:G.fd<=45?2:G.fd<=70?1:0;if(G.lv==null)G.lv=0;
+    if(lv>G.lv&&!busy){if(lv===3){G.seen=true;flash();toast(T.closeIn[Math.floor(Math.random()*T.closeIn.length)]);buzz([300,90,300,90,500]);beep(140,.6)}else{toast(T.fMsg[lv-1]);buzz(lv===2?[120,80,120]:80)}}
+    else if(lv<G.lv&&lv===0)toast(T.lost);
+    G.lv=busy?Math.min(G.lv,lv):lv;
+    $("#hD").parentNode.classList.toggle("danger",G.fd<70);var fb=$("#fbar i");if(fb){fb.style.width=Math.round(Math.max(0,Math.min(1,(140-G.fd)/110))*100)+"%";fb.parentNode.classList.toggle("hot",G.fd<45)}}
   $("#hT").textContent=Math.floor(el/60)+":"+String(el%60).padStart(2,"0");$("#hS").textContent=done+"/8";$("#hG").textContent=(G.echo||[]).filter(function(q){return q.done}).length+"/3";$("#hD").textContent=G.won?"–":Math.round(G.fd)+" m";
   var open=G.won?(G.epi&&!G.epi.done?[G.epi]:[]):G.st.filter(function(s){return !s.done}),near=null,nd=1e9;open.forEach(function(s){var d=dTo(s);if(d<nd){nd=d;near=s}});nearD=nd;
   var ec=(G.echo||[]).filter(function(q){return !q.done&&dTo(q)<=200}),ecNear=(G.echo||[]).some(function(q){return !q.done&&dTo(q)>200&&dTo(q)<=320});

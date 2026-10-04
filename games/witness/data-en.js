@@ -158,12 +158,21 @@ window.OG_DATA={
   "behind": "Behind you",
   "fHint": "Someone is walking behind you. Keep moving.",
   "closeIn": [
-   "Don't stand still.",
-   "Behind you. Keep walking.",
-   "You've stopped too long. He can see you."
+   "HE SEES YOU. WALK.",
+   "Right behind you. Keep walking, now.",
+   "You stood still too long. He's got you."
   ],
   "lost": "You've lost him. For now.",
-  "att": "Attachment"
+  "att": "Attachment",
+  "fMsg": [
+   "I can see him. He's walking behind you.",
+   "He's close. Don't look back, keep walking."
+  ],
+  "rush": [
+   "He's speeding up.",
+   "He's already round the corner. Faster.",
+   "He's walking faster than you now."
+  ]
  },
  "PZ": {
   "lamp": [
