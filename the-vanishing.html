@@ -16,10 +16,10 @@
 <meta property="og:url" content="https://murderwalk.com/the-vanishing.html">
 <meta property="og:locale" content="en_GB">
 <meta name="twitter:card" content="summary">
-<meta name="theme-color" content="#101a2b">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600&display=swap">
+<meta name="theme-color" content="#0c0a0b">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600&family=IM+Fell+English+SC&family=Caveat:wght@600&display=swap">
 <link rel="stylesheet" href="shared/platform.css?v=1">
-<link rel="stylesheet" href="games/vanishing/game.css?v=1">
+<link rel="stylesheet" href="games/vanishing/game.css?v=2">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"The Vanishing","url":"https://murderwalk.com/the-vanishing.html","description":"Someone is gone. Their last eight traces of that evening lie at real places around you: camera stills, texts, statements, objects. Abducted, fled or a disappearance by choice? First case free.","inLanguage":"en","gamePlatform":"Web browser","genre":["Detective","Location-based game"],"isAccessibleForFree":true,"offers":{"@type":"Offer","price":"3.99","priceCurrency":"EUR","description":"Pro"}}</script>
 </head>
 <body>
@@ -27,10 +27,11 @@
   <canvas id="hero" aria-hidden="true"></canvas>
   <section class="screen" id="home">
     <div class="wrap">
-      <div class="row0"><div class="eyebrow">Someone is gone</div><div class="pills"><a class="pill" id="hub" href="./">◂ All walks</a><button type="button" class="pill" id="lang">Nederlands</button></div></div>
+      <div class="row0"><div class="pills"><a class="pill" id="hub" href="./">◂ All walks</a><button type="button" class="pill" id="lang">Nederlands</button></div></div>
+      <div class="masthead"><div class="brand">Murder Walk</div><h1 id="ttl">The Vanishing</h1><div class="redline"></div></div>
       <div class="gap"></div>
-      <div class="poster"><span class="pstamp">Missing</span><h1 id="ttl">The Vanish&shy;ing</h1></div>
-      <p class="lead">You hold the last message. The last eight traces of that evening lie in your streets: camera stills, texts, statements, objects. Everything you find is true. But nobody knows the whole story.</p>
+      <p class="lead">Someone is gone.<br>Their last eight traces lie in your streets.</p>
+      <ul class="tasks"><li>Uncover the last messages.</li><li>Watch the camera stills.</li><li>Question witnesses.</li><li>Gather evidence.</li><li>Abducted, fled or vanished by choice?</li></ul>
       <div class="pline"><b id="pRank">–</b><span><b id="pStreak">0</b> Day streak</span><span><b id="pSolved">0</b> Solved</span></div>
       <div hidden><div class="xp"><i id="pXp" style="width:0%"></i></div><p class="note" id="pNext"></p></div>
       <div class="seg" id="len">
@@ -105,9 +106,9 @@
 </div>
 <script src="shared/platform.js?v=1"></script>
 <script src="shared/catalog.js?v=1"></script>
-<script src="shared/walk.js?v=1"></script>
+<script src="shared/walk.js?v=2"></script>
 <script src="games/vanishing/data-en.js?v=1"></script>
 <script src="games/vanishing/puzzles.js?v=1"></script>
-<script src="games/vanishing/game.js?v=1"></script>
+<script src="games/vanishing/game.js?v=2"></script>
 </body>
 </html>
