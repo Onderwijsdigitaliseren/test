@@ -7,6 +7,8 @@ Statische site voor GitHub Pages, geen build-stap. Zelfde bestanden op murderwal
 /nl/index.html               hub NL
 /murder-walk.html            spel 1 EN        /nl/moordwandeling.html   spel 1 NL   (eigen, oudere motor; staat compleet in het bestand)
 /the-vanishing.html          spel 2 EN        /nl/de-verdwijning.html   spel 2 NL   (shell; logica in /games/vanishing/)
+/till-death-do-us-part.html  spel 3 EN        /nl/tot-de-dood-ons-scheidt.html  spel 3 NL (shell; logica in /games/bride/)
+/games/bride/                game.js (zelfde motor als vanishing: zes gasten, motief, de bruid als schim) · data-nl.js · data-en.js · game.css; gebruikt games/vanishing/puzzles.js
 /games/vanishing/            game.js (logica, taalonafhankelijk) · data-nl.js · data-en.js · game.css
 /shared/platform.js          gedeelde laag: Pro, groepspas, codes.json, profiel (rang/punten/streak), taal, instellingen (SS_PRO)
 /shared/walk.js              wandelmotor voor nieuwe spellen: OpenStreetMap/Overpass, plekken kiezen, nachtkaart, gps, oefenwereld, vellen/geluid
@@ -23,7 +25,7 @@ bestaande Pro-kopers en groepscodes blijven werken, er is geen migratie nodig. N
 (eerste zaak per spel gratis), en loggen hun resultaten in `ss_prof.games.<id>`. Rang, punten en dagstreak zijn platformbreed.
 
 ## Oude links
-`/#z=…` en `/#g=…` (zaakcodes en groepslinks van vóór het platform) worden door de hub doorgestuurd naar het juiste spel; `#z=VZ…` naar De Verdwijning.
+`/#z=…` en `/#g=…` (zaakcodes en groepslinks van vóór het platform) worden door de hub doorgestuurd naar het juiste spel; `#z=VZ…` naar De Verdwijning, `#z=TD…` naar Tot de Dood Ons Scheidt.
 
 ## Nieuw spel toevoegen
 1. Object toevoegen in `shared/catalog.js` (id, categorie, status, slugs/titels per taal).

@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <script>(function(){var h=location.hash||"",L="";try{L=(localStorage.getItem("ss_lang")||"").replace(/"/g,"")}catch(e){}
 var nl=h==="#nl"?true:h==="#en"?false:L==="nl"?true:L==="en"?false:/moordwandeling/i.test(location.hostname);
+if(/^#z=TD/i.test(h)){location.replace((nl?"nl/tot-de-dood-ons-scheidt.html":"till-death-do-us-part.html")+h);return}
 if(/^#z=VZ/i.test(h)){location.replace((nl?"nl/de-verdwijning.html":"the-vanishing.html")+h);return}
 if(/^#(z|g)=/.test(h)){location.replace((nl?"nl/moordwandeling.html":"murder-walk.html")+h);return}
 if(h==="#nl"||h==="#en"){try{localStorage.setItem("ss_lang",nl?"nl":"en")}catch(e){}}

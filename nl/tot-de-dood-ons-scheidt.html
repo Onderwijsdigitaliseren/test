@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Tot de Dood Ons Scheidt – een bruiloftsmysterie dat je loopt, in je eigen straten</title>
+<meta name="description" content="Ze zou vandaag trouwen. Alleen de bruid kwam nooit aan. Loop haar laatste avond na op echte plekken om je heen: zes gasten, acht sporen, en iedereen had een reden om te liegen. Eerste zaak gratis.">
+<link rel="canonical" href="https://moordwandeling.nl/nl/tot-de-dood-ons-scheidt.html">
+<link rel="alternate" hreflang="en" href="https://murderwalk.com/till-death-do-us-part.html">
+<link rel="alternate" hreflang="nl" href="https://moordwandeling.nl/nl/tot-de-dood-ons-scheidt.html">
+<link rel="alternate" hreflang="x-default" href="https://murderwalk.com/till-death-do-us-part.html">
+<meta property="og:site_name" content="Moordwandeling">
+<meta property="og:title" content="Moordwandeling – Tot de Dood Ons Scheidt">
+<meta property="og:description" content="Ze zou vandaag trouwen. Alleen de bruid kwam nooit aan.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://moordwandeling.nl/nl/tot-de-dood-ons-scheidt.html">
+<meta property="og:locale" content="nl_NL">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#101a2b">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600&display=swap">
+<link rel="stylesheet" href="../shared/platform.css?v=1">
+<link rel="stylesheet" href="../games/bride/game.css?v=1">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Tot de Dood Ons Scheidt","url":"https://moordwandeling.nl/nl/tot-de-dood-ons-scheidt.html","description":"Ze zou vandaag trouwen. Alleen de bruid kwam nooit aan. Loop haar laatste avond na op echte plekken om je heen: zes gasten, acht sporen, en iedereen had een reden om te liegen. Eerste zaak gratis.","inLanguage":"nl","gamePlatform":"Webbrowser","genre":["Detective","Romantisch mysterie","Locatiespel"],"isAccessibleForFree":true,"offers":{"@type":"Offer","price":"3.99","priceCurrency":"EUR","description":"Pro"}}</script>
+</head>
+<body>
+<div id="app">
+  <canvas id="hero" aria-hidden="true"></canvas>
+  <section class="screen" id="home">
+    <div class="wrap">
+      <div class="row0"><div class="eyebrow">Ze zou vandaag trouwen</div><div class="pills"><a class="pill" id="hub" href="./">◂ Alle wandelingen</a><button type="button" class="pill" id="lang">English</button></div></div>
+      <div class="gap"></div>
+      <div class="poster"><span class="pstamp">Moordwandeling</span><h1 id="ttl">Tot de Dood Ons Scheidt</h1></div>
+      <p class="lead">Ze zou vandaag trouwen.<br>Haar jurk hing klaar. De gasten waren onderweg.<br>Alleen de bruid kwam nooit aan.<br>Uren later werd haar lichaam gevonden.<br>Iedereen op de gastenlijst had een reden om te liegen.</p>
+      <div class="pline"><b id="pRank">–</b><span><b id="pStreak">0</b> Dagen op rij</span><span><b id="pSolved">0</b> Opgelost</span></div>
+      <div hidden><div class="xp"><i id="pXp" style="width:0%"></i></div><p class="note" id="pNext"></p></div>
+      <div class="seg" id="len">
+        <button type="button" data-r="380" data-par="40" aria-pressed="false">Kort · 40 min</button>
+        <button type="button" data-r="650" data-par="75" aria-pressed="true">Volledig · 75 min</button>
+      </div>
+      <button class="btn" id="bResume" hidden>Ga verder met je zaak</button>
+      <button class="btn" id="bGps">Start de zaak van vandaag</button>
+      <button class="btn ghost" id="bRandom">Extra zaak op deze plek</button>
+      <button class="btn ghost" id="bCode">Zaakcode invoeren</button>
+      <button class="btn ghost sm" id="bDemo">Proefronde in fictief Londen</button>
+      <button class="btn ghost" id="bPro" hidden></button>
+      <p class="note" id="status"></p>
+      <ol class="how"><li>De kaart legt acht sporen op echte plekken om je heen: de route die de bruid liep op de avond voor haar bruiloft.</li><li>Kom binnen 35 meter en het spoor gaat open: een brief, een bericht, een getuige, en soms staat zij er zelf nog.</li><li>Beslis wie haar die avond ontmoette en waarom het misging: jaloezie, geld of een geheim.</li></ol>
+      <button class="btn ghost" id="bEcho">Aandenkens</button>
+      <button class="btn ghost" id="bArch">Archief</button>
+      <button class="btn ghost sm" id="bWipe">Wissen</button>
+      <p class="note">Blijf op de openbare weg en let op het verkeer. Je hoeft nergens naar binnen.</p>
+    </div>
+  </section>
+
+  <section class="screen" id="brief" hidden>
+    <div class="wrap">
+      <div class="paper">
+        <div class="eyebrow" id="bfNo"></div>
+        <div class="phead"><div class="sil" aria-hidden="true"></div><div><span class="stamp2">De bruid</span><h2 id="bfTitle"></h2></div></div>
+        <p class="eyebrow" id="bfSub"></p>
+        <p id="bfText"></p>
+        <div class="msgcard"><small id="bfMsgH"></small><span id="bfMsg"></span></div>
+        <div class="eyebrow" id="bfConH"></div>
+        <div class="list" id="bfCon"></div>
+        <p class="note" id="bfLie"></p>
+      </div>
+      <button class="btn" id="bGo">De nacht in</button>
+      <button class="btn ghost" id="bBack">Terug</button>
+    </div>
+  </section>
+
+  <section class="screen" id="play" hidden>
+    <canvas id="map"></canvas>
+    <div id="hud">
+      <div><b id="hT">0:00</b><span>Tijd</span></div>
+      <div><b id="hS">0/8</b><span>Sporen</span></div>
+      <div><b id="hG">0/3</b><span>Aandenkens</span></div>
+      <div><b id="hD">0,0</b><span>Km</span></div>
+    </div>
+    <div id="zoom">
+      <button type="button" id="zM" aria-label="Menu">☰</button>
+      <button type="button" id="zIn" aria-label="Inzoomen">+</button>
+      <button type="button" id="zOut" aria-label="Uitzoomen">−</button>
+      <button type="button" id="zMe" aria-label="Centreer op mij">◎</button>
+      <button type="button" id="zS" aria-label="Geluid aan of uit">♪</button>
+    </div>
+    <div id="low">
+      <div id="radar">Zoek het eerste spoor</div>
+      <div id="chip" hidden>
+        <div class="row"><b id="cName"></b><span id="cDist"></span></div>
+        <span id="cHint" class="note"></span>
+        <button class="btn" id="cAct"></button>
+      </div>
+      <div id="bar">
+        <button type="button" id="bNote">Notitieboek</button>
+        <button type="button" id="bPeople">Gasten</button>
+        <button type="button" id="bAcc" class="red">Sluit dossier</button>
+      </div>
+    </div>
+  </section>
+
+  <div id="ar" hidden><video id="arV" playsinline muted autoplay></video><canvas id="arC"></canvas><div id="arH"></div><button type="button" class="btn ghost" id="arX">Camera uit</button></div>
+  <div class="sheet" id="sheet" hidden><div class="paper" id="sheetBody"></div></div>
+  <div id="load" hidden role="status"><div class="spin"></div><b id="loadT"></b><span>Dit duurt meestal 5 tot 30 seconden. Blijf even op deze pagina.</span></div>
+  <div id="toast" hidden></div>
+</div>
+<script src="../shared/platform.js?v=1"></script>
+<script src="../shared/catalog.js?v=1"></script>
+<script src="../shared/walk.js?v=1"></script>
+<script src="../games/bride/data-nl.js?v=1"></script>
+<script src="../games/vanishing/puzzles.js?v=1"></script>
+<script src="../games/bride/game.js?v=1"></script>
+</body>
+</html>
