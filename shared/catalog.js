@@ -7,10 +7,10 @@ window.MW_CATALOG={
                             en:{n:"Murder case",  t:"Who did it? Evidence never lies; one of the witnesses does."}},
     {id:"missing",icon:"👤", nl:{n:"Vermissing",  t:"Iemand is weg. Alles wat je vindt is waar, maar niemand weet het hele verhaal."},
                             en:{n:"Missing person",t:"Someone is gone. Everything you find is true, but nobody knows the whole story."}},
-    {id:"cold",   icon:"📁", nl:{n:"Cold case",   t:"Een oud dossier, nieuwe ogen. De plekken zijn er nog; de getuigen ook, ouder."},
-                            en:{n:"Cold case",    t:"An old file, fresh eyes. The places are still there; so are the witnesses, older now."}},
     {id:"night",  icon:"🌑", nl:{n:"Nachtzaak",   t:"Jij bent geen speurder maar doelwit. Thriller: blijf lopen en kijk om je heen."},
-                            en:{n:"Night case",   t:"You are not the detective but the target. A thriller: keep walking and look around you."}}
+                            en:{n:"Night case",   t:"You are not the detective but the target. A thriller: keep walking and look around you."}},
+    {id:"cold",   icon:"📁", nl:{n:"Cold case",   t:"Een oud dossier, nieuwe ogen. De plekken zijn er nog; de getuigen ook, ouder."},
+                            en:{n:"Cold case",    t:"An old file, fresh eyes. The places are still there; so are the witnesses, older now."}}
   ],
   games:[
     {id:"mw", cat:"murder", status:"live", access:"trial", minutes:"45–90", km:"2–4", group:true,
