@@ -1,6 +1,6 @@
 # Moordwandeling / Murder Walk – platform
 
-Statische site voor GitHub Pages, geen build-stap. Zelfde bestanden op www.murderwalk.com en www.moordwandeling.nl.
+Statische site voor GitHub Pages, geen build-stap. Zelfde bestanden op murderwalk.com en moordwandeling.nl (aparte repo's, alleen CNAME verschilt).
 
 ```
 /index.html                  hub EN (op moordwandeling.nl stuurt hij door naar /nl/)
