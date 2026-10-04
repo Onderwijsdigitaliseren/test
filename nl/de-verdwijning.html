@@ -17,8 +17,6 @@
 <meta property="og:locale" content="nl_NL">
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#101a2b">
-<link rel="icon" href="../assets/favicon.png">
-<link rel="apple-touch-icon" href="../assets/logo-nl-192.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600&display=swap">
 <link rel="stylesheet" href="../shared/platform.css?v=1">
 <link rel="stylesheet" href="../games/vanishing/game.css?v=1">
@@ -30,15 +28,11 @@
   <section class="screen" id="home">
     <div class="wrap">
       <div class="row0"><div class="eyebrow">Iemand is verdwenen</div><div class="pills"><a class="pill" id="hub" href="./">◂ Alle wandelingen</a><button type="button" class="pill" id="lang">English</button></div></div>
-      <h1 id="ttl">De Verdwij&shy;ning</h1>
       <div class="gap"></div>
+      <div class="poster"><span class="pstamp">Vermist</span><h1 id="ttl">De Verdwij&shy;ning</h1></div>
       <p class="lead">Jij hebt het laatste bericht. De laatste acht sporen van die avond liggen in jouw buurt: camerabeelden, berichten, verklaringen, voorwerpen. Alles wat je vindt is waar. Maar niemand weet het hele verhaal.</p>
-      <div class="strip">
-        <div><b id="pRank">–</b><span>Rang</span></div>
-        <div><b id="pStreak">0</b><span>Dagen op rij</span></div>
-        <div><b id="pSolved">0</b><span>Opgelost</span></div>
-      </div>
-      <div><div class="xp"><i id="pXp" style="width:0%"></i></div><p class="note" id="pNext"></p></div>
+      <div class="pline"><b id="pRank">–</b><span><b id="pStreak">0</b> Dagen op rij</span><span><b id="pSolved">0</b> Opgelost</span></div>
+      <div hidden><div class="xp"><i id="pXp" style="width:0%"></i></div><p class="note" id="pNext"></p></div>
       <div class="seg" id="len">
         <button type="button" data-r="380" data-par="40" aria-pressed="false">Kort · 40 min</button>
         <button type="button" data-r="650" data-par="75" aria-pressed="true">Volledig · 75 min</button>
@@ -61,7 +55,7 @@
     <div class="wrap">
       <div class="paper">
         <div class="eyebrow" id="bfNo"></div>
-        <h2 id="bfTitle"></h2>
+        <div class="phead"><div class="sil" aria-hidden="true"></div><div><span class="stamp2">Vermist</span><h2 id="bfTitle"></h2></div></div>
         <p class="eyebrow" id="bfSub"></p>
         <p id="bfText"></p>
         <div class="msgcard"><small id="bfMsgH"></small><span id="bfMsg"></span></div>
@@ -103,6 +97,7 @@
     </div>
   </section>
 
+  <div id="ar" hidden><video id="arV" playsinline muted autoplay></video><canvas id="arC"></canvas><div id="arH"></div><button type="button" class="btn ghost" id="arX">Camera uit</button></div>
   <div class="sheet" id="sheet" hidden><div class="paper" id="sheetBody"></div></div>
   <div id="load" hidden role="status"><div class="spin"></div><b id="loadT"></b><span>Dit duurt meestal 5 tot 30 seconden. Blijf even op deze pagina.</span></div>
   <div id="toast" hidden></div>
@@ -111,6 +106,7 @@
 <script src="../shared/catalog.js?v=1"></script>
 <script src="../shared/walk.js?v=1"></script>
 <script src="../games/vanishing/data-nl.js?v=1"></script>
+<script src="../games/vanishing/puzzles.js?v=1"></script>
 <script src="../games/vanishing/game.js?v=1"></script>
 </body>
 </html>

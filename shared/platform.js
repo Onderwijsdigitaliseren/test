@@ -63,7 +63,7 @@ var PROFILE={
   award:function(o){var p=this.get(),before=this.rank(p.xp);
     if(o.gps){var t=today();if(p.last!==t){p.streak=p.last===yesterday()?p.streak+1:1;p.last=t}}
     p.xp+=o.xp||0;if(o.solved!==false)p.solved=(p.solved||0)+1;
-    var g=p.games[o.game]||(p.games[o.game]={n:0,best:0,log:[]});g.n++;if((o.stars||0)>g.best)g.best=o.stars||0;
+    var g=p.games[o.game]||(p.games[o.game]={n:0,best:0,log:[]});if(o.solved!==false)g.n++;if((o.stars||0)>g.best)g.best=o.stars||0;
     if(o.title){g.log.unshift({d:today(),t:o.title,st:o.stars||0,m:Math.round(o.min||0),km:+(o.km||0).toFixed(1),c:o.code||""});g.log=g.log.slice(0,12)}
     this.save(p);return{prof:p,up:this.rank(p.xp)>before}},
   wipe:function(){LS.del("ss_prof")}

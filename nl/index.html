@@ -49,14 +49,12 @@ if(h==="#en"){try{localStorage.setItem("ss_lang","en")}catch(e){}location.replac
     </header>
 
     <section class="profile" aria-label="Je profiel">
-      <div class="strip">
-        <div><b id="pRank">Aspirant</b><span>Rang</span></div>
-        <div><b id="pStreak">0</b><span>Dagen op rij</span></div>
-        <div><b id="pSolved">0</b><span>Opgelost</span></div>
-      </div>
-      <div style="margin-top:8px"><div class="xp"><i id="pXp" style="width:0%"></i></div><p class="note" id="pNext"></p></div>
-      <p class="note" id="status" style="margin-top:6px"></p>
-      <button class="btn ghost sm" id="bPro" style="margin-top:10px">Word Pro · één keer kopen, alle wandelingen</button>
+      <span class="pr"><b id="pRank">Aspirant</b><span class="xp"><i id="pXp" style="width:0%"></i></span></span>
+      <span><b id="pStreak">0</b> dagen op rij</span>
+      <span><b id="pSolved">0</b> opgelost</span>
+      <span id="status" class="st"></span>
+      <span id="pNext" hidden></span>
+      <button class="plink" id="bPro">Word Pro</button>
     </section>
 
     <section>

@@ -51,14 +51,12 @@ if(nl)location.replace("nl/");})();</script>
     </header>
 
     <section class="profile" aria-label="Your profile">
-      <div class="strip">
-        <div><b id="pRank">Cadet</b><span>Rank</span></div>
-        <div><b id="pStreak">0</b><span>Day streak</span></div>
-        <div><b id="pSolved">0</b><span>Solved</span></div>
-      </div>
-      <div style="margin-top:8px"><div class="xp"><i id="pXp" style="width:0%"></i></div><p class="note" id="pNext"></p></div>
-      <p class="note" id="status" style="margin-top:6px"></p>
-      <button class="btn ghost sm" id="bPro" style="margin-top:10px">Go Pro · one purchase, every walk</button>
+      <span class="pr"><b id="pRank">Cadet</b><span class="xp"><i id="pXp" style="width:0%"></i></span></span>
+      <span><b id="pStreak">0</b> day streak</span>
+      <span><b id="pSolved">0</b> solved</span>
+      <span id="status" class="st"></span>
+      <span id="pNext" hidden></span>
+      <button class="plink" id="bPro">Go Pro</button>
     </section>
 
     <section>
