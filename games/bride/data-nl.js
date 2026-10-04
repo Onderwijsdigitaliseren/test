@@ -1,6 +1,7 @@
 /* Tot de Dood Ons Scheidt – Nederlandse teksten en zaakdata. Plaatshouders: {N} bruid, {P} zij, {O} haar, {S} haar, {K} dader, {KR} relatie, {t} tijd.
    CONTACTS: [naam, relatie, wat diegene zelf zegt]. CT: eigenschappen van de gasten + sporen die op die waarde wijzen.
-   SC: sporen per motief (J = jaloezie, G = geld, S = geheim); elk spoor past bij twee motieven. */
+   SC: sporen per motief (J = jaloezie, G = geld, S = geheim); elk spoor past bij twee motieven.
+   CONTACTS 4e element en CT.x.ic / MOTIF: naam van het pictogram (zie IC in game.js). */
 window.TD_DATA={
  "lang": "nl",
  "T": {
@@ -474,62 +475,74 @@ window.TD_DATA={
   [
    "Daan Verbeek",
    "de bruidegom",
-   "Ze was nog nooit zo gelukkig geweest. Dat moet je van me aannemen."
+   "Ze was nog nooit zo gelukkig geweest. Dat moet je van me aannemen.",
+   "bowtie"
   ],
   [
    "Thomas Aerts",
    "de bruidegom",
-   "We hadden geen geheimen voor elkaar. Geen enkel."
+   "We hadden geen geheimen voor elkaar. Geen enkel.",
+   "bowtie"
   ],
   [
    "Sanne Kuipers",
    "de beste vriendin",
-   "Ze hield helemaal niet van hem. Dat wist iedereen, behalve hij."
+   "Ze hield helemaal niet van hem. Dat wist iedereen, behalve hij.",
+   "hearts"
   ],
   [
    "Lieke van Dam",
    "de beste vriendin",
-   "Ik was haar getuige. Als er iets was, had ze het mij verteld."
+   "Ik was haar getuige. Als er iets was, had ze het mij verteld.",
+   "hearts"
   ],
   [
    "Eva Lindhout",
    "de zus",
-   "Zij kreeg altijd alles. Ik gunde het haar. Echt."
+   "Zij kreeg altijd alles. Ik gunde het haar. Echt.",
+   "locket"
   ],
   [
    "Marit Sweers",
    "de zus",
-   "Wij hadden al jaren geen ruzie meer. Vraag het maar aan wie je wilt."
+   "Wij hadden al jaren geen ruzie meer. Vraag het maar aan wie je wilt.",
+   "locket"
   ],
   [
    "Ruben Hartog",
    "de ex",
-   "Ik heb haar in geen jaar gesproken. Ik weet niet eens waarom ik was uitgenodigd."
+   "Ik heb haar in geen jaar gesproken. Ik weet niet eens waarom ik was uitgenodigd.",
+   "broken"
   ],
   [
    "Jesse Molenaar",
    "de ex",
-   "Het was al lang over tussen ons. Ik kwam alleen om het goed af te sluiten."
+   "Het was al lang over tussen ons. Ik kwam alleen om het goed af te sluiten.",
+   "broken"
   ],
   [
    "Hermine Wolters",
    "de moeder van de bruidegom",
-   "Ik heb haar als een dochter ontvangen. Vanaf de eerste dag."
+   "Ik heb haar als een dochter ontvangen. Vanaf de eerste dag.",
+   "crown"
   ],
   [
    "Agnes Peeters",
    "de moeder van de bruidegom",
-   "Mijn zoon had niemand beter kunnen treffen. Dat heb ik altijd gezegd."
+   "Mijn zoon had niemand beter kunnen treffen. Dat heb ik altijd gezegd.",
+   "crown"
   ],
   [
    "Milan Brouwer",
    "de fotograaf",
-   "Ik kende haar alleen van de intake. Voor mij was het gewoon een opdracht."
+   "Ik kende haar alleen van de intake. Voor mij was het gewoon een opdracht.",
+   "camera"
   ],
   [
    "Iris Coppens",
    "de fotograaf",
-   "Ik kijk naar mensen door een lens. Dichterbij kom ik niet."
+   "Ik kijk naar mensen door een lens. Dichterbij kom ik niet.",
+   "camera"
   ]
  ],
  "CT": {
@@ -571,7 +584,8 @@ window.TD_DATA={
       "t": "Bericht aan {N}, {t} uur: “Ik rij nu van huis weg. Tien minuten. Wacht op me, alsjeblieft.”"
      }
     ]
-   }
+   },
+   "ic": "bed"
   },
   "diner": {
    "v": [
@@ -611,7 +625,8 @@ window.TD_DATA={
       "t": "{t} uur. Ze komt naar buiten met haar servet nog in haar hand. Onder de lantaarn wacht iemand die niet binnen heeft gezeten."
      }
     ]
-   }
+   },
+   "ic": "glass"
   },
   "ring": {
    "v": [
@@ -651,7 +666,8 @@ window.TD_DATA={
       "t": "Bericht aan {N}, {t} uur: “Neem de ringen mee. Ik wil ze één keer vasthouden voor het morgen te laat is.”"
      }
     ]
-   }
+   },
+   "ic": "ring"
   },
   "sleutel": {
    "v": [
@@ -691,7 +707,8 @@ window.TD_DATA={
       "t": "Een briefje dat onder haar deur door is geschoven: “Ik heb drie keer aangebeld. Kom naar het einde van de straat.”"
      }
     ]
-   }
+   },
+   "ic": "key"
   },
   "bellen": {
    "v": [
@@ -731,7 +748,8 @@ window.TD_DATA={
       "t": "{t} uur. Ze leest onder de lantaarn een handgeschreven kaartje. Haar telefoon heeft ze niet bij zich."
      }
     ]
-   }
+   },
+   "ic": "phone"
   }
  },
  "SC": [
@@ -833,5 +851,10 @@ window.TD_DATA={
   "J",
   "G",
   "S"
+ ],
+ "MOTIF": [
+  "pierced",
+  "coins",
+  "keyhole"
  ]
 };

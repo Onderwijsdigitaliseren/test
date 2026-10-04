@@ -1,6 +1,7 @@
 /* Till Death Do Us Part – English text and case data. Placeholders: {N} bride, {P} she, {O} her, {S} her, {K} culprit, {KR} relation, {t} time.
    CONTACTS: [name, relation, what they say themselves]. CT: guest traits + traces pointing at that value.
-   SC: traces per motive (J = jealousy, G = money, S = secret); every trace fits two motives. */
+   SC: traces per motive (J = jealousy, G = money, S = secret); every trace fits two motives.
+   CONTACTS 4th element and CT.x.ic / MOTIF: icon name (see IC in game.js). */
 window.TD_DATA={
  "lang": "en",
  "T": {
@@ -474,62 +475,74 @@ window.TD_DATA={
   [
    "Daniel Verney",
    "the groom",
-   "She had never been so happy. You have to take my word for that."
+   "She had never been so happy. You have to take my word for that.",
+   "bowtie"
   ],
   [
    "Thomas Aldous",
    "the groom",
-   "We had no secrets from each other. Not one."
+   "We had no secrets from each other. Not one.",
+   "bowtie"
   ],
   [
    "Sophie Kerridge",
    "the best friend",
-   "She didn't love him at all. Everybody knew, except him."
+   "She didn't love him at all. Everybody knew, except him.",
+   "hearts"
   ],
   [
    "Lydia Vane",
    "the best friend",
-   "I was her maid of honour. If there had been anything, she would have told me."
+   "I was her maid of honour. If there had been anything, she would have told me.",
+   "hearts"
   ],
   [
    "Eve Linton",
    "the sister",
-   "She always got everything. I never begrudged her. Truly."
+   "She always got everything. I never begrudged her. Truly.",
+   "locket"
   ],
   [
    "Marian Sweet",
    "the sister",
-   "We hadn't quarrelled in years. Ask anyone you like."
+   "We hadn't quarrelled in years. Ask anyone you like.",
+   "locket"
   ],
   [
    "Rupert Hartley",
    "the ex",
-   "I hadn't spoken to her in a year. I don't even know why I was invited."
+   "I hadn't spoken to her in a year. I don't even know why I was invited.",
+   "broken"
   ],
   [
    "Jesse Mallory",
    "the ex",
-   "It was long over between us. I only came to end it properly."
+   "It was long over between us. I only came to end it properly.",
+   "broken"
   ],
   [
    "Hermione Walters",
    "the groom's mother",
-   "I welcomed her as a daughter. From the very first day."
+   "I welcomed her as a daughter. From the very first day.",
+   "crown"
   ],
   [
    "Agnes Peverell",
    "the groom's mother",
-   "My son could not have chosen better. I have always said so."
+   "My son could not have chosen better. I have always said so.",
+   "crown"
   ],
   [
    "Miles Brewer",
    "the photographer",
-   "I only knew her from the booking. For me it was just a job."
+   "I only knew her from the booking. For me it was just a job.",
+   "camera"
   ],
   [
    "Iris Coppin",
    "the photographer",
-   "I look at people through a lens. That is as close as I get."
+   "I look at people through a lens. That is as close as I get.",
+   "camera"
   ]
  ],
  "CT": {
@@ -571,7 +584,8 @@ window.TD_DATA={
       "t": "Message to {N}, {t}: “I'm leaving home now. Ten minutes. Wait for me, please.”"
      }
     ]
-   }
+   },
+   "ic": "bed"
   },
   "diner": {
    "v": [
@@ -611,7 +625,8 @@ window.TD_DATA={
       "t": "{t}. She comes outside with her napkin still in her hand. Under the street lamp waits someone who was not sitting inside."
      }
     ]
-   }
+   },
+   "ic": "glass"
   },
   "ring": {
    "v": [
@@ -651,7 +666,8 @@ window.TD_DATA={
       "t": "Message to {N}, {t}: “Bring the rings. I want to hold them once before it's too late tomorrow.”"
      }
     ]
-   }
+   },
+   "ic": "ring"
   },
   "sleutel": {
    "v": [
@@ -691,7 +707,8 @@ window.TD_DATA={
       "t": "A note pushed under her door: “I rang three times. Come to the end of the street.”"
      }
     ]
-   }
+   },
+   "ic": "key"
   },
   "bellen": {
    "v": [
@@ -731,7 +748,8 @@ window.TD_DATA={
       "t": "{t}. Under the street lamp she reads a handwritten card. She does not have her phone with her."
      }
     ]
-   }
+   },
+   "ic": "phone"
   }
  },
  "SC": [
@@ -833,5 +851,10 @@ window.TD_DATA={
   "J",
   "G",
   "S"
+ ],
+ "MOTIF": [
+  "pierced",
+  "coins",
+  "keyhole"
  ]
 };

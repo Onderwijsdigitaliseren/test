@@ -16,21 +16,25 @@
 <meta property="og:url" content="https://murderwalk.com/till-death-do-us-part.html">
 <meta property="og:locale" content="en_GB">
 <meta name="twitter:card" content="summary">
-<meta name="theme-color" content="#101a2b">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600&display=swap">
+<meta name="theme-color" content="#170c14">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Cormorant+SC:wght@600&family=Pinyon+Script&display=swap">
 <link rel="stylesheet" href="shared/platform.css?v=1">
-<link rel="stylesheet" href="games/bride/game.css?v=1">
+<link rel="stylesheet" href="games/bride/game.css?v=2">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Till Death Do Us Part","url":"https://murderwalk.com/till-death-do-us-part.html","description":"She was to be married today. Only the bride never arrived. Retrace her last evening at real places around you: six guests, eight traces, and everyone had a reason to lie. First case free.","inLanguage":"en","gamePlatform":"Web browser","genre":["Detective","Romantic mystery","Location-based game"],"isAccessibleForFree":true,"offers":{"@type":"Offer","price":"3.99","priceCurrency":"EUR","description":"Pro"}}</script>
 </head>
 <body>
 <div id="app">
-  <canvas id="hero" aria-hidden="true"></canvas>
   <section class="screen" id="home">
+    <canvas id="hero" aria-hidden="true"></canvas>
     <div class="wrap">
-      <div class="row0"><div class="eyebrow">She was to be married today</div><div class="pills"><a class="pill" id="hub" href="./">◂ All walks</a><button type="button" class="pill" id="lang">Nederlands</button></div></div>
+      <div class="row0"><div class="pills"><a class="pill" id="hub" href="./">◂ All walks</a><button type="button" class="pill" id="lang">Nederlands</button></div></div>
       <div class="gap"></div>
-      <div class="poster"><span class="pstamp">Murder Walk</span><h1 id="ttl">Till Death Do Us Part</h1></div>
-      <p class="lead">She was to be married today.<br>Her dress hung ready. The guests were on their way.<br>Only the bride never arrived.<br>Hours later her body was found.<br>Everyone on the guest list had a reason to lie.</p>
+      <div class="invite">
+        <div class="brand">Murder Walk</div>
+        <h1 id="ttl">Till Death <em>Do Us Part</em></h1>
+        <div class="orn"></div>
+        <p class="lead"><span>She was to be married today.</span><span>Her dress hung ready. The guests were on their way.</span><span>Only the bride never arrived.</span><span>Hours later her body was found.</span><span>Everyone on the guest list had a reason to lie.</span></p>
+      </div>
       <div class="pline"><b id="pRank">–</b><span><b id="pStreak">0</b> Day streak</span><span><b id="pSolved">0</b> Solved</span></div>
       <div hidden><div class="xp"><i id="pXp" style="width:0%"></i></div><p class="note" id="pNext"></p></div>
       <div class="seg" id="len">
@@ -44,7 +48,9 @@
       <button class="btn ghost sm" id="bDemo">Practice round in a fictional London</button>
       <button class="btn ghost" id="bPro" hidden></button>
       <p class="note" id="status"></p>
-      <ol class="how"><li>The map lays eight traces on real places around you: the route the bride walked on the evening before her wedding.</li><li>Come within 35 metres and the trace opens: a letter, a message, a witness, and sometimes she is still standing there herself.</li><li>Decide who met her that evening and why it went wrong: jealousy, money or a secret.</li></ol>
+      <div class="orn"></div>
+      <ol class="how"><li><span>The map lays eight traces on real places around you: the route the bride walked on the evening before her wedding.</span></li><li><span>Come within 35 metres and the trace opens: a letter, a message, a witness, and sometimes she is still standing there herself.</span></li><li><span>Decide who met her that evening and why it went wrong: jealousy, money or a secret.</span></li></ol>
+      <div class="orn"></div>
       <button class="btn ghost" id="bEcho">Keepsakes</button>
       <button class="btn ghost" id="bArch">Archive</button>
       <button class="btn ghost sm" id="bWipe">Erase</button>
@@ -56,13 +62,15 @@
     <div class="wrap">
       <div class="paper">
         <div class="eyebrow" id="bfNo"></div>
-        <div class="phead"><div class="sil" aria-hidden="true"></div><div><span class="stamp2">The bride</span><h2 id="bfTitle"></h2></div></div>
+        <div class="phead"><div class="sil" aria-hidden="true"></div><span class="stamp2">The bride</span><h2 id="bfTitle"></h2></div>
         <p class="eyebrow" id="bfSub"></p>
+        <div class="orn"></div>
         <p id="bfText"></p>
         <div class="msgcard"><small id="bfMsgH"></small><span id="bfMsg"></span></div>
+        <div class="orn"></div>
         <div class="eyebrow" id="bfConH"></div>
+        <p class="note ctr" id="bfLie"></p>
         <div class="list" id="bfCon"></div>
-        <p class="note" id="bfLie"></p>
       </div>
       <button class="btn" id="bGo">Into the night</button>
       <button class="btn ghost" id="bBack">Back</button>
@@ -106,9 +114,9 @@
 </div>
 <script src="shared/platform.js?v=1"></script>
 <script src="shared/catalog.js?v=1"></script>
-<script src="shared/walk.js?v=1"></script>
-<script src="games/bride/data-en.js?v=1"></script>
+<script src="shared/walk.js?v=2"></script>
+<script src="games/bride/data-en.js?v=2"></script>
 <script src="games/vanishing/puzzles.js?v=1"></script>
-<script src="games/bride/game.js?v=1"></script>
+<script src="games/bride/game.js?v=2"></script>
 </body>
 </html>
