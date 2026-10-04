@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script>(function(){var h=location.hash||"",L="",R=location.pathname.replace(/\/(nl\/)?[^\/]*$/,"/");window.ROOT=R;try{L=(localStorage.getItem("ss_lang")||"").replace(/"/g,"")}catch(e){}
+var nl=L==="nl"||(L!=="en"&&/moordwandeling/i.test(location.hostname));
+if(/^#z=VZ/i.test(h)){location.replace(R+(nl?"nl/de-verdwijning.html":"the-vanishing.html")+h);return}
+if(/^#(z|g)=/.test(h)){location.replace(R+(nl?"nl/moordwandeling.html":"murder-walk.html")+h);return}
+document.documentElement.lang=nl?"nl":"en";window.NL=nl})();</script>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Not found · Murder Walk</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Barlow:wght@400;500;600&display=swap">
+<script>document.write('<link rel="stylesheet" href="'+ROOT+'shared/platform.css?v=1">')</script>
+<style>main{min-height:100vh;display:flex;align-items:center}.wrap{gap:14px}</style>
+</head>
+<body>
+<main><div class="wrap">
+  <div class="eyebrow" id="e">Dossier not found</div>
+  <h1 id="h">This street does not exist</h1>
+  <p class="lead" id="p">The page you were looking for is not in the archive. All walks are on the start page.</p>
+  <a class="btn" id="b" href="/">To all walks</a>
+</div></main>
+<script>document.getElementById("b").href=ROOT;if(window.NL){document.title="Niet gevonden · Moordwandeling";document.getElementById("e").textContent="Dossier niet gevonden";document.getElementById("h").textContent="Deze straat bestaat niet";document.getElementById("p").textContent="De pagina die je zocht staat niet in het archief. Alle wandelingen vind je op de startpagina.";var b=document.getElementById("b");b.textContent="Naar alle wandelingen";b.href=ROOT+"nl/"}</script>
+</body>
+</html>

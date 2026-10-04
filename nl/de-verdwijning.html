@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>De Verdwijning – een vermissing die je loopt, in je eigen straten</title>
+<meta name="description" content="Iemand is verdwenen. De laatste acht sporen van die avond liggen op echte plekken om je heen: camerabeelden, berichten, verklaringen, voorwerpen. Ontvoerd, gevlucht of vrijwillig verdwenen? Eerste zaak gratis.">
+<link rel="canonical" href="https://www.moordwandeling.nl/nl/de-verdwijning.html">
+<link rel="alternate" hreflang="en" href="https://www.murderwalk.com/the-vanishing.html">
+<link rel="alternate" hreflang="nl" href="https://www.moordwandeling.nl/nl/de-verdwijning.html">
+<link rel="alternate" hreflang="x-default" href="https://www.murderwalk.com/the-vanishing.html">
+<meta property="og:site_name" content="Moordwandeling">
+<meta property="og:title" content="De Verdwijning">
+<meta property="og:description" content="Iemand is verdwenen. De laatste acht sporen liggen in jouw buurt.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.moordwandeling.nl/nl/de-verdwijning.html">
+<meta property="og:locale" content="nl_NL">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#101a2b">
+<link rel="icon" href="../assets/favicon.png">
+<link rel="apple-touch-icon" href="../assets/logo-nl-192.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600&display=swap">
+<link rel="stylesheet" href="../shared/platform.css?v=1">
+<link rel="stylesheet" href="../games/vanishing/game.css?v=1">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"De Verdwijning","url":"https://www.moordwandeling.nl/nl/de-verdwijning.html","description":"Iemand is verdwenen. De laatste acht sporen van die avond liggen op echte plekken om je heen: camerabeelden, berichten, verklaringen, voorwerpen. Ontvoerd, gevlucht of vrijwillig verdwenen? Eerste zaak gratis.","inLanguage":"nl","gamePlatform":"Webbrowser","genre":["Detective","Locatiespel"],"isAccessibleForFree":true,"offers":{"@type":"Offer","price":"3.99","priceCurrency":"EUR","description":"Pro"}}</script>
+</head>
+<body>
+<div id="app">
+  <canvas id="hero" aria-hidden="true"></canvas>
+  <section class="screen" id="home">
+    <div class="wrap">
+      <div class="row0"><div class="eyebrow">Iemand is verdwenen</div><div class="pills"><a class="pill" id="hub" href="./">◂ Alle wandelingen</a><button type="button" class="pill" id="lang">English</button></div></div>
+      <h1 id="ttl">De Verdwij&shy;ning</h1>
+      <div class="gap"></div>
+      <p class="lead">Jij hebt het laatste bericht. De laatste acht sporen van die avond liggen in jouw buurt: camerabeelden, berichten, verklaringen, voorwerpen. Alles wat je vindt is waar. Maar niemand weet het hele verhaal.</p>
+      <div class="strip">
+        <div><b id="pRank">–</b><span>Rang</span></div>
+        <div><b id="pStreak">0</b><span>Dagen op rij</span></div>
+        <div><b id="pSolved">0</b><span>Opgelost</span></div>
+      </div>
+      <div><div class="xp"><i id="pXp" style="width:0%"></i></div><p class="note" id="pNext"></p></div>
+      <div class="seg" id="len">
+        <button type="button" data-r="380" data-par="40" aria-pressed="false">Kort · 40 min</button>
+        <button type="button" data-r="650" data-par="75" aria-pressed="true">Volledig · 75 min</button>
+      </div>
+      <button class="btn" id="bResume" hidden>Ga verder met je zaak</button>
+      <button class="btn" id="bGps">Start de zaak van vandaag</button>
+      <button class="btn ghost" id="bRandom">Extra zaak op deze plek</button>
+      <button class="btn ghost" id="bCode">Zaakcode invoeren</button>
+      <button class="btn ghost sm" id="bDemo">Proefronde in fictief Amsterdam</button>
+      <button class="btn ghost" id="bPro" hidden></button>
+      <p class="note" id="status"></p>
+      <ol class="how"><li>De kaart legt acht sporen op echte plekken om je heen: de route die de vermiste die avond liep.</li><li>Kom binnen 35 meter en het spoor gaat open. Elk spoor heeft een tijdstip. Samen vormen ze de avond.</li><li>Beslis wat er is gebeurd (ontvoerd, gevlucht of vrijwillig verdwenen) en wie er meer van weet.</li></ol>
+      <button class="btn ghost" id="bArch">Archief</button>
+      <button class="btn ghost sm" id="bWipe">Wissen</button>
+      <p class="note">Blijf op de openbare weg en let op het verkeer. Je hoeft nergens naar binnen.</p>
+    </div>
+  </section>
+
+  <section class="screen" id="brief" hidden>
+    <div class="wrap">
+      <div class="paper">
+        <div class="eyebrow" id="bfNo"></div>
+        <h2 id="bfTitle"></h2>
+        <p class="eyebrow" id="bfSub"></p>
+        <p id="bfText"></p>
+        <div class="msgcard"><small id="bfMsgH"></small><span id="bfMsg"></span></div>
+        <div class="eyebrow" id="bfConH"></div>
+        <div class="list" id="bfCon"></div>
+      </div>
+      <button class="btn" id="bGo">De nacht in</button>
+      <button class="btn ghost" id="bBack">Terug</button>
+    </div>
+  </section>
+
+  <section class="screen" id="play" hidden>
+    <canvas id="map"></canvas>
+    <div id="hud">
+      <div><b id="hT">0:00</b><span>Tijd</span></div>
+      <div><b id="hS">0/8</b><span>Sporen</span></div>
+      <div><b id="hG">–</b><span>Vroegste</span></div>
+      <div><b id="hD">0,0</b><span>Km</span></div>
+    </div>
+    <div id="zoom">
+      <button type="button" id="zM" aria-label="Menu">☰</button>
+      <button type="button" id="zIn" aria-label="Inzoomen">+</button>
+      <button type="button" id="zOut" aria-label="Uitzoomen">−</button>
+      <button type="button" id="zMe" aria-label="Centreer op mij">◎</button>
+      <button type="button" id="zS" aria-label="Geluid aan of uit">♪</button>
+    </div>
+    <div id="low">
+      <div id="radar">Zoek het eerste spoor</div>
+      <div id="chip" hidden>
+        <div class="row"><b id="cName"></b><span id="cDist"></span></div>
+        <span id="cHint" class="note"></span>
+        <button class="btn" id="cAct"></button>
+      </div>
+      <div id="bar">
+        <button type="button" id="bNote">Notitieboek</button>
+        <button type="button" id="bPeople">Mensen</button>
+        <button type="button" id="bAcc" class="red">Sluit dossier</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="sheet" id="sheet" hidden><div class="paper" id="sheetBody"></div></div>
+  <div id="load" hidden role="status"><div class="spin"></div><b id="loadT"></b><span>Dit duurt meestal 5 tot 30 seconden. Blijf even op deze pagina.</span></div>
+  <div id="toast" hidden></div>
+</div>
+<script src="../shared/platform.js?v=1"></script>
+<script src="../shared/catalog.js?v=1"></script>
+<script src="../shared/walk.js?v=1"></script>
+<script src="../games/vanishing/data-nl.js?v=1"></script>
+<script src="../games/vanishing/game.js?v=1"></script>
+</body>
+</html>

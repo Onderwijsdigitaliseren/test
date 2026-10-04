@@ -1,0 +1,45 @@
+/* De Verdwijning / The Vanishing – spelstijl bovenop /shared/platform.css */
+body{overflow:hidden}
+#app{height:100%;position:relative}
+.screen{position:absolute;inset:0;overflow-y:auto;padding-block:20px}
+#home .wrap{min-height:100%}
+#hero{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:-1}
+#ttl{text-shadow:1px 1px 0 #c4832a,2px 2px 0 #a36b1f,3px 3px 0 #825416,4px 4px 0 #613e0e,10px 14px 20px rgba(0,0,0,.75)}
+.gap{flex:1;min-height:120px}
+.msgcard{background:var(--night2);border:1px solid var(--street);border-radius:14px 14px 14px 3px;padding:12px 14px;font-family:var(--f-type);color:var(--paper);position:relative}
+.paper .msgcard{background:#1b2233;color:var(--paper)}
+.msgcard small{display:block;font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.1em;font-size:11px;color:var(--fog);margin-bottom:4px}
+/* kaart */
+#play{padding:0;overflow:hidden}
+#map{position:absolute;inset:0;width:100%;height:100%;touch-action:none;display:block}
+#hud{position:absolute;top:0;left:0;right:0;display:grid;grid-template-columns:repeat(4,1fr);background:rgba(16,26,43,.88);border-bottom:1px solid var(--street);padding-top:env(safe-area-inset-top,0px)}
+#hud div{padding:7px 4px;text-align:center}
+#hud b{display:block;font-family:var(--f-type);font-weight:400;font-size:17px;font-variant-numeric:tabular-nums}
+#hud span{font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.1em;font-size:10px;color:var(--fog)}
+#zoom{position:absolute;right:12px;top:74px;display:flex;flex-direction:column;gap:6px}
+#zoom button{width:42px;height:42px;background:rgba(24,39,65,.92);border:1px solid var(--street);border-radius:4px;font-size:20px}
+#low{position:absolute;left:0;right:0;bottom:0;display:flex;flex-direction:column;gap:8px;padding:0 12px calc(10px + env(safe-area-inset-bottom,0px))}
+#radar{align-self:flex-start;background:rgba(16,26,43,.9);border:1px solid var(--street);border-radius:20px;padding:5px 12px;font-size:13px;color:var(--spook)}
+#chip{background:var(--paper);color:var(--ink);border-radius:4px;padding:12px;display:flex;flex-direction:column;gap:8px}
+#chip .row{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+#chip b{font-family:var(--f-type);font-weight:400;font-size:17px;min-width:0}
+#chip .note{color:var(--ink2)}
+#chip .btn{padding:10px;font-size:15px}
+#bar{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+#bar button{padding:12px 4px;background:rgba(24,39,65,.95);border:1px solid var(--street);border-radius:4px;font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.08em;font-size:14px}
+#bar button.red{background:var(--blood);border-color:var(--blood);color:#fff}
+.sheet{position:absolute}
+#toast{position:absolute}
+.tabs{display:flex;gap:6px}
+.tabs button{flex:1;padding:8px;border-bottom:2px solid var(--rule);font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.08em;font-size:14px;color:var(--ink2)}
+.tabs button[aria-selected="true"]{border-color:var(--blood);color:var(--ink)}
+.clue.wit{border-color:#3d8f80}
+.btn.hold{position:relative;overflow:hidden;background:var(--ink);color:var(--paper);user-select:none;-webkit-user-select:none;touch-action:none}
+.btn.hold i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--lamp);opacity:.9}
+.btn.hold span{position:relative;mix-blend-mode:difference}
+#load{position:absolute;inset:0;z-index:7;background:rgba(16,26,43,.95);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:24px;text-align:center}
+#load b{font-family:var(--f-type);font-weight:400;font-size:22px;color:var(--lamp);text-wrap:balance}
+#load span{color:var(--fog);font-size:14px;max-width:30ch}
+.spin{width:64px;height:64px;border-radius:50%;border:5px solid var(--street);border-top-color:var(--lamp);animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.pills{display:flex;gap:8px;align-items:center}

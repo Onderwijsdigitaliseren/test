@@ -1,0 +1,66 @@
+/* Moordwandeling / Murder Walk – gedeelde stijl. Nachtkaart + dossierpapier, bewust alleen donker.
+   Spel 1 heeft zijn eigen (oudere) CSS in het bestand; dit bestand is voor de hub en voor nieuwe spellen. */
+:root{
+  color-scheme:dark;
+  --night:#101a2b; --night2:#182741; --street:#2c3f62; --fog:#93a6c6;
+  --paper:#ece4d2; --paper2:#e2d8c0; --ink:#1b2233; --ink2:#6a6250; --rule:#c9bfa6;
+  --lamp:#f0a63a; --spook:#a6ead9; --blood:#d8503f; --violet:#c9a6ea;
+  --f-type:'Special Elite','Courier New',monospace;
+  --f-body:'Barlow','Segoe UI',system-ui,sans-serif;
+  --f-cond:'Barlow Condensed','Arial Narrow',sans-serif;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{margin:0;background:var(--night);color:var(--paper);font-family:var(--f-body);font-size:16px;line-height:1.45;-webkit-text-size-adjust:100%}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--lamp);outline-offset:2px}
+a{color:var(--spook)}
+h1{font-family:var(--f-type);font-weight:400;font-size:clamp(40px,12vw,58px);line-height:1;margin:0;color:var(--lamp);text-wrap:balance}
+h2{font-family:var(--f-type);font-weight:400;font-size:22px;margin:0;text-wrap:balance}
+h3{font-family:var(--f-type);font-weight:400;font-size:19px;margin:0}
+p{margin:0}
+.eyebrow{font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.14em;font-size:13px;color:var(--fog)}
+.lead{color:var(--fog);max-width:46ch}
+.note{font-size:13px;color:var(--fog)}
+.wrap{max-width:520px;margin-inline:auto;display:flex;flex-direction:column;gap:18px;padding-inline:16px}
+.btn{display:block;width:100%;padding:14px 16px;border-radius:4px;background:var(--lamp);color:var(--ink);font-weight:600;font-size:17px;text-align:center;text-decoration:none}
+.btn.ghost{background:transparent;color:var(--paper);border:1px solid var(--street)}
+.btn.red{background:var(--blood);color:#fff}
+.btn.dk{color:var(--ink);border-color:var(--rule)}
+.btn.sm{width:auto;align-self:center;padding:8px 14px;font-size:14px;font-weight:500}
+.btn:disabled{opacity:.45}
+.pill{white-space:nowrap;font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.1em;font-size:12px;border:1px solid var(--street);border-radius:20px;padding:5px 12px;background:rgba(16,26,43,.6);color:var(--paper);text-decoration:none;display:inline-block}
+.row0{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--street);border:1px solid var(--street)}
+.strip div{background:var(--night2);padding:10px 8px;text-align:center}
+.strip b{display:block;font-family:var(--f-type);font-weight:400;font-size:20px;color:var(--spook);font-variant-numeric:tabular-nums}
+.strip span{font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.1em;font-size:11px;color:var(--fog)}
+.xp{height:6px;background:var(--night2);border-radius:3px;overflow:hidden}
+.xp i{display:block;height:100%;background:var(--lamp)}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.seg button{padding:10px;border:1px solid var(--street);border-radius:4px;color:var(--fog)}
+.seg button[aria-pressed="true"]{border-color:var(--lamp);color:var(--lamp)}
+.how{display:flex;flex-direction:column;gap:6px;color:var(--fog);font-size:15px;padding-left:18px;margin:0}
+/* papier */
+.paper{background:var(--paper);color:var(--ink);padding:18px 16px;border-radius:2px;display:flex;flex-direction:column;gap:12px}
+.paper h2,.paper h3{color:var(--ink)}
+.paper .eyebrow,.paper .note{color:var(--ink2)}
+.paper a{color:#2e5e8a}
+.inp{width:100%;padding:12px;border:1px solid var(--rule);border-radius:4px;background:#fff;color:var(--ink);font-family:var(--f-type);font-size:20px;text-transform:uppercase;letter-spacing:.1em;text-align:center}
+.tags{display:flex;flex-wrap:wrap;gap:4px}
+.tags i{font-style:normal;font-size:12px;background:#d9cfb6;padding:2px 6px;border-radius:2px}
+.list{display:flex;flex-direction:column;gap:8px}
+.sus{display:flex;flex-direction:column;gap:4px;padding:10px;border:1px solid var(--rule);border-radius:3px;text-align:left;width:100%;background:transparent}
+.sus b{font-family:var(--f-type);font-weight:400}
+.sus small{color:var(--ink2)}
+.sus.pick{border-color:var(--blood);box-shadow:inset 0 0 0 1px var(--blood)}
+.sus.out{opacity:.4;text-decoration:line-through}
+.clue{padding:10px;border-left:3px solid var(--lamp);background:var(--paper2);display:flex;flex-direction:column;gap:4px;text-align:left;width:100%}
+.clue em{font-style:normal;font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.08em;font-size:12px;color:var(--ink2)}
+.stars{font-size:34px;letter-spacing:6px;color:var(--lamp);font-family:var(--f-type)}
+/* vellen (sheets) */
+.sheet{position:fixed;inset:0;background:rgba(8,13,22,.78);display:flex;align-items:flex-end;justify-content:center;z-index:50}
+.sheet>.paper{width:100%;max-width:560px;max-height:92%;overflow-y:auto;border-radius:6px 6px 0 0;padding-bottom:calc(18px + env(safe-area-inset-bottom,0px))}
+#toast{position:fixed;left:50%;top:70px;transform:translateX(-50%);background:var(--lamp);color:var(--ink);padding:8px 14px;border-radius:4px;font-weight:600;z-index:90;max-width:88%;text-align:center}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}

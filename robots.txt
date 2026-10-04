@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /codes.html
+
+Sitemap: https://www.murderwalk.com/sitemap.xml
+Sitemap: https://www.moordwandeling.nl/sitemap.xml

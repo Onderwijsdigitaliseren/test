@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<script>(function(){var h=location.hash||"";
+if(/^#z=VZ/i.test(h)){location.replace("de-verdwijning.html"+h);return}
+if(/^#(z|g)=/.test(h)){location.replace("moordwandeling.html"+h);return}
+if(h==="#en"){try{localStorage.setItem("ss_lang","en")}catch(e){}location.replace("../");}})();</script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Moordwandeling – Detectivespellen die je loopt, in je eigen straten</title>
+<meta name="description" content="Wandelspellen op echte plekken om je heen via gps: een moordzaak, een vermissing en meer. Eerste zaak gratis, in het Nederlands of Engels.">
+<link rel="canonical" href="https://www.moordwandeling.nl/nl/">
+<link rel="alternate" hreflang="nl" href="https://www.moordwandeling.nl/nl/">
+<link rel="alternate" hreflang="en" href="https://www.murderwalk.com/">
+<link rel="alternate" hreflang="x-default" href="https://www.murderwalk.com/">
+<meta property="og:site_name" content="Moordwandeling">
+<meta property="og:title" content="Moordwandeling – detectivespellen die je loopt">
+<meta property="og:description" content="Acht sporen op echte plekken in je eigen straten. Een moordzaak, een vermissing, en meer op komst. Eerste zaak gratis.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.moordwandeling.nl/nl/">
+<meta property="og:locale" content="nl_NL">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.moordwandeling.nl/assets/hero.webp">
+<meta name="theme-color" content="#101a2b">
+<link rel="icon" href="../assets/favicon.png">
+<link rel="apple-touch-icon" href="../assets/logo-nl-192.png">
+<meta property="og:image" content="https://www.moordwandeling.nl/assets/hero.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600&display=swap">
+<link rel="stylesheet" href="../shared/platform.css?v=1">
+<link rel="stylesheet" href="../shared/hub.css?v=1">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"Moordwandeling","url":"https://www.moordwandeling.nl/nl/","description":"Wandelspellen op echte plekken om je heen: detectivezaken die je loopt.","inLanguage":"nl","hasPart":[
+{"@type":"VideoGame","name":"Moordwandeling","url":"https://www.moordwandeling.nl/nl/moordwandeling.html","genre":["Detective","Locatiespel"],"gamePlatform":"Webbrowser"},
+{"@type":"VideoGame","name":"De Verdwijning","url":"https://www.moordwandeling.nl/nl/de-verdwijning.html","genre":["Detective","Locatiespel"],"gamePlatform":"Webbrowser"}]}
+</script>
+</head>
+<body>
+<canvas id="sky" aria-hidden="true"></canvas>
+<main>
+  <div class="wrap">
+    <header class="hero">
+      <div class="top"><div class="eyebrow">Detectivespellen in je eigen straten</div><a class="pill" id="lang" href="../" hreflang="en" lang="en">English</a></div>
+      <h1 id="ttl">Moordwandeling</h1>
+      <img class="logo" src="../assets/logo-nl.webp" alt="Moordwandeling" width="800" height="800" fetchpriority="high">
+      <p id="typed">Acht sporen op echte plekken om je heen.</p>
+      <p class="lead">De kaart legt de sporen op echte plekken om je heen: de kerk, de bushalte, het café. Jij loopt erheen, vindt wat er is achtergebleven en trekt je eigen conclusie.</p>
+      <div class="cta"><a class="btn" href="#cats">Kies je wandeling</a><span class="arrow" aria-hidden="true">▼</span></div>
+    </header>
+
+    <section class="profile" aria-label="Je profiel">
+      <div class="strip">
+        <div><b id="pRank">Aspirant</b><span>Rang</span></div>
+        <div><b id="pStreak">0</b><span>Dagen op rij</span></div>
+        <div><b id="pSolved">0</b><span>Opgelost</span></div>
+      </div>
+      <div style="margin-top:8px"><div class="xp"><i id="pXp" style="width:0%"></i></div><p class="note" id="pNext"></p></div>
+      <p class="note" id="status" style="margin-top:6px"></p>
+      <button class="btn ghost sm" id="bPro" style="margin-top:10px">Word Pro · één keer kopen, alle wandelingen</button>
+    </section>
+
+    <section>
+      <h2 class="eyebrow" style="margin-bottom:10px">Kies je wandeling</h2>
+      <div class="cats" id="cats">
+        <noscript><p>Spellen: <a href="moordwandeling.html">Moordwandeling</a> · <a href="de-verdwijning.html">De Verdwijning</a>. Deze site heeft JavaScript nodig om te spelen.</p></noscript>
+      </div>
+    </section>
+
+    <section class="steps" aria-label="Zo werkt het">
+      <div><b>1</b><p>Open een wandeling op je telefoon, sta locatie toe, en de kaart legt de sporen op echte plekken op loopafstand van waar je staat.</p></div>
+      <div><b>2</b><p>Loop erheen. Binnen 35 meter gaat een spoor open: een schim die iets zag, een bewijsstuk, een camerabeeld, een bericht.</p></div>
+      <div><b>3</b><p>Trek je conclusie in het notitieboek. Je rang, dagstreak en Pro-status gelden voor alle wandelingen op deze site.</p></div>
+    </section>
+
+    <section class="paper" id="proBox" aria-label="Pro"></section>
+
+
+    <footer>
+      <button type="button" id="bPriv">Privacy</button>
+      <a href="mailto:kellievandekerkhof@gmail.com">Contact</a>
+      <a href="https://graveyardfiles.com/nl/" rel="noopener">Het Nachtdossier (bureauzaken)</a>
+      <span>Blijf op de openbare weg en let op het verkeer.</span>
+    </footer>
+  </div>
+</main>
+<div class="sheet" id="sheet" hidden><div class="paper" id="sheetBody"></div></div>
+<div id="toast" hidden></div>
+<script src="../shared/platform.js?v=1"></script>
+<script src="../shared/catalog.js?v=1"></script>
+<script src="../shared/hub.js?v=1"></script>
+</body>
+</html>

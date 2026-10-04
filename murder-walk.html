@@ -1,0 +1,1105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Murder Walk – a murder mystery you walk, in your own streets</title>
+<meta name="description" content="Eight leads at real places around you via GPS, five witnesses, one liar. Four story series, rare shades to catch, group mode. Free first case; play in English or Dutch.">
+<link rel="canonical" href="https://www.murderwalk.com/murder-walk.html">
+<link rel="alternate" hreflang="en" href="https://www.murderwalk.com/murder-walk.html">
+<link rel="alternate" hreflang="nl" href="https://www.moordwandeling.nl/nl/moordwandeling.html">
+<link rel="alternate" hreflang="x-default" href="https://www.murderwalk.com/murder-walk.html">
+<meta property="og:site_name" content="Murder Walk">
+<meta property="og:title" content="Murder Walk">
+<meta property="og:description" content="A murder mystery you walk. Eight leads in your own streets, five witnesses, one liar.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.murderwalk.com/murder-walk.html">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#101a2b">
+<link rel="icon" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/logo-en-192.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600&display=swap">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Murder Walk","url":"https://www.murderwalk.com/murder-walk.html","description":"Eight leads at real places around you via GPS, five witnesses, one liar. Four story series, rare shades to catch, group mode. Free first case; play in English or Dutch.","inLanguage":"en","gamePlatform":"Web browser","genre":["Detective","Location-based game"],"isAccessibleForFree":true,"offers":{"@type":"Offer","price":"3.99","priceCurrency":"EUR","description":"Pro"}}</script>
+<style>body{margin:0}</style>
+<style>#root{height:100%}
+/* Layout: één scherm als nachtkaart; dossierpapier schuift er als vel overheen. Eén donkere wereld, bewust zonder licht thema. */
+:root{
+  color-scheme:dark;
+  --night:#101a2b; --night2:#182741; --street:#2c3f62; --fog:#93a6c6;
+  --paper:#ece4d2; --ink:#1b2233; --lamp:#f0a63a; --spook:#a6ead9; --blood:#d8503f;
+  --f-type:'Special Elite','Courier New',monospace;
+  --f-body:'Barlow','Segoe UI',system-ui,sans-serif;
+  --f-cond:'Barlow Condensed','Arial Narrow',sans-serif;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{background:var(--night);color:var(--paper);font-family:var(--f-body);font-size:16px;line-height:1.45;overflow:hidden}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+button:focus-visible{outline:2px solid var(--lamp);outline-offset:2px}
+#app{height:100%;position:relative}
+.screen{position:absolute;inset:0;overflow-y:auto;padding-inline:16px;padding-block:20px}
+.wrap{max-width:520px;margin-inline:auto;display:flex;flex-direction:column;gap:18px}
+h1{font-family:var(--f-type);font-weight:400;font-size:clamp(40px,12vw,58px);line-height:1;margin:0;color:var(--lamp);text-wrap:balance}
+h2{font-family:var(--f-type);font-weight:400;font-size:22px;margin:0;text-wrap:balance}
+.eyebrow{font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.14em;font-size:13px;color:var(--fog)}
+p{margin:0}
+.lead{color:var(--fog);max-width:46ch}
+.btn{display:block;width:100%;padding:14px 16px;border-radius:4px;background:var(--lamp);color:var(--ink);font-weight:600;font-size:17px;text-align:center}
+.btn.ghost{background:transparent;color:var(--paper);border:1px solid var(--street)}
+.btn.red{background:var(--blood);color:#fff}
+.btn:disabled{opacity:.45}
+.btn.sm{width:auto;align-self:center;padding:8px 14px;font-size:14px;font-weight:500}
+.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--street);border:1px solid var(--street)}
+.strip div{background:var(--night2);padding:10px 8px;text-align:center}
+.strip b{display:block;font-family:var(--f-type);font-weight:400;font-size:20px;color:var(--spook);font-variant-numeric:tabular-nums}
+.strip span{font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.1em;font-size:11px;color:var(--fog)}
+.xp{height:6px;background:var(--night2);border-radius:3px;overflow:hidden}
+.xp i{display:block;height:100%;background:var(--lamp)}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.seg button{padding:10px;border:1px solid var(--street);border-radius:4px;color:var(--fog)}
+.seg button[aria-pressed="true"]{border-color:var(--lamp);color:var(--lamp)}
+.how{display:flex;flex-direction:column;gap:6px;color:var(--fog);font-size:15px;padding-left:18px;margin:0}
+.note{font-size:13px;color:var(--fog)}
+#hero{position:absolute;inset:0;width:100%;height:100%;display:block}
+#home .wrap{min-height:100%}
+.row0{display:flex;justify-content:space-between;align-items:center;gap:10px}
+#snd,#lang,#hub{white-space:nowrap;flex:none;font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.1em;font-size:12px;border:1px solid var(--street);border-radius:20px;padding:5px 12px;background:rgba(16,26,43,.6)}
+#ttl{transform-origin:50% 60%;will-change:transform;text-shadow:1px 1px 0 #c4832a,2px 2px 0 #a36b1f,3px 3px 0 #825416,4px 4px 0 #613e0e,10px 14px 20px rgba(0,0,0,.75)}
+#typed{font-family:var(--f-type);min-height:3em;text-shadow:0 2px 8px #000}
+.gap{flex:1;min-height:250px}
+/* papier */
+.paper{background:var(--paper);color:var(--ink);padding:18px 16px;border-radius:2px;display:flex;flex-direction:column;gap:12px}
+.paper h2{color:var(--ink)}
+.paper .eyebrow{color:#6a6250}
+/* kaart */
+#play{padding:0;overflow:hidden}
+#map{position:absolute;inset:0;width:100%;height:100%;touch-action:none;display:block}
+#hud{position:absolute;top:0;left:0;right:0;display:grid;grid-template-columns:repeat(4,1fr);background:rgba(16,26,43,.88);border-bottom:1px solid var(--street);padding-top:env(safe-area-inset-top,0px)}
+#hud div{padding:7px 4px;text-align:center}
+#hud b{display:block;font-family:var(--f-type);font-weight:400;font-size:17px;font-variant-numeric:tabular-nums}
+#hud span{font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.1em;font-size:10px;color:var(--fog)}
+#zoom{position:absolute;right:12px;top:74px;display:flex;flex-direction:column;gap:6px}
+#zoom button{width:42px;height:42px;background:rgba(24,39,65,.92);border:1px solid var(--street);border-radius:4px;font-size:20px}
+#low{position:absolute;left:0;right:0;bottom:0;display:flex;flex-direction:column;gap:8px;padding:0 12px calc(10px + env(safe-area-inset-bottom,0px))}
+#radar{align-self:flex-start;background:rgba(16,26,43,.9);border:1px solid var(--street);border-radius:20px;padding:5px 12px;font-size:13px;color:var(--spook)}
+#chip{background:var(--paper);color:var(--ink);border-radius:4px;padding:12px;display:flex;flex-direction:column;gap:8px}
+#chip .row{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+#chip b{font-family:var(--f-type);font-weight:400;font-size:17px;min-width:0}
+#chip .btn{padding:10px;font-size:15px}
+#bar{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+#bar button{padding:12px 4px;background:rgba(24,39,65,.95);border:1px solid var(--street);border-radius:4px;font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.08em;font-size:14px}
+#bar button.red{background:var(--blood);border-color:var(--blood);color:#fff}
+/* vellen */
+.sheet{position:absolute;inset:0;background:rgba(8,13,22,.78);display:flex;align-items:flex-end;justify-content:center;z-index:5}
+.sheet>.paper{width:100%;max-width:560px;max-height:92%;overflow-y:auto;border-radius:6px 6px 0 0;padding-bottom:calc(18px + env(safe-area-inset-bottom,0px))}
+.tabs{display:flex;gap:6px}
+.tabs button{flex:1;padding:8px;border-bottom:2px solid #c9bfa6;font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.08em;font-size:14px;color:#6a6250}
+.tabs button[aria-selected="true"]{border-color:var(--blood);color:var(--ink)}
+.sus{display:flex;flex-direction:column;gap:4px;padding:10px;border:1px solid #c9bfa6;border-radius:3px;text-align:left;width:100%}
+.sus b{font-family:var(--f-type);font-weight:400}
+.sus small{color:#6a6250}
+.sus.out{opacity:.4;text-decoration:line-through}
+.sus.pick{border-color:var(--blood);box-shadow:inset 0 0 0 1px var(--blood)}
+.tags{display:flex;flex-wrap:wrap;gap:4px}
+.tags i{font-style:normal;font-size:12px;background:#d9cfb6;padding:2px 6px;border-radius:2px}
+.clue{padding:10px;border-left:3px solid var(--lamp);background:#e2d8c0;display:flex;flex-direction:column;gap:4px;text-align:left;width:100%}
+.clue.wit{border-color:#3d8f80}
+.clue.m1{border-color:#2e7d4f}.clue.m2{border-color:var(--blood)}
+.clue em{font-style:normal;font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.08em;font-size:12px;color:#6a6250}
+.list{display:flex;flex-direction:column;gap:8px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(max-width:360px){.grid2{grid-template-columns:1fr}}
+#mgbox{display:flex;flex-direction:column;gap:10px;align-items:center}
+#mgbox canvas.sq{width:min(260px,100%);aspect-ratio:1;background:var(--night);border-radius:4px;touch-action:none}
+.dustw{position:relative;width:min(260px,100%);aspect-ratio:1;background:var(--night);border-radius:4px;overflow:hidden}
+.dustw canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
+.dustw div{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;font-family:var(--f-type);color:var(--lamp);font-size:22px}
+.lans{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:min(220px,100%);background:var(--night);padding:16px;border-radius:4px}
+.lan{aspect-ratio:1;border-radius:50%;background:#2a3550;border:2px solid #4a5b79}
+.lan.on{background:var(--lamp);box-shadow:0 0 22px var(--lamp)}
+.dig{display:flex;gap:8px}
+.dig button{width:54px;height:60px;background:var(--ink);color:var(--paper);font-family:var(--f-type);font-size:28px;border-radius:4px}
+.hist{display:flex;flex-direction:column;gap:4px;font-family:var(--f-type)}
+.hist span{display:inline-block;width:30px;text-align:center;padding:2px;margin:0 2px;border-radius:2px;color:#fff}
+.g0{background:#8a8372}.g1{background:#b8860b}.g2{background:#2e7d4f}
+.big{font-family:var(--f-type);font-size:30px;letter-spacing:.2em;background:var(--ink);color:var(--spook);padding:14px 10px;border-radius:4px;width:100%;text-align:center;overflow-wrap:anywhere}
+.rowb{display:flex;gap:8px;width:100%}
+.rowb .btn{padding:10px}
+.btn.dk{color:var(--ink);border-color:#c9bfa6}
+input[type=range]{width:100%;accent-color:var(--blood)}
+.book{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.book div{border:1px solid #c9bfa6;border-radius:3px;padding:8px 6px;text-align:center;font-size:12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.book div.no{opacity:.35}
+.book b{font-family:var(--f-type);font-weight:400;font-size:13px}
+.r1{color:#3d6f66}.r2{color:#7a4fa3}.r3{color:#b5651d}
+.stars{font-size:34px;letter-spacing:6px;color:var(--lamp);font-family:var(--f-type)}
+#ar{position:absolute;inset:0;z-index:8;background:#000}
+#ar video,#ar canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;touch-action:none}
+#arX{position:absolute;left:16px;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));width:auto;background:rgba(16,26,43,.8)}
+#load{position:absolute;inset:0;z-index:7;background:rgba(16,26,43,.95);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:24px;text-align:center}
+#load b{font-family:var(--f-type);font-weight:400;font-size:22px;color:var(--lamp);text-wrap:balance}
+#load span{color:var(--fog);font-size:14px;max-width:30ch}
+.spin{width:64px;height:64px;border-radius:50%;border:5px solid var(--street);border-top-color:var(--lamp);animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+a.btn{text-decoration:none}
+.inp{width:100%;padding:12px;border:1px solid #c9bfa6;border-radius:4px;background:#fff;color:var(--ink);font-family:var(--f-type);font-size:20px;text-transform:uppercase;letter-spacing:.1em;text-align:center}
+#toast{position:absolute;left:50%;top:70px;transform:translateX(-50%);background:var(--lamp);color:var(--ink);padding:8px 14px;border-radius:4px;font-weight:600;z-index:9;max-width:88%;text-align:center}
+
+#home .row0 .row0{flex-wrap:wrap;justify-content:flex-end}
+
+a#hub{text-decoration:none;color:var(--paper)}
+#lang:hover,#hub:hover{border-color:var(--lamp)}
+</style>
+</head>
+<body>
+<div id="root">
+<div id="app">
+  <canvas id="hero"></canvas>
+  <section class="screen" id="home">
+    <div class="wrap">
+      <div class="row0"><div class="eyebrow">A murder case on your own streets</div><div class="row0"><a id="hub" href="./">◂ Walks</a><button type="button" id="lang">Nederlands</button><button type="button" id="snd" aria-pressed="false">Rain off</button></div></div>
+      <h1 id="ttl">Murder Walk</h1>
+      <p id="typed"></p>
+      <div class="gap"></div>
+      <p class="lead">Walk your neighbourhood. Find the evidence, catch the shades who saw something, name the killer. Exactly one witness is lying.</p>
+      <div class="strip">
+        <div><b id="pRank">Cadet</b><span>Rank</span></div>
+        <div><b id="pStreak">0</b><span>Day streak</span></div>
+        <div><b id="pBook">0/12</b><span>Shades</span></div>
+      </div>
+      <div><div class="xp"><i id="pXp" style="width:0%"></i></div><p class="note" id="pNext"></p></div>
+      <div class="seg" id="len">
+        <button type="button" data-r="380" data-par="45" aria-pressed="false">Short · 45 min</button>
+        <button type="button" data-r="650" data-par="90" aria-pressed="true">Full · 90 min</button>
+      </div>
+      <div class="eyebrow">Choose your series</div>
+      <div class="seg" id="stories"></div>
+      <p class="note" id="stTag"></p>
+      <button class="btn" id="bResume" hidden>Pick up your case</button>
+      <button class="btn" id="bGps">Start today's case</button>
+      <button class="btn ghost" id="bRandom">Extra case right here</button>
+      <button class="btn ghost" id="bCode">Enter a case code</button>
+      <button class="btn ghost" id="bGrp">Group case</button>
+      <button class="btn ghost sm" id="bDemo">Trial round in a fictional Amsterdam</button>
+      <button class="btn ghost" id="bPro" hidden></button>
+      <p class="note" id="status"></p>
+      <ol class="how">
+        <li>The map drops eight leads at real places around you: the church, the bus stop, the café.</li>
+        <li>Get within 35 metres and the lead opens. Evidence is always true. Of the five witnesses, one is lying.</li>
+        <li>Rare shades only show when you are close. Catch them for your Book of Shades and a tip.</li>
+      </ol>
+      <button class="btn ghost" id="bBookHome">Book of Shades</button>
+      <button class="btn ghost" id="bArch">Case archive</button>
+      <button class="btn ghost sm" id="bWipe">Erase</button>
+      <p class="note">Stay on public roads and mind the traffic. You never have to go inside anywhere.</p>
+    </div>
+  </section>
+
+  <section class="screen" id="brief" hidden>
+    <div class="wrap">
+      <div class="paper">
+        <div class="eyebrow" id="bfNo"></div>
+        <h2 id="bfTitle"></h2>
+        <p id="bfText"></p>
+        <div class="eyebrow">Six suspects</div>
+        <div class="list" id="bfSus"></div>
+      </div>
+      <button class="btn ghost" id="bInv" hidden>Send the invitation</button>
+      <button class="btn" id="bGo">Into the night</button>
+      <button class="btn ghost" id="bBack">Back</button>
+    </div>
+  </section>
+
+  <section class="screen" id="play" hidden>
+    <canvas id="map"></canvas>
+    <div id="hud">
+      <div><b id="hT">0:00</b><span>Time</span></div>
+      <div><b id="hS">0/8</b><span>Leads</span></div>
+      <div><b id="hG">0/3</b><span>Shades</span></div>
+      <div><b id="hD">0.0</b><span>Km</span></div>
+    </div>
+    <div id="zoom">
+      <button type="button" id="zM" aria-label="Menu">☰</button>
+      <button type="button" id="zIn" aria-label="Zoom in">+</button>
+      <button type="button" id="zOut" aria-label="Zoom out">−</button>
+      <button type="button" id="zMe" aria-label="Centre on me">◎</button>
+      <button type="button" id="zS" aria-label="Sound on or off">♪</button>
+    </div>
+    <div id="low">
+      <div id="radar">Find the first lead</div>
+      <div id="chip" hidden>
+        <div class="row"><b id="cName"></b><span id="cDist"></span></div>
+        <span id="cHint" class="note" style="color:#6a6250"></span>
+        <button class="btn" id="cAct"></button>
+      </div>
+      <div id="bar">
+        <button type="button" id="bNote">Notebook</button>
+        <button type="button" id="bBook">Shades</button>
+        <button type="button" id="bAcc" class="red">Accuse</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="sheet" id="sheet" hidden><div class="paper" id="sheetBody"></div></div>
+  <div id="ar" hidden><video id="arV" playsinline muted autoplay></video><canvas id="arC"></canvas><button type="button" class="btn ghost" id="arX">Camera off</button></div>
+  <div id="load" hidden role="status"><div class="spin"></div><b id="loadT"></b><span>This usually takes 5 to 30 seconds. Stay on this page.</span></div>
+  <div id="toast" hidden></div>
+</div>
+
+</div>
+<script src="shared/platform.js?v=1"></script>
+<script src="shared/catalog.js?v=1"></script>
+<script>
+/* ---------- zaakgenerator (puur, controleerbaar) ---------- */
+function rngOf(seed){let a=seed>>>0;return function(){a=(a+0x6D2B79F5)>>>0;let t=a;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return((t^(t>>>14))>>>0)/4294967296}}
+function hashStr(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
+function shuffle(a,r){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+const POOL=[["Iris Vaughan", "the solicitor"], ["Reuben Ackroyd", "the butcher"], ["Miriam Wolfe", "the choir conductor"], ["Toby Coles", "the cab driver"], ["Fenella Easton", "the vet"], ["Henry Marsh", "the publican"], ["Sarah Lindley", "the reporter"], ["Otto Plum", "the antiques dealer"], ["Nora Havering", "the councillor"], ["Giles Tarrant", "the bicycle repairman"], ["Elizabeth Cramer", "the baker"], ["Jeremy Dunn", "the estate agent"], ["Anne Forrest", "the family doctor"], ["Dan Skipper", "the harbour master"], ["Rose Winter", "the florist"], ["Clive Hooker", "the bookkeeper"], ["Vera Black", "the hairdresser"], ["Abe Thornton", "the gardener"], ["Hannah Brewer", "the schoolteacher"], ["Stuart Mason", "the fire chief"]];
+const VICTIMS=[["Cornelius Vermont", "retired bank manager", "He lent money to half the village and never forgot a debt."], ["Adele Roseborough", "art dealer", "Last month she sold a painting that wasn't hers to sell."], ["Wesley Digby", "property developer", "His building scheme would wipe out six gardens and one pub."], ["Thea Bloom", "village archivist", "She had just found a box of old letters and wanted to talk about them."], ["Bernard Slater", "auctioneer", "He knew what the contents of every house in the village were worth."], ["Margaret Haslett", "former mayor", "She kept thirty years of favours and knew exactly who still owed her."], ["Everett King", "landlord", "He raised the rent by letter and never came round himself."], ["Lydia Storm", "pharmacist", "She knew who took which pills, and did not always keep it to herself."], ["George Hawthorne", "football club chairman", "The club accounts had not added up for years, and he held the only key."], ["Philippa Ryder", "jeweller", "She took jewellery as security and seldom gave it back."], ["Martin Shearman", "headmaster", "He kept a drawer full of files on former pupils and their parents."], ["Greta Falk", "landowner", "Half the village leased land from her, and the leases ran out this year."]];
+const TR={jas:["black","grey","red"],bril:["glasses","no glasses"],hand:["left","right"],schoen:["boots","sneakers","dress shoes"],lengte:["tall","short"]};
+const TRL={jas:"coat",bril:"",hand:"-handed",schoen:"",lengte:""};
+const ADJ={black:"black",grey:"grey",red:"red"};
+function evText(t,v){
+  if(t==="jas")return["Fibre","A "+ADJ[v]+" wool fibre is caught on the fence. The killer wore a "+ADJ[v]+" coat."];
+  if(t==="bril")return v==="glasses"?["Broken frame","The snapped-off arm of a pair of glasses lies in the gutter, blood on it. The killer wears glasses."]:["Doorbell cam","A doorbell camera caught the face. Blurred, but clear enough: the killer wears no glasses."];
+  if(t==="hand")return["Post-mortem","The angle of the wound leaves no doubt. The killer is "+v+"-handed."];
+  if(t==="schoen")return["Shoe print","A fresh print in the mud. The killer wore "+v+"."];
+  return["Shadow photo","The streetlamp threw a shadow on the wall. The killer is "+(v==="tall"?"tall":"short")+"."];
+}
+function witText(t,v){
+  if(t==="jas")return"I saw someone running off in a "+ADJ[v]+" coat.";
+  if(t==="bril")return v==="glasses"?"That figure wore glasses. The lenses caught the lamplight.":"I looked that figure straight in the face. No glasses.";
+  if(t==="hand")return"Threw something into the bushes. With the "+v+" hand.";
+  if(t==="schoen")return v==="boots"?"I heard heavy boots on the cobbles.":v==="sneakers"?"Sneakers. I got a good look.":"The click of dress shoes. You know that sound at once.";
+  return v==="tall"?"A tall figure, a head taller than me.":"A short figure, barely cleared the hedge.";
+}
+function traitMask(sus,t,v){let m=0;sus.forEach((s,i)=>{if(s.tr[t]===v)m|=1<<i});return m}
+function solve(c){ // alle daders die passen bij: bewijs waar, precies één getuige liegt
+  const out=[];for(let k=0;k<6;k++){if(c.ev.some(e=>!(e.mask>>k&1)))continue;let lies=0;c.wit.forEach(w=>{if(!(w.mask>>k&1))lies++});if(lies===1)out.push(k)}return out}
+function genCase(seed,S){
+  const r=rngOf(seed),pick=a=>a[Math.floor(r()*a.length)];
+  for(let tries=0;tries<4000;tries++){
+    const sus=shuffle(S?S.pool:POOL,r).slice(0,6).map(p=>{const tr={};for(const t in TR)tr[t]=pick(TR[t]);return{name:p[0],role:p[1],tr}});
+    const k=Math.floor(r()*6),keys=shuffle(Object.keys(TR),r),evT=keys.slice(0,3),free=keys.slice(3);
+    const ev=evT.map(t=>{const v=sus[k].tr[t],x=evText(t,v);return{trait:t,val:v,mask:traitMask(sus,t,v),title:x[0],text:x[1]}});
+    let cand=63;ev.forEach(e=>cand&=e.mask);let n=0;for(let i=0;i<6;i++)n+=cand>>i&1;if(n<3||n>4)continue;
+    const liar=Math.floor(r()*5),wit=[],used={};let ok=true;
+    for(let i=0;i<5&&ok;i++){
+      if(i===liar){
+        if(r()<.5)wit.push({mask:63&~(1<<k),text:sus[k].name+" was with me all evening. Couldn't have done it.",lie:true});
+        else{const t=pick(free),v=pick(TR[t].filter(x=>x!==sus[k].tr[t]));wit.push({mask:traitMask(sus,t,v),text:witText(t,v),lie:true})}
+      }else{
+        let done=false;
+        for(let a=0;a<20&&!done;a++){
+          if(r()<.55){const x=Math.floor(r()*6);if(x===k||used["a"+x])continue;used["a"+x]=1;wit.push({mask:63&~(1<<x),text:sus[x].name+" was with me all evening. Couldn't have done it.",lie:false});done=true}
+          else{const t=pick(free);if(used[t])continue;used[t]=1;const v=sus[k].tr[t];wit.push({mask:traitMask(sus,t,v),text:witText(t,v),lie:false});done=true}
+        }
+        if(!done)ok=false;
+      }
+    }
+    if(!ok)continue;
+    const c={seed,victim:pick(S?S.vic:VICTIMS),sus,killer:k,ev,wit,liar};
+    const s=solve(c);if(s.length===1&&s[0]===k)return c;
+  }
+  return null;
+}
+if(typeof module!=="undefined")module.exports={genCase,solve};
+
+</script>
+<script>
+(function(){
+const $=s=>document.querySelector(s);
+const LS={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const RANKS=[[0,"Cadet"],[150,"Constable"],[400,"Detective"],[800,"Inspector"],[1400,"Chief Inspector"],[2200,"Commissioner"]];
+const SHADES=[["The Lamplighter",1,"Still lights the lamps each evening. The lamps are long gone."],["The Milkman",1,"Rattles his bottles, always just round the corner."],["The Night Watchman",1,"Calls out the hour. It's never right."],["The Rag-and-Bone Man",1,"Looking for his horse. Eighty years now."],["The Bell-Ringer",1,"Tolls for those who'd rather not hear."],["The Vanished Bride",2,"Waits at every church for someone who never came."],["The Fortune Teller",2,"Knows how your case ends. Says nothing."],["The Ferryman",2,"Takes you across, even where there's no water."],["The Organ Grinder",2,"One tune. You'll never shake it."],["The Market Hangman",3,"Still wears the hood. Nods politely."],["The White Women",3,"Three shapes in the mist, never seen all at once."],["The Man Without a Shadow",3,"You only see him when the lamp flickers."]];
+const RN=["","Common","Rare","Legendary"];
+const TYPES={kerk:["the church","the sexton"],bank:["the bank","the bank's night guard"],cafe:["the café","the barman"],hotel:["the hotel","the night porter"],apotheek:["the pharmacy","the pharmacy assistant"],halte:["the bus stop","the night bus driver"],post:["the postbox","the postman"],park:["the park","the dog walker"],school:["the school","the caretaker"],winkel:["the shop","the shelf stacker"],bieb:["the library","the librarian"],kunst:["the artwork","the busker"],bankje:["the bench","the sleepless neighbour"],tank:["the petrol station","the pump attendant"],hoek:["the street corner","the paper boy"]};
+const PRI=["kerk","hotel","bank","apotheek","cafe","bieb","park","school","kunst","tank","winkel","halte","post","bankje","hoek"];
+const SPARE=["the street sweeper","the night nurse heading home","the angler who can't sleep","the baker's boy","the homeless poet"];
+let prof=LS.get("ss_prof",{xp:0,streak:0,last:"",solved:0,book:{}});
+let G=null,W=[],P={x:0,y:0,acc:0},V={s:.5,ox:0,oy:0,follow:true},sel=null,walkTo=null,watchId=null,R0=650,PAR=90,lastT=0,arrived=null;
+const today=()=>{const d=new Date();return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()};
+const rank=xp=>{let i=0;RANKS.forEach((r,j)=>{if(xp>=r[0])i=j});return i};
+function toast(t){const e=$("#toast");e.textContent=t;e.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>e.hidden=true,2600)}
+function buzz(p){try{navigator.vibrate&&navigator.vibrate(p)}catch(e){}}
+let AC=null,sndOn=LS.get("ss_snd",true);function beep(f,d){if(!sndOn)return;try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.frequency.value=f;o.type="triangle";g.gain.value=.08;g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+d);o.connect(g);g.connect(AC.destination);o.start();o.stop(AC.currentTime+d)}catch(e){}}
+function actx(){AC=AC||new (window.AudioContext||window.webkitAudioContext)();return AC}
+function thump(v){if(!sndOn)return;try{const a=actx(),o=a.createOscillator(),g=a.createGain();o.type="triangle";o.frequency.setValueAtTime(95,a.currentTime);o.frequency.exponentialRampToValueAtTime(50,a.currentTime+.12);g.gain.setValueAtTime(v,a.currentTime);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+.17);o.connect(g);g.connect(a.destination);o.start();o.stop(a.currentTime+.19)}catch(e){}}
+function step(pan,v){if(!sndOn)return;try{const a=actx(),n=Math.floor(a.sampleRate*.07),b=a.createBuffer(1,n,a.sampleRate),c=b.getChannelData(0);for(let i=0;i<n;i++)c[i]=(Math.random()*2-1)*(1-i/n);
+  const s=a.createBufferSource(),fl=a.createBiquadFilter(),g=a.createGain();s.buffer=b;fl.type="lowpass";fl.frequency.value=520;g.gain.value=v;s.connect(fl);fl.connect(g);
+  if(a.createStereoPanner){const p=a.createStereoPanner();p.pan.value=pan;g.connect(p);p.connect(a.destination)}else g.connect(a.destination);s.start()}catch(e){}}
+function say(txt,i){if(!sndOn||!window.speechSynthesis)return;try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(txt);u.lang="en-GB";u.rate=.9;u.pitch=.45+(i%5)*.13;const v=speechSynthesis.getVoices().filter(x=>/^en/i.test(x.lang));if(v.length)u.voice=v[i%v.length];speechSynthesis.speak(u)}catch(e){}}
+let nearD=1e9,heartOn=false,stepAt=0;
+function heartLoop(){if(heartOn)return;heartOn=true;stepAt=Date.now()+20000+Math.random()*20000;
+  const f=()=>{if($("#play").hidden||!G){heartOn=false;return}
+    let next=900;
+    if($("#sheet").hidden&&$("#ar").hidden){
+      if(nearD<150){thump(.5);setTimeout(()=>thump(.3),170);next=480+nearD/150*1000}
+      if(Date.now()>stepAt){stepAt=Date.now()+25000+Math.random()*30000;const pan=Math.random()<.5?-.8:.8;for(let i=0;i<4;i++)setTimeout(()=>step(pan,.1+i*.05),i*480)}
+    }
+    setTimeout(f,next)};f()}
+
+function show(id){["home","brief","play"].forEach(s=>$("#"+s).hidden=s!==id);$("#hero").hidden=id!=="home";if(id==="play")resize()}
+function sheet(html){$("#sheetBody").innerHTML=html;$("#sheet").hidden=false;$("#sheetBody").scrollTop=0}
+function closeSheet(){$("#sheet").hidden=true;mg.stop();try{window.speechSynthesis&&speechSynthesis.cancel()}catch(e){}}
+$("#sheet").addEventListener("click",e=>{if(e.target.id==="sheet"&&!$("#sheet").dataset.lock)closeSheet()});
+
+/* ---------- startscherm ---------- */
+function home(){
+  const i=rank(prof.xp),nx=RANKS[i+1];
+  $("#pRank").textContent=RANKS[i][1];$("#pStreak").textContent=prof.streak;$("#pBook").textContent=Object.keys(prof.book).length+"/12";
+  $("#pXp").style.width=(nx?Math.round((prof.xp-RANKS[i][0])/(nx[0]-RANKS[i][0])*100):100)+"%";
+  $("#pNext").textContent=nx?prof.xp+" points. "+(nx[0]-prof.xp)+" more to make "+nx[1]+".":prof.xp+" points. Top rank reached.";
+  $("#bResume").hidden=!LS.get("ss_game_en",null);
+  const pro=isPro(),lk=locked();
+  $("#bGps").textContent=(lk?"🔒 ":"")+(prof.last===today()?"Replay today's case":"Start today's case");
+  $("#bRandom").textContent=(lk?"🔒 ":"")+T.pExtra;$("#bPro").hidden=pro;$("#bPro").textContent=T.pBtn+" · "+PRO.price;
+  $("#status").textContent=(pro?T.pOn:lk?T.pUsed:T.pFree)+(groupLeft()?" "+T.gpOn.replace("{h}",Math.ceil(groupLeft()/36e5)):"");$("#bGrp").textContent=(groupLeft()?"":"🔒 ")+T.bGrp;
+  storyUI();show("home");heroStart();
+}
+$("#len").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;R0=+b.dataset.r;PAR=+b.dataset.par;document.querySelectorAll("#len button").forEach(x=>x.setAttribute("aria-pressed",x===b))});
+$("#bGps").onclick=()=>locked()?proSheet():startGps(hashStr(today()));
+$("#bRandom").onclick=()=>locked()?proSheet():startGps(Math.floor(Math.random()*4e9));
+$("#bPro").onclick=()=>proSheet();
+$("#bDemo").onclick=()=>{const w=demoWorld();build(Math.floor(Math.random()*4e9),"demo",w.pois,w.ways,null)};
+$("#bResume").onclick=()=>{G=LS.get("ss_game_en",null);W=LS.get("ss_ways_en",[]);if(!G)return home();P={x:G.px||0,y:G.py||0,acc:0};enter()};
+$("#bBookHome").onclick=()=>bookSheet();
+
+/* ---------- Pro en groepspas: gedeelde platformlaag (/shared/platform.js) ---------- */
+const PRO=window.SS_PRO||{},GP=PRO.groep||{},proNorm=MW.norm,sha256=MW.sha256;
+let codesOk=MW.pro.codesOk(),CODES=MW.pro.codes();
+const codesP=MW.pro.ready.then(()=>{codesOk=MW.pro.codesOk();CODES=MW.pro.codes();if(!$("#home").hidden&&$("#sheet").hidden&&!G)home()});
+const isPro=()=>MW.pro.isPro(),locked=()=>MW.pro.locked("mw"),groupLeft=()=>MW.pro.groupLeft(),redeem=v=>MW.pro.redeem(v);
+function proSheet(kind){
+  const g=kind==="groep",url=g?GP.url:PRO.url,price=g?GP.price:PRO.price,U=s=>s.replace(/\{u\}/g,GP.uren||48).replace(/\{n\}/g,GP.max||10);
+  sheet('<div class="eyebrow">'+(g?T.bGrp:"Pro")+'</div><h2>'+(g?T.gpH:T.pH)+'</h2><p>'+(g?U(T.gpT):T.pT)+'</p>'+(url?'<a class="btn" href="'+esc(url)+'" target="_blank" rel="noopener">'+(g?T.gpBtn:T.pBtn)+(price?' · '+esc(price):'')+'</a>':'')+'<div class="eyebrow">'+T.pHave+'</div><input class="inp" id="pCode" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="'+T.pHave+'"><button type="button" class="btn ghost dk" id="pOk">'+T.pUse+'</button><p class="note" id="pMsg" style="color:#a5392c"></p><button type="button" class="btn ghost dk" id="shX">'+T.cancel+'</button>');
+  let busy=false;
+  const go=async()=>{if(busy)return;busy=true;const v=$("#pCode").value,m=$("#pMsg");if(!codesOk){m.textContent=T.pWait;await codesP}
+    const r=redeem(v);busy=false;
+    if(r==="pro"){closeSheet();home();toast(T.pOk)}
+    else if(r==="groep"){closeSheet();home();toast(U(T.gpOk))}
+    else{const e=$("#pMsg");if(e)e.textContent=r==="exp"?T.pExp:r==="used"?T.pUsedC:!codesOk&&CODES.length===0?T.pNoNet:T.pBad;buzz(120)}};
+  $("#sheetBody").onclick=e=>{if(e.target.id==="shX")closeSheet();else if(e.target.id==="pOk")go()};
+  $("#pCode").onkeydown=e=>{if(e.key==="Enter")go()};
+}
+
+/* ---------- wereld ophalen ---------- */
+function poiType(t){
+  if(!t)return null;const a=t.amenity,s=t.tourism;
+  if(a==="place_of_worship")return"kerk";if(a==="bank"||a==="atm")return"bank";if(/^(cafe|pub|bar|restaurant)$/.test(a||""))return"cafe";
+  if(a==="pharmacy")return"apotheek";if(a==="post_box")return"post";if(a==="library")return"bieb";if(a==="school")return"school";if(a==="fuel")return"tank";if(a==="bench")return"bankje";
+  if(s==="hotel")return"hotel";if(s==="artwork"||s==="museum")return"kunst";if(t.shop)return"winkel";if(t.highway==="bus_stop")return"halte";
+  if(t.leisure==="park"||t.leisure==="playground")return"park";return null;
+}
+function startGps(seed){
+  const st={set textContent(v){$("#loadT").textContent=v;$("#load").hidden=!v}};const fail=m=>{st.textContent="";sheet('<h2>No luck here</h2><p>'+m+'</p><button type="button" class="btn" id="shX">Back</button>');$("#sheetBody").onclick=e=>{if(e.target.id==="shX")closeSheet()}};
+  if(!navigator.geolocation){fail("This device won't give a location. You can still play the practice round.");return}
+  st.textContent="Finding your location…";
+  navigator.geolocation.getCurrentPosition(async pos=>{
+    const gl=GRP&&GRP.o,lat=gl?gl[0]:pos.coords.latitude,lon=gl?gl[1]:pos.coords.longitude,R=R0;if(gl&&Math.hypot((pos.coords.longitude-lon)*111320*Math.cos(lat*Math.PI/180),(pos.coords.latitude-lat)*110540)>2500)toast(T.gFar);
+    const kx=111320*Math.cos(lat*Math.PI/180),ky=110540,xy=(la,lo)=>[(lo-lon)*kx,-(la-lat)*ky],A="(around:"+R+","+lat+","+lon+")";
+    const hosts=window.SS_MAP||["https://overpass.private.coffee/api/interpreter","https://maps.mail.ru/osm/tools/overpass/api/interpreter","https://overpass-api.de/api/interpreter"];
+    // eerst één server; pas na 4 en 8 seconden zonder antwoord (of meteen bij een fout) de volgende erbij
+    const ask=(q,ms)=>new Promise((res,rej)=>{const ac=new AbortController(),ts=[];let nx=0,left=hosts.length,done=false;
+      const fin=(ok,v)=>{if(done)return;done=true;ts.forEach(clearTimeout);ac.abort();ok?res(v):rej(v)};
+      const start=()=>{if(done||nx>=hosts.length)return;const h=hosts[nx++];
+        fetch(h,{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:"data="+encodeURIComponent(q),signal:ac.signal}).then(r=>{if(!r.ok)throw new Error("server "+r.status);return r.json()}).then(d=>fin(true,d),e=>{if(--left<=0)fin(false,e);else start()})};
+      start();ts.push(setTimeout(start,4000),setTimeout(start,8000),setTimeout(()=>fin(false,new Error("timeout")),ms))});
+    let pois=[],ways=[];const c=LS.get("ss_map",null);
+    // deze buurt al eens geladen: meteen starten
+    if(c&&c.R>=R&&c.pois&&c.pois.length&&Math.hypot((c.lon-lon)*kx,(c.lat-lat)*ky)<150){const ox=(c.lon-lon)*kx,oy=-(c.lat-lat)*ky;
+      pois=c.pois.map(p=>({x:p.x+ox,y:p.y+oy,type:p.type,name:p.name}));ways=(c.ways||[]).map(w=>({w:w.w,n:w.n,p:w.p.map((v,i)=>Math.round(v+(i%2?oy:ox)))}));
+      st.textContent="";build(seed,"gps",pois,ways,{lat,lon,kx,ky});return}
+    st.textContent="Finding places near you…";
+    try{
+      const d=GRP&&GRP.st?{elements:[]}:await ask('[out:json][timeout:15];(nwr'+A+'[amenity~"^(place_of_worship|bank|atm|cafe|pub|bar|restaurant|pharmacy|post_box|library|school|fuel)$"];nwr'+A+'[tourism~"^(hotel|artwork|museum)$"];nwr'+A+'[shop~"^(supermarket|bakery|convenience)$"];node'+A+'[highway=bus_stop];nwr'+A+'[leisure~"^(park|playground)$"];);out center qt 400;',18000);
+      for(const e of d.elements||[]){const ty=poiType(e.tags),q=e.type==="node"?[e.lat,e.lon]:e.center?[e.center.lat,e.center.lon]:null;if(!ty||!q)continue;const p=xy(q[0],q[1]);pois.push({x:p[0],y:p[1],type:ty,name:e.tags.name||""})}
+    }catch(e){toast("The map service is not answering. Your leads are placed within walking distance.")}
+    st.textContent="";build(seed,"gps",pois,[],{lat,lon,kx,ky});
+    // straten komen op de achtergrond; het spel wacht er niet op
+    const mine=G;
+    ask('[out:json][timeout:25];way(around:'+(R+150)+','+lat+','+lon+')[highway~"^(residential|tertiary|secondary|primary|unclassified|living_street|pedestrian|footway|path|cycleway|service)$"];out geom qt;',45000).then(d=>{
+      for(const e of d.elements||[]){if(!e.geometry)continue;const p=[];e.geometry.forEach(g=>{const q=xy(g.lat,g.lon);p.push(Math.round(q[0]),Math.round(q[1]))});const h=(e.tags&&e.tags.highway)||"";ways.push({p,w:/primary|secondary|tertiary/.test(h)?3:/footway|path|cycleway/.test(h)?1:2,n:(e.tags&&e.tags.name)||""})}
+      if(G&&G===mine){W=ways;LS.set(WK,W)}
+      if(pois.length)LS.set("ss_map",{lat,lon,R,pois,ways});
+    }).catch(()=>{if(pois.length)LS.set("ss_map",{lat,lon,R,pois,ways:[]})});
+  },err=>{fail("No access to your location. Open this game in your phone's browser on an https address and allow location. Here you can play the practice round.")},{enableHighAccuracy:true,timeout:20000});
+}
+function demoWorld(){
+  // fictieve grachtengordel: ringen rond een middelpunt ten noorden van de speler
+  const cy=-500,ways=[],arc=(r,w,n)=>{const p=[];for(let a=25;a<=155;a+=5){const t=a*Math.PI/180;p.push(Math.round(r*Math.cos(t)),Math.round(cy+r*Math.sin(t)))}ways.push({p,w,n:n||""})};
+  [[400,"Schaduwgracht"],[560,"Lantaarngracht"],[740,"Nachtgracht"],[920,"Mistgracht"]].forEach(c=>arc(c[0],9,c[1]));
+  [[400],[560],[740],[920]].forEach(c=>{arc(c[0]-26,1);arc(c[0]+26,1)});
+  [330,470,650,830].forEach(r=>arc(r,2));
+  for(let a=30;a<=150;a+=12){const t=a*Math.PI/180;ways.push({p:[Math.round(260*Math.cos(t)),Math.round(cy+260*Math.sin(t)),Math.round(1000*Math.cos(t)),Math.round(cy+1000*Math.sin(t))],w:a===90||a===54||a===126?3:2,n:""})}
+  const L=[[330,90,"kerk","Oude Nachtkerk"],[470,70,"cafe","Café De Blauwe Reiger"],[470,112,"post","Brievenbus Lantaarnsteeg"],[650,90,"hotel","Hotel Winterlicht"],[650,68,"bank","Spaarbank De Halve Maan"],[650,113,"apotheek","Apotheek De Gouden Vijzel"],[830,80,"park","Schimmenplantsoen"],[830,102,"halte","Tramhalte Nachtgracht"],[830,58,"bieb","Bibliotheek De Nachtschuit"],[830,124,"kunst","Beeld De Wachter"],[470,45,"winkel","Bakkerij Van Dam"],[470,136,"school","School De Wissel"],[980,90,"bankje","Bankje aan de Mistgracht"]];
+  return{ways,pois:L.map(l=>{const t=l[1]*Math.PI/180;return{x:Math.round(l[0]*Math.cos(t)),y:Math.round(cy+l[0]*Math.sin(t)),type:l[2],name:l[3]}})};
+}
+function build(seed,mode,pois,ways,origin){
+  const SD=STORIES[RUN]||STORIES.c,c=genCase(seed,SD.pool?SD:null);if(!c){toast("This case won't add up. Try an extra case.");return}
+  const r=rngOf(seed^0x9e3779b9),R=R0,far=(p,l,m)=>l.every(q=>Math.hypot(q.x-p.x,q.y-p.y)>=m);
+  let min=Math.max(90,R*.24);const ch=[],cand=shuffle(pois.filter(p=>{const d=Math.hypot(p.x,p.y);return d>70&&d<=R}),r).sort((a,b)=>PRI.indexOf(a.type)-PRI.indexOf(b.type));
+  for(let pass=0;pass<2&&ch.length<8;pass++)for(const p of cand){if(ch.length>=8)break;const n=ch.filter(q=>q.type===p.type).length;if(ch.includes(p)||n>pass||p.type==="bankje"&&pass===0&&cand.length>12)continue;if(far(p,ch,min))ch.push(p)}
+  const nodes=[];ways.forEach(w=>{for(let i=0;i<w.p.length;i+=2)nodes.push([w.p[i],w.p[i+1],w.n])});
+  for(let t=0;ch.length<8&&t<600;t++){
+    if(t%80===79)min*=.8;const a=r()*6.283,d=R*(.4+.55*r());let p={x:Math.cos(a)*d,y:Math.sin(a)*d,type:"hoek",name:""};
+    let b=null,bd=140;for(const n of nodes){const dd=Math.hypot(n[0]-p.x,n[1]-p.y);if(dd<bd){bd=dd;b=n}}if(b){p.x=b[0];p.y=b[1];if(b[2])p.name=b[2]+" corner"}
+    if(far(p,ch,min))ch.push(p);
+  }
+  const order=shuffle(ch,r),usedP={},spare=SPARE.slice();
+  // plaats delict liefst park of rustige hoek
+  const pd=order.findIndex(p=>p.type==="park");if(pd>0)[order[0],order[pd]]=[order[pd],order[0]];
+  if(GRP&&GRP.st){order.length=0;GRP.st.forEach(q=>order.push({x:q.x,y:q.y,type:q.type,name:q.name||""}))}
+  const st=order.map((p,i)=>{const T=TYPES[p.type];let persona=T[1];if(i>=3){if(usedP[persona])persona=spare.shift()||"a passer-by";usedP[persona]=1}
+    return{x:Math.round(p.x),y:Math.round(p.y),type:p.type,nm:p.name||"",name:p.name||T[0].replace(/^the /,"").replace(/^./,m=>m.toUpperCase()),noun:T[0],kind:i<3?"ev":"wit",idx:i<3?i:i-3,persona:i>=3?persona:"",done:false}});
+  // zeldzame schimmen tussen de sporen
+  const rare=[];{const r=rngOf(seed^0x85ebca6b);for(let i=0;i<3;i++){const a=st[Math.floor(r()*st.length)],b=st[Math.floor(r()*st.length)],f=.3+.4*r(),x=r(),tier=x<.08?3:x<.35?2:1,opts=SHADES.map((s,j)=>j).filter(j=>SHADES[j][1]===tier&&!rare.some(q=>q.id===j));
+    rare.push({x:Math.round(a.x+(b.x-a.x)*f+(r()-.5)*120),y:Math.round(a.y+(b.y-a.y)*f+(r()-.5)*120),id:opts[Math.floor(r()*opts.length)],done:false})}}
+  G={mode,R,par:PAR,seed,c,st,rare,t0:0,dist:0,ms:[0,0,0,0,0,0],mw:[0,0,0,0,0],tips:[],tries:0,origin,px:0,py:0,story:RUN,code:codeOf(RUN,PAR,seed),grp:GRP?mkGrp(seed):null};GRP=null;
+  W=ways;P={x:0,y:0,acc:0};LS.set("ss_ways_en",W);
+  // briefing
+  const v=c.victim;$("#bfNo").textContent="Case file "+G.code+" · "+SD.n+(mode==="demo"?" · practice round":"");
+  $("#bfTitle").textContent="The death of "+v[0];
+  $("#bfText").textContent=(SD.intro?SD.intro+" ":"")+v[0]+", "+v[1]+", was found dead at 23:40 near "+st[0].noun+(st[0].name&&!/^(Church|Bank|Park|Street corner)/.test(st[0].name)?" ("+st[0].name+")":"")+". "+v[2]+" Three places hold evidence. At five others a shade lingers who saw something. Exactly one of those five is lying.";
+  grpBrief();$("#bfSus").innerHTML=c.sus.map(susCard).join("");show("brief");
+}
+function susCard(s,i){return `<div class="sus"><b>${esc(s.name)}</b><small>${esc(s.role)}, ${esc(vn(motOf(s.name)[0]))}</small><div class="tags"><i>${ADJ[s.tr.jas]} coat</i><i>${s.tr.bril}</i><i>${s.tr.hand}-handed</i><i>${s.tr.schoen}</i><i>${s.tr.lengte==="tall"?"tall":"short"}</i></div></div>`}
+$("#bGo").onclick=()=>{G.t0=Date.now();if(G.mode==="gps"&&!G.grp)LS.set("ss_free",1);save();enter()};
+function save(){if(G){G.px=P.x;G.py=P.y;LS.set("ss_game_en",G)}}
+function enter(){
+  show("play");V.follow=true;V.s=Math.min(innerWidth,innerHeight)/(G.R*1.5);sel=null;walkTo=null;arrived=null;$("#chip").hidden=true;
+  if(watchId!=null){navigator.geolocation.clearWatch(watchId);watchId=null}
+  if(G.mode==="gps"&&navigator.geolocation){const o=G.origin;watchId=navigator.geolocation.watchPosition(p=>{const x=(p.coords.longitude-o.lon)*o.kx,y=-(p.coords.latitude-o.lat)*o.ky,d=Math.hypot(x-P.x,y-P.y);if(d>3&&d<80)G.dist+=d;if(d>3){P.x=x;P.y=y}P.acc=p.coords.accuracy||0},()=>{},{enableHighAccuracy:true,maximumAge:2000})}
+  try{navigator.wakeLock&&navigator.wakeLock.request("screen").catch(()=>{})}catch(e){}
+  if(G.mode==="demo")toast("Practice round: tap the map to walk.");
+  heartLoop();requestAnimationFrame(loop);
+}
+
+/* ---------- kaart ---------- */
+const cv=$("#map"),cx=cv.getContext("2d");let dpr=1,cw=0,chh=0;
+function resize(){dpr=window.devicePixelRatio||1;cw=cv.clientWidth;chh=cv.clientHeight;cv.width=cw*dpr;cv.height=chh*dpr}
+addEventListener("resize",resize);
+const sx=x=>(x-(V.follow?P.x:V.ox))*V.s+cw/2,sy=y=>(y-(V.follow?P.y:V.oy))*V.s+chh/2;
+const dTo=t=>Math.hypot(t.x-P.x,t.y-P.y);
+const inRange=t=>dTo(t)<=Math.max(35,Math.min(P.acc||0,60))||G.force===t;
+function ghost(c,x,y,s,col,al){c.save();c.globalAlpha=al;
+  const h=c.createRadialGradient(x,y,s*.1,x,y,s*.85);h.addColorStop(0,"rgba(147,166,198,.28)");h.addColorStop(1,"rgba(147,166,198,0)");c.fillStyle=h;c.beginPath();c.arc(x,y,s*.85,0,7);c.fill();
+  c.fillStyle="rgba(4,7,12,.6)";c.beginPath();c.ellipse(x+s*.22,y+s*.52,s*.5,s*.09,-.12,0,7);c.fill();
+  c.fillStyle="#05080e";c.strokeStyle=col;c.lineWidth=Math.max(1,s*.035);c.lineJoin="round";
+  c.beginPath();c.moveTo(x-s*.09,y-s*.3);c.lineTo(x-s*.24,y-s*.24);c.lineTo(x-s*.3,y+s*.5);c.lineTo(x+s*.3,y+s*.5);c.lineTo(x+s*.24,y-s*.24);c.lineTo(x+s*.09,y-s*.3);c.closePath();c.fill();c.stroke();
+  c.beginPath();c.arc(x,y-s*.4,s*.13,0,7);c.fill();c.stroke();
+  c.beginPath();c.moveTo(x-s*.27,y-s*.47);c.lineTo(x+s*.27,y-s*.47);c.lineTo(x+s*.27,y-s*.52);c.lineTo(x+s*.14,y-s*.53);c.lineTo(x+s*.12,y-s*.7);c.lineTo(x-s*.12,y-s*.7);c.lineTo(x-s*.14,y-s*.53);c.lineTo(x-s*.27,y-s*.52);c.closePath();c.fill();c.stroke();
+  c.fillStyle=col;c.beginPath();c.arc(x-s*.05,y-s*.41,s*.022,0,7);c.arc(x+s*.05,y-s*.41,s*.022,0,7);c.fill();c.restore()}
+const still=matchMedia("(prefers-reduced-motion: reduce)").matches;
+function draw(t){
+  cx.setTransform(dpr,0,0,dpr,0,0);cx.fillStyle="#101a2b";cx.fillRect(0,0,cw,chh);
+  cx.lineCap="round";cx.lineJoin="round";
+  for(const w of W){cx.strokeStyle=w.w===9?"#173f5c":w.w===1?"#22324f":"#2c3f62";cx.lineWidth=Math.max(1.2,(w.w===9?30:w.w===3?9:w.w===2?6:2.5)*V.s);cx.beginPath();for(let i=0;i<w.p.length;i+=2){const X=sx(w.p[i]),Y=sy(w.p[i+1]);i?cx.lineTo(X,Y):cx.moveTo(X,Y)}cx.stroke()}
+  cx.font="italic 12px Georgia,serif";cx.textAlign="center";cx.fillStyle="#5f8fb0";for(const w of W){if(w.w===9&&w.n){const m=Math.floor(w.p.length/4)*2;cx.fillText(w.n,sx(w.p[m]),sy(w.p[m+1])+4)}}
+  // speelveld
+  cx.strokeStyle="rgba(147,166,198,.25)";cx.setLineDash([4,8]);cx.lineWidth=1;cx.beginPath();cx.arc(sx(0),sy(0),G.R*V.s,0,7);cx.stroke();cx.setLineDash([]);
+  const bob=still?0:Math.sin(t/500)*3;
+  cx.font="600 12px 'Barlow Condensed','Arial Narrow',sans-serif";cx.textAlign="center";
+  G.st.forEach((s,i)=>{const X=sx(s.x),Y=sy(s.y);
+    if(s.kind==="wit")ghost(cx,X,Y+(s.done?0:bob*.4),38,"#a6ead9",s.done?.3:canOpen(s)?.95:.4);
+    else{cx.save();cx.globalAlpha=s.done?.35:canOpen(s)?1:.4;cx.fillStyle="#f0a63a";cx.translate(X,Y);cx.rotate(Math.PI/4);cx.fillRect(-9,-9,18,18);cx.restore();if(!s.done&&!still&&canOpen(s)){cx.strokeStyle="rgba(240,166,58,"+(.6-((t/1500)%1)*.6)+")";cx.lineWidth=2;cx.beginPath();cx.arc(X,Y,12+((t/1500)%1)*16,0,7);cx.stroke()}}
+    if(sel===s){cx.strokeStyle="#ece4d2";cx.lineWidth=2;cx.beginPath();cx.arc(X,Y,24,0,7);cx.stroke()}
+    const lk=!s.done&&!canOpen(s);cx.fillStyle=s.done||lk?"#5f7090":"#ece4d2";if(V.s>=.4||sel===s)cx.fillText((s.done||gotI(i)?"✓ ":"")+(lk?ownTag(i).toUpperCase()+" · ":"")+s.name.toUpperCase().slice(0,26),X,Y+40)});
+  G.rare.forEach(q=>{if(q.done||dTo(q)>200)return;const X=sx(q.x),Y=sy(q.y),tier=SHADES[q.id][1];ghost(cx,X,Y-bob*.4,42,tier===3?"#f0a63a":tier===2?"#c9a6ea":"#ffffff",still?.8:.5+.4*Math.abs(Math.sin(t/300)));cx.fillStyle="#ece4d2";cx.fillText("???",X,Y+42);if(sel===q){cx.strokeStyle="#ece4d2";cx.lineWidth=2;cx.beginPath();cx.arc(X,Y,26,0,7);cx.stroke()}});
+  xDraw(t);
+  // speler
+  const X=sx(P.x),Y=sy(P.y);cx.fillStyle="rgba(240,166,58,.12)";cx.beginPath();cx.arc(X,Y,35*V.s,0,7);cx.fill();cx.strokeStyle="rgba(240,166,58,.5)";cx.lineWidth=1;cx.stroke();
+  cx.fillStyle="#f0a63a";cx.beginPath();cx.arc(X,Y,7,0,7);cx.fill();cx.strokeStyle="#101a2b";cx.lineWidth=2;cx.stroke();
+}
+function loop(t){
+  if($("#play").hidden||!G)return;
+  const dt=Math.min(.1,(t-lastT)/1000)||0;lastT=t;
+  if(G.mode==="demo"&&walkTo){const d=Math.hypot(walkTo.x-P.x,walkTo.y-P.y),step=90*dt;if(d<=step){P.x=walkTo.x;P.y=walkTo.y;G.dist+=d;walkTo=null}else{P.x+=(walkTo.x-P.x)/d*step;P.y+=(walkTo.y-P.y)/d*step;G.dist+=step}}
+  draw(t);
+  if(!loop.n||t-loop.n>500){loop.n=t;tick()}
+  requestAnimationFrame(loop);
+}
+function targets(){return G.st.filter(s=>!s.done&&canOpen(s)).concat(G.rare.filter(q=>!q.done&&dTo(q)<=200)).concat(xTargets())}
+function tick(){
+  const el=Math.floor((Date.now()-G.t0)/1000);$("#hT").textContent=Math.floor(el/60)+":"+String(el%60).padStart(2,"0");
+  $("#hS").textContent=G.st.filter((s,i)=>s.done||gotI(i)).length+"/8";$("#hG").textContent=G.rare.filter(q=>q.done).length+"/3";$("#hD").textContent=(G.dist/1000).toFixed(1);
+  const ts=targets();let near=null,nd=1e9;ts.forEach(s=>{const d=dTo(s);if(d<nd){nd=d;near=s}});
+  nearD=nd;const rr=G.rare.find(q=>!q.done&&dTo(q)<=320&&dTo(q)>200);
+  $("#radar").textContent=!near?G.grp&&!G.st.every(s=>s.done)?T.gRadar:"All leads in. Time to accuse.":rr?"Something is prowling close by…":nd<60?"Hot. "+Math.round(nd)+" m to go":nd<150?"Warm. "+Math.round(nd)+" m to go":"Nearest lead: "+Math.round(nd)+" m";
+  const here=ts.find(inRange);
+  if(here&&arrived!==here&&$("#sheet").hidden){arrived=here;sel=here;buzz([80,60,80]);beep(660,.2)}
+  if(!here)arrived=null;
+  xTick();chip();xAfter();if(el%10===0)save();
+}
+function chip(){
+  const c=$("#chip");if(!sel||sel.done){c.hidden=true;return}c.hidden=false;
+  const rare=sel.id!=null,d=dTo(sel),ok=inRange(sel);
+  $("#cName").textContent=rare?"Unknown shade":sel.name;$("#cDist").textContent=Math.round(d)+" m";
+  $("#cHint").textContent=rare?"Flickers, and fades if you wait too long.":sel.kind==="ev"?"There is evidence here.":"Someone is standing in the shadows: "+sel.persona+".";
+  const b=$("#cAct");b.hidden=false;
+  if(ok)b.textContent=rare||sel.kind==="wit"?"Catch the shadow":"Examine";
+  else if(G.mode==="demo")b.textContent="Walk here";
+  else if(d<150)b.textContent="GPS is off, I'm here";
+  else b.hidden=true;
+  if(G.grp&&!rare&&!canOpen(sel)){$("#cHint").textContent=lockHint(sel);b.hidden=true}
+  xAfter();
+}
+$("#cAct").onclick=()=>{if(!sel||(sel.id==null&&!canOpen(sel)))return;if(inRange(sel))encounter(sel);else if(G.mode==="demo"){walkTo={x:sel.x,y:sel.y};V.follow=true}else if(dTo(sel)<150){G.force=sel;encounter(sel)}};
+let pd=null;
+cv.addEventListener("pointerdown",e=>{pd={x:e.clientX,y:e.clientY,ox:V.follow?P.x:V.ox,oy:V.follow?P.y:V.oy,drag:false};cv.setPointerCapture(e.pointerId)});
+cv.addEventListener("pointermove",e=>{if(!pd)return;const dx=e.clientX-pd.x,dy=e.clientY-pd.y;if(!pd.drag&&Math.hypot(dx,dy)>8)pd.drag=true;if(pd.drag){V.follow=false;V.ox=pd.ox-dx/V.s;V.oy=pd.oy-dy/V.s}});
+cv.addEventListener("pointerup",e=>{if(!pd)return;if(!pd.drag){const b=cv.getBoundingClientRect(),mx=e.clientX-b.left,my=e.clientY-b.top;let hit=null;targets().concat(G.st.filter(s=>s.done)).forEach(s=>{if(Math.hypot(sx(s.x)-mx,sy(s.y)-my)<30)hit=s});
+  if(hit&&!hit.done){sel=hit;chip()}else if(G.mode==="demo"){const wx=(mx-cw/2)/V.s+(V.follow?P.x:V.ox),wy=(my-chh/2)/V.s+(V.follow?P.y:V.oy);walkTo={x:wx,y:wy};sel=null;V.follow=true;chip()}else{sel=null;chip()}}pd=null});
+$("#zIn").onclick=()=>V.s=Math.min(4,V.s*1.4);$("#zOut").onclick=()=>V.s=Math.max(.1,V.s/1.4);$("#zMe").onclick=()=>V.follow=true;
+const sndUi=()=>{$("#zS").style.opacity=sndOn?1:.4;$("#zS").setAttribute("aria-pressed",sndOn?"true":"false")};sndUi();
+$("#zS").onclick=()=>{sndOn=!sndOn;LS.set("ss_snd",sndOn);sndUi();if(!sndOn){try{window.speechSynthesis&&speechSynthesis.cancel()}catch(e){}}toast(sndOn?"Sound on":"Sound off")};
+
+/* ---------- ontmoeting met minispel ---------- */
+const mg={raf:0,tm:[],stop(){cancelAnimationFrame(this.raf);this.raf=0;this.tm.forEach(clearTimeout);this.tm=[]}};
+const INFO={
+  lamp:["Someone is hiding","Sweep your torch through the dark. Hold the light on the shadow until the circle closes. Three times."],
+  seq:["The shadow signals with lanterns","Watch the order, then tap it back. One more each round."],
+  code:["A combination lock","Crack the code: three different digits from 1 to 5. Green is right. Yellow is in there, but in another spot."],
+  cipher:["A note in cipher","Every letter has been shifted the same number of places. Turn until it spells a word."],
+  radio:["Whispers on the short wave","Slide until the voice comes clear, then hold it there."],
+  tiles:["A torn photograph","Tap two pieces to swap them until the picture fits."],
+  dust:["Something is lying here","Wipe away the dust and the leaves."]};
+const PLAY={
+  lamp(o){const c=o.canvas(),g=c.getContext("2d");let fx,fy,vx,vy,lx=130,ly=210,hold=0,hits=0,last=0;
+    const place=()=>{fx=40+Math.random()*180;fy=55+Math.random()*150;const a=Math.random()*6.28,sp=o.rare?24:9;vx=Math.cos(a)*sp;vy=Math.sin(a)*sp};place();
+    const crates=[0,1,2,3,4,5,6].map(()=>[Math.random()*230,Math.random()*230,20+Math.random()*40,20+Math.random()*50]);
+    const mv=e=>{const q=o.at(e,c);lx=q[0];ly=q[1]};c.onpointerdown=mv;c.onpointermove=mv;
+    const f=ts=>{const dt=Math.min(.1,(ts-last)/1000)||0;last=ts;fx+=vx*dt;fy+=vy*dt;if(fx<30||fx>230)vx=-vx;if(fy<50||fy>220)vy=-vy;
+      g.fillStyle="#2a3550";g.fillRect(0,0,260,260);g.fillStyle="#1c2740";crates.forEach(r=>g.fillRect(r[0],r[1],r[2],r[3]));
+      ghost(g,fx,fy,64,o.col,1);
+      const gr=g.createRadialGradient(lx,ly,8,lx,ly,62);gr.addColorStop(0,"rgba(5,8,14,0)");gr.addColorStop(1,"rgba(5,8,14,1)");g.fillStyle=gr;g.fillRect(0,0,260,260);
+      const near=Math.hypot(lx-fx,ly-fy)<28;hold=near?hold+dt:0;
+      if(near){g.strokeStyle="#f0a63a";g.lineWidth=3;g.beginPath();g.arc(fx,fy,44,-1.57,-1.57+6.283*Math.min(1,hold/.6));g.stroke()}
+      if(hold>=.6){hits++;hold=0;beep(500+hits*120,.12);buzz(40);if(hits>=3)return o.done();place()}
+      g.fillStyle="#ece4d2";g.font="16px 'Special Elite',monospace";g.textAlign="center";g.fillText(hits+" / 3",130,252);
+      mg.raf=requestAnimationFrame(f)};mg.raf=requestAnimationFrame(f)},
+  seq(o){o.box.innerHTML='<div class="lans">'+[0,1,2,3].map(i=>'<button type="button" class="lan" data-i="'+i+'" aria-label="Lantern '+(i+1)+'"></button>').join("")+'</div><p class="note" id="sqS" style="color:#6a6250"></p>';
+    const L=[].slice.call(o.box.querySelectorAll(".lan")),S=[0,1,2,3,4].map(()=>Math.floor(Math.random()*4)),st=$("#sqS");let pos=0,busy=true,len=3;
+    const lit=(i,ms)=>{L[i].classList.add("on");beep(330+i*110,.18);mg.tm.push(setTimeout(()=>L[i].classList.remove("on"),ms))};
+    const play=()=>{busy=true;pos=0;st.textContent="Watch…";for(let k=0;k<len;k++)mg.tm.push(setTimeout(()=>lit(S[k],350),600+k*600));mg.tm.push(setTimeout(()=>{busy=false;st.textContent="Your turn: "+len+" lanterns"},600+len*600))};
+    o.box.firstChild.onclick=e=>{const b=e.target.closest(".lan");if(!b||busy)return;const i=+b.dataset.i;lit(i,200);
+      if(i!==S[pos]){busy=true;st.textContent="Wrong. Watch again.";buzz(150);mg.tm.push(setTimeout(play,900));return}
+      pos++;if(pos>=len){if(len>=5)return o.done();len++;busy=true;st.textContent="Good. One more.";mg.tm.push(setTimeout(play,700))}};
+    play()},
+  code(o){const sec=shuffle([1,2,3,4,5],Math.random).slice(0,3),cur=[1,1,1];
+    o.box.innerHTML='<div class="dig">'+[0,1,2].map(i=>'<button type="button" data-d="'+i+'" aria-label="Digit '+(i+1)+'">1</button>').join("")+'</div><button type="button" class="btn" id="cdTry">Try it</button><div class="hist" id="cdH"></div>';
+    o.box.querySelector(".dig").onclick=e=>{const b=e.target.closest("button");if(!b)return;const i=+b.dataset.d;cur[i]=cur[i]%5+1;b.textContent=cur[i];beep(300,.05)};
+    $("#cdTry").onclick=()=>{const fb=cur.map((d,i)=>d===sec[i]?2:sec.indexOf(d)>=0?1:0);$("#cdH").insertAdjacentHTML("afterbegin","<div>"+cur.map((d,i)=>'<span class="g'+fb[i]+'">'+d+"</span>").join("")+"</div>");if(fb.every(x=>x===2))o.done();else beep(200,.1)}},
+  cipher(o){const ws=["ALIBI","MOTIVE","WITNESS","DECEIT","GUILT","KILLER","PROOF","REVENGE","LEGACY","BLACKMAIL"],w=ws[Math.floor(Math.random()*ws.length)];let k=3+Math.floor(Math.random()*20);
+    const enc=s=>w.replace(/[A-Z]/g,ch=>String.fromCharCode((ch.charCodeAt(0)-65+s)%26+65));
+    o.box.innerHTML='<div class="big" id="cpT"></div><div class="rowb"><button type="button" class="btn ghost dk" id="cpL">◀ Turn</button><button type="button" class="btn ghost dk" id="cpR">Turn ▶</button></div><button type="button" class="btn" id="cpOk">This is the word</button>';
+    const up=()=>{$("#cpT").textContent=enc(k)};up();
+    $("#cpL").onclick=()=>{k=(k+25)%26;up();beep(260,.04)};$("#cpR").onclick=()=>{k=(k+1)%26;up();beep(300,.04)};
+    $("#cpOk").onclick=()=>{if(k===0)o.done();else{beep(160,.2);buzz(120);toast("That's not a word. Keep turning.")}}},
+  radio(o){const msg="I SAW IT ALL BY THE STREETLAMP",noise="#%&@/=*?",tg=8+Math.floor(Math.random()*84);let hold=0,last=0,acc=1;
+    o.box.innerHTML='<div class="big" id="rdT" style="font-size:18px;letter-spacing:.08em"></div><input type="range" id="rdR" min="0" max="100" value="'+(tg>50?4:96)+'" aria-label="Frequency"><div class="xp" style="width:100%;background:#c9bfa6"><i id="rdB" style="width:0%"></i></div>';
+    const f=ts=>{const dt=Math.min(.2,(ts-last)/1000)||0;last=ts;acc+=dt;const d=Math.abs(+$("#rdR").value-tg);hold=d<=2?hold+dt:0;
+      if(acc>.1){acc=0;const p=d<=2?0:Math.min(1,d/22);$("#rdT").textContent=msg.replace(/[A-Z]/g,ch=>Math.random()<p?noise[Math.floor(Math.random()*8)]:ch);$("#rdB").style.width=Math.round((1-p)*100)+"%"}
+      if(hold>=1.2)return o.done();mg.raf=requestAnimationFrame(f)};mg.raf=requestAnimationFrame(f)},
+  tiles(o){const c=o.canvas(),g=c.getContext("2d"),src=document.createElement("canvas");src.width=src.height=260;const s=src.getContext("2d");
+    s.fillStyle="#ece4d2";s.fillRect(0,0,260,260);s.strokeStyle="#1b2233";s.lineWidth=3;s.strokeRect(12,12,236,236);
+    s.fillStyle="#d8503f";s.save();s.translate(200,60);s.rotate(.6);s.fillRect(-22,-22,44,44);s.restore();
+    s.beginPath();s.arc(60,66,26,0,7);s.lineWidth=4;s.stroke();
+    s.fillStyle="#1b2233";s.textAlign="center";s.font="28px 'Special Elite',monospace";s.fillText(G.c.ev[o.t.idx].title,130,130);s.font="15px 'Special Elite',monospace";s.fillText("EXHIBIT "+(o.t.idx+1),130,156);
+    s.lineWidth=1;for(let i=0;i<8;i++){s.beginPath();s.moveTo(30,180+i*8);s.lineTo(70+((i*53)%160),180+i*8);s.stroke()}
+    let p;do{p=shuffle([0,1,2,3,4,5,6,7,8],Math.random)}while(p.every((v,i)=>v===i));let pick=-1,fin=false;const T=260/3;
+    const dr=()=>{g.clearRect(0,0,260,260);p.forEach((v,i)=>{g.drawImage(src,(v%3)*T,Math.floor(v/3)*T,T,T,(i%3)*T,Math.floor(i/3)*T,T,T);g.strokeStyle="#101a2b";g.lineWidth=2;g.strokeRect((i%3)*T+1,Math.floor(i/3)*T+1,T-2,T-2)});
+      if(pick>=0){g.strokeStyle="#f0a63a";g.lineWidth=5;g.strokeRect((pick%3)*T+3,Math.floor(pick/3)*T+3,T-6,T-6)}};dr();
+    c.onpointerdown=e=>{if(fin)return;const q=o.at(e,c),i=Math.min(2,Math.floor(q[0]/T))+3*Math.min(2,Math.floor(q[1]/T));
+      if(pick<0)pick=i;else{const a=p[pick];p[pick]=p[i];p[i]=a;pick=-1;beep(300,.05)}dr();
+      if(p.every((v,k)=>v===k)){fin=true;mg.tm.push(setTimeout(o.done,600))}}},
+  dust(o){o.box.innerHTML='<div class="dustw"><div>'+esc(G.c.ev[o.t.idx].title)+'</div><canvas width="260" height="260"></canvas></div>';const c=o.box.querySelector("canvas"),g=c.getContext("2d");
+    g.fillStyle="#3a4a66";g.fillRect(0,0,260,260);for(let i=0;i<500;i++){g.fillStyle=i%2?"#4a5b79":"#2d3b55";g.fillRect(Math.random()*260,Math.random()*260,6,3)}
+    g.globalCompositeOperation="destination-out";const cells=new Set();let down=false;
+    const rub=e=>{if(!down)return;const q=o.at(e,c);g.beginPath();g.arc(q[0],q[1],26,0,7);g.fill();cells.add(Math.floor(q[0]/33)+"_"+Math.floor(q[1]/33));if(cells.size>=34){c.onpointermove=null;o.done()}};
+    c.onpointerdown=e=>{down=true;rub(e)};c.onpointermove=rub;c.onpointerup=()=>{down=false}}
+};
+function puzzle(t){
+  const rare=t.id!=null,wit=rare||t.kind==="wit";walkTo=null;
+  const key=mgKey(t),I=(rare&&T.mgRare[key])||INFO[key];
+  sheet('<div class="eyebrow">'+(rare?"A rare shadow":esc(t.name)+(wit?" · "+esc(t.persona):" · evidence"))+'</div><h2>'+I[0]+'</h2><p id="mgHint">'+I[1]+'</p><div id="mgbox"></div><div id="mgOut"></div><button type="button" class="btn ghost dk" id="mgSkip">Come back later</button>');
+  $("#sheet").dataset.lock="1";$("#sheetBody").onclick=null;
+  $("#mgSkip").onclick=()=>{delete $("#sheet").dataset.lock;closeSheet()};
+  const box=$("#mgbox");let fin=false;
+  const tier=rare?SHADES[t.id][1]:0,col=tier===3?"#f0a63a":tier===2?"#c9a6ea":tier===1?"#ffffff":"#a6ead9";
+  const done=()=>{if(fin)return;fin=true;mg.stop();delete $("#sheet").dataset.lock;$("#mgSkip").hidden=true;buzz(200);beep(880,.35);t.done=true;reveal(t)};
+  const canvas=()=>{box.innerHTML='<canvas class="sq" width="260" height="260"></canvas>';return box.firstChild};
+  const at=(e,c)=>{const b=c.getBoundingClientRect();return[(e.clientX-b.left)/b.width*260,(e.clientY-b.top)/b.height*260]};
+  PLAY[key]({t:t,box:box,done:done,canvas:canvas,at:at,rare:rare,col:col});
+}
+/* ---------- verhaal ---------- */
+const MOT={
+"Iris Vaughan":[["drew up {V}'s will and is the only one who knows what's in it", "The will was changed last week. Twenty years of loyal service, and my name was gone."], ["managed {V}'s money for years, and a sum is missing", "I had borrowed from {V}'s account, meaning to pay it back. {V} checked the figures before I could."]],
+"Reuben Ackroyd":[["owed {V} a great deal of money", "{V} was going to put my father's shop up for auction. I saw no way out."], ["sold {V} meat that never saw an inspector", "{V} kept the receipts and meant to take them to the inspectors. That would have closed the shop."]],
+"Miriam Wolfe":[["heard from {V} that the choir is losing its rehearsal hall", "Thirty years of music, struck out with one signature from {V}. I only wanted to talk."], ["was pushed off the music fund's board by {V}", "{V} called me a thief in front of the whole hall. I went after to set it straight."]],
+"Toby Coles":[["drove {V} every week and heard too much from the back seat", "I knew what {V} was hiding and I named a price. Then it turned, and I was the one who had to be afraid."], ["nearly lost the cab licence over a complaint from {V}", "One complaint from {V} and I was off the road for three months. I wanted it withdrawn, nothing more."]],
+"Fenella Easton":[["fell out with {V} over a poisoned dog", "{V} had dragged my practice through the mud all over the village. That night it got out of hand."], ["treated {V}'s horse, which did not survive", "{V} demanded a sum I could never pay, for an animal nobody could have saved."]],
+"Henry Marsh":[["blames {V} for the pub emptying out", "{V} wanted my licence pulled. That pub is all I have."], ["ran a tab for {V} for years and never saw a penny", "{V} laughed when I showed the bill. Ten years on the slate, and I get laughed at in my own pub."]],
+"Sarah Lindley":[["wrote a piece about {V} that never ran", "{V} bought my source and buried my story. I went to have it out."], ["was being sued by {V}", "{V} wanted a retraction and my job. All I had written was the truth."]],
+"Otto Plum":[["sold {V} an heirloom that turned out to be a fake", "{V} threatened to take that forgery to the police. I couldn't let that happen."], ["valued {V}'s furniture and named far too low a figure", "I wanted that cabinet for myself, for next to nothing. {V} had called in a second valuer."]],
+"Nora Havering":[["signed a permit that {V} knew everything about", "{V} had the paperwork on that permit. One phone call and my career was over."], ["took money from {V} for the election campaign", "{V} wanted something in return that I could not give. Otherwise everyone would learn where the money came from."]],
+"Giles Tarrant":[["has been feuding with {V} over a fence for years", "It stopped being about the fence long ago. {V} laughed at me, and something snapped."], ["repaired {V}'s bicycle and was blamed for a fall", "{V} told everyone my work is a danger to life. Nobody has come to the workshop since."]],
+"Elizabeth Cramer":[["rents the bakery from {V} and was given notice", "Three generations in that building, and {V} wanted to turn it into flats. I went to ask for more time."], ["refused to serve {V} after a row in the shop", "{V} had been telling people there are mice in my bakery. It was a lie, and it cost me half my customers."]],
+"Jeremy Dunn":[["sold {V} a house and kept quiet about the subsidence", "{V} had a survey done and wanted everything back, with interest. That money was long gone."], ["bid on the same property as {V} and lost", "I had staked everything on that building. {V} outbid me on the last day, purely to spite me."]],
+"Anne Forrest":[["was reported to the medical board by {V}", "The complaint was nonsense, but I would have been suspended for months. I asked {V} to withdraw it."], ["once signed a statement for {V} that was not true", "{V} still had that statement and brought it out every time I said no. I wanted it back."]],
+"Dan Skipper":[["had {V}'s boat chained up", "{V} threatened to call my boss about what I let slide in the harbour. I would have been the one in chains."], ["let {V} a mooring that does not appear in the books", "{V} suddenly wanted receipts for all those cash payments. I could not write them without turning myself in."]],
+"Rose Winter":[["delivered flowers from {V} every week to an address nobody was meant to know", "I knew about that address and said so out loud, once. {V} swore I would lose my shop."], ["borrowed money from {V} to open the shop", "The interest went up every year. {V} wanted the shop if I did not pay this month."]],
+"Clive Hooker":[["kept {V}'s books and found something that should not be there", "I should have kept quiet. When I asked about it, {V} pointed out that my signature was on every page."], ["was dismissed by {V} after sixteen years", "Sixteen years, and {V} sent a note of two lines. I wanted to hear it face to face, at least."]],
+"Vera Black":[["hears everything in the salon and passed on something about {V}", "{V} knew the story came from me and meant to take me to court. I went to apologise."], ["nearly lost the salon over a letter from {V}", "{V} complained about my permit. One letter, and I had to close until further notice."]],
+"Abe Thornton":[["worked in {V}'s garden for years and was accused of theft", "I never took a thing from that house. {V} said so anyway, to anyone who would listen."], ["felled a tree that turned out to be {V}'s", "{V} demanded more in damages than I earn in a year. For one tree."]],
+"Hannah Brewer":[["was put forward for dismissal by {V}", "{V} sat on the board and had put my name on the list. I wanted to know why."], ["inherited a house jointly with {V} and refuses to sell", "{V} had found a buyer behind my back. It was my mother's house."]],
+"Stuart Mason":[["failed one of {V}'s buildings on fire safety", "{V} offered money for a signature, and I took it. After that {V} kept wanting more signatures."], ["arrived too late at a fire in {V}'s barn", "{V} blamed me and demanded my dismissal from the council. I was at the station that night, as always."]]};
+function motOf(n){const m=MOT[n]||[["",""]],c=G&&G.c;return m[hashStr(POOL.findIndex(p=>p[0]===n)+"|"+(c?c.seed:0))%m.length]}
+const INTRO={"the sexton":"I was just locking the side door when I heard it.","the bank's night guard":"I sit here every night. I see everything that walks past that cash machine.","the barman":"Last orders had just gone. I was rinsing glasses by the window.","the night porter":"After eleven, nobody gets in here without me seeing.","the pharmacy assistant":"I was on the late shift. Stepped outside for a smoke.","the night bus driver":"I had a ten-minute break. Engine off, window down.","the postman":"I always empty that box last, just before midnight.","the dog walker":"The dog wouldn't go on. He smelled it before I did.","the caretaker":"I came to check the alarm. False alarm, I thought at first.","the shelf stacker":"I was out back by the bins, flattening cardboard.","the librarian":"I was taking the late returns out of the box by the door.","the busker":"I was counting my change under the streetlamp.","the sleepless neighbour":"I haven't slept in years. I sit at the window, with tea.","the pump attendant":"Quiet night. One customer an hour. So I watched the street.","the paper boy":"I was early. Or late, depending how you look at it.","the street sweeper":"I sweep here before the sun comes up. You see things.","the night nurse heading home":"I'd come off my shift and took the short cut.","the angler who can't sleep":"I was walking to the water with my rod.","the baker's boy":"I start at three. I was on my way to the ovens.","the homeless poet":"I was lying in the doorway. Nobody sees me, but I see everyone."};
+const VF={"Cornelius Vermont":["19:10. {V} shuts the ledger. One name is circled in red.","20:00. {V} rings the same number three times. Nobody picks up."],
+"Adele Roseborough":["19:10. {V} takes a painting off the wall and turns its face to the plaster.","20:00. A buyer calls to cancel. {V} throws the phone onto the sofa."],
+"Wesley Digby":["19:10. {V} unrolls the plans on the kitchen table and puts a cross through one plot.","20:00. A stone lands in {V}'s front garden, a note wrapped round it."],
+"Thea Bloom":["19:10. {V} sets a box of old letters on the table and reads one of them twice.","20:00. {V} copies a single letter and hides the original among the cookbooks."]};
+const KF={"Iris Vaughan":["someone clutching a leather folder under one arm","“Twenty years, and then this?”","A broken wax seal is left on the stones."],
+"Reuben Ackroyd":["someone who smells of smoke and brine","“That shop was my father's!”","A crumpled final demand lies in the gutter."],
+"Miriam Wolfe":["someone softly humming a tune","“Thirty years, and you strike it out!”","A sheet of music lies among the bushes."],
+"Toby Coles":["someone whose car is idling up the road","“You said yourself what it was worth!”","A fare receipt lies in the road, no amount filled in."],
+"Fenella Easton":["someone who smells of disinfectant","“You ruined me in this village!”","An empty dog collar lies in the grass."],
+"Henry Marsh":["someone jangling a heavy bunch of keys","“That pub is all I have!”","A beer mat lies on the pavement, a sum written on it."],
+"Sarah Lindley":["someone writing everything down in a notebook","“That story was mine!”","A snapped pencil lies on the stones."],
+"Otto Plum":["someone in white cotton gloves","“Nobody would ever have seen the difference!”","A cracked magnifying glass lies in the gutter."],
+"Nora Havering":["someone who keeps glancing over one shoulder","“That signature was a formality!”","A lapel pin with the council crest lies on the ground."],
+"Giles Tarrant":["someone with grease on both hands","“This stopped being about the fence long ago!”","A valve cap lies on the stones."]};
+const fragList=()=>{const v=VF[G.c.victim[0]]||T.vfD,k=KF[G.c.sus[G.c.killer].name]||T.kfD,m=(STORIES[G.story||"c"]||{}).mid;return[v[0],v[1],(m?m[0]:"20:45. {V} takes something from the safe and slips it into an inside pocket."),(m?m[1]:"21:30. A neighbour sees {V} leave the house. No coat. In a hurry."),"22:15. {V} stands talking to "+k[0]+".","22:50. Voices, getting louder. Someone shouts: "+k[1],(m?m[2]:"23:20. {V} walks on alone and keeps looking back."),"23:40. A dull thud, then footsteps hurrying away. "+k[2]]};
+const vn=s=>s.replace(/\{V\}/g,G.c.victim[0]);
+/* ---------- camera: de schaduw in je eigen straat ---------- */
+function encounter(t){
+  if(t.kind==="evt")return evtOpen(t);if(t.kind==="iv")return ivSheet(t);
+  const wit=t.id!=null||t.kind==="wit",can=navigator.mediaDevices&&navigator.mediaDevices.getUserMedia;walkTo=null;
+  if(!wit||!can||G.cam==="off")return puzzle(t);
+  if(G.cam==="on")return startAR(t);
+  sheet('<div class="eyebrow">Someone is here</div><h2>Look around you</h2><p>Through your camera you see the shadow standing in your own street. Turn until you find it. The picture stays on your phone. Nothing is saved or sent.</p><button type="button" class="btn" id="arYes">Turn camera on</button><button type="button" class="btn ghost dk" id="arNo">Play without camera</button>');
+  $("#sheetBody").onclick=null;
+  $("#arYes").onclick=()=>startAR(t);$("#arNo").onclick=()=>{G.cam="off";puzzle(t)};
+}
+async function startAR(t){
+  let stream;
+  try{
+    if(typeof DeviceOrientationEvent!=="undefined"&&DeviceOrientationEvent.requestPermission){try{await DeviceOrientationEvent.requestPermission()}catch(e){}}
+    stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:"environment"}},audio:false});
+  }catch(e){G.cam="off";toast("No camera available. We'll play without.");return puzzle(t)}
+  G.cam="on";closeSheet();
+  const ar=$("#ar"),v=$("#arV"),c=$("#arC"),g=c.getContext("2d");v.srcObject=stream;v.play().catch(()=>{});ar.hidden=false;
+  const w=ar.clientWidth,h=ar.clientHeight;c.width=w;c.height=h;
+  let head=0,h0=null,beta=80,manual=0,hold=0,last=0,raf=0,got=false,px=null,over=false,t0=0;
+  let off=(Math.random()<.5?-1:1)*(50+Math.random()*70);
+  const tier=t.id!=null?SHADES[t.id][1]:0,col=tier===3?"#f0a63a":tier===2?"#c9a6ea":tier===1?"#ffffff":"#a6ead9";
+  const onO=e=>{const a=e.webkitCompassHeading!=null?e.webkitCompassHeading:(e.alpha!=null?360-e.alpha:null);if(a==null)return;got=true;head=a;if(h0==null)h0=a;if(e.beta!=null)beta=e.beta};
+  addEventListener("deviceorientation",onO);
+  c.onpointerdown=e=>{px=e.clientX};c.onpointermove=e=>{if(px!=null){manual-=(e.clientX-px)*.25;px=e.clientX}};c.onpointerup=()=>{px=null};
+  const end=ok=>{if(over)return;over=true;cancelAnimationFrame(raf);removeEventListener("deviceorientation",onO);stream.getTracks().forEach(x=>x.stop());v.srcObject=null;ar.hidden=true;if(ok){buzz(120);beep(700,.2);puzzle(t)}};
+  $("#arX").onclick=()=>end(false);
+  const f=ts=>{const dt=Math.min(.1,(ts-last)/1000)||0;last=ts;
+    if(!t0)t0=ts;const cur=(got?head-h0:0)+manual;let d=(((off-cur)%360)+540)%360-180;
+    if(ts-t0>9000&&Math.abs(d)>4){off-=Math.sign(d)*Math.min(Math.abs(d),45*dt);d=(((off-cur)%360)+540)%360-180}
+    g.clearRect(0,0,w,h);g.fillStyle="rgba(10,16,30,.38)";g.fillRect(0,0,w,h);
+    const s=Math.min(w,h)*.8,x=w/2+d/60*w,y=h*.56+(got?Math.max(-h*.3,Math.min(h*.3,(beta-80)*h/100)):0);
+    if(Math.abs(d)<55)ghost(g,x,y,s,col,.94);
+    const on=Math.abs(d)<9;hold=on?hold+dt:0;
+    g.strokeStyle="rgba(236,228,210,.7)";g.lineWidth=2;g.beginPath();g.arc(w/2,h/2,46,0,7);g.stroke();
+    if(on){g.strokeStyle="#f0a63a";g.lineWidth=5;g.beginPath();g.arc(w/2,h/2,46,-1.57,-1.57+6.283*Math.min(1,hold));g.stroke()}
+    g.font="20px 'Special Elite',monospace";g.textAlign="center";g.fillStyle="#ece4d2";g.shadowColor="#000";g.shadowBlur=8;
+    g.fillText(on?"Hold still…":d>0?"Turn right ▶":"◀ Turn left",w/2,h*.16);
+    g.font="14px sans-serif";g.fillText(ts-t0>9000?"The shadow is coming to you":"Turn your phone, or drag across the picture",w/2,h*.16+26);
+    if(Math.abs(d)>=30){const sx2=d>0?w-26:26,dir=d>0?1:-1;g.fillStyle="#f0a63a";g.beginPath();g.moveTo(sx2+dir*14,h/2);g.lineTo(sx2-dir*10,h/2-22);g.lineTo(sx2-dir*10,h/2+22);g.fill();g.fillStyle="#ece4d2"}
+    g.shadowBlur=0;
+    if(hold>=1)return end(true);
+    raf=requestAnimationFrame(f)};
+  raf=requestAnimationFrame(f);
+}
+function reveal(t){
+  let h="";
+  if(t.id!=null){const s=SHADES[t.id],isNew=!prof.book[t.id];prof.book[t.id]=(prof.book[t.id]||0)+1;prof.xp+=20*s[1];LS.set("ss_prof",prof);
+    const opts=G.c.wit.map((w,i)=>i).filter(i=>!G.c.wit[i].lie&&!G.tips.includes(i)),ti=opts.length?opts[Math.floor(Math.random()*opts.length)]:-1;let tip="";
+    if(ti>=0&&!G.tips.length){G.tips.push(ti);const p=G.st.find(x=>x.kind==="wit"&&x.idx===ti).persona;tip=`<div class="clue"><em>Tip from the shade</em>Believe ${esc(p)}. That one is telling the truth.</div>`}
+    h=`<div class="eyebrow r${s[1]}">${RN[s[1]]}${isNew?" · new in your book":""}</div><h2>${esc(s[0])}</h2><p>${esc(s[2])}</p>${tip}<p class="note" style="color:#6a6250">+${20*s[1]} points</p>`;
+  }else if(t.kind==="ev"){const e=G.c.ev[t.idx];h=`<div class="clue"><em>Evidence · always true</em><b>${esc(e.title)}</b>${esc(e.text)}</div>`}
+  else{const w=G.c.wit[t.idx];say((INTRO[t.persona]||"")+" "+w.text,t.idx);h=`<div class="clue wit"><em>${esc(t.persona)} · witness</em>“${esc(INTRO[t.persona]||"I just happened to be passing.")} ${esc(w.text)}”</div><p class="note" style="color:#6a6250">One of the five witnesses is lying. This one?</p>`}
+  if(t.id==null){const n=G.st.filter(x=>x.done).length;h+=`<div class="clue" style="border-color:#6a6250;margin-top:8px"><em>The last evening · ${n}/8</em>${esc(vn(fragList()[n-1]))}</div>`}
+  $("#mgHint").hidden=true;$("#mgbox").hidden=true;
+  $("#mgOut").innerHTML=h+(G.grp&&t.id==null?codeHtml(G.st.indexOf(t)):"")+`<button class="btn" id="mgOk" style="margin-top:12px">Continue</button>`;
+  $("#mgOk").onclick=()=>{closeSheet();sel=null;save();if(G.grp&&!G.st.every(s=>s.done)){if(myLeft()===0)toast(T.gAllMine)}else if(G.st.every(s=>s.done))toast("All eight leads in. Open your notebook.")};
+  save();
+}
+
+/* ---------- notitieboek ---------- */
+function noteSheet(tab){
+  if(tab==="g"&&G.grp)return grpSheet();
+  const c=G.c,found=G.st.filter(s=>s.done);
+  let body;
+  if(tab==="v"){const n=found.length;body=`<p>${esc(c.victim[0])}, ${esc(c.victim[1])}. ${esc(c.victim[2])}</p><div class="eyebrow">The last evening · ${n}/8</div><div class="list">`+(fragList().slice(0,n).map(x=>`<div class="clue" style="border-color:#6a6250">${esc(vn(x))}</div>`).join("")||`<p class="note" style="color:#6a6250">Every lead you find gives back a piece of the evening.</p>`)+`</div>`}
+  else if(tab==="s")body=`<p class="note" style="color:#6a6250">Tap a suspect to cross them off.</p><div class="list">`+c.sus.map((s,i)=>susCard(s,i).replace('<div class="sus"',`<button type="button" data-s="${i}" class="sus${G.ms[i]?" out":""}"`).replace(/<\/div>$/,"</button>")).join("")+`</div>`;
+  else{const ev=found.filter(s=>s.kind==="ev"),wi=found.filter(s=>s.kind==="wit");
+    body=`<div class="eyebrow">Evidence ${ev.length}/3 · always true</div><div class="list">`+(ev.map(s=>`<div class="clue"><b>${esc(c.ev[s.idx].title)}</b>${esc(c.ev[s.idx].text)}</div>`).join("")||`<p class="note" style="color:#6a6250">Nothing found yet.</p>`)+`</div>
+    <div class="eyebrow">Witnesses ${wi.length}/5 · one is lying</div><p class="note" style="color:#6a6250">Tap to mark as truth or lie.</p><div class="list">`+(wi.map(s=>`<button type="button" data-w="${s.idx}" class="clue wit m${G.mw[s.idx]}"><em>${esc(s.persona)}${G.tips.includes(s.idx)?" · telling the truth (tip)":""}${G.mw[s.idx]===1?" · truth":G.mw[s.idx]===2?" · lie":""}</em>“${esc(c.wit[s.idx].text)}”</button>`).join("")||`<p class="note" style="color:#6a6250">Nobody questioned yet.</p>`)+`</div>`}
+  sheet(`<h2>Notebook</h2><div class="tabs"><button type="button" data-t="c" aria-selected="${tab==="c"}">Leads</button><button type="button" data-t="s" aria-selected="${tab==="s"}">Suspects</button><button type="button" data-t="v" aria-selected="${tab==="v"}">Story</button>${G.grp?`<button type="button" data-t="g" aria-selected="false">${T.gTab}</button>`:""}</div>${body}${G.grp&&tab==="c"?gotHtml(false):""}${tab==="c"?xHtml():""}<button class="btn ghost" style="color:#1b2233;border-color:#c9bfa6" id="shX">Back to the map</button>`);
+  $("#sheetBody").onclick=e=>{const b=e.target.closest("button");if(!b)return;if(b.dataset.t)noteSheet(b.dataset.t);else if(b.dataset.s){G.ms[b.dataset.s]^=1;noteSheet("s")}else if(b.dataset.w){G.mw[b.dataset.w]=(G.mw[b.dataset.w]+1)%3;noteSheet("c")}else if(b.id==="shX"){closeSheet()}};
+}
+$("#bNote").onclick=()=>noteSheet("c");
+function bookSheet(){
+  sheet(`<h2>Book of Shades</h2><p class="note" style="color:#6a6250">${Object.keys(prof.book).length} of 12 caught. Every case sets three loose.</p><div class="book">`+SHADES.map((s,i)=>prof.book[i]?`<div><b>${esc(s[0])}</b><span class="r${s[1]}">${RN[s[1]]} · ${prof.book[i]}×</span><span>${esc(s[2])}</span></div>`:`<div class="no"><b>???</b><span class="r${s[1]}">${RN[s[1]]}</span></div>`).join("")+`</div><button class="btn ghost" style="color:#1b2233;border-color:#c9bfa6" id="shX">Close</button>`);
+  $("#sheetBody").onclick=e=>{if(e.target.id==="shX")closeSheet()};
+}
+$("#bBook").onclick=bookSheet;
+
+/* ---------- beschuldigen ---------- */
+function accSheet(ps,pw){
+  const c=G.c,left=G.st.filter((s,i)=>!s.done&&!gotI(i)).length,wi=G.st.filter((s,i)=>s.kind==="wit"&&(s.done||gotI(i)));
+  sheet(`<h2>Who did it?</h2>${left?`<p style="color:#a5392c">You are still missing ${left} ${left===1?"lead":"leads"}. You can accuse, but you would be guessing.</p>`:""}
+  <div class="grid2">`+c.sus.map((s,i)=>`<button type="button" data-s="${i}" class="sus${ps===i?" pick":""}${G.ms[i]?" out":""}"><b>${esc(s.name)}</b><small>${esc(s.role)}</small></button>`).join("")+`</div>
+  <div class="eyebrow">And who lied? Worth an extra star</div><div class="list">`+(wi.map(s=>`<button type="button" data-w="${s.idx}" class="sus${pw===s.idx?" pick":""}"><b>${esc(s.persona)}</b></button>`).join("")||`<p class="note" style="color:#6a6250">You have not questioned any witnesses yet.</p>`)+`</div>
+  <button class="btn red" id="accGo" ${ps==null?"disabled":""}>Accuse</button><button class="btn ghost" style="color:#1b2233;border-color:#c9bfa6" id="shX">I'll keep looking</button>`);
+  $("#sheetBody").onclick=e=>{const b=e.target.closest("button");if(!b)return;if(b.dataset.s)accSheet(+b.dataset.s,pw);else if(b.dataset.w)accSheet(ps,pw===+b.dataset.w?null:+b.dataset.w);else if(b.id==="shX")closeSheet();else if(b.id==="accGo")verdict(ps,pw)};
+}
+$("#bAcc").onclick=()=>accSheet(null,null);
+function verdict(ps,pw){
+  const c=G.c;G.tries++;
+  if(ps!==c.killer){if(G.grp&&G.grp.m==="V")toast(T.gPen);buzz([200,100,200]);beep(140,.5);save();
+    sheet(`<div class="eyebrow">Wrong</div><h2>${esc(c.sus[ps].name)} has a watertight alibi</h2><p>The real killer is still out there. Look again at who could have lied. A wrong accusation costs you a star.</p><button class="btn" id="shX">Back to the leads</button>`);
+    $("#sheetBody").onclick=e=>{if(e.target.id==="shX")closeSheet()};return}
+  const min=(Date.now()-G.t0)/60000+(G.grp&&G.grp.m==="V"?5*(G.tries-1):0),s2=pw===c.liar,s3=G.tries===1&&min<=G.par,stars=1+(s2?1:0)+(s3?1:0),xp=100+stars*50,before=rank(prof.xp);
+  const t=today(),y=new Date(Date.now()-864e5),ys=y.getFullYear()+"-"+(y.getMonth()+1)+"-"+y.getDate();
+  if(G.mode==="gps"){if(prof.last!==t){prof.streak=prof.last===ys?prof.streak+1:1;prof.last=t}prof.solved++}
+  prof.xp+=xp;logCase(stars,min);LS.set("ss_prof",prof);LS.del("ss_game_en");buzz([100,50,100,50,300]);beep(660,.2);setTimeout(()=>beep(990,.4),200);
+  let cand=63;c.ev.forEach(e=>cand&=e.mask);const names=c.sus.filter((s,i)=>cand>>i&1).map(s=>s.name).join(", ");
+  const lp=G.st.find(x=>x.kind==="wit"&&x.idx===c.liar).persona,up=rank(prof.xp)>before;
+  sheet(`<div class="eyebrow">Case closed</div><h2>${esc(c.sus[c.killer].name)} confesses</h2><div class="stars">${"★".repeat(stars)}${"☆".repeat(3-stars)}</div>
+  <p>“${esc(vn(motOf(c.sus[c.killer].name)[1]))}”</p>
+  <p>The evidence left: ${esc(names)}. The liar was ${esc(lp)}: “${esc(c.wit[c.liar].text)}” Take that lie out and only ${esc(c.sus[c.killer].name)} fits.</p>
+  <div class="tags"><i>${Math.round(min)} min</i><i>${(G.dist/1000).toFixed(1)} km</i><i>${G.rare.filter(q=>q.done).length}/3 shades</i><i>+${xp} points</i>${G.mode==="gps"?`<i>${prof.streak} ${prof.streak===1?"day":"days"} in a row</i>`:""}</div>
+  ${up?`<p><b>Promoted to ${RANKS[rank(prof.xp)][1]}.</b></p>`:""}${!s2?`<p class="note" style="color:#6a6250">Star missed: name the liar.</p>`:""}${!s3?`<p class="note" style="color:#6a6250">Star missed: right first time, within ${G.par} minutes.</p>`:""}
+  <button type="button" class="btn ghost dk" id="shC">${G.grp?T.gResBtn:T.shBtn}</button><button class="btn" id="shX">Back to the station</button>`);
+  $("#sheet").dataset.lock="1";
+  $("#sheetBody").onclick=e=>{if(e.target.id==="shC"){if(G.grp){shareRes(stars,Math.round(min));return}shareCase(G.code||codeOf(G.story||"c",G.par,G.seed),stars,Math.round(min));return}if(e.target.id==="shX"){delete $("#sheet").dataset.lock;closeSheet();if(watchId!=null){navigator.geolocation.clearWatch(watchId);watchId=null}G=null;home()}};
+}
+/* ---------- levende startpagina: een straat in de regen waar je doorheen loopt ---------- */
+const hv=$("#hero"),hx=hv.getContext("2d");let hw=0,hh=0,heroRaf=0,figHit=null,figT0=0;const par={x:0,y:0,tx:0,ty:0};
+const hr=rngOf(11),arr=(n,f)=>{const a=[];for(let i=0;i<n;i++)a.push(f(i));return a};
+const FAR=arr(22,()=>[hr(),.05+hr()*.11,.03+hr()*.05]),MID=arr(12,i=>[i/12+hr()*.04,.1+hr()*.16,.07+hr()*.05,1+Math.floor(hr()*1e6)]),RAIN=arr(110,()=>[hr(),hr(),.7+hr()*.9]);
+const WHISPER=["“You're too late. Or right on time.”","“I saw nothing. That's what they all say.”","“Don't look at me. Look at who's lying.”","“This street forgets nothing.”","“One of them is standing very close to you tonight.”"];
+function heroSize(){const d=window.devicePixelRatio||1;hw=hv.clientWidth;hh=hv.clientHeight;hv.width=hw*d;hv.height=hh*d}
+function hero(ts){
+  if($("#home").hidden){heroRaf=0;return}
+  const d0=window.devicePixelRatio||1;hx.setTransform(d0,0,0,d0,0,0);
+  const t=ts/1000,w=hw,h=hh;par.x+=(par.tx-par.x)*.06;par.y+=(par.ty-par.y)*.06;
+  const hz=h*.42+par.y*10,vx=w/2-par.x*w*.14,gh=h-hz;
+  let g=hx.createLinearGradient(0,0,0,hz);g.addColorStop(0,"#070c18");g.addColorStop(1,"#1d2e4f");hx.fillStyle=g;hx.fillRect(0,0,w,hz+2);
+  const mx=w*.78-par.x*6,my=h*.13;g=hx.createRadialGradient(mx,my,4,mx,my,90);g.addColorStop(0,"rgba(236,228,210,.95)");g.addColorStop(.18,"rgba(236,228,210,.9)");g.addColorStop(.2,"rgba(236,228,210,.18)");g.addColorStop(1,"rgba(236,228,210,0)");hx.fillStyle=g;hx.fillRect(mx-90,my-90,180,180);
+  hx.fillStyle="#15213a";FAR.forEach(b=>{hx.fillRect((b[0]*1.3-.15)*w-par.x*10,hz-b[1]*h,b[2]*w*1.3,b[1]*h+2)});
+  const cx0=w*.27-par.x*10;hx.fillRect(cx0,hz-h*.24,w*.05,h*.24);hx.beginPath();hx.moveTo(cx0-3,hz-h*.24);hx.lineTo(cx0+w*.025,hz-h*.33);hx.lineTo(cx0+w*.05+3,hz-h*.24);hx.fill();
+  MID.forEach(b=>{const bx=(b[0]*1.3-.15)*w-par.x*28,bw=b[2]*w*1.4,bh=b[1]*h;hx.fillStyle="#0b1322";hx.fillRect(bx,hz-bh,bw,bh+2);
+    const r=rngOf(b[3]),cols=Math.max(2,Math.floor(bw/16)),rows=Math.max(2,Math.floor(bh/20));
+    for(let i=0;i<cols;i++)for(let j=0;j<rows;j++){const on=r()<.22,ph=r()*40;if(on&&Math.sin(t*.7+ph)>-.85){hx.fillStyle="rgba(240,166,58,"+(.5+.3*Math.sin(t*3+ph))+")";hx.fillRect(bx+5+i*16,hz-bh+7+j*20,7,10)}}});
+  g=hx.createLinearGradient(0,hz,0,h);g.addColorStop(0,"#1c2a47");g.addColorStop(1,"#080d18");hx.fillStyle=g;hx.fillRect(0,hz,w,gh);
+  const dep=k=>(((k-t*.35)%8.4)+8.4)%8.4+.7;
+  hx.lineWidth=1;for(let k=0;k<14;k++){const d=dep(k*.6);hx.strokeStyle="rgba(147,166,198,"+Math.min(.3,.35/d)+")";hx.beginPath();hx.moveTo(0,hz+gh/d);hx.lineTo(w,hz+gh/d);hx.stroke()}
+  hx.strokeStyle="rgba(147,166,198,.16)";[-1.5,-.5,.5,1.5].forEach(X=>{hx.beginPath();hx.moveTo(vx,hz);hx.lineTo(vx+X*w*1.3,h);hx.stroke()});
+  const obj=[];for(let k=0;k<6;k++){obj.push([dep(k*1.4),-1]);obj.push([dep(k*1.4+.7),1])}
+  const u=((((t-figT0)%26)+26)%26)/26;obj.push([7-5.3*u,0]);obj.sort((a,b)=>b[0]-a[0]);
+  obj.forEach(o=>{const d=o[0],s=1/d,yb=hz+gh*s;
+    if(o[1]===0){const sz=h*.46*s,x=vx+.1*w*s,al=Math.min(1,u*8,(1-u)*6);ghost(hx,x,yb-sz*.5,sz,"#a6ead9",Math.max(0,al)*.95);figHit={x:x,y:yb-sz*.5,r:sz*.55};return}
+    const x=vx+o[1]*.55*w*s,ph=h*.5*s;hx.save();hx.globalAlpha=Math.max(0,Math.min(1,(9.1-d)/2));
+    hx.fillStyle="rgba(240,166,58,.16)";hx.beginPath();hx.ellipse(x-o[1]*26*s,yb,110*s,20*s,0,0,7);hx.fill();
+    hx.strokeStyle="#05080e";hx.lineWidth=Math.max(1,6*s);hx.beginPath();hx.moveTo(x,yb);hx.lineTo(x,yb-ph);hx.lineTo(x-o[1]*26*s,yb-ph);hx.stroke();
+    const lx=x-o[1]*26*s,ly=yb-ph+6*s,rr=70*s;const gl=hx.createRadialGradient(lx,ly,1,lx,ly,rr);gl.addColorStop(0,"rgba(255,214,140,.95)");gl.addColorStop(.12,"rgba(240,166,58,.55)");gl.addColorStop(1,"rgba(240,166,58,0)");hx.fillStyle=gl;hx.fillRect(lx-rr,ly-rr,rr*2,rr*2);hx.restore()});
+  hx.strokeStyle="rgba(147,166,198,.28)";hx.lineWidth=1;hx.beginPath();RAIN.forEach(r=>{const y=((r[1]+t*r[2]*.9)%1)*h,x=(((r[0]*1.2*w-y*.25-par.x*30)%w)+w)%w;hx.moveTo(x,y);hx.lineTo(x-4,y+15)});hx.stroke();
+  g=hx.createLinearGradient(0,hz-40,0,hz+60);g.addColorStop(0,"rgba(147,166,198,0)");g.addColorStop(.5,"rgba(147,166,198,.13)");g.addColorStop(1,"rgba(147,166,198,0)");hx.fillStyle=g;hx.fillRect(0,hz-40,w,100);
+  g=hx.createLinearGradient(0,h*.6,0,h*.8);g.addColorStop(0,"rgba(16,26,43,0)");g.addColorStop(1,"rgba(16,26,43,.95)");hx.fillStyle=g;hx.fillRect(0,h*.6,w,h*.4);
+  $("#ttl").style.transform="perspective(600px) rotateY("+(par.x*16).toFixed(2)+"deg) rotateX("+(-par.y*9).toFixed(2)+"deg)";
+  heroRaf=still?0:requestAnimationFrame(hero);
+}
+function heroStart(){heroSize();if(!heroRaf)heroRaf=requestAnimationFrame(hero);if(!typeLoop.on){typeLoop.on=true;typeLoop(0,0)}}
+addEventListener("resize",()=>{if(!$("#home").hidden)heroSize()});
+$("#home").addEventListener("pointermove",e=>{par.tx=(e.clientX/innerWidth-.5)*2;par.ty=(e.clientY/innerHeight-.5)*2});
+addEventListener("deviceorientation",e=>{if(e.gamma==null||$("#home").hidden)return;par.tx=Math.max(-1,Math.min(1,e.gamma/30));par.ty=Math.max(-1,Math.min(1,((e.beta||45)-45)/30))});
+$("#home").addEventListener("click",e=>{if(e.target.closest("button")||!figHit)return;const b=hv.getBoundingClientRect();
+  if(Math.hypot(e.clientX-b.left-figHit.x,e.clientY-b.top-figHit.y)<Math.max(36,figHit.r)){toast(WHISPER[Math.floor(Math.random()*WHISPER.length)]);beep(170,.5);buzz(60);figT0=performance.now()/1000}});
+const LINES=["Someone on your street lied tonight.","Eight leads. Five witnesses. One liar.","The killer knows this neighbourhood. So do you.","It's {T}. The trail is going cold.","Tap the shadow, if you dare."];
+function typeLoop(i,n){
+  if($("#home").hidden){typeLoop.on=false;return}
+  const d=new Date(),s=LINES[i].replace("{T}",String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0"));
+  $("#typed").textContent=s.slice(0,n)+(n<s.length?"▌":"");
+  if(still){$("#typed").textContent=s;return}
+  setTimeout(()=>n<s.length?typeLoop(i,n+1):typeLoop((i+1)%LINES.length,0),n<s.length?45:2600);
+}
+/* regen als geluid */
+let rainNode=null;
+$("#snd").onclick=()=>{try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();
+  if(rainNode){rainNode.stop();rainNode=null}
+  else{const buf=AC.createBuffer(1,AC.sampleRate*2,AC.sampleRate),ch=buf.getChannelData(0);for(let i=0;i<ch.length;i++)ch[i]=Math.random()*2-1;
+    const src=AC.createBufferSource(),fl=AC.createBiquadFilter(),gn=AC.createGain();src.buffer=buf;src.loop=true;fl.type="bandpass";fl.frequency.value=1400;fl.Q.value=.4;gn.gain.value=.06;src.connect(fl);fl.connect(gn);gn.connect(AC.destination);src.start();rainNode=src}
+  }catch(e){}
+  $("#snd").textContent=rainNode?"Rain on":"Rain off";$("#snd").setAttribute("aria-pressed",rainNode?"true":"false")};
+const GK="ss_game_en",WK="ss_ways_en",T={"pExtra": "Extra case right here", "pBtn": "Go Pro", "pOn": "Pro is active on this device.", "pUsed": "You have played your free case. With Pro you get a new one every day.", "pFree": "Your first case in your own streets is free.", "pH": "A new case every day", "pT": "With Pro you play today's case every day and as many extra cases as you like, wherever you are. You pay once on Ko-fi and get a code there. Enter it below.", "pHave": "I have a code", "pUse": "Enter code", "pOk": "Pro is on. Good luck, detective.", "pBad": "That code is not right. Check it and try again.", "menu": "Paused", "map": "Back to the map", "home": "To the start screen", "wipeG": "Erase this case", "cancel": "Cancel", "saved": "Your case is saved. Pick it up from the start screen.", "wipeQ": "Erase this case?", "wipeT": "The leads and notes from this case will be gone. Your rank and Book of Shades stay.", "wipeY": "Erase the open case", "wipeH": "Erase", "wipeAll": "Erase everything", "allQ": "Erase everything?", "allT": "Your open case, rank, points, streak and Book of Shades will be removed from this device. This cannot be undone.", "allY": "Yes, erase it all", "wiped": "Erased."};
+/* ---------- terug en wissen ---------- */
+function stopWatch(){if(watchId!=null){navigator.geolocation.clearWatch(watchId);watchId=null}}
+function leavePlay(){save();stopWatch();G=null;home()}
+function wipeGame(){LS.del(GK);LS.del(WK);stopWatch();G=null;closeSheet();home();toast(T.wiped)}
+function confirmSheet(title,text,yes,fn){sheet('<h2>'+title+'</h2><p>'+text+'</p><button type="button" class="btn red" id="cfY">'+yes+'</button><button type="button" class="btn ghost dk" id="shX">'+T.cancel+'</button>');
+  $("#sheetBody").onclick=e=>{if(e.target.id==="shX")closeSheet();else if(e.target.id==="cfY")fn()}}
+function menuSheet(){sheet('<h2>'+T.menu+'</h2><button type="button" class="btn" id="mBack">'+T.map+'</button><button type="button" class="btn ghost dk" id="mHome">'+T.home+'</button>'+(G&&G.grp&&!G.grp.free?'<button type="button" class="btn ghost dk" id="mFree">'+T.gFree+'</button>':'')+'<button type="button" class="btn ghost dk" id="mWipe">'+T.wipeG+'</button>');
+  $("#sheetBody").onclick=e=>{const i=e.target.id;if(i==="mBack")closeSheet();else if(i==="mHome"){closeSheet();leavePlay();toast(T.saved)}else if(i==="mFree")confirmSheet(T.gFreeQ,T.gFreeT,T.gFree,()=>{G.grp.free=true;save();closeSheet()});else if(i==="mWipe")confirmSheet(T.wipeQ,T.wipeT,T.wipeY,wipeGame)}}
+function wipeSheet(){const has=!!LS.get(GK,null);sheet('<h2>'+T.wipeH+'</h2>'+(has?'<button type="button" class="btn ghost dk" id="wG">'+T.wipeY+'</button>':'')+'<button type="button" class="btn ghost dk" id="wA">'+T.wipeAll+'</button><button type="button" class="btn" id="shX">'+T.cancel+'</button>');
+  $("#sheetBody").onclick=e=>{const i=e.target.id;if(i==="shX")closeSheet();else if(i==="wG")confirmSheet(T.wipeQ,T.wipeT,T.wipeY,wipeGame);
+    else if(i==="wA")confirmSheet(T.allQ,T.allT,T.allY,()=>{LS.del(GK);LS.del(WK);LS.del("ss_prof");prof={xp:0,streak:0,last:"",solved:0,book:{}};closeSheet();home();toast(T.wiped)})}}
+function goBack(){
+  if(!$("#ar").hidden){$("#arX").click();return true}
+  if(!$("#sheet").hidden){const k=$("#mgSkip");if(k&&!k.hidden)k.click();else if($("#sheet").dataset.lock){const x=$("#shX");if(x)x.click()}else closeSheet();return true}
+  if(!$("#load").hidden)return true;
+  if(!$("#brief").hidden){G=null;home();return true}
+  if(!$("#play").hidden){leavePlay();toast(T.saved);return true}
+  return false}
+try{history.pushState({ss:1},"");addEventListener("popstate",()=>{if(goBack()){try{history.pushState({ss:1},"")}catch(e){}}})}catch(e){}
+$("#zM").onclick=menuSheet;$("#bBack").onclick=()=>{goBack()};$("#bWipe").onclick=wipeSheet;
+/* ---------- verhalen, duel via zaakcode, archief ---------- */
+const STORIES={"c": {"n": "The Village", "tag": "The classic series. Twenty villagers, and every one of them had business with the victim."}, "t": {"n": "The Will", "tag": "The Lorne family has gathered. Tomorrow the will is read.", "intro": "The Lorne family is in town for the reading of the will, tomorrow morning at nine.", "mid": ["20:45. {V} lays out a sealed envelope for the solicitor and locks the drawer.", "21:30. The family sits down to dinner. {V}'s chair stays empty.", "23:20. {V} walks on alone, gripping the key to the drawer."], "vic": [["Augusta Lorne", "widow and head of the family", "She had the will rewritten last week and told no one what was in it.", "19:10. {V} sets seven place cards on the dining table and takes one away again.", "20:00. {V} rings the solicitor and asks whether one more sentence can go in."], ["Leopold Lorne", "retired shipowner", "He had summoned the family to tell them who would get nothing.", "19:10. {V} takes the family portrait off the mantelpiece and studies one face for a long time.", "20:00. {V} pours two glasses. The second is never touched."]], "sus": [["Jasper Lorne", "the eldest son", "has been counting on the house by the canal for years", "{V} said the house was going to a charity. I had already mortgaged it.", "someone tapping a signet ring against the lamp post", "“That house is mine, everyone knows it!”", "A crumpled valuation report lies on the stones."], ["Isabel Lorne", "the daughter", "learned this afternoon that she has been cut out of the will", "One quarrel, ten years ago. {V} never forgave it and made me read it in black and white.", "someone running a string of pearls through their fingers", "“Ten years, and still you punish me!”", "A single pearl lies in the gutter."], ["Dexter Rowe", "the son-in-law", "runs the family firm and has made the figures look better than they are", "{V} had seen the real books and meant to say so at the table tomorrow, in front of everyone.", "someone who smells of expensive cigars", "“Not tomorrow, not in front of them all!”", "A half-smoked cigar lies on the pavement."], ["Jane Callis", "the housekeeper", "looked after {V} for twelve years and was promised a legacy", "Twelve years, day and night. My name was not even in the new will.", "someone who smells of beeswax polish", "“Twelve years, and I'm not even in it!”", "A silver teaspoon lies on the stones."], ["Florian Lorne", "the grandson", "borrowed money in {V}'s name", "{V} had found the letter from the bank. I asked for a week. I got an hour.", "someone who keeps checking a phone", "“Give me a week, one week!”", "A betting slip from the racecourse lies on the ground."], ["Rupert Tack", "the family lawyer", "has managed the family fortune for thirty years", "{V} wanted an accountant to look at what I had charged in thirty years. My practice would not have survived it.", "someone hugging a briefcase to their chest", "“Thirty loyal years, and now an accountant?”", "A fountain pen with a gold cap lies on the stones."], ["Odette Marchand", "the unknown niece", "turned up last month with a birth certificate", "That certificate is real. {V} called me a fraud and tried to tear it up.", "someone swearing softly in French", "“I am family, whether you like it or not!”", "A train ticket from Paris lies in the gutter."]]}, "v": {"n": "Final Curtain", "tag": "The Night Theatre plays its last night in town. Not everyone makes the curtain call.", "intro": "The Night Theatre is giving its final performance in this town tonight.", "mid": ["20:45. The curtain goes up. {V} stands in the wings, writing names on a list.", "21:30. Interval. {V} slips out through the stage door, the list in a breast pocket.", "23:20. The applause can be heard out in the street. {V} walks the other way."], "vic": [["Maximilian Brandt", "director of the Night Theatre", "After the curtain call he was going to announce who would not be coming on tour.", "19:10. In the dressing room {V} strikes two names off the cast list.", "20:00. {V} has the set moved one more time. Nobody says a word."], ["Cornelia Dove", "owner of the Night Theatre", "She had put the company up for sale and had told no one yet.", "19:10. {V} counts the ticket takings and locks the box office in person.", "20:00. {V} receives a gentleman with a small case in the office. The door closes."]], "sus": [["Lucas Montaine", "the leading man", "heard that {V} wants to give his part to a younger actor", "Twenty years I filled that house. {V} said my face no longer sells tickets.", "someone whose voice carries across the street", "“Twenty years I filled that house!”", "A handkerchief smeared with greasepaint lies on the stones."], ["Ellen Sawyer", "the understudy", "knows every part by heart and has never once been on stage", "{V} had promised me the opening night. Tonight I heard the same promise had been made to three others.", "someone whispering half-lines from the play", "“You promised me!”", "A script full of underlinings lies in the gutter."], ["Benny Quast", "the set builder", "was blamed by {V} when a lighting rig came down", "I had warned them, in writing. {V} put in the report that it was my fault.", "someone who smells of sawdust and glue", "“I warned you, in black and white!”", "A folding rule lies on the pavement."], ["Delphine Arden", "the costume designer", "has been waiting months for her money from {V}", "I had paid for the fabrics myself. {V} laughed and said art does not do invoices.", "someone with a tape measure round their neck", "“Art does do invoices!”", "A pincushion lies in the grass."], ["Miles Seaton", "the playwright", "wrote the play and saw his name vanish from the poster", "My play, word for word. {V} had another name printed above it.", "someone with a sheaf of loose pages under one arm", "“Every word of it is mine!”", "A page of crossed-out lines lies on the stones."], ["Marian Pearce", "the company manager", "signed the loans for the tour", "The company was bankrupt and {V} knew it. My house was the security.", "someone adding up sums out loud", "“My house is on the line, do you understand?”", "An endless strip of adding-machine paper lies on the ground."], ["Sacha Wynd", "the prompter", "hears everything that is said behind the curtain in the dark", "I knew about the fire insurance on the theatre. {V} offered money for my silence and took it back a day later.", "someone who only ever speaks in a whisper", "“I'll whisper it all over town if I must!”", "A pocket torch lies in the gutter, still lit."]]}, "k": {"n": "Fairground Night", "tag": "Last night of the fair. At midnight the lights go out.", "intro": "The fair is in town for its last night.", "mid": ["20:45. {V} goes from stall to stall with a cash box and a notebook.", "21:30. The lights on the big wheel go out. {V} leaves the ground, the cash box under one arm.", "23:20. The carousel music stops. {V} stands alone under a streetlamp, counting."], "vic": [["Aaron Millcombe", "fairground boss", "He handed out the pitches and never forgot who had talked back.", "19:10. {V} walks the ground with a site plan and crosses out two stalls.", "20:00. {V} stands a long time under the big wheel, looking up."], ["Dora Millcombe", "owner of the fair", "She meant to sell the fair after this season and had told no one yet.", "19:10. {V} pins a notice up in the caravan: tomorrow, 8 o'clock, everyone present.", "20:00. An envelope is passed to {V} through the caravan window. {V} hands it back unopened."]], "sus": [["Silas Reeve", "the dodgems boss", "has had the worst pitch on the ground for three years", "Three years behind the toilet wagons. {V} said I should be grateful to be there at all.", "someone with a jingling bag of tokens", "“Three years at the back, and now this!”", "A dodgem token lies on the stones."], ["Mona Lisle", "the fortune teller", "foretold an accident and was blamed by {V} when it happened", "{V} told everyone I brought the fair bad luck. Nobody came into my tent any more.", "someone whose bracelets clink at every step", "“I saw this coming, and so did you!”", "A tarot card lies in the gutter: the Tower."], ["Jack Finch", "the big wheel mechanic", "signed inspection papers that are not true", "{V} had me sign for an axle that has been worn out for years. If it went wrong, mine was the only name on it.", "someone with a tool bag slung over one shoulder", "“It's my name on it, not yours!”", "A nut the size of a fist lies on the pavement."], ["Bibi Cockle", "the candyfloss seller", "borrowed money from {V} for a new stall", "Every week {V} came for half my takings. This week {V} wanted all of it.", "someone who smells of burnt sugar", "“Half was the deal. Half!”", "A pink candyfloss stick lies in the grass."], ["Hugo Starr", "the strongman", "was on the poster for twenty years until {V} took him off it", "{V} said nobody pays any more to watch an old man bend a bar.", "someone with a neck as wide as a doorpost", "“I carried this fair!”", "A horseshoe bent out of shape lies on the stones."], ["Ravi Blue", "the shooting gallery man", "saw {V} count the takings with two sets of books", "I asked for my share, for keeping quiet. {V} threatened to hand my licence back to the council.", "someone with a plush bear under one arm", "“Two sets of books. I saw them both!”", "A cork from a fairground rifle lies in the gutter."], ["Nell Oldham", "the cashier", "has counted {V}'s money for thirty years", "Money went missing and {V} pointed at me. After thirty years. I never took a penny too many.", "someone with a roll of tickets round one wrist", "“Thirty years, and you call me a thief!”", "A torn admission ticket lies on the ground."]]}},SID=["c","t","v","k"];
+Object.assign(T,{"stEy": "Choose your series", "stMore": "A series is a world with a fixed cast of suspects. Every case in it is new: a different victim, a different killer, a different liar.", "bCode": "Enter a case code", "bArch": "Case archive", "dEy": "Duel", "dH": "Play the same case", "dT": "Every case has a code. Enter someone else's code and you get the same suspects, the same evidence and the same liar, at places in your own neighbourhood. Who cracks it fastest?", "dGo": "Start this case", "dBad": "That case code does not exist. Check it and try again.", "shBtn": "Challenge someone with this case", "shTxt": "Murder Walk: I solved case {c} with {s} in {m} minutes. Same case, your own streets. Can you beat that?", "copied": "Challenge copied.", "copyP": "Copy this challenge:", "aH": "Case archive", "aMed": "Medals per series", "aSolved": "solved", "aLast": "Recent cases", "aNone": "No case solved yet. Your first will appear here.", "aTip": "Tap a case to replay it or pass the code on.", "close": "Close", "dec": ".", "pH": "Three more series, a new case every day", "pT": "With Pro you play today's case every day and as many extra cases as you like, wherever you are. You also get three more series: The Will, Final Curtain and Fairground Night. Each series has its own world and its own suspects, and keeps producing new cases. You pay once through Ko-fi and get a code there. Enter it below.", "vfD": ["19:10. {V} draws the curtains, earlier than usual.", "20:00. {V} takes a phone call and says almost nothing back."], "kfD": ["someone who keeps their face turned from the streetlamp", "“I won't let this happen!”", "Nothing is left on the stones but one wet footprint."]});Object.assign(VF,{"Bernard Slater": ["19:10. {V} sticks a lot number on a crate and writes no name beside it.", "20:00. An offer comes to {V}'s door and is turned down, the envelope unopened."], "Margaret Haslett": ["19:10. {V} leafs through an old address book and puts a cross by three names.", "20:00. {V} writes a letter, reads it through and pockets it without a stamp."], "Everett King": ["19:10. {V} slips six rent increases into six envelopes.", "20:00. Someone rings {V}'s bell. The door stays shut and the light goes out."], "Lydia Storm": ["19:10. {V} locks up the pharmacy and takes one prescription book home.", "20:00. {V} dials a number, hangs up and dials it again."], "George Hawthorne": ["19:10. {V} takes the key to the club safe off the ring and tucks it into a breast pocket.", "20:00. A note is waiting for {V} in the clubhouse. {V} reads it and tears it in four."], "Philippa Ryder": ["19:10. {V} places a ring in the shop window that was not there this morning.", "20:00. Someone stands a long while at {V}'s shop window and walks on without ringing."], "Martin Shearman": ["19:10. {V} takes one file from the drawer and lays it on top of the pile.", "20:00. {V} rings a former pupil. The call lasts less than a minute."], "Greta Falk": ["19:10. {V} spreads the leases across the table and sets two aside.", "20:00. A tractor crawls past {V}'s house and turns at the end of the lane."]});Object.assign(KF,{"Elizabeth Cramer": ["someone with flour on both sleeves", "“Three generations, and you sweep it away!”", "A torn bread bag lies on the pavement."], "Jeremy Dunn": ["someone toying with a bunch of labelled keys", "“That money is gone!”", "A business card lies in the gutter, one corner soaked."], "Anne Forrest": ["someone carrying a doctor's bag", "“Withdraw it, and then we talk!”", "A blank prescription slip lies on the ground."], "Dan Skipper": ["someone who smells of tar and diesel", "“Then I'm the one in chains!”", "A length of tarred rope lies on the stones."], "Rose Winter": ["someone with pruning shears on their belt", "“You are not taking my shop!”", "A snapped white lily lies in the gutter."], "Clive Hooker": ["someone with ink stains on their fingers", "“Sixteen years, and this is my thanks?”", "A till receipt covered in pencil marks lies on the ground."], "Vera Black": ["someone who smells of hairspray", "“One letter, and it all shut down!”", "A comb with a broken tooth lies on the pavement."], "Abe Thornton": ["someone with soil under their fingernails", "“I never deserved that!”", "A reel of garden wire lies in the grass."], "Hannah Brewer": ["someone with chalk on their fingers", "“Behind my back, after all these years!”", "A red pen without its cap lies on the stones."], "Stuart Mason": ["someone with a pager on their belt", "“This has to end somewhere!”", "A loose uniform button lies in the road."]});
+SID.forEach(id=>{const s=STORIES[id];if(!s.sus)return;s.pool=s.sus.map(x=>[x[0],x[1]]);s.sus.forEach(x=>{MOT[x[0]]=[[x[2],x[3]]];KF[x[0]]=[x[4],x[5],x[6]]});s.vic.forEach(x=>{VF[x[0]]=[x[3],x[4]]})});
+let NEXT=LS.get("ss_story","c"),RUN="c";if(!STORIES[NEXT])NEXT="c";
+const HZ=(location.hash||"").match(/z=([A-Za-z0-9-]+)/);
+function canStory(id){return id==="c"||isPro()}
+function pickS(){return canStory(NEXT)?NEXT:"c"}
+function codeOf(sid,par,seed){return sid.toUpperCase()+(par<=45?"S":"L")+"-"+(seed>>>0).toString(36).toUpperCase()}
+function parseCode(v){const c=proNorm(v);if(c.length<3||c.length>9)return null;const sid=c[0].toLowerCase(),seed=parseInt(c.slice(2),36);
+  if(!STORIES[sid]||!/[SL]/.test(c[1])||!(seed>=0)||seed>4294967295)return null;return{sid,short:c[1]==="S",seed}}
+function setLen(short){const b=document.querySelectorAll("#len button")[short?0:1];if(b)b.click()}
+function storyUI(){
+  if(!canStory(NEXT))NEXT="c";const b=prof.best||{};
+  $("#stories").innerHTML=SID.map(id=>'<button type="button" data-id="'+id+'" aria-pressed="'+(id===NEXT)+'">'+(canStory(id)?"":"🔒 ")+esc(STORIES[id].n)+(b[id]?" "+"★".repeat(b[id]):"")+'</button>').join("");
+  $("#stTag").textContent=STORIES[NEXT].tag+" "+T.stMore}
+$("#stories").onclick=e=>{const b=e.target.closest("button");if(!b)return;const id=b.dataset.id;if(!canStory(id)){proSheet();return}NEXT=id;LS.set("ss_story",id);storyUI()};
+$("#bGps").onclick=()=>{if(locked())return proSheet();GRP=null;RUN=pickS();startGps(hashStr(today()))};
+$("#bRandom").onclick=()=>{if(locked())return proSheet();GRP=null;RUN=pickS();startGps(Math.floor(Math.random()*4e9))};
+$("#bDemo").onclick=()=>{GRP=null;RUN=pickS();const w=demoWorld();build(Math.floor(Math.random()*4e9),"demo",w.pois,w.ways,null)};
+function codeSheet(pre){
+  sheet('<div class="eyebrow">'+T.dEy+'</div><h2>'+T.dH+'</h2><p>'+T.dT+'</p><input class="inp" id="dCode" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="'+T.bCode+'" value="'+esc(pre||"")+'"><button type="button" class="btn" id="dOk">'+T.dGo+'</button><p class="note" id="dMsg" style="color:#a5392c"></p><button type="button" class="btn ghost dk" id="shX">'+T.cancel+'</button>');
+  const go=()=>{const gm=/g=([A-Za-z0-9.%~_!'()*-]+)/.exec($("#dCode").value);if(gm){grpOpen(gm[1]);return}const p=parseCode($("#dCode").value);if(!p){$("#dMsg").textContent=T.dBad;buzz(120);return}if(locked()||!canStory(p.sid)){proSheet();return}closeSheet();setLen(p.short);GRP=null;RUN=p.sid;startGps(p.seed)};
+  $("#sheetBody").onclick=e=>{if(e.target.id==="shX")closeSheet();else if(e.target.id==="dOk")go()};
+  $("#dCode").onkeydown=e=>{if(e.key==="Enter")go()}}
+$("#bCode").onclick=()=>codeSheet("");
+function shareCase(code,stars,min){
+  const url=location.origin+location.pathname+"#z="+code,txt=T.shTxt.replace("{c}",code).replace("{s}","★".repeat(stars)).replace("{m}",min),all=txt+" "+url;
+  if(navigator.share){navigator.share({text:txt,url:url}).catch(()=>{});return}
+  try{navigator.clipboard.writeText(all).then(()=>toast(T.copied),()=>prompt(T.copyP,all))}catch(e){prompt(T.copyP,all)}}
+function logCase(stars,min){
+  if(G.mode!=="gps")return;const sid=STORIES[G.story]?G.story:"c";
+  prof.best=prof.best||{};prof.cnt=prof.cnt||{};prof.log=prof.log||[];
+  prof.best[sid]=Math.max(prof.best[sid]||0,stars);prof.cnt[sid]=(prof.cnt[sid]||0)+1;
+  prof.log.unshift({d:today(),s:sid,c:G.code||codeOf(sid,G.par,G.seed),st:stars,m:Math.round(min),km:Math.round(G.dist/100)/10,v:G.c.victim[0]});
+  if(prof.log.length>40)prof.log.length=40}
+function archSheet(){
+  const log=prof.log||[],b=prof.best||{},n=prof.cnt||{},st=k=>"★".repeat(k||0)+"☆".repeat(3-(k||0));
+  sheet('<h2>'+T.aH+'</h2><div class="eyebrow">'+T.aMed+'</div><div class="book" style="grid-template-columns:1fr 1fr">'+SID.map(id=>'<div'+(n[id]?'':' class="no"')+'><b>'+esc(STORIES[id].n)+'</b><span class="r3">'+st(b[id])+'</span><span>'+(n[id]||0)+' '+T.aSolved+'</span></div>').join("")+'</div><div class="eyebrow">'+T.aLast+'</div><div class="list">'+
+    (log.map(x=>'<button type="button" class="sus" data-c="'+esc(x.c)+'"><b>'+esc(x.v)+'</b><small>'+esc((STORIES[x.s]||STORIES.c).n)+' · '+esc(String(x.d).split("-").reverse().join("-"))+' · '+x.m+' min · '+String(x.km).replace(".",T.dec)+' km</small><div class="tags"><i>'+st(x.st)+'</i><i>'+esc(x.c)+'</i></div></button>').join("")||'<p class="note" style="color:#6a6250">'+T.aNone+'</p>')+
+    '</div>'+(log.length?'<p class="note" style="color:#6a6250">'+T.aTip+'</p>':'')+'<button type="button" class="btn ghost dk" id="shX">'+T.close+'</button>');
+  $("#sheetBody").onclick=e=>{if(e.target.id==="shX"){closeSheet();return}const r=e.target.closest("[data-c]");if(r)codeSheet(r.dataset.c)}}
+$("#bArch").onclick=archSheet;
+
+/* ---------- groepsspel zonder server: samen of teams tegen elkaar ---------- */
+Object.assign(T,{"bGrp": "Group case", "gH": "One case, several phones", "gT": "You create the case right here and send the link to the others. Everyone gets the same case at the same places. Every player needs Pro.", "gMode": "Game type", "gModeS": "Together", "gModeV": "Team against team", "gCnt": "Number of players", "gPls": "players", "gYou": "You are", "gYouS": "you", "gPl": "Player", "gTeam": "Team", "gOf": "of", "gWe": "our group", "gMake": "Create the case", "gJoinH": "You have been invited", "gJoin": "Join", "gInv": "Send the invitation", "gInvTxt": "Murder Walk: join our group case. Open this link on your phone and pick your place in the group.", "gCopied": "Copied.", "gBadL": "That invitation is not valid. Ask for the link again.", "gFar": "You are far from this group's starting point. The leads are over there.", "gRuleS": "The eight leads are shared out. You can only open your own. Pass the lead codes to each other and solve the case together.", "gRuleV": "Each team holds four leads. Trade lead codes with the other team, honestly or not: you may hand over a false lead. If you don't trust it, walk their leads yourself once your own four are in. A wrong accusation costs five minutes.", "gLockS": "This lead belongs to player {n}. Ask for the lead code.", "gLockV": "This lead belongs to team {n}. Trade for it, or finish your own leads first.", "gRadar": "Your leads are in. Swap codes with the others.", "gAllMine": "Your leads are in. Open your notebook, Group tab.", "gCodeEy": "Lead code for your group", "gCodeV": "Share with the other team from your notebook, Group tab: true or false.", "gTab": "Group", "gIn": "Enter a lead code", "gAdd": "Add", "gBadC": "That lead code does not belong to this case.", "gOwn": "You already found that lead yourself.", "gAdded": "Lead added.", "gGot": "Leads received", "gNoGot": "Nothing received yet.", "gTap": "Tap a received lead to mark it true or a lie.", "gMay": "may be false", "gOkC": "checked, it holds", "gLieC": "checked, this was false", "gTrue": "true", "gLie": "lie", "gMine": "Your leads to share", "gNoMine": "No lead found yet.", "gShare": "Share this lead", "gFake": "Make a false lead", "gFakeH": "False lead", "gFakeT": "Whoever enters this code sees this. It cannot be told apart from the real thing.", "gFakeS": "Share the false lead", "gFakeN": "Another lie", "gBackG": "Back to Group", "gMsg": "Murder Walk, lead at {p}: code {c}", "gAll": "All eight leads", "gStOpen": "still open", "gStDone": "found", "gStGot": "received", "gFree": "Release all leads", "gFreeQ": "Release all leads?", "gFreeT": "Has someone dropped out? From now on you can open every lead yourself.", "gBack": "Back to the notebook", "gResBtn": "Share your result", "gRes": "Murder Walk, case {c}: {w} solved it in {m} minutes with {s}, done at {t}.", "gPen": "Wrong. Five minutes' penalty.", "alibi": "{N} was with me all evening. Couldn't have done it."});
+Object.assign(T,{"gT": "You create the case right here and send the link to the others. Everyone gets the same case at the same places. The others join for free, on up to 10 phones.", "gPair": "you share player {n}'s leads", "gpH": "Play as a group", "gpT": "A group pass lets you create group cases for {u} hours, for up to {n} phones. Only you need the pass. The others join for free through your invitation. You buy the pass through Ko-fi and get a code there. Enter the code within 7 days of purchase. The {u} hours start the moment you enter it below.", "gpBtn": "Buy a group pass", "gpOn": "Group pass active, {h} hours left.", "gpOk": "Group pass active. You have {u} hours.", "pExp": "That code has expired or been withdrawn.", "pUsedC": "That group code has already been used on this device.", "pWait": "Fetching the codes…", "pNoNet": "The codes could not be fetched. Check your connection and try again."});
+let GRP=null;
+const HG=(location.hash||"").match(/g=([A-Za-z0-9.%~_!'()*-]+)/),B32="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+const b36=(n,w)=>Math.round(n).toString(36).padStart(w,"0");
+function gotI(i){return !!(G&&G.grp&&G.grp.got[i]!=null)}
+function myLeft(){const g=G.grp;return G.st.filter((s,i)=>g.own[i]===g.me&&!s.done).length}
+function canOpen(s){const g=G&&G.grp;if(!g||g.free)return true;const i=G.st.indexOf(s);if(i<0||g.own[i]===g.me)return true;return g.m==="V"&&myLeft()===0}
+function ownTag(i){const g=G.grp;return g.m==="V"?T.gTeam+" "+"AB"[g.own[i]]:T.gPl+" "+(g.own[i]+1)}
+function lockHint(s){const g=G.grp,i=G.st.indexOf(s);return(g.m==="V"?T.gLockV:T.gLockS).replace("{n}",g.m==="V"?"AB"[g.own[i]]:g.own[i]+1)}
+function mkGrp(seed){const p=shuffle([0,1,2,3,4,5,6,7],rngOf(seed^0x2545f491)),own=[];const k=Math.min(GRP.n,8);p.forEach((i,j)=>own[i]=j%k);return{m:GRP.m,n:GRP.n,me:GRP.me%k,ph:GRP.me,own,got:{},tm:{},free:false}}
+function meTxt(){const g=G.grp;return g.m==="V"?T.gModeV+" · "+T.gTeam.toLowerCase()+" "+"AB"[g.me]:T.gModeS+" · "+T.gPl.toLowerCase()+" "+((g.ph==null?g.me:g.ph)+1)+" "+T.gOf+" "+g.n+(g.ph>=8?" · "+T.gPair.replace("{n}",g.me+1):"")}
+function glink(){const g=G.grp,o=G.origin;return location.origin+location.pathname+"#g="+[(G.story||"c")+(G.par<=45?"s":"l")+g.m.toLowerCase()+g.n.toString(36),(G.seed>>>0).toString(36),b36(o.lat*1e5+9e6,5),b36(o.lon*1e5+18e6,5),G.st.map(s=>b36(s.x+3000,3)+b36(s.y+3000,3)+b36(PRI.indexOf(s.type),1)).join(""),encodeURIComponent(G.st.map(s=>(s.nm||"").replace(/[~.]/g," ")).join("~"))].join(".")}
+function parseG(v){
+  const p=String(v).split(".");if((p.length!==5&&p.length!==6)||p[4].length!==56||p[0].length!==4)return null;
+  const h=p[0].toLowerCase(),sid=h[0],n=parseInt(h[3],36);if(!STORIES[sid]||!/[sl]/.test(h[1])||!/[sv]/.test(h[2])||!(n>=2&&n<=10))return null;
+  const seed=parseInt(p[1],36),lat=(parseInt(p[2],36)-9e6)/1e5,lon=(parseInt(p[3],36)-18e6)/1e5;if(!(seed>=0)||seed>4294967295||!(Math.abs(lat)<=90)||!(Math.abs(lon)<=180))return null;
+  const st=[];for(let i=0;i<8;i++){const q=p[4].substr(i*7,7),ty=PRI[parseInt(q[6],36)],x=parseInt(q.substr(0,3),36)-3000,y=parseInt(q.substr(3,3),36)-3000;if(!ty||!(Math.abs(x)<=3000)||!(Math.abs(y)<=3000))return null;st.push({x,y,type:ty})}
+  if(p[5]){try{decodeURIComponent(p[5]).split("~").forEach((nm,i)=>{if(st[i])st[i].name=nm.slice(0,40)})}catch(e){}}
+  return{sid,short:h[1]==="s",m:h[2].toUpperCase(),n:h[2]==="v"?2:n,seed,o:[lat,lon],st}}
+function shareTxt(txt,url){const all=url?txt+" "+url:txt;
+  if(navigator.share){navigator.share(url?{text:txt,url:url}:{text:txt}).catch(()=>{});return}
+  try{navigator.clipboard.writeText(all).then(()=>toast(T.gCopied),()=>prompt(T.copyP,all))}catch(e){prompt(T.copyP,all)}}
+function invite(){if(G&&G.grp&&G.origin)shareTxt(T.gInvTxt,glink())}
+function grpBrief(){const b=$("#bInv");b.hidden=!(G.grp&&G.origin);if(!G.grp)return;
+  $("#bfNo").textContent+=" · "+meTxt();$("#bfText").textContent+=" "+(G.grp.m==="V"?T.gRuleV:T.gRuleS)}
+$("#bInv").onclick=invite;
+/* spoorcodes: drie tekens, echt en vals zien er hetzelfde uit */
+function clueCode(i,v){const k=hashStr("k"+G.seed)%64,x=((i*8+v)*37+k)%64,n=x*512+hashStr(G.seed+"|"+x)%512;return B32[n>>10]+B32[n>>5&31]+B32[n&31]}
+function readCode(s){const c=String(s||"").toUpperCase().replace(/[^A-Z0-9]/g,"");if(c.length!==3)return null;let n=0;for(const ch of c){const j=B32.indexOf(ch);if(j<0)return null;n=n*32+j}
+  const x=n>>9,k=hashStr("k"+G.seed)%64;if(hashStr(G.seed+"|"+x)%512!==(n&511))return null;const q=((x-k+64)*45)%64,i=q>>3,v=q&7;return clueOf(i,v)?{i,v}:null}
+function clueOf(i,v){const s=G.st[i],c=G.c;if(!s)return null;
+  if(s.kind==="ev"){const e=c.ev[s.idx];if(!v)return{t:e.title,x:e.text};const o=TR[e.trait].filter(q=>q!==e.val)[v-1];if(!o)return null;const z=evText(e.trait,o);return{t:z[0],x:z[1]}}
+  const w=c.wit[s.idx];if(!v)return{t:s.persona,x:w.text};let x;
+  if(v<7)x=T.alibi.replace("{N}",c.sus[v-1].name);else{const ks=Object.keys(TR),h=hashStr(G.seed+"f"+i),t=ks[h%ks.length];x=witText(t,TR[t][(h>>>8)%TR[t].length])}
+  return x===w.text?null:{t:s.persona,x}}
+function fakeV(i){const o=[];for(let v=1;v<8;v++)if(clueOf(i,v))o.push(v);if(!o.length)return 0;if(o.includes(7)&&Math.random()<.4)return 7;return o[Math.floor(Math.random()*o.length)]}
+function codeHtml(i){return G.grp.m==="V"?'<p class="note" style="color:#6a6250;margin-top:8px">'+T.gCodeV+'</p>':'<div class="clue" style="border-style:dashed;margin-top:8px"><em>'+T.gCodeEy+'</em><b style="font-size:26px;letter-spacing:.18em">'+clueCode(i,0)+'</b></div>'}
+function gotCard(i,tap){const g=G.grp,s=G.st[i],q=clueOf(i,g.got[i]),V2=g.m==="V",chk=s.done?(g.got[i]?T.gLieC:T.gOkC):V2?T.gMay:"",m=g.tm[i]||0;
+  return'<'+(tap?'button type="button" data-g="'+i+'"':'div')+' class="clue'+(s.kind==="wit"?" wit":"")+' m'+m+'"><em>'+esc(s.name)+(s.kind==="wit"?" · "+esc(q.t):"")+(chk?" · "+chk:"")+(m===1?" · "+T.gTrue:m===2?" · "+T.gLie:"")+'</em>'+(s.kind==="ev"?'<b>'+esc(q.t)+'</b>'+esc(q.x):"„"+esc(q.x)+"”")+'</'+(tap?'button':'div')+'>'}
+function gotHtml(tap){const ks=Object.keys(G.grp.got).map(Number).sort((a,b)=>a-b);
+  return'<div class="eyebrow">'+T.gGot+' · '+ks.length+'</div><div class="list">'+(ks.map(i=>gotCard(i,tap)).join("")||'<p class="note" style="color:#6a6250">'+T.gNoGot+'</p>')+'</div>'}
+function grpSheet(msg){
+  const g=G.grp,V2=g.m==="V",done=G.st.map((s,i)=>i).filter(i=>G.st[i].done);
+  sheet('<h2>'+T.gTab+'</h2><p><b>'+esc(meTxt())+'.</b> '+(V2?T.gRuleV:T.gRuleS)+'</p>'+
+    '<div class="eyebrow">'+T.gIn+'</div><input class="inp" id="gIn" maxlength="3" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="'+T.gIn+'"><button type="button" class="btn" id="gAdd">'+T.gAdd+'</button><p class="note" id="gMsg" style="color:#a5392c">'+(msg||"")+'</p>'+
+    gotHtml(true)+(Object.keys(g.got).length?'<p class="note" style="color:#6a6250">'+T.gTap+'</p>':'')+
+    '<div class="eyebrow">'+T.gMine+'</div><div class="list">'+(done.map(i=>{const s=G.st[i],q=clueOf(i,0);return'<div class="clue'+(s.kind==="wit"?" wit":"")+'"><em>'+esc(s.name)+(s.kind==="wit"?" · "+esc(q.t):"")+'</em>'+(s.kind==="ev"?'<b>'+esc(q.t)+'</b>'+esc(q.x):"„"+esc(q.x)+"”")+'<b style="font-size:22px;letter-spacing:.18em;margin-top:6px">'+clueCode(i,0)+'</b><div class="grid2" style="margin-top:6px"><button type="button" class="btn ghost dk sm" data-sh="'+i+'">'+T.gShare+'</button>'+(V2?'<button type="button" class="btn ghost dk sm" data-fk="'+i+'">'+T.gFake+'</button>':'')+'</div></div>'}).join("")||'<p class="note" style="color:#6a6250">'+T.gNoMine+'</p>')+'</div>'+
+    '<div class="eyebrow">'+T.gAll+'</div><div class="list">'+G.st.map((s,i)=>'<div class="sus"><b>'+esc(s.name)+'</b><small>'+esc(ownTag(i))+(g.own[i]===g.me?" ("+T.gYouS+")":"")+' · '+(s.done?T.gStDone:gotI(i)?T.gStGot:T.gStOpen)+'</small></div>').join("")+'</div>'+
+    (G.origin?'<button type="button" class="btn ghost dk" id="gInv">'+T.gInv+'</button>':'')+'<button type="button" class="btn" id="gBack">'+T.gBack+'</button>');
+  const add=()=>{const r=readCode($("#gIn").value);if(!r){$("#gMsg").textContent=T.gBadC;buzz(120);return}if(G.st[r.i].done){$("#gMsg").textContent=T.gOwn;return}g.got[r.i]=r.v;save();beep(660,.2);grpSheet();toast(T.gAdded)};
+  $("#sheetBody").onclick=e=>{const b=e.target.closest("button");if(!b)return;
+    if(b.id==="gBack")noteSheet("c");else if(b.id==="gAdd")add();else if(b.id==="gInv")invite();
+    else if(b.dataset.g){g.tm[b.dataset.g]=((g.tm[b.dataset.g]||0)+1)%3;save();const y=$("#sheetBody").scrollTop;grpSheet();$("#sheetBody").scrollTop=y}
+    else if(b.dataset.sh)shareTxt(T.gMsg.replace("{p}",G.st[b.dataset.sh].name).replace("{c}",clueCode(+b.dataset.sh,0)));
+    else if(b.dataset.fk)fakeSheet(+b.dataset.fk)};
+  $("#gIn").onkeydown=e=>{if(e.key==="Enter")add()}}
+function fakeSheet(i){const v=fakeV(i);if(!v)return grpSheet();const q=clueOf(i,v),s=G.st[i],code=clueCode(i,v);
+  sheet('<div class="eyebrow">'+esc(s.name)+'</div><h2>'+T.gFakeH+'</h2><p>'+T.gFakeT+'</p><div class="clue'+(s.kind==="wit"?" wit":"")+'"><em>'+esc(s.name)+(s.kind==="wit"?" · "+esc(q.t):"")+'</em>'+(s.kind==="ev"?'<b>'+esc(q.t)+'</b>'+esc(q.x):"„"+esc(q.x)+"”")+'<b style="font-size:26px;letter-spacing:.18em;margin-top:6px">'+code+'</b></div><button type="button" class="btn" id="fkS">'+T.gFakeS+'</button><button type="button" class="btn ghost dk" id="fkN">'+T.gFakeN+'</button><button type="button" class="btn ghost dk" id="gBack">'+T.gBackG+'</button>');
+  $("#sheetBody").onclick=e=>{const b=e.target.id;if(b==="gBack")grpSheet();else if(b==="fkN")fakeSheet(i);else if(b==="fkS")shareTxt(T.gMsg.replace("{p}",s.name).replace("{c}",code))}}
+function shareRes(stars,min){const g=G.grp,d=new Date();shareTxt(T.gRes.replace("{c}",G.code).replace("{w}",g.m==="V"?T.gTeam+" "+"AB"[g.me]:T.gWe).replace("{m}",min).replace("{s}","★".repeat(stars)).replace("{t}",String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0")))}
+/* aanmaken en meedoen */
+function seg(id,opts,cur){return'<div class="seg" id="'+id+'" style="grid-template-columns:repeat('+Math.min(opts.length,3)+',1fr)">'+opts.map(o=>'<button type="button" data-v="'+o[0]+'" aria-pressed="'+(String(o[0])===String(cur))+'" style="color:#1b2233;border-color:'+(String(o[0])===String(cur)?"#a5392c":"#c9bfa6")+'">'+o[1]+'</button>').join("")+'</div>'}
+function grpForm(cfg,join){
+  const V2=cfg.m==="V",who=V2?[[0,T.gTeam+" A"],[1,T.gTeam+" B"]]:Array.from({length:cfg.n},(x,i)=>[i,T.gPl+" "+(i+1)]);if(cfg.me>=who.length)cfg.me=0;
+  sheet('<div class="eyebrow">'+T.bGrp+'</div><h2>'+(join?T.gJoinH:T.gH)+'</h2><p>'+(join?esc(STORIES[cfg.sid].n)+" · "+(V2?T.gModeV:T.gModeS+" · "+cfg.n+" "+T.gPls)+". ":T.gT+" ")+(V2?T.gRuleV:T.gRuleS)+'</p>'+
+    (join?'':'<div class="eyebrow">'+T.gMode+'</div>'+seg("gM",[["S",T.gModeS],["V",T.gModeV]],cfg.m)+(V2?'':'<div class="eyebrow">'+T.gCnt+'</div>'+seg("gN",[2,3,4,5,6,7,8,9,10].map(n=>[n,n]),cfg.n)))+
+    '<div class="eyebrow">'+T.gYou+'</div>'+seg("gW",who,cfg.me)+
+    '<button type="button" class="btn" id="gGo">'+(join?T.gJoin:T.gMake)+'</button><button type="button" class="btn ghost dk" id="shX">'+T.cancel+'</button>');
+  $("#sheetBody").onclick=e=>{const b=e.target.closest("button");if(!b)return;const p=b.parentNode.id;
+    if(b.id==="shX")closeSheet();
+    else if(p==="gM"){cfg.m=b.dataset.v;if(cfg.m==="V")cfg.n=2;else if(cfg.n<2)cfg.n=4;grpForm(cfg,join)}
+    else if(p==="gN"){cfg.n=+b.dataset.v;grpForm(cfg,join)}
+    else if(p==="gW"){cfg.me=+b.dataset.v;grpForm(cfg,join)}
+    else if(b.id==="gGo"){if(!join&&!groupLeft()){proSheet("groep");return}closeSheet();
+      if(join){setLen(cfg.short);RUN=cfg.sid;GRP={m:cfg.m,n:cfg.n,me:cfg.me,o:cfg.o,st:cfg.st};startGps(cfg.seed)}
+      else{RUN=pickS();GRP={m:cfg.m,n:cfg.m==="V"?2:cfg.n,me:cfg.me};startGps(Math.floor(Math.random()*4e9))}}}}
+function grpOpen(v){const c=parseG(v);if(!c){toast(T.gBadL);return false}c.me=0;grpForm(c,true);return true}
+$("#bGrp").onclick=()=>{if(!groupLeft())return proSheet("groep");grpForm({m:"S",n:4,me:0},false)};
+
+/* ---------- onderweg: vluchtend bewijs en verhoor ---------- */
+Object.assign(T,{"evName": "Evidence on the run", "evEy": "Now", "evH": "Someone is removing evidence", "evT": "About {d} metres away, someone is trying to make a lead disappear. Get there within {m} minutes and it is yours. A brisk walk will do. Keep watching the traffic.", "evOk": "Go after it", "evLost": "Too late. The evidence is gone.", "evRadar": "Evidence on the run: {t} · {d} m to go", "evHint": "Someone is trying to make this disappear.", "evAct": "Grab the evidence", "evWinEy": "Just in time", "evWinH": "Nobody was meant to find this", "evWinT": "Someone dropped it and vanished into the dark. You have a fourth piece of evidence.", "evTag": "Extra evidence · always true", "ivGo": "{n} is out here. You may ask one question.", "ivHint": "A suspect. You may ask one question.", "ivAct": "Question them", "ivEy": "Interview", "ivT": "You may ask one question. Choose well, because the other one is lost.", "ivRule": "An innocent person tells the truth. The killer lies.", "ivRuleS": "true, unless this is the killer", "ivPre": "I was only passing. But I did see someone.", "ivLater": "Not yet", "ivQ": {"jas": "What coat was that person wearing?", "bril": "Was that person wearing glasses?", "hand": "Which hand did that person use?", "schoen": "What shoes was that person wearing?", "lengte": "How tall was that person?"}, "xXp": "+30 points", "xOn": "Continue", "xNote": "Found along the way"});
+const xFree=()=>Object.keys(TR).filter(t=>!G.c.ev.some(e=>e.trait===t));
+function xTargets(){const X=G.x;if(!X)return[];const o=[];if(X.evt&&X.evt.state==="run")o.push(X.evt);if(X.iv&&!X.iv.done)o.push(X.iv);return o}
+function spot(a,b){const ok=p=>Math.hypot(p.x,p.y)<=G.R*1.1&&G.st.concat(G.rare,xTargets()).every(s=>Math.hypot(s.x-p.x,s.y-p.y)>60),c=[];
+  for(const w of W){if(w.w===9)continue;for(let i=0;i<w.p.length;i+=2){const p={x:w.p[i],y:w.p[i+1]},d=Math.hypot(p.x-P.x,p.y-P.y);if(d>=a&&d<=b&&ok(p))c.push(p)}}
+  if(c.length)return c[Math.floor(Math.random()*c.length)];
+  let best=null;for(let k=0;k<40;k++){const ang=Math.random()*6.283,d=a+Math.random()*(b-a),p={x:Math.round(P.x+Math.cos(ang)*d),y:Math.round(P.y+Math.sin(ang)*d)};if(ok(p))return p;best=p}return best}
+function xTick(){
+  if(!G||G.grp||!G.t0||!G.c)return;const X=G.x=G.x||{},n=G.st.filter(s=>s.done).length;
+  if(X.evt&&X.evt.state==="run"&&Date.now()>X.evt.until&&$("#sheet").hidden){X.evt.state="lost";X.evt.done=true;if(sel===X.evt)sel=null;toast(T.evLost);buzz(200);beep(140,.5);save()}
+  if(!$("#sheet").hidden||!$("#ar").hidden||n>=8)return;
+  if(!X.evt&&n>=2){const p=spot(130,230),d=Math.hypot(p.x-P.x,p.y-P.y),k=xFree(),s=Math.round(d/1.1+40);
+    X.evt={kind:"evt",x:p.x,y:p.y,name:T.evName,state:"run",done:false,until:Date.now()+s*1000,t:k[G.seed%k.length]};
+    save();buzz([120,60,120,60,300]);beep(880,.15);setTimeout(()=>beep(880,.15),220);
+    sheet('<div class="eyebrow" style="color:#a5392c">'+T.evEy+'</div><h2>'+T.evH+'</h2><p>'+T.evT.replace("{m}",Math.ceil(s/60)).replace("{d}",Math.round(d/10)*10)+'</p><button type="button" class="btn" id="shX">'+T.evOk+'</button>');
+    $("#sheetBody").onclick=e=>{if(e.target.id==="shX"){closeSheet();sel=X.evt;V.follow=true;chip()}}}
+  else if(!X.iv&&n>=5&&!(X.evt&&X.evt.state==="run")){const c=G.c;let cand=63;c.ev.forEach(e=>cand&=e.mask);const cs=c.sus.map((s,i)=>i).filter(i=>cand>>i&1),si=cs[hashStr(G.seed+"iv")%cs.length],p=spot(110,220);
+    X.iv={kind:"iv",x:p.x,y:p.y,name:c.sus[si].name,s:si,done:false,q:null};save();buzz([80,60,80]);beep(520,.25);toast(T.ivGo.replace("{n}",c.sus[si].name))}}
+function xAfter(){const e=G&&G.x&&G.x.evt;if(e&&e.state==="run"){const s=Math.max(0,Math.ceil((e.until-Date.now())/1000));$("#radar").textContent=T.evRadar.replace("{t}",Math.floor(s/60)+":"+String(s%60).padStart(2,"0")).replace("{d}",Math.round(dTo(e)))}
+  if(sel&&sel.kind==="evt"){$("#cHint").textContent=T.evHint;if(inRange(sel))$("#cAct").textContent=T.evAct}
+  else if(sel&&sel.kind==="iv"){$("#cHint").textContent=T.ivHint;if(inRange(sel))$("#cAct").textContent=T.ivAct}}
+function xDraw(t){const X=G.x;if(!X)return;const bob=still?0:Math.sin(t/300)*3;
+  if(X.evt&&X.evt.state==="run"){const e=X.evt,x=sx(e.x),y=sy(e.y),k=still?0:(t/700)%1;cx.strokeStyle="rgba(216,80,63,"+(.8-k*.8)+")";cx.lineWidth=2;cx.beginPath();cx.arc(x,y,12+k*22,0,7);cx.stroke();
+    cx.save();cx.fillStyle="#d8503f";cx.translate(x,y+bob*.5);cx.rotate(Math.PI/4);cx.fillRect(-9,-9,18,18);cx.restore();
+    const s=Math.max(0,Math.ceil((e.until-Date.now())/1000));cx.fillStyle="#ece4d2";cx.fillText(T.evName.toUpperCase()+" · "+Math.floor(s/60)+":"+String(s%60).padStart(2,"0"),x,y+36);if(sel===e){cx.strokeStyle="#ece4d2";cx.lineWidth=2;cx.beginPath();cx.arc(x,y,24,0,7);cx.stroke()}}
+  if(X.iv&&!X.iv.done){const e=X.iv,x=sx(e.x),y=sy(e.y);ghost(cx,x,y+bob*.3,40,"#d8503f",.95);cx.fillStyle="#ece4d2";cx.fillText(e.name.toUpperCase(),x,y+42);if(sel===e){cx.strokeStyle="#ece4d2";cx.lineWidth=2;cx.beginPath();cx.arc(x,y,26,0,7);cx.stroke()}}}
+function evtOpen(e){walkTo=null;if(e.state!=="run")return;if(Date.now()>e.until){xTick();return}
+  e.state="won";e.done=true;e.v=G.c.sus[G.c.killer].tr[e.t];prof.xp+=30;LS.set("ss_prof",prof);sel=null;save();buzz([100,50,100,50,300]);beep(660,.2);setTimeout(()=>beep(990,.4),200);
+  const z=evText(e.t,e.v);
+  sheet('<div class="eyebrow">'+T.evWinEy+'</div><h2>'+T.evWinH+'</h2><p>'+T.evWinT+'</p><div class="clue"><em>'+T.evTag+'</em><b>'+esc(z[0])+'</b>'+esc(z[1])+'</div><p class="note" style="color:#6a6250">'+T.xXp+'</p><button type="button" class="btn" id="shX">'+T.xOn+'</button>');
+  $("#sheetBody").onclick=ev=>{if(ev.target.id==="shX")closeSheet()}}
+function ivAns(e,t){const c=G.c,kv=c.sus[c.killer].tr[t];if(e.s!==c.killer)return witText(t,kv);const o=TR[t].filter(v=>v!==kv);return witText(t,o[hashStr(G.seed+"l"+t)%o.length])}
+function ivSheet(e){walkTo=null;const c=G.c,s=c.sus[e.s],k=xFree();
+  if(e.q){const a=ivAns(e,e.q);say(a,e.s);sheet('<div class="eyebrow">'+T.ivEy+'</div><h2>'+esc(s.name)+'</h2><p class="note" style="color:#6a6250">'+T.ivQ[e.q]+'</p><div class="clue wit"><em>'+esc(s.name)+' · '+esc(s.role)+'</em>„'+esc(T.ivPre)+' '+esc(a)+'”</div><p><b>'+T.ivRule+'</b></p><p class="note" style="color:#6a6250">'+T.xXp+'</p><button type="button" class="btn" id="shX">'+T.xOn+'</button>');
+    $("#sheetBody").onclick=ev=>{if(ev.target.id==="shX")closeSheet()};return}
+  sheet('<div class="eyebrow">'+T.ivEy+'</div><h2>'+esc(s.name)+'</h2><p>'+esc(s.role.replace(/^./,m=>m.toUpperCase()))+', '+esc(vn(motOf(s.name)[0]))+'.</p><p>'+T.ivT+' <b>'+T.ivRule+'</b></p>'+k.map(t=>'<button type="button" class="btn ghost dk" data-q="'+t+'">'+T.ivQ[t]+'</button>').join("")+'<button type="button" class="btn ghost dk" id="shX">'+T.ivLater+'</button>');
+  $("#sheetBody").onclick=ev=>{const b=ev.target.closest("button");if(!b)return;if(b.id==="shX"){closeSheet();return}if(b.dataset.q){e.q=b.dataset.q;e.done=true;prof.xp+=30;LS.set("ss_prof",prof);sel=null;save();ivSheet(e)}}}
+function xHtml(){const X=G&&G.x;if(!X)return"";let h="";
+  if(X.evt&&X.evt.state==="won"){const z=evText(X.evt.t,X.evt.v);h+='<div class="clue"><em>'+T.evTag+'</em><b>'+esc(z[0])+'</b>'+esc(z[1])+'</div>'}
+  if(X.iv&&X.iv.q){const s=G.c.sus[X.iv.s];h+='<div class="clue wit"><em>'+T.ivEy+' · '+esc(s.name)+' · '+T.ivRuleS+'</em>'+T.ivQ[X.iv.q]+' „'+esc(ivAns(X.iv,X.iv.q))+'”</div>'}
+  return h?'<div class="eyebrow">'+T.xNote+'</div><div class="list">'+h+'</div>':""}
+
+/* ---------- meer en pittiger minispellen ---------- */
+Object.assign(T,{"mgI": {"code": ["A combination lock", "Crack the code: four different digits from 1 to 6. After each try you see how many digits are in the right place and how many are in the code but somewhere else. You have eight tries."], "cipher": ["A note in cipher", "Two rings. Ring 1 shifts the first, third and fifth letter, ring 2 the ones in between. Turn both until a word appears."], "vault": ["A safe with scribbled notes", "Someone wrote down their attempts. Work out the code of three different digits from those notes."], "pairs": ["Torn slips of paper", "Find the six pairs. You may turn over two slips twelve times."], "pick": ["A lock on the door", "Tap the panel when the light is in the gold zone. Five pins. Miss, and one springs back."], "odd": ["One sign is wrong", "Among all these signs, one is different. Tap it before time runs out. Four rounds. A mistake costs you a round."]}, "mgRare": {"pick": ["The shade is slipping away", "Tap the panel when the light is in the gold zone. Five hits. Miss, and you lose one."], "odd": ["The shade is hiding", "Among all these signs, one is different. Tap it before time runs out. Four rounds. A mistake costs you a round."]}, "mgTry": "Try", "mgLeft": "Tries left: {n}", "mgNew": "The lock snaps back. There is a new code on it.", "mgFb": "{a} in the right place · {b} somewhere else", "mgR1": "Ring 1", "mgR2": "Ring 2", "mgWord": "This is the word", "mgNoWord": "That is not a word. Keep turning.", "mgOpen": "Open the safe", "mgNo": "The safe stays shut.", "mgVnew": "Three misses. There are new notes.", "mgV": ["nothing right", "{n} right, in the right place", "{n} right, in the wrong place"], "mgTurns": "Turns left: {n}", "mgShuf": "Too many turns. The slips are shuffled again.", "mgRound": "Round {n} of 4", "mgW": ["ALIBI", "MOTIVE", "WITNESS", "DECEIT", "GUILT", "KILLER", "PROOF", "REVENGE", "LEGACY", "BLACKMAIL", "SUSPECT", "SHADOW", "LANTERN", "SECRET", "POISON"]});Object.assign(INFO,T.mgI);
+let mgDbg=null;
+function mgKey(t){
+  if(t.id!=null)return["lamp","pick","odd"][(Math.max(0,G.rare.indexOf(t))+G.seed)%3];
+  const r=rngOf(G.seed^0x51f15e),ev=shuffle(["tiles","dust","vault","pairs","odd","code"],r).slice(0,3),w=shuffle(["seq","code","cipher","radio","lamp","pairs","vault","pick"].filter(k=>!ev.includes(k)),r);
+  return t.kind==="ev"?ev[t.idx%3]:w[t.idx%w.length]}
+Object.assign(PLAY,{
+  code(o){let sec,cur,left;
+    const init=()=>{sec=shuffle([1,2,3,4,5,6],Math.random).slice(0,4);cur=[1,2,3,4];left=8;mgDbg={sec};
+      o.box.innerHTML='<div class="dig">'+cur.map((d,i)=>'<button type="button" data-d="'+i+'" style="width:48px">'+d+'</button>').join("")+'</div><button type="button" class="btn" id="cdTry">'+T.mgTry+'</button><p class="note" id="cdL" style="color:#6a6250">'+T.mgLeft.replace("{n}",left)+'</p><div class="hist" id="cdH"></div>';
+      o.box.querySelector(".dig").onclick=e=>{const b=e.target.closest("button");if(!b)return;const i=+b.dataset.d;cur[i]=cur[i]%6+1;b.textContent=cur[i];beep(300,.05)};
+      $("#cdTry").onclick=()=>{const a=cur.filter((d,i)=>d===sec[i]).length,b=sec.filter((d,i)=>cur[i]!==d&&cur.includes(d)).length;
+        if(a===4)return o.done();left--;beep(200,.1);
+        $("#cdH").insertAdjacentHTML("afterbegin",'<div>'+cur.map(d=>'<span class="g0">'+d+'</span>').join("")+' <small style="color:#1b2233">'+T.mgFb.replace("{a}",a).replace("{b}",b)+'</small></div>');
+        if(left<=0){toast(T.mgNew);buzz(150);init()}else $("#cdL").textContent=T.mgLeft.replace("{n}",left)}};
+    init()},
+  cipher(o){const ws=T.mgW,w=ws[Math.floor(Math.random()*ws.length)],k=[3+Math.floor(Math.random()*20),3+Math.floor(Math.random()*20)];if(k[0]===k[1])k[1]=(k[1]+7)%26||5;mgDbg={k};
+    const enc=()=>w.replace(/[A-Z]/g,(ch,i)=>String.fromCharCode((ch.charCodeAt(0)-65+k[i%2])%26+65));
+    o.box.innerHTML='<div class="big" id="cpT"></div>'+[0,1].map(r=>'<div class="rowb" style="align-items:center"><button type="button" class="btn ghost dk" data-r="'+r+'" data-s="25">◀</button><span style="flex:0 0 64px;text-align:center;font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.08em;font-size:13px">'+(r?T.mgR2:T.mgR1)+'</span><button type="button" class="btn ghost dk" data-r="'+r+'" data-s="1">▶</button></div>').join("")+'<button type="button" class="btn" id="cpOk">'+T.mgWord+'</button>';
+    const up=()=>{$("#cpT").textContent=enc()};up();
+    o.box.onclick=e=>{const b=e.target.closest("button");if(!b)return;if(b.id==="cpOk"){if(!k[0]&&!k[1]){o.box.onclick=null;o.done()}else{beep(160,.2);buzz(120);toast(T.mgNoWord)}return}
+      if(b.dataset.r){const r=+b.dataset.r;k[r]=(k[r]+ +b.dataset.s)%26;up();beep(260+r*60,.04)}}},
+  vault(o){const fbk=(s,g)=>{let a=0,b=0;g.forEach((d,i)=>{if(d===s[i])a++;else if(s.includes(d))b++});return[a,b]},all=[];
+    for(let i=0;i<10;i++)for(let j=0;j<10;j++)for(let k=0;k<10;k++)if(i!==j&&j!==k&&i!==k)all.push([i,j,k]);
+    let sec,hints,cur,miss;
+    const gen=()=>{for(;;){sec=all[Math.floor(Math.random()*720)];hints=[];let cand=all;
+      for(let n=0;n<60&&hints.length<5&&cand.length>1;n++){const g=all[Math.floor(Math.random()*720)],f=fbk(sec,g);if(f[0]>=2||(f[0]+f[1]===0&&hints.some(h=>h.f[0]+h.f[1]===0)))continue;
+        const nc=cand.filter(c=>{const x=fbk(c,g);return x[0]===f[0]&&x[1]===f[1]});if(nc.length<cand.length){hints.push({g,f});cand=nc}}
+      if(cand.length===1&&hints.length>=4)return}};
+    const txt=f=>{const p=[];if(f[0])p.push(T.mgV[1].replace("{n}",f[0]));if(f[1])p.push(T.mgV[2].replace("{n}",f[1]));return p.join(", ")||T.mgV[0]};
+    const init=()=>{gen();cur=[0,0,0];miss=0;mgDbg={sec};
+      o.box.innerHTML='<div class="hist" style="align-self:stretch">'+hints.map(h=>'<div>'+h.g.map(d=>'<span class="g0">'+d+'</span>').join("")+' <small style="color:#1b2233">'+txt(h.f)+'</small></div>').join("")+'</div><div class="dig">'+cur.map((d,i)=>'<button type="button" data-d="'+i+'">'+d+'</button>').join("")+'</div><button type="button" class="btn" id="vtOk">'+T.mgOpen+'</button>';
+      o.box.querySelector(".dig").onclick=e=>{const b=e.target.closest("button");if(!b)return;const i=+b.dataset.d;cur[i]=(cur[i]+1)%10;b.textContent=cur[i];beep(300,.05)};
+      $("#vtOk").onclick=()=>{if(cur.every((d,i)=>d===sec[i]))return o.done();miss++;beep(160,.2);buzz(120);if(miss>=3){toast(T.mgVnew);init()}else toast(T.mgNo)}};
+    init()},
+  pairs(o){const SY=["✦","☂","✉","♜","☕","⚓","♞","✂","⚖","☎"];let deck,open,found,turns,lock;
+    const dr=()=>{o.box.innerHTML='<p class="note" style="color:#6a6250">'+T.mgTurns.replace("{n}",turns)+'</p><div id="prG" style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;width:min(264px,100%)">'+deck.map((s,i)=>{const up=found.has(i)||open.includes(i);return'<button type="button" data-i="'+i+'" style="aspect-ratio:3/4;border-radius:4px;font-size:26px;'+(found.has(i)?'background:#d9cfb6;color:#6a6250':up?'background:#fff;color:#1b2233;box-shadow:inset 0 0 0 2px #f0a63a':'background:#1b2233;color:#4a5b79')+'">'+(up?s:"?")+'</button>'}).join("")+'</div>';
+      $("#prG").onclick=e=>{const b=e.target.closest("button");if(!b||lock)return;const i=+b.dataset.i;if(found.has(i)||open.includes(i))return;open.push(i);beep(300,.05);
+        if(open.length<2){dr();return}turns--;
+        if(deck[open[0]]===deck[open[1]]){found.add(open[0]);found.add(open[1]);open=[];beep(600,.12);dr();if(found.size===12){lock=true;mg.tm.push(setTimeout(o.done,500))}else if(turns<=0)fail()}
+        else{lock=true;dr();mg.tm.push(setTimeout(()=>{open=[];lock=false;if(turns<=0)fail();else dr()},850))}}};
+    const init=()=>{deck=shuffle(shuffle(SY,Math.random).slice(0,6).reduce((a,s)=>a.concat([s,s]),[]),Math.random);open=[];found=new Set();turns=12;lock=false;mgDbg={deck};dr()};
+    const fail=()=>{toast(T.mgShuf);buzz(150);init()};init()},
+  pick(o){const c=o.canvas(),g=c.getContext("2d"),N=5;let pins=0,x=30,dir=1,last=0,zone=0,zw=0,flash=0;
+    const nz=()=>{zw=Math.max(o.rare?20:24,(o.rare?44:56)-pins*7);zone=30+Math.random()*(200-zw);mgDbg={get x(){return x},zone,zw}};nz();
+    c.onpointerdown=()=>{if(x>=zone&&x<=zone+zw){pins++;beep(400+pins*90,.1);buzz(40);flash=.25;if(pins>=N){c.onpointerdown=null;return o.done()}nz()}else{pins=Math.max(0,pins-1);beep(150,.2);buzz(120);flash=-.3;nz()}};
+    const f=ts=>{const dt=Math.min(.05,(ts-last)/1000)||0;last=ts;x+=dir*((o.rare?185:145)+pins*36)*dt;if(x>230){x=230;dir=-1}if(x<30){x=30;dir=1}flash=flash>0?Math.max(0,flash-dt):Math.min(0,flash+dt);
+      g.fillStyle=flash<0?"#3a2030":"#182741";g.fillRect(0,0,260,260);
+      for(let i=0;i<N;i++){const set=i<pins;g.fillStyle=set?"#f0a63a":"#4a5b79";g.fillRect(38+i*40,set?52:78,24,set?74:48);g.fillStyle="#101a2b";g.fillRect(38+i*40,126,24,6)}
+      g.fillStyle="#2c3f62";g.fillRect(30,176,200,14);g.fillStyle="#f0a63a";g.fillRect(zone,172,zw,22);
+      g.fillStyle=flash>0?"#a6ead9":"#ece4d2";g.beginPath();g.arc(x,183,9,0,7);g.fill();g.strokeStyle="#101a2b";g.lineWidth=2;g.stroke();
+      g.fillStyle="#ece4d2";g.font="16px 'Special Elite',monospace";g.textAlign="center";g.fillText(pins+" / "+N,130,236);
+      mg.raf=requestAnimationFrame(f)};mg.raf=requestAnimationFrame(f)},
+  odd(o){const PR=[["O","Q"],["E","F"],["b","d"],["M","N"],["8","B"],["S","5"],["p","q"],["C","G"],["V","Y"],["n","h"]];let round=0;
+    const go=()=>{mg.tm.forEach(clearTimeout);mg.tm=[];const n=[4,5,6,6][round],pr=PR[Math.floor(Math.random()*PR.length)],fl=Math.random()<.5,a=pr[fl?1:0],b=pr[fl?0:1],k=Math.floor(Math.random()*n*n),sec=o.rare?6:8;mgDbg={k};
+      o.box.innerHTML='<p class="note" style="color:#6a6250">'+T.mgRound.replace("{n}",round+1)+'</p><div class="xp" style="width:100%;background:#c9bfa6"><i id="odB" style="width:100%;transition:width '+sec+'s linear"></i></div><div id="odG" style="display:grid;grid-template-columns:repeat('+n+',1fr);gap:4px;width:min(264px,100%)">'+Array.from({length:n*n},(x,i)=>'<button type="button" data-i="'+i+'" style="aspect-ratio:1;background:#1b2233;color:#ece4d2;font:19px ui-monospace,Menlo,Consolas,monospace;border-radius:3px;padding:0">'+(i===k?b:a)+'</button>').join("")+'</div>';
+      requestAnimationFrame(()=>requestAnimationFrame(()=>{const e=$("#odB");if(e)e.style.width="0%"}));
+      const miss=()=>{beep(150,.2);buzz(120);round=Math.max(0,round-1);go()};
+      mg.tm.push(setTimeout(miss,sec*1000));
+      $("#odG").onclick=e=>{const bt=e.target.closest("button");if(!bt)return;if(+bt.dataset.i===k){beep(500+round*120,.12);round++;if(round>=4){mg.tm.forEach(clearTimeout);return o.done()}go()}else miss()}};
+    go()}
+});
+
+home();if(HG)grpOpen(HG[1]);else if(HZ)codeSheet(HZ[1]);
+})();
+
+</script>
+<script>(function(){var b=document.getElementById("lang");if(b)b.onclick=function(){MW.switchLang("mw","nl")};})();</script>
+</body>
+</html>
