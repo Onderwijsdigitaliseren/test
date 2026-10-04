@@ -8,7 +8,7 @@ Statische site voor GitHub Pages, geen build-stap. Zelfde bestanden op murderwal
 /murder-walk.html            spel 1 EN        /nl/moordwandeling.html   spel 1 NL   (eigen, oudere motor; staat compleet in het bestand)
 /the-vanishing.html          spel 2 EN        /nl/de-verdwijning.html   spel 2 NL   (shell; logica in /games/vanishing/)
 /till-death-do-us-part.html  spel 3 EN        /nl/tot-de-dood-ons-scheidt.html  spel 3 NL (shell; logica in /games/bride/)
-/games/bride/                game.js (zelfde motor als vanishing: zes gasten, motief, de bruid als schim) · data-nl.js · data-en.js · game.css · hero.svg; gebruikt games/vanishing/puzzles.js. Eigen sfeer (wijnrood/ivoor/goud, Cormorant + Pinyon Script), eigen pictogrammen (IC in game.js) en eigen kaartkleuren via createMap({theme})
+/games/bride/                game.js (zelfde motor als vanishing: zes gasten, motief, de bruid als schim) · data-nl.js · data-en.js · game.css · hero.webp (sfeerfoto, uitsnede zonder titel) · portrait.webp; gebruikt games/vanishing/puzzles.js. Eigen sfeer naar de sfeerfoto (natte nacht, lantaarnlicht, ivoor, dieprode rozenblaadjes; Cinzel + Cormorant Garamond), eigen pictogrammen (IC in game.js), getekende figuren (bride/witness) en eigen kaartkleuren via createMap({theme})
 /games/vanishing/            game.js (logica, taalonafhankelijk) · data-nl.js · data-en.js · game.css
 /shared/platform.js          gedeelde laag: Pro, groepspas, codes.json, profiel (rang/punten/streak), taal, instellingen (SS_PRO)
 /shared/walk.js              wandelmotor voor nieuwe spellen: OpenStreetMap/Overpass, plekken kiezen, nachtkaart, gps, oefenwereld, vellen/geluid
