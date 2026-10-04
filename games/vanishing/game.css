@@ -86,3 +86,9 @@ input[type=range]{width:100%;accent-color:var(--blood)}
 @keyframes spin{to{transform:rotate(360deg)}}
 .pills{display:flex;gap:8px;align-items:center}
 #home .lead,#home .eyebrow{text-shadow:0 1px 8px #000,0 0 2px #000;color:#e6ecf7}
+.book{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.book div{border:1px solid var(--rule);border-radius:3px;padding:8px 6px;text-align:center;font-size:12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.book div.no{opacity:.35}
+.book b{font-family:var(--f-type);font-weight:400;font-size:13px}
+.r1{color:#3d6f66}.r2{color:#7a4fa3}.r3{color:#b5651d}
+.clue b{font-family:var(--f-type);font-weight:400}
