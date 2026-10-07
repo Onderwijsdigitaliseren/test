@@ -170,7 +170,8 @@ window.NG_DATA={
   "news": [
    "Missing woman",
    "No trace since Tuesday"
-  ]
+  ],
+  "stmt": "Witness statement"
  },
  "TYPES": {
   "kerk": [

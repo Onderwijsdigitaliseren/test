@@ -222,7 +222,7 @@ function doc(s,html,then,btn){sheet(head(s)+'<div class="doc d'+s.n+'">'+html+'<
 function done(s){mg.stop();s.done=true;G.force=null;save()}
 function openLoc(s){walkTo=null;var c=G.c,n=s.n,v=vars(c);
   if(n===1)return holdSheet(s,T.holdDev,function(){done(s);doc(s,'<div class="photo"><img src="'+MW.root+'games/ghosts/photo1.webp" alt="" width="900" height="532"><i>'+v.PY+'</i></div><p>'+esc(locText(c,1))+'</p>')});
-  if(n===2){done(s);return doc(s,'<p class="hand">'+esc(locText(c,2))+'</p>')}
+  if(n===2){done(s);return doc(s,stmtHTML(s,locText(c,2)))}
   if(n===3)return doc(s,'<p>'+esc(fill(D.L3a,v))+'</p>',function(){runPuzzle(s,"dust",v.INI,function(){done(s);doc(s,'<div class="engr">'+esc(v.INI)+'</div><p>'+esc(locText(c,3))+'</p>')})},PZ.dust[1]);
   if(n===4){var after=function(){done(s);doc(s,'<div class="photo"><img src="'+MW.root+'games/ghosts/apparition.webp" alt="" width="900" height="782"></div><p>'+esc(locText(c,4))+'</p>',function(){move6(false)})};
     var lamp=function(){runPuzzle(s,"lamp","",after)};
@@ -235,6 +235,9 @@ function openLoc(s){walkTo=null;var c=G.c,n=s.n,v=vars(c);
   if(n===8)return finalSheet(s);
   if(n===9){done(s);var id=D.RARE.map(function(e,j){return j}).filter(function(j){return D.RARE[j][1]===3})[(c.seed>>>0)%3];addRare(id);
     doc(s,''+rpic(id," wide")+'<p>'+esc(D.L9)+'</p><p class="note">'+esc(fill(T.rare.got,{n:D.RARE[id][0]}))+' · +60</p>')}}
+/* de getuigenverklaring: getypt vel met de foto aan een paperclip */
+function stmtHTML(s,t){var m=t.match(/^(.*?:)\s*(‘.*?’)\s*([^‘’]*?:)\s*(‘.*’)$/);if(!m)return '<p class="hand">'+esc(t)+'</p>';
+  return '<div class="stmt"><div class="sh"><span>'+esc(T.stmt)+'</span><span>'+esc(s.name)+' <b>'+s.n+'</b></span></div><div class="sb"><img src="'+MW.root+'games/ghosts/witness.webp" alt=""><p>'+esc(m[2])+'</p><p class="mg">'+esc(m[3])+'</p><p>'+esc(m[4])+'</p></div></div>'}
 /* de waarschuwing als gescheurd, getypt briefje met de steen ernaast */
 function warnHTML(t){var m=t.match(/^(.*?:)\s*([^a-z]+?\.)\s*([^a-z]+?\.)\s*(.*?)(‘.*’)\s*(.*)$/);if(!m)return '<p class="chalk">'+esc(t)+'</p>';
   var low=function(x){return x.charAt(0)+x.slice(1).toLowerCase()};

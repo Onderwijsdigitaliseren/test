@@ -173,7 +173,8 @@ window.NG_DATA={
   "news": [
    "Vermiste vrouw",
    "Sedert dinsdag geen spoor meer"
-  ]
+  ],
+  "stmt": "Getuigenverklaring"
  },
  "TYPES": {
   "kerk": [
