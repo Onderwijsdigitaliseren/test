@@ -14,7 +14,7 @@ var PZ=D.PZ,MAPFONT="600 12px 'Barlow Condensed','Arial Narrow',sans-serif",stil
 function cap(s){return s.replace(/^./,function(m){return m.toUpperCase()})}
 
 /* ---------- de zaak: welke van de drie vrouwen, welk lot, waarom vannacht ---------- */
-var WPIC=[2,3,4]; // de vrouwen met een portret (woman-<i>.webp)
+var WPIC=[0,1,2,3,4,5]; // de vrouwen met een portret (woman-<i>.webp)
 function wsrc(i){return MW.root+"games/ghosts/woman-"+i+".webp"}
 function genCase(seed){var r=rngOf(seed),idx=[0,1,2];
   for(var t=0;t<300;t++){idx=shuffle(WPIC.slice(),r).slice(0,3);var k={};if(idx.every(function(i){var w=D.WOMEN[i],key=w.a+""+w.b;if(k[key])return false;k[key]=1;return true}))break}
@@ -221,8 +221,8 @@ function doc(s,html,then,btn){sheet(head(s)+'<div class="doc d'+s.n+'">'+html+'<
   $("#shX").onclick=function(){closeSheet();sel=null;chip();if(then)then()}}
 function done(s){mg.stop();s.done=true;G.force=null;save()}
 function openLoc(s){walkTo=null;var c=G.c,n=s.n,v=vars(c);
-  if(n===1)return holdSheet(s,T.holdDev,function(){done(s);doc(s,'<div class="photo"><img src="'+MW.root+'games/ghosts/photo1.webp" alt="" width="900" height="532"><i>'+v.PY+'</i></div><p class="typed">'+esc(locText(c,1))+'</p>')});
-  if(n===2){done(s);return doc(s,stmtHTML(s,locText(c,2)))}
+  if(n===1)return holdSheet(s,T.holdDev,function(){done(s);doc(s,'<div class="photo"><img src="'+MW.root+'games/ghosts/photo1'+(ghost(c).a?'b':'')+'.webp" alt=""><i>'+v.PY+'</i></div><p class="typed">'+esc(locText(c,1))+'</p>')});
+  if(n===2){done(s);return doc(s,stmtHTML(s,locText(c,2),ghost(c).b))}
   if(n===3)return doc(s,exhibit(c,'',fill(D.L3a,v)),function(){runPuzzle(s,"dust",v.INI,function(){done(s);doc(s,exhibit(c,v.INI,locText(c,3)))})},PZ.dust[1]);
   if(n===4){var after=function(){done(s);doc(s,'<div class="photo"><img src="'+MW.root+'games/ghosts/apparition.webp" alt="" width="900" height="782"></div><p>'+esc(locText(c,4))+'</p>',function(){move6(false)})};
     var lamp=function(){runPuzzle(s,"lamp","",after)};
@@ -236,17 +236,18 @@ function openLoc(s){walkTo=null;var c=G.c,n=s.n,v=vars(c);
   if(n===9){done(s);var id=D.RARE.map(function(e,j){return j}).filter(function(j){return D.RARE[j][1]===3})[(c.seed>>>0)%3];addRare(id);
     doc(s,''+rpic(id," wide")+'<p>'+esc(D.L9)+'</p><p class="note">'+esc(fill(T.rare.got,{n:D.RARE[id][0]}))+' · +60</p>')}}
 /* bewijsstukken: plaatje per voorwerp; het label met de initialen hangt eraan */
-function objPic(c){return c.obj===2?'<img class="objp" src="'+MW.root+'games/ghosts/obj-key.webp" alt="">':'<span class="objp o'+c.obj+'" aria-hidden="true"><i></i></span>'}
+function osrc(c){return MW.root+'games/ghosts/'+(c.obj===2?'obj-key':'obj-'+c.obj)+'.webp'}
+function objPic(c){return '<img class="objp" src="'+osrc(c)+'" alt="">'}
 function exhibit(c,ini,text){return '<div class="exh"><div class="sh"><span>'+esc(T.exhibit)+'</span><span>'+esc(T.found)+' <b>3</b></span></div><div class="eb">'+objPic(c)+(ini?'<span class="tagl">'+esc(ini)+'</span>':'')+'</div><p>'+esc(text)+'</p></div>'}
-function itemPic(c,i){return i===0?'<img class="ip" src="'+MW.root+'games/ghosts/photo1.webp" alt="">':i===2?'<img class="ip" src="'+MW.root+'games/ghosts/clipping.webp" alt="">':c.obj===2?'<img class="ip" src="'+MW.root+'games/ghosts/obj-key.webp" alt="">':'<span class="ip objp o'+c.obj+'" aria-hidden="true"><i></i></span>'}
+function itemPic(c,i){return '<img class="ip" src="'+(i===0?MW.root+'games/ghosts/photo1'+(ghost(c).a?'b':'')+'.webp':i===2?MW.root+'games/ghosts/clipping.webp':osrc(c))+'" alt="">'}
 var SPI=new Image();SPI.src=MW.root+"games/ghosts/spirit.webp";
 /* de geest uit de foto over het (camera)beeld: 'screen' laat het donker wegvallen */
 function spiritImg(g,x,y,h,al,calm){if(!(SPI.complete&&SPI.naturalWidth))return spirit(g,x,y,h,al,calm);var w=h*SPI.naturalWidth/SPI.naturalHeight;g.save();g.globalCompositeOperation="screen";g.globalAlpha=Math.max(0,Math.min(1,al));
   if(calm){var gr=g.createRadialGradient(x,y,h*.05,x,y,h*.7);gr.addColorStop(0,"rgba(255,200,130,.35)");gr.addColorStop(1,"rgba(255,200,130,0)");g.fillStyle=gr;g.fillRect(x-h,y-h,h*2,h*2)}
   g.drawImage(SPI,x-w/2,y-h/2,w,h);g.restore()}
 /* de getuigenverklaring: getypt vel met de foto aan een paperclip */
-function stmtHTML(s,t){var m=t.match(/^(.*?:)\s*(‘.*?’)\s*([^‘’]*?:)\s*(‘.*’)$/);if(!m)return '<p class="hand">'+esc(t)+'</p>';
-  return '<div class="stmt"><div class="sh"><span>'+esc(T.stmt)+'</span><span>'+esc(s.name)+' <b>'+s.n+'</b></span></div><div class="sb"><img src="'+MW.root+'games/ghosts/witness.webp" alt=""><p>'+esc(m[2])+'</p><p class="mg">'+esc(m[3])+'</p><p>'+esc(m[4])+'</p></div></div>'}
+function stmtHTML(s,t,coat){var m=t.match(/^(.*?:)\s*(‘.*?’)\s*([^‘’]*?:)\s*(‘.*’)$/);if(!m)return '<p class="hand">'+esc(t)+'</p>';
+  return '<div class="stmt"><div class="sh"><span>'+esc(T.stmt)+'</span><span>'+esc(s.name)+' <b>'+s.n+'</b></span></div><div class="sb"><img src="'+MW.root+'games/ghosts/witness'+(coat?'-coat':'')+'.webp" alt=""><p>'+esc(m[2])+'</p><p class="mg">'+esc(m[3])+'</p><p>'+esc(m[4])+'</p></div></div>'}
 /* de waarschuwing als gescheurd, getypt briefje met de steen ernaast */
 function warnHTML(t){var m=t.match(/^(.*?:)\s*([^a-z]+?\.)\s*([^a-z]+?\.)\s*(.*?)(‘.*’)\s*(.*)$/);if(!m)return '<p class="chalk">'+esc(t)+'</p>';
   var low=function(x){return x.charAt(0)+x.slice(1).toLowerCase()};
