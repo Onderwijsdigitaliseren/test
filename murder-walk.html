@@ -177,6 +177,8 @@ a#hub{text-decoration:none;color:var(--paper)}
 .sheet>.paper{border-radius:0;padding-top:28px;clip-path:polygon(0 10px,3% 4px,7% 11px,11% 3px,16% 9px,21% 2px,26% 10px,31% 5px,36% 12px,42% 3px,47% 9px,53% 2px,58% 11px,63% 4px,69% 10px,74% 3px,80% 9px,85% 2px,90% 11px,95% 5px,100% 9px,100% 100%,0 100%)}
 #brief .paper{position:relative;padding-top:30px;clip-path:polygon(0 10px,3% 4px,7% 11px,11% 3px,16% 9px,21% 2px,26% 10px,31% 5px,36% 12px,42% 3px,47% 9px,53% 2px,58% 11px,63% 4px,69% 10px,74% 3px,80% 9px,85% 2px,90% 11px,95% 5px,100% 9px,100% 100%,0 100%);transform:rotate(-.6deg)}
 #brief .paper::before{content:"";position:absolute;right:20px;top:18px;width:16px;height:16px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff6b6b,#b3222b 55%,#6f0f15);box-shadow:0 3px 5px rgba(0,0,0,.45)}
+.ph{display:block;width:100%;height:clamp(140px,26vh,220px);object-fit:cover;object-position:50% 38%;background:#0c0a0b;border:5px solid #f3ecdc;border-bottom-width:14px;box-shadow:0 5px 14px rgba(20,12,8,.45);transform:rotate(-.7deg);margin:2px 0 6px}
+#brief .ph{height:clamp(120px,20vh,180px);object-position:50% 60%;transform:rotate(.5deg);margin-bottom:10px}
 .clue{border-left-color:#b3222b}
 .tabs button[aria-selected="true"]{border-color:#b3222b}
 /* kaart */
@@ -237,6 +239,7 @@ a#hub{text-decoration:none;color:var(--paper)}
   <section class="screen" id="brief" hidden>
     <div class="wrap">
       <div class="paper">
+        <img class="ph" src="assets/mw-victim.webp" alt="" width="640" height="544">
         <div class="eyebrow" id="bfNo"></div>
         <h2 id="bfTitle"></h2>
         <p id="bfText"></p>
@@ -524,6 +527,9 @@ const dTo=t=>Math.hypot(t.x-P.x,t.y-P.y);
 const inRange=t=>dTo(t)<=Math.max(35,Math.min(P.acc||0,60))||G.force===t;
 /* schim: man met hoed en lange jas in het lantaarnlicht, zoals op de sfeerfoto; twee ogen in de kleur van de schim */
 const FP={},fp=d=>FP[d]||(FP[d]=new Path2D(d));
+function ph(k){return'<img class="ph" src="'+MW.root+'assets/mw-'+k+'.webp" alt="" width="640" height="540">'}
+function phT(t){return ph(t==="jas"||t==="bril"||t==="schoen"||t==="hand"?t:"evidence")}
+["lantern","witness","suspect","victim","evidence","jas","bril","schoen","hand","flee","shade","dossier"].forEach((k,i)=>setTimeout(()=>{new Image().src=MW.root+"assets/mw-"+k+".webp"},3000+i*300));
 const SHIMG=new Image();SHIMG.src=MW.root+"assets/mw-shadow.webp";const tint=(h,a)=>"rgba("+parseInt(h.slice(1,3),16)+","+parseInt(h.slice(3,5),16)+","+parseInt(h.slice(5,7),16)+","+a+")";
 function ghost(c,x,y,s,col,al){c.save();c.globalAlpha=al;
   if(SHIMG.naturalWidth){const d=s*1.3,r=s*.72,cy=y-s*.12,g=c.createRadialGradient(x,cy,s*.04,x,cy,r);g.addColorStop(0,tint(col,.6));g.addColorStop(.55,tint(col,.22));g.addColorStop(1,tint(col,0));c.fillStyle=g;c.beginPath();c.arc(x,cy,r,0,7);c.fill();c.drawImage(SHIMG,x-d/2,y-d*.46,d,d);c.restore();return}
@@ -729,7 +735,7 @@ function encounter(t){
   const wit=t.id!=null||t.kind==="wit",can=navigator.mediaDevices&&navigator.mediaDevices.getUserMedia;walkTo=null;
   if(!wit||!can||G.cam==="off")return puzzle(t);
   if(G.cam==="on")return startAR(t);
-  sheet('<div class="eyebrow">Someone is here</div><h2>Look around you</h2><p>Through your camera you see the shadow standing in your own street. Turn until you find it. The picture stays on your phone. Nothing is saved or sent.</p><button type="button" class="btn" id="arYes">Turn camera on</button><button type="button" class="btn ghost dk" id="arNo">Play without camera</button>');
+  sheet(ph("lantern")+'<div class="eyebrow">Someone is here</div><h2>Look around you</h2><p>Through your camera you see the shadow standing in your own street. Turn until you find it. The picture stays on your phone. Nothing is saved or sent.</p><button type="button" class="btn" id="arYes">Turn camera on</button><button type="button" class="btn ghost dk" id="arNo">Play without camera</button>');
   $("#sheetBody").onclick=null;
   $("#arYes").onclick=()=>startAR(t);$("#arNo").onclick=()=>{G.cam="off";puzzle(t)};
 }
@@ -773,9 +779,9 @@ function reveal(t){
   if(t.id!=null){const s=SHADES[t.id],isNew=!prof.book[t.id];prof.book[t.id]=(prof.book[t.id]||0)+1;prof.xp+=20*s[1];LS.set("ss_prof",prof);
     const opts=G.c.wit.map((w,i)=>i).filter(i=>!G.c.wit[i].lie&&!G.tips.includes(i)),ti=opts.length?opts[Math.floor(Math.random()*opts.length)]:-1;let tip="";
     if(ti>=0&&!G.tips.length){G.tips.push(ti);const p=G.st.find(x=>x.kind==="wit"&&x.idx===ti).persona;tip=`<div class="clue"><em>Tip from the shade</em>Believe ${esc(p)}. That one is telling the truth.</div>`}
-    h=`<div class="eyebrow r${s[1]}">${RN[s[1]]}${isNew?" · new in your book":""}</div><h2>${esc(s[0])}</h2><p>${esc(s[2])}</p>${tip}<p class="note" style="color:#6a6250">+${20*s[1]} points</p>`;
-  }else if(t.kind==="ev"){const e=G.c.ev[t.idx];h=`<div class="clue"><em>Evidence · always true</em><b>${esc(e.title)}</b>${esc(e.text)}</div>`}
-  else{const w=G.c.wit[t.idx];say((INTRO[t.persona]||"")+" "+w.text,t.idx);h=`<div class="clue wit"><em>${esc(t.persona)} · witness</em>“${esc(INTRO[t.persona]||"I just happened to be passing.")} ${esc(w.text)}”</div><p class="note" style="color:#6a6250">One of the five witnesses is lying. This one?</p>`}
+    h=ph("shade")+`<div class="eyebrow r${s[1]}">${RN[s[1]]}${isNew?" · new in your book":""}</div><h2>${esc(s[0])}</h2><p>${esc(s[2])}</p>${tip}<p class="note" style="color:#6a6250">+${20*s[1]} points</p>`;
+  }else if(t.kind==="ev"){const e=G.c.ev[t.idx];h=phT(e.trait)+`<div class="clue"><em>Evidence · always true</em><b>${esc(e.title)}</b>${esc(e.text)}</div>`}
+  else{const w=G.c.wit[t.idx];say((INTRO[t.persona]||"")+" "+w.text,t.idx);h=ph("witness")+`<div class="clue wit"><em>${esc(t.persona)} · witness</em>“${esc(INTRO[t.persona]||"I just happened to be passing.")} ${esc(w.text)}”</div><p class="note" style="color:#6a6250">One of the five witnesses is lying. This one?</p>`}
   if(t.id==null){const n=G.st.filter(x=>x.done).length;h+=`<div class="clue" style="border-color:#6a6250;margin-top:8px"><em>The last evening · ${n}/8</em>${esc(vn(fragList()[n-1]))}</div>`}
   $("#mgHint").hidden=true;$("#mgbox").hidden=true;
   $("#mgOut").innerHTML=h+(G.grp&&t.id==null?codeHtml(G.st.indexOf(t)):"")+`<button class="btn" id="mgOk" style="margin-top:12px">Continue</button>`;
@@ -824,7 +830,7 @@ function verdict(ps,pw){
   prof.xp+=xp;logCase(stars,min);LS.set("ss_prof",prof);LS.del("ss_game_en");buzz([100,50,100,50,300]);beep(660,.2);setTimeout(()=>beep(990,.4),200);
   let cand=63;c.ev.forEach(e=>cand&=e.mask);const names=c.sus.filter((s,i)=>cand>>i&1).map(s=>s.name).join(", ");
   const lp=G.st.find(x=>x.kind==="wit"&&x.idx===c.liar).persona,up=rank(prof.xp)>before;
-  sheet(`<div class="eyebrow">Case closed</div><h2>${esc(c.sus[c.killer].name)} confesses</h2><div class="stars">${"★".repeat(stars)}${"☆".repeat(3-stars)}</div>
+  sheet(ph("dossier")+`<div class="eyebrow">Case closed</div><h2>${esc(c.sus[c.killer].name)} confesses</h2><div class="stars">${"★".repeat(stars)}${"☆".repeat(3-stars)}</div>
   <p>“${esc(vn(motOf(c.sus[c.killer].name)[1]))}”</p>
   <p>The evidence left: ${esc(names)}. The liar was ${esc(lp)}: “${esc(c.wit[c.liar].text)}” Take that lie out and only ${esc(c.sus[c.killer].name)} fits.</p>
   <div class="tags"><i>${Math.round(min)} min</i><i>${(G.dist/1000).toFixed(1)} km</i><i>${G.rare.filter(q=>q.done).length}/3 shades</i><i>+${xp} points</i>${G.mode==="gps"?`<i>${prof.streak} ${prof.streak===1?"day":"days"} in a row</i>`:""}</div>
@@ -1047,7 +1053,7 @@ function xTick(){
   if(!X.evt&&n>=2){const p=spot(130,230),d=Math.hypot(p.x-P.x,p.y-P.y),k=xFree(),s=Math.round(d/1.1+40);
     X.evt={kind:"evt",x:p.x,y:p.y,name:T.evName,state:"run",done:false,until:Date.now()+s*1000,t:k[G.seed%k.length]};
     save();buzz([120,60,120,60,300]);beep(880,.15);setTimeout(()=>beep(880,.15),220);
-    sheet('<div class="eyebrow" style="color:#a5392c">'+T.evEy+'</div><h2>'+T.evH+'</h2><p>'+T.evT.replace("{m}",Math.ceil(s/60)).replace("{d}",Math.round(d/10)*10)+'</p><button type="button" class="btn" id="shX">'+T.evOk+'</button>');
+    sheet(ph("flee")+'<div class="eyebrow" style="color:#a5392c">'+T.evEy+'</div><h2>'+T.evH+'</h2><p>'+T.evT.replace("{m}",Math.ceil(s/60)).replace("{d}",Math.round(d/10)*10)+'</p><button type="button" class="btn" id="shX">'+T.evOk+'</button>');
     $("#sheetBody").onclick=e=>{if(e.target.id==="shX"){closeSheet();sel=X.evt;V.follow=true;chip()}}}
   else if(!X.iv&&n>=5&&!(X.evt&&X.evt.state==="run")){const c=G.c;let cand=63;c.ev.forEach(e=>cand&=e.mask);const cs=c.sus.map((s,i)=>i).filter(i=>cand>>i&1),si=cs[hashStr(G.seed+"iv")%cs.length],p=spot(110,220);
     X.iv={kind:"iv",x:p.x,y:p.y,name:c.sus[si].name,s:si,done:false,q:null};save();buzz([80,60,80]);beep(520,.25);toast(T.ivGo.replace("{n}",c.sus[si].name))}}
@@ -1062,13 +1068,13 @@ function xDraw(t){const X=G.x;if(!X)return;const bob=still?0:Math.sin(t/300)*3;
 function evtOpen(e){walkTo=null;if(e.state!=="run")return;if(Date.now()>e.until){xTick();return}
   e.state="won";e.done=true;e.v=G.c.sus[G.c.killer].tr[e.t];prof.xp+=30;LS.set("ss_prof",prof);sel=null;save();buzz([100,50,100,50,300]);beep(660,.2);setTimeout(()=>beep(990,.4),200);
   const z=evText(e.t,e.v);
-  sheet('<div class="eyebrow">'+T.evWinEy+'</div><h2>'+T.evWinH+'</h2><p>'+T.evWinT+'</p><div class="clue"><em>'+T.evTag+'</em><b>'+esc(z[0])+'</b>'+esc(z[1])+'</div><p class="note" style="color:#6a6250">'+T.xXp+'</p><button type="button" class="btn" id="shX">'+T.xOn+'</button>');
+  sheet(phT(e.t)+'<div class="eyebrow">'+T.evWinEy+'</div><h2>'+T.evWinH+'</h2><p>'+T.evWinT+'</p><div class="clue"><em>'+T.evTag+'</em><b>'+esc(z[0])+'</b>'+esc(z[1])+'</div><p class="note" style="color:#6a6250">'+T.xXp+'</p><button type="button" class="btn" id="shX">'+T.xOn+'</button>');
   $("#sheetBody").onclick=ev=>{if(ev.target.id==="shX")closeSheet()}}
 function ivAns(e,t){const c=G.c,kv=c.sus[c.killer].tr[t];if(e.s!==c.killer)return witText(t,kv);const o=TR[t].filter(v=>v!==kv);return witText(t,o[hashStr(G.seed+"l"+t)%o.length])}
 function ivSheet(e){walkTo=null;const c=G.c,s=c.sus[e.s],k=xFree();
-  if(e.q){const a=ivAns(e,e.q);say(a,e.s);sheet('<div class="eyebrow">'+T.ivEy+'</div><h2>'+esc(s.name)+'</h2><p class="note" style="color:#6a6250">'+T.ivQ[e.q]+'</p><div class="clue wit"><em>'+esc(s.name)+' · '+esc(s.role)+'</em>„'+esc(T.ivPre)+' '+esc(a)+'”</div><p><b>'+T.ivRule+'</b></p><p class="note" style="color:#6a6250">'+T.xXp+'</p><button type="button" class="btn" id="shX">'+T.xOn+'</button>');
+  if(e.q){const a=ivAns(e,e.q);say(a,e.s);sheet(ph("suspect")+'<div class="eyebrow">'+T.ivEy+'</div><h2>'+esc(s.name)+'</h2><p class="note" style="color:#6a6250">'+T.ivQ[e.q]+'</p><div class="clue wit"><em>'+esc(s.name)+' · '+esc(s.role)+'</em>„'+esc(T.ivPre)+' '+esc(a)+'”</div><p><b>'+T.ivRule+'</b></p><p class="note" style="color:#6a6250">'+T.xXp+'</p><button type="button" class="btn" id="shX">'+T.xOn+'</button>');
     $("#sheetBody").onclick=ev=>{if(ev.target.id==="shX")closeSheet()};return}
-  sheet('<div class="eyebrow">'+T.ivEy+'</div><h2>'+esc(s.name)+'</h2><p>'+esc(s.role.replace(/^./,m=>m.toUpperCase()))+', '+esc(vn(motOf(s.name)[0]))+'.</p><p>'+T.ivT+' <b>'+T.ivRule+'</b></p>'+k.map(t=>'<button type="button" class="btn ghost dk" data-q="'+t+'">'+T.ivQ[t]+'</button>').join("")+'<button type="button" class="btn ghost dk" id="shX">'+T.ivLater+'</button>');
+  sheet(ph("suspect")+'<div class="eyebrow">'+T.ivEy+'</div><h2>'+esc(s.name)+'</h2><p>'+esc(s.role.replace(/^./,m=>m.toUpperCase()))+', '+esc(vn(motOf(s.name)[0]))+'.</p><p>'+T.ivT+' <b>'+T.ivRule+'</b></p>'+k.map(t=>'<button type="button" class="btn ghost dk" data-q="'+t+'">'+T.ivQ[t]+'</button>').join("")+'<button type="button" class="btn ghost dk" id="shX">'+T.ivLater+'</button>');
   $("#sheetBody").onclick=ev=>{const b=ev.target.closest("button");if(!b)return;if(b.id==="shX"){closeSheet();return}if(b.dataset.q){e.q=b.dataset.q;e.done=true;prof.xp+=30;LS.set("ss_prof",prof);sel=null;save();ivSheet(e)}}}
 function xHtml(){const X=G&&G.x;if(!X)return"";let h="";
   if(X.evt&&X.evt.state==="won"){const z=evText(X.evt.t,X.evt.v);h+='<div class="clue"><em>'+T.evTag+'</em><b>'+esc(z[0])+'</b>'+esc(z[1])+'</div>'}
