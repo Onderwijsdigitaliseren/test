@@ -18,13 +18,14 @@ var PLAY={
       g.fillStyle="#ece4d2";g.font="16px 'Special Elite',monospace";g.textAlign="center";g.fillText(hits+" / 3",130,252);
       o.mg.raf=requestAnimationFrame(f)};o.mg.raf=requestAnimationFrame(f)},
   /* deurbelcamera: lampjes-volgorde natikken */
-  seq:function(o){o.box.innerHTML='<div class="lans">'+[0,1,2,3].map(function(i){return'<button type="button" class="lan" data-i="'+i+'" aria-label="'+(i+1)+'"></button>'}).join("")+'</div><p class="note" id="sqS"></p>';
-    var Ls=[].slice.call(o.box.querySelectorAll(".lan")),S=[0,1,2,3,4].map(function(){return Math.floor(Math.random()*4)}),st=o.box.querySelector("#sqS"),pos=0,busy=true,len=3;
-    var lit=function(i,ms){Ls[i].classList.add("on");o.beep(330+i*110,.18);o.mg.tm.push(setTimeout(function(){Ls[i].classList.remove("on")},ms))};
-    var play=function(){busy=true;pos=0;st.textContent=o.P.look;for(var k=0;k<len;k++)(function(k){o.mg.tm.push(setTimeout(function(){lit(S[k],350)},600+k*600))})(k);o.mg.tm.push(setTimeout(function(){busy=false;st.textContent=o.P.yours.replace("{n}",len)},600+len*600))};
+  seq:function(o){o.box.innerHTML='<div class="lans">'+[0,1,2,3].map(function(i){return'<button type="button" class="lan" data-i="'+i+'" aria-label="'+(i+1)+'"></button>'}).join("")+'</div><p class="note" id="sqS"></p><button type="button" class="btn ghost dk" id="sqR">'+(o.P.again||(/^nl/i.test(document.documentElement.lang||"")?"Toon het patroon opnieuw":"Show the pattern again"))+'</button>';
+    var Ls=[].slice.call(o.box.querySelectorAll(".lan")),S=[0,1,2,3,4].map(function(){return Math.floor(Math.random()*4)}),st=o.box.querySelector("#sqS"),pos=0,busy=true,len=3,pt=[],later=function(fn,ms){var id=setTimeout(fn,ms);pt.push(id);o.mg.tm.push(id)};
+    var lit=function(i,ms){Ls[i].classList.add("on");o.beep(330+i*110,.18);later(function(){Ls[i].classList.remove("on")},ms)};
+    var play=function(){pt.forEach(clearTimeout);pt=[];Ls.forEach(function(l){l.classList.remove("on")});busy=true;pos=0;st.textContent=o.P.look;for(var k=0;k<len;k++)(function(k){later(function(){lit(S[k],350)},600+k*600)})(k);later(function(){busy=false;st.textContent=o.P.yours.replace("{n}",len)},600+len*600)};
+    o.box.querySelector("#sqR").addEventListener("click",function(){play()});
     o.box.firstChild.addEventListener("click",function(e){var b=e.target.closest(".lan");if(!b||busy)return;var i=+b.dataset.i;lit(i,200);
-      if(i!==S[pos]){busy=true;st.textContent=o.P.wrongSeq;o.buzz(150);o.mg.tm.push(setTimeout(play,900));return}
-      pos++;if(pos>=len){if(len>=5)return o.done();len++;busy=true;st.textContent=o.P.good;o.mg.tm.push(setTimeout(play,700))}});
+      if(i!==S[pos]){busy=true;st.textContent=o.P.wrongSeq;o.buzz(150);later(play,900);return}
+      pos++;if(pos>=len){if(len>=5)return o.done();len++;busy=true;st.textContent=o.P.good;later(play,700)}});
     play()},
   /* vergrendelde telefoon: vier vette vegen op het toetsenbord, vind de volgorde (groen = goed, geel = wel in de code) */
   pin:function(o){var digits=o.shuffle([1,2,3,4,5,6,7,8,9,0],Math.random).slice(0,4),sec=o.shuffle(digits,Math.random),cur=[],tries=0;

@@ -145,8 +145,8 @@ function stopWatch(){if(watchId!=null&&navigator.geolocation){navigator.geolocat
 
 /* ---------- ui: vellen, toast, laadscherm, geluid ---------- */
 function toast(t){var e=$("#toast");if(!e)return;e.textContent=t;e.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(function(){e.hidden=true},2600)}
-function sheet(html,lock){var b=$("#sheetBody");b.innerHTML=html;$("#sheet").hidden=false;b.scrollTop=0;if(lock)$("#sheet").dataset.lock="1";else delete $("#sheet").dataset.lock;return b}
-function closeSheet(){$("#sheet").hidden=true;delete $("#sheet").dataset.lock}
+function sheet(html,lock){var b=$("#sheetBody");b.onclick=null;b.innerHTML=html;$("#sheet").hidden=false;b.scrollTop=0;if(lock)$("#sheet").dataset.lock="1";else delete $("#sheet").dataset.lock;return b}
+function closeSheet(){var b=$("#sheetBody");if(b)b.onclick=null;$("#sheet").hidden=true;delete $("#sheet").dataset.lock}
 function loading(txt){var l=$("#load");if(!l)return;l.hidden=!txt;if(txt)$("#loadT").textContent=txt}
 function buzz(p){try{navigator.vibrate&&navigator.vibrate(p)}catch(e){}}
 var AC=null,sndOn=LS.get("ss_snd",true);
