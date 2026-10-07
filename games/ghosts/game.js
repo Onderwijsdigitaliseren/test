@@ -231,10 +231,14 @@ function openLoc(s){walkTo=null;var c=G.c,n=s.n,v=vars(c);
     $("#arYes").onclick=function(){runAR(false,after,lamp)};$("#arNo").onclick=function(){G.cam="off";save();lamp()};return}
   if(n===5)return runPuzzle(s,"seq","",function(){done(s);doc(s,'<div class="paperclip"><h3>'+esc(T.news[0])+'</h3><img src="'+MW.root+'games/ghosts/clipping.webp" alt=""><b>'+esc(T.news[1])+'</b><p>'+esc(locText(c,5))+'</p></div>')});
   if(n===6){done(s);return doc(s,'<p class="strike">'+esc(cap(D.SUM[c.Wf]))+'</p><p>'+esc(locText(c,6))+'</p>',function(){add9(false)})}
-  if(n===7){if(G.step7>=1)return step7(s);G.step7=1;save();return doc(s,'<p class="chalk">'+esc(locText(c,7))+'</p>',function(){step7(s)},PZ.tiles[0])}
+  if(n===7){if(G.step7>=1)return step7(s);G.step7=1;save();return doc(s,warnHTML(locText(c,7)),function(){step7(s)},PZ.tiles[0])}
   if(n===8)return finalSheet(s);
   if(n===9){done(s);var id=D.RARE.map(function(e,j){return j}).filter(function(j){return D.RARE[j][1]===3})[(c.seed>>>0)%3];addRare(id);
     doc(s,''+rpic(id," wide")+'<p>'+esc(D.L9)+'</p><p class="note">'+esc(fill(T.rare.got,{n:D.RARE[id][0]}))+' · +60</p>')}}
+/* de waarschuwing als gescheurd, getypt briefje met de steen ernaast */
+function warnHTML(t){var m=t.match(/^(.*?:)\s*([^a-z]+?\.)\s*([^a-z]+?\.)\s*(.*?)(‘.*’)\s*(.*)$/);if(!m)return '<p class="chalk">'+esc(t)+'</p>';
+  var low=function(x){return x.charAt(0)+x.slice(1).toLowerCase()};
+  return '<div class="warn"><div class="wt"><p>'+esc(m[1])+'</p><p class="caps">'+esc(m[2])+'</p><p>'+esc(low(m[3]))+'</p><p>'+esc(m[4])+'</p><p class="q">'+esc(m[5])+'</p><p>'+esc(m[6])+'</p></div><img src="'+MW.root+'games/ghosts/warning.webp" alt=""></div>'}
 /* locatie 7: het teken leggen, dan kiezen welk bewijs meegaat */
 function step7(s){var c=G.c,right=ITEMOF[c.R],sg=D.SIG[c.sig[right]];
   if(G.step7<2)return runPuzzle(s,"tiles",sg+"  "+sg+"  "+sg,function(){G.step7=2;save();step7(s)});
