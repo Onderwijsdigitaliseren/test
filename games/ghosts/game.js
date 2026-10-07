@@ -48,6 +48,9 @@ function rareFig(c,x,y,s,al,type){if(type==="w")return spirit(c,x,y,s,al,false,"
     else{c.fill(fp(COAT));c.beginPath();c.arc(60,30,8.5,0,7);c.fill();
       if(type==="s"){c.fill(fp("M46 20 C46 6 74 6 74 20 L80 24 H40 Z"));c.strokeStyle=g;c.lineWidth=2.5;c.stroke(fp("M86 24 L77 152"))}
       else{c.fill(fp("M47 18 H73 V5 H47 Z M38 18 H82 V22.5 H38 Z"));c.fillStyle="rgba(245,248,252,"+a+")";c.beginPath();c.ellipse(60,31,6,7,0,0,7);c.fill()}}})}
+var RFX=[45,45,55,55,35,62,50,40,35,47,47,75],RIMG={};function rsrc(id){return MW.root+"games/ghosts/rare-"+id+".webp"}
+function rimg(id){if(!RIMG[id]){RIMG[id]=new Image();RIMG[id].src=rsrc(id)}return RIMG[id]}
+function rpic(id,cls){return '<img class="rpic'+(cls||"")+'" src="'+rsrc(id)+'" alt="" style="object-position:'+RFX[id]+'% 50%">'}
 function spiritG(c,x,y,s,col,al){spirit(c,x,y,s,al,false)}
 
 /* ---------- startscherm ---------- */
@@ -127,7 +130,8 @@ function items(){var it=[],nx=nextN();
     if(sel===s){cx.strokeStyle="#e9eef5";cx.lineWidth=1.5;cx.setLineDash([3,4]);cx.beginPath();cx.arc(X,Y,25,0,7);cx.stroke();cx.setLineDash([])}
     if(state===1||sel===s||(state===2&&api.V.s>=.5)){cx.font=MAPFONT;cx.textAlign="center";cx.shadowColor="#000";cx.shadowBlur=6;cx.fillStyle=state===2?"#7f8ba0":state===1?"#ffd9b0":"#c8d4e4";cx.fillText((T.loc[s.n-1]+" · "+s.name).toUpperCase().slice(0,34),X,Y+34);cx.shadowBlur=0}}})});
   var q=G.rare.cur;if(q)it.push({x:q.x,y:q.y,ref:q,tap:true,draw:function(cx,X,Y,t,api){var left=1-(Date.now()-q.t0)/RLIFE,ty=D.RARE[q.id][2],dr=api.still?0:Math.sin(t/700)*6;
-    rareFig(cx,X+dr,Y-10,64,Math.max(.15,Math.min(1,left*2))*(api.still?1:.7+.3*Math.abs(Math.sin(t/190))),ty);
+    var al=Math.max(.2,Math.min(1,left*2))*(api.still?1:.75+.25*Math.abs(Math.sin(t/190))),im=rimg(q.id);
+    if(im.complete&&im.naturalWidth){var sh=im.naturalHeight,sx=Math.max(0,Math.min(im.naturalWidth-sh,im.naturalWidth*RFX[q.id]/100-sh/2));cx.save();cx.globalAlpha=al;cx.beginPath();cx.arc(X+dr,Y-10,36,0,7);cx.clip();cx.drawImage(im,sx,0,sh,sh,X+dr-36,Y-46,72,72);cx.restore()}else rareFig(cx,X+dr,Y-10,64,al,ty);
     cx.strokeStyle="rgba(255,138,40,.9)";cx.lineWidth=3;cx.beginPath();cx.arc(X,Y-10,40,-1.57,-1.57+6.283*Math.max(0,left));cx.stroke();
     cx.font=MAPFONT;cx.textAlign="center";cx.fillStyle="#ffd9b0";cx.shadowColor="#000";cx.shadowBlur=6;cx.fillText("???",X,Y+44);cx.shadowBlur=0}});
   return it}
@@ -228,7 +232,7 @@ function openLoc(s){walkTo=null;var c=G.c,n=s.n,v=vars(c);
   if(n===7){if(G.step7>=1)return step7(s);G.step7=1;save();return doc(s,'<p class="chalk">'+esc(locText(c,7))+'</p>',function(){step7(s)},PZ.tiles[0])}
   if(n===8)return finalSheet(s);
   if(n===9){done(s);var id=D.RARE.map(function(e,j){return j}).filter(function(j){return D.RARE[j][1]===3})[(c.seed>>>0)%3];addRare(id);
-    doc(s,'<canvas class="figc app" id="figc" width="260" height="260"></canvas><p>'+esc(D.L9)+'</p><p class="note">'+esc(fill(T.rare.got,{n:D.RARE[id][0]}))+' · +60</p>');rareFig($("#figc").getContext("2d"),130,128,200,1,D.RARE[id][2])}}
+    doc(s,''+rpic(id," wide")+'<p>'+esc(D.L9)+'</p><p class="note">'+esc(fill(T.rare.got,{n:D.RARE[id][0]}))+' · +60</p>')}}
 /* locatie 7: het teken leggen, dan kiezen welk bewijs meegaat */
 function step7(s){var c=G.c,right=ITEMOF[c.R],sg=D.SIG[c.sig[right]];
   if(G.step7<2)return runPuzzle(s,"tiles",sg+"  "+sg+"  "+sg,function(){G.step7=2;save();step7(s)});
@@ -250,11 +254,11 @@ function add9(quiet){if(G.ev.n9)return;G.ev.n9=1;var p=G.sp[1];G.st.push({x:p.x,
 /* ---------- zeldzame geesten ---------- */
 function addRare(id){var p=MW.profile.get();p.book_ng=p.book_ng||{};var isNew=!p.book_ng[id];p.book_ng[id]=(p.book_ng[id]||0)+1;p.xp+=20*D.RARE[id][1];MW.profile.save(p);G.rare.got.push(id);save();return isNew}
 function catchRare(q){if(!G.rare.cur||q!==G.rare.cur)return;var E=D.RARE[q.id];G.rare.cur=null;G.rare.next=Date.now()+40000+Math.random()*55000;var isNew=addRare(q.id);buzz([60,40,160]);beep(880,.2);setTimeout(function(){beep(1180,.3)},140);
-  sheet('<div class="eyebrow">'+esc(T.rare.tier[E[1]])+(isNew?" · "+esc(T.rare["new"]):"")+'</div><canvas class="figc app" id="figc" width="260" height="260"></canvas><h2>'+esc(E[0])+'</h2><p>'+esc(E[3])+'</p><div class="tags"><i>+'+(20*E[1])+'</i></div><button type="button" class="btn" id="shX">'+T.back+'</button>');
-  rareFig($("#figc").getContext("2d"),130,128,200,1,E[2]);$("#shX").onclick=function(){closeSheet();sel=null;chip()}}
+  sheet('<div class="eyebrow">'+esc(T.rare.tier[E[1]])+(isNew?" · "+esc(T.rare["new"]):"")+'</div>'+rpic(q.id," wide")+'<h2>'+esc(E[0])+'</h2><p>'+esc(E[3])+'</p><div class="tags"><i>+'+(20*E[1])+'</i></div><button type="button" class="btn" id="shX">'+T.back+'</button>');
+  $("#shX").onclick=function(){closeSheet();sel=null;chip()}}
 function bookSheet(){var bk=MW.profile.get().book_ng||{},n=Object.keys(bk).length;
-  sheet('<div class="eyebrow">'+n+' / '+D.RARE.length+'</div><h2>'+esc(T.rare.book)+'</h2><p class="note">'+esc(T.rare.bookT)+'</p><div class="book">'+D.RARE.map(function(e,i){return '<div'+(bk[i]?'':' class="no"')+'><canvas width="90" height="90" data-g="'+(bk[i]?e[2]:"")+'"></canvas><b>'+(bk[i]?esc(e[0]):"???")+'</b><span class="r'+e[1]+'">'+esc(T.rare.tier[e[1]])+'</span>'+(bk[i]?'<span>×'+bk[i]+'</span>':'')+'</div>'}).join("")+'</div><button type="button" class="btn ghost dk" id="shX">'+T.back+'</button>');
-  $$("#sheetBody .book canvas").forEach(function(cv){if(cv.dataset.g)rareFig(cv.getContext("2d"),45,46,78,1,cv.dataset.g)});$("#shX").onclick=closeSheet}
+  sheet('<div class="eyebrow">'+n+' / '+D.RARE.length+'</div><h2>'+esc(T.rare.book)+'</h2><p class="note">'+esc(T.rare.bookT)+'</p><div class="book">'+D.RARE.map(function(e,i){return '<div'+(bk[i]?'':' class="no"')+'>'+(bk[i]?rpic(i):'<span class="rpic none">?</span>')+'<b>'+(bk[i]?esc(e[0]):"???")+'</b><span class="r'+e[1]+'">'+esc(T.rare.tier[e[1]])+'</span>'+(bk[i]?'<span>×'+bk[i]+'</span>':'')+'</div>'}).join("")+'</div><button type="button" class="btn ghost dk" id="shX">'+T.back+'</button>');
+  $("#shX").onclick=closeSheet}
 $("#bEcho").onclick=bookSheet;
 
 /* ---------- notitieboek ---------- */

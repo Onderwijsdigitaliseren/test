@@ -205,3 +205,8 @@ body{background:#07090d}
 #arH{font-family:var(--f-fell);font-size:22px}
 #arX{background:rgba(7,9,13,.8);z-index:2}
 @media (prefers-reduced-motion:reduce){#map.shake,#glitch.on{animation:none}#bfIntro p{animation:none;opacity:1}}
+/* verzamelgeesten: de plaatjes */
+.rpic{display:block;width:100%;aspect-ratio:1;object-fit:cover;border-radius:3px;background:#07090d}
+.rpic.wide{aspect-ratio:auto;height:auto;border:6px solid #f4efe2;border-bottom-width:6px;box-shadow:0 6px 18px rgba(0,0,0,.45);border-radius:2px}
+.rpic.none{display:flex;align-items:center;justify-content:center;font-family:var(--f-fell);font-size:30px;color:#3a4658;background:radial-gradient(ellipse at 50% 40%,#1d2836,#07090d 75%)}
+.book div.no{opacity:.6}
