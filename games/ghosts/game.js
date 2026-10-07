@@ -5,6 +5,11 @@
    en duiken zeldzame geesten kort op die je op tijd moet aantikken. Op de laatste plek beantwoord je drie vragen: wie, wat, waarom vannacht. */
 (function(){
 "use strict";
+/* kijkrichting van de camera aan de achterkant, uit de volledige stand van het toestel (alpha, beta en gamma samen).
+   Alleen alpha gebruiken geeft sprongen zodra je de telefoon rechtop houdt; daarom rekenen we de richting van de lens zelf uit. */
+function camHead(e){if(e.alpha==null)return e.webkitCompassHeading!=null?e.webkitCompassHeading:null;if(e.beta==null||e.gamma==null)return (360-e.alpha)%360;
+  var r=Math.PI/180,A=e.alpha*r,B=e.beta*r,C=e.gamma*r,sA=Math.sin(A),cA=Math.cos(A),sB=Math.sin(B),cB=Math.cos(B),sC=Math.sin(C),cC=Math.cos(C),E=-(cC*sA*sB+cA*sC),N=-(sA*sC-cA*cC*sB);
+  if(Math.abs(E)+Math.abs(N)<.2)return null;return (Math.atan2(E,N)/r+360)%360}
 var MW=window.MW,Wk=MW.Walk,LS=MW.LS,D=window.NG_DATA,T=D.T,L=D.lang,esc=MW.esc,$=function(s){return document.querySelector(s)},$$=function(s){return [].slice.call(document.querySelectorAll(s))};
 var ID="ng",GK="ss_game_ng_"+L,WK="ss_ways_ng_"+L,rngOf=Wk.rngOf,shuffle=Wk.shuffle,hashStr=MW.hashStr;
 var toast=Wk.toast,sheet=Wk.sheet,beep=Wk.beep,buzz=Wk.buzz;function closeSheet(){if(window.mgStop)window.mgStop();Wk.closeSheet()}
@@ -215,10 +220,10 @@ function runAR(fin,onDone,onFail){closeSheet();var ar=$("#ar"),v=$("#arV"),c=$("
   req.then(function(stream){G.cam="on";save();AR.on=true;v.srcObject=stream;ar.hidden=false;ar.classList.toggle("calm",!!fin);
     var g=c.getContext("2d"),dpr=1,w=0,h=0,hd=null,dragH=180,target=fin?null:90+Math.random()*180,hold=0,last=0,over=false,hasOri=false,t0=0;
     var rs=function(){dpr=Math.min(2,devicePixelRatio||1);w=c.clientWidth;h=c.clientHeight;c.width=w*dpr;c.height=h*dpr};rs();addEventListener("resize",rs);
-    var ori=function(e){var a=e.webkitCompassHeading!=null?e.webkitCompassHeading:(e.alpha!=null?360-e.alpha:null);if(a!=null){if(hd==null)hd=a;else{var dh=((a-hd)%360+540)%360-180;hd=(hd+dh*.25+360)%360}hasOri=true}};
-    addEventListener("deviceorientationabsolute",ori);addEventListener("deviceorientation",ori);
+    var ori=function(e){var a=camHead(e);if(a!=null){if(hd==null)hd=a;else{var dh=((a-hd)%360+540)%360-180;hd=(hd+dh*.4+360)%360}hasOri=true}};
+    addEventListener("deviceorientation",ori);
     var pd=null;c.onpointerdown=function(e){pd=[e.clientX,dragH]};c.onpointermove=function(e){if(pd&&!hasOri)dragH=pd[1]-(e.clientX-pd[0])*.35};c.onpointerup=function(){pd=null};
-    var stop=function(){AR.on=false;over=true;removeEventListener("deviceorientationabsolute",ori);removeEventListener("deviceorientation",ori);removeEventListener("resize",rs);try{stream.getTracks().forEach(function(t){t.stop()})}catch(e){}v.srcObject=null;ar.hidden=true};
+    var stop=function(){AR.on=false;over=true;removeEventListener("deviceorientation",ori);removeEventListener("resize",rs);try{stream.getTracks().forEach(function(t){t.stop()})}catch(e){}v.srcObject=null;ar.hidden=true};
     AR.stop=stop;$("#arX").onclick=function(){stop();onFail()};hint.textContent=fin?PZ.ar.calm:PZ.ar.drag;
     var f=function(ts){if(over)return;var dt=Math.min(.1,(ts-last)/1000)||0;last=ts;var H=hasOri?hd:dragH;if(target==null){if(!t0)t0=ts;if(ts-t0>500)target=H;else{requestAnimationFrame(f);return}}
       var d=((target-H)%360+540)%360-180;g.setTransform(dpr,0,0,dpr,0,0);g.clearRect(0,0,w,h);var fov=60,x=w/2+d/fov*w,y=h*.55;

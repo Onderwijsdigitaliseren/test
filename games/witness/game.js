@@ -274,15 +274,20 @@ function holdSheet(s){var f=G.c.frags[s.fi];
   hb.addEventListener("contextmenu",function(e){e.preventDefault()})}
 /* camera: de gestalte in je eigen straat. Kompas via deviceorientation; zonder kompas veeg je om rond te kijken. */
 var AR={on:false};
+/* kijkrichting van de camera aan de achterkant, uit de volledige stand van het toestel (alpha, beta en gamma samen).
+   Alleen alpha gebruiken geeft sprongen zodra je de telefoon rechtop houdt; daarom rekenen we de richting van de lens zelf uit. */
+function camHead(e){if(e.alpha==null)return e.webkitCompassHeading!=null?e.webkitCompassHeading:null;if(e.beta==null||e.gamma==null)return (360-e.alpha)%360;
+  var r=Math.PI/180,A=e.alpha*r,B=e.beta*r,C=e.gamma*r,sA=Math.sin(A),cA=Math.cos(A),sB=Math.sin(B),cB=Math.cos(B),sC=Math.sin(C),cC=Math.cos(C),E=-(cC*sA*sB+cA*sC),N=-(sA*sC-cA*cC*sB);
+  if(Math.abs(E)+Math.abs(N)<.2)return null;return (Math.atan2(E,N)/r+360)%360}
 function startAR(s){closeSheet();var ar=$("#ar"),v=$("#arV"),c=$("#arC"),hint=$("#arH");
   var req=navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:"environment"}},audio:false});
   try{if(window.DeviceOrientationEvent&&typeof DeviceOrientationEvent.requestPermission==="function")DeviceOrientationEvent.requestPermission().catch(function(){})}catch(e){}
   req.then(function(stream){G.cam="on";save();AR.on=true;v.srcObject=stream;ar.hidden=false;var g=c.getContext("2d"),dpr=1,w=0,h=0,head=null,dragH=180,target=90+Math.random()*180,hold=0,last=0,fin=false,hasOri=false;
     var rs=function(){dpr=Math.min(2,devicePixelRatio||1);w=c.clientWidth;h=c.clientHeight;c.width=w*dpr;c.height=h*dpr};rs();addEventListener("resize",rs);
-    var ori=function(e){var a=e.webkitCompassHeading!=null?e.webkitCompassHeading:(e.alpha!=null?360-e.alpha:null);if(a!=null){if(head==null)head=a;else{var dh=((a-head)%360+540)%360-180;head=(head+dh*.25+360)%360}hasOri=true}};
-    addEventListener("deviceorientationabsolute",ori);addEventListener("deviceorientation",ori);
+    var ori=function(e){var a=camHead(e);if(a!=null){if(head==null)head=a;else{var dh=((a-head)%360+540)%360-180;head=(head+dh*.4+360)%360}hasOri=true}};
+    addEventListener("deviceorientation",ori);
     var pd=null;c.addEventListener("pointerdown",function(e){pd=[e.clientX,dragH]});c.addEventListener("pointermove",function(e){if(pd&&!hasOri)dragH=pd[1]-(e.clientX-pd[0])*.35});c.addEventListener("pointerup",function(){pd=null});
-    var stop=function(){AR.on=false;fin=true;removeEventListener("deviceorientationabsolute",ori);removeEventListener("deviceorientation",ori);removeEventListener("resize",rs);try{stream.getTracks().forEach(function(t){t.stop()})}catch(e){}v.srcObject=null;ar.hidden=true};
+    var stop=function(){AR.on=false;fin=true;removeEventListener("deviceorientation",ori);removeEventListener("resize",rs);try{stream.getTracks().forEach(function(t){t.stop()})}catch(e){}v.srcObject=null;ar.hidden=true};
     AR.stop=stop;
     $("#arX").onclick=function(){stop();puzzle(s)};
     hint.textContent=PZ.ar.drag;mg.tm.push(setTimeout(function(){if(!hasOri&&!fin)hint.textContent=PZ.ar.drag},1500));
