@@ -14,8 +14,10 @@ var PZ=D.PZ,MAPFONT="600 12px 'Barlow Condensed','Arial Narrow',sans-serif",stil
 function cap(s){return s.replace(/^./,function(m){return m.toUpperCase()})}
 
 /* ---------- de zaak: welke van de drie vrouwen, welk lot, waarom vannacht ---------- */
+var WPIC=[2,3,4]; // de vrouwen met een portret (woman-<i>.webp)
+function wsrc(i){return MW.root+"games/ghosts/woman-"+i+".webp"}
 function genCase(seed){var r=rngOf(seed),idx=[0,1,2];
-  for(var t=0;t<300;t++){idx=shuffle(D.WOMEN.map(function(_,i){return i}),r).slice(0,3);var k={};if(idx.every(function(i){var w=D.WOMEN[i],key=w.a+""+w.b;if(k[key])return false;k[key]=1;return true}))break}
+  for(var t=0;t<300;t++){idx=shuffle(WPIC.slice(),r).slice(0,3);var k={};if(idx.every(function(i){var w=D.WOMEN[i],key=w.a+""+w.b;if(k[key])return false;k[key]=1;return true}))break}
   var g=Math.floor(r()*3),F=Math.floor(r()*3),Wf=(F+1+Math.floor(r()*2))%3,R=Math.floor(r()*3),o=shuffle([0,1,2].filter(function(x){return x!==R}),r);
   // F = wat er echt gebeurde, Wf = wat de krant beweert (locatie 5) en locatie 6 weerlegt, X = wat de verschijning uitsluit (locatie 4)
   // R = waarom vannacht; n1 en n2 = de twee redenen die de getuige (2) en de waarschuwing (7) uitsluiten
@@ -103,7 +105,7 @@ function build(seed,mode,pois,ways,origin,daily){
   $("#bfIntro").innerHTML=T.intro.map(function(t,i){return '<p style="animation-delay:'+(.3+i*1.5)+'s">'+esc(t)+'</p>'}).join("");
   $("#bfConH").textContent=T.women;$("#bfCon").innerHTML=c.w.map(function(i){return womanCard(D.WOMEN[i],"")}).join("");
   show("brief")}
-function womanCard(w,cls,attr){return '<'+(attr?'button type="button" '+attr:'div')+' class="sus woman'+cls+'"><span class="oval" aria-hidden="true"><i class="h'+w.a+' d'+w.b+'"></i></span><span class="wb"><b>'+esc(w.n)+'</b><small>'+esc(w.role)+' · '+esc(fill(T.vanished,{y:w.y,a:w.age}))+'</small><span class="tags"><i>'+esc(T.hairTag[w.a])+'</i><i>'+esc(T.dressTag[w.b])+'</i><i>'+esc(w.ini)+'</i></span></span></'+(attr?'button':'div')+'>'}
+function womanCard(w,cls,attr){return '<'+(attr?'button type="button" '+attr:'div')+' class="sus woman'+cls+'">'+(WPIC.indexOf(D.WOMEN.indexOf(w))>=0?'<img class="wpic" src="'+wsrc(D.WOMEN.indexOf(w))+'" alt="">':'<span class="oval" aria-hidden="true"><i class="h'+w.a+' d'+w.b+'"></i></span>')+'<span class="wb"><b>'+esc(w.n)+'</b><small>'+esc(w.role)+' · '+esc(fill(T.vanished,{y:w.y,a:w.age}))+'</small><span class="tags"><i>'+esc(T.hairTag[w.a])+'</i><i>'+esc(T.dressTag[w.b])+'</i><i>'+esc(w.ini)+'</i></span></span></'+(attr?'button':'div')+'>'}
 $("#bGo").onclick=function(){G.t0=Date.now();if(G.mode==="gps")MW.pro.setFree(ID);save();enter()};
 $("#bBack").onclick=function(){G=null;home()};
 function save(){if(G){G.px=P.x;G.py=P.y;LS.set(GK,G)}}
@@ -293,7 +295,7 @@ function win(){mg.stop();var c=G.c,v=vars(c),min=(Date.now()-G.t0)/60000,s2=G.tr
   var a=MW.profile.award({game:ID,xp:xp,stars:stars,gps:G.mode==="gps",min:min,km:km,title:w.n,code:G.code});
   if(G.daily){var p=MW.profile.get();p.games.ng.day=MW.today();MW.profile.save(p)}
   G.won={stars:stars,min:min};G.rare.cur=null;save();buzz([100,50,100,50,300]);beep(520,.3);setTimeout(function(){beep(780,.5)},260);var st=a.prof.streak;
-  sheet('<div class="eyebrow">'+T.won+' · '+esc(G.code)+'</div><div class="stars">'+"★".repeat(stars)+"☆".repeat(3-stars)+'</div><h2>'+esc(w.n)+'</h2><p class="note">'+esc(w.role)+' · '+esc(fill(T.vanished,{y:w.y,a:w.age}))+'</p>'+
+  sheet('<div class="eyebrow">'+T.won+' · '+esc(G.code)+'</div><div class="stars">'+"★".repeat(stars)+"☆".repeat(3-stars)+'</div><img class="wbig" src="'+wsrc(c.w[c.g])+'" alt=""><h2>'+esc(w.n)+'</h2><p class="note">'+esc(w.role)+' · '+esc(fill(T.vanished,{y:w.y,a:w.age}))+'</p>'+
     '<p>'+esc(D.FATEEND[c.F])+' '+esc(fill(D.REASONEND[c.R],v))+'</p><p class="closing">'+esc(T.closing)+'</p>'+
     '<div class="tags"><i>'+Math.round(min)+' min</i><i>'+km.toFixed(1).replace(".",L==="nl"?",":".")+' km</i><i>'+fill(T.pts,{x:xp})+'</i><i>'+G.rare.got.length+' '+esc(T.caught)+'</i>'+(G.mode==="gps"?'<i>'+fill(st===1?T.streakTxt:T.streakTxtP,{n:st})+'</i>':'')+'</div>'+
     (a.up?'<p><b>'+esc(fill(T.up,{r:MW.profile.rankName(a.prof.xp,L)}))+'</b></p>':'')+(!s2?'<p class="note">'+T.missed1+'</p>':'')+(!s3?'<p class="note">'+fill(T.missed2,{m:G.par})+'</p>':'')+
