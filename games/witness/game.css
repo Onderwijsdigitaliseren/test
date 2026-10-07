@@ -283,7 +283,14 @@ body,.btn.ghost,.pill,#zoom button,#bar button{color:#ecebe8}
 #fbar.hot i{animation:blink .5s infinite}
 #hud div.danger{background:rgba(160,16,26,.28)}
 #hud div.danger b{font-size:20px}
-#fflash{position:absolute;inset:0;z-index:4;pointer-events:none;background:radial-gradient(ellipse at center,rgba(255,45,61,.15),rgba(160,16,26,.75));opacity:0}
+#fflash{position:absolute;inset:0;z-index:4;pointer-events:none;background:radial-gradient(ellipse at center,rgba(255,45,61,.15),rgba(160,16,26,.75)),url("p-shadows.webp") center/cover no-repeat;opacity:0}
 #fflash.on{animation:fflash 1.4s ease-out}
 @keyframes fflash{0%{opacity:1}12%{opacity:.25}24%{opacity:.9}100%{opacity:0}}
 @media(prefers-reduced-motion:reduce){#fflash.on{animation:none}#fbar.hot i{animation:none}}
+
+/* sfeerfoto's: als bijlage in de chat en bovenaan de schermen */
+.ph{display:block;width:100%;height:clamp(150px,27vh,230px);object-fit:cover;object-position:50% 40%;border-radius:10px;background:#070708;border:1px solid var(--rule);box-shadow:0 8px 20px rgba(0,0,0,.5);margin:2px 0 8px;flex-shrink:0}
+#brief .ph{height:clamp(130px,21vh,190px);object-position:50% 55%;margin-bottom:12px}
+.aph{display:block;width:min(100%,300px);aspect-ratio:7/5;height:auto;object-fit:cover;border-radius:9px;background:#070708}
+.aph.solo{align-self:flex-start;border:1px solid var(--rule);border-radius:14px 14px 14px 4px;opacity:0;animation:pop .45s ease-out forwards}
+.att.k-cam .aph{filter:grayscale(.7) contrast(1.12)}
