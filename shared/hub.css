@@ -67,3 +67,17 @@ footer{display:flex;flex-wrap:wrap;gap:8px 16px;justify-content:center;font-size
 footer a,footer button{color:var(--fog);text-decoration:underline;font-size:13px;padding:0}
 @media(min-width:720px){.wrap{max-width:900px}.game{grid-template-columns:96px 1fr}.game .cover{width:96px;height:96px}.cats{grid-template-columns:1fr 1fr}.hero{margin:0 calc(50% - 50vw);padding-inline:calc(50vw - 450px + 16px)}.logo{width:360px}}
 @media(prefers-reduced-motion:reduce){.hero::before,.logo,.cta .arrow{animation:none}}
+
+/* uitgelichte wandeling bovenaan (seizoen) */
+#feat{display:flex;flex-direction:column;gap:14px;margin-bottom:18px}
+#feat:empty{display:none}
+.feature{position:relative;display:flex;flex-direction:column;justify-content:flex-end;min-height:440px;border-radius:6px;overflow:hidden;background-color:#07090d;background-size:cover;background-position:72% top;background-size:auto 330px;background-repeat:no-repeat;color:#f3ede1;text-decoration:none;border:1px solid #ff7a1a;box-shadow:0 0 0 1px rgba(255,122,26,.25),0 0 46px rgba(255,122,26,.28),0 18px 40px rgba(0,0,0,.55)}
+.feature .fbadge{position:absolute;left:0;top:16px;background:#ff7a1a;color:#140a02;font-family:var(--f-cond);font-weight:600;text-transform:uppercase;letter-spacing:.16em;font-size:14px;padding:6px 16px 6px 12px;border-radius:0 3px 3px 0;box-shadow:0 4px 14px rgba(0,0,0,.5)}
+.feature .fbody{display:flex;flex-direction:column;gap:8px;padding:18px 16px 16px;margin-top:210px}
+.feature h2{font-family:'IM Fell English SC','Special Elite',Georgia,serif;font-size:clamp(32px,9vw,46px);line-height:1;color:#f3ede1;margin:0;text-shadow:0 2px 0 #000,0 0 26px rgba(255,122,26,.55)}
+.feature .tag{font-family:var(--f-type);font-size:17px;color:#ffb37a}
+.feature .desc{font-size:15px;color:#d6deea;max-width:60ch}
+.feature .meta{display:flex;flex-wrap:wrap;gap:6px}
+.feature .meta i{font-style:normal;font-size:12px;background:rgba(255,255,255,.12);padding:2px 8px;border-radius:2px}
+.feature .btn{background:#ff7a1a;color:#140a02;margin-top:4px;box-shadow:0 0 22px rgba(255,122,26,.35)}
+@media(min-width:760px){.feature{min-height:480px;background-position:center top;background-size:cover}.feature .fbody{max-width:620px;padding:24px}.feature .btn{align-self:flex-start;width:auto;padding-inline:34px}}

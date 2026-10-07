@@ -37,8 +37,12 @@ function card(g){var x=g[L],p=MW.profile.get(),st=p.games&&p.games[g.id],soon=g.
   var cover=COV[g.id]?'<img class="cover" src="'+MW.root+'assets/cover-'+g.id+'.webp" alt="" width="400" height="400" loading="lazy">':'<div class="cover ico-'+g.cat+'" aria-hidden="true">'+(ICON[g.cat]||"")+'</div>';
   return '<article class="game'+(soon?' soon':'')+(g.status==="new"?' isnew':'')+'" data-id="'+g.id+'">'+(soon?'<span class="stamp">'+H.soon+'</span>':'')+(g.status==="new"?'<span class="ribbon">'+H.neu+'</span>':'')+cover+'<h3>'+esc(x.title)+'</h3><p class="tag">'+esc(x.tag)+'</p><p class="desc">'+esc(x.desc)+'</p><div class="meta">'+meta.join("")+'</div>'+
     (soon?'<button class="btn ghost dk" disabled>'+H.soon+'</button>':'<a class="btn" href="'+MW.root+esc(x.slug)+'">'+(has?H.resume:H.play)+' →</a>')+'</article>'}
+function feature(g){var x=g[L],has=!!MW.LS.get(resumeKey(g),null),p=MW.profile.get(),st=p.games&&p.games[g.id],meta="<i>"+esc(g.minutes)+" "+H.min+"</i><i>"+esc(g.km)+" "+H.km+"</i>"+(MW.pro.isPro()?'<i class="pro">'+H.pro+'</i>':"<i>"+H.trial+"</i>")+(st&&st.best?'<i class="star">'+H.best+" "+"★".repeat(st.best)+"☆".repeat(3-st.best)+"</i>":"");
+  return '<a class="feature" href="'+MW.root+esc(x.slug)+'" style="background-image:linear-gradient(180deg,rgba(7,9,13,.05) 0,rgba(7,9,13,.15) 170px,#07090d 325px),url('+MW.root+'assets/feature-'+g.id+'.webp)"><span class="fbadge">🎃 '+esc(g.feature[L])+'</span><span class="fbody"><h2>'+esc(x.title)+'</h2><span class="tag">'+esc(x.tag)+'</span><span class="desc">'+esc(x.desc)+'</span><span class="meta">'+meta+'</span><span class="btn">'+(has?H.resume:H.play)+' →</span></span></a>'}
 function catalog(){
-  $("#cats").innerHTML=C.cats.map(function(c){var gs=C.games.filter(function(g){return g.cat===c.id}),soon=gs.every(function(g){return g.status==="soon"});
+  var fe=$("#feat");if(!fe){fe=document.createElement("div");fe.id="feat";$("#cats").parentNode.insertBefore(fe,$("#cats"))}
+  fe.innerHTML=C.games.filter(function(g){return g.feature&&g.status!=="soon"}).map(feature).join("");
+  $("#cats").innerHTML=C.cats.map(function(c){var gs=C.games.filter(function(g){return g.cat===c.id&&!g.feature}),soon=gs.every(function(g){return g.status==="soon"});
     return '<section class="cat'+(soon?' soon':'')+'"><div class="hd"><span class="ico" aria-hidden="true">'+c.icon+'</span><h2>'+esc(c[L].n)+'</h2></div><p class="ct">'+esc(c[L].t)+'</p>'+gs.map(card).join("")+'</section>'}).join("")}
 
 /* ---------- vellen ---------- */
