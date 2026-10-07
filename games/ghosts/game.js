@@ -229,7 +229,7 @@ function openLoc(s){walkTo=null;var c=G.c,n=s.n,v=vars(c);
     if(!camOK())return lamp();if(G.cam==="on")return runAR(false,after,lamp);
     sheet(head(s)+'<h2>'+esc(PZ.ar.h)+'</h2><p>'+esc(D.L4a)+'</p><button type="button" class="btn" id="arYes">'+PZ.ar.yes+'</button><button type="button" class="btn ghost dk" id="arNo">'+PZ.ar.no+'</button>',true);
     $("#arYes").onclick=function(){runAR(false,after,lamp)};$("#arNo").onclick=function(){G.cam="off";save();lamp()};return}
-  if(n===5)return runPuzzle(s,"seq","",function(){done(s);doc(s,'<div class="paperclip"><p>'+esc(locText(c,5))+'</p></div>')});
+  if(n===5)return runPuzzle(s,"seq","",function(){done(s);doc(s,'<div class="paperclip"><h3>'+esc(T.news[0])+'</h3><img src="'+MW.root+'games/ghosts/clipping.webp" alt=""><b>'+esc(T.news[1])+'</b><p>'+esc(locText(c,5))+'</p></div>')});
   if(n===6){done(s);return doc(s,'<p class="strike">'+esc(cap(D.SUM[c.Wf]))+'</p><p>'+esc(locText(c,6))+'</p>',function(){add9(false)})}
   if(n===7){if(G.step7>=1)return step7(s);G.step7=1;save();return doc(s,'<p class="chalk">'+esc(locText(c,7))+'</p>',function(){step7(s)},PZ.tiles[0])}
   if(n===8)return finalSheet(s);

@@ -169,7 +169,11 @@ window.NG_DATA={
     "Legendarisch"
    ],
    "new": "nieuw"
-  }
+  },
+  "news": [
+   "Vermiste vrouw",
+   "Sedert dinsdag geen spoor meer"
+  ]
  },
  "TYPES": {
   "kerk": [

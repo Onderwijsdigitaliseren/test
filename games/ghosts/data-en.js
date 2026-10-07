@@ -166,7 +166,11 @@ window.NG_DATA={
     "Legendary"
    ],
    "new": "new"
-  }
+  },
+  "news": [
+   "Missing woman",
+   "No trace since Tuesday"
+  ]
  },
  "TYPES": {
   "kerk": [

@@ -216,3 +216,10 @@ body{background:#07090d}
 .sus.out .wpic{filter:grayscale(1)}
 .wbig{align-self:center;width:min(240px,80%);height:auto;border:8px solid #f4efe2;box-shadow:0 8px 22px rgba(0,0,0,.5);transform:rotate(-1.5deg)}
 .doc.d4 .photo{padding-bottom:9px;transform:rotate(1.2deg)}
+/* het krantenknipsel van locatie 5 */
+.paperclip{background:linear-gradient(160deg,#dccfae,#c9b98f 70%,#b8a579);box-shadow:0 6px 18px rgba(0,0,0,.4),inset 0 0 40px rgba(90,60,20,.25);border-top:0;border-bottom:0;padding:14px 14px 16px}
+.paperclip::after{content:"";display:block;clear:both}
+.paperclip h3{font-family:'Playfair Display','Times New Roman',Georgia,serif;font-weight:900;text-transform:uppercase;font-size:clamp(26px,8.6vw,38px);line-height:1;letter-spacing:.01em;text-align:center;color:#2a2118;border-top:1px solid #2a2118;border-bottom:3px double #2a2118;padding:8px 0;margin:0 0 10px}
+.paperclip img{float:right;width:46%;height:auto;margin:2px 0 6px 12px;border:1px solid #2a2118;filter:sepia(.35) contrast(1.05)}
+.paperclip b{display:block;font-family:Georgia,serif;font-size:18px;line-height:1.15;margin-bottom:6px;color:#2a2118}
+.paperclip p{font-size:14px;line-height:1.45;color:#2a2118}
