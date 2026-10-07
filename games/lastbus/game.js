@@ -58,9 +58,9 @@ function wet(c,rx,a){var g=c.createRadialGradient(60,152,2,60,152,rx);g.addColor
 /* de vermiste: op de rug gezien, lopend, capuchon op en rugzak om (bewust geen man of vrouw), tegen het laatste avondlicht */
 var WIMG=new Image();WIMG.src=MW.root+"games/lastbus/walker.webp";
 function ph(k,cls){return '<img class="'+(cls||"ph")+'" src="'+MW.root+'games/lastbus/p-'+k+'.webp" alt="" width="720" height="630">'}
-var KPH={cam:"cam",wit:"driver",msg:"phone",obj:"receipt",time:"pole",open:"bus"},SPH=["meet","money","proof"];
+var KPH={cam:"cam",wit:"passer",msg:"phone",obj:"receipt",time:"pole",open:"bus"},SPH=["meet","money","proof"];
 function fid(f){var i,k,v,a;if(f.k==="open")return "open";for(i=0;i<(D.SC||[]).length;i++)if(D.SC[i].t===f.t)return "SC:"+i;for(i=0;i<D.TIME.length;i++)if(D.TIME[i].t===f.t)return "TIME:"+i;for(k in D.CT)for(v in D.CT[k].clue){a=D.CT[k].clue[v];for(i=0;i<a.length;i++)if(a[i].t===f.t)return k+":"+v+":"+i}return ""}
-var FPH={"water:ja:2":"left","water:nee:2":"end","SC:2":"meet","SC:8":"proof","SC:11":"money","cam:ja:0":"phone","cam:nee:0":"phone","SC:7":"phone","SC:10":"phone","TIME:1":"phone","TIME:2":"bus","TIME:3":"bus"};
+var FPH={"lijn:ja:1":"driver","water:ja:0":"street","water:nee:0":"street","druk:ja:1":"street2","druk:nee:1":"street2","SC:6":"note","water:ja:2":"left","water:nee:2":"end","SC:2":"meet","SC:8":"proof","SC:11":"money","cam:ja:0":"phone","cam:nee:0":"phone","SC:7":"phone","SC:10":"phone","TIME:1":"phone","TIME:2":"bus","TIME:3":"bus"};
 function walker(c,x,y,s,col,al){
   if(WIMG.naturalWidth){c.save();c.globalAlpha=al;var cy=y-s*.06,g0=c.createRadialGradient(x,cy,s*.05,x,cy,s*.74);g0.addColorStop(0,"rgba(255,190,90,.40)");g0.addColorStop(.55,"rgba(255,176,0,.14)");g0.addColorStop(1,"rgba(255,176,0,0)");c.fillStyle=g0;c.beginPath();c.arc(x,cy,s*.74,0,7);c.fill();
     var wh=s*1.14,ww=wh*WIMG.naturalWidth/WIMG.naturalHeight;c.drawImage(WIMG,x-ww/2,y-wh/2,ww,wh);c.restore();return}

@@ -65,7 +65,7 @@ var SIMG=new Image();SIMG.src=MW.root+"games/witness/stalker.webp";
 function tint(h,a){return "rgba("+parseInt(h.slice(1,3),16)+","+parseInt(h.slice(3,5),16)+","+parseInt(h.slice(5,7),16)+","+a+")"}
 function ph(k,cls){return '<img class="'+(cls||"ph")+'" src="'+MW.root+'games/witness/p-'+k+'.webp" alt="" width="720" height="620">'}
 function fid(f){var i,k,v,a;if(f.k==="open")return "open";for(i=0;i<(D.SC||[]).length;i++)if(D.SC[i].t===f.t)return "SC:"+i;for(i=0;i<D.TIME.length;i++)if(D.TIME[i].t===f.t)return "TIME:"+i;for(k in D.CT)for(v in D.CT[k].clue){a=D.CT[k].clue[v];for(i=0;i<a.length;i++)if(a[i].t===f.t)return k+":"+v+":"+i}return ""}
-var FPH={"auto:ja:0":"car","auto:ja:1":"car","rookt:nee:0":"shadows","nummer:oud:1":"phone","nummer:nieuw:1":"phone","TIME:0":"shadows","TIME:2":"cam","TIME:3":"shadows"};
+var FPH={"auto:ja:0":"car","auto:ja:1":"car","auto:nee:0":"ticket","rookt:nee:0":"ticket","nummer:oud:1":"ticket","nummer:nieuw:1":"ticket","TIME:0":"shadows","TIME:2":"cam","TIME:3":"arrow"};
 function phF(f){return FPH[fid(f)]||(f.k==="cam"?"cam":f.k==="wit"?"passer":f.k==="time"?"window":"found")}
 function stalker(c,x,y,s,col,al){
   if(SIMG.naturalWidth){c.save();c.globalAlpha=al;var cy=y-s*.08,g0=c.createRadialGradient(x,cy,s*.05,x,cy,s*.72);g0.addColorStop(0,tint(col,.5));g0.addColorStop(.55,tint(col,.18));g0.addColorStop(1,tint(col,0));c.fillStyle=g0;c.beginPath();c.arc(x,cy,s*.72,0,7);c.fill();

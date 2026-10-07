@@ -59,8 +59,8 @@ function pool(c,rx,col,a){var g=c.createRadialGradient(60,152,2,60,152,rx);g.add
 var BIMG=new Image();BIMG.src=MW.root+"games/bride/bride.webp";
 function ph(k){return '<img class="ph" src="'+MW.root+'games/bride/p-'+k+'.webp" alt="" width="720" height="600">'}
 function fid(f){var i,k,v,a;if(f.k==="open")return "open";for(i=0;i<(D.SC||[]).length;i++)if(D.SC[i].t===f.t)return "SC:"+i;for(i=0;i<D.TIME.length;i++)if(D.TIME[i].t===f.t)return "TIME:"+i;for(k in D.CT)for(v in D.CT[k].clue){a=D.CT[k].clue[v];for(i=0;i<a.length;i++)if(a[i].t===f.t)return k+":"+v+":"+i}return ""}
-var FPH={"ring:ja:0":"ring","ring:nee:0":"ring","sleutel:ja:0":"dress","bellen:ja:0":"phone","bellen:nee:0":"phone","SC:8":"money","TIME:0":"jealousy","TIME:2":"witness","TIME:3":"invite"};
-function phF(f){return ph(FPH[fid(f)]||(f.k==="cam"?"bride":f.k==="wit"?"witness":f.k==="msg"||f.k==="open"?"phone":f.k==="time"?"bouquet":"invite"))}
+var FPH={"ring:ja:0":"ring","ring:nee:0":"ring","sleutel:ja:0":"dress","bellen:ja:0":"phone","bellen:nee:0":"phone","SC:8":"money","TIME:0":"jealousy","TIME:2":"coat","TIME:3":"card","hotel:nee:0":"card","diner:ja:0":"card","sleutel:nee:2":"card","SC:0":"card","SC:4":"invite2"};
+function phF(f){return ph(FPH[fid(f)]||(f.k==="cam"?"coat":f.k==="wit"?"witness":f.k==="msg"||f.k==="open"?"phone":f.k==="time"?"bouquet":"invite"))}
 var MPH=["jealousy","money","secret"];
 function bride(c,x,y,s,col,al){
   if(BIMG.naturalWidth){c.save();c.globalAlpha=al;var h0=c.createRadialGradient(x,y,s*.05,x,y,s*.8);h0.addColorStop(0,"rgba(247,239,223,.32)");h0.addColorStop(1,"rgba(247,239,223,0)");c.fillStyle=h0;c.beginPath();c.arc(x,y,s*.8,0,7);c.fill();
@@ -252,7 +252,7 @@ function puzzleKey(s){var f=G.c.frags[s.fi];return f.k==="open"?"hold":f.k==="ca
 function finish(s){mg.stop();s.done=true;G.force=null;buzz(200);beep(880,.35);save();reveal(s)}
 function encounter(s){walkTo=null;var f=G.c.frags[s.fi];
   if(f.k==="cam"&&navigator.mediaDevices&&navigator.mediaDevices.getUserMedia&&G.cam!=="off"){if(G.cam==="on")return startAR(s);
-    sheet(ph("bride")+'<div class="eyebrow">'+esc(s.name)+'</div><h2>'+esc(PZ.ar.h)+'</h2><p>'+esc(fill(PZ.ar.t,vars(G.c)))+'</p><button type="button" class="btn" id="arYes">'+PZ.ar.yes+'</button><button type="button" class="btn ghost dk" id="arNo">'+PZ.ar.no+'</button>');
+    sheet(ph("camdress")+'<div class="eyebrow">'+esc(s.name)+'</div><h2>'+esc(PZ.ar.h)+'</h2><p>'+esc(fill(PZ.ar.t,vars(G.c)))+'</p><button type="button" class="btn" id="arYes">'+PZ.ar.yes+'</button><button type="button" class="btn ghost dk" id="arNo">'+PZ.ar.no+'</button>');
     $("#arYes").onclick=function(){startAR(s)};$("#arNo").onclick=function(){G.cam="off";save();puzzle(s)};return}
   puzzle(s)}
 function puzzle(s){var f=G.c.frags[s.fi],key=puzzleKey(s),wit=f.k==="wit";

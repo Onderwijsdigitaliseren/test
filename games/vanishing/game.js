@@ -58,7 +58,7 @@ function wet(c,rx,a){var g=c.createRadialGradient(60,152,2,60,152,rx);g.addColor
 var WIMG=new Image();WIMG.src=MW.root+"games/vanishing/walker.webp";
 function ph(k,cls){return '<img class="'+(cls||"ph")+'" src="'+MW.root+'games/vanishing/p-'+k+'.webp" alt="" width="720" height="640">'}
 function fid(f){var i,k,v,a;if(f.k==="open")return "open";for(i=0;i<(D.SC||[]).length;i++)if(D.SC[i].t===f.t)return "SC:"+i;for(i=0;i<D.TIME.length;i++)if(D.TIME[i].t===f.t)return "TIME:"+i;for(k in D.CT)for(v in D.CT[k].clue){a=D.CT[k].clue[v];for(i=0;i<a.length;i++)if(a[i].t===f.t)return k+":"+v+":"+i}return ""}
-var FPH={"auto:auto:0":"car","auto:auto:1":"car","auto:auto:2":"car","bellen:ja:0":"phone","bellen:nee:0":"phone","SC:6":"left","SC:10":"fled","TIME:0":"found","TIME:1":"bag","TIME:3":"cam"};
+var FPH={"auto:auto:0":"car","auto:auto:1":"car","auto:auto:2":"car","bellen:ja:0":"phone","bellen:nee:0":"phone","SC:6":"left","SC:10":"fled","TIME:0":"receipt","geld:nee:1":"receipt","sleutel:nee:2":"note","TIME:1":"bag","TIME:3":"arrow"};
 function phF(f){return ph(FPH[fid(f)]||(f.k==="cam"?"cam":f.k==="wit"?"witness":f.k==="msg"||f.k==="open"?"phone":f.k==="time"?"doorbell":"found"))}
 var SPH=["taken","fled","left"];
 function walker(c,x,y,s,col,al){
