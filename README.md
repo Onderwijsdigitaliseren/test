@@ -11,6 +11,8 @@ Statische site voor GitHub Pages, geen build-stap. Zelfde bestanden op murderwal
 /games/bride/                game.js (zelfde motor als vanishing: zes gasten, motief, de bruid als schim) · data-nl.js · data-en.js · game.css · hero.webp (sfeerfoto, uitsnede zonder titel) · portrait.webp; gebruikt games/vanishing/puzzles.js. Eigen sfeer naar de sfeerfoto (natte nacht, lantaarnlicht, ivoor, dieprode rozenblaadjes; Cinzel + Cormorant Garamond), eigen pictogrammen (IC in game.js), getekende figuren (bride/witness) en eigen kaartkleuren via createMap({theme})
 /eyewitness.html             spel 4 EN        /nl/ooggetuige.html   spel 4 NL (shell; logica in /games/witness/)
 /games/witness/              thriller op de motor van vanishing: berichten van ‘Onbekend’ per punt, achtervolger op je eigen spoor, twee antwoorden (wie volgt je, wie vertrouw je) · data-nl.js · data-en.js · game.css · hero.webp
+/unsolved.html               spel 5 EN        /nl/onopgelost.html   spel 5 NL (shell; logica in /games/coldcase/)
+/games/coldcase/             cold case op de motor van vanishing: dossier van 22 jaar terug ({Y} wordt bij het laden ingevuld), zes namen, toen/nu per plek (THEN), papieren kaart met rode draad, figuren uit het verleden · data-nl.js · data-en.js · game.css · hero.webp
 /games/vanishing/            game.js (logica, taalonafhankelijk) · data-nl.js · data-en.js · game.css · hero.webp (sfeerfoto, uitsnede zonder titel; eigen sfeer, figuren en rode routelijn)
 /shared/platform.js          gedeelde laag: Pro, groepspas, codes.json, profiel (rang/punten/streak), taal, instellingen (SS_PRO)
 /shared/walk.js              wandelmotor voor nieuwe spellen: OpenStreetMap/Overpass, plekken kiezen, nachtkaart, gps, oefenwereld, vellen/geluid
@@ -27,7 +29,7 @@ bestaande Pro-kopers en groepscodes blijven werken, er is geen migratie nodig. N
 (eerste zaak per spel gratis), en loggen hun resultaten in `ss_prof.games.<id>`. Rang, punten en dagstreak zijn platformbreed.
 
 ## Oude links
-`/#z=…` en `/#g=…` (zaakcodes en groepslinks van vóór het platform) worden door de hub doorgestuurd naar het juiste spel; `#z=VZ…` naar De Verdwijning, `#z=TD…` naar Tot de Dood Ons Scheidt, `#z=OG…` naar Ooggetuige.
+`/#z=…` en `/#g=…` (zaakcodes en groepslinks van vóór het platform) worden door de hub doorgestuurd naar het juiste spel; `#z=VZ…` naar De Verdwijning, `#z=TD…` naar Tot de Dood Ons Scheidt, `#z=OG…` naar Ooggetuige, `#z=CC…` naar Onopgelost.
 
 ## Nieuw spel toevoegen
 1. Object toevoegen in `shared/catalog.js` (id, categorie, status, slugs/titels per taal).

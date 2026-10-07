@@ -22,4 +22,8 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://murderwalk.com/eyewitness.html"/><xhtml:link rel="alternate" hreflang="nl" href="https://moordwandeling.nl/nl/ooggetuige.html"/></url>
   <url><loc>https://moordwandeling.nl/nl/ooggetuige.html</loc><lastmod>2026-10-04</lastmod><changefreq>monthly</changefreq><priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="nl" href="https://moordwandeling.nl/nl/ooggetuige.html"/><xhtml:link rel="alternate" hreflang="en" href="https://murderwalk.com/eyewitness.html"/></url>
+  <url><loc>https://murderwalk.com/unsolved.html</loc><lastmod>2026-10-07</lastmod><changefreq>monthly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://murderwalk.com/unsolved.html"/><xhtml:link rel="alternate" hreflang="nl" href="https://moordwandeling.nl/nl/onopgelost.html"/></url>
+  <url><loc>https://moordwandeling.nl/nl/onopgelost.html</loc><lastmod>2026-10-07</lastmod><changefreq>monthly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://moordwandeling.nl/nl/onopgelost.html"/><xhtml:link rel="alternate" hreflang="en" href="https://murderwalk.com/unsolved.html"/></url>
 </urlset>

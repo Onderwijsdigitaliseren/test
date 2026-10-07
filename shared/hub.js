@@ -33,7 +33,7 @@ function card(g){var x=g[L],p=MW.profile.get(),st=p.games&&p.games[g.id],soon=g.
   if(g.access==="free")meta.push("<i>"+H.free+"</i>");else if(MW.pro.isPro())meta.push('<i class="pro">'+H.pro+'</i>');else meta.push("<i>"+H.trial+"</i>");
   if(g.group)meta.push("<i>"+H.grp+"</i>");
   if(st&&st.best)meta.push('<i class="star">'+H.best+" "+"★".repeat(st.best)+"☆".repeat(3-st.best)+"</i>");
-  var COV={mw:1,td:1,vz:1,og:1};
+  var COV={mw:1,td:1,vz:1,og:1,cc:1};
   var cover=COV[g.id]?'<img class="cover" src="'+MW.root+'assets/cover-'+g.id+'.webp" alt="" width="400" height="400" loading="lazy">':'<div class="cover ico-'+g.cat+'" aria-hidden="true">'+(ICON[g.cat]||"")+'</div>';
   return '<article class="game'+(soon?' soon':'')+(g.status==="new"?' isnew':'')+'" data-id="'+g.id+'">'+(soon?'<span class="stamp">'+H.soon+'</span>':'')+(g.status==="new"?'<span class="ribbon">'+H.neu+'</span>':'')+cover+'<h3>'+esc(x.title)+'</h3><p class="tag">'+esc(x.tag)+'</p><p class="desc">'+esc(x.desc)+'</p><div class="meta">'+meta.join("")+'</div>'+
     (soon?'<button class="btn ghost dk" disabled>'+H.soon+'</button>':'<a class="btn" href="'+MW.root+esc(x.slug)+'">'+(has?H.resume:H.play)+' →</a>')+'</article>'}
