@@ -30,4 +30,8 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://murderwalk.com/the-last-bus.html"/><xhtml:link rel="alternate" hreflang="nl" href="https://moordwandeling.nl/nl/de-laatste-bus.html"/></url>
   <url><loc>https://moordwandeling.nl/nl/de-laatste-bus.html</loc><lastmod>2026-10-07</lastmod><changefreq>monthly</changefreq><priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="nl" href="https://moordwandeling.nl/nl/de-laatste-bus.html"/><xhtml:link rel="alternate" hreflang="en" href="https://murderwalk.com/the-last-bus.html"/></url>
+  <url><loc>https://murderwalk.com/night-of-the-ghosts.html</loc><lastmod>2026-10-07</lastmod><changefreq>monthly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://murderwalk.com/night-of-the-ghosts.html"/><xhtml:link rel="alternate" hreflang="nl" href="https://moordwandeling.nl/nl/de-nacht-van-de-geesten.html"/></url>
+  <url><loc>https://moordwandeling.nl/nl/de-nacht-van-de-geesten.html</loc><lastmod>2026-10-07</lastmod><changefreq>monthly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://moordwandeling.nl/nl/de-nacht-van-de-geesten.html"/><xhtml:link rel="alternate" hreflang="en" href="https://murderwalk.com/night-of-the-ghosts.html"/></url>
 </urlset>

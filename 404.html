@@ -5,6 +5,7 @@
 <script>(function(){var h=location.hash||"",L="",R=location.pathname.replace(/\/(nl\/)?[^\/]*$/,"/");window.ROOT=R;try{L=(localStorage.getItem("ss_lang")||"").replace(/"/g,"")}catch(e){}
 var nl=L==="nl"||(L!=="en"&&/moordwandeling/i.test(location.hostname));
 if(/^#z=TD/i.test(h)){location.replace(R+(nl?"nl/tot-de-dood-ons-scheidt.html":"till-death-do-us-part.html")+h);return}
+if(/^#z=NG/i.test(h)){location.replace(R+(nl?"nl/de-nacht-van-de-geesten.html":"night-of-the-ghosts.html")+h);return}
 if(/^#z=OG/i.test(h)){location.replace(R+(nl?"nl/ooggetuige.html":"eyewitness.html")+h);return}
 if(/^#z=CC/i.test(h)){location.replace(R+(nl?"nl/onopgelost.html":"unsolved.html")+h);return}
 if(/^#z=LB/i.test(h)){location.replace(R+(nl?"nl/de-laatste-bus.html":"the-last-bus.html")+h);return}

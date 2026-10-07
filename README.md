@@ -10,6 +10,7 @@ Statische site voor GitHub Pages, geen build-stap. Zelfde bestanden op murderwal
 /till-death-do-us-part.html  spel 3 EN        /nl/tot-de-dood-ons-scheidt.html  spel 3 NL (shell; logica in /games/bride/)
 /games/bride/                game.js (zelfde motor als vanishing: zes gasten, motief, de bruid als schim) · data-nl.js · data-en.js · game.css · hero.webp (sfeerfoto, uitsnede zonder titel) · portrait.webp; gebruikt games/vanishing/puzzles.js. Eigen sfeer naar de sfeerfoto (natte nacht, lantaarnlicht, ivoor, dieprode rozenblaadjes; Cinzel + Cormorant Garamond), eigen pictogrammen (IC in game.js), getekende figuren (bride/witness) en eigen kaartkleuren via createMap({theme})
 /eyewitness.html             spel 4 EN        /nl/ooggetuige.html   spel 4 NL (shell; logica in /games/witness/)
+/night-of-the-ghosts.html     spel 7 EN        /nl/de-nacht-van-de-geesten.html   spel 7 NL (shell; logica in /games/ghosts/)
 /games/witness/              thriller op de motor van vanishing: berichten van ‘Onbekend’ per punt, achtervolger op je eigen spoor, twee antwoorden (wie volgt je, wie vertrouw je) · data-nl.js · data-en.js · game.css · hero.webp
 /unsolved.html               spel 5 EN        /nl/onopgelost.html   spel 5 NL (shell; logica in /games/coldcase/)
 /games/coldcase/             cold case op de motor van vanishing: dossier van 22 jaar terug ({Y} wordt bij het laden ingevuld), zes namen, toen/nu per plek (THEN), papieren kaart met rode draad, figuren uit het verleden · data-nl.js · data-en.js · game.css · hero.webp

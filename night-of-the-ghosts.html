@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Night of the Ghosts – a Halloween walk through your own streets</title>
+<meta name="description" content="Do you dare investigate the eight apparitions in your neighbourhood after dark? No murderer, but a ghost: find out who she is, why she cannot leave and what has to happen tonight. First night free.">
+<link rel="canonical" href="https://murderwalk.com/night-of-the-ghosts.html">
+<link rel="alternate" hreflang="en" href="https://murderwalk.com/night-of-the-ghosts.html">
+<link rel="alternate" hreflang="nl" href="https://moordwandeling.nl/nl/de-nacht-van-de-geesten.html">
+<link rel="alternate" hreflang="x-default" href="https://murderwalk.com/night-of-the-ghosts.html">
+<meta property="og:site_name" content="Murder Walk">
+<meta property="og:title" content="Murder Walk – Night of the Ghosts">
+<meta property="og:description" content="Tonight the dead do not stay where they belong.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://murderwalk.com/night-of-the-ghosts.html">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#07090d">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600&family=IM+Fell+English+SC&display=swap">
+<link rel="stylesheet" href="shared/platform.css?v=1">
+<link rel="stylesheet" href="games/ghosts/game.css?v=1">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Night of the Ghosts", "url": "https://murderwalk.com/night-of-the-ghosts.html", "description": "Do you dare investigate the eight apparitions in your neighbourhood after dark? No murderer, but a ghost: find out who she is, why she cannot leave and what has to happen tonight. First night free.", "inLanguage": "en", "gamePlatform": "Web browser", "genre": ["Mystery", "Location-based game", "Halloween"], "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "3.99", "priceCurrency": "EUR", "description": "Pro"}}</script>
+</head>
+<body>
+<div id="app">
+  <section class="screen" id="home">
+    <canvas id="hero" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <div class="row0"><div class="pills"><a class="pill" id="hub" href="./">◂ All walks</a><button type="button" class="pill" id="lang">Nederlands</button></div></div>
+      <div class="masthead"><div class="brand">Murder Walk</div><h1 id="ttl"><small>Night of the</small>Ghosts</h1><span class="cat">Night case · Halloween</span></div>
+      <div class="gap"></div>
+      <div class="omen"><p>Tonight the dead do not stay where they belong.</p><p>At eight places in your neighbourhood apparitions have been reported.</p><p>One of them is trying to tell you something.</p><p>Find out who she is before you reach the last location.</p></div>
+      <p class="dare">Do you dare investigate the eight apparitions in your neighbourhood after dark?</p>
+      <div class="pline"><b id="pRank">–</b><span><b id="pStreak">0</b> Day streak</span><span><b id="pSolved">0</b> Solved</span></div>
+      <div hidden><div class="xp"><i id="pXp" style="width:0%"></i></div><p class="note" id="pNext"></p></div>
+      <div class="seg" id="len">
+        <button type="button" data-r="380" data-par="40" aria-pressed="false">Short · 40 min</button>
+        <button type="button" data-r="650" data-par="75" aria-pressed="true">Full · 75 min</button>
+      </div>
+      <button class="btn" id="bResume" hidden>Continue your night</button>
+      <button class="btn" id="bGps">Start tonight's case</button>
+      <button class="btn ghost" id="bRandom">Extra night here</button>
+      <button class="btn ghost" id="bCode">Enter a case code</button>
+      <button class="btn ghost sm" id="bDemo">Practice round in a fictional London</button>
+      <button class="btn ghost" id="bPro" hidden></button>
+      <p class="note" id="status"></p>
+      <div class="pump" aria-hidden="true"><ul><li>Eight locations, each different</li><li>The map changes as you walk</li><li>Catch rare ghosts</li></ul></div>
+      <ol class="how"><li>The map places eight locations on real spots around you. You walk them in order: a photograph, a witness, an object, an apparition, an old report.</li><li>There is no culprit. Find out which woman walks here, what happened to her and why she appears tonight of all nights.</li><li>Rare ghosts appear along the way. Tap them in time and they go into your book of ghosts.</li></ol>
+      <button class="btn ghost" id="bEcho">Book of ghosts</button>
+      <button class="btn ghost" id="bArch">Archive</button>
+      <button class="btn ghost sm" id="bWipe">Erase</button>
+      <p class="note">Stay on public roads and mind the traffic. You never need to go inside. No gore: just darkness, mist and goosebumps. The camera is optional; the image stays on your phone.</p>
+    </div>
+  </section>
+
+  <section class="screen" id="brief" hidden>
+    <div class="wrap">
+      <div class="paper">
+        <div class="eyebrow" id="bfNo"></div>
+        <div id="bfIntro"></div>
+        <div class="eyebrow" id="bfConH"></div>
+        <div class="list" id="bfCon"></div>
+      </div>
+      <button class="btn" id="bGo">Into the night</button>
+      <button class="btn ghost" id="bBack">Back</button>
+    </div>
+  </section>
+
+  <section class="screen" id="play" hidden>
+    <canvas id="map"></canvas>
+    <div id="hud">
+      <div><b id="hT">0:00</b><span>Time</span></div>
+      <div><b id="hS">0/8</b><span>Locations</span></div>
+      <div><b id="hG">0</b><span>Ghosts</span></div>
+      <div><b id="hD">0</b><span>Km</span></div>
+    </div>
+    <div id="zoom">
+      <button type="button" id="zM" aria-label="Menu">☰</button>
+      <button type="button" id="zIn" aria-label="Zoom in">+</button>
+      <button type="button" id="zOut" aria-label="Zoom out">−</button>
+      <button type="button" id="zMe" aria-label="Centre on me">◎</button>
+      <button type="button" id="zS" aria-label="Sound on or off">♪</button>
+    </div>
+    <div id="low">
+      <div id="radar">Go to location 1</div>
+      <div id="chip" hidden>
+        <div class="row"><b id="cName"></b><span id="cDist"></span></div>
+        <span id="cHint" class="note"></span>
+        <button class="btn" id="cAct"></button>
+      </div>
+      <div id="bar">
+        <button type="button" id="bNote">Notebook</button>
+        <button type="button" id="bPeople">Three women</button>
+        <button type="button" id="bAcc" class="red">Ghosts</button>
+      </div>
+    </div>
+  </section>
+
+  <div id="ar" hidden><video id="arV" playsinline muted autoplay></video><canvas id="arC"></canvas><div id="arH"></div><button type="button" class="btn ghost" id="arX">Camera off</button></div>
+  <div class="sheet" id="sheet" hidden><div class="paper" id="sheetBody"></div></div>
+  <div id="load" hidden role="status"><div class="spin"></div><b id="loadT"></b><span>This usually takes 5 to 30 seconds. Stay on this page.</span></div>
+  <div id="toast" hidden></div>
+</div>
+<script src="shared/platform.js?v=1"></script>
+<script src="shared/catalog.js?v=6"></script>
+<script src="shared/walk.js?v=2"></script>
+<script src="games/ghosts/data-en.js?v=1"></script>
+<script src="games/vanishing/puzzles.js?v=1"></script>
+<script src="games/ghosts/game.js?v=1"></script>
+</body>
+</html>

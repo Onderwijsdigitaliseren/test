@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>De Nacht van de Geesten – een Halloween-wandeling in je eigen buurt</title>
+<meta name="description" content="Durf jij na het donker de acht verschijningen in jouw buurt te onderzoeken? Geen moordenaar, wel een geest: zoek uit wie zij is, waarom ze niet weg kan en wat er vannacht moet gebeuren. Eerste nacht gratis.">
+<link rel="canonical" href="https://moordwandeling.nl/nl/de-nacht-van-de-geesten.html">
+<link rel="alternate" hreflang="en" href="https://murderwalk.com/night-of-the-ghosts.html">
+<link rel="alternate" hreflang="nl" href="https://moordwandeling.nl/nl/de-nacht-van-de-geesten.html">
+<link rel="alternate" hreflang="x-default" href="https://murderwalk.com/night-of-the-ghosts.html">
+<meta property="og:site_name" content="Moordwandeling">
+<meta property="og:title" content="Moordwandeling – De Nacht van de Geesten">
+<meta property="og:description" content="Vanavond blijven de doden niet waar ze horen.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://moordwandeling.nl/nl/de-nacht-van-de-geesten.html">
+<meta property="og:locale" content="nl_NL">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#07090d">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600&family=IM+Fell+English+SC&display=swap">
+<link rel="stylesheet" href="../shared/platform.css?v=1">
+<link rel="stylesheet" href="../games/ghosts/game.css?v=1">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "De Nacht van de Geesten", "url": "https://moordwandeling.nl/nl/de-nacht-van-de-geesten.html", "description": "Durf jij na het donker de acht verschijningen in jouw buurt te onderzoeken? Geen moordenaar, wel een geest: zoek uit wie zij is, waarom ze niet weg kan en wat er vannacht moet gebeuren. Eerste nacht gratis.", "inLanguage": "nl", "gamePlatform": "Webbrowser", "genre": ["Mysterie", "Locatiespel", "Halloween"], "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "3.99", "priceCurrency": "EUR", "description": "Pro"}}</script>
+</head>
+<body>
+<div id="app">
+  <section class="screen" id="home">
+    <canvas id="hero" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <div class="row0"><div class="pills"><a class="pill" id="hub" href="./">◂ Alle wandelingen</a><button type="button" class="pill" id="lang">English</button></div></div>
+      <div class="masthead"><div class="brand">Moordwandeling</div><h1 id="ttl"><small>De Nacht van de</small>Geesten</h1><span class="cat">Nachtzaak · Halloween</span></div>
+      <div class="gap"></div>
+      <div class="omen"><p>Vanavond blijven de doden niet waar ze horen.</p><p>Op acht plekken in jouw buurt zijn verschijningen gemeld.</p><p>Eén van hen probeert je iets duidelijk te maken.</p><p>Zoek uit wie zij is voordat je de laatste locatie bereikt.</p></div>
+      <p class="dare">Durf jij na het donker de acht verschijningen in jouw buurt te onderzoeken?</p>
+      <div class="pline"><b id="pRank">–</b><span><b id="pStreak">0</b> Dagen op rij</span><span><b id="pSolved">0</b> Opgelost</span></div>
+      <div hidden><div class="xp"><i id="pXp" style="width:0%"></i></div><p class="note" id="pNext"></p></div>
+      <div class="seg" id="len">
+        <button type="button" data-r="380" data-par="40" aria-pressed="false">Kort · 40 min</button>
+        <button type="button" data-r="650" data-par="75" aria-pressed="true">Volledig · 75 min</button>
+      </div>
+      <button class="btn" id="bResume" hidden>Ga verder met je nacht</button>
+      <button class="btn" id="bGps">Start de nacht van vandaag</button>
+      <button class="btn ghost" id="bRandom">Extra nacht op deze plek</button>
+      <button class="btn ghost" id="bCode">Zaakcode invoeren</button>
+      <button class="btn ghost sm" id="bDemo">Proefronde in fictief Londen</button>
+      <button class="btn ghost" id="bPro" hidden></button>
+      <p class="note" id="status"></p>
+      <div class="pump" aria-hidden="true"><ul><li>Acht locaties, elk anders</li><li>De kaart verandert onderweg</li><li>Vang zeldzame geesten</li></ul></div>
+      <ol class="how"><li>De kaart legt acht locaties op echte plekken om je heen. Je loopt ze in volgorde: een foto, een getuige, een voorwerp, een verschijning, een oud bericht.</li><li>Er is geen dader. Zoek uit welke vrouw hier rondwaart, wat er met haar is gebeurd en waarom ze juist vannacht verschijnt.</li><li>Onderweg duiken zeldzame geesten op. Tik ze op tijd aan en ze komen in je geestenboek.</li></ol>
+      <button class="btn ghost" id="bEcho">Geestenboek</button>
+      <button class="btn ghost" id="bArch">Archief</button>
+      <button class="btn ghost sm" id="bWipe">Wissen</button>
+      <p class="note">Blijf op de openbare weg en let op het verkeer. Je hoeft nergens naar binnen. Niet eng-bloederig: wel donker, mist en kippenvel. De camera is optioneel; het beeld blijft op je telefoon.</p>
+    </div>
+  </section>
+
+  <section class="screen" id="brief" hidden>
+    <div class="wrap">
+      <div class="paper">
+        <div class="eyebrow" id="bfNo"></div>
+        <div id="bfIntro"></div>
+        <div class="eyebrow" id="bfConH"></div>
+        <div class="list" id="bfCon"></div>
+      </div>
+      <button class="btn" id="bGo">De nacht in</button>
+      <button class="btn ghost" id="bBack">Terug</button>
+    </div>
+  </section>
+
+  <section class="screen" id="play" hidden>
+    <canvas id="map"></canvas>
+    <div id="hud">
+      <div><b id="hT">0:00</b><span>Tijd</span></div>
+      <div><b id="hS">0/8</b><span>Locaties</span></div>
+      <div><b id="hG">0</b><span>Geesten</span></div>
+      <div><b id="hD">0</b><span>Km</span></div>
+    </div>
+    <div id="zoom">
+      <button type="button" id="zM" aria-label="Menu">☰</button>
+      <button type="button" id="zIn" aria-label="Inzoomen">+</button>
+      <button type="button" id="zOut" aria-label="Uitzoomen">−</button>
+      <button type="button" id="zMe" aria-label="Centreer op mij">◎</button>
+      <button type="button" id="zS" aria-label="Geluid aan of uit">♪</button>
+    </div>
+    <div id="low">
+      <div id="radar">Ga naar locatie 1</div>
+      <div id="chip" hidden>
+        <div class="row"><b id="cName"></b><span id="cDist"></span></div>
+        <span id="cHint" class="note"></span>
+        <button class="btn" id="cAct"></button>
+      </div>
+      <div id="bar">
+        <button type="button" id="bNote">Notitieboek</button>
+        <button type="button" id="bPeople">Drie vrouwen</button>
+        <button type="button" id="bAcc" class="red">Geesten</button>
+      </div>
+    </div>
+  </section>
+
+  <div id="ar" hidden><video id="arV" playsinline muted autoplay></video><canvas id="arC"></canvas><div id="arH"></div><button type="button" class="btn ghost" id="arX">Camera uit</button></div>
+  <div class="sheet" id="sheet" hidden><div class="paper" id="sheetBody"></div></div>
+  <div id="load" hidden role="status"><div class="spin"></div><b id="loadT"></b><span>Dit duurt meestal 5 tot 30 seconden. Blijf even op deze pagina.</span></div>
+  <div id="toast" hidden></div>
+</div>
+<script src="../shared/platform.js?v=1"></script>
+<script src="../shared/catalog.js?v=6"></script>
+<script src="../shared/walk.js?v=2"></script>
+<script src="../games/ghosts/data-nl.js?v=1"></script>
+<script src="../games/vanishing/puzzles.js?v=1"></script>
+<script src="../games/ghosts/game.js?v=1"></script>
+</body>
+</html>
