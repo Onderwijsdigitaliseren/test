@@ -56,7 +56,13 @@ function figBox(c,x,y,s,al,fn){c.save();c.globalAlpha=al;c.translate(x,y);c.scal
 function wet(c,rx,a){var g=c.createRadialGradient(60,152,2,60,152,rx);g.addColorStop(0,"rgba(240,150,60,"+a+")");g.addColorStop(1,"rgba(240,150,60,0)");c.save();c.translate(0,152);c.scale(1,.26);c.translate(0,-152);c.fillStyle=g;c.beginPath();c.arc(60,152,rx,0,7);c.fill();c.restore();
   var r=c.createLinearGradient(0,152,0,176);r.addColorStop(0,"rgba(5,4,5,.7)");r.addColorStop(1,"rgba(5,4,5,0)");c.fillStyle=r;c.fillRect(46,152,30,24)}
 /* de vermiste: op de rug gezien, lopend, capuchon op en rugzak om (bewust geen man of vrouw), tegen het laatste avondlicht */
-function walker(c,x,y,s,col,al){figBox(c,x,y,s,al,function(){
+var WIMG=new Image();WIMG.src=MW.root+"games/lastbus/walker.webp";
+function ph(k,cls){return '<img class="'+(cls||"ph")+'" src="'+MW.root+'games/lastbus/p-'+k+'.webp" alt="" width="720" height="630">'}
+var KPH={cam:"cam",wit:"driver",msg:"phone",obj:"receipt",time:"pole",open:"bus"},SPH=["meet","money","proof"];
+function walker(c,x,y,s,col,al){
+  if(WIMG.naturalWidth){c.save();c.globalAlpha=al;var cy=y-s*.06,g0=c.createRadialGradient(x,cy,s*.05,x,cy,s*.74);g0.addColorStop(0,"rgba(255,190,90,.40)");g0.addColorStop(.55,"rgba(255,176,0,.14)");g0.addColorStop(1,"rgba(255,176,0,0)");c.fillStyle=g0;c.beginPath();c.arc(x,cy,s*.74,0,7);c.fill();
+    var wh=s*1.14,ww=wh*WIMG.naturalWidth/WIMG.naturalHeight;c.drawImage(WIMG,x-ww/2,y-wh/2,ww,wh);c.restore();return}
+  figBox(c,x,y,s,al,function(){
   var h=c.createRadialGradient(60,60,6,60,70,100);h.addColorStop(0,"rgba(232,120,70,.30)");h.addColorStop(1,"rgba(232,120,70,0)");c.fillStyle=h;c.beginPath();c.arc(60,70,100,0,7);c.fill();
   wet(c,70,.5);
   c.fillStyle="#070506";
@@ -223,7 +229,7 @@ function puzzleKey(s){var f=G.c.frags[s.fi];return f.k==="open"?"hold":f.k==="ca
 function finish(s){mg.stop();s.done=true;G.force=null;buzz(200);beep(880,.35);save();reveal(s)}
 function encounter(s){walkTo=null;var f=G.c.frags[s.fi];
   if(f.k==="cam"&&navigator.mediaDevices&&navigator.mediaDevices.getUserMedia&&G.cam!=="off"){if(G.cam==="on")return startAR(s);
-    sheet('<div class="eyebrow">'+esc(s.name)+'</div><h2>'+esc(PZ.ar.h)+'</h2><p>'+esc(fill(PZ.ar.t,vars(G.c)))+'</p><button type="button" class="btn" id="arYes">'+PZ.ar.yes+'</button><button type="button" class="btn ghost dk" id="arNo">'+PZ.ar.no+'</button>');
+    sheet(ph("cam")+'<div class="eyebrow">'+esc(s.name)+'</div><h2>'+esc(PZ.ar.h)+'</h2><p>'+esc(fill(PZ.ar.t,vars(G.c)))+'</p><button type="button" class="btn" id="arYes">'+PZ.ar.yes+'</button><button type="button" class="btn ghost dk" id="arNo">'+PZ.ar.no+'</button>');
     $("#arYes").onclick=function(){startAR(s)};$("#arNo").onclick=function(){G.cam="off";save();puzzle(s)};return}
   puzzle(s)}
 function puzzle(s){var f=G.c.frags[s.fi],key=puzzleKey(s),wit=f.k==="wit";
@@ -269,7 +275,7 @@ function startAR(s){closeSheet();var ar=$("#ar"),v=$("#arV"),c=$("#arC"),hint=$(
   }).catch(function(){G.cam="off";save();puzzle(s)})}
 function reveal(s){var f=G.c.frags[s.fi],v=vars(G.c),n=G.st.filter(function(x){return x.done}).length,tw=D.TWIST[n],fig=f.k==="cam"||f.k==="wit"||f.k==="open";
   sheet('<div class="led"><b>'+v.LN+'</b><span>'+esc(s.name)+'</span><i>'+fmt(f.tm)+'</i></div>'+
-    '<div class="clue k-'+f.k+'"><em>'+esc(f.k==="wit"?T.kinds.wit+" · "+cap(s.persona):T.kinds[f.k])+' · '+esc(fill(T.found,{i:n,t:fmt(f.tm)}))+'</em>'+(fig?'<canvas class="figc" id="figc" width="320" height="240"></canvas>':'')+'<p>'+esc(fragText(f))+'</p></div>'+
+    '<div class="clue k-'+f.k+'"><em>'+esc(f.k==="wit"?T.kinds.wit+" · "+cap(s.persona):T.kinds[f.k])+' · '+esc(fill(T.found,{i:n,t:fmt(f.tm)}))+'</em>'+ph(KPH[f.k]||"receipt","dph")+'<p>'+esc(fragText(f))+'</p></div>'+
     (tw?'<div class="twist"><em>'+esc(T.certGone)+'</em><p>'+esc(fill(tw,v))+'</p></div>':'')+'<button type="button" class="btn" id="shX">'+T.back+'</button>');
   var fc=$("#figc");if(fc){var fg=fc.getContext("2d");if(f.k==="wit")shelter(fg,160,118,220,s.fi);else{bus(fg,205,112,200,v.LN,1);walker(fg,74,138,150,"#ffb000",1)}}
   if(tw){buzz([120,80,260]);beep(160,.4)}
@@ -288,7 +294,7 @@ function echoFound(q){mg.stop();q.done=true;G.force=null;buzz(200);beep(880,.35)
   var cand=c.con.map(function(k,i){return i}).filter(function(i){return i!==c.K&&!G.out[i]}),tip="";
   if(cand.length){var r=rngOf(G.seed^q.id),i=cand[Math.floor(r()*cand.length)];G.out[i]=true;tip=fill(D.ECHOT.tip,{X:c.con[i].name,XR:c.con[i].rel,r:fill(D.ECHOT.reasons[Math.floor(r()*D.ECHOT.reasons.length)],v)})}
   save();
-  sheet('<div class="eyebrow">'+esc(D.ECHOT.tier[E[1]])+(isNew?" · "+esc(T.kinds.obj):"")+'</div><h2>'+esc(E[0])+'</h2><div class="clue"><p>'+esc(fill(E[2],v))+'</p></div>'+(tip?'<p class="note"><b>'+esc(tip)+'</b></p>':'')+'<div class="tags"><i>+'+(20*E[1])+'</i></div><button type="button" class="btn" id="shX">'+T.back+'</button>');
+  sheet('<div class="eyebrow">'+esc(D.ECHOT.tier[E[1]])+(isNew?" · "+esc(T.kinds.obj):"")+'</div><h2>'+esc(E[0])+'</h2>'+ph("left")+'<div class="clue"><p>'+esc(fill(E[2],v))+'</p></div>'+(tip?'<p class="note"><b>'+esc(tip)+'</b></p>':'')+'<div class="tags"><i>+'+(20*E[1])+'</i></div><button type="button" class="btn" id="shX">'+T.back+'</button>');
   $("#shX").onclick=function(){closeSheet();sel=null;chip()}}
 function echoBook(){var p=MW.profile.get(),bk=p.book_lb||{},n=Object.keys(bk).length,v=G?vars(G.c):{N:"…"};
   sheet('<div class="eyebrow">'+n+' / '+D.ECHO.length+'</div><h2>'+esc(D.ECHOT.book)+'</h2><p class="note">'+esc(fill(D.ECHOT.bookT,v))+'</p><div class="book">'+D.ECHO.map(function(e,i){return '<div'+(bk[i]?'':' class="no"')+'><b>'+(bk[i]?esc(e[0]):"???")+'</b><span class="r'+e[1]+'">'+esc(D.ECHOT.tier[e[1]])+'</span>'+(bk[i]?'<span>×'+bk[i]+'</span>':'')+'</div>'}).join("")+'</div><button type="button" class="btn ghost dk" id="shX">'+T.back+'</button>');
@@ -300,13 +306,13 @@ function noteSheet(tab){tab=tab||"route";var v=vars(G.c),fr=G.st.filter(function
   var body=tab==="route"?certHTML(fr.length,v,true)+(fr.length?'<div class="list">'+fr.map(function(s){var f=G.c.frags[s.fi];return '<div class="clue k-'+f.k+'"><em><b class="num">'+(s.fi+1)+'</b>'+fmt(f.tm)+' · '+esc(s.name)+' · '+esc(T.kinds[f.k])+'</em><p>'+esc(fragText(f))+'</p></div>'}).join("")+'</div>':'<p class="note">'+T.nbNone+'</p>')
     :tab==="people"?'<div class="list">'+G.c.con.map(function(k,i){return '<button type="button" data-o="'+i+'" class="sus'+(G.out[i]?" out":"")+'"><b>'+esc(k.name)+'</b><small>'+esc(k.rel)+'</small>'+quote(k,v)+'<div class="tags">'+CTK.map(function(t){return"<i>"+esc(fill(D.CT[t].tag[k.tr[t]],v))+"</i>"}).join("")+'</div></button>'}).join("")+'</div><p class="note">'+T.nbTip+'</p>'
     :tab==="echo"?(function(){var bk=MW.profile.get().book_lb||{},got=(G.echo||[]).filter(function(q){return q.done});return (got.length?'<div class="list">'+got.map(function(q){var e=D.ECHO[q.id];return '<div class="clue"><em>'+esc(D.ECHOT.tier[e[1]])+'</em><b>'+esc(e[0])+'</b><p>'+esc(fill(e[2],v))+'</p></div>'}).join("")+'</div>':'<p class="note">'+esc(D.ECHOT.radar)+'</p>')+'<button type="button" class="btn ghost dk" id="nbBook">'+esc(D.ECHOT.book)+' · '+Object.keys(bk).length+'/'+D.ECHO.length+'</button>'})()
-    :'<div class="list">'+T.scn.map(function(s,i){return '<button type="button" data-s="'+i+'" class="sus'+(G.outS[i]?" out":"")+'"><b>'+esc(s[0])+'</b><small>'+esc(fill(s[1],v))+'</small></button>'}).join("")+'</div><p class="note">'+T.nbTip+'</p>';
+    :'<div class="list">'+T.scn.map(function(s,i){return '<button type="button" data-s="'+i+'" class="sus scn'+(G.outS[i]?" out":"")+'">'+ph(SPH[i],"mth")+'<b>'+esc(s[0])+'</b><small>'+esc(fill(s[1],v))+'</small></button>'}).join("")+'</div><p class="note">'+T.nbTip+'</p>';
   sheet('<div class="tabs"><button type="button" data-t="route" aria-selected="'+(tab==="route")+'">'+T.nbRoute+'</button><button type="button" data-t="people" aria-selected="'+(tab==="people")+'">'+T.nbPeople+'</button><button type="button" data-t="what" aria-selected="'+(tab==="what")+'">'+T.nbWhat+'</button><button type="button" data-t="echo" aria-selected="'+(tab==="echo")+'">'+T.nbEcho+'</button></div>'+body+'<button type="button" class="btn ghost dk" id="shX">'+T.back+'</button>');
   $("#sheetBody").onclick=function(e){var b=e.target.closest("button");if(!b)return;if(b.id==="shX")closeSheet();else if(b.id==="nbBook")echoBook();else if(b.dataset.t)noteSheet(b.dataset.t);else if(b.dataset.o){G.out[b.dataset.o]=!G.out[b.dataset.o];save();noteSheet("people")}else if(b.dataset.s){G.outS[b.dataset.s]=!G.outS[b.dataset.s];save();noteSheet("what")}}}
 
 /* ---------- conclusie ---------- */
 function verdictSheet(){var v=vars(G.c),ps=null,pw=null;
-  sheet('<div class="eyebrow">'+T.close+'</div><h2>'+T.vH+'</h2><p>'+esc(fill(T.vT,v))+'</p><div class="eyebrow">'+T.vWhat+'</div><div class="list" id="vS">'+T.scn.map(function(s,i){return '<button type="button" data-s="'+i+'" class="sus'+(G.outS[i]?" out":"")+'"><b>'+esc(s[0])+'</b><small>'+esc(fill(s[1],v))+'</small></button>'}).join("")+'</div>'+
+  sheet('<div class="eyebrow">'+T.close+'</div><h2>'+T.vH+'</h2><p>'+esc(fill(T.vT,v))+'</p><div class="eyebrow">'+T.vWhat+'</div><div class="list" id="vS">'+T.scn.map(function(s,i){return '<button type="button" data-s="'+i+'" class="sus scn'+(G.outS[i]?" out":"")+'">'+ph(SPH[i],"mth")+'<b>'+esc(s[0])+'</b><small>'+esc(fill(s[1],v))+'</small></button>'}).join("")+'</div>'+
     '<div class="eyebrow">'+T.vWho+'</div><div class="list" id="vW">'+G.c.con.map(function(k,i){return '<button type="button" data-w="'+i+'" class="sus'+(G.out[i]?" out":"")+'"><b>'+esc(k.name)+'</b><small>'+esc(k.rel)+'</small></button>'}).join("")+'</div>'+
     '<button type="button" class="btn red" id="vGo">'+T.vGo+'</button><p class="note" id="vMsg" style="color:#a5392c"></p><button type="button" class="btn ghost dk" id="shX">'+T.cancel+'</button>');
   $("#sheetBody").onclick=function(e){var b=e.target.closest("button");if(!b)return;
@@ -324,7 +330,7 @@ function win(){var c=G.c,v=vars(c),min=(Date.now()-G.t0)/60000,s2=G.tries===1,s3
   W.forEach(function(w){for(var i=0;i<w.p.length;i+=2){var dd=Math.hypot(w.p[i]-ex,w.p[i+1]-ey);if(dd<bd){bd=dd;best=[w.p[i],w.p[i+1]]}}});
   G.epi={x:Math.round(best?best[0]:ex),y:Math.round(best?best[1]:ey),done:false};save();
   var E=D.END[c.S],st=a.prof.streak;
-  sheet('<div class="eyebrow">'+T.won+' · '+esc(G.code)+'</div><div class="stars">'+"★".repeat(stars)+"☆".repeat(3-stars)+'</div><h2>'+esc(T.scn[c.S][0])+' · '+esc(c.con[c.K].name)+'</h2><p>'+esc(fill(E[0],v))+'</p>'+
+  sheet(ph(SPH[c.S])+'<div class="eyebrow">'+T.won+' · '+esc(G.code)+'</div><div class="stars">'+"★".repeat(stars)+"☆".repeat(3-stars)+'</div><h2>'+esc(T.scn[c.S][0])+' · '+esc(c.con[c.K].name)+'</h2><p>'+esc(fill(E[0],v))+'</p>'+
     '<div class="tags"><i>'+Math.round(min)+' min</i><i>'+km.toFixed(1).replace(".",L==="nl"?",":".")+' km</i><i>'+fill(T.pts,{x:xp})+'</i>'+(G.mode==="gps"?'<i>'+fill(st===1?T.streakTxt:T.streakTxtP,{n:st})+'</i>':'')+'</div>'+
     (a.up?'<p><b>'+esc(fill(T.up,{r:MW.profile.rankName(a.prof.xp,L)}))+'</b></p>':'')+(!s2?'<p class="note">'+T.missed1+'</p>':'')+(!s3?'<p class="note">'+fill(T.missed2,{m:G.par})+'</p>':'')+
     '<button type="button" class="btn" id="vEpi">'+PZ.epi.btn+'</button><button type="button" class="btn ghost dk" id="vShare">'+T.share+'</button><button type="button" class="btn ghost dk" id="vHome">'+PZ.epi.home+'</button>',true);
@@ -336,7 +342,7 @@ function win(){var c=G.c,v=vars(c),min=(Date.now()-G.t0)/60000,s2=G.tries===1,s3
 function endCase(){LS.del(GK);LS.del(WK);Wk.stopWatch();G=null;home()}
 function epilogue(){var c=G.c,v=vars(c),E=D.END[c.S];G.epi.done=true;mg.stop();buzz([100,50,300]);beep(660,.2);setTimeout(function(){beep(990,.4)},200);
   MW.profile.award({game:ID,xp:50,solved:false,gps:false});
-  sheet('<div class="eyebrow">'+esc(PZ.epi.h)+' · '+esc(c.M.n)+'</div><h2>'+esc(PZ.epi.name)+'</h2><div class="clue k-open"><p>'+esc(fill(E[1],v))+'</p></div><p class="note">'+esc(PZ.epi.bonus)+'</p><button type="button" class="btn" id="vHome">'+PZ.epi.home+'</button>',true);
+  sheet('<div class="eyebrow">'+esc(PZ.epi.h)+' · '+esc(c.M.n)+'</div><h2>'+esc(PZ.epi.name)+'</h2>'+ph("end")+'<div class="clue k-open"><p>'+esc(fill(E[1],v))+'</p></div><p class="note">'+esc(PZ.epi.bonus)+'</p><button type="button" class="btn" id="vHome">'+PZ.epi.home+'</button>',true);
   $("#vHome").onclick=function(){closeSheet();endCase()}}
 /* ---------- zaakcode, archief, menu, wissen ---------- */
 function codeSheet(pre){sheet('<h2>'+T.dH+'</h2><p>'+T.dT+'</p><input class="inp" id="dCode" autocomplete="off" autocapitalize="characters" spellcheck="false" value="'+esc(pre||"")+'"><button type="button" class="btn" id="dOk">'+T.dGo+'</button><p class="note" id="dMsg" style="color:#a5392c"></p><button type="button" class="btn ghost dk" id="shX">'+T.cancel+'</button>');
