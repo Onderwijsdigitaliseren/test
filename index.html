@@ -7,6 +7,7 @@ var nl=h==="#nl"?true:h==="#en"?false:L==="nl"?true:L==="en"?false:/moordwandeli
 if(/^#z=TD/i.test(h)){location.replace((nl?"nl/tot-de-dood-ons-scheidt.html":"till-death-do-us-part.html")+h);return}
 if(/^#z=OG/i.test(h)){location.replace((nl?"nl/ooggetuige.html":"eyewitness.html")+h);return}
 if(/^#z=CC/i.test(h)){location.replace((nl?"nl/onopgelost.html":"unsolved.html")+h);return}
+if(/^#z=LB/i.test(h)){location.replace((nl?"nl/de-laatste-bus.html":"the-last-bus.html")+h);return}
 if(/^#z=VZ/i.test(h)){location.replace((nl?"nl/de-verdwijning.html":"the-vanishing.html")+h);return}
 if(/^#(z|g)=/.test(h)){location.replace((nl?"nl/moordwandeling.html":"murder-walk.html")+h);return}
 if(h==="#nl"||h==="#en"){try{localStorage.setItem("ss_lang",nl?"nl":"en")}catch(e){}}
@@ -89,7 +90,7 @@ if(nl)location.replace("nl/");})();</script>
 <div class="sheet" id="sheet" hidden><div class="paper" id="sheetBody"></div></div>
 <div id="toast" hidden></div>
 <script src="shared/platform.js?v=1"></script>
-<script src="shared/catalog.js?v=4"></script>
-<script src="shared/hub.js?v=4"></script>
+<script src="shared/catalog.js?v=5"></script>
+<script src="shared/hub.js?v=5"></script>
 </body>
 </html>
