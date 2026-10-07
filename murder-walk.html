@@ -221,7 +221,7 @@ a#hub{text-decoration:none;color:var(--paper)}
       <button class="btn ghost" id="bRandom">Extra case right here</button>
       <button class="btn ghost" id="bCode">Enter a case code</button>
       <button class="btn ghost" id="bGrp">Group case</button>
-      <button class="btn ghost sm" id="bDemo">Trial round in a fictional Amsterdam</button>
+      <button class="btn ghost sm" id="bDemo">Trial round in Eindhoven city centre</button>
       <button class="btn ghost" id="bPro" hidden></button>
       <p class="note" id="status"></p>
       <ol class="how">
@@ -404,7 +404,7 @@ $("#len").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)
 $("#bGps").onclick=()=>locked()?proSheet():startGps(hashStr(today()));
 $("#bRandom").onclick=()=>locked()?proSheet():startGps(Math.floor(Math.random()*4e9));
 $("#bPro").onclick=()=>proSheet();
-$("#bDemo").onclick=()=>{const w=demoWorld();build(Math.floor(Math.random()*4e9),"demo",w.pois,w.ways,null)};
+$("#bDemo").onclick=()=>startDemo();
 $("#bResume").onclick=()=>{G=LS.get("ss_game_en",null);W=LS.get("ss_ways_en",[]);if(!G)return home();P={x:G.px||0,y:G.py||0,acc:0};enter()};
 $("#bBookHome").onclick=()=>bookSheet();
 
@@ -468,6 +468,28 @@ function startGps(seed){
     }).catch(()=>{if(pois.length)LS.set("ss_map",{lat,lon,R,pois,ways:[]})});
   },err=>{fail("No access to your location. Open this game in your phone's browser on an https address and allow location. Here you can play the practice round.")},{enableHighAccuracy:true,timeout:20000});
 }
+/* ---------- proefronde: echte straten en plekken in de binnenstad van Eindhoven (de Markt als middelpunt).
+   De telefoon haalt ze één keer op bij dezelfde kaartdienst als het echte spel en bewaart ze; lukt dat niet, dan speelt de proefronde in de fictieve stad. ---------- */
+const DEMO_AT={lat:51.43822,lon:5.47823},DEMO_KEY="ss_demo_ehv";
+function overpass(q,ms){const hosts=window.SS_MAP||["https://overpass.private.coffee/api/interpreter","https://maps.mail.ru/osm/tools/overpass/api/interpreter","https://overpass-api.de/api/interpreter"];
+  return new Promise((res,rej)=>{const ac=new AbortController(),ts=[];let nx=0,left=hosts.length,done=false;
+    const fin=(ok,v)=>{if(done)return;done=true;ts.forEach(clearTimeout);ac.abort();ok?res(v):rej(v)};
+    const start=()=>{if(done||nx>=hosts.length)return;const h=hosts[nx++];
+      fetch(h,{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:"data="+encodeURIComponent(q),signal:ac.signal}).then(r=>{if(!r.ok)throw new Error("server "+r.status);return r.json()}).then(d=>fin(true,d),e=>{if(--left<=0)fin(false,e);else start()})};
+    start();ts.push(setTimeout(start,4000),setTimeout(start,8000),setTimeout(()=>fin(false,new Error("timeout")),ms))})}
+function startDemo(){
+  const seed=Math.floor(Math.random()*4e9),go=(p,w)=>build(seed,"demo",p,w,null),c=LS.get(DEMO_KEY,null);
+  if(c&&c.v===1&&c.pois&&c.pois.length>=8){go(c.pois,c.ways||[]);return}
+  const lat=DEMO_AT.lat,lon=DEMO_AT.lon,kx=111320*Math.cos(lat*Math.PI/180),ky=110540,xy=(la,lo)=>[(lo-lon)*kx,-(la-lat)*ky],A="(around:850,"+lat+","+lon+")";
+  $("#loadT").textContent="Loading Eindhoven city centre…";$("#load").hidden=false;
+  const pq=overpass('[out:json][timeout:15];(nwr'+A+'[amenity~"^(place_of_worship|bank|atm|cafe|pub|bar|restaurant|pharmacy|post_box|library|school|fuel)$"];nwr'+A+'[tourism~"^(hotel|artwork|museum)$"];nwr'+A+'[shop~"^(supermarket|bakery|convenience)$"];node'+A+'[highway=bus_stop];nwr'+A+'[leisure~"^(park|playground)$"];);out center qt 400;',18000);
+  const wq=overpass('[out:json][timeout:20];way(around:950,'+lat+','+lon+')[highway~"^(residential|tertiary|secondary|primary|unclassified|living_street|pedestrian|footway|path|cycleway)$"];out geom qt;',22000);
+  Promise.allSettled([pq,wq]).then(r=>{$("#load").hidden=true;$("#loadT").textContent="";let pois=[],ways=[];
+    if(r[0].status==="fulfilled")for(const e of r[0].value.elements||[]){const ty=poiType(e.tags),q=e.type==="node"?[e.lat,e.lon]:e.center?[e.center.lat,e.center.lon]:null;if(!ty||!q)continue;const p=xy(q[0],q[1]);pois.push({x:Math.round(p[0]),y:Math.round(p[1]),type:ty,name:(e.tags&&e.tags.name)||""})}
+    if(r[1].status==="fulfilled")for(const e of r[1].value.elements||[]){if(!e.geometry)continue;const p=[];e.geometry.forEach(g=>{const q=xy(g.lat,g.lon);p.push(Math.round(q[0]),Math.round(q[1]))});const h=(e.tags&&e.tags.highway)||"";ways.push({p,w:/primary|secondary|tertiary/.test(h)?3:/footway|path|cycleway|pedestrian/.test(h)?1:2,n:(e.tags&&e.tags.name)||""})}
+    const named=pois.filter(p=>p.name);if(named.length>=14)pois=named;
+    if(pois.length<8){toast("The map of Eindhoven is not loading right now. You are playing the trial round in a fictional city.");const w=demoWorld();go(w.pois,w.ways);return}
+    LS.set(DEMO_KEY,{v:1,pois,ways});go(pois,ways)})}
 function demoWorld(){
   // fictieve grachtengordel: ringen rond een middelpunt ten noorden van de speler
   const cy=-500,ways=[],arc=(r,w,n)=>{const p=[];for(let a=25;a<=155;a+=5){const t=a*Math.PI/180;p.push(Math.round(r*Math.cos(t)),Math.round(cy+r*Math.sin(t)))}ways.push({p,w,n:n||""})};
@@ -936,7 +958,7 @@ function storyUI(){
 $("#stories").onclick=e=>{const b=e.target.closest("button");if(!b)return;const id=b.dataset.id;if(!canStory(id)){proSheet();return}NEXT=id;LS.set("ss_story",id);storyUI()};
 $("#bGps").onclick=()=>{if(locked())return proSheet();GRP=null;RUN=pickS();startGps(hashStr(today()))};
 $("#bRandom").onclick=()=>{if(locked())return proSheet();GRP=null;RUN=pickS();startGps(Math.floor(Math.random()*4e9))};
-$("#bDemo").onclick=()=>{GRP=null;RUN=pickS();const w=demoWorld();build(Math.floor(Math.random()*4e9),"demo",w.pois,w.ways,null)};
+$("#bDemo").onclick=()=>{GRP=null;RUN=pickS();startDemo()};
 function codeSheet(pre){
   sheet('<div class="eyebrow">'+T.dEy+'</div><h2>'+T.dH+'</h2><p>'+T.dT+'</p><input class="inp" id="dCode" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="'+T.bCode+'" value="'+esc(pre||"")+'"><button type="button" class="btn" id="dOk">'+T.dGo+'</button><p class="note" id="dMsg" style="color:#a5392c"></p><button type="button" class="btn ghost dk" id="shX">'+T.cancel+'</button>');
   const go=()=>{const gm=/g=([A-Za-z0-9.%~_!'()*-]+)/.exec($("#dCode").value);if(gm){grpOpen(gm[1]);return}const p=parseCode($("#dCode").value);if(!p){$("#dMsg").textContent=T.dBad;buzz(120);return}if(locked()||!canStory(p.sid)){proSheet();return}closeSheet();setLen(p.short);GRP=null;RUN=p.sid;startGps(p.seed)};
