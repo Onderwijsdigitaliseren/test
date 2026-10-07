@@ -273,3 +273,12 @@ span.ip.objp i{transform:translate(-50%,-50%) scale(.42)}
 .clue{background:linear-gradient(170deg,#e6d8b8,#d6c69f);font-family:var(--f-type);font-size:14px}
 .clue p{margin:0;line-height:1.4}
 .figc.calm{background:#07090d}
+/* kaart als oude foto: sepia rand en warm licht */
+#play::after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 0 5px #17130f,inset 0 0 0 6px rgba(185,165,123,.45),inset 0 0 70px rgba(60,30,5,.55);z-index:1}
+#hud,#zoom,#low{z-index:2}
+#hud{background:linear-gradient(180deg,rgba(23,19,15,.96),rgba(23,19,15,.82));border-color:#4d3a22}#hud b{font-family:var(--f-type);color:#e6d8b8}#hud span{color:#a8946c}
+#zoom button,#bar button{background:rgba(23,19,15,.92);border-color:#4d3a22;color:#e6d8b8;font-family:var(--f-type);text-transform:none;letter-spacing:0;font-size:14px}
+#radar{background:rgba(23,19,15,.94)}
+#chip{background:linear-gradient(170deg,#e6d8b8,#d2c098);color:#2a2118;border:0;box-shadow:0 6px 20px rgba(0,0,0,.6),inset 0 0 30px rgba(90,60,20,.25);font-family:var(--f-type)}
+#chip b{color:#17130f}#chip .note{color:#4d4132}#cDist{color:#c2331f}
+#zoom button{font-size:20px;font-family:inherit}
