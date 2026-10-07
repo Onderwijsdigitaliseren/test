@@ -27,7 +27,7 @@ function ghost(c){return D.WOMEN[c.w[c.g]]}
 function vars(c,extra){var w=ghost(c),o={NAME:w.n,N:new Date().getFullYear()-w.y,PY:w.y+5+((c.seed>>>0)%9),HAIR:D.HAIR[w.a],DRESS:D.DRESS[w.b],OBJ:D.OBJ[c.obj][0],OBJD:D.OBJ[c.obj][1],INI:w.ini};if(extra)for(var k in extra)o[k]=extra[k];return o}
 function itemName(c,i){return fill(D.ITEMS[i],vars(c))}
 function locText(c,n){var v=vars(c);
-  return n===1?fill(D.L1,v):n===2?fill(D.L2,vars(c,{NOT:D.NOTW[c.n1]})):n===3?fill(D.L3,v):n===4?fill(D.L4,{GEST:D.GEST[c.X]}):n===5?fill(D.L5,{ASSERT:D.ASSERT[c.Wf]}):
+  return n===1?fill(D.L1,v):n===2?fill(D.L2,vars(c,{NOT:D.NOTW[c.n1]})):n===3?fill(D.L3,v).replace("..","."):n===4?fill(D.L4,{GEST:D.GEST[c.X]}):n===5?fill(D.L5,{ASSERT:D.ASSERT[c.Wf]}):
     n===6?fill(D.L6,{SUM:D.SUM[c.Wf],REFUTE:D.REFUTE[c.Wf],POINT:D.POINT[c.F]}):n===7?fill(D.L7a,{NOT:D.NOTM[c.n2]}):n===9?D.L9:""}
 
 /* ---------- figuren: schimmen zonder voeten, die onderaan in mist oplossen (vak 120×164) ---------- */
@@ -207,8 +207,8 @@ function runAR(fin,onDone,onFail){closeSheet();var ar=$("#ar"),v=$("#arV"),c=$("
     AR.stop=stop;$("#arX").onclick=function(){stop();onFail()};hint.textContent=fin?PZ.ar.calm:PZ.ar.drag;
     var f=function(ts){if(over)return;var dt=Math.min(.1,(ts-last)/1000)||0;last=ts;var H=hasOri?hd:dragH;if(target==null){if(!t0)t0=ts;if(ts-t0>500)target=H;else{requestAnimationFrame(f);return}}
       var d=((target-H)%360+540)%360-180;g.setTransform(dpr,0,0,dpr,0,0);g.clearRect(0,0,w,h);var fov=60,x=w/2+d/fov*w,y=h*.55;
-      if(fin){var e=(ts-t0-500)/1000,al=e<1.6?e/1.6:e<4.5?1:Math.max(0,1-(e-4.5)/5.5);spirit(g,x,y,h*.5,al,true);hint.textContent=e<4.5?PZ.ar.calm:PZ.ar.fade;if(e>10.2){stop();onDone();return}}
-      else{if(Math.abs(d)<fov*.9){var sc=h*.3+hold*h*.14,jx=Math.sin(ts/53)*2*(1+hold);spirit(g,x+jx,y,sc,.45+.5*Math.abs(Math.sin(ts/170)),false)}
+      if(fin){var e=(ts-t0-500)/1000,al=e<1.6?e/1.6:e<4.5?1:Math.max(0,1-(e-4.5)/5.5);spiritImg(g,x,y,h*.72,al,true);hint.textContent=e<4.5?PZ.ar.calm:PZ.ar.fade;if(e>10.2){stop();onDone();return}}
+      else{if(Math.abs(d)<fov*.9){var sc=h*.3+hold*h*.14,jx=Math.sin(ts/53)*2*(1+hold);spiritImg(g,x+jx,y,sc*1.5,.5+.5*Math.abs(Math.sin(ts/170)),false)}
         g.strokeStyle="rgba(255,138,40,.8)";g.lineWidth=1.5;g.beginPath();g.arc(w/2,y,46,0,7);g.stroke();
         var near=Math.abs(d)<10;hold=near?hold+dt:0;if(near){g.strokeStyle="#e9eef5";g.lineWidth=4;g.beginPath();g.arc(w/2,y,54,-1.57,-1.57+6.283*Math.min(1,hold/1.5));g.stroke();if(Math.random()<.2)buzz(15)}
         hint.textContent=near?PZ.ar.hold:d<-10?PZ.ar.left:d>10?PZ.ar.right:"";
@@ -221,20 +221,29 @@ function doc(s,html,then,btn){sheet(head(s)+'<div class="doc d'+s.n+'">'+html+'<
   $("#shX").onclick=function(){closeSheet();sel=null;chip();if(then)then()}}
 function done(s){mg.stop();s.done=true;G.force=null;save()}
 function openLoc(s){walkTo=null;var c=G.c,n=s.n,v=vars(c);
-  if(n===1)return holdSheet(s,T.holdDev,function(){done(s);doc(s,'<div class="photo"><img src="'+MW.root+'games/ghosts/photo1.webp" alt="" width="900" height="532"><i>'+v.PY+'</i></div><p>'+esc(locText(c,1))+'</p>')});
+  if(n===1)return holdSheet(s,T.holdDev,function(){done(s);doc(s,'<div class="photo"><img src="'+MW.root+'games/ghosts/photo1.webp" alt="" width="900" height="532"><i>'+v.PY+'</i></div><p class="typed">'+esc(locText(c,1))+'</p>')});
   if(n===2){done(s);return doc(s,stmtHTML(s,locText(c,2)))}
-  if(n===3)return doc(s,'<p>'+esc(fill(D.L3a,v))+'</p>',function(){runPuzzle(s,"dust",v.INI,function(){done(s);doc(s,'<div class="engr">'+esc(v.INI)+'</div><p>'+esc(locText(c,3))+'</p>')})},PZ.dust[1]);
+  if(n===3)return doc(s,exhibit(c,'',fill(D.L3a,v)),function(){runPuzzle(s,"dust",v.INI,function(){done(s);doc(s,exhibit(c,v.INI,locText(c,3)))})},PZ.dust[1]);
   if(n===4){var after=function(){done(s);doc(s,'<div class="photo"><img src="'+MW.root+'games/ghosts/apparition.webp" alt="" width="900" height="782"></div><p>'+esc(locText(c,4))+'</p>',function(){move6(false)})};
     var lamp=function(){runPuzzle(s,"lamp","",after)};
     if(!camOK())return lamp();if(G.cam==="on")return runAR(false,after,lamp);
-    sheet(head(s)+'<h2>'+esc(PZ.ar.h)+'</h2><p>'+esc(D.L4a)+'</p><button type="button" class="btn" id="arYes">'+PZ.ar.yes+'</button><button type="button" class="btn ghost dk" id="arNo">'+PZ.ar.no+'</button>',true);
+    sheet(head(s)+'<h2>'+esc(PZ.ar.h)+'</h2><p class="typed">'+esc(D.L4a)+'</p><button type="button" class="btn" id="arYes">'+PZ.ar.yes+'</button><button type="button" class="btn ghost dk" id="arNo">'+PZ.ar.no+'</button>',true);
     $("#arYes").onclick=function(){runAR(false,after,lamp)};$("#arNo").onclick=function(){G.cam="off";save();lamp()};return}
   if(n===5)return runPuzzle(s,"seq","",function(){done(s);doc(s,'<div class="paperclip"><h3>'+esc(T.news[0])+'</h3><img src="'+MW.root+'games/ghosts/clipping.webp" alt=""><b>'+esc(T.news[1])+'</b><p>'+esc(locText(c,5))+'</p></div>')});
-  if(n===6){done(s);return doc(s,'<p class="strike">'+esc(cap(D.SUM[c.Wf]))+'</p><p>'+esc(locText(c,6))+'</p>',function(){add9(false)})}
+  if(n===6){done(s);return doc(s,'<div class="filenote"><div class="sh"><span>'+esc(T.file)+'</span><span>'+esc(s.name)+' <b>6</b></span></div><div class="fn"><div class="mini"><img src="'+MW.root+'games/ghosts/clipping.webp" alt=""><em>'+esc(T.stamp)+'</em></div><p class="strike">'+esc(cap(D.SUM[c.Wf]))+'</p></div><p>'+esc(locText(c,6))+'</p></div>',function(){add9(false)})}
   if(n===7){if(G.step7>=1)return step7(s);G.step7=1;save();return doc(s,warnHTML(locText(c,7)),function(){step7(s)},PZ.tiles[0])}
   if(n===8)return finalSheet(s);
   if(n===9){done(s);var id=D.RARE.map(function(e,j){return j}).filter(function(j){return D.RARE[j][1]===3})[(c.seed>>>0)%3];addRare(id);
     doc(s,''+rpic(id," wide")+'<p>'+esc(D.L9)+'</p><p class="note">'+esc(fill(T.rare.got,{n:D.RARE[id][0]}))+' · +60</p>')}}
+/* bewijsstukken: plaatje per voorwerp; het label met de initialen hangt eraan */
+function objPic(c){return c.obj===2?'<img class="objp" src="'+MW.root+'games/ghosts/obj-key.webp" alt="">':'<span class="objp o'+c.obj+'" aria-hidden="true"><i></i></span>'}
+function exhibit(c,ini,text){return '<div class="exh"><div class="sh"><span>'+esc(T.exhibit)+'</span><span>'+esc(T.found)+' <b>3</b></span></div><div class="eb">'+objPic(c)+(ini?'<span class="tagl">'+esc(ini)+'</span>':'')+'</div><p>'+esc(text)+'</p></div>'}
+function itemPic(c,i){return i===0?'<img class="ip" src="'+MW.root+'games/ghosts/photo1.webp" alt="">':i===2?'<img class="ip" src="'+MW.root+'games/ghosts/clipping.webp" alt="">':c.obj===2?'<img class="ip" src="'+MW.root+'games/ghosts/obj-key.webp" alt="">':'<span class="ip objp o'+c.obj+'" aria-hidden="true"><i></i></span>'}
+var SPI=new Image();SPI.src=MW.root+"games/ghosts/spirit.webp";
+/* de geest uit de foto over het (camera)beeld: 'screen' laat het donker wegvallen */
+function spiritImg(g,x,y,h,al,calm){if(!(SPI.complete&&SPI.naturalWidth))return spirit(g,x,y,h,al,calm);var w=h*SPI.naturalWidth/SPI.naturalHeight;g.save();g.globalCompositeOperation="screen";g.globalAlpha=Math.max(0,Math.min(1,al));
+  if(calm){var gr=g.createRadialGradient(x,y,h*.05,x,y,h*.7);gr.addColorStop(0,"rgba(255,200,130,.35)");gr.addColorStop(1,"rgba(255,200,130,0)");g.fillStyle=gr;g.fillRect(x-h,y-h,h*2,h*2)}
+  g.drawImage(SPI,x-w/2,y-h/2,w,h);g.restore()}
 /* de getuigenverklaring: getypt vel met de foto aan een paperclip */
 function stmtHTML(s,t){var m=t.match(/^(.*?:)\s*(‘.*?’)\s*([^‘’]*?:)\s*(‘.*’)$/);if(!m)return '<p class="hand">'+esc(t)+'</p>';
   return '<div class="stmt"><div class="sh"><span>'+esc(T.stmt)+'</span><span>'+esc(s.name)+' <b>'+s.n+'</b></span></div><div class="sb"><img src="'+MW.root+'games/ghosts/witness.webp" alt=""><p>'+esc(m[2])+'</p><p class="mg">'+esc(m[3])+'</p><p>'+esc(m[4])+'</p></div></div>'}
@@ -245,7 +254,7 @@ function warnHTML(t){var m=t.match(/^(.*?:)\s*([^a-z]+?\.)\s*([^a-z]+?\.)\s*(.*?
 /* locatie 7: het teken leggen, dan kiezen welk bewijs meegaat */
 function step7(s){var c=G.c,right=ITEMOF[c.R],sg=D.SIG[c.sig[right]];
   if(G.step7<2)return runPuzzle(s,"tiles",sg+"  "+sg+"  "+sg,function(){G.step7=2;save();step7(s)});
-  sheet(head(s)+'<div class="sigil">'+esc(sg)+'</div><h2>'+esc(T.pick)+'</h2><p class="note">'+esc(T.pickHint)+'</p><div class="list" id="pk">'+[0,1,2].map(function(i){return '<button type="button" class="sus item" data-i="'+i+'"><span class="sg">'+esc(D.SIG[c.sig[i]])+'</span><b>'+esc(cap(itemName(c,i)))+'</b></button>'}).join("")+'</div><p class="note" id="pkMsg"></p><button type="button" class="btn ghost dk" id="mgSkip">'+T.later+'</button>',true);
+  sheet(head(s)+'<div class="sigil">'+esc(sg)+'</div><h2>'+esc(T.pick)+'</h2><p class="note">'+esc(T.pickHint)+'</p><div class="list" id="pk">'+[0,1,2].map(function(i){return '<button type="button" class="sus item" data-i="'+i+'">'+itemPic(c,i)+'<b>'+esc(cap(itemName(c,i)))+'</b><span class="sg">'+esc(D.SIG[c.sig[i]])+'</span></button>'}).join("")+'</div><p class="note" id="pkMsg"></p><button type="button" class="btn ghost dk" id="mgSkip">'+T.later+'</button>',true);
   $("#mgSkip").onclick=closeSheet;
   $("#pk").onclick=function(e){var b=e.target.closest("button");if(!b)return;var i=+b.dataset.i;
     if(i!==right){$("#pkMsg").textContent=T.pickWrong;b.classList.add("out");buzz(180);beep(150,.3);return}
@@ -285,7 +294,7 @@ function noteSheet(tab){tab=tab||"found";var c=G.c,fr=G.st.filter(function(s){re
 
 /* ---------- de laatste plek: drie vragen, en dan verschijnt ze voor het laatst ---------- */
 function finalSheet(s){var c=G.c,a=[null,null,null];
-  sheet(head(s)+'<p>'+esc(T.last)+'</p><div class="inv"><em>'+esc(T.carry)+'</em><span class="car"><b>'+esc(D.SIG[c.sig[G.item]])+'</b>'+esc(cap(itemName(c,G.item)))+'</span></div>'+
+  sheet(head(s)+'<div class="lastp"><img src="'+MW.root+'games/ghosts/apparition.webp" alt=""><p>'+esc(T.last)+'</p></div><div class="inv"><em>'+esc(T.carry)+'</em><span class="car"><b>'+esc(D.SIG[c.sig[G.item]])+'</b>'+esc(cap(itemName(c,G.item)))+'</span></div>'+
     '<div class="eyebrow">'+esc(T.q1)+'</div><div class="list" id="q0">'+c.w.map(function(i,j){return womanCard(D.WOMEN[i],G.out[j]?" out":"",'data-v="'+j+'"')}).join("")+'</div>'+
     '<div class="eyebrow">'+esc(T.q2)+'</div><div class="list" id="q1">'+D.FATE.map(function(f,i){return '<button type="button" data-v="'+i+'" class="sus'+(G.outF[i]?" out":"")+'"><b>'+esc(f[0])+'</b><small>'+esc(f[1])+'</small></button>'}).join("")+'</div>'+
     '<div class="eyebrow">'+esc(T.q3)+'</div><div class="list" id="q2">'+D.REASON.map(function(f,i){return '<button type="button" data-v="'+i+'" class="sus'+(G.outR[i]?" out":"")+'"><b>'+esc(fill(f[0],vars(c,{N:"…"})))+'</b><small>'+esc(f[1])+'</small></button>'}).join("")+'</div>'+
@@ -296,7 +305,7 @@ function finalSheet(s){var c=G.c,a=[null,null,null];
     if(b.id==="vGo"){if(a[0]==null||a[1]==null||a[2]==null){$("#vMsg").textContent=T.qNeed;return}G.tries++;save();
       if(a[0]===c.g&&a[1]===c.F&&a[2]===c.R){done(s);finale()}else{$("#vMsg").textContent=T.qWrong;G.thick=true;buzz(220);beep(140,.5)}}}}
 function finale(){var fade=function(){sheet('<canvas class="figc app calm" id="figc" width="300" height="340"></canvas><p class="ctr" id="fadeT">'+esc(PZ.ar.calm)+'</p>',true);var cv=$("#figc"),g=cv.getContext("2d"),t0=0;
-    var f=function(ts){if(!cv.isConnected)return;t0=t0||ts;var e=(ts-t0)/1000,al=e<1.5?e/1.5:e<4?1:Math.max(0,1-(e-4)/5);g.clearRect(0,0,300,340);spirit(g,150,166,280,al,true);if(e>4)$("#fadeT").textContent=PZ.ar.fade;if(e>9.3){win();return}mg.raf=requestAnimationFrame(f)};mg.raf=requestAnimationFrame(f)};
+    var f=function(ts){if(!cv.isConnected)return;t0=t0||ts;var e=(ts-t0)/1000,al=e<1.5?e/1.5:e<4?1:Math.max(0,1-(e-4)/5);g.fillStyle='#07090d';g.fillRect(0,0,300,340);spiritImg(g,150,172,330,al,true);if(e>4)$("#fadeT").textContent=PZ.ar.fade;if(e>9.3){win();return}mg.raf=requestAnimationFrame(f)};mg.raf=requestAnimationFrame(f)};
   if(G.cam==="on"&&camOK())runAR(true,win,fade);else fade()}
 function win(){mg.stop();var c=G.c,v=vars(c),min=(Date.now()-G.t0)/60000,s2=G.tries===1,s3=min<=G.par,stars=1+(s2?1:0)+(s3?1:0),xp=100+stars*50,km=G.dist/1000,w=ghost(c);
   var a=MW.profile.award({game:ID,xp:xp,stars:stars,gps:G.mode==="gps",min:min,km:km,title:w.n,code:G.code});

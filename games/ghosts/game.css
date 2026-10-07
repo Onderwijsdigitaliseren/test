@@ -239,3 +239,37 @@ body{background:#07090d}
 .stmt img{float:right;width:44%;height:auto;margin:4px 0 6px 12px;border:5px solid #efe6cf;box-shadow:0 3px 10px rgba(0,0,0,.45);transform:rotate(2deg)}
 .stmt p{margin:0 0 9px;font-size:14.5px;line-height:1.4}
 .stmt .mg{font-size:12px;margin-bottom:3px;color:#5a4c3a}
+/* ===== alles in dezelfde stijl: oud papier, typemachine, foto's ===== */
+.typed,.exh,.filenote{background:linear-gradient(170deg,#e6d8b8,#d2c098 75%,#bfab82);box-shadow:0 6px 18px rgba(0,0,0,.4),inset 0 0 36px rgba(90,60,20,.26);color:#2a2118;font-family:var(--f-type);font-size:14.5px;line-height:1.4}
+.typed{padding:14px;transform:rotate(-.5deg)}
+.exh,.filenote{padding:12px 12px 14px;display:flex;flex-direction:column;gap:10px;transform:rotate(.6deg)}
+.exh p,.filenote p{margin:0}
+.exh .sh,.filenote .sh{display:flex;justify-content:space-between;align-items:center;gap:8px;border-top:1px solid #2a2118;border-bottom:1px solid #2a2118;padding:5px 0;font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+.exh .sh b,.filenote .sh b{display:inline-flex;width:20px;height:20px;border-radius:50%;background:#17130f;color:#e6d8b8;align-items:center;justify-content:center;font-weight:400;letter-spacing:0;margin-left:4px}
+.exh .eb{position:relative;align-self:center;display:flex;justify-content:center;width:100%}
+.objp{display:block;width:150px;height:170px;object-fit:cover;border:5px solid #efe6cf;box-shadow:0 4px 12px rgba(0,0,0,.45);background:radial-gradient(ellipse at 50% 40%,#3a2a1a,#0b0806 78%);position:relative;transform:rotate(-2deg)}
+.objp i{position:absolute;left:50%;top:54%;transform:translate(-50%,-50%)}
+.objp.o0 i{width:54px;height:66px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#e3e3e3,#8a8a8a 55%,#2e2e2e);box-shadow:0 0 18px rgba(255,200,130,.25)}
+.objp.o0 i::before{content:"";position:absolute;left:50%;top:-58px;width:70px;height:62px;border:2px solid #9a9a9a;border-bottom:0;border-radius:50% 50% 0 0;transform:translateX(-50%)}
+.objp.o0 i::after{content:"";position:absolute;left:50%;top:-10px;width:12px;height:12px;border:2px solid #b5b5b5;border-radius:50%;transform:translateX(-50%)}
+.objp.o1 i{width:62px;height:62px;border-radius:50%;border:7px solid #c9a24a;box-shadow:inset 0 0 0 1px #6d5320,0 0 0 1px #6d5320,0 0 20px rgba(255,200,110,.35)}
+.tagl{position:absolute;right:calc(50% - 118px);bottom:-6px;background:#efe6cf;color:#17130f;font-family:var(--f-fell);font-size:22px;padding:6px 12px 6px 22px;transform:rotate(-7deg);box-shadow:0 3px 8px rgba(0,0,0,.4);clip-path:polygon(14px 0,100% 0,100% 100%,14px 100%,0 50%)}
+.filenote .fn{display:flex;gap:12px;align-items:center}
+.filenote .mini{position:relative;flex:none;width:96px}
+.filenote .mini img{display:block;width:100%;height:auto;border:4px solid #efe6cf;box-shadow:0 3px 10px rgba(0,0,0,.45);transform:rotate(-3deg);filter:sepia(.4)}
+.filenote .mini em{position:absolute;left:-6px;top:38%;font-style:normal;font-family:var(--f-cond);font-weight:600;text-transform:uppercase;letter-spacing:.08em;font-size:15px;color:#c2331f;border:2px solid #c2331f;padding:1px 6px;transform:rotate(-14deg);background:rgba(239,230,207,.82)}
+.filenote .strike{font-size:19px;color:#2a2118}
+.sus.item{background:linear-gradient(170deg,#e6d8b8,#d2c098);border-color:#b9a57b;font-family:var(--f-type)}
+.sus.item b{flex:1;font-size:16px}
+.ip{flex:none;width:64px;height:64px;object-fit:cover;border:3px solid #efe6cf;box-shadow:0 2px 8px rgba(0,0,0,.4);transform:rotate(-2deg)}
+span.ip.objp{width:64px;height:64px;border-width:3px}
+span.ip.objp i{transform:translate(-50%,-50%) scale(.42)}
+.item .sg{border-color:#c2331f;color:#c2331f;background:#efe6cf}
+.sus.item.out{opacity:.45}
+.lastp{flex:none;position:relative;border:6px solid #efe6cf;box-shadow:0 6px 18px rgba(0,0,0,.45);transform:rotate(-.6deg);overflow:hidden}
+.lastp img{display:block;width:100%;height:150px;object-fit:cover;object-position:50% 22%}
+.lastp p{position:absolute;left:0;right:0;bottom:0;margin:0;padding:26px 12px 10px;background:linear-gradient(180deg,rgba(7,9,13,0),rgba(7,9,13,.92));color:#f3ede1;font-family:var(--f-type);font-size:14.5px}
+.inv{background:linear-gradient(170deg,#e6d8b8,#d2c098);border:1px solid #b9a57b;font-family:var(--f-type)}
+.clue{background:linear-gradient(170deg,#e6d8b8,#d6c69f);font-family:var(--f-type);font-size:14px}
+.clue p{margin:0;line-height:1.4}
+.figc.calm{background:#07090d}

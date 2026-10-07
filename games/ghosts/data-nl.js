@@ -174,7 +174,11 @@ window.NG_DATA={
    "Vermiste vrouw",
    "Sedert dinsdag geen spoor meer"
   ],
-  "stmt": "Getuigenverklaring"
+  "stmt": "Getuigenverklaring",
+  "stamp": "Onmogelijk",
+  "exhibit": "Bewijsstuk",
+  "file": "Dossiernotitie",
+  "found": "Gevonden op deze plek"
  },
  "TYPES": {
   "kerk": [

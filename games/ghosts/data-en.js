@@ -171,7 +171,11 @@ window.NG_DATA={
    "Missing woman",
    "No trace since Tuesday"
   ],
-  "stmt": "Witness statement"
+  "stmt": "Witness statement",
+  "stamp": "Impossible",
+  "exhibit": "Exhibit",
+  "file": "File note",
+  "found": "Found at this spot"
  },
  "TYPES": {
   "kerk": [
