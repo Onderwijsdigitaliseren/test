@@ -257,3 +257,8 @@ input[type=range]{width:100%;accent-color:var(--blood)}
 #load b{color:#efe6d8}
 .phead .sil{background-position:82% 30%}
 .letter.hers::first-letter{font-family:inherit;font-size:inherit;line-height:inherit;color:inherit;padding:0}
+
+/* sfeerfoto's bij sporen, dossier, motieven en aandenkens */
+.ph{display:block;width:100%;height:clamp(150px,27vh,230px);object-fit:cover;object-position:50% 45%;border-radius:3px;background:#0b0e13;box-shadow:0 0 0 1.5px #f0a850,0 0 0 5px var(--paper),0 0 0 6px var(--gold2),0 6px 18px rgba(0,0,0,.35);margin:8px 0 6px;flex-shrink:0}
+#brief .ph{height:clamp(140px,22vh,200px);object-position:50% 30%;margin:6px 0 14px}
+.mth{width:46px;height:46px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 1.5px #f0a850,0 0 0 4px var(--paper),0 0 0 5px var(--gold2)}
