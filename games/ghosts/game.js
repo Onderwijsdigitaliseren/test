@@ -224,7 +224,7 @@ function openLoc(s){walkTo=null;var c=G.c,n=s.n,v=vars(c);
   if(n===1)return holdSheet(s,T.holdDev,function(){done(s);doc(s,'<div class="photo"><img src="'+MW.root+'games/ghosts/photo1.webp" alt="" width="900" height="532"><i>'+v.PY+'</i></div><p>'+esc(locText(c,1))+'</p>')});
   if(n===2){done(s);return doc(s,'<p class="hand">'+esc(locText(c,2))+'</p>')}
   if(n===3)return doc(s,'<p>'+esc(fill(D.L3a,v))+'</p>',function(){runPuzzle(s,"dust",v.INI,function(){done(s);doc(s,'<div class="engr">'+esc(v.INI)+'</div><p>'+esc(locText(c,3))+'</p>')})},PZ.dust[1]);
-  if(n===4){var after=function(){done(s);doc(s,'<canvas class="figc app" id="figc" width="260" height="260"></canvas><p>'+esc(locText(c,4))+'</p>',function(){move6(false)});spirit($("#figc").getContext("2d"),130,128,210,1,false)};
+  if(n===4){var after=function(){done(s);doc(s,'<div class="photo"><img src="'+MW.root+'games/ghosts/apparition.webp" alt="" width="900" height="782"></div><p>'+esc(locText(c,4))+'</p>',function(){move6(false)})};
     var lamp=function(){runPuzzle(s,"lamp","",after)};
     if(!camOK())return lamp();if(G.cam==="on")return runAR(false,after,lamp);
     sheet(head(s)+'<h2>'+esc(PZ.ar.h)+'</h2><p>'+esc(D.L4a)+'</p><button type="button" class="btn" id="arYes">'+PZ.ar.yes+'</button><button type="button" class="btn ghost dk" id="arNo">'+PZ.ar.no+'</button>',true);

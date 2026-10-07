@@ -215,3 +215,4 @@ body{background:#07090d}
 .sus.woman:nth-child(even) .wpic{transform:rotate(1.5deg)}
 .sus.out .wpic{filter:grayscale(1)}
 .wbig{align-self:center;width:min(240px,80%);height:auto;border:8px solid #f4efe2;box-shadow:0 8px 22px rgba(0,0,0,.5);transform:rotate(-1.5deg)}
+.doc.d4 .photo{padding-bottom:9px;transform:rotate(1.2deg)}
