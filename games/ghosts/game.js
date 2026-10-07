@@ -215,7 +215,7 @@ function doc(s,html,then,btn){sheet(head(s)+'<div class="doc d'+s.n+'">'+html+'<
   $("#shX").onclick=function(){closeSheet();sel=null;chip();if(then)then()}}
 function done(s){mg.stop();s.done=true;G.force=null;save()}
 function openLoc(s){walkTo=null;var c=G.c,n=s.n,v=vars(c);
-  if(n===1)return holdSheet(s,T.holdDev,function(){done(s);doc(s,'<div class="photo"><canvas id="figc" width="300" height="220"></canvas><i>'+v.PY+'</i></div><p>'+esc(locText(c,1))+'</p>');photoScene($("#figc"),c)});
+  if(n===1)return holdSheet(s,T.holdDev,function(){done(s);doc(s,'<div class="photo"><img src="'+MW.root+'games/ghosts/photo1.webp" alt="" width="900" height="532"><i>'+v.PY+'</i></div><p>'+esc(locText(c,1))+'</p>')});
   if(n===2){done(s);return doc(s,'<p class="hand">'+esc(locText(c,2))+'</p>')}
   if(n===3)return doc(s,'<p>'+esc(fill(D.L3a,v))+'</p>',function(){runPuzzle(s,"dust",v.INI,function(){done(s);doc(s,'<div class="engr">'+esc(v.INI)+'</div><p>'+esc(locText(c,3))+'</p>')})},PZ.dust[1]);
   if(n===4){var after=function(){done(s);doc(s,'<canvas class="figc app" id="figc" width="260" height="260"></canvas><p>'+esc(locText(c,4))+'</p>',function(){move6(false)});spirit($("#figc").getContext("2d"),130,128,210,1,false)};
@@ -229,12 +229,6 @@ function openLoc(s){walkTo=null;var c=G.c,n=s.n,v=vars(c);
   if(n===8)return finalSheet(s);
   if(n===9){done(s);var id=D.RARE.map(function(e,j){return j}).filter(function(j){return D.RARE[j][1]===3})[(c.seed>>>0)%3];addRare(id);
     doc(s,'<canvas class="figc app" id="figc" width="260" height="260"></canvas><p>'+esc(D.L9)+'</p><p class="note">'+esc(fill(T.rare.got,{n:D.RARE[id][0]}))+' · +60</p>');rareFig($("#figc").getContext("2d"),130,128,200,1,D.RARE[id][2])}}
-/* de foto van locatie 1: een gezin vooraan, en zij op de achtergrond */
-function photoScene(cv,c){if(!cv)return;var g=cv.getContext("2d"),w=ghost(c);g.fillStyle="#b9ab8e";g.fillRect(0,0,300,220);var sk=g.createLinearGradient(0,0,0,220);sk.addColorStop(0,"#cdbf9f");sk.addColorStop(.6,"#a89a7c");sk.addColorStop(1,"#6f6450");g.fillStyle=sk;g.fillRect(0,0,300,220);
-  g.fillStyle="#4a4234";g.fillRect(228,20,14,150);g.beginPath();g.arc(236,40,46,0,7);g.fill();g.fillStyle="#5d5443";g.fillRect(0,168,300,52);
-  spirit(g,222,112,104,.55,false,"238,232,214");
-  g.fillStyle="#2a251c";[[70,150,1],[108,144,1.1],[146,152,.95],[126,176,.6]].forEach(function(p){var s=p[2];g.beginPath();g.arc(p[0],p[1]-58*s,11*s,0,7);g.fill();g.beginPath();g.moveTo(p[0]-17*s,p[1]-44*s);g.lineTo(p[0]+17*s,p[1]-44*s);g.lineTo(p[0]+22*s,p[1]+40*s);g.lineTo(p[0]-22*s,p[1]+40*s);g.closePath();g.fill()});
-  for(var i=0;i<60;i++){g.fillStyle="rgba(255,250,235,"+(Math.random()*.12)+")";g.fillRect(Math.random()*300,Math.random()*220,1+Math.random()*2,1+Math.random()*2)}}
 /* locatie 7: het teken leggen, dan kiezen welk bewijs meegaat */
 function step7(s){var c=G.c,right=ITEMOF[c.R],sg=D.SIG[c.sig[right]];
   if(G.step7<2)return runPuzzle(s,"tiles",sg+"  "+sg+"  "+sg,function(){G.step7=2;save();step7(s)});

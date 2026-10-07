@@ -168,8 +168,8 @@ body{background:#07090d}
 .lochead em{font-style:normal;font-family:var(--f-fell);font-size:21px;color:var(--ink);line-height:1.1}
 .doc{display:flex;flex-direction:column;gap:12px}
 .doc p{margin:0}
-.photo{position:relative;align-self:center;background:#f4efe2;padding:9px 9px 30px;box-shadow:0 6px 18px rgba(0,0,0,.4);transform:rotate(-2deg);width:min(300px,100%)}
-.photo canvas{display:block;width:100%;height:auto;filter:sepia(.5) contrast(1.05)}
+.photo{position:relative;align-self:center;background:#f4efe2;padding:9px 9px 30px;box-shadow:0 6px 18px rgba(0,0,0,.4);transform:rotate(-2deg);width:min(360px,100%)}
+.photo img{display:block;width:100%;height:auto}
 .photo i{position:absolute;right:12px;bottom:6px;font-style:normal;font-family:var(--f-type);font-size:14px;color:#5c5140}
 .hand{font-family:var(--f-type);font-size:16px;line-height:1.5;background:#f4efe2;padding:16px;border:1px solid var(--rule);box-shadow:3px 4px 0 rgba(0,0,0,.12)}
 .engr{align-self:center;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#d9d9d9,#7d7d7d 60%,#3d3d3d);display:flex;align-items:center;justify-content:center;font-family:var(--f-fell);font-size:38px;color:#2a2a2a;text-shadow:0 1px 0 rgba(255,255,255,.5);box-shadow:0 6px 16px rgba(0,0,0,.4)}
