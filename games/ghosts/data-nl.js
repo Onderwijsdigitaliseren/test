@@ -178,7 +178,11 @@ window.NG_DATA={
   "stamp": "Onmogelijk",
   "exhibit": "Bewijsstuk",
   "file": "Dossiernotitie",
-  "found": "Gevonden op deze plek"
+  "found": "Gevonden op deze plek",
+  "scareOn": "Schrikmomenten: aan",
+  "scareOff": "Schrikmomenten: uit",
+  "sc": ["Kijk nog eens naar de foto. Daarnet stond ze verder naar achteren.", "Onderaan, in een ander handschrift, de inkt nog nat: ‘Ze leest met je mee.’", "Het metaal is ijskoud. Aan de binnenkant zit adem, alsof iemand {OBJ} net nog vasthield.", "De kaarsen gaan uit. Allemaal tegelijk."],
+  "fol": {"start": ["Er loopt iemand achter je.", "Je bent niet meer alleen in deze straat.", "Voetstappen. Niet de jouwe."], "near": "Niet omkijken. Loop door.", "gone": "Ze is weg. Voor nu.", "caught": "ZE STAAT ACHTER JE", "lamp": "Het licht verderop gaat uit.", "wh": ["Niet omkijken.", "Ze kent deze straat beter dan jij.", "Hoor je dat? Dat ben jij niet.", "Blijf onder de lantaarns.", "Er loopt iemand in jouw pas.", "Tel de ramen waar licht brandt. Tel ze straks nog eens.", "Ze weet waar je heen gaat."]}
  },
  "TYPES": {
   "kerk": [
@@ -314,7 +318,8 @@ window.NG_DATA={
    "hold": "Blijf kijken…",
    "found": "Ze heeft je gezien.",
    "calm": "Ze kijkt je aan.",
-   "fade": "Ze gaat."
+   "fade": "Ze gaat.",
+   "gone": "Ze is weg. Ze staat achter je."
   },
   "dust": [
    "Onder het vuil van jaren",

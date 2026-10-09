@@ -175,7 +175,11 @@ window.NG_DATA={
   "stamp": "Impossible",
   "exhibit": "Exhibit",
   "file": "File note",
-  "found": "Found at this spot"
+  "found": "Found at this spot",
+  "scareOn": "Jump scares: on",
+  "scareOff": "Jump scares: off",
+  "sc": ["Look at the photo again. A moment ago she stood further back.", "At the bottom, in a different hand, the ink still wet: ‘She is reading along with you.’", "The metal is ice cold. There is breath on the inside, as if someone was holding {OBJ} just now.", "The candles go out. All at once."],
+  "fol": {"start": ["Someone is walking behind you.", "You are no longer alone in this street.", "Footsteps. Not yours."], "near": "Don't look back. Keep walking.", "gone": "She is gone. For now.", "caught": "SHE IS BEHIND YOU", "lamp": "The light up ahead goes out.", "wh": ["Don't look back.", "She knows this street better than you do.", "Hear that? That isn't you.", "Stay under the lanterns.", "Someone is walking in step with you.", "Count the windows with a light on. Count them again later.", "She knows where you are going."]}
  },
  "TYPES": {
   "kerk": [
@@ -311,7 +315,8 @@ window.NG_DATA={
    "hold": "Keep looking…",
    "found": "She has seen you.",
    "calm": "She is looking at you.",
-   "fade": "She is going."
+   "fade": "She is going.",
+   "gone": "She is gone. She is behind you."
   },
   "dust": [
    "Under the dirt of years",
