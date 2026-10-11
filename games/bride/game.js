@@ -1,6 +1,7 @@
 /* Tot de Dood Ons Scheidt / Till Death Do Us Part – spel-logica (taalonafhankelijk).
-   Vereist platform.js, catalog.js, walk.js, TD_DATA (data-xx.js) en de minipuzzels van De Verdwijning (games/vanishing/puzzles.js).
+   Vereist platform.js, catalog.js, walk.js, steps.js (binnen-stand), TD_DATA (data-xx.js) en de minipuzzels van De Verdwijning (games/vanishing/puzzles.js).
    Zelfde motor als De Verdwijning, met zes verdachten, een motief in plaats van een scenario, en de bruid als schim.
+   Binnen-stand (G.mode==="in"): dezelfde zaak op dezelfde kaart, maar je loopt op stappen (bewegingssensor) of op tempo in plaats van gps; teksten in D.IN.
    Eigen sfeer naar de sfeerfoto (hero.webp): natte nacht, lantaarnlicht, ivoren kant en dieprode rozenblaadjes; eigen pictogrammen (IC) voor sporen, gasten, eigenschappen en motieven. */
 (function(){
 "use strict";
@@ -9,6 +10,8 @@ var ID="td",GK="ss_game_td_"+L,WK="ss_ways_td_"+L,rngOf=Wk.rngOf,shuffle=Wk.shuf
 var toast=Wk.toast,sheet=Wk.sheet,beep=Wk.beep,buzz=Wk.buzz;function closeSheet(){if(window.mgStop)window.mgStop();Wk.closeSheet()}
 var fill=function(s,o){return String(s).replace(/\{(\w+)\}/g,function(m,k){return o&&(k in o)?o[k]:m})};
 var G=null,W=[],P={x:0,y:0,acc:0},R0=650,PAR=75,sel=null,walkTo=null,arrived=null,lastT=0,map=null,nearD=1e9;
+var St=MW.Steps,IN=D.IN,WHERE=LS.get("ss_where","out")==="in"?"in":"out",INK={kind:"sensor",spm:100},PK=false,inT0=0;
+var num=function(n){try{return Math.round(n).toLocaleString(L==="nl"?"nl-NL":"en-GB")}catch(e){return String(Math.round(n))}};
 
 /* ---------- zaakgenerator: alles waar, niets alleen afdoende ---------- */
 var NP=6,ALL=(1<<NP)-1,SCN=D.SCN,CTK=Object.keys(D.CT);
@@ -142,7 +145,7 @@ function home(){
   $("#pRank").textContent=MW.profile.rankName(p.xp,L);$("#pStreak").textContent=p.streak||0;$("#pSolved").textContent=(p.games.td&&p.games.td.n)||0;
   $("#pXp").style.width=(nx?Math.round((p.xp-R)/(nx[0]-R)*100):100)+"%";
   $("#pNext").textContent=nx?MW.fill(t.pts,{x:p.xp,n:nx[0]-p.xp,r:MW.profile.RANKS[L][i+1][1]}):MW.fill(t.ptsTop,{x:p.xp});
-  $("#bResume").hidden=!LS.get(GK,null);
+  $("#bResume").hidden=!LS.get(GK,null);whereUi();
   var pro=MW.pro.isPro(),lk=MW.pro.locked(ID),playedToday=(p.games.td&&p.games.td.day)===MW.today();
   $("#bGps").textContent=(lk?"🔒 ":"")+(playedToday?T.todayAgain:T.today);$("#bRandom").textContent=(lk?"🔒 ":"")+T.extra;
   $("#bPro").hidden=pro;$("#bPro").textContent=T.pro+" · "+MW.cfg.price;
@@ -153,24 +156,86 @@ function proSheet(){sheet(MW.proHTML(L,"pro")+'<button type="button" class="btn 
   MW.bindPro($("#sheetBody"),L,function(r,msg){closeSheet();home();toast(msg)})}
 $("#len").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;R0=+b.dataset.r;PAR=+b.dataset.par;$$("#len button").forEach(function(x){x.setAttribute("aria-pressed",x===b)})});
 function setLen(short){var b=$$("#len button")[short?0:1];if(b)b.click()}
-$("#bGps").onclick=function(){if(MW.pro.locked(ID))return proSheet();startGps(hashStr("td|"+MW.today()),true)};
-$("#bRandom").onclick=function(){if(MW.pro.locked(ID))return proSheet();startGps(Math.floor(Math.random()*4e9),false)};
+/* buiten of binnen: de keuze geldt voor de zaak van vandaag, een extra zaak en een zaakcode */
+var HOW0=$$(".how li span").map(function(e){return e.textContent});
+function whereUi(){var inn=WHERE==="in",lb=$$("#len button");$$("#where button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.w===WHERE)});
+  if(lb[0])lb[0].textContent=inn?IN.short:T.short;if(lb[1])lb[1].textContent=inn?IN.full:T.full;
+  var n=$("#inNote");if(n)n.hidden=!inn;
+  $$(".how li span").forEach(function(e,i){e.textContent=inn&&IN.how[i]?IN.how[i]:HOW0[i]})}
+if($("#where"))$("#where").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;WHERE=b.dataset.w==="in"?"in":"out";LS.set("ss_where",WHERE);whereUi()});
+function go(seed,daily){if(WHERE==="in")startIn(seed,daily);else startGps(seed,daily)}
+$("#bGps").onclick=function(){if(MW.pro.locked(ID))return proSheet();go(hashStr("td|"+MW.today()),true)};
+$("#bRandom").onclick=function(){if(MW.pro.locked(ID))return proSheet();go(Math.floor(Math.random()*4e9),false)};
 $("#bPro").onclick=proSheet;
 $("#bDemo").onclick=function(){var w=Wk.demoWorld(D.DEMO);build(Math.floor(Math.random()*4e9),"demo",w.pois,w.ways,null,false)};
-$("#bResume").onclick=function(){G=LS.get(GK,null);W=LS.get(WK,[]);if(!G)return home();P={x:G.px||0,y:G.py||0,acc:0};R0=G.R;PAR=G.par;enter()};
+$("#bResume").onclick=function(){G=LS.get(GK,null);W=LS.get(WK,[]);if(!G)return home();P={x:G.px||0,y:G.py||0,acc:0};R0=G.R;PAR=G.par;
+  // iPhone geeft de bewegingssensor alleen na een tik vrij: vraag de toestemming opnieuw bij het hervatten
+  if(G.mode==="in"&&G.in.kind==="sensor")St.ask().then(function(ok){if(!G)return;if(!ok){G.in.kind="tempo";toast(IN.noSensor)}enter()});else enter()};
 $("#bCode").onclick=function(){codeSheet("")};$("#bArch").onclick=archSheet;$("#bWipe").onclick=wipeSheet;
 $("#lang").onclick=function(){MW.switchLang(ID,L==="nl"?"en":"nl")};
 
 /* ---------- wereld ophalen ---------- */
 function fail(m){Wk.loading("");sheet('<h2>'+T.fail+'</h2><p>'+m+'</p><button type="button" class="btn" id="shX">'+T.back+'</button>');$("#shX").onclick=closeSheet}
+function lenPar(){var b=$('#len button[aria-pressed="true"]');return b?+b.dataset.par:75}
 function startGps(seed,daily){
-  Wk.loading(T.loc);
+  PAR=lenPar();Wk.loading(T.loc);
   Wk.locate().then(function(pos){
     var lat=pos.coords.latitude,lon=pos.coords.longitude;
     return Wk.fetchWorld({lat:lat,lon:lon,R:R0,status:function(s){if(s==="pois")Wk.loading(T.pois);if(s==="nomap")toast(T.nomap)}}).then(function(w){
       Wk.loading("");build(seed,"gps",w.pois,w.ways,w.origin,daily);var mine=G;
       w.later.then(function(ways){if(ways&&G&&G===mine){W=ways;LS.set(WK,W)}})})
   }).catch(function(e){fail(e==="nogps"?T.noGps:T.denied)})}
+/* ---------- binnen-stand: zelfde zaak, zelfde kaart, lopen op stappen of tempo ---------- */
+/* kies hoe je loopt; cb(kind,spm). Zonder bewegingssensor blijft alleen tempo over. */
+function inSheet(cb,cancel){var sens=St.supported();
+  sheet('<div class="eyebrow">'+esc(IN.tag)+'</div><h2>'+esc(IN.h)+'</h2><p>'+esc(IN.t)+'</p>'+
+    (sens?'<button type="button" class="btn two" id="inS"><b>'+esc(IN.sensor)+'</b><small>'+esc(IN.sensorS)+'</small></button>':'')+
+    '<button type="button" class="btn two'+(sens?' ghost dk':'')+'" id="inT"><b>'+esc(IN.tempo)+'</b><small>'+esc(IN.tempoS)+'</small></button>'+
+    '<button type="button" class="btn ghost dk" id="shX">'+T.cancel+'</button>');
+  $("#shX").onclick=function(){closeSheet();if(cancel)cancel()};
+  if(sens)$("#inS").onclick=function(){St.ask().then(function(ok){closeSheet();if(!ok)toast(IN.noSensor);cb(ok?"sensor":"tempo",INK.spm)})};
+  $("#inT").onclick=function(){
+    sheet('<div class="eyebrow">'+esc(IN.tag)+'</div><h2>'+esc(IN.tempoH)+'</h2><p>'+esc(IN.tempoT)+'</p>'+IN.tempos.map(function(x,i){return '<button type="button" class="btn two'+(i?' ghost dk':'')+'" data-spm="'+x[1]+'"><b>'+esc(x[0])+'</b><small>'+esc(fill(IN.perMin,{n:x[1]}))+'</small></button>'}).join("")+'<button type="button" class="btn ghost dk" id="shX">'+T.cancel+'</button>');
+    $("#sheetBody").onclick=function(e){var b=e.target.closest("button");if(!b)return;if(b.dataset.spm){closeSheet();cb("tempo",+b.dataset.spm)}else if(b.id==="shX"){closeSheet();if(cancel)cancel()}}}}
+/* de kaart: je eigen buurt als die al eens is opgehaald (geen gps nodig), anders nu ophalen; lukt dat niet, dan fictief Londen */
+function startIn(seed,daily){
+  inSheet(function(kind,spm){INK={kind:kind,spm:spm};PAR=R0<500?35:60;
+    var demo=function(){Wk.loading("");var w=Wk.demoWorld(D.DEMO);build(seed,"in",w.pois,w.ways,null,daily);toast(IN.noLoc)};
+    var c=LS.get("ss_map",null);
+    if(c&&c.R>=R0&&c.pois&&c.pois.length>=4){build(seed,"in",c.pois,c.ways||[],null,daily);return}
+    Wk.loading(T.loc);
+    Wk.locate().then(function(pos){
+      return Wk.fetchWorld({lat:pos.coords.latitude,lon:pos.coords.longitude,R:R0,status:function(s){if(s==="pois")Wk.loading(T.pois)}}).then(function(w){
+        if(!w.pois.length)return demo();
+        Wk.loading("");build(seed,"in",w.pois,w.ways,null,daily);var mine=G;
+        w.later.then(function(ways){if(ways&&G&&G===mine){W=ways;LS.set(WK,W)}})})
+    }).catch(demo)})}
+/* lengte van een stap op de kaart: de kortste ronde langs de acht sporen komt uit op ongeveer het gekozen aantal stappen */
+function stepLen(st,target){var left=st.slice(),x=0,y=0,tour=0;while(left.length){var bi=0,bd=1e9;left.forEach(function(s,i){var d=Math.hypot(s.x-x,s.y-y);if(d<bd){bd=d;bi=i}});tour+=bd;x=left[bi].x;y=left[bi].y;left.splice(bi,1)}
+  return Math.max(.4,Math.min(3,tour/target))}
+function inTarget(){if(!G||G.mode!=="in")return null;if(sel&&!sel.done)return sel;
+  var open=G.won?(G.epi&&!G.epi.done?[G.epi]:[]):G.st.filter(function(s){return !s.done}),near=null,nd=1e9;open.forEach(function(s){var d=dTo(s);if(d<nd){nd=d;near=s}});return near}
+function stepIn(n){if(!G||G.mode!=="in")return;G.in.steps+=n;var t=inTarget();if(!t)return;
+  var d=dTo(t),m=n*G.in.sl;if(d<=m){P.x=t.x;P.y=t.y;G.dist+=d}else{P.x+=(t.x-P.x)/d*m;P.y+=(t.y-P.y)/d*m;G.dist+=m}}
+function startSteps(){inT0=Date.now();G.in.pause=false;
+  St.start({mode:G.in.kind,spm:G.in.spm,onStep:stepIn,
+    active:function(){return !!G&&G.mode==="in"&&!$("#play").hidden&&$("#sheet").hidden&&!AR.on&&!G.in.pause},
+    onDead:function(){if(!G||G.mode!=="in")return;G.in.kind="tempo";save();toast(IN.noSensor);startSteps()}});
+  St.awake(true)}
+function stopSteps(){St.stop();St.awake(false);pocket(false)}
+/* zakstand: het scherm blijft aan (anders telt de browser niet), dus een donker slot tegen tikken in je zak */
+function pocket(on){var p=$("#pocket");
+  if(!on){PK=false;if(p)p.hidden=true;return}
+  if(!p){p=document.createElement("div");p.id="pocket";p.innerHTML='<small id="pkT"></small><b id="pkN"></b><span id="pkS"></span><p id="pkH"></p><button type="button" class="btn hold" id="pkU"><i></i><span></span></button>';$("#app").appendChild(p);
+    var hb=p.querySelector("#pkU"),bar=hb.querySelector("i"),t0=0,raf=0;
+    var stop=function(){cancelAnimationFrame(raf);t0=0;bar.style.width="0%"};
+    var run=function(){if(!t0)return;var q=Math.min(1,(Date.now()-t0)/1000);bar.style.width=q*100+"%";if(q>=1){stop();pocket(false);return}raf=requestAnimationFrame(run)};
+    hb.addEventListener("pointerdown",function(e){e.preventDefault();t0=Date.now();run()});["pointerup","pointercancel","pointerleave"].forEach(function(ev){hb.addEventListener(ev,stop)});
+    hb.addEventListener("contextmenu",function(e){e.preventDefault()})}
+  p.querySelector("#pkU span").textContent=IN.unlock;p.querySelector("#pkH").textContent=IN.pocketT;PK=true;p.hidden=false;pocketUi()}
+function pocketUi(){if(!PK||!G)return;var t=inTarget();$("#pkT").textContent=t?(t===G.epi?PZ.epi.name:t.echo?D.ECHOT.name:t.name):"";
+  $("#pkN").textContent=t?num(Math.ceil(dTo(t)/G.in.sl)):"";$("#pkS").textContent=t?IN.steps:""}
+
 function build(seed,mode,pois,ways,origin,daily){
   var c=genCase(seed);if(!c){toast(T.dBad);return}
   var r=rngOf(seed^0x9e3779b9),spots=Wk.pickSpots(pois,ways,R0,8,r,T.corner),used={},spare=D.SPARE.slice();
@@ -181,9 +246,10 @@ function build(seed,mode,pois,ways,origin,daily){
   var echo=[];(function(){var r2=rngOf(seed^0x85ebca6b);for(var i=0;i<3;i++){var a=st[Math.floor(r2()*st.length)],b=st[Math.floor(r2()*st.length)],f=.3+.4*r2(),x=r2(),tier=x<.08?3:x<.35?2:1,opts=D.ECHO.map(function(e,j){return j}).filter(function(j){return D.ECHO[j][1]===tier&&!echo.some(function(q){return q.id===j})});
     echo.push({x:Math.round(a.x+(b.x-a.x)*f+(r2()-.5)*120),y:Math.round(a.y+(b.y-a.y)*f+(r2()-.5)*120),id:opts[Math.floor(r2()*opts.length)],done:false,echo:true})}})();
   G={mode:mode,R:R0,par:PAR,seed:seed,c:c,st:st,echo:echo,t0:0,dist:0,tries:0,origin:origin,px:0,py:0,daily:!!daily,code:codeOf(PAR,seed),out:{},outS:{}};
+  if(mode==="in")G.in={kind:INK.kind,spm:INK.spm,steps:0,sl:stepLen(st,R0<500?2000:4000),pause:false};
   W=ways;P={x:0,y:0,acc:0};LS.set(WK,W);
   var v=vars(c);
-  $("#bfNo").textContent=T.brief+" "+G.code+(mode==="demo"?" · "+T.demoCase:"");
+  $("#bfNo").textContent=T.brief+" "+G.code+(mode==="demo"?" · "+T.demoCase:mode==="in"?" · "+IN.tag:"");
   $("#bfTitle").textContent=c.M.n;$("#bfSub").textContent=T.missing+" · "+c.M.r;
   $("#bfText").textContent=fill(c.M.bio,v);
   $("#bfMsgH").textContent=fill(T.lastMsg,{t:fmt(c.frags[0].tm)});$("#bfMsg").textContent="“"+c.M.msg+"”";
@@ -193,7 +259,7 @@ function build(seed,mode,pois,ways,origin,daily){
 function tagsOf(k,v){return '<div class="tags">'+CTK.map(function(t){return"<i>"+svg(D.CT[t].ic||"heart")+esc(fill(D.CT[t].tag[k.tr[t]],v))+"</i>"}).join("")+'</div>'}
 function conCard(k,v,cls){return '<div class="sus guest'+(cls||"")+'">'+med(k.ic)+'<div class="gb"><b>'+esc(k.name)+'</b><small>'+esc(k.rel)+'</small>'+quote(k)+tagsOf(k,v)+'</div></div>'}
 function quote(k){return k.q?'<p class="q">“'+esc(k.q)+'”</p>':''}
-$("#bGo").onclick=function(){G.t0=Date.now();if(G.mode==="gps")MW.pro.setFree(ID);save();enter()};
+$("#bGo").onclick=function(){G.t0=Date.now();if(G.mode!=="demo")MW.pro.setFree(ID);save();enter()};
 $("#bBack").onclick=function(){G=null;home()};
 function save(){if(G){G.px=P.x;G.py=P.y;LS.set(GK,G)}}
 function codeOf(par,seed){return"TD"+(par<=40?"S":"L")+"-"+(seed>>>0).toString(36).toUpperCase()}
@@ -222,28 +288,38 @@ function enter(){
   show("play");if(!map)map=Wk.createMap($("#map"),{player:function(){return P},ways:function(){return W},R:function(){return G?G.R:650},theme:{bg:"#0c0f15",water:"#0b1520",waterEdge:"#22384a",ripple:"rgba(150,175,200,.14)",park:"#101812",parkEdge:"#26382a",river:"#16283a",major:"#465064",minor:"#1a202a",road:"#2a323f",label:"#7d8898",waterLabel:"#5f7d98",ring:"rgba(240,168,80,.28)",me:"#f0a850",meHalo:"rgba(240,168,80,.14)",meRing:"rgba(240,168,80,.55)",font:MAPFONT},items:items,onTap:function(hit,w){
     if(hit&&!hit.ref.done){sel=hit.ref;chip()}else if(G.mode==="demo"){walkTo=w;sel=null;map.follow();chip()}else{sel=null;chip()}}});
   map.resize();map.fit(G.R);sel=null;walkTo=null;arrived=null;$("#chip").hidden=true;
-  Wk.stopWatch();if(G.mode==="gps")Wk.watch(G.origin,P,function(d){if(d>3&&d<80)G.dist+=d});
+  Wk.stopWatch();stopSteps();if(G.mode==="gps")Wk.watch(G.origin,P,function(d){if(d>3&&d<80)G.dist+=d});
+  if(G.mode==="in"){startSteps();toast(IN.tip)}
+  $("#hD").nextElementSibling.textContent=G.mode==="in"?IN.hud:T.hud[3];
   if(G.mode==="demo")toast(T.demoTip);
   requestAnimationFrame(loop)}
 function loop(t){if($("#play").hidden||!G)return;var dt=Math.min(.1,(t-lastT)/1000)||0;lastT=t;
   if(G.mode==="demo"&&walkTo){var d=Math.hypot(walkTo.x-P.x,walkTo.y-P.y),step=90*dt;if(d<=step){P.x=walkTo.x;P.y=walkTo.y;G.dist+=d;walkTo=null}else{P.x+=(walkTo.x-P.x)/d*step;P.y+=(walkTo.y-P.y)/d*step;G.dist+=step}}
-  map.draw(t);if(!loop.n||t-loop.n>500){loop.n=t;tick()}requestAnimationFrame(loop)}
+  if(!PK)map.draw(t);if(!loop.n||t-loop.n>500){loop.n=t;tick()}requestAnimationFrame(loop)}
 function tick(){
   var el=Math.floor((Date.now()-G.t0)/1000),done=G.st.filter(function(s){return s.done}).length;
-  $("#hT").textContent=Math.floor(el/60)+":"+String(el%60).padStart(2,"0");$("#hS").textContent=done+"/8";$("#hG").textContent=(G.echo||[]).filter(function(q){return q.done}).length+"/3";$("#hD").textContent=(G.dist/1000).toFixed(1).replace(".",L==="nl"?",":".");
+  $("#hT").textContent=Math.floor(el/60)+":"+String(el%60).padStart(2,"0");$("#hS").textContent=done+"/8";$("#hG").textContent=(G.echo||[]).filter(function(q){return q.done}).length+"/3";$("#hD").textContent=G.mode==="in"?num(G.in.steps):(G.dist/1000).toFixed(1).replace(".",L==="nl"?",":".");
   var open=G.won?(G.epi&&!G.epi.done?[G.epi]:[]):G.st.filter(function(s){return !s.done}),near=null,nd=1e9;open.forEach(function(s){var d=dTo(s);if(d<nd){nd=d;near=s}});nearD=nd;
   var ec=(G.echo||[]).filter(function(q){return !q.done&&dTo(q)<=200}),ecNear=(G.echo||[]).some(function(q){return !q.done&&dTo(q)>200&&dTo(q)<=320});
-  $("#radar").textContent=G.won?(near?fill(PZ.epi.radar,{d:Math.round(nd)}):T.radarAll):ecNear&&nd>60?D.ECHOT.radar:!near?T.radarAll:nd<60?fill(T.hot,{d:Math.round(nd)}):nd<150?fill(T.warm,{d:Math.round(nd)}):fill(T.near,{d:Math.round(nd)});
-  open=open.concat(ec);var here=open.filter(inRange)[0];if(here&&arrived!==here&&$("#sheet").hidden){arrived=here;sel=here;buzz([80,60,80]);beep(660,.2)}if(!here)arrived=null;
-  chip();if(el%10===0)save()}
-function chip(){var c=$("#chip");if(!sel||sel.done){c.hidden=true;return}c.hidden=false;var epi=sel===G.epi,ech=!!sel.echo,f=epi||ech?null:G.c.frags[sel.fi],d=dTo(sel),ok=inRange(sel);
-  $("#cName").textContent=epi?PZ.epi.name:ech?D.ECHOT.name:sel.name;$("#cDist").textContent=Math.round(d)+" m";$("#cHint").textContent=epi?fill(PZ.epi.chip,vars(G.c)):ech?D.ECHOT.chip:f.k==="wit"?fill(T.wit,{p:sel.persona}):T.here;
-  var b=$("#cAct");b.hidden=false;if(ok)b.textContent=epi?PZ.epi.act:ech?D.ECHOT.act:T.look;else if(G.mode==="demo")b.textContent=T.walk;else if(d<150)b.textContent=T.gps;else b.hidden=true}
-$("#cAct").onclick=function(){if(!sel)return;if(inRange(sel)){if(sel===G.epi)epilogue();else if(sel.echo)echoPuzzle(sel);else encounter(sel)}else if(G.mode==="demo"){walkTo={x:sel.x,y:sel.y};map.follow()}else if(dTo(sel)<150){G.force=sel;encounter(sel)}};
+  var inn=G.mode==="in",RT=inn?IN:T,u=inn?num(Math.ceil(nd/G.in.sl)):Math.round(nd);
+  $("#radar").textContent=G.won?(near?epiRadar():T.radarAll):ecNear&&nd>60?D.ECHOT.radar:!near?T.radarAll:nd<60?fill(RT.hot,{d:u}):nd<150?fill(RT.warm,{d:u}):fill(RT.near,{d:u});
+  open=open.concat(ec);var here=open.filter(inRange)[0];if(here&&arrived!==here&&$("#sheet").hidden){arrived=here;sel=here;buzz(inn?[200,80,200,80,400]:[80,60,80]);beep(660,.2);if(inn){setTimeout(function(){beep(880,.3)},220);pocket(false)}}if(!here)arrived=null;
+  chip();pocketUi();if(el%10===0)save()}
+function epiRadar(){var d=dTo(G.epi);return G.mode==="in"?fill(IN.epi,{d:num(Math.ceil(d/G.in.sl))}):fill(PZ.epi.radar,{d:Math.round(d)})}
+/* binnen is er altijd een doel: het aangetikte spoor, anders het dichtstbijzijnde */
+function cur(){return sel&&!sel.done?sel:inTarget()}
+function chip(){var c=$("#chip"),s=cur();if(!s||s.done){c.hidden=true;return}c.hidden=false;var inn=G.mode==="in",epi=s===G.epi,ech=!!s.echo,f=epi||ech?null:G.c.frags[s.fi],d=dTo(s),ok=inRange(s);
+  $("#cName").textContent=epi?PZ.epi.name:ech?D.ECHOT.name:s.name;$("#cDist").textContent=inn?(ok?"":num(Math.ceil(d/G.in.sl))+" "+IN.steps):Math.round(d)+" m";
+  var still=inn&&!ok&&G.in.kind==="sensor"&&Date.now()-Math.max(St.last(),inT0)>20000;
+  $("#cHint").textContent=inn&&!ok?(G.in.pause?IN.paused:still?IN.still:IN.going):epi?fill(PZ.epi.chip,vars(G.c)):ech?D.ECHOT.chip:f.k==="wit"?fill(T.wit,{p:s.persona}):T.here;
+  var b=$("#cAct");b.hidden=false;if(ok)b.textContent=epi?PZ.epi.act:ech?D.ECHOT.act:T.look;else if(inn)b.textContent=G.in.kind==="sensor"?IN.pocket:G.in.pause?IN.resume:IN.pause;else if(G.mode==="demo")b.textContent=T.walk;else if(d<150)b.textContent=T.gps;else b.hidden=true}
+$("#cAct").onclick=function(){var s=cur();if(!s)return;if(inRange(s)){sel=s;if(s===G.epi)epilogue();else if(s.echo)echoPuzzle(s);else encounter(s)}
+  else if(G.mode==="in"){if(G.in.kind==="sensor")pocket(true);else{G.in.pause=!G.in.pause;chip()}}
+  else if(G.mode==="demo"){walkTo={x:s.x,y:s.y};map.follow()}else if(dTo(s)<150){G.force=s;encounter(s)}};
 $("#zIn").onclick=function(){map.zoom(1.4)};$("#zOut").onclick=function(){map.zoom(1/1.4)};$("#zMe").onclick=function(){map.follow()};
 function sndUi(){$("#zS").style.opacity=Wk.sound()?1:.4;$("#zS").setAttribute("aria-pressed",Wk.sound()?"true":"false")}sndUi();
 $("#zS").onclick=function(){Wk.sound(!Wk.sound());sndUi()};
-$("#zM").onclick=menuSheet;$("#bNote").onclick=function(){noteSheet("route")};$("#bPeople").onclick=function(){noteSheet("people")};$("#bAcc").onclick=function(){if(G.won)return toast(fill(PZ.epi.radar,{d:Math.round(dTo(G.epi))}));verdictSheet()};
+$("#zM").onclick=menuSheet;$("#bNote").onclick=function(){noteSheet("route")};$("#bPeople").onclick=function(){noteSheet("people")};$("#bAcc").onclick=function(){if(G.won)return toast(epiRadar());verdictSheet()};
 
 /* ---------- spoor openen: puzzel per soort, camera voor camerabeelden ---------- */
 var KCOL={open:"#d9404f",cam:"#efe6d8",msg:"#efe6d8",wit:"#f0a850",obj:"#f0a850",time:"#b9c4d6"},MAPFONT="600 11px 'Cinzel',Georgia,serif";
@@ -347,8 +423,9 @@ function verdictSheet(){var v=vars(G.c),ps=null,pw=null;
     else if(b.dataset.w){pw=+b.dataset.w;$$("#vW .sus").forEach(function(x){x.classList.toggle("pick",x===b)})}
     else if(b.id==="vGo"){if(ps==null||pw==null){$("#vMsg").textContent=T.vNeed;return}G.tries++;save();
       if(ps===G.c.S&&pw===G.c.K)win();else{$("#vMsg").textContent=T.wrong+(G.tries>1?" "+T.wrongTries:"");buzz(150);beep(180,.25)}}}}
-function win(){var c=G.c,v=vars(c),min=(Date.now()-G.t0)/60000,s2=G.tries===1,s3=min<=G.par,stars=1+(s2?1:0)+(s3?1:0),xp=100+stars*50,km=G.dist/1000;
-  var a=MW.profile.award({game:ID,xp:xp,stars:stars,gps:G.mode==="gps",min:min,km:km,title:c.M.n,code:G.code});
+function win(){var c=G.c,v=vars(c),min=(Date.now()-G.t0)/60000,s2=G.tries===1,s3=min<=G.par,stars=1+(s2?1:0)+(s3?1:0),xp=100+stars*50,inn=G.mode==="in",km=inn?G.in.steps*.00075:G.dist/1000;
+  // binnen gelopen zaken tellen mee voor de dagstreak, net als buiten; alleen de proefronde niet
+  var a=MW.profile.award({game:ID,xp:xp,stars:stars,gps:G.mode!=="demo",min:min,km:Math.round(km*10)/10,title:c.M.n,code:G.code});
   if(G.daily){var p=MW.profile.get();p.games.td.day=MW.today();MW.profile.save(p)}
   G.won={stars:stars,min:min};buzz([100,50,100,50,300]);beep(660,.2);setTimeout(function(){beep(990,.4)},200);
   // laatste plek: 120–220 m verderop, liefst op een straat
@@ -357,15 +434,15 @@ function win(){var c=G.c,v=vars(c),min=(Date.now()-G.t0)/60000,s2=G.tries===1,s3
   G.epi={x:Math.round(best?best[0]:ex),y:Math.round(best?best[1]:ey),done:false};save();
   var E=D.END[c.S],st=a.prof.streak;
   sheet(ph(MPH[c.S])+'<div class="eyebrow">'+T.won+' · '+esc(G.code)+'</div><div class="crest">'+med(c.con[c.K].ic,"lg")+med(D.MOTIF[c.S],"lg mo")+'</div><div class="stars ctr">'+"★".repeat(stars)+"☆".repeat(3-stars)+'</div><h2 class="ctr">'+esc(c.con[c.K].name)+'<br><span class="script">'+esc(T.scn[c.S][0])+'</span></h2><div class="orn"></div><p class="letter">'+esc(fill(E[0],v))+'</p>'+
-    '<div class="tags"><i>'+Math.round(min)+' min</i><i>'+km.toFixed(1).replace(".",L==="nl"?",":".")+' km</i><i>'+fill(T.pts,{x:xp})+'</i>'+(G.mode==="gps"?'<i>'+fill(st===1?T.streakTxt:T.streakTxtP,{n:st})+'</i>':'')+'</div>'+
+    '<div class="tags"><i>'+Math.round(min)+' min</i><i>'+(inn?num(G.in.steps)+' '+IN.steps:km.toFixed(1).replace(".",L==="nl"?",":".")+' km')+'</i><i>'+fill(T.pts,{x:xp})+'</i>'+(G.mode!=="demo"?'<i>'+fill(st===1?T.streakTxt:T.streakTxtP,{n:st})+'</i>':'')+'</div>'+
     (a.up?'<p><b>'+esc(fill(T.up,{r:MW.profile.rankName(a.prof.xp,L)}))+'</b></p>':'')+(!s2?'<p class="note">'+T.missed1+'</p>':'')+(!s3?'<p class="note">'+fill(T.missed2,{m:G.par})+'</p>':'')+
     '<button type="button" class="btn" id="vEpi">'+PZ.epi.btn+'</button><button type="button" class="btn ghost dk" id="vShare">'+T.share+'</button><button type="button" class="btn ghost dk" id="vHome">'+PZ.epi.home+'</button>',true);
   var code=G.code,stxt="★".repeat(stars),mm=Math.round(min);
   $("#vShare").onclick=function(){var url=location.origin+location.pathname+"#z="+code,txt=fill(T.shareTxt,{c:code,s:stxt,m:mm})+" "+url;
     if(navigator.share){navigator.share({text:txt}).catch(function(){})}else{try{navigator.clipboard.writeText(txt);toast(T.copied)}catch(e){prompt("",txt)}}};
-  $("#vEpi").onclick=function(){closeSheet();sel=null;chip();toast(fill(PZ.epi.radar,{d:Math.round(dTo(G.epi))}))};
+  $("#vEpi").onclick=function(){closeSheet();sel=null;chip();toast(epiRadar())};
   $("#vHome").onclick=function(){closeSheet();endCase()}}
-function endCase(){LS.del(GK);LS.del(WK);Wk.stopWatch();G=null;home()}
+function endCase(){LS.del(GK);LS.del(WK);Wk.stopWatch();stopSteps();G=null;home()}
 function epilogue(){var c=G.c,v=vars(c),E=D.END[c.S];G.epi.done=true;mg.stop();buzz([100,50,300]);beep(660,.2);setTimeout(function(){beep(990,.4)},200);
   MW.profile.award({game:ID,xp:50,solved:false,gps:false});
   sheet('<div class="eyebrow">'+esc(PZ.epi.h)+' · '+esc(c.M.n)+'</div><div class="crest"><canvas class="figc" id="figc" width="240" height="240"></canvas></div><h2 class="ctr">'+esc(PZ.epi.name)+'</h2><div class="orn"></div><p class="letter hers">'+esc(fill(E[1],v))+'</p><p class="note">'+esc(PZ.epi.bonus)+'</p><button type="button" class="btn" id="vHome">'+PZ.epi.home+'</button>',true);
@@ -373,19 +450,19 @@ function epilogue(){var c=G.c,v=vars(c),E=D.END[c.S];G.epi.done=true;mg.stop();b
   $("#vHome").onclick=function(){closeSheet();endCase()}}
 /* ---------- zaakcode, archief, menu, wissen ---------- */
 function codeSheet(pre){sheet('<h2>'+T.dH+'</h2><p>'+T.dT+'</p><input class="inp" id="dCode" autocomplete="off" autocapitalize="characters" spellcheck="false" value="'+esc(pre||"")+'"><button type="button" class="btn" id="dOk">'+T.dGo+'</button><p class="note" id="dMsg" style="color:#a5392c"></p><button type="button" class="btn ghost dk" id="shX">'+T.cancel+'</button>');
-  var go=function(){var p=parseCode($("#dCode").value);if(!p){$("#dMsg").textContent=T.dBad;buzz(120);return}if(MW.pro.locked(ID)){proSheet();return}closeSheet();setLen(p.short);startGps(p.seed,false)};
-  $("#shX").onclick=closeSheet;$("#dOk").onclick=go;$("#dCode").onkeydown=function(e){if(e.key==="Enter")go()}}
+  var ok=function(){var p=parseCode($("#dCode").value);if(!p){$("#dMsg").textContent=T.dBad;buzz(120);return}if(MW.pro.locked(ID)){proSheet();return}closeSheet();setLen(p.short);go(p.seed,false)};
+  $("#shX").onclick=closeSheet;$("#dOk").onclick=ok;$("#dCode").onkeydown=function(e){if(e.key==="Enter")ok()}}
 function archSheet(){var g=MW.profile.get().games.td,log=(g&&g.log)||[],st=function(k){return"★".repeat(k||0)+"☆".repeat(3-(k||0))};
   sheet('<h2>'+T.aH+'</h2><div class="list">'+(log.map(function(x){return '<button type="button" class="sus" data-c="'+esc(x.c)+'"><b>'+esc(x.t)+'</b><small>'+esc(String(x.d).split("-").reverse().join("-"))+' · '+x.m+' min · '+String(x.km).replace(".",L==="nl"?",":".")+' km</small><div class="tags"><i>'+st(x.st)+'</i><i>'+esc(x.c)+'</i></div></button>'}).join("")||'<p class="note">'+T.aNone+'</p>')+'</div>'+(log.length?'<p class="note">'+T.aTip+'</p>':'')+'<button type="button" class="btn ghost dk" id="shX">'+T.back+'</button>');
   $("#sheetBody").onclick=function(e){if(e.target.id==="shX"){closeSheet();return}var r=e.target.closest("[data-c]");if(r)codeSheet(r.dataset.c)}}
 function confirmSheet(title,text,yes,fn){sheet('<h2>'+title+'</h2><p>'+text+'</p><button type="button" class="btn red" id="cfY">'+yes+'</button><button type="button" class="btn ghost dk" id="shX">'+T.cancel+'</button>');$("#shX").onclick=closeSheet;$("#cfY").onclick=fn}
-function leavePlay(){if(AR.on)AR.stop();mg.stop();save();Wk.stopWatch();G=null;home()}
-function wipeGame(){LS.del(GK);LS.del(WK);Wk.stopWatch();G=null;closeSheet();home();toast(T.wiped)}
-function menuSheet(){sheet('<h2>'+T.menu+'</h2><button type="button" class="btn" id="mBack">'+T.mMap+'</button><button type="button" class="btn ghost dk" id="mHome">'+T.mHome+'</button><button type="button" class="btn ghost dk" id="mWipe">'+T.mWipe+'</button>');
-  $("#sheetBody").onclick=function(e){var i=e.target.id;if(i==="mBack")closeSheet();else if(i==="mHome"){closeSheet();leavePlay();toast(T.saved)}else if(i==="mWipe")confirmSheet(T.wipeQ,T.wipeT,T.wipeY,wipeGame)}}
+function leavePlay(){if(AR.on)AR.stop();mg.stop();save();Wk.stopWatch();stopSteps();G=null;home()}
+function wipeGame(){LS.del(GK);LS.del(WK);Wk.stopWatch();stopSteps();G=null;closeSheet();home();toast(T.wiped)}
+function menuSheet(){sheet('<h2>'+T.menu+'</h2><button type="button" class="btn" id="mBack">'+T.mMap+'</button>'+(G.mode==="in"?'<button type="button" class="btn ghost dk" id="mIn">'+esc(IN.menu)+'</button>':'')+'<button type="button" class="btn ghost dk" id="mHome">'+T.mHome+'</button><button type="button" class="btn ghost dk" id="mWipe">'+T.mWipe+'</button>');
+  $("#sheetBody").onclick=function(e){var i=e.target.id;if(i==="mBack")closeSheet();else if(i==="mIn")inSheet(function(kind,spm){if(!G||G.mode!=="in")return;G.in.kind=kind;G.in.spm=spm;INK={kind:kind,spm:spm};save();startSteps()});else if(i==="mHome"){closeSheet();leavePlay();toast(T.saved)}else if(i==="mWipe")confirmSheet(T.wipeQ,T.wipeT,T.wipeY,wipeGame)}}
 function wipeSheet(){var has=!!LS.get(GK,null);sheet('<h2>'+T.wipe+'</h2>'+(has?'<button type="button" class="btn ghost dk" id="wG">'+T.wipeY+'</button>':'')+'<button type="button" class="btn ghost dk" id="wA">'+T.wipeAll+'</button><button type="button" class="btn" id="shX">'+T.cancel+'</button>');
   $("#sheetBody").onclick=function(e){var i=e.target.id;if(i==="shX")closeSheet();else if(i==="wG")confirmSheet(T.wipeQ,T.wipeT,T.wipeY,wipeGame);else if(i==="wA")confirmSheet(T.allQ,T.allT,T.allY,function(){LS.del(GK);LS.del(WK);MW.profile.wipe();closeSheet();home();toast(T.wiped)})}}
-function goBack(){if(AR.on){$("#arX").click();return true}if(!$("#sheet").hidden){var k=$("#mgSkip");if(k)k.click();else if($("#sheet").dataset.lock){var x=$("#shX")||$("#vHome");if(x)x.click()}else closeSheet();return true}
+function goBack(){if(PK)return true;if(AR.on){$("#arX").click();return true}if(!$("#sheet").hidden){var k=$("#mgSkip");if(k)k.click();else if($("#sheet").dataset.lock){var x=$("#shX")||$("#vHome");if(x)x.click()}else closeSheet();return true}
   if(!$("#load").hidden)return true;if(!$("#brief").hidden){G=null;home();return true}if(!$("#play").hidden){leavePlay();toast(T.saved);return true}return false}
 try{history.pushState({td:1},"");addEventListener("popstate",function(){if(goBack()){try{history.pushState({td:1},"")}catch(e){}}})}catch(e){}
 
@@ -409,5 +486,5 @@ hero();
 home();MW.pro.ready.then(function(){if(!$("#home").hidden&&$("#sheet").hidden&&!G)home()});
 var HZ=(location.hash||"").match(/z=([A-Za-z0-9-]+)/);if(HZ)codeSheet(HZ[1]);
 if(typeof module!=="undefined")module.exports={genCase:genCase,solve:solve};
-window.TD={genCase:genCase,solve:solve,state:function(){return G},test:{reveal:function(s){s.done=true;reveal(s)},epilogue:epilogue}};
+window.TD={genCase:genCase,solve:solve,state:function(){return G},test:{reveal:function(s){s.done=true;reveal(s)},epilogue:epilogue,step:stepIn,pos:function(){return P}}};
 })();

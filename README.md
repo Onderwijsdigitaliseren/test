@@ -19,6 +19,7 @@ Statische site voor GitHub Pages, geen build-stap. Zelfde bestanden op murderwal
 /games/vanishing/            game.js (logica, taalonafhankelijk) · data-nl.js · data-en.js · game.css · hero.webp (sfeerfoto, uitsnede zonder titel; eigen sfeer, figuren en rode routelijn)
 /shared/platform.js          gedeelde laag: Pro, groepspas, codes.json, profiel (rang/punten/streak), taal, instellingen (SS_PRO)
 /shared/walk.js              wandelmotor voor nieuwe spellen: OpenStreetMap/Overpass, plekken kiezen, nachtkaart, gps, oefenwereld, vellen/geluid
+/shared/steps.js             binnen-stand: stappen tellen met de bewegingssensor (devicemotion) of lopen op tempo, scherm aan houden. Nu in gebruik bij games/bride (keuze Buiten/Binnen op het startscherm, G.mode "in", teksten in D.IN); de keuze staat in `ss_where`
 /shared/catalog.js           catalogus (categorieën + spellen) voor beide hubs
 /shared/platform.css         gedeelde stijl   · /shared/hub.css + hub.js  hub
 /codes.json  /codes.html     één codelijst voor het hele platform (codes.html staat op noindex en in robots.txt op Disallow)

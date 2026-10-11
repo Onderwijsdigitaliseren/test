@@ -262,3 +262,17 @@ input[type=range]{width:100%;accent-color:var(--blood)}
 .ph{display:block;width:100%;height:clamp(150px,27vh,230px);object-fit:cover;object-position:50% 45%;border-radius:3px;background:#0b0e13;box-shadow:0 0 0 1.5px #f0a850,0 0 0 5px var(--paper),0 0 0 6px var(--gold2),0 6px 18px rgba(0,0,0,.35);margin:8px 0 6px;flex-shrink:0}
 #brief .ph{height:clamp(140px,22vh,200px);object-position:50% 30%;margin:6px 0 14px}
 .mth{width:46px;height:46px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 1.5px #f0a850,0 0 0 4px var(--paper),0 0 0 5px var(--gold2)}
+
+/* ---------- binnen-stand: keuze buiten/binnen, keuzeknoppen met ondertitel, zakstand ---------- */
+#inNote{text-align:center;margin:-2px 0 2px}
+.btn.two b{display:block;font-weight:600}
+.btn.two small{display:block;margin-top:3px;font-family:var(--f-type);font-style:italic;font-weight:500;font-size:15px;letter-spacing:0;text-transform:none;opacity:.85}
+#pocket{position:absolute;inset:0;z-index:9;background:#000;color:#efe6d8;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:24px;text-align:center;touch-action:none;user-select:none;-webkit-user-select:none}
+#pocket[hidden]{display:none}
+#pocket small{font-family:var(--f-cond);font-weight:600;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#f3c98f}
+#pocket b{font-family:var(--f-type);font-style:italic;font-weight:600;font-size:76px;line-height:1;font-variant-numeric:lining-nums tabular-nums}
+#pocket span{font-family:var(--f-cond);font-weight:600;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#7d8898}
+#pocket p{font-style:italic;font-size:17px;color:#7d8898;margin:18px 0 22px;max-width:280px}
+#pocket .btn.hold{max-width:300px;background:#12161d;color:#efe6d8;border:1px solid rgba(240,168,80,.45)}
+#pocket .btn.hold span{color:#efe6d8;font-size:14px;mix-blend-mode:normal}
+#cDist{white-space:nowrap}

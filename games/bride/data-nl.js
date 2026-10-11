@@ -4,6 +4,56 @@
    CONTACTS 4e element en CT.x.ic / MOTIF: naam van het pictogram (zie IC in game.js). */
 window.TD_DATA={
  "lang": "nl",
+ "IN": {
+  "short": "Kort · 2.000 stappen",
+  "full": "Volledig · 4.000 stappen",
+  "tag": "binnen",
+  "how": [
+   "De kaart legt acht sporen op plekken in je buurt: de route die de bruid liep op de avond voor haar bruiloft. Jij loopt hem binnen na.",
+   "Elke stap brengt je dichter bij een spoor. Ben je er, dan gaat het open: een brief, een bericht, een getuige, en soms staat zij er zelf nog."
+  ],
+  "h": "Hoe loop je?",
+  "t": "Je loopt de kaart af op je eigen stappen: door het huis, op kantoor of op de loopband. Laat deze pagina open; het scherm blijft vanzelf aan.",
+  "sensor": "Telefoon in je hand of zak",
+  "sensorS": "Telt je echte stappen",
+  "tempo": "Telefoon staat stil",
+  "tempoS": "Loopband of hometrainer: de zaak loopt op jouw tempo",
+  "tempoH": "Kies je tempo",
+  "tempoT": "De zaak loopt mee in dit tempo. Pauzeren kan onderweg altijd.",
+  "tempos": [
+   [
+    "Wandelen",
+    100
+   ],
+   [
+    "Stevig doorlopen",
+    120
+   ],
+   [
+    "Joggen",
+    150
+   ]
+  ],
+  "perMin": "{n} stappen per minuut",
+  "noSensor": "Dit toestel geeft geen beweging door. De zaak loopt nu op tempo.",
+  "noLoc": "Geen kaart van je buurt beschikbaar. Je loopt deze zaak in fictief Londen.",
+  "tip": "Loop maar. Elke stap brengt je dichter bij het spoor.",
+  "hud": "Stappen",
+  "steps": "stappen",
+  "hot": "Heet. Nog {d} stappen",
+  "warm": "Warm. Nog {d} stappen",
+  "near": "Dichtstbijzijnde spoor: {d} stappen",
+  "epi": "Loop naar de laatste plek: {d} stappen",
+  "going": "Je loopt hierheen. Tik een ander spoor aan om van route te wisselen.",
+  "still": "Ik meet geen stappen. Staat je telefoon stil? Kies in het menu voor lopen op tempo.",
+  "paused": "Gepauzeerd. De zaak wacht op je.",
+  "pause": "Pauze",
+  "resume": "Loop verder",
+  "pocket": "Zakstand",
+  "pocketT": "Scherm op slot. Je telefoon geeft een seintje als je er bent.",
+  "unlock": "Houd vast om te ontgrendelen",
+  "menu": "Manier van lopen wijzigen"
+ },
  "T": {
   "title": "Tot de Dood Ons Scheidt",
   "eyebrow": "Ze zou vandaag trouwen",

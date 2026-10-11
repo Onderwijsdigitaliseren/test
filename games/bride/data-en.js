@@ -4,6 +4,56 @@
    CONTACTS 4th element and CT.x.ic / MOTIF: icon name (see IC in game.js). */
 window.TD_DATA={
  "lang": "en",
+ "IN": {
+  "short": "Short · 2,000 steps",
+  "full": "Full · 4,000 steps",
+  "tag": "indoors",
+  "how": [
+   "The map lays eight traces on places in your neighbourhood: the route the bride walked on the evening before her wedding. You retrace it indoors.",
+   "Every step brings you closer to a trace. When you get there it opens: a letter, a message, a witness, and sometimes she is still standing there herself."
+  ],
+  "h": "How will you walk?",
+  "t": "You walk the map on your own steps: around the house, at the office or on the treadmill. Keep this page open; the screen stays on by itself.",
+  "sensor": "Phone in your hand or pocket",
+  "sensorS": "Counts your real steps",
+  "tempo": "Phone stands still",
+  "tempoS": "Treadmill or exercise bike: the case moves at your pace",
+  "tempoH": "Choose your pace",
+  "tempoT": "The case moves along at this pace. You can pause at any time.",
+  "tempos": [
+   [
+    "Walking",
+    100
+   ],
+   [
+    "Brisk walk",
+    120
+   ],
+   [
+    "Jogging",
+    150
+   ]
+  ],
+  "perMin": "{n} steps per minute",
+  "noSensor": "This device does not share its motion. The case now moves at a set pace.",
+  "noLoc": "No map of your neighbourhood available. You walk this case in a fictional London.",
+  "tip": "Start walking. Every step brings you closer to the trace.",
+  "hud": "Steps",
+  "steps": "steps",
+  "hot": "Hot. {d} steps to go",
+  "warm": "Warm. {d} steps to go",
+  "near": "Nearest trace: {d} steps",
+  "epi": "Walk to the last place: {d} steps",
+  "going": "You are walking here. Tap another trace to change your route.",
+  "still": "I am not measuring any steps. Is your phone standing still? Choose a set pace in the menu.",
+  "paused": "Paused. The case is waiting for you.",
+  "pause": "Pause",
+  "resume": "Walk on",
+  "pocket": "Pocket mode",
+  "pocketT": "Screen locked. Your phone signals when you arrive.",
+  "unlock": "Hold to unlock",
+  "menu": "Change how you walk"
+ },
  "T": {
   "title": "Till Death Do Us Part",
   "eyebrow": "She was to be married today",
