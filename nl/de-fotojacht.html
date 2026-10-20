@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>De Fotojacht – een moordzaak zonder kaart, met je camera</title>
-<meta name="description" content="Geen kaart, geen gps. De dader liet sporen achter op herkenbare plekken: een rode deur, een bankje, een prullenbak. Zoek ze, fotografeer ze en lees wat daar lag. Vijf verdachten, vier getuigen, één leugenaar. Ook binnen te spelen. Eerste zaak gratis.">
+<meta name="description" content="Geen kaart, geen gps. De dader liet sporen achter op herkenbare plekken: een bankje, een brievenbus, een putdeksel. Zoek ze, fotografeer ze en lees wat daar lag. Vijf verdachten, vier getuigen, één leugenaar. Ook binnen te spelen. Eerste zaak gratis.">
 <link rel="canonical" href="https://moordwandeling.nl/nl/de-fotojacht.html">
 <link rel="alternate" hreflang="en" href="https://murderwalk.com/the-photo-hunt.html">
 <link rel="alternate" hreflang="nl" href="https://moordwandeling.nl/nl/de-fotojacht.html">
@@ -19,8 +19,8 @@
 <meta name="theme-color" content="#141b26">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600&family=Caveat:wght@600&display=swap">
 <link rel="stylesheet" href="../shared/platform.css?v=1">
-<link rel="stylesheet" href="../games/fotojacht/game.css?v=1">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"De Fotojacht","url":"https://moordwandeling.nl/nl/de-fotojacht.html","description":"Geen kaart, geen gps. De dader liet sporen achter op herkenbare plekken: een rode deur, een bankje, een prullenbak. Zoek ze, fotografeer ze en lees wat daar lag. Vijf verdachten, vier getuigen, één leugenaar. Ook binnen te spelen. Eerste zaak gratis.","inLanguage":"nl","gamePlatform":"Webbrowser","genre":["Detective","Moordzaak","Fotospel"],"isAccessibleForFree":true,"offers":{"@type":"Offer","price":"3.99","priceCurrency":"EUR","description":"Pro"}}</script>
+<link rel="stylesheet" href="../games/fotojacht/game.css?v=2">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"De Fotojacht","url":"https://moordwandeling.nl/nl/de-fotojacht.html","description":"Geen kaart, geen gps. De dader liet sporen achter op herkenbare plekken: een bankje, een brievenbus, een putdeksel. Zoek ze, fotografeer ze en lees wat daar lag. Vijf verdachten, vier getuigen, één leugenaar. Ook binnen te spelen. Eerste zaak gratis.","inLanguage":"nl","gamePlatform":"Webbrowser","genre":["Detective","Moordzaak","Fotospel"],"isAccessibleForFree":true,"offers":{"@type":"Offer","price":"3.99","priceCurrency":"EUR","description":"Pro"}}</script>
 </head>
 <body>
 <div id="app">
@@ -30,8 +30,8 @@
       <div class="row0"><div class="pills"><a class="pill" id="hub" href="./">◂ Alle wandelingen</a><button type="button" class="pill" id="lang">English</button></div></div>
       <div class="gap"></div>
       <div class="masthead"><div class="brand">Moordwandeling · Moordzaak</div><h1 id="ttl">De Fotojacht</h1><span class="tape">geen kaart. jouw camera is het bewijs.</span></div>
-      <p class="lead">De dader liep vannacht door deze buurt en liet dingen achter. Niet op een plek, maar op een sóórt plek: een rode deur, een bankje, een prullenbak. Zoek ze. Fotografeer ze. Lees wat daar lag.</p>
-      <ul class="tasks"><li>Acht foto-opdrachten, overal te doen.</li><li>Vijf verdachten, vier getuigen, één leugenaar.</li><li>Aan het eind: jouw bewijsstrook, om te delen.</li></ul>
+      <p class="lead">De dader liep vannacht door deze buurt en liet dingen achter. Niet op een plek, maar op een sóórt plek: een bankje, een brievenbus, een putdeksel. Zoek ze. Fotografeer ze. Lees wat daar lag.</p>
+      <ul class="tasks"><li>Acht foto-opdrachten, overal te doen. De telefoon kijkt mee.</li><li>Vijf verdachten, vier getuigen, één leugenaar.</li><li>Aan het eind: jouw bewijsstrook, om te delen.</li></ul>
       <div class="pline"><b id="pRank">–</b><span><b id="pStreak">0</b> Dagen op rij</span><span><b id="pSolved">0</b> Opgelost</span></div>
       <div hidden><div class="xp"><i id="pXp" style="width:0%"></i></div><p class="note" id="pNext"></p></div>
       <div class="seg" id="len">
@@ -44,7 +44,7 @@
       <button class="btn ghost" id="bCode">Zaakcode invoeren</button>
       <button class="btn ghost" id="bPro" hidden></button>
       <p class="note" id="status"></p>
-      <ol class="how"><li>Je krijgt geen locatie maar een opdracht: “Fotografeer een rode voordeur.” Welke, dat bepaal jij. Het werkt in elke straat, en in elk huis.</li><li>Zodra de foto is gemaakt, verschijnt wat de dader daar achterliet, of wat een getuige daar zag. Bewijs is altijd waar; van de getuigen liegt er één.</li><li>Na acht foto's wijs je de dader aan én de leugenaar. Je foto's worden één bewijsstrook.</li></ol>
+      <ol class="how"><li>Je krijgt geen locatie maar een opdracht: “Fotografeer een brievenbus.” Welke, dat bepaal jij. Het werkt in elke straat, en in elk huis. Je telefoon herkent zelf wat er op de foto staat; een foto van iets anders telt niet.</li><li>Zodra de foto is gemaakt, verschijnt wat de dader daar achterliet, of wat een getuige daar zag. Bewijs is altijd waar; van de getuigen liegt er één.</li><li>Na acht foto's wijs je de dader aan én de leugenaar. Je foto's worden één bewijsstrook.</li></ol>
       <button class="btn ghost" id="bArch">Archief</button>
       <button class="btn ghost sm" id="bWipe">Wissen</button>
       <p class="note">De foto's blijven op je telefoon en worden nergens heen gestuurd. Buiten: blijf op de openbare weg, fotografeer geen mensen.</p>
@@ -87,8 +87,10 @@
   <div id="toast" hidden></div>
 </div>
 <script src="../shared/platform.js?v=1"></script>
-<script src="../shared/catalog.js?v=8"></script>
-<script src="../games/fotojacht/data-nl.js?v=1"></script>
-<script src="../games/fotojacht/game.js?v=1"></script>
+<script src="../shared/catalog.js?v=9"></script>
+<script src="../shared/ort/ort.wasm.min.js?v=1"></script>
+<script src="../games/fotojacht/model/labels.js?v=1"></script>
+<script src="../games/fotojacht/data-nl.js?v=2"></script>
+<script src="../games/fotojacht/game.js?v=2"></script>
 </body>
 </html>

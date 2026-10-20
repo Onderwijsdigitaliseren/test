@@ -39,6 +39,7 @@ body{background:var(--night)}
 .pol .ph{display:grid;place-items:center;color:var(--lamp);background:radial-gradient(circle at 50% 40%,#2f3d4d,#161c26 70%)}
 .pol .ph .big{width:46%;height:46%;filter:drop-shadow(0 0 14px rgba(240,166,58,.45))}
 .pol .cap{font-family:var(--f-hand);font-size:22px;line-height:1.1;color:#2b2a2a;text-align:center;padding:4px 0 2px}
+.pol .seen{font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.1em;font-size:11px;color:#6a6250;text-align:center;margin-top:-6px}
 .pol.done{transform:none;width:100%}
 .pol.done .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
 .pol.done .grid img{aspect-ratio:1/1}

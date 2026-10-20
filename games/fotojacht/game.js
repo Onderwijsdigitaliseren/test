@@ -45,7 +45,7 @@ function genCase(seed,mode){
       return{name:w[0],who:w[1],k:k,v:v,lie:i===Li,t:pick(D.WIT[k])}});
     // acht opdrachten en de volgorde: bewijs, getuige, bewijs, getuige, bewijs, getuige, tijd, getuige
     var list=shuffle(mode==="in"?D.IN:D.OUT,r).slice(0,8),order=["e0","w0","e1","w1","e2","w2","t","w3"];
-    var tm=22*60+5+Math.floor(r()*70),slots=order.map(function(o,i){var task=list[i],s={id:task[0],what:task[1],h1:task[2],h2:task[3],lead:task[4]};
+    var tm=22*60+5+Math.floor(r()*70),slots=order.map(function(o,i){var task=list[i],s={id:task[0],what:task[1],h1:task[2],h2:task[3],lead:task[4],cls:task[5]||[]};
       if(o==="t"){s.kind="time";s.t=fill(pick(D.TIME),{t:fmt(tm)})}
       else if(o[0]==="e"){var e=ev[+o[1]];s.kind="ev";s.k=e.k;s.v=e.v;s.t=pick(D.EV[e.k][e.v])}
       else{s.kind="wit";s.w=+o[1]}
@@ -96,7 +96,7 @@ $("#bBack").onclick=function(){G=null;home()};
 function save(){if(G)LS.set(GK,G)}
 
 /* ---------- de jacht ---------- */
-function enter(){show("play");render()}
+function enter(){show("play");render();mlWarm()}
 function hud(){if(!G)return;$("#hT").textContent=mmss(Date.now()-G.t0);$("#hS").textContent=G.ph.length+"/8";$("#hG").textContent=G.ph.filter(function(p,i){return G.c.slots[i].kind==="wit"}).length+"/4"}
 function render(){hud();var i=G.i,box=$("#card");
   if(i>=8){box.innerHTML='<div class="pol done"><div class="grid">'+G.ph.map(function(p,j){return '<img src="'+p+'" alt="">'}).join("")+'</div><p class="cap">'+esc(T.hud.n)+' 8/8</p></div><button type="button" class="btn red" id="bAcc">'+T.accuse+'</button>';$("#bAcc").onclick=accuseSheet;return}
@@ -104,23 +104,57 @@ function render(){hud();var i=G.i,box=$("#card");
   if(G.shown){ // de foto is gemaakt: laat zien wat hier lag
     var body=s.kind==="wit"?'<p class="lead2">'+esc(s.lead)+'</p><div class="wit"><em>'+esc(T.wit)+' · '+esc(cap(G.c.wits[s.w].name))+' '+esc(T.says)+'</em><p>“'+esc(witText(G.c.wits[s.w]))+'”</p></div>'
       :'<p class="lead2">'+esc(s.lead)+'</p><div class="ev"><em>'+esc(T.found)+'</em><p>'+esc(s.t)+'</p></div>';
-    box.innerHTML='<div class="pol"><img src="'+G.ph[i]+'" alt=""><p class="cap">'+esc(s.what)+'</p></div>'+body+'<button type="button" class="btn" id="bNext">'+(i===7?T.accuse:T.next)+'</button>';
-    $("#bNext").onclick=function(){G.i++;G.shown=false;save();buzz(40);render();if(G.i>=8)accuseSheet()};return}
+    box.innerHTML='<div class="pol"><img src="'+G.ph[i]+'" alt=""><p class="cap">'+esc(s.what)+'</p>'+(G.seen2?'<p class="seen">'+esc(G.seen2)+'</p>':'')+'</div>'+body+'<button type="button" class="btn" id="bNext">'+(i===7?T.accuse:T.next)+'</button>';
+    $("#bNext").onclick=function(){G.i++;G.shown=false;G.miss=0;save();buzz(40);render();if(G.i>=8)accuseSheet()};return}
   box.innerHTML='<div class="pol empty"><div class="ph">'+ico(s.id,"big")+'</div><p class="cap">'+esc(T.task.replace("{i}",i+1))+'</p></div>'+
     '<div class="task"><em>'+esc(T.find)+'</em><h2>'+esc(cap(s.what))+'</h2><p class="hint" id="hint">'+esc(s.h1)+'</p><button type="button" class="btn ghost sm" id="bHint">'+T.hint2+'</button></div>'+
-    '<label class="btn cam" for="file">📷 '+T.shoot+'</label><p class="note" id="pMsg"></p><p class="note">'+esc(T.camNote)+'</p>';
+    '<label class="btn cam" for="file">📷 '+T.shoot+'</label><p class="note" id="pMsg"></p><p class="note" id="mlSt"></p><p class="note">'+esc(T.camNote)+'</p>';
   $("#bHint").onclick=function(){$("#hint").textContent=s.h2;this.hidden=true;G.seen[i]=1;save()};
   if(G.seen[i]){$("#hint").textContent=s.h2;$("#bHint").hidden=true}}
 
-/* foto: alleen net gemaakt en niet pikzwart; kleine kopie bewaren */
+/* ---------- beeldherkenning: MobileNetV2 (ImageNet, int8) in de browser via onnxruntime-web, alles vanaf de eigen site ----------
+   Elke opdracht heeft een lijst ImageNet-klassen die tellen. De foto wordt vierkant uitgesneden, naar 224×224 geschaald en genormaliseerd;
+   de kans van de best passende klasse of de som van de passende klassen moet hoog genoeg zijn. De foto zelf verlaat de telefoon niet. */
+var ML={sess:null,busy:null,dead:false};
+function mlLoad(){if(ML.sess)return Promise.resolve(ML.sess);if(ML.busy)return ML.busy;if(ML.dead||!window.ort)return Promise.reject("noml");
+  try{ort.env.wasm.wasmPaths=new URL(MW.root+"shared/ort/",location.href).href;ort.env.wasm.numThreads=1}catch(e){}
+  ML.busy=ort.InferenceSession.create(MW.root+"games/fotojacht/model/mobilenetv2.onnx",{executionProviders:["wasm"]}).then(function(x){ML.sess=x;ML.busy=null;return x},function(e){ML.dead=true;ML.busy=null;throw e});
+  return ML.busy}
+/* classify(img) → {p(i), top:[{i,p}×5]} na softmax */
+function classify(im){return mlLoad().then(function(sess){
+  var N=224,cv=document.createElement("canvas");cv.width=cv.height=N;var g=cv.getContext("2d"),w=im.naturalWidth||im.width,h=im.naturalHeight||im.height,sq=Math.min(w,h);
+  g.drawImage(im,(w-sq)/2,(h-sq)/2,sq,sq,0,0,N,N);
+  var d=g.getImageData(0,0,N,N).data,f=new Float32Array(3*N*N),M=[.485,.456,.406],S=[.229,.224,.225];
+  for(var i=0;i<N*N;i++)for(var c=0;c<3;c++)f[c*N*N+i]=(d[i*4+c]/255-M[c])/S[c];
+  var feed={};feed[sess.inputNames[0]]=new ort.Tensor("float32",f,[1,3,N,N]);
+  return sess.run(feed).then(function(out){var o=out[sess.outputNames[0]].data,mx=-1e9,i;for(i=0;i<o.length;i++)if(o[i]>mx)mx=o[i];
+    var e=new Float64Array(o.length),sum=0;for(i=0;i<o.length;i++){e[i]=Math.exp(o[i]-mx);sum+=e[i]}
+    var idx=[];for(i=0;i<o.length;i++)idx.push(i);idx.sort(function(a,b){return e[b]-e[a]});
+    return{p:function(k){return e[k]/sum},top:idx.slice(0,5).map(function(k){return{i:k,p:e[k]/sum}})}})})}
+function mlLabel(i){var l=window.FJ_LABELS;return (D.LBL&&D.LBL[i])||(l&&l[i])||("#"+i)}
+/* mlMatch(res,cls) → past het gezochte op de foto? */
+function mlMatch(res,cls){var best=0,sum=0;cls.forEach(function(k){var p=res.p(k);sum+=p;if(p>best)best=p});return{best:best,sum:sum,ok:best>=.10||sum>=.18}}
+
+/* foto: alleen net gemaakt en niet pikzwart; dan herkennen; kleine kopie bewaren */
 $("#file").addEventListener("change",function(){var f=this.files&&this.files[0];this.value="";if(!f||!G)return;var msg=$("#pMsg");if(!msg)return;msg.textContent=T.checking;
   if(f.lastModified&&Math.abs(Date.now()-f.lastModified)>5*60000){msg.textContent=T.tooOld;buzz(120);return}
   var url=URL.createObjectURL(f),im=new Image();im.onload=function(){URL.revokeObjectURL(url);
     var w=im.naturalWidth,h=im.naturalHeight,sc=Math.min(1,360/Math.max(w,h)),cv=document.createElement("canvas");cv.width=Math.round(w*sc);cv.height=Math.round(h*sc);var g=cv.getContext("2d");g.drawImage(im,0,0,cv.width,cv.height);
     var d=g.getImageData(0,0,cv.width,cv.height).data,sum=0,n=0;for(var i=0;i<d.length;i+=16){sum+=d[i]*.3+d[i+1]*.59+d[i+2]*.11;n++}
     if(sum/n<14){msg.textContent=T.tooDark;buzz(120);return}
-    G.ph[G.i]=cv.toDataURL("image/jpeg",.7);G.shown=true;save();buzz([40,30,80]);beep(520,.15);render()};
+    var thumb=cv.toDataURL("image/jpeg",.7),s=G.c.slots[G.i],accept=function(seen){G.ph[G.i]=thumb;G.shown=true;G.seen2=seen||"";save();buzz([40,30,80]);beep(520,.15);render()};
+    if(!s.cls||!s.cls.length)return accept();
+    msg.textContent=T.mlCheck;
+    classify(im).then(function(res){var m=mlMatch(res,s.cls),top=res.top[0];
+      if(m.ok)return accept(fill(T.mlYes,{x:mlLabel(top.i)}));
+      G.miss=(G.miss||0)+1;save();buzz(120);beep(180,.2);
+      msg.textContent=fill(T.mlNo,{x:mlLabel(top.i),w:s.what});
+      if(G.miss>=3&&!$("#bSkip")){var b=document.createElement("button");b.type="button";b.id="bSkip";b.className="btn ghost sm";b.textContent=T.mlSkip;msg.parentNode.insertBefore(b,msg.nextSibling);
+        b.onclick=function(){G.skips=(G.skips||0)+1;G.miss=0;toast(T.mlSkipped);accept()}}
+    },function(){msg.textContent=T.mlFail;accept()})};
   im.onerror=function(){URL.revokeObjectURL(url);msg.textContent=T.noFile};im.src=url});
+/* bij het begin van de jacht alvast laden, zodat de eerste foto niet hoeft te wachten */
+function mlWarm(){if(ML.sess||ML.dead)return;var st=$("#mlSt");if(st)st.textContent=T.mlLoad;mlLoad().then(function(){var e=$("#mlSt");if(e)e.textContent=T.mlOk;setTimeout(function(){var e=$("#mlSt");if(e&&e.textContent===T.mlOk)e.textContent=""},2500)},function(){var e=$("#mlSt");if(e)e.textContent=T.mlFail})}
 
 /* ---------- notitieboek, verdachten, menu ---------- */
 function noteSheet(){var ev=[],wi=[];G.c.slots.forEach(function(s,i){if(i>=G.i&&!(i===G.i&&G.shown))return;
@@ -142,7 +176,7 @@ function accuseSheet(){var c=G.c,ps=null,pw=null;
     else if(b.dataset.w){pw=+b.dataset.w;$$("#vW .sus").forEach(function(x){x.classList.toggle("pick",x===b)})}
     else if(b.id==="vGo"){if(ps==null||pw==null){$("#vMsg").textContent=T.acNeed;return}G.tries++;save();
       if(ps===c.K&&pw===c.Li)win();else{$("#vMsg").textContent=T.wrong+(G.tries>1?" "+T.wrongTries:"");buzz(150);beep(180,.25)}}}}
-function win(){var c=G.c,min=(Date.now()-G.t0)/60000,s2=G.tries===1,s3=min<=G.par,stars=1+(s2?1:0)+(s3?1:0),xp=100+stars*50;
+function win(){var c=G.c,min=(Date.now()-G.t0)/60000,s2=G.tries===1&&!G.skips,s3=min<=G.par,stars=1+(s2?1:0)+(s3?1:0),xp=100+stars*50;
   var a=MW.profile.award({game:ID,xp:xp,stars:stars,gps:G.mode==="out",min:min,km:0,title:c.V,code:G.code});
   if(G.daily){var p=MW.profile.get();p.games.fj.day=MW.today();MW.profile.save(p)}
   buzz([100,50,100,50,300]);beep(660,.2);setTimeout(function(){beep(990,.4)},200);
@@ -196,7 +230,7 @@ try{history.pushState({fj:1},"");addEventListener("popstate",function(){if(goBac
 function hero(){var cv=$("#hero");if(!cv)return;var g=cv.getContext("2d"),still=matchMedia("(prefers-reduced-motion: reduce)").matches,w,h,drops=[],dpr=1;
   function rs(){dpr=Math.min(2,devicePixelRatio||1);w=cv.clientWidth;h=cv.clientHeight;cv.width=w*dpr;cv.height=h*dpr;drops=[];for(var i=0;i<(still?0:90);i++)drops.push([Math.random()*w,Math.random()*h,8+Math.random()*14,.3+Math.random()*.5])}
   rs();addEventListener("resize",rs);
-  function f(){if($("#home").hidden){requestAnimationFrame(f);return}g.setTransform(dpr,0,0,dpr,0,0);g.clearRect(0,0,w,h);
+  function f(){g.setTransform(dpr,0,0,dpr,0,0);g.clearRect(0,0,w,h);if($("#home").hidden){requestAnimationFrame(f);return}
     g.strokeStyle="rgba(236,214,180,.15)";g.lineWidth=1;for(var i=0;i<drops.length;i++){var d=drops[i];g.beginPath();g.moveTo(d[0],d[1]);g.lineTo(d[0]-2,d[1]+d[2]);g.stroke();d[1]+=d[2]*d[3]*1.6;d[0]-=.4*d[3];if(d[1]>h){d[1]=-20;d[0]=Math.random()*w}}
     if(!still)requestAnimationFrame(f)}
   requestAnimationFrame(f)}
