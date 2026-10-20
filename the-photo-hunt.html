@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Photo Hunt – a murder case without a map, with your camera</title>
+<meta name="description" content="No map, no GPS. The killer left traces at recognisable places: a red door, a bench, a litter bin. Find them, photograph them and read what was lying there. Five suspects, four witnesses, one liar. Playable indoors too. First case free.">
+<link rel="canonical" href="https://murderwalk.com/the-photo-hunt.html">
+<link rel="alternate" hreflang="en" href="https://murderwalk.com/the-photo-hunt.html">
+<link rel="alternate" hreflang="nl" href="https://moordwandeling.nl/nl/de-fotojacht.html">
+<link rel="alternate" hreflang="x-default" href="https://murderwalk.com/the-photo-hunt.html">
+<meta property="og:site_name" content="Murder Walk">
+<meta property="og:title" content="Murder Walk – The Photo Hunt">
+<meta property="og:description" content="No map. Your camera is the evidence. Eight photos, five suspects, one liar.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://murderwalk.com/the-photo-hunt.html">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#141b26">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600&family=Caveat:wght@600&display=swap">
+<link rel="stylesheet" href="shared/platform.css?v=1">
+<link rel="stylesheet" href="games/fotojacht/game.css?v=1">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"The Photo Hunt","url":"https://murderwalk.com/the-photo-hunt.html","description":"No map, no GPS. The killer left traces at recognisable places: a red door, a bench, a litter bin. Find them, photograph them and read what was lying there. Five suspects, four witnesses, one liar. Playable indoors too. First case free.","inLanguage":"en","gamePlatform":"Web browser","genre":["Detective","Murder mystery","Photo game"],"isAccessibleForFree":true,"offers":{"@type":"Offer","price":"3.99","priceCurrency":"EUR","description":"Pro"}}</script>
+</head>
+<body>
+<div id="app">
+  <canvas id="hero" aria-hidden="true"></canvas>
+  <section class="screen" id="home">
+    <div class="wrap">
+      <div class="row0"><div class="pills"><a class="pill" id="hub" href="./">◂ All walks</a><button type="button" class="pill" id="lang">Nederlands</button></div></div>
+      <div class="gap"></div>
+      <div class="masthead"><div class="brand">Murder Walk · Murder case</div><h1 id="ttl">The Photo Hunt</h1><span class="tape">no map. your camera is the evidence.</span></div>
+      <p class="lead">The killer walked through this neighbourhood last night and left things behind. Not at a place, but at a kind of place: a red door, a bench, a litter bin. Find them. Photograph them. Read what was lying there.</p>
+      <ul class="tasks"><li>Eight photo tasks, doable anywhere.</li><li>Five suspects, four witnesses, one liar.</li><li>At the end: your evidence strip, to share.</li></ul>
+      <div class="pline"><b id="pRank">–</b><span><b id="pStreak">0</b> Day streak</span><span><b id="pSolved">0</b> Solved</span></div>
+      <div hidden><div class="xp"><i id="pXp" style="width:0%"></i></div><p class="note" id="pNext"></p></div>
+      <div class="seg" id="len">
+        <button type="button" data-m="out" aria-pressed="true">Outdoors · the street</button>
+        <button type="button" data-m="in" aria-pressed="false">Indoors · the house</button>
+      </div>
+      <button class="btn" id="bResume" hidden>Continue your case</button>
+      <button class="btn" id="bGps">Start today's case</button>
+      <button class="btn ghost" id="bRandom">Extra case</button>
+      <button class="btn ghost" id="bCode">Enter case code</button>
+      <button class="btn ghost" id="bPro" hidden></button>
+      <p class="note" id="status"></p>
+      <ol class="how"><li>You get no location but a task: “Photograph a red front door.” Which one is up to you. It works in any street, and in any house.</li><li>Once the photo is taken, you see what the killer left there, or what a witness saw. Evidence is always true; one of the witnesses lies.</li><li>After eight photos you name the killer and the liar. Your photos become one evidence strip.</li></ol>
+      <button class="btn ghost" id="bArch">Archive</button>
+      <button class="btn ghost sm" id="bWipe">Wipe</button>
+      <p class="note">Your photos stay on your phone and are never sent anywhere. Outdoors: stay on public roads, don't photograph people.</p>
+    </div>
+  </section>
+
+  <section class="screen" id="brief" hidden>
+    <div class="wrap">
+      <div class="paper">
+        <div class="eyebrow" id="bfNo"></div>
+        <h2 id="bfTitle"></h2><span class="stamp2" id="bfSub"></span>
+        <p id="bfText"></p>
+        <div class="eyebrow">Five suspects</div>
+        <div class="list" id="bfSus"></div>
+        <div class="eyebrow">Four witnesses</div>
+        <div class="list" id="bfWit"></div>
+      </div>
+      <button class="btn" id="bGo">Pick up the camera</button>
+      <button class="btn ghost" id="bBack">Back</button>
+    </div>
+  </section>
+
+  <section class="screen" id="play" hidden>
+    <div id="hud">
+      <div><b id="hT">0:00</b><span>Time</span></div>
+      <div><b id="hS">0/8</b><span>Photos</span></div>
+      <div><b id="hG">0/4</b><span>Witnesses</span></div>
+      <button type="button" id="zM" aria-label="Menu">☰</button>
+    </div>
+    <div id="card"></div>
+    <input type="file" id="file" accept="image/*" capture="environment" aria-label="Take the photo">
+    <div id="bar">
+      <button type="button" id="bNote">Notebook</button>
+      <button type="button" id="bPeople">Suspects</button>
+      <button type="button" id="bAcc2" class="red">Killer</button>
+    </div>
+  </section>
+
+  <div class="sheet" id="sheet" hidden><div class="paper" id="sheetBody"></div></div>
+  <div id="toast" hidden></div>
+</div>
+<script src="shared/platform.js?v=1"></script>
+<script src="shared/catalog.js?v=8"></script>
+<script src="games/fotojacht/data-en.js?v=1"></script>
+<script src="games/fotojacht/game.js?v=1"></script>
+</body>
+</html>

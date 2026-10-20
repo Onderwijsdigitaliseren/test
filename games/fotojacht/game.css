@@ -1,0 +1,61 @@
+/* De Fotojacht / The Photo Hunt – eigen sfeer: bewolkte avond, natte straat, lantaarnlicht, polaroids.
+   Bovenop platform.css. Kleuren: amber lantaarn, teal nat asfalt, crème polaroidrand. */
+:root{--night:#141b26;--night2:#1c2534;--street:#34435a;--fog:#aab4c6;--lamp:#f0a63a;--paper:#f3ede0;--paper2:#e9e1d0;--rule:#cfc4ad;--teal:#2d5d6b;--f-hand:'Caveat',cursive}
+body{background:var(--night)}
+#app{min-height:100%;position:relative}
+.screen{min-height:100vh;min-height:100dvh;padding:12px 0 calc(28px + env(safe-area-inset-bottom,0px));position:relative}
+.gap{height:400px}
+/* ---- start: moodfoto ---- */
+#home{background:linear-gradient(180deg,rgba(14,16,22,.55) 0,rgba(14,16,22,0) 70px,rgba(14,16,22,0) 400px,rgba(14,16,22,.88) 540px,var(--night) 640px),url("hero.webp") center 0/auto 820px no-repeat,var(--night)}
+@media (min-width:600px){#home{background:linear-gradient(90deg,var(--night) 0%,rgba(14,16,22,0) 28%,rgba(14,16,22,0) 72%,var(--night) 100%),linear-gradient(180deg,rgba(14,16,22,.55) 0,rgba(14,16,22,0) 70px,rgba(14,16,22,0) 400px,rgba(14,16,22,.88) 540px,var(--night) 640px),url("hero.webp") center 0/auto 820px no-repeat,var(--night)}}
+#home::after{content:"";position:fixed;inset:0;pointer-events:none;box-shadow:inset 0 0 110px rgba(0,0,0,.75)}
+#hero{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:0;pointer-events:none}
+#home .wrap{position:relative;z-index:1}
+.masthead{text-align:center;display:flex;flex-direction:column;gap:10px;align-items:center}
+.masthead .brand{display:flex;align-items:center;gap:12px;width:100%;font-family:var(--f-cond);letter-spacing:.42em;font-size:12px;color:#d8d0c2;text-transform:uppercase}
+.masthead .brand::before,.masthead .brand::after{content:"";flex:1;height:1px;background:rgba(221,213,198,.45)}
+#ttl{font-size:clamp(44px,13vw,64px);color:#f6efe2;text-shadow:0 2px 0 #3a2a10,0 0 18px rgba(240,166,58,.55),0 6px 30px rgba(0,0,0,.9)}
+.tape{display:inline-block;background:var(--paper);color:#2b2a2a;font-family:var(--f-hand);font-size:22px;line-height:1.1;padding:6px 16px;transform:rotate(-2deg);box-shadow:0 6px 16px rgba(0,0,0,.45)}
+#home .lead{font-family:var(--f-type);font-size:18px;line-height:1.55;color:#f1e9dc;text-align:center;max-width:none;text-shadow:0 1px 8px #000}
+.tasks{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px;color:#e3d9c8;font-size:15px;text-align:center;text-shadow:0 1px 6px #000}
+.pline{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;justify-content:center;font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.1em;font-size:12px;color:var(--fog);padding:8px 0;border-top:1px solid rgba(221,213,198,.2);border-bottom:1px solid rgba(221,213,198,.2)}
+.pline b{font-family:var(--f-type);font-weight:400;font-size:15px;color:var(--lamp);text-transform:none;letter-spacing:0}
+.seg button[aria-pressed="true"]{background:rgba(240,166,58,.12)}
+.how{color:#d9d2c4}
+/* ---- dossier ---- */
+#brief .paper{box-shadow:0 18px 40px rgba(0,0,0,.6);background:var(--paper) linear-gradient(0deg,rgba(0,0,0,.03),rgba(0,0,0,0) 40%)}
+.stamp2{display:inline-block;font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.14em;font-size:12px;color:#8a2a22;border:2px solid #8a2a22;padding:3px 8px;transform:rotate(-2deg);opacity:.85}
+.paper .sus{background:rgba(255,255,255,.35)}
+/* ---- de jacht ---- */
+#play{display:flex;flex-direction:column;padding:0;min-height:100vh;min-height:100dvh}
+#hud{display:grid;grid-template-columns:repeat(3,1fr) 48px;gap:1px;background:var(--street);border-bottom:1px solid var(--street);position:sticky;top:0;z-index:5;padding-top:env(safe-area-inset-top,0px)}
+#hud div{background:#0f141d;padding:8px 6px;text-align:center}
+#hud b{display:block;font-family:var(--f-type);font-weight:400;font-size:19px;color:var(--lamp);font-variant-numeric:tabular-nums}
+#hud span{font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.1em;font-size:10px;color:var(--fog)}
+#hud button{background:#0f141d;color:var(--paper);font-size:20px}
+#card{flex:1;max-width:520px;width:100%;margin-inline:auto;padding:18px 16px 24px;display:flex;flex-direction:column;gap:14px}
+.pol{background:var(--paper);padding:14px 14px 10px;box-shadow:0 14px 34px rgba(0,0,0,.55);transform:rotate(-1.2deg);align-self:center;width:min(100%,340px);display:flex;flex-direction:column;gap:8px}
+.pol img,.pol .ph{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;background:#2b2f36}
+.pol .ph{display:grid;place-items:center;color:var(--lamp);background:radial-gradient(circle at 50% 40%,#2f3d4d,#161c26 70%)}
+.pol .ph .big{width:46%;height:46%;filter:drop-shadow(0 0 14px rgba(240,166,58,.45))}
+.pol .cap{font-family:var(--f-hand);font-size:22px;line-height:1.1;color:#2b2a2a;text-align:center;padding:4px 0 2px}
+.pol.done{transform:none;width:100%}
+.pol.done .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.pol.done .grid img{aspect-ratio:1/1}
+.task{display:flex;flex-direction:column;gap:8px;text-align:center}
+.task em{font-style:normal;font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.14em;font-size:12px;color:var(--fog)}
+.task h2{font-size:26px;color:var(--lamp)}
+.task .hint{color:#dcd4c6;font-family:var(--f-type);font-size:15px;line-height:1.5}
+.btn.cam{font-size:19px;padding:16px;box-shadow:0 8px 24px rgba(240,166,58,.35)}
+#file{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.lead2{font-family:var(--f-type);color:#dcd4c6;text-align:center}
+.ev,.wit{background:var(--paper);color:#1b2233;padding:12px 14px;border-left:4px solid var(--lamp);display:flex;flex-direction:column;gap:4px}
+.wit{border-left-color:var(--teal);font-family:var(--f-type)}
+.ev em,.wit em{font-style:normal;font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.1em;font-size:12px;color:#6a6250}
+#bar{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--street);border-top:1px solid var(--street);position:sticky;bottom:0;z-index:5;padding-bottom:env(safe-area-inset-bottom,0px)}
+#bar button{background:#0f141d;color:var(--paper);padding:14px 6px;font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.1em;font-size:13px}
+#bar button.red{color:#f0a63a}
+/* ---- vellen ---- */
+.sheet>.paper{background:var(--paper)}
+.sus.pick{border-color:#8a2a22;box-shadow:inset 0 0 0 1px #8a2a22}
+#toast{background:var(--lamp)}
