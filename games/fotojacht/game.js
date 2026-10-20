@@ -221,7 +221,7 @@ function confirmSheet(title,text,yes,fn){sheet('<h2>'+title+'</h2><p>'+text+'</p
 function leavePlay(){save();G=null;home()}
 function wipeGame(){LS.del(GK);G=null;closeSheet();home();toast(T.wiped)}
 function wipeSheet(){var has=!!LS.get(GK,null);sheet('<h2>'+T.wipe+'</h2>'+(has?'<button type="button" class="btn ghost dk" id="wG">'+T.wipeY+'</button>':'')+'<button type="button" class="btn ghost dk" id="wA">'+T.wipeAll+'</button><button type="button" class="btn" id="shX">'+T.cancel+'</button>');
-  $("#sheetBody").onclick=function(e){var i=e.target.id;if(i==="shX")closeSheet();else if(i==="wG")confirmSheet(T.wipeQ,T.wipeT,T.wipeY,wipeGame);else if(i==="wA")confirmSheet(T.allQ,T.allT,T.allY,function(){LS.del(GK);MW.profile.wipe();closeSheet();home();toast(T.wiped)})}}
+  $("#sheetBody").onclick=function(e){var i=e.target.id;if(i==="shX")closeSheet();else if(i==="wG")confirmSheet(T.wipeQ,T.wipeT,T.wipeY,wipeGame);else if(i==="wA")confirmSheet(T.allQ,T.allT,T.allY,function(){LS.del(GK);MW.profile.wipe();if(/github\.io$/.test(location.hostname))LS.del(MW.pro.freeKey(ID));/* alleen op de testsite: gratis zaak ook terugzetten */closeSheet();home();toast(T.wiped)})}}
 function goBack(){if(!$("#sheet").hidden){if($("#sheet").dataset.lock){var x=$("#vHome")||$("#shX");if(x)x.click()}else closeSheet();return true}
   if(!$("#brief").hidden){G=null;home();return true}if(!$("#play").hidden){leavePlay();toast(T.saved);return true}return false}
 try{history.pushState({fj:1},"");addEventListener("popstate",function(){if(goBack()){try{history.pushState({fj:1},"")}catch(e){}}})}catch(e){}
