@@ -21,6 +21,8 @@ T:{today:"Start today's swap",todayAgain:"Another swap today",extra:"Extra swap"
   dH:"Swap code",dT:"Enter the code from another phone. Then you play the same swap.",dGo:"Start this swap",dBad:"That code is not right. A swap code starts with DR.",
   aH:"Magpies caught",aNone:"No Magpie caught yet.",aTip:"Tap a swap to play it again.",
   wipe:"Wipe",wipeY:"Wipe this swap",wipeAll:"Wipe everything (rank and points too)",wipeQ:"Wipe this swap?",wipeT:"The photos and the swap book of this swap will be gone.",allQ:"Really wipe everything?",allT:"Rank, points, days in a row and caught Magpies will be gone. Pro stays.",allY:"Yes, wipe everything",
+  dipBtn:"Detective diploma (PDF)",dipH:"Detective diploma",dipT:"Who was in the team? Names separated by commas. May be empty.",dipP:"Team names",dipGo:"Make the diploma",dipPdf:"Download as PDF",dipImg:"Share as image",dipNote:"A4, for printing. The photos stay on this phone.",
+  dipTitle:"DETECTIVE DIPLOMA",dipL1:"Murder Walk Bureau hereby declares that",dipL2:"{J}'s team",dipL2b:"this team",dipL3:"has caught The Magpie.",dipL4:"It was {K}, {KR}. With {KJ}, on {KW}, with {KD}.",dipDate:"{d} · {m} minutes · {s}",dipTeam:"The team",dipSign:"The Magpie (reluctantly)",dipFoot:"murderwalk.com · The Swap · swap code {c}",
   stripT:"SWAP {c}",stripSub:"murderwalk.com · The Swap",
   modeMap:"Outside · with map",modeStreet:"Outside · no map",modeIn:"Indoors",
   loc:"Where are you? The Magpie is looking for places nearby…",pois:"The Magpie picks eight swap points…",nomap:"No places found nearby. Play without the map.",noGps:"This phone does not share its location. Play without the map.",denied:"Location is off. Turn it on or play without the map.",fail:"That didn't work",

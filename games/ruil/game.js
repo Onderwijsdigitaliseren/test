@@ -224,8 +224,10 @@ function win(){var c=G.c,min=(Date.now()-G.t0)/60000,s2=G.tries===1&&!G.skips,s3
     '<canvas id="strip" width="1080" height="1350" class="stripc"></canvas>'+
     '<div class="tags"><i>'+Math.round(min)+' min</i><i>'+fill(T.pts,{x:xp})+'</i>'+(G.mode==="map"?'<i>'+fill(st===1?T.streakTxt:T.streakTxtP,{n:st})+'</i>':'')+'</div>'+
     (a.up?'<p><b>'+esc(fill(T.up,{r:MW.profile.rankName(a.prof.xp,L)}))+'</b></p>':'')+(!s2?'<p class="note">'+T.missed1+'</p>':'')+(!s3?'<p class="note">'+fill(T.missed2,{m:G.par})+'</p>':'')+
-    '<button type="button" class="btn" id="vShare">'+T.shareBtn+'</button><button type="button" class="btn ghost dk" id="vDl">'+T.dl+'</button><button type="button" class="btn ghost dk" id="vHome">'+T.home+'</button>',true);
+    '<button type="button" class="btn" id="vDip">'+T.dipBtn+'</button><button type="button" class="btn ghost dk" id="vShare">'+T.shareBtn+'</button><button type="button" class="btn ghost dk" id="vDl">'+T.dl+'</button><button type="button" class="btn ghost dk" id="vHome">'+T.home+'</button>',true);
   var cv=$("#strip");drawStrip(cv,ph,code,stars,Math.round(min));
+  RES={ph:ph,code:code,stars:stars,min:Math.round(min),v:vars(),slots:G.c.slots.slice()};
+  $("#vDip").onclick=dipSheet;
   var txt=fill(T.shareTxt,{c:code,s:"★".repeat(stars),m:Math.round(min)})+location.origin+location.pathname+"#z="+code;
   $("#vShare").onclick=function(){cv.toBlob(function(b){var f=b&&new File([b],"ruil-"+code+".jpg",{type:"image/jpeg"});
       if(f&&navigator.canShare&&navigator.canShare({files:[f]})){navigator.share({files:[f],text:txt}).catch(function(){})}
@@ -249,6 +251,75 @@ function drawStrip(cv,ph,code,stars,min){var g=cv.getContext("2d"),W2=cv.width,H
   ph.forEach(function(src,i){var im=new Image();im.onload=im.onerror=function(){IMG[i]=im.width?im:null;if(--left===0)draw()};im.src=src});
   try{document.fonts.load("700 30px 'Permanent Marker'").then(function(){if(!left)draw()})}catch(e){}}
 function endCase(){LS.del(GK);G=null;home()}
+
+/* ---------- speurdersdiploma: A4 op canvas, als PDF (zelf geschreven, één JPEG-pagina) of als afbeelding ---------- */
+var RES=null,TEAM=LS.get("ss_dr_team","");
+function dipSheet(){if(!RES)return;
+  sheet('<h2>'+T.dipH+'</h2><p>'+T.dipT+'</p><input class="inp team" id="dTeam" autocomplete="off" maxlength="120" placeholder="'+esc(T.dipP)+'" value="'+esc(TEAM)+'"><button type="button" class="btn" id="dGo">'+T.dipGo+'</button><button type="button" class="btn ghost dk" id="shX">'+T.back+'</button>',true);
+  $("#shX").onclick=function(){closeSheet();winBack()};
+  $("#dGo").onclick=function(){TEAM=$("#dTeam").value.trim();LS.set("ss_dr_team",TEAM);dipShow()}}
+function winBack(){var r=RES;sheet('<div class="eyebrow">'+T.won+' · '+esc(r.code)+'</div><h2>'+esc(r.v.K)+'</h2><button type="button" class="btn" id="vDip">'+T.dipBtn+'</button><button type="button" class="btn ghost dk" id="vHome">'+T.home+'</button>',true);
+  $("#vDip").onclick=dipSheet;$("#vHome").onclick=function(){closeSheet();endCase()}}
+function dipShow(){var r=RES;
+  sheet('<div class="eyebrow">'+T.dipH+'</div><canvas id="dip" width="1240" height="1754" class="stripc a4"></canvas><p class="note">'+T.dipNote+'</p><button type="button" class="btn" id="dPdf">'+T.dipPdf+'</button><button type="button" class="btn ghost dk" id="dImg">'+T.dipImg+'</button><button type="button" class="btn ghost dk" id="vHome">'+T.home+'</button>',true);
+  var cv=$("#dip");drawDiploma(cv,r,TEAM);
+  $("#dPdf").onclick=function(){var jpg=cv.toDataURL("image/jpeg",.9),blob=pdfFromJpeg(jpg,cv.width,cv.height),u=URL.createObjectURL(blob),a=document.createElement("a");a.href=u;a.download=(L==="nl"?"speurdersdiploma-":"detective-diploma-")+r.code+".pdf";document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},4000)};
+  $("#dImg").onclick=function(){cv.toBlob(function(b){var f=b&&new File([b],"diploma-"+r.code+".jpg",{type:"image/jpeg"});
+      if(f&&navigator.canShare&&navigator.canShare({files:[f]})){navigator.share({files:[f]}).catch(function(){})}else{var a=document.createElement("a");a.href=cv.toDataURL("image/jpeg",.9);a.download="diploma-"+r.code+".jpg";document.body.appendChild(a);a.click();a.remove()}},"image/jpeg",.9)};
+  $("#vHome").onclick=function(){closeSheet();endCase()}}
+function drawDiploma(cv,r,team){var g=cv.getContext("2d"),W2=cv.width,H=cv.height,rr=rngOf(r.code.length*7919+r.min),v=r.v;
+  var dateStr=new Date().toLocaleDateString(L==="nl"?"nl-NL":"en-GB",{day:"numeric",month:"long",year:"numeric"});
+  var groups=[],places=[];r.slots.forEach(function(s,i){if(!r.ph[i])return;(s.id==="groep"?groups:places).push({src:r.ph[i],cap:s.what})});
+  var IMG={},list=groups.concat(places),left=list.length;
+  var polaroid=function(src,x,y,pw,phh,cap,rot,font){var imgH=phh-pw*.34;g.save();g.translate(x+pw/2,y+phh/2);g.rotate(rot);g.translate(-pw/2,-phh/2);
+    g.shadowColor="rgba(0,0,0,.28)";g.shadowBlur=18;g.shadowOffsetY=8;g.fillStyle="#fff";g.fillRect(0,0,pw,phh);g.shadowColor="transparent";
+    var im=IMG[src];if(im){var pad=pw*.06,iw=pw-2*pad,s=Math.max(iw/im.width,imgH/im.height),w=im.width*s,h=im.height*s;g.save();g.beginPath();g.rect(pad,pad,iw,imgH);g.clip();g.drawImage(im,pad+(iw-w)/2,pad+(imgH-h)/2,w,h);g.restore()}
+    g.fillStyle="#2b2340";g.font=font;g.textAlign="center";g.fillText(cap,pw/2,phh-pw*.1,pw-20);g.restore()};
+  var draw=function(){
+    g.fillStyle="#fff8ee";g.fillRect(0,0,W2,H);
+    // confettirand
+    for(var i=0;i<220;i++){var e=Math.floor(rr()*4),t=rr(),x,y;if(e===0){x=rr()*W2;y=30+rr()*70}else if(e===1){x=rr()*W2;y=H-100+rr()*70}else if(e===2){x=30+rr()*70;y=rr()*H}else{x=W2-100+rr()*70;y=rr()*H}
+      g.fillStyle=["#d4ff3a","#ff4fa3","#f0b429","#7fb2ff","#1a1433"][i%5];g.save();g.translate(x,y);g.rotate(rr()*6.3);g.globalAlpha=.8;g.fillRect(-9,-4,18,8);g.restore()}
+    g.strokeStyle="#1a1433";g.lineWidth=6;g.strokeRect(70,70,W2-140,H-140);g.strokeStyle="#ff4fa3";g.lineWidth=3;g.strokeRect(86,86,W2-172,H-172);
+    g.textAlign="center";
+    g.fillStyle="#1a1433";g.font="700 92px 'Fredoka','Arial Rounded MT Bold',sans-serif";g.fillText(T.dipTitle,W2/2,220);
+    g.fillStyle="#ff4fa3";g.font="600 26px 'Fredoka',sans-serif";g.fillText((L==="nl"?"MOORDWANDELING · KINDERFEESTJE":"MURDER WALK · KIDS' PARTY").split("").join(String.fromCharCode(8202)),W2/2,268);
+    g.fillStyle="#2b2340";g.font="500 34px 'Barlow','Segoe UI',sans-serif";g.fillText(T.dipL1,W2/2,350);
+    g.fillStyle="#1a1433";g.font="700 64px 'Fredoka',sans-serif";g.fillText(v.J?fill(T.dipL2,{J:v.J}):T.dipL2b,W2/2,428,W2-240);
+    g.fillStyle="#2b2340";g.font="500 34px 'Barlow',sans-serif";g.fillText(T.dipL3,W2/2,486);
+    // groepsfoto's groot
+    var n=groups.length,pw=n>=3?300:360,phh=pw*1.25,gap=30,tot=n*pw+(n-1)*gap,x0=(W2-tot)/2,y0=540;
+    groups.forEach(function(p,i){polaroid(p.src,x0+i*(pw+gap),y0+(i%2?14:0),pw,phh,p.cap,((i*7919)%9-4)*.02,"700 22px 'Permanent Marker','Comic Sans MS',cursive")});
+    var y=y0+phh+70;
+    // wie het was
+    g.fillStyle="#2b2340";g.font="italic 500 28px 'Barlow',sans-serif";g.fillText(fill(T.dipL4,v),W2/2,y,W2-220);y+=44;
+    g.fillStyle="#6e6386";g.font="500 26px 'Barlow',sans-serif";g.fillText(fill(T.dipDate,{d:dateStr,m:r.min,s:"★".repeat(r.stars)+"☆".repeat(3-r.stars)}),W2/2,y);y+=60;
+    // team
+    if(team){g.fillStyle="#ff4fa3";g.font="600 22px 'Fredoka',sans-serif";g.fillText(T.dipTeam.toUpperCase(),W2/2,y);y+=46;
+      var names=team.split(/[,;]+/).map(function(s){return s.trim()}).filter(Boolean),line="",lines=[];g.font="700 36px 'Permanent Marker','Comic Sans MS',cursive";
+      names.forEach(function(nm){var t=line?line+"  ·  "+nm:nm;if(g.measureText(t).width>W2-260&&line){lines.push(line);line=nm}else line=t});if(line)lines.push(line);
+      g.fillStyle="#1a1433";lines.slice(0,3).forEach(function(l){g.fillText(l,W2/2,y);y+=46});y+=14}
+    // plekfoto's klein
+    var m=places.length;if(m){var sw=Math.min(170,(W2-240-(m-1)*16)/m),sh=sw*1.25,sx=(W2-(m*sw+(m-1)*16))/2;places.forEach(function(p,i){polaroid(p.src,sx+i*(sw+16),y+(i%2?8:0),sw,sh,p.cap,((i*104729)%9-4)*.02,"600 14px 'Permanent Marker',cursive")});y+=sh+60}
+    // handtekening van De Kraai
+    var sy=Math.max(y+20,H-260);g.strokeStyle="#1a1433";g.lineWidth=2;g.beginPath();g.moveTo(W2/2-200,sy);g.lineTo(W2/2+200,sy);g.stroke();
+    g.fillStyle="#1a1433";g.font="700 40px 'Permanent Marker',cursive";g.save();g.translate(W2/2,sy-18);g.rotate(-.04);g.fillText(L==="nl"?"De Kraai":"The Magpie",0,0);g.restore();
+    g.fillStyle="#6e6386";g.font="500 22px 'Barlow',sans-serif";g.fillText(T.dipSign,W2/2,sy+36);
+    g.fillStyle="#6e6386";g.font="500 20px 'Fredoka',sans-serif";g.fillText(fill(T.dipFoot,{c:r.code}),W2/2,H-112)};
+  if(!left)return draw();
+  list.forEach(function(p){if(IMG[p.src]!==undefined){if(--left===0)draw();return}IMG[p.src]=null;var im=new Image();im.onload=im.onerror=function(){IMG[p.src]=im.width?im:null;if(--left===0)draw()};im.src=p.src});
+  try{document.fonts.load("700 30px 'Permanent Marker'").then(function(){if(!left)draw()})}catch(e){}}
+/* minimale PDF: één A4-pagina met één JPEG (DCTDecode) over de hele pagina */
+function pdfFromJpeg(dataURL,w,h){var b64=dataURL.split(",")[1],bin=atob(b64),n=bin.length,img=new Uint8Array(n);for(var i=0;i<n;i++)img[i]=bin.charCodeAt(i);
+  var PW=595.28,PH=841.89,enc=function(s){var u=new Uint8Array(s.length);for(var i=0;i<s.length;i++)u[i]=s.charCodeAt(i)&255;return u},parts=[],off=[],pos=0,push=function(u){parts.push(u);pos+=u.length};
+  push(enc("%PDF-1.4\n%\xe2\xe3\xcf\xd3\n"));
+  var objs=["<< /Type /Catalog /Pages 2 0 R >>","<< /Type /Pages /Kids [3 0 R] /Count 1 >>","<< /Type /Page /Parent 2 0 R /MediaBox [0 0 "+PW+" "+PH+"] /Resources << /XObject << /Im1 5 0 R >> >> /Contents 4 0 R >>"];
+  var content="q "+PW+" 0 0 "+PH+" 0 0 cm /Im1 Do Q";objs.push("<< /Length "+content.length+" >>\nstream\n"+content+"\nendstream");
+  objs.forEach(function(o,i){off[i+1]=pos;push(enc((i+1)+" 0 obj\n"+o+"\nendobj\n"))});
+  off[5]=pos;push(enc("5 0 obj\n<< /Type /XObject /Subtype /Image /Width "+w+" /Height "+h+" /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length "+n+" >>\nstream\n"));push(img);push(enc("\nendstream\nendobj\n"));
+  var x=pos,xref="xref\n0 6\n0000000000 65535 f \n";for(i=1;i<=5;i++)xref+=String(off[i]).padStart(10,"0")+" 00000 n \n";
+  push(enc(xref+"trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n"+x+"\n%%EOF\n"));
+  return new Blob(parts,{type:"application/pdf"})}
 
 /* ---------- ruilcode, archief, wissen ---------- */
 function codeSheet(pre){sheet('<h2>'+T.dH+'</h2><p>'+T.dT+'</p><input class="inp" id="dCode" autocomplete="off" autocapitalize="characters" spellcheck="false" value="'+esc(pre||"")+'"><button type="button" class="btn" id="dOk">'+T.dGo+'</button><p class="note err" id="dMsg"></p><button type="button" class="btn ghost dk" id="shX">'+T.cancel+'</button>');

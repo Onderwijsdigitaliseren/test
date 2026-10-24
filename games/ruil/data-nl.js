@@ -23,6 +23,8 @@ T:{today:"Start de ruil van vandaag",todayAgain:"Nog een ruil van vandaag",extra
   dH:"Ruilcode",dT:"Vul de code van een andere telefoon in. Dan spelen jullie dezelfde ruil.",dGo:"Start deze ruil",dBad:"Die code klopt niet. Een ruilcode begint met DR.",
   aH:"Gepakte Kraaien",aNone:"Nog geen Kraai gepakt.",aTip:"Tik op een ruil om hem opnieuw te spelen.",
   wipe:"Wissen",wipeY:"Deze ruil wissen",wipeAll:"Alles wissen (ook rang en punten)",wipeQ:"Deze ruil wissen?",wipeT:"De foto's en het ruilboekje van deze ruil gaan weg.",allQ:"Echt alles wissen?",allT:"Rang, punten, dagen op rij en gepakte Kraaien gaan weg. Pro blijft.",allY:"Ja, wis alles",
+  dipBtn:"Speurdersdiploma (PDF)",dipH:"Speurdersdiploma",dipT:"Wie zaten er in het team? Namen met een komma ertussen. Mag ook leeg.",dipP:"Namen van het team",dipGo:"Maak het diploma",dipPdf:"Download als PDF",dipImg:"Deel als afbeelding",dipNote:"A4, om te printen. De foto's blijven op deze telefoon.",
+  dipTitle:"SPEURDERSDIPLOMA",dipL1:"Bureau Moordwandeling verklaart dat",dipL2:"het team van {J}",dipL2b:"dit team",dipL3:"De Kraai heeft gepakt.",dipL4:"Het was {K}, {KR}. Met {KJ}, op {KW}, met {KD}.",dipDate:"{d} · {m} minuten · {s}",dipTeam:"Het team",dipSign:"De Kraai (met tegenzin)",dipFoot:"moordwandeling.nl · De Ruil · ruilcode {c}",
   stripT:"RUIL {c}",stripSub:"moordwandeling.nl · De Ruil",
   modeMap:"Buiten · met kaart",modeStreet:"Buiten · zonder kaart",modeIn:"Binnen",
   loc:"Waar zijn jullie? De Kraai zoekt plekken in de buurt…",pois:"De Kraai kiest acht ruilpunten…",nomap:"Geen plekken gevonden in de buurt. Speel zonder kaart.",noGps:"Deze telefoon geeft geen locatie door. Speel zonder kaart.",denied:"Locatie staat uit. Zet hem aan of speel zonder kaart.",fail:"Dat lukte niet",

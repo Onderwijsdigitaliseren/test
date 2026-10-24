@@ -115,3 +115,5 @@ h1,h2,h3{font-family:var(--f-type);font-weight:700}
 .stripc{width:100%;height:auto;border-radius:10px;box-shadow:0 10px 24px rgba(0,0,0,.35)}
 .stars{color:var(--sun)}
 #toast{background:var(--lamp);border-radius:14px;font-family:var(--f-type)}
+.stripc.a4{aspect-ratio:1240/1754}
+.inp.team{text-transform:none;letter-spacing:0;font-size:18px;font-family:var(--f-body)}
