@@ -149,6 +149,8 @@ h1,h2,h3{font-family:var(--f-type);font-weight:700}
 @keyframes sir{50%{opacity:.25}}
 .keys{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:min(100%,280px)}
 .key{aspect-ratio:1.4/1;border-radius:14px;background:#1e3a8a;color:#fff;font:700 26px var(--f-type);box-shadow:0 4px 0 #0d2a66}
+.keys.col{grid-template-columns:1fr 1fr}
+.keys.col .key{aspect-ratio:1.6/1;background:var(--c);box-shadow:0 4px 0 rgba(0,0,0,.35);border:3px solid rgba(255,255,255,.5)}
 .key:active{transform:translateY(3px);box-shadow:none}
 .ballwrap{display:flex;flex-direction:column;align-items:center;gap:4px}
 .ballwrap canvas{width:min(100%,320px);height:auto}
