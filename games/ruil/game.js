@@ -10,7 +10,7 @@ var ID="dr",GK="ss_game_dr_"+L,WK="ss_ways_dr_"+L,hashStr=MW.hashStr,rngOf=Wk.rn
 var toast=Wk.toast,sheet=Wk.sheet,closeSheet=Wk.closeSheet,buzz=Wk.buzz,beep=Wk.beep;
 var G=null,tick=0,MODE=LS.get("ss_dr_mode","map"),NAME=LS.get("ss_dr_name","");
 var ATK=["hoofd","rit","dier"],NS=5,ALL=31,ORDER=["e0","w0","e1","w1","e2","w2","g","w3"];
-var W=[],P={x:0,y:0,acc:0},R0=550,map=null,sel=null,arrived=null,lastT=0,cur=null;
+var W=[],P={x:0,y:0,acc:0},R0=550,map=null,sel=null,arrived=null,lastT=0,cur=null,walkTo=null;
 
 /* ---------- hulpjes ---------- */
 function bits(m){var n=0;while(m){n+=m&1;m>>=1}return n}
@@ -44,7 +44,7 @@ function genCase(seed,mode){
     return{sus:sus,K:K,claims:claims,Li:Li,slots:slots,ev:ev}
   }
   return null}
-function makeCode(seed,mode){return"DR"+(mode==="in"?"B":mode==="map"?"K":"S")+seed.toString(36).toUpperCase()}
+function makeCode(seed,mode){return"DR"+(mode==="in"?"B":mode==="map"||mode==="demo"?"K":"S")+seed.toString(36).toUpperCase()}
 function parseCode(v){var c=MW.norm(v);if(!/^DR[KSB]/.test(c)||c.length<4||c.length>11)return null;var seed=parseInt(c.slice(3),36);if(!(seed>=0)||seed>4294967295)return null;return{mode:c[2]==="B"?"in":c[2]==="K"?"map":"street",seed:seed}}
 function vars(){var c=G.c,k=c.sus[c.K];return{K:k.name,KR:k.rel,KJ:D.AT.hoofd.v[k.tr.hoofd],KW:D.AT.rit.v[k.tr.rit],KD:D.AT.dier.v[k.tr.dier],J:NAME,C:cadeau()}}
 function claimText(w){return fill(w.t,{v:D.AT[w.k].v[w.v]})}
@@ -70,6 +70,7 @@ $("#name").addEventListener("input",function(){NAME=this.value.trim().slice(0,24
 $("#bGps").onclick=function(){if(MW.pro.locked(ID))return proSheet();begin(hashStr("dr|"+MODE+"|"+MW.today()),MODE,true)};
 $("#bRandom").onclick=function(){if(MW.pro.locked(ID))return proSheet();begin(Math.floor(Math.random()*4e9),MODE,false)};
 $("#bPro").onclick=proSheet;
+$("#bDemo").onclick=function(){var w=Wk.demoWorld(D.DEMO);build(Math.floor(Math.random()*4e9),"demo",w.pois,w.ways,null,false)};
 $("#bResume").onclick=function(){G=LS.get(GK,null);if(!G)return home();W=LS.get(WK,[]);P={x:G.px||0,y:G.py||0,acc:0};enter()};
 $("#bCode").onclick=function(){codeSheet("")};$("#bArch").onclick=archSheet;$("#bWipe").onclick=wipeSheet;
 $("#lang").onclick=function(){MW.switchLang(ID,L==="nl"?"en":"nl")};
@@ -85,23 +86,23 @@ function fail(m){sheet('<h2>'+T.fail+'</h2><p>'+esc(m)+'</p><button type="button
 function build(seed,mode,pois,ways,origin,daily){
   var c=genCase(seed,mode);if(!c){toast("…");return}
   G={seed:seed,code:makeCode(seed,mode),mode:mode,c:c,i:0,ph:[],t0:0,tries:0,daily:!!daily,par:mode==="in"?35:70,shown:false,seen:[],skips:0,dist:0,origin:origin,px:0,py:0,st:null};
-  if(mode==="map"){var r=rngOf(seed^0x9e3779b9),spots=Wk.pickSpots(pois,ways,R0,8,r,T.corner);
+  if(mode==="map"||mode==="demo"){var r=rngOf(seed^0x9e3779b9),spots=Wk.pickSpots(pois,ways,R0,8,r,T.corner);
     G.st=spots.map(function(p,i){return{x:p.x,y:p.y,type:p.type,name:p.name||cap((D.TYPES[p.type]||D.TYPES.hoek).replace(/^(de|het|the) /,"")),fi:i,done:false}});
     W=ways||[];P={x:0,y:0,acc:0};LS.set(WK,W)}
   brief()}
 function brief(){var c=G.c;
-  $("#bfNo").textContent=fill(T.briefNo,{c:G.code});
+  $("#bfNo").textContent=fill(T.briefNo,{c:G.code})+(G.mode==="demo"?" · "+T.demoCase:"");
   $("#bfOpen").innerHTML=bubble(fill(D.OPEN,{C:cadeau()}),null,"big");
   $("#bfSus").innerHTML=c.sus.map(susCard).join("");
   $("#bfTip").textContent=T.codeTip;
   show("brief")}
 function susCard(s,i,pick){return '<'+(pick?'button type="button"':'div')+' class="sus"'+(pick?' data-s="'+i+'"':'')+'><b>'+esc(s.name)+'</b><small>'+esc(cap(s.rel))+' · '+esc(s.q)+'</small><div class="tags">'+ATK.map(function(k){return "<i>"+esc(D.AT[k].s[s.tr[k]])+"</i>"}).join("")+'</div></'+(pick?'button':'div')+'>'}
-$("#bGo").onclick=function(){if(!G.t0){G.t0=Date.now();if(G.mode!=="in")MW.pro.setFree(ID)}save();enter()};
+$("#bGo").onclick=function(){if(!G.t0){G.t0=Date.now();if(G.mode==="map"||G.mode==="street")MW.pro.setFree(ID)}save();enter()};
 $("#bBack").onclick=function(){G=null;home()};
 function save(){if(G){G.px=P.x;G.py=P.y;LS.set(GK,G)}}
 
 /* ---------- spelen zonder kaart: kaartjes ---------- */
-function enter(){mlWarm();if(G.mode==="map")enterMap();else{show("cards");render()}}
+function enter(){mlWarm();if(G.mode==="map"||G.mode==="demo")enterMap();else{show("cards");render()}}
 function hud(){if(!G)return;var n=done();$("#hT").textContent=mmss(Date.now()-G.t0);$("#hS").textContent=n+"/8";$("#hG").textContent=G.c.slots.filter(function(s,i){return G.ph[i]&&s.kind!=="gag"}).length+"/7"}
 function render(){hud();var i=G.i,box=$("#card");
   if(i>=8){box.innerHTML='<div class="pol done"><div class="grid">'+G.ph.map(function(p){return '<img src="'+p+'" alt="">'}).join("")+'</div></div>'+bubble(T.radarAll)+'<button type="button" class="btn red" id="bAcc">'+T.last+'</button>';$("#bAcc").onclick=accuseSheet;return}
@@ -113,9 +114,10 @@ function render(){hud();var i=G.i,box=$("#card");
 function enterMap(){show("play");
   if(!map)map=Wk.createMap($("#map"),{player:function(){return P},ways:function(){return W},R:function(){return R0},
     theme:{bg:"#1a1433",water:"#162a4a",waterEdge:"#2f5a8a",ripple:"rgba(120,170,230,.18)",park:"#173a2e",parkEdge:"#2b6b4f",river:"#1f3f66",major:"#5a4f86",minor:"#2c2550",road:"#3b3268",label:"#b9a8ff",waterLabel:"#7fb2ff",ring:"rgba(212,255,58,.3)",me:"#d4ff3a",meHalo:"rgba(212,255,58,.14)",meRing:"rgba(212,255,58,.6)",font:"700 12px 'Fredoka','Barlow Condensed',sans-serif"},
-    items:items,onTap:function(hit){sel=hit&&!hit.ref.done?hit.ref:null;chip()}});
-  map.resize();map.fit(R0);sel=null;arrived=null;$("#chip").hidden=true;
-  Wk.stopWatch();Wk.watch(G.origin,P,function(d){if(d>3&&d<80)G.dist+=d});
+    items:items,onTap:function(hit,w){if(hit&&!hit.ref.done){sel=hit.ref;chip()}else if(G.mode==="demo"){walkTo=w;sel=null;map.follow();chip()}else{sel=null;chip()}}});
+  map.resize();map.fit(R0);sel=null;arrived=null;walkTo=null;$("#chip").hidden=true;
+  Wk.stopWatch();if(G.mode==="map")Wk.watch(G.origin,P,function(d){if(d>3&&d<80)G.dist+=d});
+  if(G.mode==="demo")toast(T.demoTip);
   requestAnimationFrame(loop)}
 var dTo=function(t){return Math.hypot(t.x-P.x,t.y-P.y)},inRange=function(t){return dTo(t)<=Math.max(35,Math.min(P.acc||0,60))||G.force===t};
 function items(){var it=[];
@@ -125,7 +127,9 @@ function items(){var it=[];
     if(sel===s){cx.strokeStyle="#fff";cx.lineWidth=2;cx.beginPath();cx.arc(X,Y,26,0,7);cx.stroke()}
     cx.fillStyle=s.done?"#8d86a8":"#fff";cx.shadowColor="#000";cx.shadowBlur=6;if(api.V.s>=.4||sel===s)cx.fillText(s.name.toUpperCase().slice(0,24),X,Y+36);cx.shadowBlur=0}})});
   return it}
-function loop(t){if($("#play").hidden||!G)return;map.draw(t);if(!loop.n||t-loop.n>500){loop.n=t;tickMap()}requestAnimationFrame(loop)}
+function loop(t){if($("#play").hidden||!G)return;var dt=Math.min(.1,(t-lastT)/1000)||0;lastT=t;
+  if(G.mode==="demo"&&walkTo){var d=Math.hypot(walkTo.x-P.x,walkTo.y-P.y),step=110*dt;if(d<=step){P.x=walkTo.x;P.y=walkTo.y;G.dist+=d;walkTo=null}else{P.x+=(walkTo.x-P.x)/d*step;P.y+=(walkTo.y-P.y)/d*step;G.dist+=step}}
+  map.draw(t);if(!loop.n||t-loop.n>500){loop.n=t;tickMap()}requestAnimationFrame(loop)}
 function tickMap(){var el=Math.floor((Date.now()-G.t0)/1000),n=done();
   $("#mT").textContent=Math.floor(el/60)+":"+String(el%60).padStart(2,"0");$("#mS").textContent=n+"/8";$("#mD").textContent=(G.dist/1000).toFixed(1).replace(".",L==="nl"?",":".");
   var open=G.st.filter(function(s){return !s.done}),near=null,nd=1e9;open.forEach(function(s){var d=dTo(s);if(d<nd){nd=d;near=s}});
@@ -134,15 +138,15 @@ function tickMap(){var el=Math.floor((Date.now()-G.t0)/1000),n=done();
   chip();if(el%10===0)save()}
 function chip(){var c=$("#chip");if(!sel||sel.done){c.hidden=true;return}c.hidden=false;var d=dTo(sel),ok=inRange(sel);
   $("#cName").textContent=sel.name;$("#cDist").textContent=Math.round(d)+" m";$("#cHint").textContent=T.here;
-  var b=$("#cAct");b.hidden=false;if(ok)b.textContent=T.look;else if(d<150)b.textContent=T.gps;else b.hidden=true}
-$("#cAct").onclick=function(){if(!sel)return;if(inRange(sel))ruilSheet(sel.fi,sel);else if(dTo(sel)<150){G.force=sel;ruilSheet(sel.fi,sel)}};
+  var b=$("#cAct");b.hidden=false;if(ok)b.textContent=T.look;else if(G.mode==="demo")b.textContent=T.walk;else if(d<150)b.textContent=T.gps;else b.hidden=true}
+$("#cAct").onclick=function(){if(!sel)return;if(inRange(sel))ruilSheet(sel.fi,sel);else if(G.mode==="demo"){walkTo={x:sel.x,y:sel.y};map.follow()}else if(dTo(sel)<150){G.force=sel;ruilSheet(sel.fi,sel)}};
 $("#zIn").onclick=function(){map.zoom(1.4)};$("#zOut").onclick=function(){map.zoom(1/1.4)};$("#zMe").onclick=function(){map.follow()};
 $("#zM").onclick=menuSheet;$("#zM2").onclick=menuSheet;
 $("#mNote").onclick=noteSheet;$("#mPeople").onclick=susSheet;$("#mAcc").onclick=function(){if(done()>=8)accuseSheet();else noteSheet()};
 $("#bNote").onclick=noteSheet;$("#bPeople").onclick=susSheet;$("#bAcc2").onclick=function(){if(done()>=8)accuseSheet();else noteSheet()};
 
 /* ---------- de ruil zelf: opdracht → foto → antwoord van De Kraai ---------- */
-function ruilSheet(i,spot){var s=G.c.slots[i];cur={i:i,spot:spot||null};
+function ruilSheet(i,spot){walkTo=null;var s=G.c.slots[i];cur={i:i,spot:spot||null};
   var n=done()+1;
   sheet('<div class="eyebrow">'+esc(fill(T.task,{i:n}))+(spot?' · '+esc(spot.name):'')+'</div>'+bubble(s.ask,T.wants)+
     '<div class="task"><div class="ph">'+ico(s.id,"big")+'</div><div><h2>'+esc(cap(s.what))+'</h2><p class="hint" id="hint">'+(G.seen[i]?esc(s.hint):'')+'</p>'+(G.seen[i]?'':'<button type="button" class="btn ghost sm dk" id="bHint">'+T.hint2+'</button>')+'</div></div>'+
