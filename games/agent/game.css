@@ -21,10 +21,11 @@ h1,h2,h3{font-family:var(--f-type);font-weight:700}
 /* afzetlint */
 .tapeline{height:14px;background:repeating-linear-gradient(135deg,#ffc21a 0 22px,#111 22px 44px);border-radius:3px;box-shadow:0 3px 8px rgba(0,0,0,.4)}
 /* ---- start ---- */
-#home{background:linear-gradient(180deg,#1d4ed8 0,#15337a 420px,var(--night) 640px)}
+#home{background:linear-gradient(180deg,rgba(13,42,102,.15) 0,rgba(13,42,102,0) 80px,rgba(13,42,102,0) 420px,rgba(13,42,102,.92) 600px,var(--night) 700px),url("img/hero.webp") center 0/auto 760px no-repeat,var(--night)}
+@media (min-width:600px){#home{background:linear-gradient(90deg,var(--night) 0%,rgba(13,42,102,0) 25%,rgba(13,42,102,0) 75%,var(--night) 100%),linear-gradient(180deg,rgba(13,42,102,.15) 0,rgba(13,42,102,0) 80px,rgba(13,42,102,0) 420px,rgba(13,42,102,.92) 600px,var(--night) 700px),url("img/hero.webp") center 0/auto 760px no-repeat,var(--night)}}
 #hero{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:0;pointer-events:none}
 #home .wrap{position:relative;z-index:1}
-.gap{height:230px}
+.gap{height:330px}
 .masthead{text-align:center;display:flex;flex-direction:column;gap:12px;align-items:center}
 #ttl{font-size:clamp(44px,13vw,70px);color:var(--lamp);text-shadow:0 4px 0 #9a6a00,0 10px 30px rgba(0,0,0,.5);letter-spacing:-.01em;line-height:.95}
 .tape{display:inline-block;background:var(--pink);color:#fff;font-family:var(--f-hand);font-size:20px;line-height:1.1;padding:7px 16px;border-radius:6px;transform:rotate(-2deg);box-shadow:0 6px 16px rgba(0,0,0,.45)}
@@ -40,9 +41,7 @@ h1,h2,h3{font-family:var(--f-type);font-weight:700}
 /* ---- berichten: chef, getuigen, boef ---- */
 .msg{display:flex;gap:10px;align-items:flex-end}
 .avatar{width:48px;height:48px;flex:0 0 48px;border-radius:50%;display:grid;place-items:center;font:700 22px var(--f-type);color:#fff;box-shadow:0 3px 8px rgba(0,0,0,.3);background:#2a4fa8 center/cover no-repeat}
-.avatar.chef{background:#1e3a8a;position:relative}
-.avatar.chef::before{content:"";position:absolute;left:10px;right:10px;top:6px;height:14px;background:#0d2a66;border-radius:14px 14px 3px 3px;box-shadow:0 2px 0 #111}
-.avatar.chef::after{content:"★";position:absolute;top:4px;font-size:11px;color:#ffc21a}
+.avatar.chef{background-color:#dbeafe;background-size:cover;background-position:center 15%}
 .avatar.wit{background:#e76f51}
 .avatar.boefav{background-color:#fde68a;background-size:contain;background-position:center 20%}
 .msg.big .avatar{width:64px;height:64px;flex-basis:64px}
@@ -56,7 +55,10 @@ h1,h2,h3{font-family:var(--f-type);font-weight:700}
 .paper .bub{background:#fff;box-shadow:0 3px 10px rgba(0,0,0,.12);border:1px solid var(--rule)}
 /* ---- briefje ---- */
 #brief .paper{border-radius:20px;box-shadow:0 18px 40px rgba(0,0,0,.5)}
-.chefc{width:100%;height:auto;border-radius:14px;display:block}
+.chefpic{display:flex;align-items:flex-end;justify-content:center;gap:8px;background:linear-gradient(180deg,#1d4ed8,#0d2a66);border-radius:14px;padding:10px 10px 0;overflow:hidden}
+.chefimg{width:34%;height:auto}.kidsimg{width:56%;height:auto}
+.ico.pic{object-fit:contain}
+.mirror .sorry{width:min(50%,170px);height:auto;border-radius:12px;margin-top:-30px;box-shadow:0 8px 20px rgba(0,0,0,.3)}
 .paper .sus{background:rgba(255,255,255,.6);border-radius:14px;border:2px solid var(--rule)}
 .sus b{font-family:var(--f-type);font-weight:700;font-size:17px}
 .tags i{border-radius:20px;background:#e8eefc;color:#1e3a8a;font-family:var(--f-type);font-size:12px;padding:3px 9px}
@@ -167,9 +169,8 @@ h1,h2,h3{font-family:var(--f-type);font-weight:700}
 /* confrontatie in 3D: vier muren met hoogtelijnen, de boeven onder de lamp */
 #hide{position:fixed;inset:0;z-index:55;background:#0b1631;perspective:300px;overflow:hidden;touch-action:none;user-select:none}
 #room{position:absolute;left:50%;top:50%;width:0;height:0;transform-style:preserve-3d;transition:transform .05s linear}
-#room .wall{position:absolute;left:-400px;top:-320px;width:800px;height:640px;background:linear-gradient(180deg,#2b3d6b,#17264a);transform-style:preserve-3d;box-shadow:inset 0 0 90px rgba(0,0,0,.6)}
+#room .wall{position:absolute;left:-400px;top:-320px;width:800px;height:640px;background:#17264a center/cover no-repeat;transform-style:preserve-3d;box-shadow:inset 0 0 90px rgba(0,0,0,.6)}
 #room .wall .lines{position:absolute;inset:0;background:repeating-linear-gradient(180deg,transparent 0 56px,rgba(255,255,255,.18) 56px 59px);pointer-events:none}
-#room .wall::before{content:"";position:absolute;left:50%;top:0;width:260px;height:300px;margin-left:-130px;background:radial-gradient(ellipse at 50% 0,rgba(255,230,150,.35),rgba(255,230,150,0) 70%);pointer-events:none}
 #room .w0{transform:translateZ(-400px)}#room .w1{transform:rotateY(-90deg) translateZ(-400px)}#room .w2{transform:rotateY(180deg) translateZ(-400px)}#room .w3{transform:rotateY(90deg) translateZ(-400px)}
 #room .floor{position:absolute;left:-400px;top:-400px;width:800px;height:800px;transform:rotateX(90deg) translateZ(-320px);background:radial-gradient(circle at 50% 50%,#3b4d7c,#0b1631 70%)}
 .obj{position:absolute;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer}
@@ -182,6 +183,7 @@ h1,h2,h3{font-family:var(--f-type);font-weight:700}
 .obj.boef .cuffs{position:absolute;left:50%;top:50%;margin-left:-56px;width:112px;height:56px;opacity:0;transform:scale(2);transition:opacity .3s,transform .4s cubic-bezier(.2,1.6,.4,1)}
 .obj.boef.cuffed .cuffs{opacity:1;transform:scale(1)}
 .obj.boef.cuffed img{transform:scale(1.06)}
+.sus.face .face{background:#dbeafe}
 .obj.boef.cuffed span{background:#ff3b3b}
 #hideUI{position:absolute;left:0;right:0;top:0;padding:calc(12px + env(safe-area-inset-top,0px)) 14px 10px;display:flex;flex-direction:column;gap:6px;text-align:center;pointer-events:none;background:linear-gradient(180deg,rgba(7,10,25,.85),rgba(7,10,25,0))}
 #hideUI b{font-family:var(--f-type);font-size:18px;color:var(--lamp)}
