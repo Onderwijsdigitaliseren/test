@@ -27,6 +27,7 @@ var SUSF=["krul","bibi","bram","pim","sem","vos","kees","theo","lotte","dirk"];
 function pose(k,cls){return '<img class="'+(cls||"pose")+'" src="'+IMGROOT+(k==="thief"?"thief":"thief-"+k)+'.webp" alt="" width="720" height="720">'}
 /* plaatjes van de dief voor canvas (kaart, spellen, intro, spiegel) */
 var TIMG={};["thief","run","lamp","laugh","shard","red","green","yellow"].forEach(function(k){var im=new Image();im.src=IMGROOT+(k==="thief"?"thief":"thief-"+k)+".webp";TIMG[k]=im});
+["shardimg","gift","torch"].forEach(function(k){var im=new Image();im.src=IMGROOT+(k==="shardimg"?"shard":k)+".webp";TIMG[k]=im});
 function drawPose(c,k,x,y,s,al){var im=TIMG[k];if(!im||!im.naturalWidth)return false;c.save();c.globalAlpha=al==null?1:al;var h=s,w=h*im.naturalWidth/im.naturalHeight;c.drawImage(im,x-w/2,y-h/2,w,h);c.restore();return true}
 function bubble(txt,who,cls){return '<div class="msg '+(cls||"")+'">'+SHADOW+'<div class="bub">'+(who?'<em>'+esc(who)+'</em>':'')+'<p>'+esc(txt)+'</p></div></div>'}
 function shadowFig(c,x,y,s,al,eyes,key){if(drawPose(c,key||"run",x,y,s*1.1,al))return;c.save();c.globalAlpha=al==null?1:al;c.translate(x,y);c.scale(s/64,s/64);
@@ -210,7 +211,10 @@ function accept(seen){var i=cur.i,s=G.c.slots[i];G.ph[i]=cur.thumb;if(cur.spot)c
   $("#bNext").onclick=function(){closeSheet();sel=null;cur=null;if(G.mode==="map"||G.mode==="demo"){chip();if(n>=8)accuseSheet()}else{render();if(n>=8)accuseSheet()}}}
 /* scherf: veelhoek met spiegelglans; als plaatje voor de strook en als animatie (valt binnen, licht op) */
 function shardPath(g,cx,cy,r,n){var pts=[],k=5+(n%3);for(var i=0;i<k;i++){var a=i/k*6.283+n,rr=r*(.7+((i*7+n*3)%5)/10);pts.push([cx+Math.cos(a)*rr,cy+Math.sin(a)*rr])}g.beginPath();pts.forEach(function(p,i){i?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1])});g.closePath()}
-function drawShard(g,cx,cy,r,n,glow){var gr=g.createLinearGradient(cx-r,cy-r,cx+r,cy+r);gr.addColorStop(0,"#e9fbff");gr.addColorStop(.45,"#8fd8ff");gr.addColorStop(.5,"#ffffff");gr.addColorStop(.55,"#5ab0ff");gr.addColorStop(1,"#2b2a7a");
+function drawShard(g,cx,cy,r,n,glow){var im=TIMG.shardimg;
+  if(im&&im.naturalWidth){var h=r*2.2,w=h*im.naturalWidth/im.naturalHeight;g.save();if(glow){g.shadowColor="#38e8ff";g.shadowBlur=glow}g.drawImage(im,cx-w/2,cy-h/2,w,h);g.shadowBlur=0;
+    g.fillStyle="#d4ff3a";g.beginPath();g.arc(cx+r*.55,cy+r*.6,r*.36,0,7);g.fill();g.fillStyle="#1a1433";g.font="700 "+Math.round(r*.46)+"px 'Fredoka',sans-serif";g.textAlign="center";g.textBaseline="middle";g.fillText(n,cx+r*.55,cy+r*.62);g.restore();return}
+  var gr=g.createLinearGradient(cx-r,cy-r,cx+r,cy+r);gr.addColorStop(0,"#e9fbff");gr.addColorStop(.45,"#8fd8ff");gr.addColorStop(.5,"#ffffff");gr.addColorStop(.55,"#5ab0ff");gr.addColorStop(1,"#2b2a7a");
   g.save();if(glow){g.shadowColor="#38e8ff";g.shadowBlur=glow}shardPath(g,cx,cy,r,n);g.fillStyle=gr;g.fill();g.shadowBlur=0;g.strokeStyle="#fff";g.lineWidth=2;g.stroke();
   g.fillStyle="#1a1433";g.font="700 "+Math.round(r*.7)+"px 'Fredoka',sans-serif";g.textAlign="center";g.textBaseline="middle";g.fillText(n,cx,cy+2);g.restore()}
 function shardThumb(i,act){var cv=document.createElement("canvas");cv.width=cv.height=360;var g=cv.getContext("2d"),bg=g.createRadialGradient(180,180,20,180,180,260);bg.addColorStop(0,"#2a2150");bg.addColorStop(1,"#0a0718");g.fillStyle=bg;g.fillRect(0,0,360,360);
@@ -241,6 +245,7 @@ var PUZ={
       c.dataset.p=Math.round(fx)+","+Math.round(fy);g.fillStyle="#2b2560";g.fillRect(0,0,280,280);crates.forEach(function(r){g.fillStyle=r[4];g.globalAlpha=.35;g.fillRect(r[0],r[1],r[2],r[3])});g.globalAlpha=1;
       shadowFig(g,fx,fy,70,1,true,"lamp");
       var gr=g.createRadialGradient(lx,ly,10,lx,ly,70);gr.addColorStop(0,"rgba(7,5,15,0)");gr.addColorStop(1,"rgba(7,5,15,1)");g.fillStyle=gr;g.fillRect(0,0,280,280);
+      drawPose(g,"torch",lx-52,ly-48,90,.95);
       var near=Math.hypot(lx-fx,ly-fy)<30;hold=near?hold+dt:0;
       if(near){g.strokeStyle="#d4ff3a";g.lineWidth=4;g.beginPath();g.arc(fx,fy,46,-1.57,-1.57+6.283*Math.min(1,hold/.7));g.stroke()}
       if(hold>=.7){hits++;hold=0;beep(500+hits*120,.12);buzz(40);if(hits>=3)return o.done();place()}
@@ -342,15 +347,15 @@ function mirrorAnim(cv,k){var g=cv.getContext("2d"),t0=0,still=matchMedia("(pref
 
 /* ---------- zijn schuilplaats in 3D (CSS): vier muren, veeg om rond te kijken, tik op de juiste kist ---------- */
 function hideout(){var ov=$("#hide"),room=$("#room"),k=G.c.sus[G.c.K],right=k.tr.hoofd,H=D.HIDE,cols=["#e63946","#2a9d4b","#f4c20d"];
-  var walls=[[chest(0),tv()],[chest(1),coat()],[chest(2),poster()],[feathers(),lamp(),laugh()]];
-  function chest(i){return '<div class="obj chest" data-c="'+i+'" style="--c:'+cols[i]+';left:27%;bottom:10%"><i class="lid"></i><b></b><span>'+esc(H.boxes[i])+'</span></div>'}
+  var walls=[[chest(0)],[chest(1)],[chest(2)],[laugh()]];
+  function chest(i){return '<div class="obj chest img" data-c="'+i+'" style="--c:'+cols[i]+';left:'+[30,34,32][i]+'%;bottom:4%"><img class="gift" src="'+IMGROOT+'gift.webp" alt="" width="529" height="560"><img class="box" src="'+IMGROOT+'chest-'+["red","green","yellow"][i]+'.webp" alt="" width="560" height="440"><span>'+esc(H.boxes[i])+'</span></div>'}
   function tv(){return '<div class="obj tvs" data-x="1" style="right:26%;bottom:34%"><b>'+esc(H.tv)+'</b><span>'+esc(H.others[0])+'</span></div>'}
   function coat(){return '<div class="obj coat" data-x="1" style="right:27%;bottom:22%"><i></i><i></i><i></i><span>'+esc(H.others[1])+'</span></div>'}
   function feathers(){return '<div class="obj feat" data-x="1" style="left:30%;bottom:10%"><b>'+esc(H.feathers)+'</b><span>'+esc(H.others[2])+'</span></div>'}
   function poster(){return '<div class="obj poster" style="right:28%;top:12%">'+SHADOW+'<b>?</b></div>'}
   function laugh(){return '<div class="obj laugh" style="left:4%;bottom:4%">'+pose("laugh","pose")+'</div>'}
   function lamp(){return '<div class="obj lampo" style="left:38%;top:8%"></div>'}
-  room.innerHTML=walls.map(function(w,i){return '<div class="wall w'+i+'">'+w.join("")+'</div>'}).join("")+'<div class="floor"></div>';
+  room.innerHTML=walls.map(function(w,i){return '<div class="wall w'+i+'" style="background-image:url('+IMGROOT+'wall-'+i+'.webp)">'+w.join("")+'</div>'}).join("")+'<div class="floor"></div>';
   $("#hideHint").textContent=T.hideHint;$("#hideTip").textContent=T.hideTip;$("#hideMsg").textContent="";ov.hidden=true;ov.hidden=false;
   var rot=0,pd=null,fin=false,set=function(){room.style.transform="rotateY("+rot+"deg)"};set();
   ov.onpointerdown=function(e){pd={x:e.clientX,r:rot,moved:false}};ov.onpointermove=function(e){if(!pd)return;var dx=e.clientX-pd.x;if(Math.abs(dx)>6)pd.moved=true;rot=pd.r+dx*.35;set()};
