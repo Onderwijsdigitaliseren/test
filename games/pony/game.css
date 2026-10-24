@@ -24,8 +24,8 @@ h1,h2,h3{font-family:var(--f-type);font-weight:700}
 .err{color:#c2185b}
 /* ---- start ---- */
 #home{background:linear-gradient(180deg,var(--sky) 0,#d8f0ff 300px,#a8e08a 380px,var(--grass) 420px,var(--grass2) 700px,var(--night) 900px),var(--night)}
-#home.photo{background:linear-gradient(180deg,rgba(31,107,58,0) 0,rgba(31,107,58,0) 420px,rgba(31,107,58,.92) 600px,var(--night) 700px),url("img/hero.webp") center 0/auto 760px no-repeat,var(--night)}
-@media (min-width:600px){#home.photo{background:linear-gradient(90deg,var(--night) 0%,rgba(31,107,58,0) 25%,rgba(31,107,58,0) 75%,var(--night) 100%),linear-gradient(180deg,rgba(31,107,58,0) 0,rgba(31,107,58,0) 420px,rgba(31,107,58,.92) 600px,var(--night) 700px),url("img/hero.webp") center 0/auto 760px no-repeat,var(--night)}}
+#home.photo{background:linear-gradient(180deg,rgba(31,107,58,0) 0,rgba(31,107,58,0) 420px,rgba(31,107,58,.92) 600px,var(--night) 700px),url("img/hero.webp") center 0/100% auto no-repeat,var(--night)}
+@media (min-width:600px){#home.photo{background:linear-gradient(90deg,var(--night) 0%,rgba(31,107,58,0) 25%,rgba(31,107,58,0) 75%,var(--night) 100%),linear-gradient(180deg,rgba(31,107,58,0) 0,rgba(31,107,58,0) 420px,rgba(31,107,58,.92) 600px,var(--night) 700px),url("img/hero.webp") center 0/min(100%,520px) auto no-repeat,var(--night)}}
 #hero{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:0;pointer-events:none}
 #home .wrap{position:relative;z-index:1}
 .gap{height:330px}
