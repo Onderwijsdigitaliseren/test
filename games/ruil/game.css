@@ -191,3 +191,4 @@ h1,h2,h3{font-family:var(--f-type);font-weight:700}
 .chest.img.open .gift{opacity:1;transform:translateY(-60px) scale(1);filter:drop-shadow(0 0 30px #d4ff3a)}
 .chest.img.open .box{transform:translateY(10px) rotate(-6deg)}
 .chest.img span{position:relative;z-index:3}
+.paper .how{color:var(--ink);font-size:15px}

@@ -84,10 +84,43 @@ $("#name").addEventListener("input",function(){NAME=this.value.trim().slice(0,24
 $("#bGps").onclick=function(){if(MW.pro.locked(ID))return proSheet();begin(hashStr("dr|"+MODE+"|"+MW.today()),MODE,true)};
 $("#bRandom").onclick=function(){if(MW.pro.locked(ID))return proSheet();begin(Math.floor(Math.random()*4e9),MODE,false)};
 $("#bPro").onclick=proSheet;
-$("#bDemo").onclick=function(){var w=Wk.demoWorld(D.DEMO);build(Math.floor(Math.random()*4e9),"demo",w.pois,w.ways,null,false)};
+$("#bDemo").onclick=function(){var w=ehvWorld();build(Math.floor(Math.random()*4e9),"demo",w.pois,w.ways,null,false)};
+$("#bHow").onclick=function(){sheet('<h2>'+T.howH+'</h2>'+$("#howT").innerHTML+'<button type="button" class="btn ghost dk" id="shX">'+T.close+'</button>');$("#shX").onclick=closeSheet};
 $("#bResume").onclick=function(){G=LS.get(GK,null);if(!G)return home();W=LS.get(WK,[]);P={x:G.px||0,y:G.py||0,acc:0};enter()};
 $("#bCode").onclick=function(){codeSheet("")};$("#bArch").onclick=archSheet;$("#bWipe").onclick=wipeSheet;
 $("#lang").onclick=function(){MW.switchLang(ID,L==="nl"?"en":"nl")};
+
+/* ---------- proefronde: de binnenstad van Eindhoven, getekend (zelfde wereld als bij Moordwandeling) ---------- */
+function ehvWorld(){
+  var S=function(n,w){var p=[];for(var i=2;i<arguments.length;i++)p.push(arguments[i][0],arguments[i][1]);return{n:n,w:w,p:p}},ways=[
+    S("Dommel",9,[540,-760],[500,-420],[455,-120],[470,160],[430,430],[390,760]),
+    S("Vestdijk",3,[330,-760],[322,-380],[315,-60],[312,240],[330,560],[345,780]),
+    S("Emmasingel",3,[-330,-330],[-410,-150],[-440,120],[-420,330]),
+    S("Keizersgracht",3,[-420,330],[-200,300],[60,330],[300,380]),
+    S("Stationsweg",3,[60,-300],[75,-480],[95,-700]),
+    S("Mathildelaan",3,[-330,-330],[-120,-420],[95,-470],[322,-470]),
+    S("Rechtestraat",2,[0,0],[15,-150],[60,-300]),
+    S("Demer",2,[60,-300],[-120,-270],[-330,-330]),
+    S("Hooghuisstraat",2,[0,0],[-160,-40],[-310,-70]),
+    S("Kleine Berg",2,[-20,25],[-160,130],[-320,250]),
+    S("Kerkstraat",2,[0,0],[95,85]),
+    S("Stratumseind",2,[95,85],[190,210],[300,380]),
+    S("Jan van Lieshoutstraat",2,[95,85],[210,40],[315,20]),
+    S("Wal",2,[95,85],[60,200],[60,330]),
+    S("Bilderdijklaan",2,[300,380],[380,470],[430,520]),
+    S("Dommelstraat",2,[15,-150],[170,-140],[320,-140],[455,-130]),
+    S("Willemstraat",2,[-410,-150],[-250,-170],[-120,-270]),
+    S("Wilhelminaplein",2,[-440,120],[-330,150],[-160,130]),
+    S("",1,[-160,-40],[-120,-270]),S("",1,[-160,130],[-160,-40]),S("",1,[60,200],[-160,130]),
+    S("",1,[190,210],[315,200]),S("",1,[170,-140],[210,40]),S("",1,[-250,-170],[-310,-70],[-330,150]),
+    S("",2,[312,240],[470,260]),S("",2,[315,-60],[455,-60]),S("",1,[95,-470],[60,-300]),
+    S("",1,[60,330],[120,520],[230,640],[330,560]),S("",1,[120,520],[300,470]),S("",1,[230,640],[160,700])];
+  var P=[["kerk","Catharinakerk",150,120],["kunst","Van Abbemuseum",395,505],["bieb","Bibliotheek in De Witte Dame",-345,-360],["kunst","Philips Museum",-430,-240],
+    ["cafe","Café op Stratumseind",235,270],["cafe","Café aan de Markt",55,-70],["park","Stadswandelpark",190,600],["halte","Station Eindhoven Centraal",90,-620],
+    ["halte","Bushalte Vestdijk",335,-160],["winkel","De Bijenkorf",-100,-215],["winkel","Winkelcentrum Heuvel",-230,-50],["post","Brievenbus Rechtestraat",30,-180],
+    ["hotel","Hotel aan het 18 Septemberplein",110,-330],["apotheek","Apotheek Kleine Berg",-210,180],["bankje","Bankje aan de Dommel",480,200],
+    ["school","School aan de Vestdijk",380,-380],["bank","Bank aan de Vestdijk",290,40],["kunst","Kunstwerk op het Wilhelminaplein",-360,170]];
+  return{ways:ways,pois:P.map(function(q){return{type:q[0],name:q[1],x:q[2],y:q[3]}})}}
 
 /* ---------- een ruil beginnen ---------- */
 function begin(seed,mode,daily){if(mode!=="map")return build(seed,mode,null,null,null,daily);

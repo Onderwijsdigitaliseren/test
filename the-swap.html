@@ -19,7 +19,7 @@
 <meta name="theme-color" content="#1a1433">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Permanent+Marker&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600&display=swap">
 <link rel="stylesheet" href="shared/platform.css?v=1">
-<link rel="stylesheet" href="games/ruil/game.css?v=5">
+<link rel="stylesheet" href="games/ruil/game.css?v=6">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"The Swap","url":"https://murderwalk.com/the-swap.html","description":"A kids' detective hunt for parties: The Shadow Thief has stolen the present and wants to trade. Photos, puzzles and catching shadows, eight mirror shards, one lie. With a map, without a map or indoors. First swap free.","inLanguage":"en","gamePlatform":"Web browser","genre":["Kids' game","Scavenger hunt","Detective"],"isAccessibleForFree":true,"offers":{"@type":"Offer","price":"3.99","priceCurrency":"EUR","description":"Pro"}}</script>
 </head>
 <body>
@@ -30,11 +30,11 @@
       <div class="row0"><div class="pills"><a class="pill" id="hub" href="./">◂ All walks</a><button type="button" class="pill" id="lang">Nederlands</button></div></div>
       <div class="gap"></div>
       <div class="masthead">
-        <div class="brand">Murder Walk · Kids' party</div>
         <h1 id="ttl">The Swap</h1><span class="tape">Last night at 03:03 all the lights went out. Then the present was gone.</span>
       </div>
-      <p class="lead">The Shadow Thief has the present and is sending messages. He wants to trade: you do something, he gives a shard of his mirror. Eight shards, and you see who he is by day. But he lies. Once.</p>
-      <ul class="tasks"><li>Eight swaps, all different: photos of places, silly group photos, catching the shadow, a torch, a sliding puzzle, a colour lock, a fogged-up window.</li><li>He slips up three times. Four times he claims something. Once he lies.</li><li>Unmask him, enter his hideout and find the present. Then: a detective diploma.</li></ul>
+      <p class="lead">The Shadow Thief has hidden the present in his hideout. Trade with him eight times, put his mirror together and find out who he is by day. Then you know where the present is.</p>
+      
+      <button class="btn ghost sm" id="bHow">How does it work?</button>
       <div class="pline"><b id="pRank">–</b><span><b id="pStreak">0</b> Days in a row</span><span><b id="pSolved">0</b> Caught</span></div>
       <div class="namebox"><label for="name">Whose birthday is it? (may be empty)</label><input id="name" maxlength="24" autocomplete="off" placeholder="Birthday child's name"></div>
       <div class="seg" id="len">
@@ -48,9 +48,10 @@
       <button class="btn ghost" id="bCode">Enter swap code</button>
       <button class="btn ghost" id="bPro" hidden></button>
       <p class="note" id="status"></p>
-      <button class="btn ghost sm" id="bDemo">Practice round on a made-up map</button>
-      <ol class="how"><li><b>With map:</b> the Shadow Thief picks eight places nearby and creeps across the map. Walk there; the swap is waiting. <b>No map</b> or <b>indoors:</b> you get the swaps one after another, without places. Works anywhere.</li><li>Sometimes the swap is a photo (a bench, a letterbox, the whole group as shadows); the phone checks whether it fits. Sometimes it is a game on the screen: catch him, find him with the torch, a puzzle, a lock.</li><li>After every swap you get a mirror shard and a message. Sometimes he slips up: that is evidence and always true. Sometimes he claims something about himself: three times true, once a lie.</li><li>After eight shards you point out who he is and which claim was the lie. Then you enter his hideout to find the present. Your photos become an evidence strip and a diploma.</li></ol>
-      <p class="note">With an adult along. One phone per group; with the swap code several phones play the same swap. The photos stay on the phone. Outside: stay on the pavement, do not photograph strangers.</p>
+      <div id="howT" hidden><ol class="how"><li><b>With map:</b> the Shadow Thief picks eight places nearby and creeps across the map. Walk there; the swap is waiting. <b>No map</b> or <b>indoors:</b> you get the swaps one after another, without places. Works anywhere.</li><li>Sometimes the swap is a photo (a bench, a letterbox, the whole group as shadows); the phone checks whether it fits. Sometimes it is a game on the screen: catch him, find him with the torch, a puzzle, a lock.</li><li>After every swap you get a mirror shard and a message. Sometimes he slips up: that is evidence and always true. Sometimes he claims something about himself: three times true, once a lie.</li><li>After eight shards you point out who he is and which claim was the lie. Then you enter his hideout to find the present. Your photos become an evidence strip and a diploma.</li></ol><p class="note">With an adult along. One phone per group; with the swap code several phones play the same swap. The photos stay on the phone. Outside: stay on the pavement, do not photograph strangers.</p></div>
+      <button class="btn ghost sm" id="bDemo">Practice round in Eindhoven city centre</button>
+      
+      
       <button class="btn ghost" id="bArch">Thieves caught</button>
       <button class="btn ghost sm" id="bWipe">Wipe</button>
     </div>
@@ -126,7 +127,7 @@
 <script src="shared/walk.js?v=3"></script>
 <script src="shared/ort/ort.wasm.min.js?v=1"></script>
 <script src="games/fotojacht/model/labels.js?v=1"></script>
-<script src="games/ruil/data-en.js?v=4"></script>
-<script src="games/ruil/game.js?v=6"></script>
+<script src="games/ruil/data-en.js?v=5"></script>
+<script src="games/ruil/game.js?v=7"></script>
 </body>
 </html>
