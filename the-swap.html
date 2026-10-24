@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>The Swap – a kids' detective hunt for parties, playable anywhere</title>
-<meta name="description" content="The Magpie has stolen the present and wants to trade: eight tasks for eight messages. With a map in your own streets, without a map, or indoors. For children aged 8 to 11, one phone per group. First swap free.">
+<meta name="description" content="The Shadow Thief has stolen the present and wants to trade: photos, puzzles and catching shadows, for eight mirror shards. With a map in your own streets, without a map, or indoors. One phone per group. First swap free.">
 <link rel="canonical" href="https://murderwalk.com/the-swap.html">
 <link rel="alternate" hreflang="en" href="https://murderwalk.com/the-swap.html">
 <link rel="alternate" hreflang="nl" href="https://moordwandeling.nl/nl/de-ruil.html">
 <link rel="alternate" hreflang="x-default" href="https://murderwalk.com/the-swap.html">
 <meta property="og:site_name" content="Murder Walk">
 <meta property="og:title" content="Murder Walk – The Swap">
-<meta property="og:description" content="The Magpie has the present. Eight swaps, one lie. A kids' detective hunt that works anywhere.">
+<meta property="og:description" content="The Shadow Thief has the present. Eight swaps, eight shards, one lie. A kids' detective hunt that works anywhere.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://murderwalk.com/the-swap.html">
 <meta property="og:locale" content="en_GB">
@@ -19,8 +19,8 @@
 <meta name="theme-color" content="#1a1433">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Permanent+Marker&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600&display=swap">
 <link rel="stylesheet" href="shared/platform.css?v=1">
-<link rel="stylesheet" href="games/ruil/game.css?v=2">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"The Swap","url":"https://murderwalk.com/the-swap.html","description":"A kids' detective hunt for parties: The Magpie has stolen the present and wants to trade. Eight tasks, eight messages, one lie. With a map, without a map or indoors. First swap free.","inLanguage":"en","gamePlatform":"Web browser","genre":["Kids' game","Scavenger hunt","Detective"],"audience":{"@type":"PeopleAudience","suggestedMinAge":8,"suggestedMaxAge":11},"isAccessibleForFree":true,"offers":{"@type":"Offer","price":"3.99","priceCurrency":"EUR","description":"Pro"}}</script>
+<link rel="stylesheet" href="games/ruil/game.css?v=3">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"The Swap","url":"https://murderwalk.com/the-swap.html","description":"A kids' detective hunt for parties: The Shadow Thief has stolen the present and wants to trade. Photos, puzzles and catching shadows, eight mirror shards, one lie. With a map, without a map or indoors. First swap free.","inLanguage":"en","gamePlatform":"Web browser","genre":["Kids' game","Scavenger hunt","Detective"],"isAccessibleForFree":true,"offers":{"@type":"Offer","price":"3.99","priceCurrency":"EUR","description":"Pro"}}</script>
 </head>
 <body>
 <div id="app">
@@ -31,11 +31,10 @@
       <div class="gap"></div>
       <div class="masthead">
         <div class="brand">Murder Walk · Kids' party</div>
-        <svg class="kraai-hero" viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="34" cy="40" rx="18" ry="14" fill="#15121f"/><circle cx="24" cy="24" r="11" fill="#15121f"/><path d="M14 25l-11 3 11 2z" fill="#f0b429"/><circle cx="26" cy="22" r="3.2" fill="#fff"/><circle cx="26.8" cy="22.4" r="1.6" fill="#15121f"/><path d="M19 17l9 2" stroke="#15121f" stroke-width="2.4" stroke-linecap="round"/><path d="M48 36l14-8-6 12z" fill="#15121f"/><path d="M28 52l-2 8M38 52l2 8" stroke="#f0b429" stroke-width="2.4" stroke-linecap="round"/><circle cx="40" cy="36" r="3" fill="#d4ff3a"/></svg>
-        <h1 id="ttl">The Swap</h1><span class="tape">The Magpie has the present. You get it back. Maybe.</span>
+        <h1 id="ttl">The Swap</h1><span class="tape">Last night at 03:03 all the lights went out. Then the present was gone.</span>
       </div>
-      <p class="lead">The Magpie has pinched the birthday present and is sending messages. He wants to trade: you do a task, he gives something back. Eight times. But he lies. Once.</p>
-      <ul class="tasks"><li>Eight swaps: photos of places nearby and silly group photos.</li><li>The Magpie slips up three times. Four times he claims something. Once he lies.</li><li>At the end: which of the five neighbours is The Magpie? Catch him.</li></ul>
+      <p class="lead">The Shadow Thief has the present and is sending messages. He wants to trade: you do something, he gives a shard of his mirror. Eight shards, and you see who he is by day. But he lies. Once.</p>
+      <ul class="tasks"><li>Eight swaps, all different: photos of places, silly group photos, catching the shadow, a torch, a sliding puzzle, a colour lock, a fogged-up window.</li><li>He slips up three times. Four times he claims something. Once he lies.</li><li>Unmask him, enter his hideout and find the present. Then: a detective diploma.</li></ul>
       <div class="pline"><b id="pRank">–</b><span><b id="pStreak">0</b> Days in a row</span><span><b id="pSolved">0</b> Caught</span></div>
       <div class="namebox"><label for="name">Whose birthday is it? (may be empty)</label><input id="name" maxlength="24" autocomplete="off" placeholder="Birthday child's name"></div>
       <div class="seg" id="len">
@@ -50,9 +49,9 @@
       <button class="btn ghost" id="bPro" hidden></button>
       <p class="note" id="status"></p>
       <button class="btn ghost sm" id="bDemo">Practice round on a made-up map</button>
-      <ol class="how"><li><b>With map:</b> The Magpie picks eight places nearby. Walk there; that is where you get his task. <b>No map</b> or <b>indoors:</b> you only get tasks, no places. Works anywhere.</li><li>Every task is a photo: of a kind of place (a bench, a letterbox) or of the whole group (as angry magpies, on one leg). The phone checks whether it fits.</li><li>After every photo The Magpie replies. Sometimes he slips up: that is evidence and always true. Sometimes he claims something about himself: three times true, once a lie.</li><li>After eight swaps you point out who The Magpie is and which claim was the lie. Your photos become one evidence strip.</li></ol>
-      <p class="note">For ages 8 to 11, with an adult along. One phone per group; with the swap code several phones play the same swap. The photos stay on the phone. Outside: stay on the pavement, do not photograph strangers.</p>
-      <button class="btn ghost" id="bArch">Magpies caught</button>
+      <ol class="how"><li><b>With map:</b> the Shadow Thief picks eight places nearby and creeps across the map. Walk there; the swap is waiting. <b>No map</b> or <b>indoors:</b> you get the swaps one after another, without places. Works anywhere.</li><li>Sometimes the swap is a photo (a bench, a letterbox, the whole group as shadows); the phone checks whether it fits. Sometimes it is a game on the screen: catch him, find him with the torch, a puzzle, a lock.</li><li>After every swap you get a mirror shard and a message. Sometimes he slips up: that is evidence and always true. Sometimes he claims something about himself: three times true, once a lie.</li><li>After eight shards you point out who he is and which claim was the lie. Then you enter his hideout to find the present. Your photos become an evidence strip and a diploma.</li></ol>
+      <p class="note">With an adult along. One phone per group; with the swap code several phones play the same swap. The photos stay on the phone. Outside: stay on the pavement, do not photograph strangers.</p>
+      <button class="btn ghost" id="bArch">Thieves caught</button>
       <button class="btn ghost sm" id="bWipe">Wipe</button>
     </div>
   </section>
@@ -61,9 +60,9 @@
     <div class="wrap">
       <div class="paper">
         <div class="eyebrow" id="bfNo"></div>
-        <h2>Message from The Magpie</h2>
+        <h2>Message from the Shadow Thief</h2>
         <div id="bfOpen"></div>
-        <div class="eyebrow">Five neighbours. One of them is The Magpie.</div>
+        <div class="eyebrow">Five neighbours. One of them is him.</div>
         <div class="list" id="bfSus"></div>
         <p class="note" id="bfTip"></p>
       </div>
@@ -76,14 +75,14 @@
     <div id="hud">
       <div><b id="hT">0:00</b><span>Time</span></div>
       <div><b id="hS">0/8</b><span>Swaps</span></div>
-      <div><b id="hG">0/7</b><span>Messages</span></div>
+      <div><div class="shards" id="hM"></div><span>Shards</span></div>
       <button type="button" id="zM2" aria-label="Menu">☰</button>
     </div>
     <div id="card"></div>
     <div id="bar">
       <button type="button" id="bNote">Swap book</button>
       <button type="button" id="bPeople">Suspects</button>
-      <button type="button" id="bAcc2" class="red">Catch The Magpie</button>
+      <button type="button" id="bAcc2" class="red">Unmask</button>
     </div>
   </section>
 
@@ -92,7 +91,7 @@
     <div id="mhud">
       <div><b id="mT">0:00</b><span>Time</span></div>
       <div><b id="mS">0/8</b><span>Swaps</span></div>
-      <div><b id="mD">0.0</b><span>Km</span></div>
+      <div><div class="shards" id="mM"></div><span>Shards</span></div>
       <button type="button" id="zM" aria-label="Menu">☰</button>
     </div>
     <div id="zoom">
@@ -110,22 +109,24 @@
       <div id="mbar">
         <button type="button" id="mNote">Swap book</button>
         <button type="button" id="mPeople">Suspects</button>
-        <button type="button" id="mAcc" class="red">Catch The Magpie</button>
+        <button type="button" id="mAcc" class="red">Unmask</button>
       </div>
     </div>
   </section>
 
+  <div id="cine" hidden><canvas id="cineC"></canvas><div id="cineT"></div><button type="button" class="btn" id="cineX">Skip ▸</button></div>
+  <div id="hide" hidden><div id="room"></div><div id="hideUI"><b id="hideHint"></b><span id="hideTip"></span></div><div id="hideMsg"></div><button type="button" class="btn" id="hideX">◂ Back</button></div>
   <input type="file" id="file" accept="image/*" capture="environment" aria-label="Take the photo">
   <div class="sheet" id="sheet" hidden><div class="paper" id="sheetBody"></div></div>
   <div id="load" hidden role="status"><div class="spin"></div><b id="loadT"></b><span>This usually takes 5 to 30 seconds. Stay on this page.</span></div>
   <div id="toast" hidden></div>
 </div>
 <script src="shared/platform.js?v=1"></script>
-<script src="shared/catalog.js?v=10"></script>
+<script src="shared/catalog.js?v=11"></script>
 <script src="shared/walk.js?v=3"></script>
 <script src="shared/ort/ort.wasm.min.js?v=1"></script>
 <script src="games/fotojacht/model/labels.js?v=1"></script>
-<script src="games/ruil/data-en.js?v=3"></script>
-<script src="games/ruil/game.js?v=3"></script>
+<script src="games/ruil/data-en.js?v=4"></script>
+<script src="games/ruil/game.js?v=4"></script>
 </body>
 </html>
