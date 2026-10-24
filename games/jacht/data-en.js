@@ -35,6 +35,7 @@ T:{today:"Start today's hunt",todayAgain:"Another hunt today",extra:"Extra hunt"
   loc:"Where are you? The Shadow Thief is looking for places nearby…",pois:"He hides at eight places…",nomap:"No places found nearby. Play without the map.",noGps:"This phone does not share its location. Play without the map.",denied:"Location is off. Turn it on or play without the map.",fail:"That didn't work",
   radarAll:"Eight lights! Your lantern is bright enough. Shine it in his face!",near:"Shadow in {d} m",warm:"Almost! {d} m to go",hot:"This is it. {d} m",here:"The Shadow is here",look:"Catch him!",gps:"I really am here",corner:"Corner of",
   demo:"Practice round in Eindhoven city centre",demoCase:"practice round",demoTip:"Practice round: tap the map to walk.",walk:"Walk there",
+  popTap:"Tap him away",popYou:"birthday kid",
   howH:"How does it work?",
   skipPoint:"Skip (doesn't count for the stars)"
 },
@@ -66,6 +67,8 @@ PUZ:{catch:["catching the shadow","“I'm just passing by. Catch me if you can. 
      tiles:["the torn map","“I tore up my map. There's a light on it. Put it back together.”","“Hm. You're handier than I thought. Here, that light.”"],
      seq:["the colour lock","“My box has a colour lock. Watch closely. I'll show it once.”","“That lock was expensive. Kids. Pff.”"],
      dust:["the fogged-up window","“Behind this window there's a light. But the window is fogged up. Wipe it.”","“Now my window is dirty with your fingers. Thanks.”"]},
+TAUNT:["“Peekaboo! Here I am. No, there. HAHA.”", "“You walk so slowly. I've been round the block three times.”", "“{n} lights to go. You'll never make it.”", "“I can see you. You can't see me.”", "“Psst. {J}. Your present is lovely. Says me.”", "“I just blew out a street lamp. Just because.”", "“Look behind you! …Joke. Or not.”", "“I heard you talking. Wrong guess!”", "“My shadow is bigger than yours.”", "“Brr, it's so bright here. I'm off.”", "“Bet you can't catch me? Bet?”", "“ACHOO! Sorry. Shadows catch colds too.”"],
+POPHIT:["“OW! Fine, I'm gone!”", "“Hey! No tapping!”", "“Too fast for me. This time.”", "“Oops. Already gone.”"],
 DEMO:[["kunst","Statue of the Shadow"],["cafe","Penguin Ice Cream Parlour"],["post","Letterbox, Ferry Lane"],["hotel","Hotel Night Owl"],["bank","Ducat Savings Bank"],["apotheek","Plaster Pharmacy"],["park","Gnome Park"],["halte","Fox Street Stop"],["bieb","Bookworm Library"],["kerk","Leaning Tower"],["winkel","Currant Bun Bakery"],["school","Rascals School"],["bankje","Bench by the water"]],
 TYPES:{kerk:"the church",hotel:"the hotel",bank:"the bank",apotheek:"the pharmacy",cafe:"the café",bieb:"the library",park:"the park",school:"the school",kunst:"the artwork",tank:"the petrol station",winkel:"the shop",halte:"the bus stop",post:"the letterbox",bankje:"the bench",hoek:"the corner"},
 HIDE:{boxes:["the red chest","the green chest","the yellow chest"],others:["an old TV","a coat rack","a chest full of feathers"],tv:"ZZZT",coat:"COAT",feathers:"FEATHERS"},

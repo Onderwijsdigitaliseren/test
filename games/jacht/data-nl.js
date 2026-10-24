@@ -37,6 +37,7 @@ T:{today:"Start de jacht van vandaag",todayAgain:"Nog een jacht van vandaag",ext
   loc:"Waar zijn jullie? De Schaduwdief zoekt plekken in de buurt…",pois:"Hij verstopt zich op acht plekken…",nomap:"Geen plekken gevonden in de buurt. Speel zonder kaart.",noGps:"Deze telefoon geeft geen locatie door. Speel zonder kaart.",denied:"Locatie staat uit. Zet hem aan of speel zonder kaart.",fail:"Dat lukte niet",
   radarAll:"Acht lichtjes! Je lantaarn is fel genoeg. Schijn hem in zijn gezicht!",near:"Schaduw op {d} m",warm:"Bijna! Nog {d} m",hot:"Hier is het. {d} m",here:"Hier zit de Schaduw",look:"Vang hem!",gps:"Ik sta hier echt",corner:"Hoek",
   demo:"Proefronde in de binnenstad van Eindhoven",demoCase:"proefronde",demoTip:"Proefronde: tik op de kaart om te lopen.",walk:"Loop ernaartoe",
+  popTap:"Tik hem weg",popYou:"jarige",
   howH:"Hoe werkt het?",
   skipPoint:"Overslaan (telt niet voor de sterren)"
 },
@@ -97,6 +98,8 @@ PUZ:{catch:["de schaduw vangen","“Ik kom even langs. Vang me maar. Als het luk
      tiles:["de verscheurde kaart","“Ik heb mijn kaart verscheurd. Daar staat een lichtje op. Plak hem maar.”","“Hm. Jullie zijn handiger dan ik dacht. Hier, dat lichtje.”"],
      seq:["het kleurenslot","“Mijn kistje heeft een kleurenslot. Kijk goed. Ik doe het één keer voor.”","“Dat slot was duur. Kinderen. Pff.”"],
      dust:["de beslagen ruit","“Achter deze ruit zit een lichtje. Maar de ruit is beslagen. Veeg maar.”","“Nu is mijn ruit vies van jullie vingers. Bedankt.”"]},
+TAUNT:["“Koekoek! Hier ben ik. Nee, daar. HAHA.”", "“Jullie lopen zo langzaam. Ik ben al drie keer om het blok geweest.”", "“Nog {n} lichtjes. Dat halen jullie nooit.”", "“Ik zie jullie wel. Jullie mij niet.”", "“Psst. {J}. Je cadeau is heel mooi. Zegt het. Tegen mij.”", "“Ik heb net een lantaarnpaal uitgeblazen. Zomaar.”", "“Kijk eens achter je! …Grapje. Of niet.”", "“Ik hoorde jullie praten. Fout gedacht!”", "“Mijn schaduw is groter dan die van jullie.”", "“Brr, wat is het licht hier. Ik ga weer.”", "“Wedden dat jullie me niet vangen? Wedden?”", "“HATSJOE! Sorry. Schaduwen zijn ook verkouden.”"],
+POPHIT:["“AU! Oké, weg ben ik!”", "“Hé! Niet tikken!”", "“Te snel voor mij. Deze keer.”", "“Oeps. Ik ben al weg.”"],
 DEMO:[["kunst","Standbeeld van de Schaduw"],["cafe","IJssalon Pinguïn"],["post","Brievenbus Veerweg"],["hotel","Hotel De Nachtuil"],["bank","Spaarbank Dukaat"],["apotheek","Apotheek Pleister"],["park","Kabouterpark"],["halte","Halte Vossenstraat"],["bieb","Bieb De Boekenworm"],["kerk","Scheve Toren"],["winkel","Bakkerij Krentenbol"],["school","School De Rakkers"],["bankje","Bankje aan het water"]],
 TYPES:{kerk:"de kerk",hotel:"het hotel",bank:"de bank",apotheek:"de apotheek",cafe:"het café",bieb:"de bieb",park:"het park",school:"de school",kunst:"het kunstwerk",tank:"het tankstation",winkel:"de winkel",halte:"de bushalte",post:"de brievenbus",bankje:"het bankje",hoek:"de hoek"},
 /* schuilplaats in 3D: zes dingen op vier muren; de drie kisten hebben de kleuren van de hoofddeksels */
