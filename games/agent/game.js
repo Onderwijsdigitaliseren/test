@@ -73,7 +73,7 @@ var IMGROOT=MW.root+"games/agent/img/",IM={};
 function ok(k){var im=IM[k];return !!(im&&im.complete&&im.naturalWidth)}
 var IMREADY=Promise.all(Object.keys(IM).map(function(k){return new Promise(function(res){var im=IM[k];if(im.complete)return res();im.onload=im.onerror=function(){res()}})}));
 var imReady=function(){return Promise.race([IMREADY,new Promise(function(res){setTimeout(res,2500)})])};
-var BKEY=["ronnie","gerrit","greet","sjaak","bea","piet","lena","tas"],BA=[[168,452,100,125,30,180,109,40,132,69,451],[318,452,166,120,25,150,278,94,234,85,451],[262,456,132,120,55,170,157,92,176,63,455],[166,468,94,81,31,197,102,60,110,62,467],[260,336,130,120,67,149,116,88,154,53,335],[160,450,80,119,15,172,129,42,118,63,449],[244,456,138,110,38,180,140,61,158,62,455],[482,460,214,115,34,120,246,110,254,93,459]];
+var BKEY=["ronnie","gerrit","greet","sjaak","bea","piet","lena","tas"],BA=[[174,480,94,125,30,189,106,42,122,71,479],[357,480,182,120,29,144,297,96,248,89,479],[273,476,140,120,61,181,162,96,184,69,475],[152,492,86,93,27,207,101,36,108,67,491],[282,356,140,95,80,155,122,104,176,57,355],[168,470,88,115,18,179,134,43,126,68,469],[275,482,150,110,39,197,142,62,160,65,481],[497,480,222,115,39,110,246,110,260,97,479]];
 var HATK=["hat-red","hat-green","hat-yellow"],SHK=["shirt-stripes","shirt-dots","shirt-blue"],SHOK=["shoe-red","shoe-green","shoe-yellow"];
 function boefIdx(name){var j=D.SUS.findIndex(function(x){return x[0]===name});return j<0?0:j}
 function boefReady(){return ok("boef-ronnie")&&ok("hat-red")&&ok("shirt-stripes")&&ok("shoe-red")}
@@ -507,7 +507,7 @@ function lineup(){var ov=$("#hide"),room=$("#room"),c=G.c,K=c.K;
   $("#hideX").onclick=function(){if(fin)return;ov.hidden=true;hush();if(G.mode==="map"||G.mode==="demo")chip();else render()}}
 function confetti(){var ov=$("#hide");for(var i=0;i<40;i++){var s=document.createElement("i");s.className="cf";s.style.left=50+(Math.random()-.5)*60+"%";s.style.background=COL[i%4];s.style.animationDelay=Math.random()*.6+"s";s.style.setProperty("--dx",(Math.random()-.5)*200+"px");ov.appendChild(s);setTimeout(function(x){x.remove()},2600,s)}}
 function confess(){var c=G.c,k=c.sus[c.K],w=c.claims[c.Li];G.tEnd=G.tEnd||Date.now();save();$("#hide").hidden=true;
-  sheet('<div class="eyebrow">'+esc(T.confess)+'</div><div class="mirror"><img src="'+figURL(k.tr,200,{b:boefIdx(k.name)})+'" alt="" class="caught"><h2>'+esc(k.name)+'</h2></div>'+bubble(fill(D.END,vars()),k.name,"big",'<span class="avatar boefav" style="background-image:url('+figURL(k.tr,120,{b:boefIdx(k.name)})+')"></span>')+
+  sheet('<div class="eyebrow">'+esc(T.confess)+'</div><div class="mirror"><img src="'+figURL(k.tr,200,{b:boefIdx(k.name)})+'" alt="" class="caught"><img src="'+IMGROOT+'boef-sorry.webp" alt="" class="sorry"><h2>'+esc(k.name)+'</h2></div>'+bubble(fill(D.END,vars()),k.name,"big",'<span class="avatar boefav" style="background-image:url('+figURL(k.tr,120,{b:boefIdx(k.name)})+')"></span>')+
     '<p class="note liar">'+esc(fill(T.liarWas,{W:w.who,w:claimText(w)}))+'</p><button type="button" class="btn" id="bPhoto">'+T.goOn+'</button>',true);
   say(fill(D.END,vars()));
   $("#bPhoto").onclick=function(){closeSheet();photoSheet("arrest",win)}}
