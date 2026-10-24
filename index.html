@@ -12,6 +12,7 @@ if(/^#z=LB/i.test(h)){location.replace((nl?"nl/de-laatste-bus.html":"the-last-bu
 if(/^#z=VZ/i.test(h)){location.replace((nl?"nl/de-verdwijning.html":"the-vanishing.html")+h);return}
 if(/^#z=AG/i.test(h)){location.replace((nl?"nl/agent-voor-een-dag.html":"officer-for-a-day.html")+h);return}
 if(/^#z=LD/i.test(h)){location.replace((nl?"nl/de-lichtjesdief.html":"the-light-thief.html")+h);return}
+if(/^#z=PP/i.test(h)){location.replace((nl?"nl/het-geheim-van-pony-pluis.html":"the-secret-of-pony-fluff.html")+h);return}
 if(/^#(z|g)=/.test(h)){location.replace((nl?"nl/moordwandeling.html":"murder-walk.html")+h);return}
 if(h==="#nl"||h==="#en"){try{localStorage.setItem("ss_lang",nl?"nl":"en")}catch(e){}}
 if(nl)location.replace("nl/");})();</script>
@@ -93,7 +94,7 @@ if(nl)location.replace("nl/");})();</script>
 <div class="sheet" id="sheet" hidden><div class="paper" id="sheetBody"></div></div>
 <div id="toast" hidden></div>
 <script src="shared/platform.js?v=1"></script>
-<script src="shared/catalog.js?v=15"></script>
-<script src="shared/hub.js?v=14"></script>
+<script src="shared/catalog.js?v=16"></script>
+<script src="shared/hub.js?v=15"></script>
 </body>
 </html>
