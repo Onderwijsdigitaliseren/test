@@ -10,7 +10,9 @@ window.MW_CATALOG={
     {id:"night",  icon:"🌑", nl:{n:"Nachtzaak",   t:"Jij bent geen speurder maar doelwit. Thriller: blijf lopen en kijk om je heen."},
                             en:{n:"Night case",   t:"You are not the detective but the target. A thriller: keep walking and look around you."}},
     {id:"cold",   icon:"📁", nl:{n:"Cold case",   t:"Een oud dossier, nieuwe ogen. De plekken zijn er nog; de getuigen ook, ouder."},
-                            en:{n:"Cold case",    t:"An old file, fresh eyes. The places are still there; so are the witnesses, older now."}}
+                            en:{n:"Cold case",    t:"An old file, fresh eyes. The places are still there; so are the witnesses, older now."}},
+    {id:"kids",   icon:"🎈", nl:{n:"Kinderfeestje",t:"Voor 8 tot 11 jaar, met een volwassene erbij. Eén telefoon per groepje, overal te spelen."},
+                            en:{n:"Kids' party",  t:"For ages 8 to 11, with an adult along. One phone per group, playable anywhere."}}
   ],
   games:[
     {id:"mw", cat:"murder", status:"live", access:"trial", minutes:"45–90", km:"2–4", group:true,
@@ -53,5 +55,10 @@ window.MW_CATALOG={
           desc:"Not a whodunit: a thriller. At eight points a message from ‘Unknown’ is waiting, and someone is walking behind you. Who is following you, and who can you trust?"},
       nl:{slug:"nl/ooggetuige.html", title:"Ooggetuige", tag:"Jij hebt iets gezien wat je niet had mogen zien.",
           desc:"Geen detective maar een thriller. Op acht punten wacht een bericht van ‘Onbekend’, en iemand loopt achter je. Wie volgt je, en wie kun je vertrouwen?"}}
+    ,{id:"dr", cat:"kids", status:"new", access:"trial", minutes:"45–75", km:"0–2", group:false,
+      en:{slug:"the-swap.html", title:"The Swap", tag:"The Magpie has the present. Eight swaps, one lie.",
+          desc:"A cheeky thief texts the group: do my task, get a message back. Photos of places nearby and silly group photos. He slips up three times, lies once. Who of the five neighbours is he? With a map in your own streets, without one, or indoors."},
+      nl:{slug:"nl/de-ruil.html", title:"De Ruil", tag:"De Kraai heeft het cadeau. Acht ruilen, één leugen.",
+          desc:"Een brutale dief stuurt de groep berichten: doe mijn opdracht, krijg iets terug. Foto's van plekken in de buurt en gekke groepsfoto's. Hij verspreekt zich drie keer, liegt één keer. Wie van de vijf buurtfiguren is hij? Met kaart in je eigen buurt, zonder kaart, of binnen."}}
   ]
 };

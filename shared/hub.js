@@ -23,6 +23,7 @@ function profile(){var p=MW.profile.get(),i=MW.profile.rank(p.xp),nx=MW.profile.
 /* ---------- catalogus ---------- */
 var ICON={
   missing:'<svg viewBox="0 0 64 64" width="56" height="56" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="32" cy="20" r="10" stroke-dasharray="4 4"/><path d="M12 56c2-14 9-20 20-20s18 6 20 20" stroke-dasharray="5 4"/><path d="M44 10l6-6M50 4v6M50 4h-6" opacity=".7"/></svg>',
+  kids:'<svg viewBox="0 0 64 64" width="56" height="56" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="36" cy="38" rx="16" ry="12"/><circle cx="26" cy="24" r="9"/><path d="M17 25l-9 2 9 2"/><circle cx="28" cy="22" r="1.6" fill="currentColor"/><path d="M50 34l10-6-4 10M30 50l-2 7M40 50l2 7"/><path d="M8 50l1.5 3 3.5.5-2.5 2.5.5 3.5-3-1.5-3 1.5.5-3.5L3 53.5l3.5-.5z" opacity=".6"/></svg>',
   cold:'<svg viewBox="0 0 64 64" width="56" height="56" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M8 18h18l5 6h25v28H8z"/><path d="M8 30h48" opacity=".6"/><path d="M20 40h24M20 46h16" opacity=".6"/></svg>',
   night:'<svg viewBox="0 0 64 64" width="56" height="56" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M40 8a22 22 0 1 0 16 36A18 18 0 0 1 40 8z"/><path d="M14 12l1 3 3 1-3 1-1 3-1-3-3-1 3-1zM52 50l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z" fill="currentColor" stroke="none"/></svg>'};
 
