@@ -42,4 +42,8 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://murderwalk.com/the-swap.html"/><xhtml:link rel="alternate" hreflang="nl" href="https://moordwandeling.nl/nl/de-ruil.html"/></url>
   <url><loc>https://moordwandeling.nl/nl/de-ruil.html</loc><lastmod>2026-10-24</lastmod><changefreq>monthly</changefreq><priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="nl" href="https://moordwandeling.nl/nl/de-ruil.html"/><xhtml:link rel="alternate" hreflang="en" href="https://murderwalk.com/the-swap.html"/></url>
+  <url><loc>https://murderwalk.com/officer-for-a-day.html</loc><lastmod>2026-10-24</lastmod><changefreq>monthly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://murderwalk.com/officer-for-a-day.html"/><xhtml:link rel="alternate" hreflang="nl" href="https://moordwandeling.nl/nl/agent-voor-een-dag.html"/></url>
+  <url><loc>https://moordwandeling.nl/nl/agent-voor-een-dag.html</loc><lastmod>2026-10-24</lastmod><changefreq>monthly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://moordwandeling.nl/nl/agent-voor-een-dag.html"/><xhtml:link rel="alternate" hreflang="en" href="https://murderwalk.com/officer-for-a-day.html"/></url>
 </urlset>

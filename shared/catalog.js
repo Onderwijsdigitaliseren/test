@@ -60,5 +60,10 @@ window.MW_CATALOG={
           desc:"At 03:03 the lights went out and the present was gone. Now a cheeky shadow texts the group: do my task, get a mirror shard. Photos, group poses, catching shadows, puzzles. He slips up three times, lies once. Unmask him, enter his hideout, find the present. With a map in your own streets, without one, or indoors."},
       nl:{slug:"nl/de-ruil.html", title:"De Ruil", tag:"De Schaduwdief heeft het cadeau. Acht ruilen, acht scherven, één leugen.",
           desc:"Om 03:03 gingen de lichten uit en was het cadeau weg. Nu stuurt een brutale schaduw de groep berichten: doe mijn opdracht, krijg een spiegelscherf. Foto's, groepsposes, schaduwen vangen, puzzels. Hij verspreekt zich drie keer, liegt één keer. Ontmasker hem, ga zijn schuilplaats binnen, vind het cadeau. Met kaart in je eigen buurt, zonder kaart, of binnen."}}
+    ,{id:"ag", cat:"kids", status:"new", access:"trial", minutes:"40–60", km:"0–2", group:false,
+      en:{slug:"officer-for-a-day.html", title:"Officer for a Day", tag:"Playing police, age 6 and up. The Balloon Bandit has escaped.",
+          desc:"Sworn in as officers, the group follows eight leads: fingerprints, a composite sketch, footprints, the siren, binoculars, the radio, a chase and a crowd. No reading needed: the phone reads aloud. Evidence is true, one witness lies. Then the line-up in 3D, handcuffs, a police diploma and a WANTED poster with the group's own photos. With a map, without one, or indoors."},
+      nl:{slug:"nl/agent-voor-een-dag.html", title:"Agent voor Eén Dag", tag:"Politie spelen, vanaf 6 jaar. De Ballonnenboef is ontsnapt.",
+          desc:"Beëdigd als agenten volgt de groep acht sporen: vingerafdruk, compositietekening, voetspoor, sirene, verrekijker, portofoon, achtervolging en de drukte. Lezen hoeft niet: de telefoon leest voor. Bewijs is waar, één getuige liegt. Dan de confrontatie in 3D, handboeien, een politiediploma en een GEZOCHT-poster met de eigen foto's van de groep. Met kaart, zonder kaart of binnen."}}
   ]
 };
