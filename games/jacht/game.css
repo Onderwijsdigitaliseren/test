@@ -1,4 +1,4 @@
-/* De Schaduwjacht / The Shadow Hunt (stijl gelijk aan De Ruil) – eigen sfeer voor de kinderwandeling: paarse avond, limoen en roze stickers, ronde letters, berichten van De Kraai als chatbubbels.
+/* De Lichtjesdief / The Light Thief – eigen sfeer voor de kinderwandeling: paarse avond, limoen en roze stickers, ronde letters, berichten van De Kraai als chatbubbels.
    Bovenop platform.css. Grote knoppen, grote letters: een telefoon in een kinderhand, buiten. Fonts: Fredoka (koppen), Permanent Marker (De Kraai), Barlow (tekst). */
 :root{--night:#1a1433;--night2:#241c45;--street:#3b3268;--fog:#b9a8ff;--lamp:#d4ff3a;--pink:#ff4fa3;--sun:#f0b429;--sky:#7fb2ff;--paper:#fff8ee;--paper2:#f3e9d8;--rule:#d9c9b4;--ink:#2b2340;--ink2:#6e6386;--blood:#ff4fa3;
   --f-type:'Fredoka','Arial Rounded MT Bold',sans-serif;--f-hand:'Permanent Marker','Comic Sans MS',cursive;--f-cond:'Fredoka','Barlow Condensed',sans-serif}

@@ -1,7 +1,7 @@
-/* De Schaduwjacht / The Shadow Hunt – kinderwandeling voor feestjes. Plaatjes staan in deze map.
-   In plaats van ruilen en scherven: je vangt de Schaduwdief op acht plekken, hij vlucht en laat een lichtje vallen; acht lichtjes in de lantaarn tonen zijn gezicht.
+/* De Lichtjesdief / The Light Thief – kinderwandeling voor feestjes. Plaatjes staan in deze map.
+   In plaats van ruilen en scherven: je vangt de Lichtjesdief op acht plekken, hij vlucht en laat een lichtje vallen; acht lichtjes in de lantaarn tonen zijn gezicht.
    Vereist platform.js, catalog.js, walk.js, onnxruntime (shared/ort), games/fotojacht/model/labels.js en SJ_DATA (data-xx.js).
-   De Schaduwdief heeft het cadeau; acht keer ruil je een opdracht tegen een spiegelscherf en een bericht. Opdrachten wisselen af:
+   De Lichtjesdief heeft het cadeau; acht keer vang je hem en krijg je een spiegelscherf en een bericht. Opdrachten wisselen af:
    groepsfoto, schaduw vangen, schuifpuzzel, plekfoto, zaklamp, kleurcode, plekfoto, veegruit. Drie versprekingen (bewijs), vier beweringen (één leugen), één plaagbericht.
    Drie kenmerken wijzen samen precies één van vijf buurtfiguren aan. Daarna: zijn schuilplaats in 3D, het cadeau vinden, diploma.
    Standen: "map" (kaart + gps), "demo" (fictieve kaart, tik om te lopen), "street" (buiten zonder kaart), "in" (binnen). */
@@ -59,8 +59,8 @@ function genCase(seed,mode){
     return{sus:sus,K:K,claims:claims,Li:Li,slots:slots,ev:ev}
   }
   return null}
-function makeCode(seed,mode){return"SJ"+(mode==="in"?"B":mode==="map"||mode==="demo"?"K":"S")+seed.toString(36).toUpperCase()}
-function parseCode(v){var c=MW.norm(v);if(!/^SJ[KSB]/.test(c)||c.length<4||c.length>11)return null;var seed=parseInt(c.slice(3),36);if(!(seed>=0)||seed>4294967295)return null;return{mode:c[2]==="B"?"in":c[2]==="K"?"map":"street",seed:seed}}
+function makeCode(seed,mode){return"LD"+(mode==="in"?"B":mode==="map"||mode==="demo"?"K":"S")+seed.toString(36).toUpperCase()}
+function parseCode(v){var c=MW.norm(v);if(!/^LD[KSB]/.test(c)||c.length<4||c.length>11)return null;var seed=parseInt(c.slice(3),36);if(!(seed>=0)||seed>4294967295)return null;return{mode:c[2]==="B"?"in":c[2]==="K"?"map":"street",seed:seed}}
 function vars(){var c=G.c,k=c.sus[c.K];return{K:k.name,KR:k.rel,KJ:D.AT.hoofd.v[k.tr.hoofd],KW:D.AT.rit.v[k.tr.rit],KD:D.AT.dier.v[k.tr.dier],J:NAME,C:cadeau()}}
 function claimText(w){return fill(w.t,{v:D.AT[w.k].v[w.v]})}
 function done(){return G.ph.filter(Boolean).length}
@@ -164,7 +164,7 @@ function cine(then){var ov=$("#cine"),cv=$("#cineC"),g=cv.getContext("2d"),txt=$
     g.fillStyle="#07050f";g.fillRect(0,base,w,h-base);
     for(i=0;i<w;i+=90){var on=off<1||ph>7;g.fillStyle=on?"#ffd36a":"#2a2150";if(on){g.shadowColor="#ffd36a";g.shadowBlur=18}g.beginPath();g.arc(i+45,base-34,4,0,7);g.fill();g.shadowBlur=0;g.fillStyle="#1a1433";g.fillRect(i+44,base-30,2,30)}
     if(ph>4.2&&ph<6.5){var sx=w*(ph-4.2)/2.3;shadowFig(g,sx,base-70,150,.95,true,"run")}
-    if(ph>6.6){g.textAlign="center";g.fillStyle="#d4ff3a";g.shadowColor="#2d7a1f";g.shadowBlur=0;var sc=Math.min(1,(ph-6.6)/.5),fs=Math.round(60*sc+20);g.font="700 "+fs+"px 'Fredoka','Arial Rounded MT Bold',sans-serif";g.fillText(L==="nl"?"DE RUIL":"THE SWAP",w/2,h*.4)}
+    if(ph>6.6){g.textAlign="center";g.fillStyle="#d4ff3a";g.shadowColor="#2d7a1f";g.shadowBlur=0;var sc=Math.min(1,(ph-6.6)/.5),fs=Math.round(60*sc+20);var tt=L==="nl"?"DE LICHTJESDIEF":"THE LIGHT THIEF";g.font="700 "+fs+"px 'Fredoka','Arial Rounded MT Bold',sans-serif";var tw=g.measureText(tt).width;if(tw>w-32){fs=Math.floor(fs*(w-32)/tw);g.font="700 "+fs+"px 'Fredoka','Arial Rounded MT Bold',sans-serif"}g.fillText(tt,w/2,h*.4)}
     var li=Math.min(lines.length-1,Math.floor(ph/1.35));txt.textContent=ph<6.6?lines[li]:"";
     if(ph>8.2)return end();raf=requestAnimationFrame(f)};raf=requestAnimationFrame(f)}
 
@@ -276,7 +276,7 @@ function shardAnim(cv,n){var g=cv.getContext("2d"),t0=0,still=matchMedia("(prefe
     for(var k=0;k<24;k++){var a=k/24*6.283,d=40+e*90;g.fillStyle=COL[k%4];g.globalAlpha=(1-t)*.9;g.beginPath();g.arc(160+Math.cos(a)*d,100+Math.sin(a)*d*.6,3,0,7);g.fill()}g.globalAlpha=1;
     drawShard(g,160,100-(1-e)*80,20+e*50,n,20+20*Math.sin(ts/150));if(t<1&&cv.isConnected)mg.raf=requestAnimationFrame(f)};mg.raf=requestAnimationFrame(f)}
 
-/* ---------- puzzels en schaduwspellen (op een vierkant canvas of in het vel) ---------- */
+/* ---------- puzzels en vangspellen (op een vierkant canvas of in het vel) ---------- */
 var PUZ={
   /* schaduw vangen: hij flitst over het scherm, drie keer tikken */
   catch:function(o){var c=o.canvas(),g=c.getContext("2d"),fx=140,fy=140,vx=0,vy=0,hits=0,last=0,flash=0,place=function(){fx=40+Math.random()*200;fy=40+Math.random()*200;var a=Math.random()*6.28,sp=70+hits*35;vx=Math.cos(a)*sp;vy=Math.sin(a)*sp};place();
@@ -443,7 +443,7 @@ function win(){var c=G.c,min=((G.tEnd||Date.now())-G.t0)/60000,s2=G.tries===1&&!
 function drawStrip(cv,ph,code,stars,min){var g=cv.getContext("2d"),W2=cv.width,H=cv.height,slots=G.c.slots,r=rngOf(G.seed);
   var draw=function(){g.fillStyle="#1a1433";g.fillRect(0,0,W2,H);
     for(var i=0;i<140;i++){g.fillStyle=COL[i%4];g.save();g.translate(r()*W2,r()*H);g.rotate(r()*6.3);g.globalAlpha=.55;g.fillRect(-7,-3,14,6);g.restore()}
-    g.fillStyle="#d4ff3a";g.font="700 72px 'Fredoka','Arial Rounded MT Bold',sans-serif";g.textAlign="center";g.fillText(L==="nl"?"DE RUIL":"THE SWAP",W2/2,100);
+    g.fillStyle="#d4ff3a";g.font="700 72px 'Fredoka','Arial Rounded MT Bold',sans-serif";g.textAlign="center";g.fillText(L==="nl"?"DE LICHTJESDIEF":"THE LIGHT THIEF",W2/2,100,W2-80);
     g.fillStyle="#fff";g.font="600 30px 'Fredoka',sans-serif";g.fillText(fill(T.stripT,{c:code}).toUpperCase()+"   "+"★".repeat(stars)+"☆".repeat(3-stars)+"   "+min+" MIN",W2/2,150);
     var pw=250,phh=330,imgH=240,cols=4,gx=(W2-cols*pw)/(cols+1),top=250;
     ph.forEach(function(src,i){var col=i%cols,row=Math.floor(i/cols),x=gx+col*(pw+gx),y=top+row*520+(col%2?26:0),rot=((i*7919)%11-5)*.02;
