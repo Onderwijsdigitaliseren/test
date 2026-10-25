@@ -81,7 +81,10 @@ function drawFenna(g,cx,cy,r){g.save();g.translate(cx,cy);g.scale(r/30,r/30);g.l
 /* plek uit lagen (Kellie's artwork): place-N achtergrond 1600x1000, vlag rechtsboven aan de paal, dieren rechtsonder, lekkers linksonder */
 function placeArt(g,w,h,tr,idx){if(!ok("place-"+(idx%8))||!ok("flag-"+tr.vlag)||!ok("dier-"+tr.dier)||!ok("voer-"+tr.voer))return false;
   var lay=function(k,cx,cy,hh){var im=IM[k],ww=hh*im.naturalWidth/im.naturalHeight;g.drawImage(im,cx-ww/2,cy-hh/2,ww,hh)};
-  g.drawImage(IM["place-"+(idx%8)],0,0,w,h);lay("flag-"+tr.vlag,w*.78,h*.3,h*.44);lay("voer-"+tr.voer,w*.2,h*.84,h*.22);lay("dier-"+tr.dier,w*.72,h*.8,h*.3);return true}
+  var bgi=IM["place-"+(idx%8)],iw=bgi.naturalWidth,ih=bgi.naturalHeight,ta=w/h,FX=[.22,.18,.12,.2,.12,.15,.25,.18];
+  if(iw/ih>ta){var sw=ih*ta;g.drawImage(bgi,(iw-sw)*FX[idx%8],0,sw,ih,0,0,w,h)}else{var sh=iw/ta;g.drawImage(bgi,0,(ih-sh)/2,iw,sh,0,0,w,h)}
+  g.fillStyle="rgba(0,0,0,.18)";g.beginPath();g.ellipse(w*.72,h*.93,w*.17,h*.04,0,0,7);g.fill();
+  lay("flag-"+tr.vlag,w*.87,h*.42,h*.66);lay("voer-"+tr.voer,w*.16,h*.82,h*.3);lay("dier-"+tr.dier,w*.68,h*.78,h*.36);return true}
 function drawPlace(g,x,y,w,h,tr,idx,done){g.save();g.translate(x,y);g.beginPath();rr(g,0,0,w,h,w*.06);g.clip();
   if(placeArt(g,w,h,tr,idx)){if(done){g.fillStyle="rgba(0,0,0,.35)";g.fillRect(0,0,w,h)}g.restore();return}
   var sky=g.createLinearGradient(0,0,0,h);sky.addColorStop(0,"#9ad7ff");sky.addColorStop(1,"#d8f0ff");g.fillStyle=sky;g.fillRect(0,0,w,h);
@@ -98,7 +101,7 @@ function drawPlace(g,x,y,w,h,tr,idx,done){g.save();g.translate(x,y);g.beginPath(
   else{g.fillStyle="#f4c20d";g.beginPath();g.ellipse(fx+w*.05,fy,w*.09,h*.06,0,0,7);g.fill();g.strokeStyle="#d9a500";g.lineWidth=1;for(i=0;i<6;i++){g.beginPath();g.moveTo(fx-w*.02+i*w*.025,fy+h*.04);g.lineTo(fx+i*w*.025,fy-h*.05);g.stroke()}}
   if(done){g.fillStyle="rgba(0,0,0,.35)";g.fillRect(0,0,w,h)}
   g.restore()}
-function placeURL(tr,idx,w){w=w||300;var cv=document.createElement("canvas");cv.width=w;cv.height=Math.round(w*.72);drawPlace(cv.getContext("2d"),0,0,cv.width,cv.height,tr,idx);return cv.toDataURL("image/png")}
+function placeURL(tr,idx,w){w=w||300;var cv=document.createElement("canvas");cv.width=w;cv.height=Math.round(w*(ok("place-0")?.5:.72));drawPlace(cv.getContext("2d"),0,0,cv.width,cv.height,tr,idx);return cv.toDataURL("image/png")}
 function drawShoe(g,x,y,r,col,on){g.save();g.strokeStyle=col;g.lineWidth=r*.42;g.lineCap="round";g.globalAlpha=on?1:.35;g.beginPath();g.arc(x,y,r,Math.PI*.85,Math.PI*2.15);g.stroke();g.restore()}
 function drawHoofPrint(g,x,y,r,col){g.save();g.fillStyle=col||"#5b3a1e";g.beginPath();g.ellipse(x,y,r*.95,r,0,0,7);g.fill();g.fillStyle="rgba(255,255,255,.6)";g.beginPath();g.ellipse(x,y+r*.25,r*.55,r*.45,0,0,7);g.fill();g.fillStyle=col||"#5b3a1e";g.fillRect(x-r*.1,y-r*.2,r*.2,r*.6);g.restore()}
 var AVC={};

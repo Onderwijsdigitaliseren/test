@@ -66,7 +66,7 @@ h1,h2,h3{font-family:var(--f-type);font-weight:700}
 .tags i.t-dier0{background:#fff0b3;color:#7a5a00}.tags i.t-dier1{background:#e8e4da;color:#4a4034}.tags i.t-dier2{background:#f6e6d8;color:#7a4a2a}
 .tags i.t-voer0{background:#ffe0c2;color:#a0480a}.tags i.t-voer1{background:#ffd3d8;color:#8a1020}.tags i.t-voer2{background:#fff0b3;color:#7a5a00}
 .sus.face{flex-direction:row;align-items:center;gap:12px}
-.sus.face .face{width:96px;height:70px;flex:0 0 96px;object-fit:cover;background:#d8f0ff;border-radius:14px;border:2px solid #cbd5e1}
+.sus.face .face{width:120px;height:66px;flex:0 0 120px;object-fit:cover;background:#d8f0ff;border-radius:14px;border:2px solid #cbd5e1}
 .sus.face .sbody{display:flex;flex-direction:column;gap:4px;min-width:0}
 .clue{border-left:4px solid var(--sun);border-radius:0 12px 12px 0;background:#fff;flex-direction:row;align-items:center;gap:10px}
 .clue>div{display:flex;flex-direction:column;gap:3px;min-width:0}
