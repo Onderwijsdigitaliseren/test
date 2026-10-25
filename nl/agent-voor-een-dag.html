@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Agent voor Eén Dag – politie-speurtocht voor kinderfeestjes</title>
+<title>Agent voor Eén Dag – politie-speurtocht voor kinderfeestjes (6–10 jaar)</title>
 <meta name="description" content="Politie spelen op het kinderfeestje: de Ballonnenboef is ontsnapt. Acht politiepuzzels zonder lezen (de telefoon leest voor), vijf boeven, één confrontatie. Met kaart in je eigen buurt, zonder kaart of binnen. Politiediploma en GEZOCHT-poster om te printen. Eerste zaak gratis.">
 <link rel="canonical" href="https://moordwandeling.nl/nl/agent-voor-een-dag.html">
 <link rel="alternate" hreflang="en" href="https://murderwalk.com/officer-for-a-day.html">
@@ -17,9 +17,9 @@
 <meta property="og:locale" content="nl_NL">
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d2a66">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Permanent+Marker&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&display=swap">
 <link rel="stylesheet" href="../shared/platform.css?v=1">
-<link rel="stylesheet" href="../games/agent/game.css?v=4">
+<link rel="stylesheet" href="../games/agent/game.css?v=5">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Agent voor Eén Dag","url":"https://moordwandeling.nl/nl/agent-voor-een-dag.html","description":"Politie-speurtocht voor kinderfeestjes vanaf 6 jaar: de Ballonnenboef is ontsnapt. Acht politiepuzzels zonder lezen, vijf boeven, één confrontatie. Met kaart, zonder kaart of binnen. Politiediploma en GEZOCHT-poster. Eerste zaak gratis.","inLanguage":"nl","gamePlatform":"Webbrowser","genre":["Kinderspel","Speurtocht","Politie"],"isAccessibleForFree":true,"offers":{"@type":"Offer","price":"3.99","priceCurrency":"EUR","description":"Pro"}}</script>
 </head>
 <body>
@@ -30,10 +30,10 @@
       <div class="row0"><div class="pills"><a class="pill" id="hub" href="./">◂ Alle wandelingen</a><button type="button" class="pill" id="lang">English</button></div></div>
       <div class="gap"></div>
       <div class="masthead">
-        <h1 id="ttl">Agent voor Eén Dag</h1><span class="tape">ALLE EENHEDEN! De feestballonnen zijn gestolen!</span>
+        <h1 id="ttl">Agent voor Eén Dag</h1><span class="tape">Alle eenheden. De feestballonnen zijn gestolen.</span>
       </div>
       <div class="tapeline" aria-hidden="true"></div>
-      <p class="lead">Vandaag zijn jullie agenten. Volg acht sporen, los acht politiepuzzels op en zoek uit welke van de vijf boeven de ballonnen heeft. Dan: de confrontatie, de handboeien en een echt politiediploma.</p>
+      <p class="lead">Vandaag zijn jullie agenten. Volg acht sporen, los acht politiepuzzels op en zoek uit wie van de vijf verdachten de ballonnen heeft. Dan: de confrontatie, de handboeien en een echt politiediploma. Voor 6 tot 10 jaar; kies de leeftijd en de puzzels passen zich aan.</p>
       <button class="btn ghost sm" id="bHow">Hoe werkt het?</button>
       <div class="pline"><b id="pRank">–</b><span><b id="pStreak">0</b> Dagen op rij</span><span><b id="pSolved">0</b> Gepakt</span></div>
       <div class="namebox"><label for="name">Wie is er jarig? (mag leeg)</label><input id="name" maxlength="24" autocomplete="off" placeholder="Naam van de jarige"></div>
@@ -42,6 +42,10 @@
         <button type="button" data-m="street" aria-pressed="false">Buiten<br>zonder kaart</button>
         <button type="button" data-m="in" aria-pressed="false">Binnen</button>
       </div>
+      <div class="seg two" id="age">
+        <button type="button" data-a="6" aria-pressed="true">6–7 jaar</button>
+        <button type="button" data-a="8" aria-pressed="false">8 jaar en ouder</button>
+      </div>
       <button class="btn ghost sm" id="bVoice" aria-pressed="true">🔊 Voorlezen</button>
       <button class="btn" id="bResume" hidden>Ga verder met de zaak</button>
       <button class="btn" id="bGps">Start de zaak van vandaag</button>
@@ -49,9 +53,9 @@
       <button class="btn ghost" id="bCode">Zaakcode invoeren</button>
       <button class="btn ghost" id="bPro" hidden></button>
       <p class="note" id="status"></p>
-      <div id="howT" hidden><ol class="how"><li><b>Met kaart:</b> de chef prikt acht sporen op plekken in de buurt. Loop ernaartoe; daar wacht een politiepuzzel. <b>Zonder kaart</b> of <b>binnen:</b> je krijgt de puzzels achter elkaar, zonder plekken. Werkt overal.</li><li>De puzzels zijn voor kinderen vanaf een jaar of zes: vingerafdruk afnemen, een compositietekening maken, een voetspoor herkennen, de sirene nadoen, verschillen zoeken met de verrekijker, een kleurcode op de portofoon, een achtervolging en de boef zoeken in de drukte. Lezen is niet nodig: de telefoon leest alles voor (knop Voorlezen).</li><li>Na elke puzzel krijg je een ballon terug en een spoor. Bewijs is altijd waar en laat een kenmerk zien: pet, shirt of schoenen. Getuigen helpen ook, maar die vergissen zich weleens: alleen het bewijs telt echt.</li><li>Na acht sporen ga je naar de confrontatie: vijf boeven op een rij in 3D. Tik op de dader. Handboeien om, biecht, en de groep krijgt een politiediploma en een GEZOCHT-poster met hun eigen foto's, als PDF om te printen.</li></ol><p class="note">Tip voor de begeleider: lees het bewijs hardop voor aan de hele groep, dat is het leukste moment. Voor 6-jarigen werkt Binnen of Buiten zonder kaart het best; de kaartstand is voor kinderen die al een beetje kunnen lezen. Met een volwassene erbij. Eén telefoon per groepje; met de zaakcode spelen meer telefoons dezelfde zaak. De foto's blijven op de telefoon. Buiten: blijf op de stoep.</p></div>
+      <div id="howT" hidden><ol class="how"><li><b>Met kaart:</b> de chef prikt acht sporen op plekken in de buurt. Loop ernaartoe; daar wacht een politiepuzzel. <b>Zonder kaart</b> of <b>binnen:</b> je krijgt de puzzels achter elkaar, zonder plekken. Werkt overal.</li><li>Kies de leeftijd: bij 8 jaar en ouder zijn de puzzels langer en liegt één getuige. De puzzels: vingerafdruk afnemen, een compositietekening maken, een voetspoor herkennen, de sirene nadoen, verschillen zoeken met de verrekijker, een kleurcode op de portofoon, een achtervolging en de boef zoeken in de drukte. Lezen is niet nodig: de telefoon leest alles voor (knop Voorlezen).</li><li>Na elke puzzel krijg je een ballon terug en een spoor. Bewijs is altijd waar en laat een kenmerk zien: pet, shirt of schoenen. Getuigen helpen ook, maar die vergissen zich weleens: alleen het bewijs telt echt.</li><li>Na acht sporen ga je naar de confrontatie: vijf verdachten op een rij in 3D. Tik op de dader. Handboeien om, biecht, en de groep krijgt een politiediploma en een GEZOCHT-poster met hun eigen foto's, als PDF om te printen.</li></ol><p class="note">Tip voor de begeleider: lees het bewijs hardop voor aan de hele groep, dat is het leukste moment. Voor 6-jarigen werkt Binnen of Buiten zonder kaart het best; de kaartstand is voor kinderen die al een beetje kunnen lezen. Met een volwassene erbij. Eén telefoon per groepje; met de zaakcode spelen meer telefoons dezelfde zaak. De foto's blijven op de telefoon. Buiten: blijf op de stoep.</p></div>
       <button class="btn ghost sm" id="bDemo">Proefronde in de binnenstad van Eindhoven</button>
-      <button class="btn ghost" id="bArch">Gepakte boeven</button>
+      <button class="btn ghost" id="bArch">Opgeloste zaken</button>
       <button class="btn ghost sm" id="bWipe">Wissen</button>
     </div>
   </section>
@@ -62,7 +66,7 @@
         <div class="eyebrow" id="bfNo"></div>
         <h2>Bericht van de chef</h2>
         <div id="bfOpen"></div>
-        <div class="eyebrow">Vijf boeven. Eén van hen heeft de ballonnen.</div>
+        <div class="eyebrow">Vijf verdachten. Eén van hen heeft de ballonnen.</div>
         <div class="list" id="bfSus"></div>
         <p class="note" id="bfTip"></p>
       </div>
@@ -81,7 +85,7 @@
     <div id="card"></div>
     <div id="bar">
       <button type="button" id="bNote">Speurboekje</button>
-      <button type="button" id="bPeople">Boeven</button>
+      <button type="button" id="bPeople">Verdachten</button>
       <button type="button" id="bAcc2" class="red">Confrontatie</button>
     </div>
   </section>
@@ -108,7 +112,7 @@
       </div>
       <div id="mbar">
         <button type="button" id="mNote">Speurboekje</button>
-        <button type="button" id="mPeople">Boeven</button>
+        <button type="button" id="mPeople">Verdachten</button>
         <button type="button" id="mAcc" class="red">Confrontatie</button>
       </div>
     </div>
@@ -124,7 +128,7 @@
 <script src="../shared/platform.js?v=1"></script>
 <script src="../shared/catalog.js?v=16"></script>
 <script src="../shared/walk.js?v=3"></script>
-<script src="../games/agent/data-nl.js?v=2"></script>
-<script src="../games/agent/game.js?v=4"></script>
+<script src="../games/agent/data-nl.js?v=3"></script>
+<script src="../games/agent/game.js?v=5"></script>
 </body>
 </html>

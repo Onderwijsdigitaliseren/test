@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Officer for a Day – police treasure hunt for kids' parties</title>
+<title>Officer for a Day – police treasure hunt for kids' parties (ages 6–10)</title>
 <meta name="description" content="Playing police at the kids' party: the Balloon Bandit has escaped. Eight police puzzles with no reading (the phone reads aloud), five crooks, one line-up. With a map in your own streets, without one, or indoors. Police diploma and WANTED poster to print. First case free.">
 <link rel="canonical" href="https://murderwalk.com/officer-for-a-day.html">
 <link rel="alternate" hreflang="en" href="https://murderwalk.com/officer-for-a-day.html">
@@ -17,9 +17,9 @@
 <meta property="og:locale" content="en_GB">
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d2a66">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Permanent+Marker&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&display=swap">
 <link rel="stylesheet" href="shared/platform.css?v=1">
-<link rel="stylesheet" href="games/agent/game.css?v=4">
+<link rel="stylesheet" href="games/agent/game.css?v=5">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Officer for a Day","url":"https://murderwalk.com/officer-for-a-day.html","description":"Police treasure hunt for kids' parties, age 6 and up: the Balloon Bandit has escaped. Eight police puzzles with no reading, five crooks, one line-up. With a map, without one, or indoors. Police diploma and WANTED poster. First case free.","inLanguage":"en","gamePlatform":"Web browser","genre":["Kids' game","Treasure hunt","Police"],"isAccessibleForFree":true,"offers":{"@type":"Offer","price":"3.99","priceCurrency":"EUR","description":"Pro"}}</script>
 </head>
 <body>
@@ -30,10 +30,10 @@
       <div class="row0"><div class="pills"><a class="pill" id="hub" href="./">◂ All walks</a><button type="button" class="pill" id="lang">Nederlands</button></div></div>
       <div class="gap"></div>
       <div class="masthead">
-        <h1 id="ttl">Officer for a Day</h1><span class="tape">ALL UNITS! The party balloons have been stolen!</span>
+        <h1 id="ttl">Officer for a Day</h1><span class="tape">All units. The party balloons have been stolen.</span>
       </div>
       <div class="tapeline" aria-hidden="true"></div>
-      <p class="lead">Today you are the police. Follow eight leads, solve eight police puzzles and work out which of the five crooks has the balloons. Then: the line-up, the handcuffs and a real police diploma.</p>
+      <p class="lead">Today you are the police. Follow eight leads, solve eight police puzzles and work out which of the five suspects has the balloons. Then: the line-up, the handcuffs and a real police diploma. For ages 6 to 10; pick the age and the puzzles adjust.</p>
       <button class="btn ghost sm" id="bHow">How does it work?</button>
       <div class="pline"><b id="pRank">–</b><span><b id="pStreak">0</b> Day streak</span><span><b id="pSolved">0</b> Caught</span></div>
       <div class="namebox"><label for="name">Whose birthday is it? (optional)</label><input id="name" maxlength="24" autocomplete="off" placeholder="Name of the birthday child"></div>
@@ -42,6 +42,10 @@
         <button type="button" data-m="street" aria-pressed="false">Outside<br>without map</button>
         <button type="button" data-m="in" aria-pressed="false">Indoors</button>
       </div>
+      <div class="seg two" id="age">
+        <button type="button" data-a="6" aria-pressed="true">Age 6–7</button>
+        <button type="button" data-a="8" aria-pressed="false">Age 8 and up</button>
+      </div>
       <button class="btn ghost sm" id="bVoice" aria-pressed="true">🔊 Read aloud</button>
       <button class="btn" id="bResume" hidden>Continue the case</button>
       <button class="btn" id="bGps">Start today's case</button>
@@ -49,9 +53,9 @@
       <button class="btn ghost" id="bCode">Enter a case code</button>
       <button class="btn ghost" id="bPro" hidden></button>
       <p class="note" id="status"></p>
-      <div id="howT" hidden><ol class="how"><li><b>With map:</b> the chief pins eight leads on places nearby. Walk there; a police puzzle is waiting. <b>Without map</b> or <b>indoors:</b> you get the puzzles one after another, without places. Works anywhere.</li><li>The puzzles are for children of about six and up: taking a fingerprint, making a composite sketch, recognising a footprint, copying the siren, spotting differences through the binoculars, a colour code on the radio, a chase and finding the crook in a crowd. No reading needed: the phone reads everything aloud (Read aloud button).</li><li>After every puzzle you get a balloon back and a lead. Evidence is always true and shows a feature: hat, shirt or shoes. Witnesses help too, but they sometimes get it wrong: only the evidence really counts.</li><li>After eight leads you go to the line-up: five crooks in a row in 3D. Tap the culprit. Handcuffs on, a confession, and the group gets a police diploma and a WANTED poster with their own photos, as PDFs to print.</li></ol><p class="note">Tip for the grown-up: read the evidence aloud to the whole group, that is the best moment. For six-year-olds Indoors or Outside without map works best; the map mode is for children who can read a little. With an adult along. One phone per group; with the case code more phones play the same case. The photos stay on the phone. Outside: stay on the pavement.</p></div>
+      <div id="howT" hidden><ol class="how"><li><b>With map:</b> the chief pins eight leads on places nearby. Walk there; a police puzzle is waiting. <b>Without map</b> or <b>indoors:</b> you get the puzzles one after another, without places. Works anywhere.</li><li>Pick the age: for 8 and up the puzzles are longer and one witness lies. The puzzles: taking a fingerprint, making a composite sketch, recognising a footprint, copying the siren, spotting differences through the binoculars, a colour code on the radio, a chase and finding the crook in a crowd. No reading needed: the phone reads everything aloud (Read aloud button).</li><li>After every puzzle you get a balloon back and a lead. Evidence is always true and shows a feature: hat, shirt or shoes. Witnesses help too, but they sometimes get it wrong: only the evidence really counts.</li><li>After eight leads you go to the line-up: five suspects in a row in 3D. Tap the culprit. Handcuffs on, a confession, and the group gets a police diploma and a WANTED poster with their own photos, as PDFs to print.</li></ol><p class="note">Tip for the grown-up: read the evidence aloud to the whole group, that is the best moment. For six-year-olds Indoors or Outside without map works best; the map mode is for children who can read a little. With an adult along. One phone per group; with the case code more phones play the same case. The photos stay on the phone. Outside: stay on the pavement.</p></div>
       <button class="btn ghost sm" id="bDemo">Practice round in the centre of Eindhoven</button>
-      <button class="btn ghost" id="bArch">Crooks caught</button>
+      <button class="btn ghost" id="bArch">Solved cases</button>
       <button class="btn ghost sm" id="bWipe">Wipe</button>
     </div>
   </section>
@@ -62,7 +66,7 @@
         <div class="eyebrow" id="bfNo"></div>
         <h2>Message from the chief</h2>
         <div id="bfOpen"></div>
-        <div class="eyebrow">Five crooks. One of them has the balloons.</div>
+        <div class="eyebrow">Five suspects. One of them has the balloons.</div>
         <div class="list" id="bfSus"></div>
         <p class="note" id="bfTip"></p>
       </div>
@@ -81,7 +85,7 @@
     <div id="card"></div>
     <div id="bar">
       <button type="button" id="bNote">Notebook</button>
-      <button type="button" id="bPeople">Crooks</button>
+      <button type="button" id="bPeople">Suspects</button>
       <button type="button" id="bAcc2" class="red">Line-up</button>
     </div>
   </section>
@@ -108,7 +112,7 @@
       </div>
       <div id="mbar">
         <button type="button" id="mNote">Notebook</button>
-        <button type="button" id="mPeople">Crooks</button>
+        <button type="button" id="mPeople">Suspects</button>
         <button type="button" id="mAcc" class="red">Line-up</button>
       </div>
     </div>
@@ -124,7 +128,7 @@
 <script src="shared/platform.js?v=1"></script>
 <script src="shared/catalog.js?v=16"></script>
 <script src="shared/walk.js?v=3"></script>
-<script src="games/agent/data-en.js?v=2"></script>
-<script src="games/agent/game.js?v=4"></script>
+<script src="games/agent/data-en.js?v=3"></script>
+<script src="games/agent/game.js?v=5"></script>
 </body>
 </html>
