@@ -12,6 +12,9 @@ Zusje van Moordwandeling / Murder Walk: zelfde motor, zelfde Pro/groepspas en de
                       codes komen uit https://moordwandeling.nl/codes.json (één lijst voor beide sites), met /codes.json als terugval
 /shared/catalog.js    de zaken op de hub      /shared/hub.js + hub.css   hub
 /shared/walk.js       wandelmotor (kaart, gps, oefenwereld)
+/shared/party.js      feestopties voor alle zaken (knop "Feestopties" op het startscherm, opslag ss_mm_party):
+                      echte schat (laatste aanwijzing na de ontmaskering, MMP.finale), teamkleur + uitslagcode + teamstand (MMP.result),
+                      begeleidersknop (lang drukken op de bovenste regel van een puzzel: overslaan +2 min, MMP.helper)
 /assets/              logo, iconen, sfeerfoto's, deelplaatje, patroon, hoe-werkt-het-iconen, cover-<id>.webp per zaak
 /sitemap.xml /robots.txt /404.html /CNAME
 ```

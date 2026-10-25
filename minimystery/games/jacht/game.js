@@ -240,6 +240,7 @@ function ruilSheet(i,spot){walkTo=null;var s=G.c.slots[i];cur={i:i,spot:spot||nu
       '<button type="button" class="btn ghost dk" id="shX">'+T.back+'</button>',true);
     $("#shX").onclick=function(){G.force=null;closeSheet()};
     var bh=$("#bHint");if(bh)bh.onclick=function(){$("#hint").textContent=s.hint;bh.hidden=true;G.seen[i]=1;save()};
+    if(window.MMP)MMP.helper(function(){cur.thumb=shardThumb(i,s.act);G.t0-=120000;G.skips=(G.skips||0)+1;save();accept()},null);
     mlWarm();return}
   var I=T.pz[s.act];
   sheet(head+'<div class="pzh"><h2>'+esc(I[0])+'</h2><p class="hint">'+esc(I[1])+'</p></div><div id="pz"></div><button type="button" class="btn ghost dk" id="shX">'+T.back+'</button>',true);
@@ -247,6 +248,7 @@ function ruilSheet(i,spot){walkTo=null;var s=G.c.slots[i];cur={i:i,spot:spot||nu
   var fin=false,o={box:$("#pz"),done:function(){if(fin)return;fin=true;mg.stop();cur.thumb=shardThumb(i,s.act);accept()},
     canvas:function(){o.box.innerHTML='<canvas class="sq" width="280" height="280"></canvas>';return o.box.firstChild},
     at:function(e,c){var b=c.getBoundingClientRect();return[(e.clientX-b.left)/b.width*280,(e.clientY-b.top)/b.height*280]}};
+  if(window.MMP)MMP.helper(function(){G.t0-=120000;G.oops=(G.oops||0)+2;G.skips=(G.skips||0)+1;save();o.done()},null);
   PUZ[s.act](o)}
 function accept(seen){var i=cur.i,s=G.c.slots[i];G.ph[i]=cur.thumb;if(cur.spot)cur.spot.done=true;G.force=null;G.miss=0;if(G.mode!=="map"&&G.mode!=="demo")G.i=i+1;save();buzz([40,30,80]);beep(520,.15);
   var kind=s.kind,head=kind==="ev"?T.slip:kind==="claim"?T.claim:T.gag,sub=kind==="ev"?T.slipT:kind==="claim"?T.claimT:"",txt=kind==="claim"?claimText(G.c.claims[s.w]):s.t,n=done();
@@ -419,7 +421,7 @@ function hideout(){var ov=$("#hide"),room=$("#room"),k=G.c.sus[G.c.K],right=k.tr
 function confetti(){var ov=$("#hide");for(var i=0;i<60;i++){var s=document.createElement("i");s.className="cf";s.style.left=50+(Math.random()-.5)*40+"%";s.style.background=COL[i%4];s.style.animationDelay=Math.random()*.4+"s";s.style.setProperty("--dx",(Math.random()-.5)*300+"px");ov.appendChild(s);setTimeout(function(x){x.remove()},1800,s)}}
 
 /* ---------- gewonnen ---------- */
-function win(){var c=G.c,min=((G.tEnd||Date.now())-G.t0)/60000,s2=G.tries===1&&!G.skips,s3=min<=G.par,stars=1+(s2?1:0)+(s3?1:0),xp=100+stars*50;
+function win(){if(window.MMP&&MMP.hasTreasure()&&!G.trDone){G.trDone=1;G.tEnd=G.tEnd||Date.now();save();$("#hide").hidden=true;return MMP.finale(win)}var c=G.c,min=((G.tEnd||Date.now())-G.t0)/60000,s2=G.tries===1&&!G.skips,s3=min<=G.par,stars=1+(s2?1:0)+(s3?1:0),xp=100+stars*50;
   $("#hide").hidden=true;
   var a=MW.profile.award({game:ID,xp:xp,stars:stars,gps:G.mode==="map",min:min,km:G.dist/1000,title:c.sus[c.K].name,code:G.code});
   if(G.daily){var p=MW.profile.get();p.games.dr.day=MW.today();MW.profile.save(p)}
@@ -438,7 +440,7 @@ function win(){var c=G.c,min=((G.tEnd||Date.now())-G.t0)/60000,s2=G.tries===1&&!
       if(f&&navigator.canShare&&navigator.canShare({files:[f]})){navigator.share({files:[f],text:txt}).catch(function(){})}
       else if(navigator.share){navigator.share({text:txt}).catch(function(){})}else{try{navigator.clipboard.writeText(txt);toast(T.copied)}catch(e){prompt("",txt)}}},"image/jpeg",.85)};
   $("#vDl").onclick=function(){var a=document.createElement("a");a.href=cv.toDataURL("image/jpeg",.85);a.download="jacht-"+code+".jpg";document.body.appendChild(a);a.click();a.remove()};
-  $("#vHome").onclick=function(){closeSheet();endCase()}}
+  $("#vHome").onclick=function(){closeSheet();endCase()};RES.secs=Math.round(((G.tEnd||Date.now())-G.t0)/1000);if(window.MMP)MMP.result($("#sheetBody"),{code:G.code,secs:RES.secs,stars:RES.stars,back:winBack})}
 /* bewijsstrook: foto's en scherven op paars papier met confetti */
 function drawStrip(cv,ph,code,stars,min){var g=cv.getContext("2d"),W2=cv.width,H=cv.height,slots=G.c.slots,r=rngOf(G.seed);
   var draw=function(){g.fillStyle="#1a1433";g.fillRect(0,0,W2,H);
@@ -464,7 +466,7 @@ function dipSheet(){if(!RES)return;
   $("#shX").onclick=function(){closeSheet();winBack()};
   $("#dGo").onclick=function(){TEAM=$("#dTeam").value.trim();LS.set("ss_sj_team",TEAM);dipShow()}}
 function winBack(){var r=RES;sheet('<div class="eyebrow">'+T.won+' · '+esc(r.code)+'</div><h2>'+esc(r.v.K)+'</h2><button type="button" class="btn" id="vDip">'+T.dipBtn+'</button><button type="button" class="btn ghost dk" id="vHome">'+T.home+'</button>',true);
-  $("#vDip").onclick=dipSheet;$("#vHome").onclick=function(){closeSheet();endCase()}}
+  $("#vDip").onclick=dipSheet;$("#vHome").onclick=function(){closeSheet();endCase()};if(window.MMP&&RES.secs!=null)MMP.result($("#sheetBody"),{code:RES.code,secs:RES.secs,stars:RES.stars,back:winBack})}
 function dipShow(){var r=RES;
   sheet('<div class="eyebrow">'+T.dipH+'</div><canvas id="dip" width="1240" height="1754" class="stripc a4"></canvas><p class="note">'+T.dipNote+'</p><button type="button" class="btn" id="dPdf">'+T.dipPdf+'</button><button type="button" class="btn ghost dk" id="dImg">'+T.dipImg+'</button><button type="button" class="btn ghost dk" id="vHome">'+T.home+'</button>',true);
   var cv=$("#dip");drawDiploma(cv,r,TEAM);
@@ -552,6 +554,7 @@ function hero(){var cv=$("#hero");if(!cv)return;var g=cv.getContext("2d"),still=
 hero();
 /* ---------- start ---------- */
 var hz=/[#&]z=([A-Z0-9]+)/i.exec(location.hash);
+if(window.MMP)MMP.init({id:ID,fin:{nl:'De Lichtjesdief zucht: oké, oké. Het cadeau ligt niet in mijn schuilplaats. Ik heb het echt verstopt. Hier.',en:'The Light Thief sighs: okay, okay. The present is not in my hideout. I really hid it. Here.'}});
 home();if(hz){var pc=parseCode(hz[1]);if(pc)codeSheet(hz[1].toUpperCase())}
 MW.pro.ready.then(function(){if(!$("#home").hidden&&$("#sheet").hidden&&!G)home()});
 })();

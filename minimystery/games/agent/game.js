@@ -335,6 +335,7 @@ function taskSheet(i,spot){walkTo=null;var s=G.c.slots[i];cur={i:i,spot:spot||nu
     msg:function(t){var m=$("#pzM");if(!m){m=document.createElement("p");m.id="pzM";m.className="pzst";o.box.appendChild(m)}m.textContent=t},
     say:say,good:function(){buzz(80);beep(660,.15);setTimeout(function(){beep(990,.2)},120)},bad:function(){G.oops=(G.oops||0)+1;buzz(120);beep(180,.2)}};
   if(/debug/.test(location.search))window.AG_DBG=o;
+  if(window.MMP)MMP.helper(function(){G.t0-=120000;G.oops=(G.oops||0)+2;G.skips=(G.skips||0)+1;save();o.done()},function(){say(s.ask+" "+I[1])});
   PUZ[s.act](o)}
 function accept(){var i=cur.i,s=G.c.slots[i];G.ph[i]=cur.thumb;if(cur.spot)cur.spot.done=true;G.force=null;if(G.mode!=="map"&&G.mode!=="demo")G.i=i+1;save();buzz([40,30,80]);beep(520,.15);
   var kind=s.kind,n=done(),head=kind==="ev"?T.ev:kind==="claim"?T.wit:T.gag,sub=kind==="ev"?T.evT:kind==="claim"?(HARD()?T.witT8:T.witT):"",txt=kind==="claim"?claimText(G.c.claims[s.w]):s.t,who=kind==="claim"?G.c.claims[s.w].who:D.CHEF,av=kind==="claim"?witAv(who):CHEF;
@@ -535,7 +536,7 @@ function confess(){var c=G.c,k=c.sus[c.K],w=c.claims[c.Li];G.tEnd=G.tEnd||Date.n
 
 /* ---------- gewonnen ---------- */
 var RES=null,TEAM=LS.get("ss_ag_team","");
-function win(){var c=G.c,min=((G.tEnd||Date.now())-G.t0)/60000,s2=G.tries===1,s3=(G.oops||0)<=3,stars=1+(s2?1:0)+(s3?1:0),xp=100+stars*50;
+function win(){if(window.MMP&&MMP.hasTreasure()&&!G.trDone){G.trDone=1;G.tEnd=G.tEnd||Date.now();save();$("#hide").hidden=true;return MMP.finale(win)}var c=G.c,min=((G.tEnd||Date.now())-G.t0)/60000,s2=G.tries===1,s3=(G.oops||0)<=3,stars=1+(s2?1:0)+(s3?1:0),xp=100+stars*50;
   var a=MW.profile.award({game:ID,xp:xp,stars:stars,gps:G.mode==="map",min:min,km:G.dist/1000,title:c.sus[c.K].name,code:G.code});
   if(G.daily){var p=MW.profile.get();p.games.ag.day=MW.today();MW.profile.save(p)}
   Wk.stopWatch();buzz([100,50,100,50,300]);
@@ -553,7 +554,7 @@ function win(){var c=G.c,min=((G.tEnd||Date.now())-G.t0)/60000,s2=G.tries===1,s3
       if(f&&navigator.canShare&&navigator.canShare({files:[f]})){navigator.share({files:[f],text:txt}).catch(function(){})}
       else if(navigator.share){navigator.share({text:txt}).catch(function(){})}else{try{navigator.clipboard.writeText(txt);toast(T.copied)}catch(e){prompt("",txt)}}},"image/jpeg",.85)};
   $("#vDl").onclick=function(){var a=document.createElement("a");a.href=cv.toDataURL("image/jpeg",.85);a.download="agent-"+code+".jpg";document.body.appendChild(a);a.click();a.remove()};
-  $("#vHome").onclick=function(){closeSheet();endCase()}}
+  $("#vHome").onclick=function(){closeSheet();endCase()};RES.secs=Math.round(((G.tEnd||Date.now())-G.t0)/1000);if(window.MMP)MMP.result($("#sheetBody"),{code:G.code,secs:RES.secs,stars:RES.stars,back:winBack})}
 function loadImgs(list,cb){var IMG={},left=list.filter(Boolean).length;if(!left)return cb(IMG);list.filter(Boolean).forEach(function(src){if(IMG[src]!==undefined){if(--left===0)cb(IMG);return}IMG[src]=null;var im=new Image();im.onload=im.onerror=function(){IMG[src]=im.width?im:null;if(--left===0)cb(IMG)};im.src=src})}
 function polaroid(g,im,x,y,pw,phh,cap2,rot,font){var imgH=phh-pw*.34;g.save();g.translate(x+pw/2,y+phh/2);g.rotate(rot);g.translate(-pw/2,-phh/2);
   g.shadowColor="rgba(0,0,0,.3)";g.shadowBlur=18;g.shadowOffsetY=8;g.fillStyle="#fff";g.fillRect(0,0,pw,phh);g.shadowColor="transparent";
@@ -577,7 +578,7 @@ function dipSheet(){if(!RES)return;
   $("#shX").onclick=function(){closeSheet();winBack()};
   $("#dGo").onclick=function(){TEAM=$("#dTeam").value.trim();LS.set("ss_ag_team",TEAM);dipShow()}}
 function winBack(){var r=RES;sheet('<div class="eyebrow">'+T.won+' · '+esc(r.code)+'</div><h2>'+esc(r.v.K)+'</h2><button type="button" class="btn" id="vDip">'+T.dipBtn+'</button><button type="button" class="btn" id="vPos">'+T.posBtn+'</button><button type="button" class="btn ghost dk" id="vHome">'+T.home+'</button>',true);
-  $("#vDip").onclick=dipSheet;$("#vPos").onclick=posShow;$("#vHome").onclick=function(){closeSheet();endCase()}}
+  $("#vDip").onclick=dipSheet;$("#vPos").onclick=posShow;$("#vHome").onclick=function(){closeSheet();endCase()};if(window.MMP&&RES.secs!=null)MMP.result($("#sheetBody"),{code:RES.code,secs:RES.secs,stars:RES.stars,back:winBack})}
 function a4Sheet(title,note,fname,drawFn){var r=RES;
   sheet('<div class="eyebrow">'+esc(title)+'</div><canvas id="dip" width="1240" height="1754" class="stripc a4"></canvas><p class="note">'+esc(note)+'</p><button type="button" class="btn" id="dPdf">'+T.dipPdf+'</button><button type="button" class="btn ghost dk" id="dImg">'+T.dipImg+'</button><button type="button" class="btn ghost dk" id="dBack">'+T.back+'</button><button type="button" class="btn ghost dk" id="vHome">'+T.home+'</button>',true);
   var cv=$("#dip");drawFn(cv,r);
@@ -666,6 +667,7 @@ hero();
 if(/debug/.test(location.search))window.AG_DRAW={drawFig:drawFig,badgeDraw:badgeDraw,drawBalloon:drawBalloon};
 /* ---------- start ---------- */
 var hz=/[#&]z=([A-Z0-9]+)/i.exec(location.hash);
+if(window.MMP)MMP.init({id:ID,fin:{nl:'Chef Bos: De Bordendief heeft nog iets bekend. Voor het feest had hij iets verstopt. Niet op het scherm, maar echt.',en:'Chief Hayes: The Sign Thief confessed one more thing. He hid something for the party. Not on the screen, but for real.'}});
 home();if(hz){var pc=parseCode(hz[1]);if(pc)codeSheet(hz[1].toUpperCase())}
 MW.pro.ready.then(function(){if(!$("#home").hidden&&$("#sheet").hidden&&!G)home()});
 })();
