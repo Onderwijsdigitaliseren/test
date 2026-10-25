@@ -74,7 +74,7 @@ function cuffsSVG(){return '<svg class="cuffs" viewBox="0 0 64 32" width="64" he
 var IMGROOT=MW.root+"games/agent/img/",IM={};
 ["chef-talk","chef-happy","chef-worried","chef-head","hat-red","hat-green","hat-yellow","shirt-stripes","shirt-dots","shirt-blue","shoe-red","shoe-green","shoe-yellow",
  "chef-arms","car","van","moto","boef-ronnie","boef-gerrit","boef-greet","boef-sjaak","boef-bea","boef-piet","boef-lena","boef-tas","boef-run","boef-sneak","boef-caught","boef-sorry","kids-row","kids-tools",
- "icon-star","icon-cuffs","icon-siren","icon-radio","icon-glass","icon-foot","icon-print"].forEach(function(k){var im=new Image();im.src=IMGROOT+k+".webp";IM[k]=im});
+ "icon-star","icon-cuffs","icon-siren","icon-radio","icon-glass","icon-foot","icon-print"].forEach(function(k){var im=new Image();im.src=IMGROOT+k+".webp?v=3";IM[k]=im});
 function ok(k){var im=IM[k];return !!(im&&im.complete&&im.naturalWidth)}
 var IMREADY=Promise.all(Object.keys(IM).map(function(k){return new Promise(function(res){var im=IM[k];if(im.complete)return res();im.onload=im.onerror=function(){res()}})}));
 var imReady=function(){return Promise.race([IMREADY,new Promise(function(res){setTimeout(res,2500)})])};
@@ -97,8 +97,8 @@ function fig(g,x,y,h,o){o=o||{};if(o.cop||!o.tr||!boefReady())return drawFig(g,x
 function imgAt(g,k,x,y,h,al,anchorBottom,flip){var im=IM[k];if(!ok(k))return false;var w=h*im.naturalWidth/im.naturalHeight;g.save();g.globalAlpha=al==null?1:al;if(flip){g.translate(x,0);g.scale(-1,1);x=0}g.drawImage(im,x-w/2,anchorBottom===false?y-h/2:y-h,w,h);g.restore();return true}
 function itemImg(g,k,v,x,y,s){var key=k==="hoofd"?HATK[v]:k==="shirt"?SHK[v]:SHOK[v];if(!ok(key))return drawItem(g,k,v,x,y,s);var im=IM[key],w=s*62,h=w*im.naturalHeight/im.naturalWidth;g.drawImage(im,x-w/2,y-h/2,w,h)}
 var ICONIMG={print:"icon-print",shoe:"icon-foot",siren:"icon-siren",radio:"icon-radio",diff:"icon-glass",maze:"icon-cuffs",crowd:"icon-star",team:"icon-star"};
-function icoImg(id,cls){return ICONIMG[id]?'<img class="'+(cls||"ico")+' pic" src="'+IMGROOT+ICONIMG[id]+'.webp" alt="">':ico(id,cls)}
-var CHEF='<span class="avatar chef" aria-hidden="true" style="background-image:url('+IMGROOT+'chef-head.webp)"></span>';
+function icoImg(id,cls){return ICONIMG[id]?'<img class="'+(cls||"ico")+' pic" src="'+IMGROOT+ICONIMG[id]+'.webp?v=3" alt="">':ico(id,cls)}
+var CHEF='<span class="avatar chef" aria-hidden="true" style="background-image:url('+IMGROOT+'chef-head.webp?v=3)"></span>';
 function witAv(name){return '<span class="avatar wit" aria-hidden="true">'+esc(name.replace(/^(Opa|Juf|Bakker|Postbode|Mevrouw|Kapper|Oom|Grandpa|Miss|Baker|Postman|Mrs|Barber|Uncle)\s+/,"").slice(0,1))+'</span>'}
 
 /* ---------- zaakgenerator ---------- */
@@ -209,7 +209,7 @@ function build(seed,mode,pois,ways,origin,daily){
   Wk.loading(T.pois);imReady().then(function(){Wk.loading("");brief()})}
 function brief(){var c=G.c;
   $("#bfNo").textContent=fill(T.briefNo,{c:G.code})+(G.mode==="demo"?" · "+T.demoCase:"");
-  $("#bfOpen").innerHTML='<div class="chefpic"><img src="'+IMGROOT+'chef-talk.webp" alt="" class="chefimg"><img src="'+IMGROOT+'kids-row.webp" alt="" class="kidsimg"></div>'+bubble(fill(D.OPEN,{C:ballons()}),D.CHEF,"big");
+  $("#bfOpen").innerHTML='<div class="chefpic"><img src="'+IMGROOT+'chef-talk.webp?v=3" alt="" class="chefimg"><img src="'+IMGROOT+'kids-row.webp?v=3" alt="" class="kidsimg"></div>'+bubble(fill(D.OPEN,{C:ballons()}),D.CHEF,"big");
   $("#bfSus").innerHTML=c.sus.map(susCard).join("");
   $("#bfTip").textContent=T.codeTip;
   show("brief")}
@@ -393,7 +393,7 @@ function drawScene(g,S,W,H){g.save();var sky=g.createLinearGradient(0,0,0,H);sky
   S.flowers.forEach(function(f){g.strokeStyle="#15803d";g.lineWidth=2;g.beginPath();g.moveTo(f.x,H*.84);g.lineTo(f.x,H*.76);g.stroke();g.fillStyle=f.col;g.beginPath();g.arc(f.x,H*.75,5,0,7);g.fill()});
   if(S.cat){g.fillStyle="#374151";g.beginPath();g.ellipse(S.cat.x,H*.8,12,6,0,0,7);g.fill();g.beginPath();g.arc(S.cat.x+10,H*.76,5,0,7);g.fill();g.beginPath();g.moveTo(S.cat.x+6,H*.73);g.lineTo(S.cat.x+8,H*.68);g.lineTo(S.cat.x+10,H*.73);g.moveTo(S.cat.x+11,H*.73);g.lineTo(S.cat.x+13,H*.68);g.lineTo(S.cat.x+14,H*.73);g.fill()}
   if(S.bird){g.strokeStyle="#111";g.lineWidth=2;g.beginPath();g.moveTo(S.bird.x-8,S.bird.y);g.quadraticCurveTo(S.bird.x-4,S.bird.y-6,S.bird.x,S.bird.y);g.quadraticCurveTo(S.bird.x+4,S.bird.y-6,S.bird.x+8,S.bird.y);g.stroke()}
-  if(S.balloon){drawBalloon(g,S.balloon.x,H*.3,7,null,S.balloon.col)}
+  if(S.balloon){drawSign(g,S.balloon.x,H*.62,34,"STRAAT",null)}
   g.restore()}
 var PUZ={
   /* 1 vingerafdruk: poeder wegvegen, dan de juiste van vier kiezen */
@@ -444,7 +444,7 @@ var PUZ={
       function(){var i=Math.floor(r()*3);S2.houses[i].door=S2.houses[i].door==="#7c2d12"?"#facc15":"#7c2d12";var h=S.houses[i];return[h.x+h.w*.5,H*.7-h.h*.2]},
       function(){S2.flowers[1].col="#60a5fa";return[S.flowers[1].x,H*.76]},
       function(){S2.tree.apples=false;return[S.tree.x,H*.48]},
-      function(){S2.balloon.col="#4fd3ff";return[S.balloon.x,H*.3]},
+      function(){S2.balloon=null;return[S.balloon.x,H*.62]},
       function(){S2.sun=false;return[W*.86,H*.2]},
       function(){var i=Math.floor(r()*3);S2.houses[i].win=false;var h=S.houses[i];return[h.x+h.w*.5,H*.7-h.h*.68]}];
     var ND=HARD()?5:3,pts=shuffle(cands,r).slice(0,ND).map(function(f){return{p:f(),hit:false}}),found=0;
@@ -518,7 +518,7 @@ function accuseSheet(){sheet('<h2>'+T.acH+'</h2><p>'+T.acT+'</p><button type="bu
 function lineup(){var ov=$("#hide"),room=$("#room"),c=G.c,K=c.K;
   var pos=[[0,"left:28%"],[0,"left:72%"],[1,"left:50%"],[2,"left:50%"],[3,"left:50%"]];
   var walls=[[],[],[],[]];c.sus.forEach(function(s,i){walls[pos[i][0]].push('<div class="obj boef" data-s="'+i+'" style="'+pos[i][1]+';bottom:6%"><img src="'+figURL(s.tr,230,{b:boefIdx(s.name)})+'" alt="">'+cuffsSVG()+'<span>'+esc(s.name)+'</span></div>')});
-  room.innerHTML=walls.map(function(w,i){return '<div class="wall w'+i+'" style="background-image:url('+IMGROOT+'wall-'+i+'.webp)">'+w.join("")+'</div>'}).join("")+'<div class="floor"></div>';
+  room.innerHTML=walls.map(function(w,i){return '<div class="wall w'+i+'" style="background-image:url('+IMGROOT+'wall-'+i+'.webp?v=3)">'+w.join("")+'</div>'}).join("")+'<div class="floor"></div>';
   $("#hideHint").textContent=T.lineHint;$("#hideTip").textContent=T.lineTip;$("#hideMsg").textContent="";ov.hidden=false;say(T.lineHint);
   var rot=0,pd=null,fin=false,set=function(){room.style.transform="rotateY("+rot+"deg)"};set();
   ov.onpointerdown=function(e){pd={x:e.clientX,r:rot,moved:false}};ov.onpointermove=function(e){if(!pd)return;var dx=e.clientX-pd.x;if(Math.abs(dx)>6)pd.moved=true;rot=pd.r+dx*.35;set()};
@@ -528,7 +528,7 @@ function lineup(){var ov=$("#hide"),room=$("#room"),c=G.c,K=c.K;
   $("#hideX").onclick=function(){if(fin)return;ov.hidden=true;hush();if(G.mode==="map"||G.mode==="demo")chip();else render()}}
 function confetti(){var ov=$("#hide");for(var i=0;i<40;i++){var s=document.createElement("i");s.className="cf";s.style.left=50+(Math.random()-.5)*60+"%";s.style.background=["#1d4ed8","#ffc21a","#fff","#4fd3ff"][i%4];s.style.animationDelay=Math.random()*.6+"s";s.style.setProperty("--dx",(Math.random()-.5)*200+"px");ov.appendChild(s);setTimeout(function(x){x.remove()},2600,s)}}
 function confess(){var c=G.c,k=c.sus[c.K],w=c.claims[c.Li];G.tEnd=G.tEnd||Date.now();save();$("#hide").hidden=true;
-  sheet('<div class="eyebrow">'+esc(T.confess)+'</div><div class="mirror"><img src="'+figURL(k.tr,200,{b:boefIdx(k.name)})+'" alt="" class="caught"><img src="'+IMGROOT+'boef-sorry.webp" alt="" class="sorry"><h2>'+esc(k.name)+'</h2></div>'+bubble(fill(D.END,vars()),k.name,"big",'<span class="avatar boefav" style="background-image:url('+figURL(k.tr,120,{b:boefIdx(k.name)})+')"></span>')+
+  sheet('<div class="eyebrow">'+esc(T.confess)+'</div><div class="mirror"><img src="'+figURL(k.tr,200,{b:boefIdx(k.name)})+'" alt="" class="caught"><img src="'+IMGROOT+'boef-sorry.webp?v=3" alt="" class="sorry"><h2>'+esc(k.name)+'</h2></div>'+bubble(fill(D.END,vars()),k.name,"big",'<span class="avatar boefav" style="background-image:url('+figURL(k.tr,120,{b:boefIdx(k.name)})+')"></span>')+
     '<p class="note liar">'+esc(fill(T.liarWas,{W:w.who,w:claimText(w)}))+'</p><button type="button" class="btn" id="bPhoto">'+T.goOn+'</button>',true);
   say(fill(D.END,vars()));
   $("#bPhoto").onclick=function(){closeSheet();photoSheet("arrest",win)}}
