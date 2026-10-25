@@ -294,7 +294,7 @@ function items(){var it=[];
     cx.fillStyle=s.done?"#9fb0d8":"#fff";cx.shadowColor="#000";cx.shadowBlur=6;if(api.V.s>=.4||sel===s)cx.fillText(s.name.toUpperCase().slice(0,24),X,Y+36);cx.shadowBlur=0}})});
   if(open.length){var k=G.c.sus[G.c.K];it.push({x:TH.x,y:TH.y,tap:false,draw:function(cx,X,Y,t,api){var run=TH.wait<=0,key=run?"boef-run":"boef-sneak",bob=run?Math.abs(Math.sin(t/120))*4:0,al=.8+.2*Math.abs(Math.sin(t/400));
     cx.save();cx.fillStyle="rgba(0,0,0,.25)";cx.beginPath();cx.ellipse(X,Y+4,18,6,0,0,7);cx.fill();cx.restore();
-    if(!imgAt(cx,key,X,Y-bob,68,al,true,TH.vx<0))drawFig(cx,X,Y-bob,62,{tr:k.tr,balloons:true,al:al})}})}
+    if(!imgAt(cx,key,X,Y-bob,68,al,true,false))drawFig(cx,X,Y-bob,62,{tr:k.tr,balloons:true,al:al})}})}
   return it}
 /* de dief loopt echt over de kaart: van open spoor naar open spoor, blijft even rondhangen, en gaat weer verder */
 var TH={x:0,y:0,tgt:null,vx:1,wait:0,init:false};
