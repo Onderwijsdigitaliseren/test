@@ -32,7 +32,8 @@ document.addEventListener("click",function(e){var b=e.target.closest(".spk");if(
 
 /* ---------- plaatjes (Kellie's artwork, games/pony/img): als een plaatje er is, wint het van de canvas-tekening ---------- */
 var IMGROOT=MW.root+"games/pony/img/",IM={};
-["fenna-talk","fenna-happy","fenna-head","pluis","pluis-walk","pluis-bibi","bibi","wit-goat","wit-duck","wit-dog","wit-cat","wit-crow","kids-row","hero","icon-shoe"].forEach(function(k){var im=new Image();im.src=IMGROOT+k+".webp";IM[k]=im});
+["fenna-talk","fenna-happy","fenna-head","pluis","pluis-walk","pluis-bibi","bibi","wit-goat","wit-duck","wit-dog","wit-cat","wit-crow","kids-row","hero","icon-shoe",
+ "place-0","place-1","place-2","place-3","place-4","place-5","place-6","place-7","flag-0","flag-1","flag-2","dier-0","dier-1","dier-2","voer-0","voer-1","voer-2"].forEach(function(k){var im=new Image();im.src=IMGROOT+k+".webp";IM[k]=im});
 function ok(k){var im=IM[k];return !!(im&&im.complete&&im.naturalWidth)}
 var IMREADY=Promise.all(Object.keys(IM).map(function(k){return new Promise(function(res){var im=IM[k];if(im.complete)return res();im.onload=im.onerror=function(){res()}})}));
 var imReady=function(){return Promise.race([IMREADY,new Promise(function(res){setTimeout(res,2500)})])};
@@ -77,7 +78,12 @@ function drawFenna(g,cx,cy,r){g.save();g.translate(cx,cy);g.scale(r/30,r/30);g.l
   g.fillStyle="#fff";g.beginPath();g.arc(-7,2,4,0,7);g.arc(7,2,4,0,7);g.fill();g.fillStyle="#2b2b36";g.beginPath();g.arc(-6,2,2.2,0,7);g.arc(8,2,2.2,0,7);g.fill();
   g.strokeStyle="#7a3b2e";g.lineWidth=1.8;g.beginPath();g.arc(0,8,7,.3,2.85);g.stroke();g.fillStyle="#f28c8c";g.beginPath();g.arc(-12,9,3,0,7);g.arc(12,9,3,0,7);g.fill();g.restore()}
 /* plek waar Bibi kan logeren: kaartje met vlag, dieren en lekkers. (x,y) linksboven, w×h */
+/* plek uit lagen (Kellie's artwork): place-N achtergrond 1600x1000, vlag rechtsboven aan de paal, dieren rechtsonder, lekkers linksonder */
+function placeArt(g,w,h,tr,idx){if(!ok("place-"+(idx%8))||!ok("flag-"+tr.vlag)||!ok("dier-"+tr.dier)||!ok("voer-"+tr.voer))return false;
+  var lay=function(k,cx,cy,hh){var im=IM[k],ww=hh*im.naturalWidth/im.naturalHeight;g.drawImage(im,cx-ww/2,cy-hh/2,ww,hh)};
+  g.drawImage(IM["place-"+(idx%8)],0,0,w,h);lay("flag-"+tr.vlag,w*.78,h*.3,h*.44);lay("voer-"+tr.voer,w*.2,h*.84,h*.22);lay("dier-"+tr.dier,w*.72,h*.8,h*.3);return true}
 function drawPlace(g,x,y,w,h,tr,idx,done){g.save();g.translate(x,y);g.beginPath();rr(g,0,0,w,h,w*.06);g.clip();
+  if(placeArt(g,w,h,tr,idx)){if(done){g.fillStyle="rgba(0,0,0,.35)";g.fillRect(0,0,w,h)}g.restore();return}
   var sky=g.createLinearGradient(0,0,0,h);sky.addColorStop(0,"#9ad7ff");sky.addColorStop(1,"#d8f0ff");g.fillStyle=sky;g.fillRect(0,0,w,h);
   g.fillStyle="#fde047";g.beginPath();g.arc(w*.85,h*.18,h*.09,0,7);g.fill();
   g.fillStyle="#a8e08a";g.beginPath();g.ellipse(w*.3,h*.62,w*.6,h*.2,0,0,7);g.ellipse(w*.9,h*.66,w*.5,h*.22,0,0,7);g.fill();g.fillStyle=GRASS;g.fillRect(0,h*.64,w,h*.36);
