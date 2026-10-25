@@ -19,7 +19,7 @@ var CFG={
   kofi:"https://ko-fi.com/s/aa277497a2", // Ko-fi-knop op de hub; zet hier je Ko-fi-pagina (bijv. https://ko-fi.com/<jouwnaam>) als je die liever toont
   salt:"moordwandeling|",            // zout voor code-hashes; NIET wijzigen, anders werken bestaande codes niet meer
   codes:"codes.json",                // terugval-kopie (relatief aan de site-root)
-  codesMain:"https://www.moordwandeling.nl/codes.json" // de ene codelijst voor Moordwandeling én MiniMystery
+  codesMain:"https://moordwandeling.nl/codes.json" // de ene codelijst voor Moordwandeling én MiniMystery
 };
 window.SS_PRO=CFG;
 /* Tijdelijk: Pro-codes (Ko-fi-product van Moordwandeling) openen ook de Feestpas. Zet op false zodra er een eigen Feestpas-product is. */

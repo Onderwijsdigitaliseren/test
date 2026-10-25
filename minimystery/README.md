@@ -9,7 +9,7 @@ Zusje van Moordwandeling / Murder Walk: zelfde motor, zelfde Pro/groepspas en de
 /het-geheim-van-pony-pluis.html     Pony Pluis      /en/the-secret-of-pony-fluff.html  (logica in /games/pony/)
 /agent-voor-een-dag.html            Agent           /en/officer-for-a-day.html         (logica in /games/agent/)
 /shared/platform.js   gedeelde laag (Pro, groepspas, profiel, taal). Verschil met Moordwandeling: root = NL, /en/ = EN;
-                      codes komen uit https://www.moordwandeling.nl/codes.json (één lijst voor beide sites), met /codes.json als terugval
+                      codes komen uit https://moordwandeling.nl/codes.json (één lijst voor beide sites), met /codes.json als terugval
 /shared/catalog.js    de zaken op de hub      /shared/hub.js + hub.css   hub
 /shared/walk.js       wandelmotor (kaart, gps, oefenwereld)
 /assets/              logo, iconen, sfeerfoto's, deelplaatje, patroon, hoe-werkt-het-iconen, cover-<id>.webp per zaak
