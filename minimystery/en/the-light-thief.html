@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Light Thief – a kids' detective hunt for parties, playable anywhere</title>
+<link rel="icon" href="../assets/favicon.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<meta name="description" content="At 03:03 the Light Thief stole every light in the street, and the present. Catch him at eight places with photos, puzzles and catching games, collect eight lights and see who he is. With a map in your own streets, without a map, or indoors. One phone per group. First hunt free.">
+<link rel="canonical" href="https://www.minimystery.nl/en/the-light-thief.html">
+<link rel="alternate" hreflang="en" href="https://www.minimystery.nl/en/the-light-thief.html">
+<link rel="alternate" hreflang="nl" href="https://www.minimystery.nl/de-lichtjesdief.html">
+<link rel="alternate" hreflang="x-default" href="https://www.minimystery.nl/de-lichtjesdief.html">
+<meta property="og:site_name" content="MiniMystery">
+<meta property="og:title" content="MiniMystery – The Light Thief">
+<meta property="og:description" content="Catch the Light Thief, collect eight lights, see who he is. A kids' detective hunt that works anywhere.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.minimystery.nl/en/the-light-thief.html">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:image" content="https://www.minimystery.nl/assets/og-image.jpg">
+<meta name="theme-color" content="#1a1433">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Permanent+Marker&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600&display=swap">
+<link rel="stylesheet" href="../shared/platform.css?v=1">
+<link rel="stylesheet" href="../games/jacht/game.css?v=3">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"The Light Thief","url":"https://www.minimystery.nl/en/the-light-thief.html","description":"A kids' detective hunt for parties: catch the Light Thief at eight places, collect eight lights in your lantern and find out who he is. With a map, without a map or indoors. First hunt free.","inLanguage":"en","gamePlatform":"Web browser","genre":["Kids' game","Scavenger hunt","Detective"],"isAccessibleForFree":true,"offers":{"@type":"Offer","price":"3.99","priceCurrency":"EUR","description":"Pro"}}</script>
+</head>
+<body>
+<div id="app">
+  <section class="screen" id="home">
+    <canvas id="hero" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <div class="row0"><div class="pills"><a class="pill" id="hub" href="./">◂ All cases</a><button type="button" class="pill" id="lang">Nederlands</button></div></div>
+      <div class="gap"></div>
+      <div class="masthead">
+        <h1 id="ttl">The Light Thief</h1><span class="tape">Last night at 03:03 someone stole every light in the street. And the present.</span>
+      </div>
+      <p class="lead">The Light Thief is hiding at eight places nearby. Catch him and he drops a light out of fright. Eight lights in your lantern and you see who he is by day. Then you know where the present is.</p>
+      
+      <button class="btn ghost sm" id="bHow">How does it work?</button>
+      <div class="pline"><b id="pRank">–</b><span><b id="pStreak">0</b> Days in a row</span><span><b id="pSolved">0</b> Caught</span></div>
+      <div class="namebox"><label for="name">Whose birthday is it? (may be empty)</label><input id="name" maxlength="24" autocomplete="off" placeholder="Birthday child's name"></div>
+      <div class="seg" id="len">
+        <button type="button" data-m="map" aria-pressed="true">Outside<br>with map</button>
+        <button type="button" data-m="street" aria-pressed="false">Outside<br>no map</button>
+        <button type="button" data-m="in" aria-pressed="false">Indoors</button>
+      </div>
+      <button class="btn" id="bResume" hidden>Continue the hunt</button>
+      <button class="btn" id="bGps">Start today's hunt</button>
+      <button class="btn ghost" id="bRandom">Extra hunt</button>
+      <button class="btn ghost" id="bCode">Enter hunt code</button>
+      <button class="btn ghost" id="bPro" hidden></button>
+      <p class="note" id="status"></p>
+      <div id="howT" hidden><ol class="how"><li><b>With map:</b> the Light Thief hides at eight places nearby and creeps across the map. Walk there and catch him. <b>No map</b> or <b>indoors:</b> you get the challenges one after another, without places. Works anywhere.</li><li>Every time he dares you differently: a photo (a bench, a letterbox, the whole group as shadows; the phone checks whether it fits) or a game on the screen: catch him, find him with the torch, a puzzle, a lock.</li><li>If you succeed he flees, drops a light and shouts something. Sometimes he slips up: that is evidence and always true. Sometimes he claims something about himself: three times true, once a lie.</li><li>With eight lights your lantern is bright enough. Point out who he is and which claim was the lie. Then you enter his hideout to find the present. Your photos become an evidence strip and a diploma.</li></ol><p class="note">With an adult along. One phone per group; with the hunt code several phones play the same hunt. The photos stay on the phone. Outside: stay on the pavement, do not photograph strangers.</p></div>
+      <button class="btn ghost sm" id="bDemo">Practice round in Eindhoven city centre</button>
+      
+      
+      <button class="btn ghost" id="bArch">Thieves caught</button>
+      <button class="btn ghost sm" id="bWipe">Wipe</button>
+    </div>
+  </section>
+
+  <section class="screen" id="brief" hidden>
+    <div class="wrap">
+      <div class="paper">
+        <div class="eyebrow" id="bfNo"></div>
+        <h2>Message from the Light Thief</h2>
+        <div id="bfOpen"></div>
+        <div class="eyebrow">Five neighbours. One of them is him.</div>
+        <div class="list" id="bfSus"></div>
+        <p class="note" id="bfTip"></p>
+      </div>
+      <button class="btn" id="bGo">On the hunt!</button>
+      <button class="btn ghost" id="bBack">Back</button>
+    </div>
+  </section>
+
+  <section class="screen" id="cards" hidden>
+    <div id="hud">
+      <div><b id="hT">0:00</b><span>Time</span></div>
+      <div><b id="hS">0/8</b><span>Places</span></div>
+      <div><div class="shards" id="hM"></div><span>Lights</span></div>
+      <button type="button" id="zM2" aria-label="Menu">☰</button>
+    </div>
+    <div id="card"></div>
+    <div id="bar">
+      <button type="button" id="bNote">Detective book</button>
+      <button type="button" id="bPeople">Suspects</button>
+      <button type="button" id="bAcc2" class="red">Unmask</button>
+    </div>
+  </section>
+
+  <section class="screen" id="play" hidden>
+    <canvas id="map"></canvas>
+    <div id="mhud">
+      <div><b id="mT">0:00</b><span>Time</span></div>
+      <div><b id="mS">0/8</b><span>Places</span></div>
+      <div><div class="shards" id="mM"></div><span>Lights</span></div>
+      <button type="button" id="zM" aria-label="Menu">☰</button>
+    </div>
+    <div id="zoom">
+      <button type="button" id="zIn" aria-label="Zoom in">+</button>
+      <button type="button" id="zOut" aria-label="Zoom out">−</button>
+      <button type="button" id="zMe" aria-label="Centre on me">◎</button>
+    </div>
+    <div id="low">
+      <div id="radar">On the way to the Light Thief</div>
+      <div id="chip" hidden>
+        <div class="row"><b id="cName"></b><span id="cDist"></span></div>
+        <span id="cHint" class="note"></span>
+        <button class="btn" id="cAct"></button>
+      </div>
+      <div id="mbar">
+        <button type="button" id="mNote">Detective book</button>
+        <button type="button" id="mPeople">Suspects</button>
+        <button type="button" id="mAcc" class="red">Unmask</button>
+      </div>
+    </div>
+  </section>
+
+  <div id="cine" hidden><canvas id="cineC"></canvas><div id="cineT"></div><button type="button" class="btn" id="cineX">Skip ▸</button></div>
+  <div id="hide" hidden><div id="room"></div><div id="hideUI"><b id="hideHint"></b><span id="hideTip"></span></div><div id="hideMsg"></div><button type="button" class="btn" id="hideX">◂ Back</button></div>
+  <input type="file" id="file" accept="image/*" capture="environment" aria-label="Take the photo">
+  <div class="sheet" id="sheet" hidden><div class="paper" id="sheetBody"></div></div>
+  <div id="load" hidden role="status"><div class="spin"></div><b id="loadT"></b><span>This usually takes 5 to 30 seconds. Stay on this page.</span></div>
+  <div id="toast" hidden></div>
+</div>
+<script src="../shared/platform.js?v=mm1"></script>
+<script src="../shared/catalog.js?v=mm1"></script>
+<script src="../shared/walk.js?v=3"></script>
+<script src="../shared/ort/ort.wasm.min.js?v=1"></script>
+<script src="../games/fotojacht/model/labels.js?v=1"></script>
+<script src="../games/jacht/data-en.js?v=3"></script>
+<script src="../games/jacht/game.js?v=4"></script>
+</body>
+</html>
