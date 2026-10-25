@@ -6,7 +6,7 @@
 <title>The Light Thief – a kids' detective hunt for parties, playable anywhere</title>
 <link rel="icon" href="../assets/favicon.png">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
-<meta name="description" content="At 03:03 the Light Thief stole every light in the street, and the present. Catch him at eight places with photos, puzzles and catching games, collect eight lights and see who he is. With a map in your own streets, without a map, or indoors. One phone per group. First hunt free.">
+<meta name="description" content="At 03:03 the Light Thief stole every light in the street, and the present. Catch him at eight places with photos, puzzles and catching games, collect eight lights and see who he is. With a map in your own streets, without a map, or indoors. One phone per group. Practice round free.">
 <link rel="canonical" href="https://www.minimystery.nl/en/the-light-thief.html">
 <link rel="alternate" hreflang="en" href="https://www.minimystery.nl/en/the-light-thief.html">
 <link rel="alternate" hreflang="nl" href="https://www.minimystery.nl/de-lichtjesdief.html">
@@ -23,7 +23,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Permanent+Marker&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600&display=swap">
 <link rel="stylesheet" href="../shared/platform.css?v=1">
 <link rel="stylesheet" href="../games/jacht/game.css?v=3">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"The Light Thief","url":"https://www.minimystery.nl/en/the-light-thief.html","description":"A kids' detective hunt for parties: catch the Light Thief at eight places, collect eight lights in your lantern and find out who he is. With a map, without a map or indoors. First hunt free.","inLanguage":"en","gamePlatform":"Web browser","genre":["Kids' game","Scavenger hunt","Detective"],"isAccessibleForFree":true,"offers":{"@type":"Offer","price":"3.99","priceCurrency":"EUR","description":"Pro"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"The Light Thief","url":"https://www.minimystery.nl/en/the-light-thief.html","description":"A kids' detective hunt for parties: catch the Light Thief at eight places, collect eight lights in your lantern and find out who he is. With a map, without a map or indoors. Practice round free.","inLanguage":"en","gamePlatform":"Web browser","genre":["Kids' game","Scavenger hunt","Detective"],"isAccessibleForFree":false,"offers":{"@type":"Offer","price":"9.99","priceCurrency":"EUR","description":"Party Pass"}}</script>
 </head>
 <body>
 <div id="app">
@@ -38,7 +38,7 @@
       <p class="lead">The Light Thief is hiding at eight places nearby. Catch him and he drops a light out of fright. Eight lights in your lantern and you see who he is by day. Then you know where the present is.</p>
       
       <button class="btn ghost sm" id="bHow">How does it work?</button>
-      <div class="pline"><b id="pRank">–</b><span><b id="pStreak">0</b> Days in a row</span><span><b id="pSolved">0</b> Caught</span></div>
+      <div class="pline" hidden style="display:none"><b id="pRank">–</b><span><b id="pStreak">0</b> Days in a row</span><span><b id="pSolved">0</b> Caught</span></div>
       <div class="namebox"><label for="name">Whose birthday is it? (may be empty)</label><input id="name" maxlength="24" autocomplete="off" placeholder="Birthday child's name"></div>
       <div class="seg" id="len">
         <button type="button" data-m="map" aria-pressed="true">Outside<br>with map</button>
@@ -125,12 +125,14 @@
   <div id="load" hidden role="status"><div class="spin"></div><b id="loadT"></b><span>This usually takes 5 to 30 seconds. Stay on this page.</span></div>
   <div id="toast" hidden></div>
 </div>
-<script src="../shared/platform.js?v=mm1"></script>
+<script src="../shared/platform.js?v=mm2"></script>
 <script src="../shared/catalog.js?v=mm2"></script>
 <script src="../shared/walk.js?v=3"></script>
 <script src="../shared/ort/ort.wasm.min.js?v=1"></script>
 <script src="../games/fotojacht/model/labels.js?v=1"></script>
 <script src="../games/jacht/data-en.js?v=3"></script>
 <script src="../games/jacht/game.js?v=4"></script>
+<script id="mm-demo">/* MiniMystery: ?oefen start direct de gratis oefenronde (link vanaf Inspiratie op de hub) */
+if(/[?&]oefen\b/.test(location.search)){var b=document.getElementById("bDemo");if(b)setTimeout(function(){b.click()},50)}</script>
 </body>
 </html>

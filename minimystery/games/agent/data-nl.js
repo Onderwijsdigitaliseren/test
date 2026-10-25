@@ -3,7 +3,7 @@
    drie keer echt bewijs (altijd waar, laat een kenmerk zien), vier keer een getuige (één liegt), één keer een bericht van de chef.
    Drie kenmerken (pet, shirt, schoenen) wijzen samen precies één van vijf boeven aan. Daarna: de confrontatie in 3D, handboeien, diploma en GEZOCHT-poster. */
 window.AG_DATA={lang:"nl",V:"de Ballonnenboef",CHEF:"Chef Dikkie",
-T:{today:"Start de zaak van vandaag",todayAgain:"Nog een zaak van vandaag",extra:"Extra zaak",pro:"Pro",proOn:"Pro staat aan: elke dag een nieuwe zaak, zo vaak je wilt.",proFree:"De eerste zaak is gratis.",proUsed:"Je gratis zaak is gespeeld. Met Pro speel je onbeperkt, op alle wandelingen.",
+T:{today:"Start de zaak van vandaag",todayAgain:"Nog een zaak van vandaag",extra:"Extra zaak",pro:"Feestpas",proOn:"De Feestpas staat aan: speel zo vaak je wilt.",proFree:"De oefenronde is gratis. De echte zaak speel je met de Feestpas.",proUsed:"De oefenronde is gratis. De echte zaak speel je met de Feestpas.",
   cancel:"Annuleren",close:"Sluiten",back:"Terug",saved:"De zaak is bewaard. Ga later verder.",wiped:"Gewist.",
   briefNo:"Zaakcode {c}",codeTip:"Spelen jullie met meer telefoons? Vul op elke telefoon deze zaakcode in, dan krijgt iedereen dezelfde zaak.",
   voice:"Voorlezen",voiceOn:"De telefoon leest de opdrachten voor.",voiceOff:"Voorlezen staat uit.",
@@ -33,7 +33,7 @@ T:{today:"Start de zaak van vandaag",todayAgain:"Nog een zaak van vandaag",extra
   up:"Nieuwe rang: {r}!",pts:"+{x} punten",streakTxt:"Dag {n} op rij",streakTxtP:"{n} dagen op rij",
   dH:"Zaakcode",dT:"Vul de code van een andere telefoon in. Dan spelen jullie dezelfde zaak.",dGo:"Start deze zaak",dBad:"Die code klopt niet. Een zaakcode begint met AG.",
   aH:"Gepakte boeven",aNone:"Nog geen boef gepakt.",aTip:"Tik op een zaak om hem opnieuw te spelen.",
-  wipe:"Wissen",wipeY:"Deze zaak wissen",wipeAll:"Alles wissen (ook rang en punten)",wipeQ:"Deze zaak wissen?",wipeT:"De foto's en het speurboekje van deze zaak gaan weg.",allQ:"Echt alles wissen?",allT:"Rang, punten, dagen op rij en gepakte boeven gaan weg. Pro blijft.",allY:"Ja, wis alles",
+  wipe:"Wissen",wipeY:"Deze zaak wissen",wipeAll:"Alles wissen (ook rang en punten)",wipeQ:"Deze zaak wissen?",wipeT:"De foto's en het speurboekje van deze zaak gaan weg.",allQ:"Echt alles wissen?",allT:"Rang, punten, dagen op rij en gepakte boeven gaan weg. De Feestpas blijft.",allY:"Ja, wis alles",
   dipBtn:"Politiediploma (PDF)",posBtn:"GEZOCHT-poster (PDF)",dipH:"Politiediploma",dipT:"Wie zaten er in het team? Namen met een komma ertussen. Mag ook leeg.",dipP:"Namen van het team",dipGo:"Maak het diploma",dipPdf:"Download als PDF",dipImg:"Deel als afbeelding",dipNote:"A4, om te printen. De foto's blijven op deze telefoon.",
   dipTitle:"POLITIEDIPLOMA",dipSub:"BUREAU BUURTWACHT · AGENT VOOR ÉÉN DAG",dipL1:"Bureau Buurtwacht verklaart dat",dipL2:"het team van {J}",dipL2b:"dit team",dipL3:"de Ballonnenboef heeft gepakt.",dipL4:"Het was {K}. Met {KJ}, {KW} en {KD}.",dipDate:"{d} · {m} minuten · {s}",dipTeam:"De agenten",dipSign:"De Ballonnenboef (met handboeien om)",dipFoot:"minimystery.nl · Agent voor Eén Dag · zaakcode {c}",
   posH:"GEZOCHT-poster",posTitle:"GEZOCHT",posSub:"DE BALLONNENBOEF",posL1:"Gepakt door deze agenten:",posL2:"Beloning: taart voor iedereen",posNote:"A4, om te printen. De foto blijft op deze telefoon.",

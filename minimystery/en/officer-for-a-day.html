@@ -6,7 +6,7 @@
 <title>Officer for a Day – police treasure hunt for kids' parties</title>
 <link rel="icon" href="../assets/favicon.png">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
-<meta name="description" content="Playing police at the kids' party: the Balloon Bandit has escaped. Eight police puzzles with no reading (the phone reads aloud), five crooks, one line-up. With a map in your own streets, without one, or indoors. Police diploma and WANTED poster to print. First case free.">
+<meta name="description" content="Playing police at the kids' party: the Balloon Bandit has escaped. Eight police puzzles with no reading (the phone reads aloud), five crooks, one line-up. With a map in your own streets, without one, or indoors. Police diploma and WANTED poster to print. Practice round free.">
 <link rel="canonical" href="https://www.minimystery.nl/en/officer-for-a-day.html">
 <link rel="alternate" hreflang="en" href="https://www.minimystery.nl/en/officer-for-a-day.html">
 <link rel="alternate" hreflang="nl" href="https://www.minimystery.nl/agent-voor-een-dag.html">
@@ -23,7 +23,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Permanent+Marker&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600&display=swap">
 <link rel="stylesheet" href="../shared/platform.css?v=1">
 <link rel="stylesheet" href="../games/agent/game.css?v=4">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Officer for a Day","url":"https://www.minimystery.nl/en/officer-for-a-day.html","description":"Police treasure hunt for kids' parties, age 6 and up: the Balloon Bandit has escaped. Eight police puzzles with no reading, five crooks, one line-up. With a map, without one, or indoors. Police diploma and WANTED poster. First case free.","inLanguage":"en","gamePlatform":"Web browser","genre":["Kids' game","Treasure hunt","Police"],"isAccessibleForFree":true,"offers":{"@type":"Offer","price":"3.99","priceCurrency":"EUR","description":"Pro"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Officer for a Day","url":"https://www.minimystery.nl/en/officer-for-a-day.html","description":"Police treasure hunt for kids' parties, age 6 and up: the Balloon Bandit has escaped. Eight police puzzles with no reading, five crooks, one line-up. With a map, without one, or indoors. Police diploma and WANTED poster. Practice round free.","inLanguage":"en","gamePlatform":"Web browser","genre":["Kids' game","Treasure hunt","Police"],"isAccessibleForFree":false,"offers":{"@type":"Offer","price":"9.99","priceCurrency":"EUR","description":"Party Pass"}}</script>
 </head>
 <body>
 <div id="app">
@@ -38,7 +38,7 @@
       <div class="tapeline" aria-hidden="true"></div>
       <p class="lead">Today you are the police. Follow eight leads, solve eight police puzzles and work out which of the five crooks has the balloons. Then: the line-up, the handcuffs and a real police diploma.</p>
       <button class="btn ghost sm" id="bHow">How does it work?</button>
-      <div class="pline"><b id="pRank">–</b><span><b id="pStreak">0</b> Day streak</span><span><b id="pSolved">0</b> Caught</span></div>
+      <div class="pline" hidden style="display:none"><b id="pRank">–</b><span><b id="pStreak">0</b> Day streak</span><span><b id="pSolved">0</b> Caught</span></div>
       <div class="namebox"><label for="name">Whose birthday is it? (optional)</label><input id="name" maxlength="24" autocomplete="off" placeholder="Name of the birthday child"></div>
       <div class="seg" id="len">
         <button type="button" data-m="map" aria-pressed="true">Outside<br>with map</button>
@@ -124,10 +124,12 @@
   <div id="load" hidden role="status"><div class="spin"></div><b id="loadT"></b><span>This usually takes 5 to 30 seconds. Stay on this page.</span></div>
   <div id="toast" hidden></div>
 </div>
-<script src="../shared/platform.js?v=mm1"></script>
+<script src="../shared/platform.js?v=mm2"></script>
 <script src="../shared/catalog.js?v=mm2"></script>
 <script src="../shared/walk.js?v=3"></script>
 <script src="../games/agent/data-en.js?v=2"></script>
 <script src="../games/agent/game.js?v=4"></script>
+<script id="mm-demo">/* MiniMystery: ?oefen start direct de gratis oefenronde (link vanaf Inspiratie op de hub) */
+if(/[?&]oefen\b/.test(location.search)){var b=document.getElementById("bDemo");if(b)setTimeout(function(){b.click()},50)}</script>
 </body>
 </html>

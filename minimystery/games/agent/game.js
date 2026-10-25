@@ -522,8 +522,8 @@ function win(){var c=G.c,min=((G.tEnd||Date.now())-G.t0)/60000,s2=G.tries===1,s3
   RES={ph:G.ph.slice(),team:G.team,arrest:G.arrest,code:code,stars:stars,min:Math.round(min),v:vars(),slots:G.c.slots.slice(),K:c.sus[c.K],Kb:boefIdx(c.sus[c.K].name),seed:G.seed};
   sheet('<div class="eyebrow">'+T.won+' · '+esc(code)+'</div><div class="stars">'+"★".repeat(stars)+"☆".repeat(3-stars)+'</div><h2>'+esc(c.sus[c.K].name)+'</h2>'+
     '<canvas id="strip" width="1080" height="1350" class="stripc"></canvas>'+
-    '<div class="tags"><i>'+Math.round(min)+' min</i><i>'+fill(T.pts,{x:xp})+'</i>'+(G.mode==="map"?'<i>'+fill(st===1?T.streakTxt:T.streakTxtP,{n:st})+'</i>':'')+'</div>'+
-    (a.up?'<p><b>'+esc(fill(T.up,{r:MW.profile.rankName(a.prof.xp,L)}))+'</b></p>':'')+(!s2?'<p class="note">'+T.missed1+'</p>':'')+(!s3?'<p class="note">'+T.missed2+'</p>':'')+
+    '<div class="tags"><i>'+Math.round(min)+' min</i></div>'+
+    ''+(!s2?'<p class="note">'+T.missed1+'</p>':'')+(!s3?'<p class="note">'+T.missed2+'</p>':'')+
     '<button type="button" class="btn" id="vDip">'+T.dipBtn+'</button><button type="button" class="btn" id="vPos">'+T.posBtn+'</button><button type="button" class="btn ghost dk" id="vShare">'+T.shareBtn+'</button><button type="button" class="btn ghost dk" id="vDl">'+T.dl+'</button><button type="button" class="btn ghost dk" id="vHome">'+T.home+'</button>',true);
   var cv=$("#strip");drawStrip(cv,RES);
   $("#vDip").onclick=dipSheet;$("#vPos").onclick=posShow;

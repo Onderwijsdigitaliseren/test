@@ -7,9 +7,9 @@
 "use strict";
 /* ===== PRO-INSTELLINGEN: alleen hier aanpassen ===== */
 var CFG={
-  url:"https://ko-fi.com/s/aa277497a2",  // Ko-fi-product voor Pro
-  price:"€ 3,99",                    // staat op de Pro-knop
-  hash:1659528216,                   // oude Pro-code (vóór codes.json) blijft hiermee werken
+  url:"",                           // Ko-fi-product voor de Feestpas (€ 9,99): hier de link invullen
+  price:"€ 9,99",                    // staat op de Feestpas-knop
+  hash:0,                            // geen oude Pro-code op MiniMystery
   groep:{
     url:"https://ko-fi.com/s/dc0dfbafe5",  // Ko-fi-product voor de groepspas
     price:"€ 9,99",
@@ -82,25 +82,27 @@ var entry=function(h){for(var i=0;i<CODES.length;i++)if(CODES[i]&&CODES[i].h===h
 var dayNum=function(s){var p=String(s).split("-");return p[0]*10000+p[1]*100+ +p[2]};
 function valid(e,t){return !!e&&!e.uit&&(e.t||"pro")===t&&(!e.tot||dayNum(today())<=dayNum(e.tot))}
 // wie de oude (pre-codes.json) Pro-code al had ingevoerd, blijft Pro
-if(!LS.get("ss_proH","")&&CFG.hash&&hashStr(norm(LS.get("ss_pro","")))===CFG.hash)LS.set("ss_proH","oud");
+if(false&&hashStr(norm(LS.get("ss_pro","")))===CFG.hash)LS.set("ss_proH","oud");
 var PRO={
   cfg:CFG,
   ready:ready,
   codesOk:function(){return codesOk},
   codes:function(){return CODES},
-  isPro:function(){var h=LS.get("ss_proH","");if(!h)return false;var e=entry(h);return !(e&&e.uit)},
+  /* MiniMystery: de Feestpas (codetype "feest") is de echte activiteit. Alleen de oefenrondes zijn gratis. */
+  isPro:function(){var h=LS.get("ss_feestH","");if(!h)return false;var e=entry(h);return !!e&&e.t==="feest"&&!e.uit||!e&&!codesOk},
   /* vrije proefzaak per spel: spel 1 gebruikt het oude ss_free, nieuwe spellen ss_free_<id> */
   freeKey:function(game){return game==="mw"?"ss_free":"ss_free_"+game},
-  usedFree:function(game){return !!LS.get(this.freeKey(game),0)},
+  usedFree:function(game){return true},
   setFree:function(game){LS.set(this.freeKey(game),1)},
-  locked:function(game){return !this.isPro()&&this.usedFree(game)},
+  locked:function(game){return !this.isPro()},
   groupLeft:function(){var g=LS.get("ss_grp",null);if(!g)return 0;var e=entry(g.h);if(e&&e.uit)return 0;var end=g.t0+(CFG.groep.uren||48)*36e5;
     if(e&&e.tot){var p=String(e.tot).split("-");end=Math.min(end,new Date(+p[0],p[1]-1,+p[2],23,59,59).getTime())}return Math.max(0,end-Date.now())},
   /* redeem(code) → "pro" | "groep" | "used" | "exp" | null */
   redeem:function(v){var c=norm(v);if(!c)return null;
     if(CFG.hash&&hashStr(c)===CFG.hash){LS.set("ss_proH","oud");return"pro"}
     var h=sha256(CFG.salt+c),e=entry(h);if(!e)return null;
-    if(valid(e,"pro")){LS.set("ss_proH",h);return"pro"}
+    if(valid(e,"feest")){LS.set("ss_feestH",h);return"pro"}
+    if(e.t!=="feest")return null;
     if(valid(e,"groep")){var cur=LS.get("ss_grp",null),used=LS.get("ss_grpU",[]);if(cur&&cur.h===h&&this.groupLeft())return"groep";if(used.indexOf(h)>=0)return"used";
       used.push(h);LS.set("ss_grpU",used);LS.set("ss_grp",{h:h,t0:Date.now()});return"groep"}
     return"exp"}
@@ -108,14 +110,14 @@ var PRO={
 
 /* ---------- gedeelde teksten (hub, Pro-paneel, nieuwe spellen) ---------- */
 var T={
-  nl:{pro:"Pro",pH:"Eén keer Pro, alle zaken",pT:"Met Pro speel je bij alle MiniMystery-zaken (en bij Moordwandeling) elke dag een nieuwe zaak en zoveel extra zaken als je wilt. Je betaalt één keer via Ko-fi en krijgt daar een code. Vul die hieronder in.",
-    pBtn:"Word Pro",pHave:"Ik heb een code",pUse:"Code invoeren",pOk:"Pro staat aan. Veel speurplezier!",pBad:"Die code klopt niet. Controleer hem en probeer het opnieuw.",pExp:"Deze code is verlopen.",pUsedC:"Deze groepscode is op dit toestel al gebruikt.",pNoNet:"De codelijst kon niet worden geladen. Controleer je verbinding en probeer het opnieuw.",pWait:"Even geduld, de codes worden geladen…",
-    pOn:"Pro is actief op dit toestel.",pFree:"Je eerste zaak van elk spel is gratis.",pUsed:"Je gratis zaak is gespeeld. Met Pro speel je elke dag een nieuwe.",
+  nl:{pro:"Feestpas",pH:"De Feestpas: de echte speurtocht",pT:"Met de Feestpas speel je alle MiniMystery-zaken echt: met kaart in je eigen buurt, zonder kaart of binnen, zo vaak je wilt. De oefenrondes bij Inspiratie blijven gratis. Je betaalt één keer {p} via Ko-fi en krijgt daar een code. Vul die hieronder in.",
+    pBtn:"Koop de Feestpas",pHave:"Ik heb een code",pUse:"Code invoeren",pOk:"De Feestpas staat aan. Veel speurplezier!",pBad:"Die code klopt niet. Controleer hem en probeer het opnieuw.",pExp:"Deze code is verlopen.",pUsedC:"Deze groepscode is op dit toestel al gebruikt.",pNoNet:"De codelijst kon niet worden geladen. Controleer je verbinding en probeer het opnieuw.",pWait:"Even geduld, de codes worden geladen…",
+    pOn:"De Feestpas is actief op dit toestel.",pFree:"De oefenrondes zijn gratis. De echte zaak speel je met de Feestpas.",pUsed:"De oefenrondes zijn gratis. De echte zaak speel je met de Feestpas.",
     gp:"Groepspas",gpOn:"Groepspas actief, nog {h} uur.",gpOk:"Groepspas staat aan voor {u} uur.",gpH:"Speel met een groep",gpT:"Met een groepspas maak je {u} uur lang groepszaken aan, voor maximaal {n} telefoons. Alleen jij hebt de pas nodig. De rest doet gratis mee via je uitnodiging. De {u} uur gaan in zodra je de code invoert.",gpBtn:"Koop een groepspas",
     cancel:"Annuleren",close:"Sluiten",rank:"Rang",streak:"Dagen op rij",solved:"Opgelost",pts:"{x} punten. Nog {n} tot {r}.",ptsTop:"{x} punten. Hoogste rang bereikt."},
-  en:{pro:"Pro",pH:"Pro once, every case",pT:"Pro unlocks a new case every day and as many extra cases as you like, in every MiniMystery case (and Murder Walk too). Pay once via Ko-fi and you get a code. Enter it below.",
-    pBtn:"Go Pro",pHave:"I have a code",pUse:"Enter code",pOk:"Pro is on. Happy sleuthing!",pBad:"That code is not right. Check it and try again.",pExp:"This code has expired.",pUsedC:"This group code has already been used on this phone.",pNoNet:"The code list could not be loaded. Check your connection and try again.",pWait:"One moment, loading codes…",
-    pOn:"Pro is active on this phone.",pFree:"Your first case of every game is free.",pUsed:"Your free case is played. With Pro you play a new one every day.",
+  en:{pro:"Party Pass",pH:"The Party Pass: the real hunt",pT:"With the Party Pass you play every MiniMystery case for real: with a map in your own streets, without one, or indoors, as often as you like. The practice rounds under Inspiration stay free. Pay {p} once via Ko-fi and you get a code. Enter it below.",
+    pBtn:"Get the Party Pass",pHave:"I have a code",pUse:"Enter code",pOk:"The Party Pass is on. Happy sleuthing!",pBad:"That code is not right. Check it and try again.",pExp:"This code has expired.",pUsedC:"This group code has already been used on this phone.",pNoNet:"The code list could not be loaded. Check your connection and try again.",pWait:"One moment, loading codes…",
+    pOn:"The Party Pass is active on this phone.",pFree:"The practice rounds are free. You play the real case with the Party Pass.",pUsed:"The practice rounds are free. You play the real case with the Party Pass.",
     gp:"Group pass",gpOn:"Group pass active, {h} hours left.",gpOk:"Group pass is on for {u} hours.",gpH:"Play with a group",gpT:"A group pass lets you create group cases for {u} hours, for up to {n} phones. Only you need the pass; the others join free through your invitation. The {u} hours start when you enter the code.",gpBtn:"Buy a group pass",
     cancel:"Cancel",close:"Close",rank:"Rank",streak:"Day streak",solved:"Solved",pts:"{x} points. {n} more to make {r}.",ptsTop:"{x} points. Top rank reached."}
 };
@@ -123,7 +125,7 @@ var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&
 var fill=function(s,o){return String(s).replace(/\{(\w+)\}/g,function(m,k){return o&&k in o?o[k]:m})};
 
 /* Pro-paneel: HTML + binding. Zelfde ids als in spel 1 (pCode/pOk/pMsg). kind: "pro"|"groep" */
-function proHTML(lang,kind){var t=T[lang]||T.en,g=kind==="groep",url=g?CFG.groep.url:CFG.url,price=g?CFG.groep.price:CFG.price,U={u:CFG.groep.uren,n:CFG.groep.max};
+function proHTML(lang,kind){var t=T[lang]||T.en,g=kind==="groep",url=g?CFG.groep.url:CFG.url,price=g?CFG.groep.price:CFG.price,U={u:CFG.groep.uren,n:CFG.groep.max,p:CFG.price};
   return '<div class="eyebrow">'+(g?t.gp:t.pro)+'</div><h2>'+(g?t.gpH:t.pH)+'</h2><p>'+fill(g?t.gpT:t.pT,U)+'</p>'+
     (url?'<a class="btn" href="'+esc(url)+'" target="_blank" rel="noopener">'+(g?t.gpBtn:t.pBtn)+(price?' · '+esc(price):'')+'</a>':'')+
     '<div class="eyebrow">'+t.pHave+'</div><input class="inp" id="pCode" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="'+t.pHave+'"><button type="button" class="btn ghost dk" id="pOk">'+t.pUse+'</button><p class="note" id="pMsg" style="color:#a5392c"></p>'}

@@ -3,7 +3,7 @@
    three times real evidence (always true, shows a feature), four times a witness (one lies), once a message from the chief.
    Three features (hat, shirt, shoes) point at exactly one of five crooks. Then: the line-up in 3D, handcuffs, diploma and WANTED poster. */
 window.AG_DATA={lang:"en",V:"the Balloon Bandit",CHEF:"Chief Chubb",
-T:{today:"Start today's case",todayAgain:"Another case for today",extra:"Extra case",pro:"Pro",proOn:"Pro is on: a new case every day, as often as you like.",proFree:"The first case is free.",proUsed:"Your free case is played. With Pro you play without limits, on every walk.",
+T:{today:"Start today's case",todayAgain:"Another case for today",extra:"Extra case",pro:"Party Pass",proOn:"The Party Pass is on: play as often as you like.",proFree:"The practice round is free. You play the real case with the Party Pass.",proUsed:"The practice round is free. You play the real case with the Party Pass.",
   cancel:"Cancel",close:"Close",back:"Back",saved:"The case is saved. Continue later.",wiped:"Wiped.",
   briefNo:"Case code {c}",codeTip:"Playing with more phones? Enter this case code on every phone and everyone gets the same case.",
   voice:"Read aloud",voiceOn:"The phone reads the tasks aloud.",voiceOff:"Reading aloud is off.",
@@ -33,7 +33,7 @@ T:{today:"Start today's case",todayAgain:"Another case for today",extra:"Extra c
   up:"New rank: {r}!",pts:"+{x} points",streakTxt:"Day {n} in a row",streakTxtP:"{n} days in a row",
   dH:"Case code",dT:"Enter the code from another phone. Then you play the same case.",dGo:"Start this case",dBad:"That code is not right. A case code starts with AG.",
   aH:"Crooks caught",aNone:"No crook caught yet.",aTip:"Tap a case to play it again.",
-  wipe:"Wipe",wipeY:"Wipe this case",wipeAll:"Wipe everything (rank and points too)",wipeQ:"Wipe this case?",wipeT:"The photos and the notebook of this case will be gone.",allQ:"Really wipe everything?",allT:"Rank, points, day streak and caught crooks will be gone. Pro stays.",allY:"Yes, wipe everything",
+  wipe:"Wipe",wipeY:"Wipe this case",wipeAll:"Wipe everything (rank and points too)",wipeQ:"Wipe this case?",wipeT:"The photos and the notebook of this case will be gone.",allQ:"Really wipe everything?",allT:"Rank, points, day streak and caught crooks will be gone. The Party Pass stays.",allY:"Yes, wipe everything",
   dipBtn:"Police diploma (PDF)",posBtn:"WANTED poster (PDF)",dipH:"Police diploma",dipT:"Who was on the team? Names with a comma between them. May be left empty.",dipP:"Names of the team",dipGo:"Make the diploma",dipPdf:"Download as PDF",dipImg:"Share as image",dipNote:"A4, for printing. The photos stay on this phone.",
   dipTitle:"POLICE DIPLOMA",dipSub:"NEIGHBOURHOOD WATCH · OFFICER FOR A DAY",dipL1:"Neighbourhood Watch Station declares that",dipL2:"{J}'s team",dipL2b:"this team",dipL3:"caught the Balloon Bandit.",dipL4:"It was {K}. With {KJ}, {KW} and {KD}.",dipDate:"{d} · {m} minutes · {s}",dipTeam:"The officers",dipSign:"The Balloon Bandit (in handcuffs)",dipFoot:"minimystery.nl · Officer for a Day · case code {c}",
   posH:"WANTED poster",posTitle:"WANTED",posSub:"THE BALLOON BANDIT",posL1:"Caught by these officers:",posL2:"Reward: cake for everyone",posNote:"A4, for printing. The photo stays on this phone.",

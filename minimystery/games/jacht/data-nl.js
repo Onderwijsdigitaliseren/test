@@ -2,7 +2,7 @@
    Om 03:03 stal de Lichtjesdief alle lichtjes van de straat (en het cadeau). Op acht plekken vang je hem met een opdracht; hij vlucht en laat een lichtje achter.
    Acht lichtjes in de lantaarn = genoeg licht om zijn gezicht te zien. Wie hij overdag is, vertelt waar zijn schuilplaats is, en daar ligt het cadeau. */
 window.SJ_DATA={lang:"nl",V:"De Lichtjesdief",VS:"de Lichtjesdief",
-T:{today:"Start de jacht van vandaag",todayAgain:"Nog een jacht van vandaag",extra:"Extra jacht",pro:"Pro",proOn:"Pro staat aan: elke dag een nieuwe jacht, zo vaak je wilt.",proFree:"De eerste jacht is gratis.",proUsed:"Je gratis jacht is gespeeld. Met Pro speel je onbeperkt, op alle wandelingen.",
+T:{today:"Start de jacht van vandaag",todayAgain:"Nog een jacht van vandaag",extra:"Extra jacht",pro:"Feestpas",proOn:"De Feestpas staat aan: speel zo vaak je wilt.",proFree:"De oefenronde is gratis. De echte jacht speel je met de Feestpas.",proUsed:"De oefenronde is gratis. De echte jacht speel je met de Feestpas.",
   cancel:"Annuleren",close:"Sluiten",back:"Terug",saved:"Je jacht is bewaard. Ga later verder.",wiped:"Gewist.",
   brief:"Jacht",briefNo:"Jachtcode {c}",codeTip:"Spelen jullie met meer telefoons? Vul op elke telefoon deze jachtcode in, dan krijgt iedereen dezelfde jacht.",
   go:"Op jacht!",skipCine:"Overslaan ▸",
@@ -30,7 +30,7 @@ T:{today:"Start de jacht van vandaag",todayAgain:"Nog een jacht van vandaag",ext
   up:"Nieuwe rang: {r}!",pts:"+{x} punten",streakTxt:"Dag {n} op rij",streakTxtP:"{n} dagen op rij",
   dH:"Jachtcode",dT:"Vul de code van een andere telefoon in. Dan spelen jullie dezelfde jacht.",dGo:"Start deze jacht",dBad:"Die code klopt niet. Een jachtcode begint met LD.",
   aH:"Gepakte dieven",aNone:"Nog geen dief gepakt.",aTip:"Tik op een jacht om hem opnieuw te spelen.",
-  wipe:"Wissen",wipeY:"Deze jacht wissen",wipeAll:"Alles wissen (ook rang en punten)",wipeQ:"Deze jacht wissen?",wipeT:"De foto's en het speurboekje van deze jacht gaan weg.",allQ:"Echt alles wissen?",allT:"Rang, punten, dagen op rij en gepakte dieven gaan weg. Pro blijft.",allY:"Ja, wis alles",
+  wipe:"Wissen",wipeY:"Deze jacht wissen",wipeAll:"Alles wissen (ook rang en punten)",wipeQ:"Deze jacht wissen?",wipeT:"De foto's en het speurboekje van deze jacht gaan weg.",allQ:"Echt alles wissen?",allT:"Rang, punten, dagen op rij en gepakte dieven gaan weg. De Feestpas blijft.",allY:"Ja, wis alles",
   dipBtn:"Speurdersdiploma (PDF)",dipH:"Speurdersdiploma",dipT:"Wie zaten er in het team? Namen met een komma ertussen. Mag ook leeg.",dipP:"Namen van het team",dipGo:"Maak het diploma",dipPdf:"Download als PDF",dipImg:"Deel als afbeelding",dipNote:"A4, om te printen. De foto's blijven op deze telefoon.",
   dipTitle:"SPEURDERSDIPLOMA",dipL1:"Bureau MiniMystery verklaart dat",dipL2:"het team van {J}",dipL2b:"dit team",dipL3:"de Lichtjesdief heeft ontmaskerd.",dipL4:"Het was {K}, {KR}. Met {KJ}, op {KW}, met {KD}.",dipDate:"{d} · {m} minuten · {s}",dipTeam:"Het team",dipSign:"De Lichtjesdief (met tegenzin)",dipFoot:"minimystery.nl · De Lichtjesdief · jachtcode {c}",
   stripT:"JACHT {c}",stripSub:"minimystery.nl · De Lichtjesdief",

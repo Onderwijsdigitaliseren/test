@@ -6,7 +6,7 @@
 <title>Agent voor Eén Dag – politie-speurtocht voor kinderfeestjes</title>
 <link rel="icon" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-<meta name="description" content="Politie spelen op het kinderfeestje: de Ballonnenboef is ontsnapt. Acht politiepuzzels zonder lezen (de telefoon leest voor), vijf boeven, één confrontatie. Met kaart in je eigen buurt, zonder kaart of binnen. Politiediploma en GEZOCHT-poster om te printen. Eerste zaak gratis.">
+<meta name="description" content="Politie spelen op het kinderfeestje: de Ballonnenboef is ontsnapt. Acht politiepuzzels zonder lezen (de telefoon leest voor), vijf boeven, één confrontatie. Met kaart in je eigen buurt, zonder kaart of binnen. Politiediploma en GEZOCHT-poster om te printen. Oefenronde gratis.">
 <link rel="canonical" href="https://www.minimystery.nl/agent-voor-een-dag.html">
 <link rel="alternate" hreflang="en" href="https://www.minimystery.nl/en/officer-for-a-day.html">
 <link rel="alternate" hreflang="nl" href="https://www.minimystery.nl/agent-voor-een-dag.html">
@@ -23,7 +23,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Permanent+Marker&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600&display=swap">
 <link rel="stylesheet" href="shared/platform.css?v=1">
 <link rel="stylesheet" href="games/agent/game.css?v=4">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Agent voor Eén Dag","url":"https://www.minimystery.nl/agent-voor-een-dag.html","description":"Politie-speurtocht voor kinderfeestjes vanaf 6 jaar: de Ballonnenboef is ontsnapt. Acht politiepuzzels zonder lezen, vijf boeven, één confrontatie. Met kaart, zonder kaart of binnen. Politiediploma en GEZOCHT-poster. Eerste zaak gratis.","inLanguage":"nl","gamePlatform":"Webbrowser","genre":["Kinderspel","Speurtocht","Politie"],"isAccessibleForFree":true,"offers":{"@type":"Offer","price":"3.99","priceCurrency":"EUR","description":"Pro"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Agent voor Eén Dag","url":"https://www.minimystery.nl/agent-voor-een-dag.html","description":"Politie-speurtocht voor kinderfeestjes vanaf 6 jaar: de Ballonnenboef is ontsnapt. Acht politiepuzzels zonder lezen, vijf boeven, één confrontatie. Met kaart, zonder kaart of binnen. Politiediploma en GEZOCHT-poster. Oefenronde gratis.","inLanguage":"nl","gamePlatform":"Webbrowser","genre":["Kinderspel","Speurtocht","Politie"],"isAccessibleForFree":false,"offers":{"@type":"Offer","price":"9.99","priceCurrency":"EUR","description":"Feestpas"}}</script>
 </head>
 <body>
 <div id="app">
@@ -38,7 +38,7 @@
       <div class="tapeline" aria-hidden="true"></div>
       <p class="lead">Vandaag zijn jullie agenten. Volg acht sporen, los acht politiepuzzels op en zoek uit welke van de vijf boeven de ballonnen heeft. Dan: de confrontatie, de handboeien en een echt politiediploma.</p>
       <button class="btn ghost sm" id="bHow">Hoe werkt het?</button>
-      <div class="pline"><b id="pRank">–</b><span><b id="pStreak">0</b> Dagen op rij</span><span><b id="pSolved">0</b> Gepakt</span></div>
+      <div class="pline" hidden style="display:none"><b id="pRank">–</b><span><b id="pStreak">0</b> Dagen op rij</span><span><b id="pSolved">0</b> Gepakt</span></div>
       <div class="namebox"><label for="name">Wie is er jarig? (mag leeg)</label><input id="name" maxlength="24" autocomplete="off" placeholder="Naam van de jarige"></div>
       <div class="seg" id="len">
         <button type="button" data-m="map" aria-pressed="true">Buiten<br>met kaart</button>
@@ -124,10 +124,12 @@
   <div id="load" hidden role="status"><div class="spin"></div><b id="loadT"></b><span>Dit duurt meestal 5 tot 30 seconden. Blijf op deze pagina.</span></div>
   <div id="toast" hidden></div>
 </div>
-<script src="shared/platform.js?v=mm1"></script>
+<script src="shared/platform.js?v=mm2"></script>
 <script src="shared/catalog.js?v=mm2"></script>
 <script src="shared/walk.js?v=3"></script>
 <script src="games/agent/data-nl.js?v=2"></script>
 <script src="games/agent/game.js?v=4"></script>
+<script id="mm-demo">/* MiniMystery: ?oefen start direct de gratis oefenronde (link vanaf Inspiratie op de hub) */
+if(/[?&]oefen\b/.test(location.search)){var b=document.getElementById("bDemo");if(b)setTimeout(function(){b.click()},50)}</script>
 </body>
 </html>

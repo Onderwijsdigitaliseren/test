@@ -1,6 +1,6 @@
 /* The Light Thief – English texts. Same structure as data-nl.js (see there). */
 window.SJ_DATA={lang:"en",V:"The Light Thief",VS:"the Light Thief",
-T:{today:"Start today's hunt",todayAgain:"Another hunt today",extra:"Extra hunt",pro:"Pro",proOn:"Pro is on: a new hunt every day, as often as you like.",proFree:"The first hunt is free.",proUsed:"Your free hunt has been played. With Pro you play without limit, on every walk.",
+T:{today:"Start today's hunt",todayAgain:"Another hunt today",extra:"Extra hunt",pro:"Party Pass",proOn:"The Party Pass is on: play as often as you like.",proFree:"The practice round is free. You play the real hunt with the Party Pass.",proUsed:"The practice round is free. You play the real hunt with the Party Pass.",
   cancel:"Cancel",close:"Close",back:"Back",saved:"Your hunt is saved. Continue later.",wiped:"Wiped.",
   brief:"Hunt",briefNo:"Hunt code {c}",codeTip:"Playing on several phones? Enter this hunt code on each phone and everyone gets the same hunt.",
   go:"On the hunt!",skipCine:"Skip ▸",
@@ -28,7 +28,7 @@ T:{today:"Start today's hunt",todayAgain:"Another hunt today",extra:"Extra hunt"
   up:"New rank: {r}!",pts:"+{x} points",streakTxt:"Day {n} in a row",streakTxtP:"{n} days in a row",
   dH:"Hunt code",dT:"Enter the code from another phone. Then you play the same hunt.",dGo:"Start this hunt",dBad:"That code is not right. A hunt code starts with LD.",
   aH:"Thieves caught",aNone:"No thief caught yet.",aTip:"Tap a hunt to play it again.",
-  wipe:"Wipe",wipeY:"Wipe this hunt",wipeAll:"Wipe everything (rank and points too)",wipeQ:"Wipe this hunt?",wipeT:"The photos and the detective book of this hunt will be gone.",allQ:"Really wipe everything?",allT:"Rank, points, days in a row and caught thieves will be gone. Pro stays.",allY:"Yes, wipe everything",
+  wipe:"Wipe",wipeY:"Wipe this hunt",wipeAll:"Wipe everything (rank and points too)",wipeQ:"Wipe this hunt?",wipeT:"The photos and the detective book of this hunt will be gone.",allQ:"Really wipe everything?",allT:"Rank, points, days in a row and caught thieves will be gone. The Party Pass stays.",allY:"Yes, wipe everything",
   dipBtn:"Detective diploma (PDF)",dipH:"Detective diploma",dipT:"Who was in the team? Names separated by commas. May be empty.",dipP:"Team names",dipGo:"Make the diploma",dipPdf:"Download as PDF",dipImg:"Share as image",dipNote:"A4, for printing. The photos stay on this phone.",
   dipTitle:"DETECTIVE DIPLOMA",dipL1:"The MiniMystery Bureau hereby declares that",dipL2:"{J}'s team",dipL2b:"this team",dipL3:"has unmasked the Light Thief.",dipL4:"It was {K}, {KR}. With {KJ}, on {KW}, with {KD}.",dipDate:"{d} · {m} minutes · {s}",dipTeam:"The team",dipSign:"The Light Thief (reluctantly)",dipFoot:"minimystery.nl · The Light Thief · hunt code {c}",
   stripT:"HUNT {c}",stripSub:"minimystery.nl · The Light Thief",

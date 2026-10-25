@@ -3,7 +3,7 @@
    halsterkleuren, glimmertjes van de kraai, kat aaien, de wei door). Per spoor: bewijs (3x, altijd waar, wijst een kenmerk van de plek aan), een dier-getuige (4x, één zit ernaast)
    of een berichtje van Fenna (1x). Drie kenmerken (vlag, dieren, lekkers) wijzen precies één van vijf plekken aan waar Bibi logeert – en daar is Pluis. */
 window.PP_DATA={lang:"nl",CHEF:"Fenna",PONY:"Pluis",FRIEND:"Bibi",
-T:{today:"Start de zaak van vandaag",todayAgain:"Nog een zaak van vandaag",extra:"Extra zaak",pro:"Pro",proOn:"Pro staat aan: elke dag een nieuwe zaak, zo vaak je wilt.",proFree:"De eerste zaak is gratis.",proUsed:"Je gratis zaak is gespeeld. Met Pro speel je onbeperkt, op alle wandelingen.",
+T:{today:"Start de zaak van vandaag",todayAgain:"Nog een zaak van vandaag",extra:"Extra zaak",pro:"Feestpas",proOn:"De Feestpas staat aan: speel zo vaak je wilt.",proFree:"De oefenronde is gratis. De echte zaak speel je met de Feestpas.",proUsed:"De oefenronde is gratis. De echte zaak speel je met de Feestpas.",
   cancel:"Annuleren",close:"Sluiten",back:"Terug",saved:"De zaak is bewaard. Ga later verder.",wiped:"Gewist.",
   briefNo:"Zaakcode {c}",codeTip:"Spelen jullie met meer telefoons? Vul op elke telefoon deze zaakcode in, dan krijgt iedereen dezelfde zaak.",
   voice:"Voorlezen",voiceOn:"De telefoon leest de opdrachten voor.",voiceOff:"Voorlezen staat uit.",
@@ -35,7 +35,7 @@ T:{today:"Start de zaak van vandaag",todayAgain:"Nog een zaak van vandaag",extra
   up:"Nieuwe rang: {r}!",pts:"+{x} punten",streakTxt:"Dag {n} op rij",streakTxtP:"{n} dagen op rij",
   dH:"Zaakcode",dT:"Vul de code van een andere telefoon in. Dan spelen jullie dezelfde zaak.",dGo:"Start deze zaak",dBad:"Die code klopt niet. Een zaakcode begint met PP.",
   aH:"Gevonden pony's",aNone:"Nog geen zaak opgelost.",aTip:"Tik op een zaak om hem opnieuw te spelen.",
-  wipe:"Wissen",wipeY:"Deze zaak wissen",wipeAll:"Alles wissen (ook rang en punten)",wipeQ:"Deze zaak wissen?",wipeT:"De foto's en het speurboekje van deze zaak gaan weg.",allQ:"Echt alles wissen?",allT:"Rang, punten, dagen op rij en gevonden pony's gaan weg. Pro blijft.",allY:"Ja, wis alles",
+  wipe:"Wissen",wipeY:"Deze zaak wissen",wipeAll:"Alles wissen (ook rang en punten)",wipeQ:"Deze zaak wissen?",wipeT:"De foto's en het speurboekje van deze zaak gaan weg.",allQ:"Echt alles wissen?",allT:"Rang, punten, dagen op rij en gevonden pony's gaan weg. De Feestpas blijft.",allY:"Ja, wis alles",
   dipBtn:"Ruiterpaspoort (PDF)",dipH:"Ruiterpaspoort",dipT:"Wie zaten er in de speurdersclub? Namen met een komma ertussen. Mag ook leeg.",dipP:"Namen van de speurders",dipGo:"Maak het paspoort",dipPdf:"Download als PDF",dipImg:"Deel als afbeelding",dipNote:"A4, om te printen. De foto's blijven op deze telefoon.",
   dipTitle:"RUITERPASPOORT",dipSub:"MANEGE DE HOEFSLAG · SPEURDERSCLUB",dipL1:"Manege De Hoefslag verklaart dat",dipL2:"de speurdersclub van {J}",dipL2b:"deze speurdersclub",dipL3:"Pony Pluis heeft teruggevonden.",dipL4:"Ze was bij Bibi: {P}. Met {PV}, {PD} en {PE}.",dipDate:"{d} · {m} minuten · {s}",dipTeam:"De speurders",dipSign:"Fenna, stalhouder (en een hoefafdruk van Pluis)",dipFoot:"minimystery.nl · Het Geheim van Pony Pluis · zaakcode {c}",dipStamp:"GEVONDEN",
   stripT:"ZAAK {c}",stripSub:"minimystery.nl · Het Geheim van Pony Pluis",stripTitle:"STALKAART VAN PLUIS",

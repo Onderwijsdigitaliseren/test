@@ -3,7 +3,7 @@
    halter colours, the crow's shinies, petting the cat, through the meadow). Per lead: evidence (3x, always true, points at a feature of the place), an animal witness (4x, one is wrong)
    or a message from Fenna (1x). Three features (flag, animals, treats) point at exactly one of five places where Bibi is staying – and that is where Fluff is. */
 window.PP_DATA={lang:"en",CHEF:"Fenna",PONY:"Fluff",FRIEND:"Bibi",
-T:{today:"Start today's case",todayAgain:"Another case for today",extra:"Extra case",pro:"Pro",proOn:"Pro is on: a new case every day, as often as you like.",proFree:"The first case is free.",proUsed:"Your free case has been played. With Pro you play without limits, on every walk.",
+T:{today:"Start today's case",todayAgain:"Another case for today",extra:"Extra case",pro:"Party Pass",proOn:"The Party Pass is on: play as often as you like.",proFree:"The practice round is free. You play the real case with the Party Pass.",proUsed:"The practice round is free. You play the real case with the Party Pass.",
   cancel:"Cancel",close:"Close",back:"Back",saved:"The case is saved. Continue later.",wiped:"Wiped.",
   briefNo:"Case code {c}",codeTip:"Playing with more phones? Enter this case code on every phone and everyone gets the same case.",
   voice:"Read aloud",voiceOn:"The phone reads the tasks aloud.",voiceOff:"Read aloud is off.",
@@ -35,7 +35,7 @@ T:{today:"Start today's case",todayAgain:"Another case for today",extra:"Extra c
   up:"New rank: {r}!",pts:"+{x} points",streakTxt:"Day {n} in a row",streakTxtP:"{n} days in a row",
   dH:"Case code",dT:"Enter the code from another phone. Then you play the same case.",dGo:"Start this case",dBad:"That code isn't right. A case code starts with PP.",
   aH:"Ponies found",aNone:"No case solved yet.",aTip:"Tap a case to play it again.",
-  wipe:"Wipe",wipeY:"Wipe this case",wipeAll:"Wipe everything (rank and points too)",wipeQ:"Wipe this case?",wipeT:"The photos and the notebook of this case will be gone.",allQ:"Really wipe everything?",allT:"Rank, points, day streak and found ponies will be gone. Pro stays.",allY:"Yes, wipe everything",
+  wipe:"Wipe",wipeY:"Wipe this case",wipeAll:"Wipe everything (rank and points too)",wipeQ:"Wipe this case?",wipeT:"The photos and the notebook of this case will be gone.",allQ:"Really wipe everything?",allT:"Rank, points, day streak and found ponies will be gone. The Party Pass stays.",allY:"Yes, wipe everything",
   dipBtn:"Rider's Passport (PDF)",dipH:"Rider's Passport",dipT:"Who was in the detective club? Names separated by commas. May be left empty.",dipP:"Names of the detectives",dipGo:"Make the passport",dipPdf:"Download as PDF",dipImg:"Share as image",dipNote:"A4, for printing. The photos stay on this phone.",
   dipTitle:"RIDER'S PASSPORT",dipSub:"HOOFBEAT STABLES · DETECTIVE CLUB",dipL1:"Hoofbeat Stables declares that",dipL2:"{J}'s detective club",dipL2b:"this detective club",dipL3:"has found Pony Fluff.",dipL4:"She was with Bibi, at {P}. With {PV}, {PD} and {PE}.",dipDate:"{d} · {m} minutes · {s}",dipTeam:"The detectives",dipSign:"Fenna, stable keeper (and a hoof print from Fluff)",dipFoot:"minimystery.nl · The Secret of Pony Fluff · case code {c}",dipStamp:"FOUND",
   stripT:"CASE {c}",stripSub:"minimystery.nl · The Secret of Pony Fluff",stripTitle:"FLUFF'S STABLE CARD",
