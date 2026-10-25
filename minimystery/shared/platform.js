@@ -7,8 +7,8 @@
 "use strict";
 /* ===== PRO-INSTELLINGEN: alleen hier aanpassen ===== */
 var CFG={
-  url:"",                           // Ko-fi-product voor de Feestpas (€ 9,99): hier de link invullen
-  price:"€ 9,99",                    // staat op de Feestpas-knop
+  url:"https://ko-fi.com/s/aa277497a2",  // Ko-fi-product voor de Feestpas (tijdelijk hetzelfde als Pro van Moordwandeling)
+  price:"€ 3,99",                    // staat op de Feestpas-knop (tijdelijk; later € 9,99)
   hash:0,                            // geen oude Pro-code op MiniMystery
   groep:{
     url:"https://ko-fi.com/s/dc0dfbafe5",  // Ko-fi-product voor de groepspas
@@ -21,7 +21,9 @@ var CFG={
   codes:"codes.json",                // terugval-kopie (relatief aan de site-root)
   codesMain:"https://www.moordwandeling.nl/codes.json" // de ene codelijst voor Moordwandeling én MiniMystery
 };
-window.SS_PRO=CFG; // spel 1 leest zijn instellingen hieruit
+window.SS_PRO=CFG;
+/* Tijdelijk: Pro-codes (Ko-fi-product van Moordwandeling) openen ook de Feestpas. Zet op false zodra er een eigen Feestpas-product is. */
+var FEEST_OK_PRO=true; // spel 1 leest zijn instellingen hieruit
 /* site-root: werkt in de root van een domein én in een submap (bv. gebruiker.github.io/repo/) */
 var ROOT=location.pathname.replace(/\/(en\/)?[^\/]*$/,"/");
 
@@ -89,7 +91,7 @@ var PRO={
   codesOk:function(){return codesOk},
   codes:function(){return CODES},
   /* MiniMystery: de Feestpas (codetype "feest") is de echte activiteit. Alleen de oefenrondes zijn gratis. */
-  isPro:function(){var h=LS.get("ss_feestH","");if(!h)return false;var e=entry(h);return !!e&&e.t==="feest"&&!e.uit||!e&&!codesOk},
+  isPro:function(){var h=LS.get("ss_feestH","");if(!h)return false;var e=entry(h);return !!e&&(e.t==="feest"||FEEST_OK_PRO&&e.t==="pro")&&!e.uit||!e&&!codesOk},
   /* vrije proefzaak per spel: spel 1 gebruikt het oude ss_free, nieuwe spellen ss_free_<id> */
   freeKey:function(game){return game==="mw"?"ss_free":"ss_free_"+game},
   usedFree:function(game){return true},
@@ -101,8 +103,8 @@ var PRO={
   redeem:function(v){var c=norm(v);if(!c)return null;
     if(CFG.hash&&hashStr(c)===CFG.hash){LS.set("ss_proH","oud");return"pro"}
     var h=sha256(CFG.salt+c),e=entry(h);if(!e)return null;
-    if(valid(e,"feest")){LS.set("ss_feestH",h);return"pro"}
-    if(e.t!=="feest")return null;
+    if(valid(e,"feest")||FEEST_OK_PRO&&valid(e,"pro")){LS.set("ss_feestH",h);return"pro"}
+    if(e.t!=="feest"&&e.t!=="pro")return null;
     if(valid(e,"groep")){var cur=LS.get("ss_grp",null),used=LS.get("ss_grpU",[]);if(cur&&cur.h===h&&this.groupLeft())return"groep";if(used.indexOf(h)>=0)return"used";
       used.push(h);LS.set("ss_grpU",used);LS.set("ss_grp",{h:h,t0:Date.now()});return"groep"}
     return"exp"}
