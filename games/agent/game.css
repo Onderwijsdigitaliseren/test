@@ -85,8 +85,8 @@ h1,h2,h3{font-family:var(--f-type);font-weight:700;text-transform:uppercase;lett
 #hud span,#mhud span{font-family:var(--f-type);text-transform:uppercase;letter-spacing:.06em;font-size:10px;color:var(--fog)}
 #hud button,#mhud button{background:#0b2152;color:var(--paper);font-size:22px}
 .balls{display:flex;gap:4px;justify-content:center;align-items:center;height:22px}
-.balls i{width:11px;height:14px;border-radius:50% 50% 50% 50%/45% 45% 55% 55%;background:#1a3b85;border:1px solid #2a4fa8}
-.balls i.on{background:var(--c);border-color:#fff;box-shadow:0 0 6px var(--c)}
+.balls i{width:14px;height:9px;border-radius:2px;background:#1a3b85;border:1px solid #2a4fa8}
+.balls i.on{background:#3b82f6;border:2px solid #fff;box-shadow:0 0 8px #4fd3ff}
 #card{flex:1;max-width:520px;width:100%;margin-inline:auto;padding:18px 16px 24px;display:flex;flex-direction:column;gap:16px}
 .pol{background:var(--paper);padding:14px 14px 10px;border-radius:6px;box-shadow:0 14px 34px rgba(0,0,0,.45);transform:rotate(-1.5deg);align-self:center;width:min(100%,320px);display:flex;flex-direction:column;gap:8px}
 .pol img,.pol .ph{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;background:#15337a;border-radius:3px}
@@ -194,6 +194,6 @@ h1,h2,h3{font-family:var(--f-type);font-weight:700;text-transform:uppercase;lett
 #hideUI span{font-size:14px;color:var(--fog)}
 #hideMsg{position:absolute;left:0;right:0;top:46%;text-align:center;font-family:var(--f-type);font-size:38px;color:#fff;text-shadow:0 2px 12px #000;pointer-events:none}
 #hideX{position:absolute;left:14px;bottom:calc(16px + env(safe-area-inset-bottom,0px));width:auto;padding:10px 16px;background:rgba(13,42,102,.9);color:#fff;border:2px solid var(--street)}
-.cf{position:absolute;top:70%;width:16px;height:20px;border-radius:50% 50% 50% 50%/45% 45% 55% 55%;animation:cf 2.4s ease-out forwards;pointer-events:none}
+.cf{position:absolute;top:70%;width:18px;height:10px;border-radius:2px;animation:cf 2.4s ease-out forwards;pointer-events:none}
 @keyframes cf{0%{transform:translate(0,0);opacity:1}100%{transform:translate(var(--dx),-520px);opacity:0}}
 .paper .how{color:var(--ink);font-size:15px}

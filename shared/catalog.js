@@ -56,9 +56,9 @@ window.MW_CATALOG={
       nl:{slug:"nl/ooggetuige.html", title:"Ooggetuige", tag:"Jij hebt iets gezien wat je niet had mogen zien.",
           desc:"Geen detective maar een thriller. Op acht punten wacht een bericht van ‘Onbekend’, en iemand loopt achter je. Wie volgt je, en wie kun je vertrouwen?"}}
     ,{id:"ag", cat:"kids", status:"new", access:"trial", minutes:"40–60", km:"0–2", group:false,
-      en:{slug:"officer-for-a-day.html", title:"Officer for a Day", tag:"A police case for ages 6 to 10. The Balloon Thief is on the run.",
+      en:{slug:"officer-for-a-day.html", title:"Officer for a Day", tag:"A police case for ages 6 to 10. Every street sign in the neighbourhood is gone.",
           desc:"Sworn in as officers, the group follows eight leads (age setting 6–7 or 8+): fingerprints, a composite sketch, footprints, the siren, binoculars, the radio, a chase and a crowd. No reading needed: the phone reads aloud. Evidence is true, one witness lies. Then the line-up in 3D, handcuffs, a police diploma and a WANTED poster with the group's own photos. With a map, without one, or indoors."},
-      nl:{slug:"nl/agent-voor-een-dag.html", title:"Agent voor Eén Dag", tag:"Een politiezaak voor 6 tot 10 jaar. De Ballonnendief is ervandoor.",
+      nl:{slug:"nl/agent-voor-een-dag.html", title:"Agent voor Eén Dag", tag:"Een politiezaak voor 6 tot 10 jaar. Alle straatnaamborden in de buurt zijn weg.",
           desc:"Beëdigd als agenten volgt de groep acht sporen (leeftijdsstand 6–7 of 8+): vingerafdruk, compositietekening, voetspoor, sirene, verrekijker, portofoon, achtervolging en de drukte. Lezen hoeft niet: de telefoon leest voor. Bewijs is waar, één getuige liegt. Dan de confrontatie in 3D, handboeien, een politiediploma en een GEZOCHT-poster met de eigen foto's van de groep. Met kaart, zonder kaart of binnen."}}
     ,{id:"sj", cat:"kids", status:"new", access:"trial", minutes:"45–75", km:"0–2", group:false,
       en:{slug:"the-light-thief.html", title:"The Light Thief", tag:"He stole every light in the street. Catch him, collect eight lights, see who he is.",
