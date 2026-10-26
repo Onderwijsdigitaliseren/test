@@ -43,6 +43,11 @@ T:{today:"Start today's case",todayAgain:"Another case for today",extra:"Extra c
   radarAll:"All eight leads! Where is Fluff?",near:"Hoof print at {d} m",warm:"Almost! {d} m to go",hot:"This is it. {d} m",here:"There's a lead here",look:"Investigate",gps:"I really am here",corner:"Corner",
   demo:"Practice round in the centre of Eindhoven",demoCase:"practice round",demoTip:"Practice round: tap the map to walk.",walk:"Walk there",
   howH:"How does it work?",
+  kv:{cold:"Cold… try another direction",cool:"Lukewarm. Getting closer",warm:"Warm! Keep going!",hot:"HOT! Look around you!",here:"The lead is here!",look:"Find the lead",first:"Start walking, the compass shows the way",noDir:"Walk a little, then the compass knows the direction",
+      map:"Map (grown-up)",kids:"Back to the compass",mapTip:"The map is for the grown-up. Tap the compass for the children.",
+      glimpse:"There goes Fluff! Tap quickly!",glimpseYes:"You saw Fluff! Glimpse {n} of 3",glimpseAll:"Three glimpses! That earns a sticker on the passport.",glimpseNo:"Gone! Be quicker next time.",
+      gpsLost:"No GPS signal. Wait a moment, or continue without the map from the menu.",noMapQ:"No map today?",noMapT:"The phone can't find places nearby (or location is off). You can play the same case without the map: the puzzles then come one after another.",noMapGo:"Continue without map",mNoMap:"Continue without map (same case)",switched:"Continuing without the map. Same case, same leads."},
+  dipGlimpse:"FLUFF SPOTTER",
   pop:["Boris the dog runs past: “I smell pony! That way!”","Doortje the duck flies over: “QUACK! She walked along the water, you know!”","Gerda the goat shouts from behind a fence: “I saw a hundred ponies! Well, one.”","Karel the crow on a lamp post: “Krrr. Keep looking, why don't you.”","Kato the cat watches from a wall and says nothing. Not yet."]
 },
 /* places where Bibi could be staying: name (in a sentence), short description. Five per case, features are drawn per case. */

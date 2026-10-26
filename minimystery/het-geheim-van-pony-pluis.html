@@ -22,7 +22,7 @@
 <meta name="theme-color" content="#9ad7ff">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Permanent+Marker&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600&display=swap">
 <link rel="stylesheet" href="shared/platform.css?v=1">
-<link rel="stylesheet" href="games/pony/game.css?v=3">
+<link rel="stylesheet" href="games/pony/game.css?v=4">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Het Geheim van Pony Pluis","url":"https://www.minimystery.nl/het-geheim-van-pony-pluis.html","description":"Pony-speurtocht voor kinderfeestjes: pony Pluis is weg uit haar stal. Acht manege-puzzels zonder lezen, vijf dieren-getuigen, één geheim. Met kaart, zonder kaart of binnen. Ruiterpaspoort. Oefenronde gratis.","inLanguage":"nl","gamePlatform":"Webbrowser","genre":["Kinderspel","Speurtocht","Pony's"],"isAccessibleForFree":false,"offers":{"@type":"Offer","price":"3.99","priceCurrency":"EUR","description":"Feestpas"}}</script>
 </head>
 <body>
@@ -55,7 +55,7 @@
       <button class="btn ghost" id="bCode">Zaakcode invullen</button>
       <button class="btn ghost" id="bPro" hidden></button>
       <p class="note" id="status"></p>
-      <div id="howT" hidden><ol class="how"><li><b>Met kaart:</b> Fenna prikt acht hoefafdrukken op plekken in de buurt. Loop erheen; daar wacht een puzzel. <b>Zonder kaart</b> of <b>binnen:</b> je krijgt de puzzels achter elkaar, zonder plekken. Werkt overal.</li><li><b>Veulen</b> is makkelijk: korte puzzels en één dier vergist zich. <b>Ruiter</b> is pittiger: langere puzzels en één dier liegt echt. Lezen hoeft niet: de telefoon leest alles voor (knop Voorlezen).</li><li>De puzzels: hoefafdruk zoeken in het zand, door de verrekijker kijken, een foto roskammen, appels tellen, de halsterkleuren onthouden, de glimmertjes van de kraai, kat Kato aaien en Pluis door de wei naar het hek brengen.</li><li>Na elke puzzel krijg je een hoefijzer en een spoor. Sporen zijn altijd waar en wijzen een kenmerk aan: de vlag, de dieren of het lekkers van de plek waar Bibi logeert. De dieren helpen ook, maar niet allemaal goed.</li><li>Na acht sporen kies je uit vijf plekken waar Pluis is. Dan vertelt kat Kato het geheim van het open hek, en de groep krijgt een Ruiterpaspoort met de eigen foto's, als PDF om te printen.</li></ol><p class="note">Tip voor de volwassene: lees de sporen hardop voor aan de hele groep, dat is het leukste moment. Eén telefoon per groepje; met de zaakcode spelen meer telefoons dezelfde zaak. De foto's blijven op de telefoon. Buiten: op de stoep blijven.</p></div>
+      <div id="howT" hidden><ol class="how"><li><b>Met kaart:</b> Fenna prikt acht hoefafdrukken op plekken in de buurt. De kinderen zien geen plattegrond maar een <b>speurkompas</b>: een pijl en koud/warm/heet. De begeleider kan met de knop even de plattegrond bekijken. Af en toe draaft Pluis door het beeld: snel tikken, drie glimpen is een sticker op het paspoort. Werkt de GPS niet? Dan gaat dezelfde zaak gewoon verder zonder kaart. <b>Zonder kaart</b> of <b>binnen:</b> je krijgt de puzzels achter elkaar, zonder plekken. Werkt overal.</li><li><b>Veulen</b> is makkelijk: korte puzzels en één dier vergist zich. <b>Ruiter</b> is pittiger: langere puzzels en één dier liegt echt. Lezen hoeft niet: de telefoon leest alles voor (knop Voorlezen).</li><li>De puzzels: hoefafdruk zoeken in het zand, door de verrekijker kijken, een foto roskammen, appels tellen, de halsterkleuren onthouden, de glimmertjes van de kraai, kat Kato aaien en Pluis door de wei naar het hek brengen.</li><li>Na elke puzzel krijg je een hoefijzer en een spoor. Sporen zijn altijd waar en wijzen een kenmerk aan: de vlag, de dieren of het lekkers van de plek waar Bibi logeert. De dieren helpen ook, maar niet allemaal goed.</li><li>Na acht sporen kies je uit vijf plekken waar Pluis is. Dan vertelt kat Kato het geheim van het open hek, en de groep krijgt een Ruiterpaspoort met de eigen foto's, als PDF om te printen.</li></ol><p class="note">Tip voor de volwassene: lees de sporen hardop voor aan de hele groep, dat is het leukste moment. Eén telefoon per groepje; met de zaakcode spelen meer telefoons dezelfde zaak. De foto's blijven op de telefoon. Buiten: op de stoep blijven.</p></div>
       <button class="btn ghost sm" id="bDemo">Proefronde in de binnenstad van Eindhoven</button>
       <button class="btn ghost" id="bArch">Gevonden pony's</button>
       <button class="btn ghost sm" id="bWipe">Wissen</button>
@@ -94,6 +94,8 @@
 
   <section class="screen" id="play" hidden>
     <canvas id="map"></canvas>
+    <div id="kids"><canvas id="kidsC"></canvas><div id="kidsMsg"></div><div id="kidsHot"></div></div>
+    <button type="button" id="bView">Kaart (begeleider)</button>
     <div id="mhud">
       <div><b id="mT">0:00</b><span>Tijd</span></div>
       <div><b id="mS">0/8</b><span>Sporen</span></div>
@@ -131,8 +133,8 @@
 <script src="shared/catalog.js?v=mm8"></script>
 <script src="shared/walk.js?v=3"></script>
 <script src="shared/party.js?v=1"></script>
-<script src="games/pony/data-nl.js?v=1z"></script>
-<script src="games/pony/game.js?v=7z"></script>
+<script src="games/pony/data-nl.js?v=2"></script>
+<script src="games/pony/game.js?v=8"></script>
 <script id="mm-demo">/* MiniMystery: ?oefen start direct de gratis oefenronde (link vanaf Inspiratie op de hub) */
 if(/[?&]oefen\b/.test(location.search)){var b=document.getElementById("bDemo");if(b)setTimeout(function(){b.click()},50)}</script>
 </body>

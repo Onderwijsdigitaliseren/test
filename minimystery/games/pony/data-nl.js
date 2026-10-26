@@ -43,6 +43,11 @@ T:{today:"Start de zaak van vandaag",todayAgain:"Nog een zaak van vandaag",extra
   radarAll:"Alle acht sporen! Waar is Pluis?",near:"Hoefafdruk op {d} m",warm:"Bijna! Nog {d} m",hot:"Hier is het. {d} m",here:"Hier ligt een spoor",look:"Onderzoeken",gps:"Ik sta hier echt",corner:"Hoek",
   demo:"Proefronde in de binnenstad van Eindhoven",demoCase:"proefronde",demoTip:"Proefronde: tik op de kaart om te lopen.",walk:"Loop ernaartoe",
   howH:"Hoe werkt het?",
+  kv:{cold:"Koud… loop een andere kant op",cool:"Lauw. Dichterbij komt-ie",warm:"Warm! Goed zo!",hot:"HEET! Kijk om je heen!",here:"Hier is het spoor!",look:"Zoek het spoor",first:"Loop maar, het kompas wijst de weg",noDir:"Loop een stukje, dan weet het kompas de richting",
+      map:"Kaart (begeleider)",kids:"Terug naar het speurkompas",mapTip:"De plattegrond is voor de begeleider. Tik op het speurkompas voor de kinderen.",
+      glimpse:"Daar draaft Pluis! Tik snel!",glimpseYes:"Je zag Pluis! Glimp {n} van 3",glimpseAll:"Drie glimpen! Dat wordt een sticker op het paspoort.",glimpseNo:"Weg! Volgende keer sneller.",
+      gpsLost:"Geen GPS-signaal. Even wachten, of verder zonder kaart via het menu.",noMapQ:"Geen kaart vandaag?",noMapT:"De telefoon vindt geen plekken in de buurt (of de locatie staat uit). Jullie kunnen dezelfde zaak gewoon zonder kaart spelen: de puzzels komen dan achter elkaar.",noMapGo:"Verder zonder kaart",mNoMap:"Verder zonder kaart (zelfde zaak)",switched:"Verder zonder kaart. Dezelfde zaak, dezelfde sporen."},
+  dipGlimpse:"PLUIS-SPOTTER",
   pop:["Hond Boris rent langs: “Ik ruik pony! Die kant op!”","Eend Doortje vliegt over: “KWAAK! Ze liep langs het water, hoor!”","Geit Gerda roept van achter een hek: “Ik zag wel honderd pony's! Nou ja, één.”","Kraai Karel op een lantaarnpaal: “Krrr. Zoek maar lekker verder.”","Kat Kato kijkt vanaf een muurtje en zegt niks. Nog niet."]
 },
 /* plekken waar Bibi kan logeren: naam (met lidwoord, in een zin), korte omschrijving. Vijf per zaak, kenmerken worden per zaak geloot. */
