@@ -230,7 +230,7 @@ function begin(seed,mode,daily,n){if(mode!=="map")return build(seed,mode,null,nu
   Wk.loading(T.loc);
   Wk.locate().then(function(pos){var lat=pos.coords.latitude,lon=pos.coords.longitude;
     return Wk.fetchWorld({lat:lat,lon:lon,R:R0,status:function(s){if(s==="pois")Wk.loading(T.pois);if(s==="nomap")toast(T.nomap)}}).then(function(w){Wk.loading("");
-      if(!w.pois||w.pois.length<3)return noMapSheet(seed,daily,null,n);
+      if(!w.pois||!w.pois.length)return noMapSheet(seed,daily,null,n);
       build(seed,"map",w.pois,w.ways,w.origin,daily,n);var mine=G;w.later.then(function(ways){if(ways&&G&&G===mine){W=ways;LS.set(WK,W)}})})
   }).catch(function(e){Wk.loading("");noMapSheet(seed,daily,e==="nogps"?T.noGps:T.denied,n)})}
 /* geen kaart mogelijk: dezelfde zaak zonder kaart aanbieden in plaats van een foutmelding */
@@ -321,13 +321,13 @@ function enterMap(){show("play");
     items:items,onTap:function(hit,w){if(hit&&hit.ref.glimpse){if(GL.on){GL.on=false;G.gl=(G.gl||0)+1;save();buzz([40,30,80]);beep(880,.15);toast(G.gl>=3?T.kv.glimpseAll:fill(T.kv.glimpseYes,{n:Math.min(3,G.gl)}))}return}if(hit&&!hit.ref.done){sel=hit.ref;chip()}else if(G.mode==="demo"){walkTo=w;sel=null;map.follow();chip()}else{sel=null;chip()}}});
   map.resize();map.fit(R0);sel=null;arrived=null;walkTo=null;$("#chip").hidden=true;
   Wk.stopWatch();if(G.mode==="map")Wk.watch(G.origin,P,function(d){if(d>3&&d<80)G.dist+=d;lastFix=Date.now();if(lastP&&d>6){MOVB=Math.atan2(P.y-lastP.y,P.x-lastP.x)}if(!lastP||d>6)lastP={x:P.x,y:P.y}});
-  lastFix=Date.now();lastP=null;MOVB=null;KV=G.mode==="map";setView();startHead();GL.next=Date.now()+45000+Math.random()*45000;
+  lastFix=Date.now();lastP=null;MOVB=null;KV=false;setView();startHead();GL.next=Date.now()+45000+Math.random()*45000;
   if(G.mode==="demo")toast(T.demoTip);
   requestAnimationFrame(loop)}
 /* ---------- speurkompas: kinderweergave zonder plattegrond (uit commit 09b384c) ---------- */
 function setView(){$("#kids").hidden=!KV;$("#play").classList.toggle("kv",KV);$("#bView").textContent=KV?T.kv.map:T.kv.kids;if(KV)kidsSize();else{map.resize();if(G.mode==="map")toast(T.kv.mapTip)}}
 $("#bView").onclick=function(){KV=!KV;setView()};
-function kidsSize(){var cv=$("#kidsC"),dpr=Math.min(2,devicePixelRatio||1);cv.width=cv.clientWidth*dpr;cv.height=cv.clientHeight*dpr;cv.dataset.dpr=dpr}
+function kidsSize(){var cv=$("#kidsC"),dpr=Math.min(2,devicePixelRatio||1),w=cv.clientWidth||innerWidth,h=cv.clientHeight||innerHeight;cv.width=w*dpr;cv.height=h*dpr;cv.dataset.dpr=dpr}
 addEventListener("resize",function(){if(!$("#play").hidden&&KV)kidsSize()});
 function onHead(e){var h=null;if(typeof e.webkitCompassHeading==="number")h=e.webkitCompassHeading;else if(e.absolute&&typeof e.alpha==="number")h=360-e.alpha;if(h!=null)HEAD=h}
 function startHead(){try{if(window.DeviceOrientationEvent&&typeof DeviceOrientationEvent.requestPermission==="function"){DeviceOrientationEvent.requestPermission().then(function(r){if(r==="granted")addEventListener("deviceorientation",onHead)}).catch(function(){})}else{addEventListener("deviceorientationabsolute",onHead);addEventListener("deviceorientation",onHead)}}catch(e){}}
