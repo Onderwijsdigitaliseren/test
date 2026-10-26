@@ -7,8 +7,16 @@
 "use strict";
 /* ===== PRO-INSTELLINGEN: alleen hier aanpassen ===== */
 var CFG={
-  url:"https://ko-fi.com/s/aa277497a2",  // Ko-fi-product voor de Feestpas (tijdelijk hetzelfde als Pro van Moordwandeling)
-  price:"€ 3,99",                    // staat op de Feestpas-knop (tijdelijk; later € 9,99)
+  /* Feestpas per zaak: één Ko-fi-product per zaak. Link hier invullen zodra het product bestaat (leeg = geen koopknop). */
+  shop:{
+    sj:"",   // De Lichtjesdief
+    pp:"",   // Het Geheim van Pony Pluis
+    ag:"",   // Agent voor Eén Dag
+    ts:""    // De Betoverde Toverspiegel
+  },
+  url:"",                            // bundel "Alle zaken" (later; leeg = niet tonen)
+  price:"€ 9,99",                    // prijs per zaak, staat op de koopknop
+  dagen:31,                          // een Feestpas is zo lang geldig vanaf het invoeren (per code te overschrijven met "dagen" in codes.json)
   hash:0,                            // geen oude Pro-code op MiniMystery
   groep:{
     url:"https://ko-fi.com/s/dc0dfbafe5",  // Ko-fi-product voor de groepspas
@@ -22,8 +30,7 @@ var CFG={
   codesMain:"https://moordwandeling.nl/codes.json" // de ene codelijst voor Moordwandeling én MiniMystery
 };
 window.SS_PRO=CFG;
-/* Tijdelijk: Pro-codes (Ko-fi-product van Moordwandeling) openen ook de Feestpas. Zet op false zodra er een eigen Feestpas-product is. */
-var FEEST_OK_PRO=true; // spel 1 leest zijn instellingen hieruit
+ // spel 1 leest zijn instellingen hieruit
 /* site-root: werkt in de root van een domein én in een submap (bv. gebruiker.github.io/repo/) */
 var ROOT=location.pathname.replace(/\/(en\/)?[^\/]*$/,"/");
 
@@ -90,21 +97,26 @@ var PRO={
   ready:ready,
   codesOk:function(){return codesOk},
   codes:function(){return CODES},
-  /* MiniMystery: de Feestpas (codetype "feest") is de echte activiteit. Alleen de oefenrondes zijn gratis. */
-  isPro:function(){var h=LS.get("ss_feestH","");if(!h)return false;var e=entry(h);return !!e&&(e.t==="feest"||FEEST_OK_PRO&&e.t==="pro")&&!e.uit||!e&&!codesOk},
+  /* MiniMystery: een Feestpas per zaak (codetype "feest", veld "spel": sj/pp/ag/ts of "alle").
+     Geldig "dagen" dagen (standaard 31) vanaf het invoeren. Opgeslagen in ss_feest = {spel:{h,t0}}. Alleen de oefenrondes zijn gratis. */
+  pass:function(game){var all=LS.get("ss_feest",{}),best=null;[game,"alle"].forEach(function(k){var x=all[k];if(!x)return;var e=entry(x.h);
+      if(e&&(e.uit||e.t!=="feest"))return;if(!e&&codesOk)return;
+      var end=x.t0+((e&&e.dagen)||CFG.dagen)*864e5;if(end>Date.now()&&(!best||end>best.end))best={spel:k,end:end}});return best},
+  isPro:function(game){if(!game)return false;return !!this.pass(game)},
   /* vrije proefzaak per spel: spel 1 gebruikt het oude ss_free, nieuwe spellen ss_free_<id> */
   freeKey:function(game){return game==="mw"?"ss_free":"ss_free_"+game},
   usedFree:function(game){return true},
   setFree:function(game){LS.set(this.freeKey(game),1)},
-  locked:function(game){return !this.isPro()},
+  locked:function(game){return !this.isPro(game)},
   groupLeft:function(){var g=LS.get("ss_grp",null);if(!g)return 0;var e=entry(g.h);if(e&&e.uit)return 0;var end=g.t0+(CFG.groep.uren||48)*36e5;
     if(e&&e.tot){var p=String(e.tot).split("-");end=Math.min(end,new Date(+p[0],p[1]-1,+p[2],23,59,59).getTime())}return Math.max(0,end-Date.now())},
-  /* redeem(code) → "pro" | "groep" | "used" | "exp" | null */
+  /* redeem(code) → "pro" | "used" | "exp" | null ; zet PRO.last = {spel,end} */
   redeem:function(v){var c=norm(v);if(!c)return null;
-    if(CFG.hash&&hashStr(c)===CFG.hash){LS.set("ss_proH","oud");return"pro"}
-    var h=sha256(CFG.salt+c),e=entry(h);if(!e)return null;
-    if(valid(e,"feest")||FEEST_OK_PRO&&valid(e,"pro")){LS.set("ss_feestH",h);return"pro"}
-    if(e.t!=="feest"&&e.t!=="pro")return null;
+    var h=sha256(CFG.salt+c),e=entry(h);if(!e||e.t!=="feest"&&e.t!=="groep")return null;
+    if(valid(e,"feest")){var all=LS.get("ss_feest",{}),k=e.spel||"alle",x=all[k];
+      if(!x||x.h!==h){x={h:h,t0:Date.now()};all[k]=x;LS.set("ss_feest",all)}
+      var end=x.t0+(e.dagen||CFG.dagen)*864e5;if(end<=Date.now())return"exp";this.last={spel:k,end:end};return"pro"}
+    if(e.t!=="groep")return"exp";
     if(valid(e,"groep")){var cur=LS.get("ss_grp",null),used=LS.get("ss_grpU",[]);if(cur&&cur.h===h&&this.groupLeft())return"groep";if(used.indexOf(h)>=0)return"used";
       used.push(h);LS.set("ss_grpU",used);LS.set("ss_grp",{h:h,t0:Date.now()});return"groep"}
     return"exp"}
@@ -112,14 +124,14 @@ var PRO={
 
 /* ---------- gedeelde teksten (hub, Pro-paneel, nieuwe spellen) ---------- */
 var T={
-  nl:{pro:"Feestpas",pH:"De Feestpas: de echte speurtocht",pT:"Met de Feestpas speel je alle MiniMystery-zaken echt: met kaart in je eigen buurt, zonder kaart of binnen, zo vaak je wilt. De oefenrondes bij Inspiratie blijven gratis. Je betaalt één keer {p} via Ko-fi en krijgt daar een code. Vul die hieronder in.",
-    pBtn:"Koop de Feestpas",pHave:"Ik heb een code",pUse:"Code invoeren",pOk:"De Feestpas staat aan. Veel speurplezier!",pBad:"Die code klopt niet. Controleer hem en probeer het opnieuw.",pExp:"Deze code is verlopen.",pUsedC:"Deze groepscode is op dit toestel al gebruikt.",pNoNet:"De codelijst kon niet worden geladen. Controleer je verbinding en probeer het opnieuw.",pWait:"Even geduld, de codes worden geladen…",
-    pOn:"De Feestpas is actief op dit toestel.",pFree:"De oefenrondes zijn gratis. De echte zaak speel je met de Feestpas.",pUsed:"De oefenrondes zijn gratis. De echte zaak speel je met de Feestpas.",
+  nl:{pro:"Feestpas",pH:"Feestpas: {g}",pT:"Met de Feestpas speel je {g} echt, zo vaak je wilt, een maand lang vanaf het invoeren van de code. De oefenronde blijft gratis. Je betaalt één keer {p} via Ko-fi en krijgt daar je code. Vul die hieronder in.",pHub:"Elke zaak heeft een eigen Feestpas van {p}. Daarmee speel je die zaak echt, zo vaak je wilt, een maand lang vanaf het invoeren van de code. De oefenrondes bij Inspiratie blijven gratis.",pAll:"Alle zaken",
+    pBtn:"Koop de Feestpas",pHave:"Ik heb een code",pUse:"Code invoeren",pOk:"De Feestpas voor {g} staat aan, tot en met {d}. Veel speurplezier!",pBad:"Die code klopt niet. Controleer hem en probeer het opnieuw.",pExp:"Deze code is verlopen.",pUsedC:"Deze groepscode is op dit toestel al gebruikt.",pNoNet:"De codelijst kon niet worden geladen. Controleer je verbinding en probeer het opnieuw.",pWait:"Even geduld, de codes worden geladen…",
+    pOn:"Feestpas actief tot en met {d}.",pFree:"De oefenronde is gratis. De echte zaak speel je met de Feestpas.",pUsed:"De oefenronde is gratis. De echte zaak speel je met de Feestpas.",
     gp:"Groepspas",gpOn:"Groepspas actief, nog {h} uur.",gpOk:"Groepspas staat aan voor {u} uur.",gpH:"Speel met een groep",gpT:"Met een groepspas maak je {u} uur lang groepszaken aan, voor maximaal {n} telefoons. Alleen jij hebt de pas nodig. De rest doet gratis mee via je uitnodiging. De {u} uur gaan in zodra je de code invoert.",gpBtn:"Koop een groepspas",
     cancel:"Annuleren",close:"Sluiten",rank:"Rang",streak:"Dagen op rij",solved:"Opgelost",pts:"{x} punten. Nog {n} tot {r}.",ptsTop:"{x} punten. Hoogste rang bereikt."},
-  en:{pro:"Party Pass",pH:"The Party Pass: the real hunt",pT:"With the Party Pass you play every MiniMystery case for real: with a map in your own streets, without one, or indoors, as often as you like. The practice rounds under Inspiration stay free. Pay {p} once via Ko-fi and you get a code. Enter it below.",
-    pBtn:"Get the Party Pass",pHave:"I have a code",pUse:"Enter code",pOk:"The Party Pass is on. Happy sleuthing!",pBad:"That code is not right. Check it and try again.",pExp:"This code has expired.",pUsedC:"This group code has already been used on this phone.",pNoNet:"The code list could not be loaded. Check your connection and try again.",pWait:"One moment, loading codes…",
-    pOn:"The Party Pass is active on this phone.",pFree:"The practice rounds are free. You play the real case with the Party Pass.",pUsed:"The practice rounds are free. You play the real case with the Party Pass.",
+  en:{pro:"Party Pass",pH:"Party Pass: {g}",pT:"With the Party Pass you play {g} for real, as often as you like, for one month from the moment you enter the code. The practice round stays free. Pay {p} once via Ko-fi and you get your code there. Enter it below.",pHub:"Every case has its own Party Pass of {p}. With it you play that case for real, as often as you like, for one month from the moment you enter the code. The practice rounds under Inspiration stay free.",pAll:"All cases",
+    pBtn:"Get the Party Pass",pHave:"I have a code",pUse:"Enter code",pOk:"The Party Pass for {g} is on, until {d}. Happy sleuthing!",pBad:"That code is not right. Check it and try again.",pExp:"This code has expired.",pUsedC:"This group code has already been used on this phone.",pNoNet:"The code list could not be loaded. Check your connection and try again.",pWait:"One moment, loading codes…",
+    pOn:"Party Pass active until {d}.",pFree:"The practice round is free. You play the real case with the Party Pass.",pUsed:"The practice round is free. You play the real case with the Party Pass.",
     gp:"Group pass",gpOn:"Group pass active, {h} hours left.",gpOk:"Group pass is on for {u} hours.",gpH:"Play with a group",gpT:"A group pass lets you create group cases for {u} hours, for up to {n} phones. Only you need the pass; the others join free through your invitation. The {u} hours start when you enter the code.",gpBtn:"Buy a group pass",
     cancel:"Cancel",close:"Close",rank:"Rank",streak:"Day streak",solved:"Solved",pts:"{x} points. {n} more to make {r}.",ptsTop:"{x} points. Top rank reached."}
 };
@@ -127,17 +139,22 @@ var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&
 var fill=function(s,o){return String(s).replace(/\{(\w+)\}/g,function(m,k){return o&&k in o?o[k]:m})};
 
 /* Pro-paneel: HTML + binding. Zelfde ids als in spel 1 (pCode/pOk/pMsg). kind: "pro"|"groep" */
-function proHTML(lang,kind){var t=T[lang]||T.en,g=kind==="groep",url=g?CFG.groep.url:CFG.url,price=g?CFG.groep.price:CFG.price,U={u:CFG.groep.uren,n:CFG.groep.max,p:CFG.price};
-  return '<div class="eyebrow">'+(g?t.gp:t.pro)+'</div><h2>'+(g?t.gpH:t.pH)+'</h2><p>'+fill(g?t.gpT:t.pT,U)+'</p>'+
-    (url?'<a class="btn" href="'+esc(url)+'" target="_blank" rel="noopener">'+(g?t.gpBtn:t.pBtn)+(price?' · '+esc(price):'')+'</a>':'')+
+function gameName(id,lang){var c=window.MW_CATALOG,g=c&&c.games.filter(function(x){return x.id===id})[0];return id==="alle"?(T[lang]||T.en).pAll:g?g[lang==="en"?"en":"nl"].title:id}
+function fmtDay(ms,lang){try{return new Date(ms).toLocaleDateString(lang==="en"?"en-GB":"nl-NL",{day:"numeric",month:"long"})}catch(e){return new Date(ms).toISOString().slice(0,10)}}
+/* game = zaak-id (sj/pp/ag/ts) in een spel; leeg op de hub (dan: koopknop per zaak) */
+function proHTML(lang,kind,game){var t=T[lang]||T.en,U={p:CFG.price,g:esc(gameName(game,lang))},c=window.MW_CATALOG,btns;
+  if(game){var url=CFG.shop[game]||"";btns=url?'<a class="btn" href="'+esc(url)+'" target="_blank" rel="noopener">'+t.pBtn+' · '+esc(CFG.price)+'</a>':''}
+  else btns=(c?c.games.filter(function(x){return x.status!=="soon"&&CFG.shop[x.id]}).map(function(x){return '<a class="btn ghost dk" href="'+esc(CFG.shop[x.id])+'" target="_blank" rel="noopener">'+esc(x[lang==="en"?"en":"nl"].title)+' · '+esc(CFG.price)+'</a>'}).join(""):"")+
+    (CFG.url?'<a class="btn dk" href="'+esc(CFG.url)+'" target="_blank" rel="noopener">'+t.pAll+'</a>':'');
+  return '<div class="eyebrow">'+t.pro+'</div><h2>'+(game?fill(t.pH,U):t.pro)+'</h2><p>'+fill(game?t.pT:t.pHub,U)+'</p>'+btns+
     '<div class="eyebrow">'+t.pHave+'</div><input class="inp" id="pCode" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="'+t.pHave+'"><button type="button" class="btn ghost dk" id="pOk">'+t.pUse+'</button><p class="note" id="pMsg" style="color:#a5392c"></p>'}
-function bindPro(root,lang,done){var t=T[lang]||T.en,inp=root.querySelector("#pCode"),ok=root.querySelector("#pOk"),msg=root.querySelector("#pMsg"),busy=false;
+function bindPro(root,lang,done){var L2=lang;var t=T[lang]||T.en,inp=root.querySelector("#pCode"),ok=root.querySelector("#pOk"),msg=root.querySelector("#pMsg"),busy=false;
   var go=function(){if(busy)return;busy=true;var v=inp.value;var run=function(){var r=PRO.redeem(v);busy=false;
-      if(r==="pro"||r==="groep"){msg.textContent="";done&&done(r,r==="pro"?t.pOk:fill(t.gpOk,{u:CFG.groep.uren}))}
+      if(r==="pro"||r==="groep"){msg.textContent="";done&&done(r,r==="pro"?fill(t.pOk,{g:gameName(PRO.last.spel,L2),d:fmtDay(PRO.last.end-864e5/2,L2)}):fill(t.gpOk,{u:CFG.groep.uren}))}
       else{msg.textContent=r==="exp"?t.pExp:r==="used"?t.pUsedC:!codesOk&&CODES.length===0?t.pNoNet:t.pBad;try{navigator.vibrate&&navigator.vibrate(120)}catch(e){}}};
     if(!codesOk){msg.textContent=t.pWait;ready.then(run)}else run()};
   ok.onclick=go;inp.onkeydown=function(e){if(e.key==="Enter")go()}}
-function statusText(lang,game){var t=T[lang]||T.en,s=PRO.isPro()?t.pOn:game&&PRO.usedFree(game)?t.pUsed:t.pFree,gl=PRO.groupLeft();return s+(gl?" "+fill(t.gpOn,{h:Math.ceil(gl/36e5)}):"")}
+function statusText(lang,game){var t=T[lang]||T.en,ps=game&&PRO.pass(game);return game?(ps?fill(t.pOn,{d:fmtDay(ps.end-864e5/2,lang)}):t.pFree):""}
 
 /* ---------- navigatie ---------- */
 function gameUrl(id,lang){var c=window.MW_CATALOG,g=c&&c.games.filter(function(x){return x.id===id})[0];if(!g)return hubUrl(lang);return ROOT+g[lang==="en"?"en":"nl"].slug}

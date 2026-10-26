@@ -70,7 +70,7 @@ function home(){
   var p=MW.profile.get();
   $("#pRank").textContent=MW.profile.rankName(p.xp,L);$("#pStreak").textContent=p.streak||0;$("#pSolved").textContent=(p.games.dr&&p.games.dr.n)||0;
   $("#bResume").hidden=!LS.get(GK,null);
-  var pro=MW.pro.isPro(),lk=MW.pro.locked(ID),playedToday=(p.games.dr&&p.games.dr.day)===MW.today();
+  var pro=MW.pro.isPro(ID),lk=MW.pro.locked(ID),playedToday=(p.games.dr&&p.games.dr.day)===MW.today();
   $("#bGps").textContent=(lk?"🔒 ":"")+(playedToday?T.todayAgain:T.today);$("#bRandom").textContent=(lk?"🔒 ":"")+T.extra;
   $("#bPro").hidden=pro;$("#bPro").textContent=T.pro+" · "+MW.cfg.price;
   $("#status").textContent=pro?T.proOn:lk?T.proUsed:T.proFree;
@@ -78,7 +78,7 @@ function home(){
   $$("#len button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.m===MODE)});
   show("home")}
 function show(id){["home","brief","play","cards"].forEach(function(s){$("#"+s).hidden=s!==id});clearInterval(tick);tick=0;if(id==="cards")tick=setInterval(hud,1000);if(id==="play"&&map)map.resize()}
-function proSheet(){sheet(MW.proHTML(L,"pro")+'<button type="button" class="btn ghost dk" id="shX">'+T.cancel+'</button>');$("#shX").onclick=closeSheet;
+function proSheet(){sheet(MW.proHTML(L,"pro",ID)+'<button type="button" class="btn ghost dk" id="shX">'+T.cancel+'</button>');$("#shX").onclick=closeSheet;
   MW.bindPro($("#sheetBody"),L,function(r,msg){closeSheet();home();toast(msg)})}
 $("#len").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;MODE=b.dataset.m;LS.set("ss_sj_mode",MODE);$$("#len button").forEach(function(x){x.setAttribute("aria-pressed",x===b)})});
 $("#name").addEventListener("input",function(){NAME=this.value.trim().slice(0,24);LS.set("ss_sj_name",NAME)});
