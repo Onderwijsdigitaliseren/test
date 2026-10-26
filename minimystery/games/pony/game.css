@@ -232,7 +232,7 @@ h1,h2,h3{font-family:var(--f-type);font-weight:700}
 #kids{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,var(--sky),#d8f0ff 45%,#a8e08a 55%,var(--grass))}
 #kids[hidden]{display:none}
 #kidsC{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:manipulation}
-#kidsMsg{position:absolute;left:14px;right:14px;top:calc(176px + env(safe-area-inset-top,0px));text-align:center;font-family:var(--f-type);font-weight:700;font-size:clamp(20px,6vw,28px);color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.45);pointer-events:none;text-wrap:balance}
-#kidsHot{position:absolute;left:14px;right:14px;top:calc(118px + env(safe-area-inset-top,0px));text-align:center;font-family:var(--f-type);font-weight:700;font-size:clamp(22px,7vw,40px);line-height:1.1;text-wrap:balance;pointer-events:none;text-shadow:0 2px 10px rgba(0,0,0,.4);transition:color .4s}
-#bView{position:absolute;left:12px;top:calc(72px + env(safe-area-inset-top,0px));z-index:3;width:auto;padding:8px 12px;border-radius:14px;background:rgba(255,250,240,.95);border:2px solid var(--bark);font:600 13px var(--f-type);color:var(--ink)}
+#kidsMsg{position:absolute;left:90px;right:14px;bottom:calc(150px + env(safe-area-inset-bottom,0px));text-align:center;font-family:var(--f-type);font-weight:700;font-size:clamp(16px,4.6vw,21px);color:var(--ink);background:rgba(255,250,240,.92);border:2px solid var(--bark);border-radius:16px;padding:8px 12px;pointer-events:none;text-wrap:balance}
+#kidsHot{position:absolute;left:14px;right:14px;top:calc(72px + env(safe-area-inset-top,0px));text-align:left;font-family:var(--f-type);font-weight:700;font-size:clamp(20px,6vw,30px);pointer-events:none;text-shadow:0 2px 10px rgba(0,0,0,.4);transition:color .4s}
+#bView{position:absolute;right:12px;top:calc(72px + env(safe-area-inset-top,0px));z-index:3;width:auto;padding:8px 12px;border-radius:14px;background:rgba(255,250,240,.95);border:2px solid var(--bark);font:600 13px var(--f-type);color:var(--ink)}
 #play.kv #zoom,#play.kv #radar{display:none}
