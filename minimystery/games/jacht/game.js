@@ -159,17 +159,40 @@ function ehvWorld(){
   return{ways:ways,pois:P.map(function(q){return{type:q[0],name:q[1],x:q[2],y:q[3]}})}}
 
 /* ---------- een ruil beginnen ---------- */
+/* ---------- verhaalkaart (kidsmap.js): de nachtstraat rond het feesthuis ---------- */
+var KI=MW.KidsMap.icons,START={x:500,y:1290};
+var FP=[{x:230,y:1040,k:"lamp"},{x:150,y:760,k:"bank"},{x:300,y:520,k:"speel"},{x:520,y:330,k:"school"},{x:760,y:420,k:"brug"},{x:860,y:700,k:"park"},{x:720,y:960,k:"kerk"},{x:500,y:760,k:"plein"},{x:150,y:300,k:"winkel"},{x:880,y:1060,k:"halte"},{x:620,y:1130,k:"post"}];
+var ROADS=[[-1,0],[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,-1],[7,2],[7,5],[7,0],[7,6],[8,2],[8,1],[9,6],[9,5],[10,-1],[10,6]];
+var TREES=[[80,1180],[120,320],[420,160],[640,180],[900,260],[950,900],[940,1180],[300,1300],[700,1300],[380,900],[640,600],[90,520],[820,1050],[560,1120]];
+var KM=MW.KidsMap.create({T:T.kv,G:function(){return G},P:function(){return P},dTo:function(s){return dTo(s)},virt:function(){return !!(G&&G.virt)},mode:function(){return G&&G.mode},
+  map:{W:1000,H:1400,bot:250,start:START,spots:FP,roads:ROADS,vsc:.42,sky:"#140f2e",land:"#223a3a",road:"#4a3f86",roadLine:"#9f8cff",label:"#ffd36a",labelHalo:"rgba(20,15,46,.9)",heroHalo:"rgba(212,255,58,.25)"},
+  draw:{mark:function(g,x,y,r,col){g.save();g.fillStyle=col==="#fff"?"#ffd36a":"rgba(255,211,106,.5)";g.shadowColor="#ffd36a";g.shadowBlur=8;g.beginPath();g.arc(x,y,r*.8,0,7);g.fill();g.restore()},
+    ground:function(g,t,still){g.fillStyle="#1d3330";[[200,250,160],[760,900,200],[300,1150,140],[650,250,120]].forEach(function(e){g.beginPath();g.ellipse(e[0],e[1],e[2],e[2]*.5,0,0,7);g.fill()});
+      g.strokeStyle="#0f2d5c";g.lineWidth=70;g.lineCap="round";g.lineJoin="round";g.beginPath();[[0,640],[120,690],[260,660],[420,700],[600,680],[800,720],[1000,690]].forEach(function(p,i){i?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1])});g.stroke();
+      g.fillStyle="#fff";for(var i=0;i<40;i++){g.globalAlpha=still?.6:.3+.5*Math.abs(Math.sin(t/700+i));g.beginPath();g.arc((i*173)%980+10,(i*97)%260+20,2,0,7);g.fill()}g.globalAlpha=1;g.fillStyle="#fff7c2";g.beginPath();g.arc(880,140,34,0,7);g.fill()},
+    decor:function(g){TREES.forEach(function(p,i){KI.tree(g,p[0],p[1],44+(i%3)*8,"#1f5a3a","#2a7a4a")});[[60,1000,"#3b3560"],[900,200,"#4a3f86"],[420,1000,"#3b3560"]].forEach(function(h){KI.house(g,h[0],h[1],56,h[2],"#2a2540")})},
+    start:function(g,x,y){KI.party(g,x,y,90)},
+    landmark:function(g,k,x,y,s){({lamp:function(){KI.lamp(g,x,y,s,true)},bank:function(){KI.bench(g,x,y,s)},speel:function(){KI.swing(g,x,y,s)},school:function(){KI.school(g,x,y,s)},brug:function(){KI.bridge(g,x,y,s)},park:function(){KI.park(g,x,y,s)},kerk:function(){KI.church(g,x,y,s)},plein:function(){KI.fountain(g,x,y,s)},winkel:function(){KI.shop(g,x,y,s)},halte:function(){KI.sign(g,x,y,s,"#2563eb","B")},post:function(){KI.postbox(g,x,y,s)}}[k]||function(){})()},
+    hero:function(g,x,y){g.fillStyle="#d4ff3a";g.shadowColor="#d4ff3a";g.shadowBlur=20;g.beginPath();g.arc(x,y-24,20,0,7);g.fill();g.shadowBlur=0;g.fillStyle="#140f2e";g.beginPath();g.arc(x-7,y-27,3,0,7);g.arc(x+7,y-27,3,0,7);g.fill()},
+    runner:function(g,fx,fy,t,still){var a=t/2200,px=fx+Math.cos(a)*80,py=fy+30+Math.sin(a*.7)*40;shadowFig(g,px,py,60,still?.8:.55+.4*Math.abs(Math.sin(t/400)))}}});
+KM.mount();
+function buildVirt(seed,origin,daily){build(seed,"map",null,null,origin,daily,true);if(G)toast(T.kv.virtOut)}
+function noMapSheet(seed,daily,why){sheet('<h2>'+T.kv.noMapQ+'</h2>'+(why?'<p class="note">'+esc(why)+'</p>':'')+'<p>'+esc(T.kv.noMapT)+'</p><button type="button" class="btn" id="nmGo">'+T.kv.noMapGo+'</button><button type="button" class="btn ghost dk" id="shX">'+T.back+'</button>');
+  $("#shX").onclick=closeSheet;$("#nmGo").onclick=function(){closeSheet();MODE="street";LS.set("ss_sj_mode",MODE);build(seed,"street",null,null,null,daily)}}
+function dropMap(){if(!G||G.mode!=="map")return;Wk.stopWatch();KM.leave();G.virt=false;G.mode="street";G.i=0;while(G.ph[G.i])G.i++;G.st=null;save();show("cards");render();toast(T.kv.switched)}
 function begin(seed,mode,daily){if(mode!=="map")return build(seed,mode,null,null,null,daily);
   Wk.loading(T.loc);
   Wk.locate().then(function(pos){var lat=pos.coords.latitude,lon=pos.coords.longitude;
     return Wk.fetchWorld({lat:lat,lon:lon,R:R0,status:function(s){if(s==="pois")Wk.loading(T.pois);if(s==="nomap")toast(T.nomap)}}).then(function(w){Wk.loading("");
-      build(seed,"map",w.pois,w.ways,w.origin,daily);var mine=G;w.later.then(function(ways){if(ways&&G&&G===mine){W=ways;LS.set(WK,W)}})})
-  }).catch(function(e){Wk.loading("");fail(e==="nogps"?T.noGps:T.denied)})}
+      if(!w.pois||!w.pois.length)return buildVirt(seed,w.origin,daily);
+      build(seed,"map",w.pois,w.ways,w.origin,daily);var mine=G;w.later.then(function(ways){if(ways&&G&&G===mine){W=ways;LS.set(WK,W)}})},function(){Wk.loading("");var kx=111320*Math.cos(lat*Math.PI/180);buildVirt(seed,{lat:lat,lon:lon,kx:kx,ky:110540},daily)})
+  }).catch(function(e){Wk.loading("");noMapSheet(seed,daily,e==="nogps"?T.noGps:T.denied)})}
 function fail(m){sheet('<h2>'+T.fail+'</h2><p>'+esc(m)+'</p><button type="button" class="btn" id="shX">'+T.back+'</button>');$("#shX").onclick=closeSheet}
-function build(seed,mode,pois,ways,origin,daily){
+function build(seed,mode,pois,ways,origin,daily,virt){
   var c=genCase(seed,mode,LEN);if(!c){toast("…");return}
   G={seed:seed,code:makeCode(seed,mode,LEN,LEVEL),mode:mode,len:LEN,level:LEVEL,c:c,i:0,ph:[],t0:0,tries:0,daily:!!daily,par:Math.round((mode==="in"?35:70)*LENS[LEN].par),seen:[],skips:0,dist:0,origin:origin,px:0,py:0,st:null,cine:false,gold:[],hints:0};
-  if(mode==="map"||mode==="demo"){var r=rngOf(seed^0x9e3779b9),spots=Wk.pickSpots(pois,ways,R0,c.slots.length,r,T.corner);
+  if(virt){G.virt=true;G.st=KM.virtSpots(c.slots.length).map(function(p,i){p.fi=i;p.done=false;return p});W=[];P={x:0,y:0,acc:0};LS.set(WK,W)}
+  else if(mode==="map"||mode==="demo"){var r=rngOf(seed^0x9e3779b9),spots=Wk.pickSpots(pois,ways,R0,c.slots.length,r,T.corner);
     G.st=spots.map(function(p,i){return{x:p.x,y:p.y,type:p.type,name:p.name||cap((D.TYPES[p.type]||D.TYPES.hoek).replace(/^(de|het|the) /,"")),fi:i,done:false}});
     W=ways||[];P={x:0,y:0,acc:0};LS.set(WK,W)}
   brief()}
@@ -213,7 +236,7 @@ function goldTotal(){return G.c.slots.filter(function(s){return isPuz(s.act)}).l
 function goldHTML(){var got=G.gold||[],left=Math.max(0,goldTotal()-got.length),h='<span class="gl">'+esc(T.goldBar)+'</span>';
   got.forEach(function(x){h+='<b class="coin">'+x.d+'</b>'});for(var k=0;k<left;k++)h+='<b class="coin off">?</b>';return h}
 function goldUI(){if(!G)return;var el=$("#goldM");if(!el&&$("#low")){el=document.createElement("div");el.id="goldM";el.className="goldbar";$("#low").insertBefore(el,$("#radar"))}if(el)el.innerHTML=goldHTML();var c=$("#goldC");if(c)c.innerHTML=goldHTML()}
-function render(){hud();popPlan();var i=G.i,box=$("#card"),t=N();
+function render(){hud();popPlan();while(G.i<N()&&G.ph[G.i])G.i++;var i=G.i,box=$("#card"),t=N();
   if(i>=t){box.innerHTML='<div class="goldbar" id="goldC">'+goldHTML()+'</div><div class="pol done"><div class="grid">'+G.ph.map(function(p){return '<img src="'+p+'" alt="">'}).join("")+'</div></div>'+bubble(T.radarAll)+'<button type="button" class="btn red" id="bAcc">'+T.last+'</button>';$("#bAcc").onclick=accuseSheet;return}
   var s=G.c.slots[i],photo=!isPuz(s.act);
   box.innerHTML='<div class="goldbar" id="goldC">'+goldHTML()+'</div><div class="pol empty"><div class="ph">'+ico(s.id,"big")+'</div><p class="cap">'+esc(fill(T.task,{i:i+1,N:t}))+' · '+esc(T.kinds[s.act])+'</p></div>'+bubble(s.ask,T.wants)+'<div class="lvlrow">'+spk(s.ask)+'</div><button type="button" class="btn" id="bOpen">'+(photo?'📷 '+T.shoot:'▶ '+T.start)+'</button>';
@@ -225,7 +248,8 @@ function enterMap(){show("play");popPlan();
     theme:{bg:"#140f2e",water:"#0f2d5c",waterEdge:"#38e8ff",ripple:"rgba(56,232,255,.25)",park:"#123d2a",parkEdge:"#2fd27a",river:"#1b4a8a",major:"#ff4fa3",minor:"#4a3f86",road:"#7a5cff",label:"#ffd36a",waterLabel:"#9ff0ff",ring:"rgba(212,255,58,.35)",me:"#d4ff3a",meHalo:"rgba(212,255,58,.16)",meRing:"rgba(212,255,58,.7)",font:"700 12px 'Fredoka','Barlow Condensed',sans-serif"},
     items:items,onTap:function(hit,w){if(hit&&!hit.ref.done){sel=hit.ref;chip()}else if(G.mode==="demo"){walkTo=w;sel=null;map.follow();chip()}else{sel=null;chip()}}});
   map.resize();map.fit(R0);sel=null;arrived=null;walkTo=null;$("#chip").hidden=true;
-  Wk.stopWatch();if(G.mode==="map")Wk.watch(G.origin,P,function(d){if(d>3&&d<80)G.dist+=d});
+  Wk.stopWatch();if(G.mode==="map")Wk.watch(G.origin,P,function(d){if(d>3&&d<80)G.dist+=d;KM.moved(d)});
+  KM.enter({kids:true,virt:!!G.virt,map:map});
   if(G.mode==="demo")toast(T.demoTip);
   requestAnimationFrame(loop)}
 var dTo=function(t){return Math.hypot(t.x-P.x,t.y-P.y)},inRange=function(t){return dTo(t)<=Math.max(35,Math.min(P.acc||0,60))||G.force===t};
@@ -243,7 +267,7 @@ function items(){var it=[];
   return it}
 function loop(t){if($("#play").hidden||!G)return;var dt=Math.min(.1,(t-lastT)/1000)||0;lastT=t;
   if(G.mode==="demo"&&walkTo){var d=Math.hypot(walkTo.x-P.x,walkTo.y-P.y),step=110*dt;if(d<=step){P.x=walkTo.x;P.y=walkTo.y;G.dist+=d;walkTo=null}else{P.x+=(walkTo.x-P.x)/d*step;P.y+=(walkTo.y-P.y)/d*step;G.dist+=step}}
-  map.draw(t);if(!loop.n||t-loop.n>500){loop.n=t;tickMap()}requestAnimationFrame(loop)}
+  if(!KM.draw(t))map.draw(t);if(!loop.n||t-loop.n>500){loop.n=t;tickMap()}requestAnimationFrame(loop)}
 function tickMap(){var el=Math.floor((Date.now()-G.t0)/1000),n=done();
   $("#mT").textContent=Math.floor(el/60)+":"+String(el%60).padStart(2,"0");$("#mS").textContent=n+"/"+N();shardsUI($("#mM"),n);goldUI();
   var open=G.st.filter(function(s){return !s.done}),near=null,nd=1e9;open.forEach(function(s){var d=dTo(s);if(d<nd){nd=d;near=s}});
@@ -300,7 +324,7 @@ function ruilSheet(i,spot){walkTo=null;var s=G.c.slots[i];cur={i:i,spot:spot||nu
   if(window.MMP)MMP.helper(function(){G.t0-=120000;G.oops=(G.oops||0)+2;G.skips=(G.skips||0)+1;save();o.done()},function(){say(I[0]+". "+instr)});
   (PUZ[s.act]||PUZ.catch)(o)}
 function goldOf(i){var s=G.c.slots[i];return s.gold!=null?s.gold:1+(hashStr(G.seed+"|g"+i)%9)}
-function accept(seen){var i=cur.i,s=G.c.slots[i];G.ph[i]=cur.thumb;if(cur.spot)cur.spot.done=true;G.force=null;G.miss=0;if(G.mode!=="map"&&G.mode!=="demo")G.i=i+1;
+function accept(seen){var i=cur.i,s=G.c.slots[i];G.ph[i]=cur.thumb;if(cur.spot){cur.spot.done=true;cur.spot.doneAt=Date.now();G.kd0=null}G.force=null;G.miss=0;if(G.mode!=="map"&&G.mode!=="demo")G.i=i+1;
   var gd=null;if(isPuz(s.act)){G.gold=G.gold||[];var had=G.gold.filter(function(x){return x.i===i})[0];if(had)gd=had.d;else{gd=goldOf(i);G.gold.push({i:i,d:gd,id:s.id})}}
   save();buzz([40,30,80]);beep(520,.15);
   var kind=s.kind,head=kind==="ev"?T.slip:kind==="claim"?T.claim:T.gag,sub=kind==="ev"?T.slipT:kind==="claim"?T.claimT:"",txt=kind==="claim"?claimText(G.c.claims[s.w]):s.t,n=done(),t=N();
@@ -510,7 +534,7 @@ function noteSheet(){var ev=[],cl=[];G.c.slots.forEach(function(s,i){if(!G.ph[i]
   sheet('<h2>'+T.notebook+'</h2>'+MW.codeBox(L,G.code,"jacht",true)+gold+(ev.length||cl.length?'<div class="eyebrow">'+T.nbE+'</div><div class="list">'+(ev.join("")||'<p class="note">–</p>')+'</div><div class="eyebrow">'+T.nbW+'</div><div class="list">'+(cl.join("")||'<p class="note">–</p>')+'</div>':'<p class="note">'+T.nbNone+'</p>')+'<button type="button" class="btn ghost dk" id="shX">'+T.close+'</button>');MW.bindCodeBox($("#sheetBody"),L);$("#shX").onclick=closeSheet}
 function susSheet(){sheet('<h2>'+T.people+'</h2><p class="note">'+T.peopleT+'</p><div class="list">'+G.c.sus.map(susCard).join("")+'</div><button type="button" class="btn ghost dk" id="shX">'+T.close+'</button>');$("#shX").onclick=closeSheet}
 function menuSheet(){sheet('<h2>'+T.menu+'</h2><button type="button" class="btn" id="mBack">'+T.mBack+'</button><button type="button" class="btn ghost dk" id="mHome">'+T.mHome+'</button><button type="button" class="btn ghost dk" id="mWipe">'+T.mWipe+'</button>');
-  $("#sheetBody").onclick=function(e){var i=e.target.id;if(i==="mBack")closeSheet();else if(i==="mHome"){closeSheet();leavePlay();toast(T.saved)}else if(i==="mWipe")confirmSheet(T.wipeQ,T.wipeT,T.wipeY,wipeGame)}}
+  $("#sheetBody").onclick=function(e){var i=e.target.id;if(i==="mBack")closeSheet();else if(i==="mNoMap"){closeSheet();dropMap()}else if(i==="mHome"){closeSheet();leavePlay();toast(T.saved)}else if(i==="mWipe")confirmSheet(T.wipeQ,T.wipeT,T.wipeY,wipeGame)}}
 
 /* ---------- ontmaskeren ---------- */
 function accuseSheet(){var c=G.c,ps=null,pw=null;
@@ -759,8 +783,8 @@ function archSheet(){var g=MW.profile.get().games.dr,log=(g&&g.log)||[],st=funct
   sheet('<h2>'+T.aH+'</h2><div class="list">'+(log.map(function(x){return '<button type="button" class="sus" data-c="'+esc(x.c)+'"><b>'+esc(x.t)+'</b><small>'+esc(String(x.d).split("-").reverse().join("-"))+' · '+x.m+' min</small><div class="tags"><i>'+st(x.st)+'</i><i>'+esc(x.c)+'</i></div></button>'}).join("")||'<p class="note">'+T.aNone+'</p>')+'</div>'+(log.length?'<p class="note">'+T.aTip+'</p>':'')+'<button type="button" class="btn ghost dk" id="shX">'+T.back+'</button>');
   $("#sheetBody").onclick=function(e){if(e.target.id==="shX"){closeSheet();return}var r=e.target.closest("[data-c]");if(r)codeSheet(r.dataset.c)}}
 function confirmSheet(title,text,yes,fn){sheet('<h2>'+title+'</h2><p>'+text+'</p><button type="button" class="btn red" id="cfY">'+yes+'</button><button type="button" class="btn ghost dk" id="shX">'+T.cancel+'</button>');$("#shX").onclick=closeSheet;$("#cfY").onclick=fn}
-function leavePlay(){save();Wk.stopWatch();popStop();G=null;home()}
-function wipeGame(){LS.del(GK);Wk.stopWatch();popStop();G=null;closeSheet();home();toast(T.wiped)}
+function leavePlay(){save();Wk.stopWatch();KM.leave();popStop();G=null;home()}
+function wipeGame(){LS.del(GK);Wk.stopWatch();KM.leave();popStop();G=null;closeSheet();home();toast(T.wiped)}
 function wipeSheet(){var has=!!LS.get(GK,null);sheet('<h2>'+T.wipe+'</h2>'+(has?'<button type="button" class="btn ghost dk" id="wG">'+T.wipeY+'</button>':'')+'<button type="button" class="btn ghost dk" id="wA">'+T.wipeAll+'</button><button type="button" class="btn" id="shX">'+T.cancel+'</button>');
   $("#sheetBody").onclick=function(e){var i=e.target.id;if(i==="shX")closeSheet();else if(i==="wG")confirmSheet(T.wipeQ,T.wipeT,T.wipeY,wipeGame);else if(i==="wA")confirmSheet(T.allQ,T.allT,T.allY,function(){LS.del(GK);MW.profile.wipe();if(/github\.io$/.test(location.hostname))LS.del(MW.pro.freeKey(ID));closeSheet();home();toast(T.wiped)})}}
 function goBack(){if(!$("#hide").hidden){$("#hideX").click();return true}if(!$("#cine").hidden){$("#cineX").click();return true}
@@ -785,7 +809,7 @@ hero();
 var hz=/[#&]z=([A-Z0-9]+)/i.exec(location.hash);
 if(window.MMP)MMP.init({id:ID,fin:{nl:'De Lichtjesdief zucht: oké, oké. Het cadeau ligt niet in mijn schuilplaats. Ik heb het echt verstopt. Hier.',en:'The Light Thief sighs: okay, okay. The present is not in my hideout. I really hid it. Here.'}});
 /* testhaakjes (voor de begeleider/ontwikkelaar; doet niks tenzij je ze aanroept) */
-window.SJ_T={G:function(){return G},solve:function(){if(cur&&cur.solve)cur.solve()},parse:parseCode,make:makeCode,gen:function(seed,mode,len){return genCase(seed,mode,len)},lock:function(){return lockOrder().map(function(x){return x.d}).join("")},open:function(i){var sp=G.st?G.st.filter(function(x){return x.fi===i})[0]:null;ruilSheet(i,sp||null)}};
+window.SJ_T={begin:begin,G:function(){return G},solve:function(){if(cur&&cur.solve)cur.solve()},parse:parseCode,make:makeCode,gen:function(seed,mode,len){return genCase(seed,mode,len)},lock:function(){return lockOrder().map(function(x){return x.d}).join("")},open:function(i){var sp=G.st?G.st.filter(function(x){return x.fi===i})[0]:null;ruilSheet(i,sp||null)}};
 home();if(hz){var pc=parseCode(hz[1]);if(pc)codeSheet(hz[1].toUpperCase())}
 MW.pro.ready.then(function(){if(!$("#home").hidden&&$("#sheet").hidden&&!G)home()});
 })();

@@ -22,7 +22,8 @@
 <meta name="theme-color" content="#9ad7ff">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Permanent+Marker&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600&display=swap">
 <link rel="stylesheet" href="shared/platform.css?v=1">
-<link rel="stylesheet" href="games/pony/game.css?v=5">
+<link rel="stylesheet" href="shared/kidsmap.css?v=1">
+<link rel="stylesheet" href="games/pony/game.css?v=6">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Het Geheim van Pony Pluis","url":"https://www.minimystery.nl/het-geheim-van-pony-pluis.html","description":"Pony-speurtocht voor kinderfeestjes: pony Pluis is weg uit haar stal. Acht manege-puzzels zonder lezen, vijf dieren-getuigen, één geheim. Met kaart, zonder kaart of binnen. Ruiterpaspoort. Oefenronde gratis.","inLanguage":"nl","gamePlatform":"Webbrowser","genre":["Kinderspel","Speurtocht","Pony's"],"isAccessibleForFree":false,"offers":{"@type":"Offer","price":"3.99","priceCurrency":"EUR","description":"Feestpas"}}</script>
 </head>
 <body>
@@ -99,9 +100,7 @@
 
   <section class="screen" id="play" hidden>
     <canvas id="map"></canvas>
-    <div id="kids"><canvas id="kidsC"></canvas><div id="kidsMsg"></div><div id="kidsHot"></div></div>
-    <button type="button" id="bView">Kaart (begeleider)</button>
-    <div id="mhud">
+        <div id="mhud">
       <div><b id="mT">0:00</b><span>Tijd</span></div>
       <div><b id="mS">0</b><span>Sporen</span></div>
       <div><div class="balls" id="mM"></div><span>Hoefijzers</span></div>
@@ -138,10 +137,11 @@
 <script src="shared/catalog.js?v=mm8"></script>
 <script src="shared/walk.js?v=3"></script>
 <script src="shared/steps.js?v=1"></script>
+<script src="shared/kidsmap.js?v=1"></script>
 <script src="shared/party.js?v=2"></script>
 <script src="shared/voice.js?v=1"></script>
-<script src="games/pony/data-nl.js?v=5"></script>
-<script src="games/pony/game.js?v=11"></script>
+<script src="games/pony/data-nl.js?v=6"></script>
+<script src="games/pony/game.js?v=12"></script>
 <script id="mm-demo">/* MiniMystery: ?oefen start direct de gratis oefenronde (link vanaf Inspiratie op de hub) */
 if(/[?&]oefen\b/.test(location.search)){var b=document.getElementById("bDemo");if(b)setTimeout(function(){b.click()},50)}</script>
 </body>

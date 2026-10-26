@@ -36,6 +36,10 @@ T:{today:"Start today's hunt",todayAgain:"Another hunt today",extra:"Extra hunt"
   radarAll:"All the lights! Your lantern is bright enough. Shine it in his face!",near:"Light Thief in {d} m",warm:"Almost! {d} m to go",hot:"This is it. {d} m",here:"The Light Thief is here",look:"Catch him!",gps:"I really am here",corner:"Corner of",
   demo:"Practice round in Eindhoven city centre",demoCase:"practice round",demoTip:"Practice round: tap the map to walk.",walk:"Walk there",
   popTap:"Tap him away",popYou:"birthday kid",
+  kv:{fp:["Lamp post","Bench","Playground","School","Bridge","Park","Church","Square","Shop","Bus stop","Postbox"],all:"All lights! To the lantern.",near:"Light at {d} m",cold:"Cold… try another direction",cool:"Lukewarm. Getting closer",warm:"Warm! Keep going!",hot:"HOT! Look around you!",here:"The Light Thief is here!",first:"Start walking, the compass shows the way",noDir:"Walk a little, then the compass knows the direction",
+      map:"Map",kids:"Story map",mapTip:"The real map. Tap Story map for the children's drawing.",inSteps:"{n} steps to go",
+      virtOut:"No map of the area found. You walk on the story map: the arrow and warm/cold show the way.",
+      noMapQ:"No location today?",noMapT:"The phone doesn't share its location. You can play the same case without the map: the tasks then come one after another.",noMapGo:"Continue without map",mNoMap:"Continue without map (same case)",switched:"Continuing without the map. Same case, same tasks."},
   howH:"How does it work?",
   skipPoint:"Skip (doesn't count for the stars)"
 },

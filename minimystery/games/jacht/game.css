@@ -294,3 +294,7 @@ h1,h2,h3{font-family:var(--f-type);font-weight:700}
 .twistpic{width:min(60%,200px);margin:0 auto;animation:popwob 2s ease-in-out infinite}
 #cine.fin #cineT{top:auto;bottom:calc(76px + env(safe-area-inset-bottom,0px))}
 @media(prefers-reduced-motion:reduce){#sjPad,.twistpic,.lt.hint{animation:none}}
+
+#play{--km-sky:#140f2e;--km-ink:#ffd36a;--km-line:#7a5cff;--km-paper:rgba(20,15,46,.92)}
+#kidsHot{text-shadow:0 2px 10px #000}
+#play.kv #kidsMsg{bottom:calc(200px + env(safe-area-inset-bottom,0px))}
