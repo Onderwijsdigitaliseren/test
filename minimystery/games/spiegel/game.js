@@ -8,7 +8,7 @@
 var MW=window.MW,Wk=MW.Walk,LS=MW.LS,D=window.TS_DATA,T=D.T,L=D.lang,esc=MW.esc,fill=MW.fill,$=function(s){return document.querySelector(s)},$$=function(s){return [].slice.call(document.querySelectorAll(s))};
 var ID="ts",GK="ss_game_ts_"+L,hashStr=MW.hashStr,rngOf=Wk.rngOf,shuffle=Wk.shuffle,toast=Wk.toast,sheet=Wk.sheet,buzz=Wk.buzz,beep=Wk.beep;
 function closeSheet(){Wk.closeSheet()}
-var G=null,LEVEL=LS.get("ss_ts_level","elfje"),NAME=LS.get("ss_ts_name",""),VOICE=LS.get("ss_ts_voice",true),KIDS=LS.get("ss_ts_kids",[]),SMODE=LS.get("ss_ts_smode","auto");
+var G=null,LEVEL=LS.get("ss_ts_level","elfje"),NAME=LS.get("ss_ts_name",""),VOICE=LS.get("ss_ts_voice",true),KIDS=LS.get("ss_ts_kids",[]),SMODE=LS.get("ss_ts_smode","auto"),WHERE=LS.get("ss_ts_where","in"),LEN=LS.get("ss_ts_len","normaal");
 var SENS={motion:false,mic:false,asked:false},mic=null,AC=null,cam=null;
 var COLHEX=["#b794f6","#3ccfa8","#f4c20d"],COLDARK=["#7c4dd6","#15957a","#c99400"];
 var mg={raf:0,tm:[],iv:[],ev:[],stop:function(){cancelAnimationFrame(this.raf);this.raf=0;this.tm.forEach(clearTimeout);this.tm=[];this.iv.forEach(clearInterval);this.iv=[];this.ev.forEach(function(e){e[0].removeEventListener(e[1],e[2])});this.ev=[];stopCam()},
@@ -94,8 +94,10 @@ function home(){hush();mg.stop();$$(".screen").forEach(function(s){s.hidden=true
   $("#bGps").textContent=(lk?"🔒 ":"")+T.today;$("#bRandom").textContent=(lk?"🔒 ":"")+T.extra;$("#bPro").hidden=pro;$("#bPro").textContent=T.pro+" · "+MW.cfg.price;
   $("#bResume").hidden=!(g&&!g.done&&!g.demo);$("#status").textContent=MW.statusText(L,ID);
   $("#name").value=NAME;$("#kids").value=KIDS.join("\n");
-  $$("#lvl button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.l===LEVEL)});$("#bVoice").setAttribute("aria-pressed",VOICE)}
+  $$("#lvl button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.l===LEVEL)});$$("#where button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.w===WHERE)});$$("#len button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.n===LEN)});$("#bVoice").setAttribute("aria-pressed",VOICE)}
 function proSheet(){sheet(MW.proHTML(L,"pro",ID)+'<button type="button" class="btn ghost dk" id="shX">'+T.cancel+'</button>');$("#shX").onclick=closeSheet;MW.bindPro($("#sheetBody"),L,function(r,msg){closeSheet();home();toast(msg)})}
+$("#where").onclick=function(e){var b=e.target.closest("button");if(!b)return;WHERE=b.dataset.w;LS.set("ss_ts_where",WHERE);$$("#where button").forEach(function(x){x.setAttribute("aria-pressed",x===b)})};
+$("#len").onclick=function(e){var b=e.target.closest("button");if(!b)return;LEN=b.dataset.n;LS.set("ss_ts_len",LEN);$$("#len button").forEach(function(x){x.setAttribute("aria-pressed",x===b)})};
 $("#lvl").onclick=function(e){var b=e.target.closest("button");if(!b)return;LEVEL=b.dataset.l;LS.set("ss_ts_level",LEVEL);$$("#lvl button").forEach(function(x){x.setAttribute("aria-pressed",x===b)})};
 $("#name").oninput=function(){NAME=this.value.trim();LS.set("ss_ts_name",NAME)};
 $("#kids").oninput=function(){KIDS=this.value.split(/\n|,/).map(function(s){return s.trim()}).filter(Boolean).slice(0,10);LS.set("ss_ts_kids",KIDS)};
@@ -105,13 +107,13 @@ $("#bGps").onclick=function(){if(MW.pro.locked(ID))return proSheet();begin(hashS
 $("#bRandom").onclick=function(){if(MW.pro.locked(ID))return proSheet();begin(Math.floor(Math.random()*4e9),false)};
 $("#bDemo").onclick=function(){begin(Math.floor(Math.random()*4e9),true)};
 $("#bPro").onclick=proSheet;$("#bCode").onclick=function(){codeSheet("")};$("#bWipe").onclick=wipeSheet;
-$("#bResume").onclick=function(){G=LS.get(GK,null);if(!G)return home();LEVEL=G.level||LEVEL;showPlay();wake(function(){if(G.ph==="room"&&G.room)return roomScreen();step()})};
+$("#bResume").onclick=function(){G=LS.get(GK,null);if(!G)return home();LEVEL=G.level||LEVEL;showPlay();wake(function(){if(G.ph==="room"&&G.room)return roomScreen();if(G.ph==="sj")return after();step()})};
 $("#lang").onclick=function(){MW.switchLang(ID,L==="nl"?"en":"nl")};
 $("#hub").href=MW.hubUrl(L);
 
 function begin(seed,demo){if(!demo&&KIDS.length<2){toast(T.namesErr);$("#kids").focus();return}
   var kids=KIDS.length>=2?KIDS.slice():(L==="nl"?["Speurder 1","Speurder 2"]:["Sleuth 1","Sleuth 2"]);
-  G={seed:seed,level:LEVEL,demo:!!demo,c:makeCase(seed),kids:kids,off:Math.floor(Math.random()*kids.length),i:0,ph:"intro",pot:[],words:0,digits:0,photo:null,crown:null,t0:Date.now(),done:false,wrong:0};
+  G={seed:seed,level:LEVEL,demo:!!demo,c:makeCase(seed),kids:kids,off:Math.floor(Math.random()*kids.length),i:0,ph:"intro",pot:[],words:0,digits:0,photo:null,crown:null,t0:Date.now(),done:false,wrong:0,where:WHERE,len:LEN,album:[],sj:{},sjN:0};G.sjList=sjPlan(seed);
   G.code=caseCode(seed);save();showPlay();wake(function(){intro()})}
 function showPlay(){$$(".screen").forEach(function(s){s.hidden=true});$("#play").hidden=false;window.scrollTo(0,0);pot()}
 
@@ -150,7 +152,8 @@ function won(k){mg.stop();var ing=T.ing[k];G.pot.push(k);beep(660,.15);setTimeou
 function wordGet(then){var w=G.c.words[G.words];G.words=Math.min(3,G.words+1);save();
   glass('<div class="talk"><p>'+esc(T.wordGet)+'</p><div class="word">'+esc(w)+'</div><p class="note">'+esc(T.wordsSoFar)+' '+esc(G.c.words.slice(0,G.words).join(" · "))+'</p><button type="button" class="btn" id="nx">'+T.next+'</button></div>');
   say(T.wordGet+" "+w);$("#nx").onclick=then}
-function after(){G.i++;G.ph="pass";save();
+function after(){var per=G.len==="lang"?2:G.len==="kort"?0:1,doneHere=G.sj[G.i]||0;if(G.sjList&&doneHere<per){G.sj[G.i]=doneHere+1;save();return photoHunt(G.sjList[G.sjN++],after)}
+  G.i++;G.ph="pass";save();
   /* Tovenaar: één valse hint van Grimmel, na ingrediënt 5 (vlak voor de selfie) */
   if(hard()&&G.i===5&&!G.lied){G.lied=1;save();var t=fill(T.lie,{c:D.COLS[G.c.lieCol]});glass('<div class="talk"><div class="av">'+svgGrimmel(G.c.col,G.c.hat,G.c.eyes,{sil:true})+'</div><p class="big whisper">'+esc(t)+'</p><button type="button" class="btn" id="nx">'+T.next+'</button></div>');say(t);$("#nx").onclick=step;return}
   step()}
@@ -378,6 +381,27 @@ function clues(){var c=G.c,h=[];if(G.pot.indexOf(0)>=0)h.push('<div class="cl"><
   if(G.pot.indexOf(5)>=0)h.push('<div class="cl"><span class="eyes">'+(c.eyes?"👁👁👁":"👁👁")+'</span><b>'+esc(cap(D.EYES[c.eyes]))+'</b></div>');
   return h.length?'<div class="clues">'+h.join("")+'</div>':'<p class="note">'+esc(T.bookNone)+'</p>'}
 function bookSheet(){sheet('<h2>'+esc(T.bookH)+'</h2><p>'+esc(T.bookT)+'</p>'+clues()+'<button type="button" class="btn" id="shX">'+esc(T.close)+'</button>');$("#shX").onclick=closeSheet}
+
+/* ========== Spiegeljacht: foto's van echte dingen, binnen of buiten, en groepsposes ========== */
+function sjPlan(seed){var r=rngOf(seed^0x5A5A),inn=shuffle(D.SJ.in,r),out=shuffle(D.SJ.out,r),pose=shuffle(D.SJ.pose,r),list=[],a=0,b=0,c=0;
+  for(var i=0;i<14;i++){var isPose=i%3===2,src;if(isPose)list.push({t:pose[c++%pose.length],pose:true});
+    else{var useOut=WHERE==="out"||(WHERE==="mix"&&(a+b)%2===1);list.push(useOut?{t:out[b++%out.length],out:true}:{t:inn[a++%inn.length]})}}return list}
+function photoHunt(it,then){G.ph="sj";save();var first=!G.sjSeen,who=kid(G.i+1+G.sjN);
+  var show=function(){G.sjSeen=1;save();var txt=it.pose?D.sjPose:D.sjAsk;
+    glass('<div class="talk sj">'+pic("mira-talk",svgMira("talk"),"av sm")+'<span class="eyebrow">📷 '+esc(D.sjH)+' · '+(G.sjN)+'</span><p>'+esc(txt)+'</p><div class="sjE">'+it.t[1]+'</div><p class="big sjT">'+esc(cap(it.t[0]))+'</p><p class="note">'+esc(fill(D.sjWho,{n:who}))+(it.out?' '+esc(D.sjOut):'')+'</p><button type="button" class="btn big" id="sjG">'+esc(D.sjGo)+'</button><button type="button" class="btn ghost sm" id="sjS">'+esc(D.sjSkip)+'</button></div>');
+    say(txt+" "+it.t[0]+". "+fill(D.sjWho,{n:who}));bindHelp(then);
+    $("#sjS").onclick=then;
+    $("#sjG").onclick=function(){var f=$("#file");f.setAttribute("capture",it.pose?"user":"environment");f.onchange=function(){var fl=f.files&&f.files[0];f.value="";if(!fl)return;var u=URL.createObjectURL(fl),im=new Image();
+      im.onload=function(){URL.revokeObjectURL(u);var m=Math.min(im.naturalWidth,im.naturalHeight),cv=document.createElement("canvas");cv.width=cv.height=420;cv.getContext("2d").drawImage(im,(im.naturalWidth-m)/2,(im.naturalHeight-m)/2,m,m,0,0,420,420);
+        var url=cv.toDataURL("image/jpeg",.62);G.album.push({u:url,t:it.t[0],e:it.t[1]});try{save()}catch(e){G.album.pop()}wow(url,then)};im.src=u};f.click()}};
+  if(first)talk([D.sjIntro],show,"mira-happy");else show()}
+function wow(url,then){var w=D.sjWow[Math.floor(Math.random()*D.sjWow.length)];beep(880,.1);setTimeout(function(){beep(1320,.2)},110);buzz([30,30,80]);
+  glass('<div class="talk"><div class="magic"><img src="'+url+'" alt=""><i></i></div><p class="big">'+esc(w)+'</p><p class="note">'+esc(fill(D.sjCount,{n:G.album.length}))+'</p><button type="button" class="btn" id="nx">'+T.next+'</button></div>');say(w);$("#nx").onclick=then}
+function albumSheet(){var a=G.album||[];sheet('<h2>'+esc(D.album)+'</h2><p>'+esc(D.albumT)+'</p>'+(a.length?'<div class="album">'+a.map(function(x){return '<figure><img src="'+x.u+'" alt=""><figcaption>'+x.e+' '+esc(x.t)+'</figcaption></figure>'}).join("")+'</div><button type="button" class="btn" id="abS">'+esc(D.albumSave)+'</button><div id="abOut"></div>':'<p class="note">'+esc(D.albumNone)+'</p>')+'<button type="button" class="btn ghost dk" id="shX">'+esc(T.close)+'</button>');
+  $("#shX").onclick=closeSheet;var b=$("#abS");if(b)b.onclick=function(){var n=a.length,cols=n<=4?2:n<=9?3:4,rows=Math.ceil(n/cols),S=300,P=24,cv=document.createElement("canvas");cv.width=cols*S+(cols+1)*P;cv.height=rows*(S+40)+(rows+1)*P+120;var g=cv.getContext("2d");
+    g.fillStyle="#1a1740";g.fillRect(0,0,cv.width,cv.height);g.fillStyle="#f4c20d";g.font="700 48px Fredoka, sans-serif";g.textAlign="center";g.fillText(D.album+(NAME?" · "+NAME:""),cv.width/2,80);
+    var left=n;a.forEach(function(x,i){var im=new Image();im.onload=function(){var cx=P+(i%cols)*(S+P),cy=120+P+Math.floor(i/cols)*(S+40+P);g.fillStyle="#f4c20d";g.fillRect(cx-6,cy-6,S+12,S+12);g.drawImage(im,cx,cy,S,S);g.fillStyle="#e8e4ff";g.font="500 22px Barlow, sans-serif";var t=x.t.length>26?x.t.slice(0,25)+"…":x.t;g.fillText(t,cx+S/2,cy+S+32);
+      if(--left===0)cv.toBlob(function(bl){var u=URL.createObjectURL(bl);$("#abOut").innerHTML='<img class="shot" src="'+u+'" alt=""><a class="btn ghost dk" download="spiegelalbum.jpg" href="'+u+'">'+esc(T.dipSave)+'</a>'},"image/jpeg",.85)};im.src=x.u})}}
 /* ---------- finale ---------- */
 function finale(){G.ph="finale";save();var c=G.c.cands;
   glass('<div class="talk"><h2>'+esc(T.finH)+'</h2><p>'+esc(T.finT)+'</p>'+(hard()?'':clues())+'<div class="opts three big">'+c.map(function(x,i){return '<button type="button" data-i="'+i+'">'+svgGrimmel(x.col,x.hat,x.eyes)+'</button>'}).join("")+'</div></div>');say(T.finH+" "+T.finT);
@@ -396,8 +420,8 @@ function crown(){var txt=NAME?fill(T.crownT,{j:NAME}):T.crownT0;selfie({e:"👑"
 function award(){if(G.awarded||G.demo)return;G.awarded=1;save();var min=(G.tEnd-G.t0)/60000,stars=1+(G.wrong===0?1:0)+(G.wrong<=2?1:0);G.stars=stars;
   MW.profile.award({game:ID,xp:0,stars:stars,gps:false,min:min,km:0,title:(L==="nl"?"Toverspiegel ":"Mirror ")+G.code,code:G.code})}
 function finish(){G.done=true;save();confetti();
-  glass('<div class="talk"><h2>'+esc(T.doneH)+'</h2>'+(G.crown?'<img class="shot" src="'+G.crown+'" alt="">':pic("parel-cheer",svgParel({cheer:true}),"av"))+'<p class="big">'+esc(NAME?fill(T.crownOk,{j:NAME}):T.crownOk0)+'</p><p>'+esc(T.doneT)+'</p><p class="note">'+esc(fill(T.codeIs,{c:G.code}))+'</p><button type="button" class="btn big" id="dp">🎓 '+esc(T.dip)+'</button><button type="button" class="btn ghost" id="hm">'+esc(T.home)+'</button></div>');
-  say(T.doneH+" "+T.doneT);$("#dp").onclick=dipSheet;$("#hm").onclick=function(){G=null;LS.del(GK);home()}}
+  glass('<div class="talk"><h2>'+esc(T.doneH)+'</h2>'+(G.crown?'<img class="shot" src="'+G.crown+'" alt="">':pic("parel-cheer",svgParel({cheer:true}),"av"))+'<p class="big">'+esc(NAME?fill(T.crownOk,{j:NAME}):T.crownOk0)+'</p><p>'+esc(T.doneT)+'</p><p class="note">'+esc(fill(T.codeIs,{c:G.code}))+'</p><button type="button" class="btn big" id="dp">🎓 '+esc(T.dip)+'</button>'+((G.album||[]).length?'<button type="button" class="btn ghost" id="ab">📷 '+esc(fill(D.sjCount,{n:G.album.length}))+'</button>':'')+'<button type="button" class="btn ghost" id="hm">'+esc(T.home)+'</button></div>');
+  say(T.doneH+" "+T.doneT);$("#dp").onclick=dipSheet;var ab=$("#ab");if(ab)ab.onclick=albumSheet;$("#hm").onclick=function(){G=null;LS.del(GK);home()}}
 function demoEnd(){mg.stop();glass('<div class="talk"><h2>'+esc(T.demoH)+'</h2>'+pic("frog",svgFrog(),"av")+'<p class="big">'+esc(T.demoT)+'</p><button type="button" class="btn big" id="pr">'+esc(T.pro)+' · '+MW.cfg.price+'</button><button type="button" class="btn ghost" id="hm">'+esc(T.home)+'</button></div>');say(T.demoT);
   $("#pr").onclick=proSheet;$("#hm").onclick=function(){G=null;LS.del(GK);home()}}
 function confetti(){var c=document.createElement("canvas");c.className="conf";document.body.appendChild(c);c.width=innerWidth;c.height=innerHeight;var g=c.getContext("2d"),ps=[],cols=["#ff8fab","#f4c20d","#b794f6","#3ccfa8","#ff6b6b","#4fb3ff"];
@@ -428,7 +452,7 @@ function wrap(g,txt,x,y,w,lh){var words=txt.split(" "),line="";words.forEach(fun
 /* ---------- menu / ouderscherm ---------- */
 function menu(skip){var v=vars();
   sheet('<h2>'+esc(T.menuH)+'</h2><p class="note">'+esc(fill(T.codeIs,{c:G.code}))+'</p>'+
-   '<button type="button" class="btn ghost dk" id="mBk">📖 '+esc(T.bookH)+'</button>'+
+   '<button type="button" class="btn ghost dk" id="mBk">📖 '+esc(T.bookH)+'</button>'+((G.album||[]).length?'<button type="button" class="btn ghost dk" id="mAl">📷 '+esc(fill(D.sjCount,{n:G.album.length}))+'</button>':'')+
    '<button type="button" class="btn ghost dk" id="mSp">🔎 '+esc(T.spiek)+'</button>'+
    (skip?'<button type="button" class="btn ghost dk" id="mSk">⏭ '+esc(T.skipIng)+'</button>':'')+
    '<button type="button" class="btn ghost dk" id="mOr">🔀 '+esc(T.order)+'</button>'+
@@ -436,7 +460,7 @@ function menu(skip){var v=vars();
    '<button type="button" class="btn ghost dk" id="mQ">'+esc(T.quit)+'</button><button type="button" class="btn" id="shX">'+esc(T.resume)+'</button>');
   var t=0,sp=$("#mSp");var open=function(){sheet('<h2>'+esc(T.spiekH)+'</h2><p class="big">'+esc(fill(T.spiekT,v))+'</p><p class="note">🔢 '+G.c.digits.join(" ")+' · 🕯 '+G.c.cseq.map(function(i){return["🩷","💛","💜","💚"][i]}).join("")+' · 📚 '+G.c.words[0].slice(0,hard()?6:4).toUpperCase()+'</p>'+(hard()?'<p class="note">'+esc(T.spiekLie)+'</p>':'')+'<div class="opts three"><button type="button" disabled>'+svgGrimmel(G.c.col,G.c.hat,G.c.eyes)+'</button></div><button type="button" class="btn" id="shX">'+esc(T.close)+'</button>');$("#shX").onclick=closeSheet};
   var down=function(){clearTimeout(t);t=setTimeout(open,900)},up=function(){clearTimeout(t)};sp.addEventListener("pointerdown",down);sp.addEventListener("pointerup",up);sp.addEventListener("pointerleave",up);sp.addEventListener("contextmenu",function(e){e.preventDefault()});
-  $("#mBk").onclick=bookSheet;$("#shX").onclick=closeSheet;$("#mOr").onclick=function(){G.off=Math.floor(Math.random()*G.kids.length);save();closeSheet();toast(T.ok)};
+  $("#mBk").onclick=bookSheet;var al=$("#mAl");if(al)al.onclick=albumSheet;$("#shX").onclick=closeSheet;$("#mOr").onclick=function(){G.off=Math.floor(Math.random()*G.kids.length);save();closeSheet();toast(T.ok)};
   $("#mSens").onclick=function(e){var b=e.target.closest("button");if(!b)return;SMODE=b.dataset.s;LS.set("ss_ts_smode",SMODE);$$("#mSens button").forEach(function(x){x.setAttribute("aria-pressed",x===b)})};
   var sk=$("#mSk");if(sk)sk.onclick=function(){closeSheet();skip()};
   $("#mQ").onclick=function(){closeSheet();save();G=null;home()}}

@@ -10,6 +10,16 @@ RIDDLE:[
  "Ik glinster goud en zit op een koning. Ik heb puntjes rondom, maar geen touw. Wat ben ik?",
  "Ik heb twee lussen en twee staartjes. Je ziet mij op een cadeautje of in het haar. Wat ben ik?"],
 /* plaatjesraadsel (Elfje): "Wat zie je in de mist?" → zelfde hoeden als plaatje */
+/* Spiegeljacht: foto-opdrachten. [tekst, emoji]. in = binnen, out = buiten (tuin/stoep), pose = groepsfoto */
+ SJ:{in:[["iets ronds","🔵"],["iets heel zachts","🧸"],["een knuffel met een gezicht","🐻"],["iets dat glimt of glittert","✨"],["iets geels","💛"],["een lepel","🥄"],["één sok","🧦"],["iets dat geluid maakt","🔔"],["een boek met een dier erop","📖"],["iets heel kleins, kleiner dan je duim","🐜"],["iets in de vorm van een hart of een ster","⭐"],["iets blauws","💙"],["een kussen","🛏️"],["iets dat je in de keuken vindt","🍳"],["iets met een strik of een lint","🎀"],["iets wat een prinses mooi zou vinden","👑"]],
+  out:[["een blad","🍃"],["een steen","🪨"],["een bloem","🌼"],["iets met wielen","🚲"],["een boom","🌳"],["een veer of een vogel","🪶"],["iets groens","💚"],["een deur met een nummer","🚪"],["een wolk","☁️"],["een beestje: een slak, een mier of een spin","🐌"],["iets van hout","🪵"],["jullie eigen schaduw","👤"],["iets wat zo groot is als een kikker","🐸"],["iets ronds buiten","⚽"],["een plas, of iets wat nat is","💧"],["iets roods buiten","❤️"]],
+  pose:[["Doe allemaal een kikker na!","🐸"],["Maak allemaal een kroontje met je handen!","👑"],["Kijk allemaal zo betoverd mogelijk!","😵‍💫"],["Kijk allemaal heel ondeugend, net als Grimmel!","😈"],["Doe allemaal of je slaapt, net als bij het slaapliedje!","😴"],["Zwaai allemaal naar prinses Parel!","👋"],["Allemaal tegelijk springen! Klik precies in de lucht!","🦘"],["Wees allemaal een standbeeld van een tovenaar!","🧙"]]},
+ sjIntro:"Psst… een spiegel wordt sterker van mooie beelden. Laat me de echte wereld zien! Elke keer vraag ik om iets. Zoek het en maak er een foto van.",
+ sjH:"Spiegeljacht",sjAsk:"Mira wil zien:",sjPose:"Groepsfoto voor de spiegel:",sjWho:"{n} maakt de foto.",sjGo:"📸 Foto maken",sjSkip:"Kunnen we niet vinden",sjOut:"Buiten: blijf in de tuin of bij een volwassene.",
+ sjWow:["Oooh, prachtig!","Wat mooi! Dat had ik nog nooit gezien.","Hihi, wat leuk!","Wauw! De spiegel glinstert ervan.","Die gaat in mijn album!","Wat een speurneuzen zijn jullie!"],
+ sjCount:"Spiegelalbum: {n} foto's",album:"Spiegelalbum",albumT:"Alle foto's van de spiegeljacht.",albumSave:"Album opslaan als plaatje",albumNone:"Nog geen foto's.",
+ whereL:"Waar spelen jullie?",whereIn:"Binnen",whereOut:"Buiten",whereMix:"Binnen + buiten",
+ lenL:"Hoe lang?",lenS:"Kort",lenSs:"± 45 min",lenM:"Normaal",lenMs:"± 60 min · 7 foto's",lenLg:"Lang",lenLs:"± 80 min · 14 foto's",
 T:{
  listen:"Lees voor",cancel:"Annuleren",back:"Terug",close:"Sluiten",next:"Verder ▸",ok:"Oké!",skip:"Overslaan",
  today:"Start de zaak van vandaag",todayAgain:"Nog een keer: de zaak van vandaag",extra:"Extra zaak",pro:"Feestpas",
