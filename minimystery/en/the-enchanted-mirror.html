@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Enchanted Mirror – a phone party game for kids' parties</title>
+<link rel="icon" href="../assets/favicon.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<meta name="description" content="The phone is the magic mirror. Princess Pearl is a frog and only the Counter-Potion helps: seven ingredients, each a task with the phone itself. Shake, tilt, blow, find something red with the camera, clap along, a group photo and shouting the spell. Indoors, in the garden or on the back seat. No GPS, nothing to print. Practice round free.">
+<link rel="canonical" href="https://www.minimystery.nl/en/the-enchanted-mirror.html">
+<link rel="alternate" hreflang="en" href="https://www.minimystery.nl/en/the-enchanted-mirror.html">
+<link rel="alternate" hreflang="nl" href="https://www.minimystery.nl/de-betoverde-toverspiegel.html">
+<link rel="alternate" hreflang="x-default" href="https://www.minimystery.nl/de-betoverde-toverspiegel.html">
+<meta property="og:site_name" content="MiniMystery">
+<meta property="og:title" content="MiniMystery – The Enchanted Mirror">
+<meta property="og:description" content="The phone is the magic mirror. Seven ingredients, seven tasks with the phone itself. An indoor party game, no GPS, nothing to print.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.minimystery.nl/en/the-enchanted-mirror.html">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:image" content="https://www.minimystery.nl/assets/og-image.jpg">
+<meta name="theme-color" content="#1f2a44">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600&display=swap">
+<link rel="stylesheet" href="../shared/platform.css?v=1">
+<link rel="stylesheet" href="../games/spiegel/game.css?v=1">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"The Enchanted Mirror","url":"https://www.minimystery.nl/en/the-enchanted-mirror.html","description":"A kids' party game where the phone is the magic mirror: seven ingredients, each a task with the phone's sensors. Indoors, no GPS, nothing to print. Practice round free.","inLanguage":"en","gamePlatform":"Web browser","genre":["Kids game","Party game","Fairy tale"],"isAccessibleForFree":false,"offers":{"@type":"Offer","price":"3.99","priceCurrency":"EUR","description":"Party Pass"}}</script>
+</head>
+<body>
+<div id="app">
+  <section class="screen" id="home">
+    <div class="stars" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="row0"><div class="pills"><a class="pill" id="hub" href="./">◂ All cases</a><button type="button" class="pill" id="lang">Nederlands</button></div></div>
+      <div class="gap"></div>
+      <div class="masthead">
+        <h1 id="ttl">The Enchanted Mirror</h1><span class="tape">Help! My princess is… a frog!</span>
+      </div>
+      <p class="lead">The phone is the magic mirror. It goes round the circle. Seven ingredients for the Counter-Potion: shake, tilt, blow, find something red, clap along, a group photo and shout the spell. Who is in the mirror?</p>
+      <button class="btn ghost sm" id="bHow">How does it work?</button>
+      <div id="howT" hidden><ol class="how"><li><b>The phone is the magic mirror.</b> It goes round the circle. For each ingredient the mirror says who gets to hold it; the others help.</li><li><b>Seven ingredients,</b> each a task with the phone itself: shake, tilt, blow, find something red with the camera, clap along, a group photo and shout the spell.</li><li><b>Elf</b> is easy: the mirror says exactly what to do and the riddles use pictures. <b>Wizard</b> is harder: word riddles, and Grimble gives one false hint.</li><li>Along the way you see traces of Grimble: his colour, his hat and his eyes. At the end you pick him out of three mirror spirits.</li><li>Then you all blow the enchantment away together, the birthday child gets the crown in a photo, and every child gets a diploma to share.</li></ol><p class="note">Tip for the grown-up: if the phone will not allow motion or listening, the mirror switches to tapping and swiping by itself. The menu (☰) has a cheat sheet and a skip button. Indoors, in the garden or on the back seat: no GPS, nothing to print.</p></div>
+      <div class="namebox"><label for="name">Whose birthday is it? (may be empty)</label><input id="name" maxlength="24" autocomplete="off" placeholder="Birthday child"></div>
+      <div class="namebox"><label for="kids">Who is playing? One name per line (2 to 10)</label><textarea id="kids" placeholder="Noor&#10;Sam&#10;Lina"></textarea></div>
+      <div class="seg two" id="lvl">
+        <button type="button" data-l="elfje" aria-pressed="true">Elf<small>easy · from 6</small></button>
+        <button type="button" data-l="tovenaar" aria-pressed="false">Wizard<small>harder · 8+</small></button>
+      </div>
+      <button class="btn ghost sm" id="bVoice" aria-pressed="true">🔊 Read aloud</button>
+      <button class="btn" id="bResume" hidden>Continue the case</button>
+      <button class="btn" id="bGps">Start today's case</button>
+      <button class="btn ghost" id="bRandom">Extra case</button>
+      <button class="btn ghost" id="bCode">Enter case code</button>
+      <button class="btn ghost" id="bPro" hidden></button>
+      <p class="note" id="status"></p>
+      <button class="btn ghost sm" id="bDemo">Practice round: the first two ingredients</button>
+      <button class="btn ghost sm" id="bWipe">Clear</button>
+    </div>
+  </section>
+
+  <section class="screen" id="play" hidden>
+    <div id="mirror">
+      <div id="hud"><span>🔮 Magic Mirror</span><span id="hudN"></span><button type="button" id="hudM" aria-label="Menu">☰</button></div>
+      <div id="glassWrap"><div id="glass"></div></div>
+      <div id="pot"></div>
+    </div>
+  </section>
+
+  <input type="file" id="file" accept="image/*" capture="user" aria-label="Take the photo">
+  <div class="sheet" id="sheet" hidden><div class="paper" id="sheetBody"></div></div>
+  <div id="toast" hidden></div>
+</div>
+<script src="../shared/platform.js?v=mm3"></script>
+<script src="../shared/catalog.js?v=mm4"></script>
+<script src="../shared/walk.js?v=3"></script>
+<script src="../games/spiegel/data-en.js?v=1"></script>
+<script src="../games/spiegel/game.js?v=1"></script>
+<script id="mm-demo">/* MiniMystery: ?oefen start direct de gratis oefenronde (link vanaf Inspiratie op de hub) */
+if(/[?&]oefen\b/.test(location.search)){var b=document.getElementById("bDemo");if(b)setTimeout(function(){b.click()},50)}</script>
+</body>
+</html>
