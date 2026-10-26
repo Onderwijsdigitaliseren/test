@@ -25,8 +25,9 @@ document.addEventListener("click",function(e){var b=e.target.closest(".spk");if(
 
 /* ---------- plaatjes (Kellie's artwork, games/spiegel/img): als een plaatje er is, wint het van de SVG-tekening ---------- */
 var IMGROOT=MW.root+"games/spiegel/img/",IM={};
-["mira-talk","mira-happy","mira-shock","parel","parel-cheer","frog","frog-jump","grimmel-party","hero","crown","cauldron"].forEach(function(k){var im=new Image();im.src=IMGROOT+k+".webp";IM[k]=im});
+["mira-talk","mira-happy","mira-shock","parel","parel-cheer","frog","frog-jump","grimmel-party","hero","crown","cauldron","ing-0","ing-1","ing-2","ing-3","ing-4","ing-6","room-bg","room-books","room-chest","room-chest-open","room-candle","room-lamp-off","room-lamp-on","room-door","room-door-open","room-frame","room-shard"].forEach(function(k){var im=new Image();im.src=IMGROOT+k+".webp";IM[k]=im});
 function ok(k){var im=IM[k];return !!(im&&im.complete&&im.naturalWidth)}
+function ingIco(k,cls){var key="ing-"+k;return ok(key)?'<img class="'+(cls||"ii")+'" src="'+IMGROOT+key+'.webp" alt="">':T.ing[k].e}
 function pic(k,svg,cls){return ok(k)?'<img class="'+(cls||"fig")+'" src="'+IMGROOT+k+'.webp" alt="">':'<div class="'+(cls||"fig")+'">'+svg+'</div>'}
 IM.hero.onload=function(){var h=$("#home");if(h&&IM.hero.naturalWidth)h.classList.add("photo")};
 
@@ -67,7 +68,7 @@ function svgHat(h,big){var s=big?' style="width:100px;height:100px"':'';
   if(h===0)return '<svg viewBox="-40 -60 80 70"'+s+'><path d="M-24,0 L0,-54 L24,0 Z" fill="#5b44b8" stroke="#1f2a44" stroke-width="2.5"/><path d="M-34,0 L34,0" stroke="#1f2a44" stroke-width="4" stroke-linecap="round"/><circle cx="0" cy="-30" r="4" fill="#f4c20d"/></svg>';
   if(h===1)return '<svg viewBox="-40 -60 80 70"'+s+'><path d="M-26,0 L-28,-34 L-14,-18 L0,-42 L14,-18 L28,-34 L26,0 Z" fill="#f4c20d" stroke="#1f2a44" stroke-width="2.5"/><circle cx="0" cy="-42" r="4" fill="#ff6b6b"/></svg>';
   return '<svg viewBox="-40 -60 80 70"'+s+'><path d="M0,-24 L-30,-44 L-26,-6 Z M0,-24 L30,-44 L26,-6 Z" fill="#ff6b6b" stroke="#1f2a44" stroke-width="2.5"/><circle cx="0" cy="-24" r="7" fill="#ff8fab" stroke="#1f2a44" stroke-width="2.5"/></svg>'}
-function drawCrownOn(g,cx,top,w){g.save();g.translate(cx,top);var s=w/60;g.scale(s,s);g.fillStyle="#f4c20d";g.strokeStyle="#1f2a44";g.lineWidth=2;g.beginPath();g.moveTo(-26,8);g.lineTo(-28,-18);g.lineTo(-14,-6);g.lineTo(0,-26);g.lineTo(14,-6);g.lineTo(28,-18);g.lineTo(26,8);g.closePath();g.fill();g.stroke();
+function drawCrownOn(g,cx,top,w){if(ok("crown")){var im=IM.crown,h=w*im.naturalHeight/im.naturalWidth;g.drawImage(im,cx-w/2,top-h*.75,w,h);return}g.save();g.translate(cx,top);var s=w/60;g.scale(s,s);g.fillStyle="#f4c20d";g.strokeStyle="#1f2a44";g.lineWidth=2;g.beginPath();g.moveTo(-26,8);g.lineTo(-28,-18);g.lineTo(-14,-6);g.lineTo(0,-26);g.lineTo(14,-6);g.lineTo(28,-18);g.lineTo(26,8);g.closePath();g.fill();g.stroke();
   g.fillStyle="#ff6b6b";g.beginPath();g.arc(0,-26,3.5,0,7);g.fill();g.fillStyle="#3ccfa8";g.beginPath();g.arc(-28,-18,3,0,7);g.arc(28,-18,3,0,7);g.fill();g.restore()}
 
 /* ---------- zaak ---------- */
@@ -129,9 +130,9 @@ function stopCam(){if(cam){cam.getTracks().forEach(function(t){t.stop()});cam=nu
 
 /* ---------- scherm ---------- */
 function glass(html){mg.stop();curSkip=null;var g=$("#glass");g.innerHTML=html;g.scrollTop=0;$("#hudN").textContent=G?(G.i<7?(G.i+1)+"/7":"7/7"):"";}
-function pot(){var el=$("#pot");if(!el||!G)return;var ings=T.ing;el.innerHTML=G.c.order.map(function(k,i){var full=G.pot.indexOf(k)>=0;return '<i class="'+(full?"on":"")+'" title="'+esc(ings[k].n)+'">'+(full?ings[k].e:"")+'</i>'}).join("")+'<b>'+(G.pot.length)+'/7</b>'}
+function pot(){var el=$("#pot");if(!el||!G)return;var ings=T.ing;el.innerHTML=G.c.order.map(function(k,i){var full=G.pot.indexOf(k)>=0;return '<i class="'+(full?"on":"")+'" title="'+esc(ings[k].n)+'">'+(full?ingIco(k):"")+'</i>'}).join("")+'<b>'+(G.pot.length)+'/7</b>'}
 function talk(lines,then,who){var i=0,av=who||"mira-talk";var show=function(){if(i>=lines.length)return then();var t=lines[i++];
-  glass('<div class="talk">'+(av==="frog"?pic("frog",svgFrog(),"av"):av==="grimmel"?'<div class="av">'+svgGrimmel(G.c.col,G.c.hat,G.c.eyes,{sad:true})+'</div>':av==="parel"?pic("parel-cheer",svgParel({cheer:true}),"av"):pic(av,svgMira(av==="mira-shock"?"shock":av==="mira-happy"?"happy":"talk"),"av"))+'<p class="big">'+esc(t)+'</p><button type="button" class="btn" id="nx">'+T.next+'</button></div>');
+  glass('<div class="talk">'+(av==="frog"?pic("frog",svgFrog(),"av"):av==="cauldron"?pic("cauldron",svgFrog(),"av"):av==="grimmel"?'<div class="av">'+svgGrimmel(G.c.col,G.c.hat,G.c.eyes,{sad:true})+'</div>':av==="parel"?pic("parel-cheer",svgParel({cheer:true}),"av"):pic(av,svgMira(av==="mira-shock"?"shock":av==="mira-happy"?"happy":"talk"),"av"))+'<p class="big">'+esc(t)+'</p><button type="button" class="btn" id="nx">'+T.next+'</button></div>');
   say(t);$("#nx").onclick=show};show()}
 function intro(){G.ph="intro";save();
   talk([T.in1,T.in2],function(){talk([T.in3],function(){talk([T.in4],function(){talk([T.in5,T.in6],function(){buzz(40);G.ph="pass";G.i=0;save();step()},"mira-talk")},"frog")},"mira-shock")},"mira-shock")}
@@ -143,7 +144,7 @@ function task(k){G.ph="task";save();var ing=T.ing[k];hush();
   var fn=[tSterren,tRood,tDruppel,tMist,tRitme,tSelfie,tSpreuk][k];fn(ing,function(){puzzle(k,function(){won(k)})})}
 function won(k){mg.stop();var ing=T.ing[k];G.pot.push(k);beep(660,.15);setTimeout(function(){beep(880,.15)},150);setTimeout(function(){beep(1320,.3)},300);buzz([60,40,60,40,160]);pot();
   var clue=fill(ing.clue,vars());
-  glass('<div class="talk"><div class="burst">'+ing.e+'</div><h2>'+esc(ing.done)+'</h2>'+pic("mira-happy",svgMira("happy"),"av sm")+'<p class="big">'+esc(clue)+'</p><button type="button" class="btn" id="nx">'+T.next+'</button></div>');
+  glass('<div class="talk"><div class="burst">'+ingIco(k,"bi")+'</div><h2>'+esc(ing.done)+'</h2>'+pic("mira-happy",svgMira("happy"),"av sm")+'<p class="big">'+esc(clue)+'</p><button type="button" class="btn" id="nx">'+T.next+'</button></div>');
   say(ing.done+" "+clue);
   $("#nx").onclick=function(){var pos=G.c.order.indexOf(k);if(pos===0||pos===2||pos===4)wordGet(function(){after()});else if(pos===1||pos===3||pos===5)digitGet(function(){after()});else after()}}
 function wordGet(then){var w=G.c.words[G.words];G.words=Math.min(3,G.words+1);save();
@@ -317,7 +318,20 @@ function digitGet(then){var d=G.c.digits[G.digits];G.digits=Math.min(3,G.digits+
 function taunt(){if(!G||Math.random()<.35)return;var el=document.createElement("div");el.className="taunt";el.innerHTML=svgGrimmel(G.c.col,G.c.hat,G.c.eyes,{sil:true})+'<span>'+esc(RM.taunts[Math.floor(Math.random()*RM.taunts.length)])+'</span>';$("#glassWrap").appendChild(el);beep(1200,.08);setTimeout(function(){beep(1500,.08)},90);setTimeout(function(){el.classList.add("go");setTimeout(function(){el.remove()},500)},2600)}
 
 /* ========== escape-room: de spiegelwereld ========== */
-function roomSvg(){var dark=!G.room.lamp;return '<svg viewBox="0 0 900 520" class="roomS" preserveAspectRatio="xMidYMid slice">'+
+function roomArt(){return ok("room-bg")&&ok("room-books")&&ok("room-chest")&&ok("room-candle")&&ok("room-door")&&ok("room-lamp-off")}
+function roomHtml(){var R=G.room,im=function(k,id,st,extra){return '<div class="ro'+(id?" hs":"")+'"'+(id?' id="'+id+'"':'')+' style="'+st+'"><img src="'+IMGROOT+k+'.webp" alt="">'+(extra||"")+'</div>'};
+  var CC=["#ff8fab","#f4c20d","#b794f6","#3ccfa8"],FX=[17,37,62,84];
+  var flames=[0,1,2,3].map(function(i){return R.cand.indexOf(i)>=0?'<i class="flame" style="left:'+FX[i]+'%"></i>':''}).join("");
+  var paint=R.paintOn?'<div class="pdots">'+R.cseq.map(function(c){return '<i style="background:'+CC[c]+'"></i>'}).join("")+'</div>':'<div class="pdots q">?</div>';
+  return '<div class="roomScene" style="background-image:url('+IMGROOT+'room-bg.webp)">'+
+   im("room-frame","hsPaint","left:73%;top:16%;width:13%",paint)+
+   im("room-books","hsBooks","left:3%;bottom:9%;height:62%")+
+   im(R.door?"room-door-open":"room-door","hsDoor","left:21%;bottom:11%;height:50%")+
+   im(R.key?"room-chest-open":"room-chest","hsChest","left:37%;bottom:4%;height:24%")+
+   im("room-candle","hsCandle","left:56%;bottom:8%;height:31%",flames)+
+   im(R.lamp?"room-lamp-on":"room-lamp-off","hsLamp","left:81%;bottom:5%;height:33%")+
+   (R.shard?im("room-shard","","left:12%;bottom:5%;height:10%;pointer-events:none"):"")+'</div>'}
+function roomSvg(){if(roomArt())return roomHtml();var dark=!G.room.lamp;return '<svg viewBox="0 0 900 520" class="roomS" preserveAspectRatio="xMidYMid slice">'+
  '<defs><linearGradient id="wl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2b2466"/><stop offset="1" stop-color="#1a1740"/></linearGradient><linearGradient id="fl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3b2d6b"/><stop offset="1" stop-color="#241c4a"/></linearGradient></defs>'+
  '<rect width="900" height="380" fill="url(#wl)"/><rect y="380" width="900" height="140" fill="url(#fl)"/><path d="M0,380 L900,380" stroke="#6a57b8" stroke-width="3"/>'+
  /* raam met maan */'<rect x="380" y="60" width="140" height="190" rx="70" fill="#0d0b22" stroke="#c99400" stroke-width="6"/><circle cx="450" cy="130" r="30" fill="#fff7c2"/><circle cx="462" cy="122" r="26" fill="#0d0b22"/><circle cx="410" cy="200" r="2" fill="#fff"/><circle cx="480" cy="90" r="1.5" fill="#fff"/><circle cx="495" cy="210" r="2" fill="#fff"/>'+
@@ -329,10 +343,10 @@ function roomSvg(){var dark=!G.room.lamp;return '<svg viewBox="0 0 900 520" clas
  /* deur */'<g id="hsDoor" class="hs"><rect x="260" y="150" width="90" height="230" rx="45" fill="#3b2a14" stroke="#c99400" stroke-width="5"/><circle cx="330" cy="270" r="7" fill="#f4c20d"/>'+(G.room.door?'<rect x="268" y="158" width="74" height="222" rx="37" fill="#b794f6" opacity=".9"/>':'')+'</g>'+
  '</svg>'}
 function room(){G.ph="room";if(!G.room){var r=rngOf(G.seed^0x5E5E);G.room={lamp:false,key:false,shard:false,door:false,cand:[],cseq:G.c.cseq,paintOn:!hard()};save();
-    return talk([RM.enter1],function(){talk([RM.enter2],function(){roomScreen()},"mira-shock")},"mira-talk")}
+    return talk([RM.enter1],function(){talk([RM.enter2],function(){roomScreen()},"mira-shock")},"cauldron")}
   roomScreen()}
 function roomScreen(){mg.stop();var R=G.room;
-  glass('<div class="roomWrap" id="rw"><div class="roomPan" id="rp">'+roomSvg()+'</div>'+(R.lamp?'':'<div class="darkL" id="dk"></div>')+'</div><p class="note rhint" id="rh">'+esc(R.lamp?RM.roomT:RM.dark)+'</p><div class="inv">'+esc(RM.inv)+' '+(R.lamp?"🏮 ":"")+(R.key?"🔑 ":"")+(R.shard?"🔷 ":"")+(hard()||R.key?"":'<span class="dg">'+esc(PZ.digitsSoFar)+' '+G.c.digits.map(function(d){return '<b>'+d+'</b>'}).join(" ")+'</span>')+'</div>');
+  glass('<div class="roomWrap" id="rw"><div class="roomPan" id="rp">'+roomSvg()+'</div>'+(R.lamp?'':'<div class="darkL" id="dk"></div>')+'</div><p class="note rhint" id="rh">'+esc(R.lamp?RM.roomT:RM.dark)+'</p><div class="inv">'+esc(RM.inv)+' '+(R.lamp?"🏮 ":"")+(R.key?"🔑 ":"")+(R.shard?(ok("room-shard")?'<img class="invi" src="'+IMGROOT+'room-shard.webp" alt=""> ':"🔷 "):"")+(hard()||R.key?"":'<span class="dg">'+esc(PZ.digitsSoFar)+' '+G.c.digits.map(function(d){return '<b>'+d+'</b>'}).join(" ")+'</span>')+'</div>');
   say(R.lamp?(R.said?"":RM.roomT):RM.dark);R.said=1;
   var rw=$("#rw"),rp=$("#rp");rp.scrollLeft=R.lamp?rp.scrollLeft:rp.scrollWidth;
   if(!R.lamp){var dk=$("#dk");var mv=function(e){var rc=rw.getBoundingClientRect();dk.style.setProperty("--x",(e.clientX-rc.left)+"px");dk.style.setProperty("--y",(e.clientY-rc.top)+"px")};mg.on(rw,"pointermove",mv);mg.on(rw,"pointerdown",mv);
@@ -376,7 +390,7 @@ function blowAll(){var m=useMic(),mist=1;
   if(!m){var b=$("#bl");mg.on(b,"pointerdown",function(){holding=true});mg.on(b,"pointerup",function(){holding=false});mg.on(b,"pointerleave",function(){holding=false})}tick()}
 function back(){talk([T.back1],function(){talk([T.back2],function(){talk([T.back3],function(){ask()},"grimmel")},"parel")},"parel")}
 function ask(){glass('<div class="talk"><div class="av">'+svgGrimmel(G.c.col,G.c.hat,G.c.eyes,{sad:true})+'</div><h2>'+esc(T.askH)+'</h2><button type="button" class="btn big" id="y">'+esc(T.askY)+'</button><button type="button" class="btn ghost" id="n">'+esc(T.askN)+'</button></div>');say(T.askH);
-  var go=function(){confetti();glass('<div class="talk"><div class="av">'+svgGrimmel(G.c.col,G.c.hat,G.c.eyes,{party:true})+'</div><p class="big">'+esc(T.askOk)+'</p><button type="button" class="btn" id="nx">'+T.next+'</button></div>');say(T.askOk);$("#nx").onclick=crown};
+  var go=function(){confetti();glass('<div class="talk">'+(ok("grimmel-party")?pic("grimmel-party","","av"):'<div class="av">'+svgGrimmel(G.c.col,G.c.hat,G.c.eyes,{party:true})+'</div>')+'<p class="big">'+esc(T.askOk)+'</p><button type="button" class="btn" id="nx">'+T.next+'</button></div>');say(T.askOk);$("#nx").onclick=crown};
   $("#y").onclick=go;$("#n").onclick=go}
 function crown(){var txt=NAME?fill(T.crownT,{j:NAME}):T.crownT0;selfie({e:"👑",n:T.crownH},txt,function(url){G.crown=url;G.done=true;G.tEnd=G.tEnd||Date.now();save();award();finish()},true)}
 function award(){if(G.awarded||G.demo)return;G.awarded=1;save();var min=(G.tEnd-G.t0)/60000,stars=1+(G.wrong===0?1:0)+(G.wrong<=2?1:0);G.stars=stars;
@@ -401,7 +415,7 @@ function diploma(name){var cv=document.createElement("canvas");cv.width=1080;cv.
   ph(G.photo,function(im){g.font="700 54px Fredoka, Arial Rounded MT Bold, sans-serif";g.fillStyle="#f4c20d";g.textAlign="center";g.fillText(T.dipTitle.toUpperCase(),540,170);
     g.font="500 30px Barlow, sans-serif";g.fillStyle="#cfd8ff";g.fillText("MiniMystery · "+(L==="nl"?"De Betoverde Toverspiegel":"The Enchanted Mirror"),540,215);
     if(im){g.save();g.beginPath();g.arc(540,520,250,0,7);g.closePath();g.clip();g.drawImage(im,290,270,500,500);g.restore();g.strokeStyle="#f4c20d";g.lineWidth=12;g.beginPath();g.arc(540,520,250,0,7);g.stroke()}
-    else{g.fillStyle="#1a1740";g.beginPath();g.arc(540,520,250,0,7);g.fill();g.strokeStyle="#f4c20d";g.lineWidth=12;g.stroke();g.font="220px serif";g.fillText("🐸",540,600)}
+    else{g.fillStyle="#1a1740";g.beginPath();g.arc(540,520,250,0,7);g.fill();g.strokeStyle="#f4c20d";g.lineWidth=12;g.stroke();if(ok("frog")){var fi=IM.frog,fh=360,fw=fh*fi.naturalWidth/fi.naturalHeight;g.drawImage(fi,540-fw/2,350,fw,fh)}else{g.font="220px serif";g.fillText("🐸",540,600)}}
     drawCrownOn(g,540,290,160);
     g.font="700 88px Fredoka, sans-serif";g.fillStyle="#fff";var nm=name;while(g.measureText(nm).width>880&&nm.length>3)nm=nm.slice(0,-1);g.fillText(nm,540,900);
     g.font="500 34px Barlow, sans-serif";g.fillStyle="#e8e4ff";wrap(g,T.dipLine,540,970,860,44);
