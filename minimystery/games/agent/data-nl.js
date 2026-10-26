@@ -31,7 +31,7 @@ T:{today:"Start de zaak van vandaag",todayAgain:"Nog een zaak van vandaag",extra
   won:"ZAAK OPGELOST",shareBtn:"Deel het rapport",shareTxt:"Wij hebben de Bordendief gepakt! Zaak {c} · {s} · {m} min · ",copied:"Gekopieerd.",home:"Terug naar het begin",dl:"Bewaar het rapport",
   missed1:"Jullie wezen eerst een verkeerde verdachte aan: één ster minder.",missed2:"Meer dan drie keer mis getikt bij de puzzels: één ster minder.",
   up:"Nieuwe rang: {r}!",pts:"+{x} punten",streakTxt:"Dag {n} op rij",streakTxtP:"{n} dagen op rij",
-  dH:"Zaakcode",dT:"Vul de code van een andere telefoon in. Dan spelen jullie dezelfde zaak.",dGo:"Start deze zaak",dBad:"Die code klopt niet. Een zaakcode begint met AG.",
+  dH:"Zaakcode",dT:"Vul de zaakcode van de eerste telefoon in. Die staat daar bij de start van de zaak, in het vak ‘Zaakcode’, en in het Speurboekje. Vul op deze telefoon ook dezelfde Feestpas-code in. Dan spelen jullie dezelfde zaak.",dGo:"Start deze zaak",dBad:"Die code klopt niet. Een zaakcode begint met AG.",
   aH:"Opgeloste zaken",aNone:"Nog geen zaak opgelost.",aTip:"Tik op een zaak om hem opnieuw te spelen.",
   wipe:"Wissen",wipeY:"Deze zaak wissen",wipeAll:"Alles wissen (ook rang en punten)",wipeQ:"Deze zaak wissen?",wipeT:"De foto's en het speurboekje van deze zaak gaan weg.",allQ:"Echt alles wissen?",allT:"Rang, punten, dagen op rij en opgeloste zaken gaan weg. De Feestpas blijft.",allY:"Ja, wis alles",
   dipBtn:"Politiediploma (PDF)",posBtn:"GEZOCHT-poster (PDF)",dipH:"Politiediploma",dipT:"Wie zaten er in het team? Namen met een komma ertussen. Mag ook leeg.",dipP:"Namen van het team",dipGo:"Maak het diploma",dipPdf:"Download als PDF",dipImg:"Deel als afbeelding",dipNote:"A4, om te printen. De foto's blijven op deze telefoon.",

@@ -28,7 +28,7 @@ T:{today:"Start de jacht van vandaag",todayAgain:"Nog een jacht van vandaag",ext
   won:"GEPAKT",shareBtn:"Deel de bewijsstrook",shareTxt:"Wij hebben de Lichtjesdief gepakt! Jacht {c} · {s} · {m} min · ",copied:"Gekopieerd.",home:"Terug naar het begin",dl:"Bewaar de bewijsstrook",
   missed1:"Jullie hadden meer dan één poging nodig of lieten een opdracht zitten: één ster minder.",missed2:"Langer dan {m} minuten: één ster minder.",
   up:"Nieuwe rang: {r}!",pts:"+{x} punten",streakTxt:"Dag {n} op rij",streakTxtP:"{n} dagen op rij",
-  dH:"Jachtcode",dT:"Vul de code van een andere telefoon in. Dan spelen jullie dezelfde jacht.",dGo:"Start deze jacht",dBad:"Die code klopt niet. Een jachtcode begint met LD.",
+  dH:"Jachtcode",dT:"Vul de jachtcode van de eerste telefoon in. Die staat daar bij de start van de jacht, in het vak ‘Jachtcode’, en in het Speurboekje. Vul op deze telefoon ook dezelfde Feestpas-code in. Dan spelen jullie dezelfde jacht.",dGo:"Start deze jacht",dBad:"Die code klopt niet. Een jachtcode begint met LD.",
   aH:"Gepakte dieven",aNone:"Nog geen dief gepakt.",aTip:"Tik op een jacht om hem opnieuw te spelen.",
   wipe:"Wissen",wipeY:"Deze jacht wissen",wipeAll:"Alles wissen (ook rang en punten)",wipeQ:"Deze jacht wissen?",wipeT:"De foto's en het speurboekje van deze jacht gaan weg.",allQ:"Echt alles wissen?",allT:"Rang, punten, dagen op rij en gepakte dieven gaan weg. De Feestpas blijft.",allY:"Ja, wis alles",
   dipBtn:"Speurdersdiploma (PDF)",dipH:"Speurdersdiploma",dipT:"Wie zaten er in het team? Namen met een komma ertussen. Mag ook leeg.",dipP:"Namen van het team",dipGo:"Maak het diploma",dipPdf:"Download als PDF",dipImg:"Deel als afbeelding",dipNote:"A4, om te printen. De foto's blijven op deze telefoon.",

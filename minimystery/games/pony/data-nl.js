@@ -33,7 +33,7 @@ T:{today:"Start de zaak van vandaag",todayAgain:"Nog een zaak van vandaag",extra
   won:"ZAAK OPGELOST",shareBtn:"Deel de stalkaart",shareTxt:"Wij hebben Pony Pluis gevonden! Zaak {c} · {s} · {m} min · ",copied:"Gekopieerd.",home:"Terug naar het begin",dl:"Bewaar de stalkaart",
   missed1:"Jullie kozen eerst een verkeerde plek: één hoefijzer minder.",missed2:"Meer dan drie keer mis getikt bij de puzzels: één hoefijzer minder.",
   up:"Nieuwe rang: {r}!",pts:"+{x} punten",streakTxt:"Dag {n} op rij",streakTxtP:"{n} dagen op rij",
-  dH:"Zaakcode",dT:"Vul de code van een andere telefoon in. Dan spelen jullie dezelfde zaak.",dGo:"Start deze zaak",dBad:"Die code klopt niet. Een zaakcode begint met PP.",
+  dH:"Zaakcode",dT:"Vul de zaakcode van de eerste telefoon in. Die staat daar bij de start van de zaak, in het vak ‘Zaakcode’, en in het Speurboekje. Vul op deze telefoon ook dezelfde Feestpas-code in. Dan spelen jullie dezelfde zaak.",dGo:"Start deze zaak",dBad:"Die code klopt niet. Een zaakcode begint met PP.",
   aH:"Gevonden pony's",aNone:"Nog geen zaak opgelost.",aTip:"Tik op een zaak om hem opnieuw te spelen.",
   wipe:"Wissen",wipeY:"Deze zaak wissen",wipeAll:"Alles wissen (ook rang en punten)",wipeQ:"Deze zaak wissen?",wipeT:"De foto's en het speurboekje van deze zaak gaan weg.",allQ:"Echt alles wissen?",allT:"Rang, punten, dagen op rij en gevonden pony's gaan weg. De Feestpas blijft.",allY:"Ja, wis alles",
   dipBtn:"Ruiterpaspoort (PDF)",dipH:"Ruiterpaspoort",dipT:"Wie zaten er in de speurdersclub? Namen met een komma ertussen. Mag ook leeg.",dipP:"Namen van de speurders",dipGo:"Maak het paspoort",dipPdf:"Download als PDF",dipImg:"Deel als afbeelding",dipNote:"A4, om te printen. De foto's blijven op deze telefoon.",

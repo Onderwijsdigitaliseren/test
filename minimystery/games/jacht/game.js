@@ -139,10 +139,10 @@ function build(seed,mode,pois,ways,origin,daily){
     W=ways||[];P={x:0,y:0,acc:0};LS.set(WK,W)}
   brief()}
 function brief(){var c=G.c;
-  $("#bfNo").textContent=fill(T.briefNo,{c:G.code})+(G.mode==="demo"?" · "+T.demoCase:"");
+  $("#bfNo").textContent=(G.mode==="demo"?T.demoCase:"");
   $("#bfOpen").innerHTML=pose("thief","hero-pose")+bubble(fill(D.OPEN,{C:cadeau()}),null,"big");
   $("#bfSus").innerHTML=c.sus.map(susCard).join("");
-  $("#bfTip").textContent=T.codeTip;
+  $("#bfTip").innerHTML=MW.codeBox(L,G.code,"jacht");MW.bindCodeBox($("#bfTip"),L);
   show("brief")}
 function susImg(s){var j=D.SUS.findIndex(function(x){return x[0]===s.name});return j>=0?'<img class="face" src="'+IMGROOT+'sus-'+SUSF[j]+'.webp" alt="" width="420" height="420">':''}
 function susCard(s,i,pick){return '<'+(pick?'button type="button"':'div')+' class="sus face"'+(pick?' data-s="'+i+'"':'')+'>'+susImg(s)+'<div class="sbody"><b>'+esc(s.name)+'</b><small>'+esc(cap(s.rel))+' · '+esc(s.q)+'</small><div class="tags">'+ATK.map(function(k){return '<i class="t-'+k+(k==="hoofd"?s.tr[k]:"")+'">'+esc(D.AT[k].s[s.tr[k]])+"</i>"}).join("")+'</div></div></'+(pick?'button':'div')+'>'}
@@ -370,7 +370,7 @@ function mlWarm(){if(ML.sess||ML.dead)return;var st=$("#mlSt");if(st)st.textCont
 /* ---------- ruilboekje, verdachten, menu ---------- */
 function noteSheet(){var ev=[],cl=[];G.c.slots.forEach(function(s,i){if(!G.ph[i])return;
     if(s.kind==="ev")ev.push('<div class="clue"><em>'+esc(s.what)+'</em><p>'+esc(s.t)+'</p></div>');else if(s.kind==="claim")cl.push('<div class="clue"><em>'+esc(s.what)+'</em><p>'+esc(claimText(G.c.claims[s.w]))+'</p></div>')});
-  sheet('<h2>'+T.notebook+'</h2>'+(ev.length||cl.length?'<div class="eyebrow">'+T.nbE+'</div><div class="list">'+(ev.join("")||'<p class="note">–</p>')+'</div><div class="eyebrow">'+T.nbW+'</div><div class="list">'+(cl.join("")||'<p class="note">–</p>')+'</div>':'<p class="note">'+T.nbNone+'</p>')+'<button type="button" class="btn ghost dk" id="shX">'+T.close+'</button>');$("#shX").onclick=closeSheet}
+  sheet('<h2>'+T.notebook+'</h2>'+MW.codeBox(L,G.code,"jacht",true)+(ev.length||cl.length?'<div class="eyebrow">'+T.nbE+'</div><div class="list">'+(ev.join("")||'<p class="note">–</p>')+'</div><div class="eyebrow">'+T.nbW+'</div><div class="list">'+(cl.join("")||'<p class="note">–</p>')+'</div>':'<p class="note">'+T.nbNone+'</p>')+'<button type="button" class="btn ghost dk" id="shX">'+T.close+'</button>');MW.bindCodeBox($("#sheetBody"),L);$("#shX").onclick=closeSheet}
 function susSheet(){sheet('<h2>'+T.people+'</h2><p class="note">'+T.peopleT+'</p><div class="list">'+G.c.sus.map(susCard).join("")+'</div><button type="button" class="btn ghost dk" id="shX">'+T.close+'</button>');$("#shX").onclick=closeSheet}
 function menuSheet(){sheet('<h2>'+T.menu+'</h2><button type="button" class="btn" id="mBack">'+T.mBack+'</button><button type="button" class="btn ghost dk" id="mHome">'+T.mHome+'</button><button type="button" class="btn ghost dk" id="mWipe">'+T.mWipe+'</button>');
   $("#sheetBody").onclick=function(e){var i=e.target.id;if(i==="mBack")closeSheet();else if(i==="mHome"){closeSheet();leavePlay();toast(T.saved)}else if(i==="mWipe")confirmSheet(T.wipeQ,T.wipeT,T.wipeY,wipeGame)}}

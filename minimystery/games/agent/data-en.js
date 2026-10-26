@@ -31,7 +31,7 @@ T:{today:"Start today's case",todayAgain:"Another case for today",extra:"Extra c
   won:"CASE SOLVED",shareBtn:"Share the report",shareTxt:"We caught the Sign Thief! Case {c} · {s} · {m} min · ",copied:"Copied.",home:"Back to the start",dl:"Save the report",
   missed1:"You pointed at the wrong suspect first: one star less.",missed2:"More than three wrong taps in the puzzles: one star less.",
   up:"New rank: {r}!",pts:"+{x} points",streakTxt:"Day {n} in a row",streakTxtP:"{n} days in a row",
-  dH:"Case code",dT:"Enter the code from another phone. Then you play the same case.",dGo:"Start this case",dBad:"That code is not right. A case code starts with AG.",
+  dH:"Case code",dT:"Enter the case code from the first phone. It is shown there at the start of the case, in the ‘Case code’ box, and in the Notebook. Enter the same Party Pass code on this phone too. You then play the same case.",dGo:"Start this case",dBad:"That code is not right. A case code starts with AG.",
   aH:"Solved cases",aNone:"No case solved yet.",aTip:"Tap a case to play it again.",
   wipe:"Wipe",wipeY:"Wipe this case",wipeAll:"Wipe everything (rank and points too)",wipeQ:"Wipe this case?",wipeT:"The photos and the notebook of this case will be gone.",allQ:"Really wipe everything?",allT:"Rank, points, day streak and solved cases will be gone. The Party Pass stays.",allY:"Yes, wipe everything",
   dipBtn:"Police diploma (PDF)",posBtn:"WANTED poster (PDF)",dipH:"Police diploma",dipT:"Who was on the team? Names with a comma between them. May be left empty.",dipP:"Names of the team",dipGo:"Make the diploma",dipPdf:"Download as PDF",dipImg:"Share as image",dipNote:"A4, for printing. The photos stay on this phone.",

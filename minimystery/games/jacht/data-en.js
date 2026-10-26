@@ -26,7 +26,7 @@ T:{today:"Start today's hunt",todayAgain:"Another hunt today",extra:"Extra hunt"
   won:"CAUGHT",shareBtn:"Share the evidence strip",shareTxt:"We caught the Light Thief! Hunt {c} · {s} · {m} min · ",copied:"Copied.",home:"Back to start",dl:"Save the evidence strip",
   missed1:"You needed more than one try or let a task go: one star less.",missed2:"Longer than {m} minutes: one star less.",
   up:"New rank: {r}!",pts:"+{x} points",streakTxt:"Day {n} in a row",streakTxtP:"{n} days in a row",
-  dH:"Hunt code",dT:"Enter the code from another phone. Then you play the same hunt.",dGo:"Start this hunt",dBad:"That code is not right. A hunt code starts with LD.",
+  dH:"Hunt code",dT:"Enter the hunt code from the first phone. It is shown there at the start of the hunt, in the ‘Hunt code’ box, and in the Detective book. Enter the same Party Pass code on this phone too. You then play the same hunt.",dGo:"Start this hunt",dBad:"That code is not right. A hunt code starts with LD.",
   aH:"Thieves caught",aNone:"No thief caught yet.",aTip:"Tap a hunt to play it again.",
   wipe:"Wipe",wipeY:"Wipe this hunt",wipeAll:"Wipe everything (rank and points too)",wipeQ:"Wipe this hunt?",wipeT:"The photos and the detective book of this hunt will be gone.",allQ:"Really wipe everything?",allT:"Rank, points, days in a row and caught thieves will be gone. The Party Pass stays.",allY:"Yes, wipe everything",
   dipBtn:"Detective diploma (PDF)",dipH:"Detective diploma",dipT:"Who was in the team? Names separated by commas. May be empty.",dipP:"Team names",dipGo:"Make the diploma",dipPdf:"Download as PDF",dipImg:"Share as image",dipNote:"A4, for printing. The photos stay on this phone.",
