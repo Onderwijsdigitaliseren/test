@@ -284,8 +284,9 @@ function pzRoses(done){var r=rngOf(G.seed^0xB22),n=G.c.digits[0],cells=[],tot=16
   glass(pzHead(PZ.roseH,hard()?PZ.roseTT:PZ.roseT)+'<div class="garden">'+cells.map(fl).join("")+'</div><div class="opts four">'+opts.map(function(v){return '<button type="button" data-v="'+v+'"><span>'+v+'</span></button>'}).join("")+'</div>');say(hard()?PZ.roseTT:PZ.roseT);
   $(".opts").onclick=function(e){var b=e.target.closest("button");if(!b)return;if(+b.dataset.v===n){toast(T.right);done()}else{G.wrong++;save();toast(T.wrong);buzz(80);b.classList.add("no")}}}
 /* 3 maanreeks */
-function pzMoons(done){var M=["🌑","🌒","🌓","🌔","🌕","🌖","🌗","🌘"],r=rngOf(G.seed^0xC33),step=hard()?(r()<.5?2:3):1,s0=Math.floor(r()*8),len=hard()?5:4,seq=[];for(var i=0;i<len;i++)seq.push(M[(s0+i*step)%8]);var ans=M[(s0+len*step)%8];
-  var opts=shuffle([ans,M[(s0+len*step+3)%8],M[(s0+len*step+5)%8]],r);
+function pzMoons(done){var M=["🌑","🌒","🌓","🌔","🌕","🌖","🌗","🌘"],r=rngOf(G.seed^0xC33),seq,ans,opts;
+  if(hard()){var step=r()<.5?2:3,s0=Math.floor(r()*8),len=5;seq=[];for(var i=0;i<len;i++)seq.push(M[(s0+i*step)%8]);ans=M[(s0+len*step)%8];opts=shuffle([ans,M[(s0+len*step+3)%8],M[(s0+len*step+5)%8]],r)}
+  else{/* Elfje: een herhalend patroon, zoals in groep 2/3 */var P=shuffle(["🌙","⭐","☁️","🌈"],r),k=2+Math.floor(r()*2),pat=P.slice(0,k);seq=[];for(i=0;i<(k===2?5:6);i++)seq.push(pat[i%k]);ans=pat[seq.length%k];opts=shuffle([ans].concat(P.filter(function(x){return x!==ans}).slice(0,2)),r)}
   glass(pzHead(PZ.moonH,PZ.moonT)+'<div class="moons">'+seq.map(function(m){return '<span>'+m+'</span>'}).join("")+'<span class="q">?</span></div><div class="opts three">'+opts.map(function(m){return '<button type="button" data-m="'+m+'"><span class="moonb">'+m+'</span></button>'}).join("")+'</div>');say(PZ.moonT);
   $(".opts").onclick=function(e){var b=e.target.closest("button");if(!b)return;if(b.dataset.m===ans){toast(T.right);done()}else{G.wrong++;save();toast(T.wrong);buzz(80);b.classList.add("no")}}}
 /* 4 vuurvliegjes vangen → gouden cijfer 2 (= aantal mint) */
@@ -331,7 +332,7 @@ function room(){G.ph="room";if(!G.room){var r=rngOf(G.seed^0x5E5E);G.room={lamp:
     return talk([RM.enter1],function(){talk([RM.enter2],function(){roomScreen()},"mira-shock")},"mira-talk")}
   roomScreen()}
 function roomScreen(){mg.stop();var R=G.room;
-  glass('<div class="roomWrap" id="rw"><div class="roomPan" id="rp">'+roomSvg()+'</div>'+(R.lamp?'':'<div class="darkL" id="dk"></div>')+'</div><p class="note rhint" id="rh">'+esc(R.lamp?RM.roomT:RM.dark)+'</p><div class="inv">'+esc(RM.inv)+' '+(R.lamp?"🏮 ":"")+(R.key?"🔑 ":"")+(R.shard?"🔷":"")+'</div>');
+  glass('<div class="roomWrap" id="rw"><div class="roomPan" id="rp">'+roomSvg()+'</div>'+(R.lamp?'':'<div class="darkL" id="dk"></div>')+'</div><p class="note rhint" id="rh">'+esc(R.lamp?RM.roomT:RM.dark)+'</p><div class="inv">'+esc(RM.inv)+' '+(R.lamp?"🏮 ":"")+(R.key?"🔑 ":"")+(R.shard?"🔷 ":"")+(hard()||R.key?"":'<span class="dg">'+esc(PZ.digitsSoFar)+' '+G.c.digits.map(function(d){return '<b>'+d+'</b>'}).join(" ")+'</span>')+'</div>');
   say(R.lamp?(R.said?"":RM.roomT):RM.dark);R.said=1;
   var rw=$("#rw"),rp=$("#rp");rp.scrollLeft=R.lamp?rp.scrollLeft:rp.scrollWidth;
   if(!R.lamp){var dk=$("#dk");var mv=function(e){var rc=rw.getBoundingClientRect();dk.style.setProperty("--x",(e.clientX-rc.left)+"px");dk.style.setProperty("--y",(e.clientY-rc.top)+"px")};mg.on(rw,"pointermove",mv);mg.on(rw,"pointerdown",mv);
@@ -345,9 +346,9 @@ function roomScreen(){mg.stop();var R=G.room;
 function chestSheet(){var v=[0,0,0];var html=function(){return '<h2>'+esc(RM.chestH)+'</h2><p>'+esc(RM.chestT)+'</p><div class="wheels">'+v.map(function(d,i){return '<div><button type="button" data-i="'+i+'" data-d="1">▲</button><b>'+d+'</b><button type="button" data-i="'+i+'" data-d="-1">▼</button></div>'}).join("")+'</div><button type="button" class="btn" id="cOk">'+esc(RM.open)+'</button><button type="button" class="btn ghost dk" id="shX">'+esc(T.back)+'</button>'};
   var render=function(){sheet(html());$("#shX").onclick=closeSheet;$$(".wheels button").forEach(function(b){b.onclick=function(){var i=+b.dataset.i;v[i]=(v[i]+ +b.dataset.d+10)%10;beep(500,.05);render()}});
     $("#cOk").onclick=function(){if(v.join("")===G.c.digits.join("")){G.room.key=true;save();closeSheet();beep(660,.15);setTimeout(function(){beep(990,.3)},150);buzz([60,40,160]);toast(RM.chestOk);say(RM.chestOk);roomScreen()}else{G.wrong++;save();toast(RM.chestBad);buzz(120)}}};render()}
-function booksSheet(){var w=G.c.words[0].slice(0,6).toUpperCase().split(""),r=rngOf(G.seed^0xB00C),decoy="BDGKPSTZ".split("").filter(function(c){return w.indexOf(c)<0}),letters=shuffle(w.concat(decoy.slice(0,3)),r),at=0;
-  sheet('<h2>'+esc(RM.booksH)+'</h2><p>'+esc(hard()?RM.booksTT:fill(RM.booksT,{w:G.c.words[0]}))+'</p><div class="books">'+letters.map(function(c,i){return '<button type="button" data-c="'+c+'" style="background:'+["#ff6b6b","#4fb3ff","#3ccfa8","#f4c20d","#b794f6","#ff8fab","#e76f51","#6ec3ff","#2a9d4b"][i%9]+'">'+c+'</button>'}).join("")+'</div><p class="note" id="bk"></p><button type="button" class="btn ghost dk" id="shX">'+esc(T.back)+'</button>');
-  $("#shX").onclick=closeSheet;say(hard()?RM.booksTT:fill(RM.booksT,{w:G.c.words[0]}));
+function booksSheet(){var NL=hard()?6:4,w=G.c.words[0].slice(0,NL).toUpperCase().split(""),r=rngOf(G.seed^0xB00C),decoy="BDGKPSTZ".split("").filter(function(c){return w.indexOf(c)<0}),letters=shuffle(w.concat(decoy.slice(0,hard()?3:2)),r),at=0;
+  sheet('<h2>'+esc(RM.booksH)+'</h2><p>'+esc(hard()?RM.booksTT:fill(RM.booksT,{w:G.c.words[0].slice(0,NL).toUpperCase().split('').join(' ')+' ('+G.c.words[0]+')'}))+'</p><div class="books">'+letters.map(function(c,i){return '<button type="button" data-c="'+c+'" style="background:'+["#ff6b6b","#4fb3ff","#3ccfa8","#f4c20d","#b794f6","#ff8fab","#e76f51","#6ec3ff","#2a9d4b"][i%9]+'">'+c+'</button>'}).join("")+'</div><p class="note" id="bk"></p><button type="button" class="btn ghost dk" id="shX">'+esc(T.back)+'</button>');
+  $("#shX").onclick=closeSheet;say(hard()?RM.booksTT:fill(RM.booksT,{w:G.c.words[0].slice(0,NL).toUpperCase().split('').join(' ')+' ('+G.c.words[0]+')'}));
   $(".books").onclick=function(e){var b=e.target.closest("button");if(!b||b.classList.contains("ok"))return;if(b.dataset.c===w[at]){b.classList.add("ok");at++;beep(500+at*70,.1);$("#bk").textContent=w.slice(0,at).join("");if(at>=w.length){G.room.shard=true;save();mg.later(function(){closeSheet();beep(990,.3);buzz([60,40,160]);toast(RM.booksOk);say(RM.booksOk);roomScreen()},500)}}else{G.wrong++;save();toast(RM.booksBad);buzz(100);at=0;$$(".books button").forEach(function(x){x.classList.remove("ok")});$("#bk").textContent=""}}}
 function candleTap(){var R=G.room,seq=R.cseq;if(R.cand.length===0&&!R.tapT){toast(hard()?RM.candleTT:RM.candleT);say(hard()?RM.candleTT:RM.candleT);R.tapT=1}
   /* tik op de kandelaar = volgende kaars aansteken: welke? een klein vel met vier kleuren */
@@ -357,9 +358,15 @@ function candleTap(){var R=G.room,seq=R.cseq;if(R.cand.length===0&&!R.tapT){toas
       if(R.cand.length===4){mg.later(function(){closeSheet();var t=fill(RM.candleOk,vars());toast(t);say(t);roomScreen()},500)}}
     else{G.wrong++;R.cand=[];save();toast(RM.candleBad);buzz(120);$$(".cands button").forEach(function(x){x.classList.remove("lit")})}}}
 
+/* speurboekje: wat weten we al van Grimmel? */
+function clues(){var c=G.c,h=[];if(G.pot.indexOf(0)>=0)h.push('<div class="cl"><i style="background:'+COLHEX[c.col]+'"></i><b>'+esc(cap(D.COLS[c.col]))+'</b></div>');
+  if(G.pot.indexOf(3)>=0)h.push('<div class="cl">'+svgHat(c.hat)+'<b>'+esc(cap(D.HATS1[c.hat]))+'</b></div>');
+  if(G.pot.indexOf(5)>=0)h.push('<div class="cl"><span class="eyes">'+(c.eyes?"👁👁👁":"👁👁")+'</span><b>'+esc(cap(D.EYES[c.eyes]))+'</b></div>');
+  return h.length?'<div class="clues">'+h.join("")+'</div>':'<p class="note">'+esc(T.bookNone)+'</p>'}
+function bookSheet(){sheet('<h2>'+esc(T.bookH)+'</h2><p>'+esc(T.bookT)+'</p>'+clues()+'<button type="button" class="btn" id="shX">'+esc(T.close)+'</button>');$("#shX").onclick=closeSheet}
 /* ---------- finale ---------- */
 function finale(){G.ph="finale";save();var c=G.c.cands;
-  glass('<div class="talk"><h2>'+esc(T.finH)+'</h2><p>'+esc(T.finT)+'</p><div class="opts three big">'+c.map(function(x,i){return '<button type="button" data-i="'+i+'">'+svgGrimmel(x.col,x.hat,x.eyes)+'</button>'}).join("")+'</div></div>');say(T.finH+" "+T.finT);
+  glass('<div class="talk"><h2>'+esc(T.finH)+'</h2><p>'+esc(T.finT)+'</p>'+(hard()?'':clues())+'<div class="opts three big">'+c.map(function(x,i){return '<button type="button" data-i="'+i+'">'+svgGrimmel(x.col,x.hat,x.eyes)+'</button>'}).join("")+'</div></div>');say(T.finH+" "+T.finT);
   $(".opts").onclick=function(e){var b=e.target.closest("button");if(!b)return;if(c[+b.dataset.i].ok){toast(T.finRight);beep(660,.15);setTimeout(function(){beep(990,.3)},160);G.tEnd=Date.now();save();mg.later(blowAll,600)}else{G.wrong++;save();toast(T.finWrong);buzz(120);b.classList.add("no")}}}
 function blowAll(){var m=useMic(),mist=1;
   glass('<div class="th"><h2>'+esc(T.blowH)+'</h2><p>'+esc(m?T.blowT:T.blowTT)+'</p></div><div class="mistbox"><div class="under">'+pic("parel-cheer",svgParel({cheer:true}),"fig")+'</div><canvas id="mc" width="320" height="320"></canvas></div>'+(m?'<div class="vol"><i id="vb"></i></div>':'<button type="button" class="btn big" id="bl">💨 '+esc(T.blowBtn)+'</button>'));
@@ -407,14 +414,15 @@ function wrap(g,txt,x,y,w,lh){var words=txt.split(" "),line="";words.forEach(fun
 /* ---------- menu / ouderscherm ---------- */
 function menu(skip){var v=vars();
   sheet('<h2>'+esc(T.menuH)+'</h2><p class="note">'+esc(fill(T.codeIs,{c:G.code}))+'</p>'+
+   '<button type="button" class="btn ghost dk" id="mBk">📖 '+esc(T.bookH)+'</button>'+
    '<button type="button" class="btn ghost dk" id="mSp">🔎 '+esc(T.spiek)+'</button>'+
    (skip?'<button type="button" class="btn ghost dk" id="mSk">⏭ '+esc(T.skipIng)+'</button>':'')+
    '<button type="button" class="btn ghost dk" id="mOr">🔀 '+esc(T.order)+'</button>'+
    '<div class="seg two" id="mSens">'+[["auto",T.sensA],["silent",T.sensB],["old",T.sensC],["tap",T.sensD]].map(function(o){return '<button type="button" data-s="'+o[0]+'" aria-pressed="'+(SMODE===o[0])+'">'+esc(o[1])+'</button>'}).join("")+'</div>'+
    '<button type="button" class="btn ghost dk" id="mQ">'+esc(T.quit)+'</button><button type="button" class="btn" id="shX">'+esc(T.resume)+'</button>');
-  var t=0,sp=$("#mSp");var open=function(){sheet('<h2>'+esc(T.spiekH)+'</h2><p class="big">'+esc(fill(T.spiekT,v))+'</p><p class="note">🔢 '+G.c.digits.join(" ")+' · 🕯 '+G.c.cseq.map(function(i){return["🩷","💛","💜","💚"][i]}).join("")+' · 📚 '+G.c.words[0].slice(0,6).toUpperCase()+'</p>'+(hard()?'<p class="note">'+esc(T.spiekLie)+'</p>':'')+'<div class="opts three"><button type="button" disabled>'+svgGrimmel(G.c.col,G.c.hat,G.c.eyes)+'</button></div><button type="button" class="btn" id="shX">'+esc(T.close)+'</button>');$("#shX").onclick=closeSheet};
+  var t=0,sp=$("#mSp");var open=function(){sheet('<h2>'+esc(T.spiekH)+'</h2><p class="big">'+esc(fill(T.spiekT,v))+'</p><p class="note">🔢 '+G.c.digits.join(" ")+' · 🕯 '+G.c.cseq.map(function(i){return["🩷","💛","💜","💚"][i]}).join("")+' · 📚 '+G.c.words[0].slice(0,hard()?6:4).toUpperCase()+'</p>'+(hard()?'<p class="note">'+esc(T.spiekLie)+'</p>':'')+'<div class="opts three"><button type="button" disabled>'+svgGrimmel(G.c.col,G.c.hat,G.c.eyes)+'</button></div><button type="button" class="btn" id="shX">'+esc(T.close)+'</button>');$("#shX").onclick=closeSheet};
   var down=function(){clearTimeout(t);t=setTimeout(open,900)},up=function(){clearTimeout(t)};sp.addEventListener("pointerdown",down);sp.addEventListener("pointerup",up);sp.addEventListener("pointerleave",up);sp.addEventListener("contextmenu",function(e){e.preventDefault()});
-  $("#shX").onclick=closeSheet;$("#mOr").onclick=function(){G.off=Math.floor(Math.random()*G.kids.length);save();closeSheet();toast(T.ok)};
+  $("#mBk").onclick=bookSheet;$("#shX").onclick=closeSheet;$("#mOr").onclick=function(){G.off=Math.floor(Math.random()*G.kids.length);save();closeSheet();toast(T.ok)};
   $("#mSens").onclick=function(e){var b=e.target.closest("button");if(!b)return;SMODE=b.dataset.s;LS.set("ss_ts_smode",SMODE);$$("#mSens button").forEach(function(x){x.setAttribute("aria-pressed",x===b)})};
   var sk=$("#mSk");if(sk)sk.onclick=function(){closeSheet();skip()};
   $("#mQ").onclick=function(){closeSheet();save();G=null;home()}}

@@ -183,3 +183,11 @@ a.btn{display:block;text-align:center;text-decoration:none}
 .cands button i{position:absolute;left:50%;top:-22px;width:16px;height:26px;margin-left:-8px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:#ffd166;opacity:0;box-shadow:0 0 16px #ffb703}
 .cands button.lit i{opacity:1;animation:flick .5s infinite alternate}
 @keyframes flick{to{transform:scaleY(1.2)}}
+/* speurboekje */
+.clues{display:flex;justify-content:center;gap:12px;margin:8px 0 12px;flex-wrap:wrap}
+.cl{display:flex;flex-direction:column;align-items:center;gap:4px;background:rgba(255,255,255,.1);border:2px solid rgba(255,255,255,.25);border-radius:14px;padding:8px 12px;min-width:80px;font:600 13px var(--f-type);color:#fff}
+.paper .cl{background:#fff;border-color:var(--rule);color:var(--ink)}
+.cl i{width:44px;height:44px;border-radius:50%;border:3px solid #1f2a44;display:block}
+.cl svg{width:48px;height:44px}
+.cl .eyes{font-size:22px;line-height:44px}
+.inv .dg{display:block;font-size:15px;color:var(--fog)}.inv .dg b{color:var(--gold);font-size:20px;margin:0 3px}

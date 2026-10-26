@@ -59,6 +59,7 @@ T:{
  /* zaakcode */
  dH:"Zaakcode",dT:"Vul de code van een andere telefoon in. Dan speel je dezelfde zaak (zelfde Grimmel, zelfde spreuk).",dGo:"Start deze zaak",dBad:"Die code klopt niet. Een zaakcode begint met TS.",codeIs:"Zaakcode: {c}",
  /* menu / ouderscherm */
+ bookH:"Speurboekje",bookT:"Dit weten jullie al over Grimmel:",bookNone:"Nog niets. Let goed op de sporen!",
  menuH:"Ouderscherm",spiek:"Spiekbrief (lang indrukken)",spiekH:"Spiekbrief",spiekT:"Grimmel is {c}, draagt {h} en heeft {o}. De toverspreuk is: {w}.",spiekLie:"De valse hint van Grimmel gaat over zijn kleur.",
  sens:"Spiegelstand",sensA:"Spiegel (alle sensoren)",sensB:"Stille spiegel (geen microfoon)",sensC:"Oude spiegel (geen bewegen)",sensD:"Alleen tikken",
  pause:"Pauze",resume:"Verder",skipIng:"Dit ingrediënt overslaan",order:"Volgorde kinderen husselen",quit:"Stoppen met de zaak",quitT:"De zaak blijft bewaard; je kunt er straks mee verder.",

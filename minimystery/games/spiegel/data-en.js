@@ -48,6 +48,7 @@ T:{
  doneH:"Case solved!",doneT:"Princess Pearl is back, Grimble has friends and the cauldron is empty. Every child gets a Mirror Sleuth diploma.",dip:"Make the diplomas",dipH:"Mirror Sleuth diploma",dipT:"Tap a name. You can save the picture or share it via WhatsApp.",dipSave:"Save",dipShare:"Share",dipTitle:"Mirror Sleuth",dipLine:"turned Princess Pearl back and gave Grimble a friend",dipCase:"Case",
  home:"Back to start",again:"Once more",
  dH:"Case code",dT:"Enter the code from another phone to play the same case (same Grimble, same spell).",dGo:"Start this case",dBad:"That code is not right. A case code starts with TS.",codeIs:"Case code: {c}",
+ bookH:"Clue book",bookT:"This is what you already know about Grimble:",bookNone:"Nothing yet. Watch for the traces!",
  menuH:"Grown-up screen",spiek:"Cheat sheet (press and hold)",spiekH:"Cheat sheet",spiekT:"Grimble is {c}, wears {h} and has {o}. The spell is: {w}.",spiekLie:"Grimble's false hint is about his colour.",
  sens:"Mirror mode",sensA:"Mirror (all sensors)",sensB:"Quiet mirror (no microphone)",sensC:"Old mirror (no motion)",sensD:"Tap only",
  pause:"Pause",resume:"Continue",skipIng:"Skip this ingredient",order:"Shuffle the children's order",quit:"Stop the case",quitT:"The case is kept; you can continue later.",
