@@ -215,3 +215,111 @@ a.btn{display:block;text-align:center;text-decoration:none}
 .album{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
 .album figure{margin:0}.album img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;border:3px solid var(--gold)}
 .album figcaption{font:500 11px var(--f-type);color:var(--ink2);text-align:center;line-height:1.2;margin-top:2px}
+/* ===== uitbreiding: feestopties, zaakcode, nieuwe puzzels, verhaal, finale ===== */
+#bCode .bsub{display:block;font:500 12px var(--f-type);opacity:.8;margin-top:2px}
+.lenInfo{margin:6px 2px 4px;font-size:14px;color:var(--fog);opacity:.9;line-height:1.35}
+#hudT{width:14px;height:14px;border-radius:50%;border:2px solid var(--ink);display:inline-block}
+.codeI .mmCodeBox{width:100%;box-sizing:border-box}
+.fin .mmCodeBox{width:100%;max-width:340px;box-sizing:border-box}
+.fin .stars{font-family:var(--f-type);color:var(--gold);font-size:22px;letter-spacing:.05em}
+.fin .mmp-res,.fin>div{width:100%;max-width:340px}
+.paper ul.where{margin:6px 0 10px;padding-left:20px;line-height:1.45}
+/* begeleidersknop: lang indrukken op de bovenste regel */
+.hold{position:relative;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.hold::after{content:'';position:absolute;left:10%;bottom:-4px;height:3px;width:0;background:var(--gold);border-radius:2px;transition:width 1s linear}
+.hold.holding::after{width:80%}
+#tsHelp{position:fixed;inset:0;z-index:90;background:rgba(10,8,30,.78);display:flex;align-items:center;justify-content:center;padding:20px}
+#tsHelp>div{background:var(--paper);color:var(--ink);border-radius:20px;padding:18px;display:flex;flex-direction:column;gap:10px;width:min(100%,380px);border:4px solid var(--gold)}
+#tsHelp h3{margin:0}#tsHelp p{margin:0;color:var(--ink2);font-size:15px}
+.who.sm{font-family:var(--f-type);font-size:34px;font-weight:700;color:var(--gold);text-shadow:0 0 20px rgba(244,194,13,.5)}
+/* A toverklokjes */
+.bells{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%;max-width:300px;margin:6px auto}
+.bells button{aspect-ratio:1;border-radius:50%;border:4px solid rgba(255,255,255,.35);background:radial-gradient(circle at 35% 30%,#fff 0,var(--c) 45%,rgba(0,0,0,.25) 100%);font-size:44px;transition:transform .15s,box-shadow .15s}
+.bells button.lit{transform:scale(1.12) rotate(-8deg);box-shadow:0 0 34px var(--c),0 0 0 6px #fff}
+.dots{display:flex;gap:8px;justify-content:center;margin:8px 0}.dots i{width:14px;height:14px;border-radius:50%;background:rgba(255,255,255,.2)}.dots i.on{background:var(--gold);box-shadow:0 0 10px var(--gold)}
+/* B halve vlinder */
+.sym{position:relative;display:grid;grid-template-columns:1fr 6px 1fr;gap:8px 6px;width:100%;max-width:320px;margin:8px auto;padding:14px 10px;border-radius:24px;background:rgba(255,255,255,.05)}
+.sym .body{position:absolute;left:50%;top:-14px;transform:translateX(-50%);font-size:26px}
+.sym>b{background:linear-gradient(var(--gold),var(--gold2));border-radius:3px;box-shadow:0 0 10px var(--gold)}
+.sym .wl,.sym .wr{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:6px}
+.sym .wl i,.sym .wr button{aspect-ratio:1;border-radius:40%;border:2px dashed rgba(255,255,255,.3);background:transparent;display:block}
+.sym .wl i.on,.sym .wr button.on{background:radial-gradient(circle at 35% 30%,#fff,var(--w) 60%);border:2px solid #fff;box-shadow:0 0 12px var(--w)}
+.sym.fly{animation:flap .5s ease-in-out 2}
+@keyframes flap{50%{transform:scaleX(.82)}}
+/* C kikkervijver */
+.pond{position:relative;width:100%;max-width:340px;aspect-ratio:4/3;margin:6px auto;border-radius:50%;background:radial-gradient(ellipse at 50% 40%,#3fa7d6 0,#1d6fa5 60%,#124a72 100%);box-shadow:0 0 0 8px #2a9d4b,0 0 0 12px #1a6b33;overflow:hidden}
+.pond .pad{position:absolute;width:15%;aspect-ratio:1;margin:-7.5% 0 0 -7.5%;border-radius:50%;background:radial-gradient(circle at 40% 40%,#7ed957,#2a9d4b);clip-path:polygon(50% 50%,100% 35%,100% 0,0 0,0 100%,100% 100%,100% 65%)}
+.pond .frg{position:absolute;font-size:32px;margin:-24px 0 0 -18px;transition:left .7s ease-in-out,top .7s ease-in-out;z-index:2}
+.pond .frg.hop{animation:frhop .7s ease-in-out}
+@keyframes frhop{40%{transform:translateY(-28px) scale(1.15)}}
+.pond::after{content:"";position:absolute;inset:0;background:radial-gradient(circle,rgba(232,228,255,.97) 30%,rgba(232,228,255,.9) 70%);opacity:0;transition:opacity 1s;z-index:3;pointer-events:none}
+.pond.mist::after{opacity:1}
+/* D schaduwkast */
+.shObj{font-size:84px;line-height:1.15;margin:4px 0;filter:drop-shadow(0 0 16px rgba(244,194,13,.5));animation:pop .5s ease-out}
+.opts.two2{grid-template-columns:1fr 1fr}
+.shs button{background:#fff7e8;border-color:var(--gold2)}
+.shs button span{font-size:56px;line-height:1.1;filter:brightness(0);opacity:.85}
+.shs.flip button span{display:inline-block;transform:scaleX(-1)}
+.shs button.ok{background:var(--mint)}
+.shs button.ok span{filter:none;opacity:1}
+/* E/F kringspellen */
+.mimeC{display:flex;flex-direction:column;align-items:center;background:#fff7e8;color:var(--ink);border:5px solid var(--gold);border-radius:26px;padding:16px 26px}
+.mimeC span{font-size:110px;line-height:1.1}.mimeC b{font:700 26px var(--f-type)}
+.mimeQ{font-size:90px;animation:float 2s ease-in-out infinite}
+.orb{font-size:120px;line-height:1.15;filter:drop-shadow(0 0 24px var(--lila))}
+.orb.hot{animation:orbP 1s ease-in-out infinite}
+@keyframes orbP{50%{transform:scale(1.18) rotate(8deg);filter:drop-shadow(0 0 40px var(--pink))}}
+.cfs{position:absolute;top:55%;width:9px;height:14px;z-index:5;pointer-events:none;animation:cfs 1s ease-out forwards}
+@keyframes cfs{to{transform:translate(var(--dx),var(--dy)) rotate(540deg);opacity:0}}
+/* Grimmel gluurt */
+.taunt.low{top:auto;bottom:70px}
+/* cliffhanger en twist */
+#glassWrap.shake{animation:shk .6s ease-in-out}
+@keyframes shk{15%{transform:translate(-5px,2px) rotate(-.6deg)}30%{transform:translate(5px,-2px) rotate(.6deg)}45%{transform:translate(-4px,1px)}60%{transform:translate(3px,-1px)}75%{transform:translate(-2px,0)}}
+.cliff .rumble{animation:rmb 2.4s ease-in-out infinite}
+@keyframes rmb{0%,100%{transform:none}10%{transform:rotate(-4deg)}20%{transform:rotate(4deg)}30%{transform:none}}
+.cliff .eyebrow{color:var(--pink);font-size:15px}
+.note2{background:#fff7e8;color:var(--ink);border-radius:6px 22px 6px 22px;padding:18px 20px;max-width:340px;box-shadow:0 10px 30px rgba(0,0,0,.5);transform:rotate(-2deg)}
+.note2 p{color:var(--ink);font:600 19px/1.4 var(--f-type);margin:0;transform:scaleX(-1);transition:transform 1s cubic-bezier(.5,1.6,.4,1)}
+.note2.read p{transform:none}
+.poofs{display:flex;justify-content:center;gap:4px;width:100%}
+.poofs .pf{width:31%;opacity:0;animation:pfIn .6s ease-out forwards}
+.poofs .pf svg{width:100%;height:auto}
+@keyframes pfIn{0%{opacity:0;transform:scale(.2) rotate(-30deg);filter:blur(6px)}70%{transform:scale(1.15)}100%{opacity:1;transform:none;filter:none}}
+/* finale */
+.opts button.chosen{border-color:var(--gold);background:rgba(244,194,13,.18);animation:chosen 1s ease-in-out 2;box-shadow:0 0 30px var(--gold)}
+@keyframes chosen{50%{transform:scale(1.12) rotate(4deg)}}
+.opts button.poof{animation:poof .7s ease-in forwards}
+@keyframes poof{40%{transform:scale(1.2)}100%{transform:scale(0) rotate(90deg);opacity:0;filter:blur(8px)}}
+.tfS{position:relative;width:250px;height:250px;margin:0 auto}
+.tfS .tfF,.tfS .tfP{position:absolute;inset:20px;width:auto;height:auto}
+.tfS .tfF{object-fit:contain;z-index:2}
+.tfS .tfP{transform:scale(0);opacity:0;z-index:3;display:flex;align-items:center;justify-content:center}
+.tfS .tfP .fig{width:100%;height:100%}
+.tfS .tfC{position:absolute;left:50%;top:-40px;width:80px;margin-left:-40px;opacity:0}
+.tfS .tfC svg{width:80px;height:54px}
+.tfS .tfR{position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,#ff8fab,#f4c20d,#3ccfa8,#b794f6,#ff8fab);-webkit-mask:radial-gradient(circle,transparent 58%,#000 60%,#000 66%,transparent 68%);mask:radial-gradient(circle,transparent 58%,#000 60%,#000 66%,transparent 68%);opacity:0}
+.tfS .tfX{position:absolute;left:50%;top:50%;width:20px;height:20px;margin:-10px;border-radius:50%;background:#fff;opacity:0;z-index:4;pointer-events:none}
+.tfS.spin .tfR{opacity:1;animation:rot 1s linear infinite}
+.tfS.spin .tfF{animation:tfspin 1.8s cubic-bezier(.5,0,.8,.4) forwards}
+@keyframes rot{to{transform:rotate(360deg)}}
+@keyframes tfspin{to{transform:rotate(1080deg) scale(.15);opacity:.3}}
+.tfS.flash .tfX{animation:flash .7s ease-out forwards}
+@keyframes flash{0%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(30)}}
+.tfS.done .tfF{display:none}
+.tfS.done .tfP{animation:tfIn .8s cubic-bezier(.3,1.6,.5,1) forwards}
+.tfS.done .tfC{animation:crownDrop .7s .7s ease-out forwards}
+.tfS.done .tfR{animation:rot 4s linear infinite;opacity:.6}
+@keyframes tfIn{to{transform:none;opacity:1}}
+@keyframes crownDrop{0%{opacity:0;transform:translateY(-60px) rotate(-20deg)}100%{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){#glassWrap.shake,.cliff .rumble,.orb.hot,.tfS.spin .tfR{animation:none}}
+.opts.big.solo{grid-template-columns:1fr;max-width:170px;margin-left:auto;margin-right:auto}
+.fin .btn.ghost.dk{color:#fff;border-color:rgba(255,255,255,.6);background:rgba(255,255,255,.08)}
+.opts button{min-width:0}
+.opts.big button svg{width:100%;max-width:96px;height:auto;aspect-ratio:96/110}
+.codeI .mmCodeBox,.fin .mmCodeBox{color:#1b2550!important}
+/* toasts onderin, boven de ketelbalk: nooit over titels */
+#toast{top:auto;bottom:calc(92px + env(safe-area-inset-bottom,0px));border-radius:14px;font-family:var(--f-type);box-shadow:0 6px 20px rgba(0,0,0,.45);animation:toastIn .25s ease-out}
+@keyframes toastIn{from{opacity:0;transform:translate(-50%,10px)}to{opacity:1;transform:translateX(-50%)}}
+/* Teamstand-knop op het eindscherm in spiegelstijl */
+.fin #mmpCmp{color:var(--gold);border:2px solid var(--gold);background:rgba(244,194,13,.1);font-family:var(--f-type);font-weight:600}
