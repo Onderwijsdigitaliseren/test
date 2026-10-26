@@ -6,7 +6,7 @@
 <title>The Light Thief – a kids' detective hunt for parties, playable anywhere</title>
 <link rel="icon" href="../assets/favicon.png">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
-<meta name="description" content="At 03:03 the Light Thief stole every light in the street, and the present. Catch him at eight places with photos, puzzles and catching games, collect eight lights and see who he is. With a map in your own streets, without a map, or indoors. One phone per group. Practice round free.">
+<meta name="description" content="At 03:03 the Light Thief stole every light in the street, and the present. Catch him at five to eleven places with photos, puzzles and catching games, collect his lights, crack his golden lock and see who he is. With a map in your own streets, without a map, or indoors. One phone per group. Practice round free.">
 <link rel="canonical" href="https://www.minimystery.nl/en/the-light-thief.html">
 <link rel="alternate" hreflang="en" href="https://www.minimystery.nl/en/the-light-thief.html">
 <link rel="alternate" hreflang="nl" href="https://www.minimystery.nl/de-lichtjesdief.html">
@@ -22,7 +22,7 @@
 <meta name="theme-color" content="#1a1433">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Permanent+Marker&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600&display=swap">
 <link rel="stylesheet" href="../shared/platform.css?v=1">
-<link rel="stylesheet" href="../games/jacht/game.css?v=3">
+<link rel="stylesheet" href="../games/jacht/game.css?v=8">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"The Light Thief","url":"https://www.minimystery.nl/en/the-light-thief.html","description":"A kids' detective hunt for parties: catch the Light Thief at eight places, collect eight lights in your lantern and find out who he is. With a map, without a map or indoors. Practice round free.","inLanguage":"en","gamePlatform":"Web browser","genre":["Kids' game","Scavenger hunt","Detective"],"isAccessibleForFree":false,"offers":{"@type":"Offer","price":"3.99","priceCurrency":"EUR","description":"Party Pass"}}</script>
 </head>
 <body>
@@ -35,7 +35,7 @@
       <div class="masthead">
         <h1 id="ttl">The Light Thief</h1><span class="tape">Last night at 03:03 someone stole every light in the street. And the present.</span>
       </div>
-      <p class="lead">The Light Thief is hiding at eight places nearby. Catch him and he drops a light out of fright. Eight lights in your lantern and you see who he is by day. Then you know where the present is.</p>
+      <p class="lead">The Light Thief is hiding at five, eight or eleven places nearby: you choose. Catch him and he drops a light out of fright. Every puzzle also gives a golden digit. All the lights in your lantern and you see who he is by day. With the golden digits you crack the lock of his hideout. That is where the present is.</p>
       
       <button class="btn ghost sm" id="bHow">How does it work?</button>
       <div class="pline" hidden style="display:none"><b id="pRank">–</b><span><b id="pStreak">0</b> Days in a row</span><span><b id="pSolved">0</b> Caught</span></div>
@@ -45,13 +45,23 @@
         <button type="button" data-m="street" aria-pressed="false">Outside<br>no map</button>
         <button type="button" data-m="in" aria-pressed="false">Indoors</button>
       </div>
+      <div class="optrow"><span>How long?</span><div class="seg" id="dur">
+        <button type="button" data-n="kort" aria-pressed="false">Short<small>5 places<br>±30 min</small></button>
+        <button type="button" data-n="normaal" aria-pressed="true">Normal<small>8 places<br>±50 min</small></button>
+        <button type="button" data-n="lang" aria-pressed="false">Long<small>11 places<br>±75 min</small></button>
+      </div></div>
+      <div class="optrow"><span>Puzzles</span><div class="seg two" id="lvl">
+        <button type="button" data-l="easy" aria-pressed="true">Easy<small>pictures, the phone reads aloud</small></button>
+        <button type="button" data-l="hard" aria-pressed="false">Tricky<small>more, faster, harder</small></button>
+      </div></div>
+      <button type="button" class="btn ghost sm" id="bVoice" aria-pressed="true">🔊 Read aloud on</button>
       <button class="btn" id="bResume" hidden>Continue the hunt</button>
       <button class="btn" id="bGps">Start today's hunt</button>
       <button class="btn ghost" id="bRandom">Extra hunt</button>
       <button class="btn ghost" id="bCode">Enter hunt code</button>
       <button class="btn ghost" id="bPro" hidden></button>
       <p class="note" id="status"></p>
-      <div id="howT" hidden><ol class="how"><li><b>With map:</b> the Light Thief hides at eight places nearby and creeps across the map. Walk there and catch him. <b>No map</b> or <b>indoors:</b> you get the challenges one after another, without places. Works anywhere.</li><li>Every time he dares you differently: a photo (a bench, a letterbox, the whole group as shadows; the phone checks whether it fits) or a game on the screen: catch him, find him with the torch, a puzzle, a lock.</li><li>If you succeed he flees, drops a light and shouts something. Sometimes he slips up: that is evidence and always true. Sometimes he claims something about himself: three times true, once a lie.</li><li>With eight lights your lantern is bright enough. Point out who he is and which claim was the lie. Then you enter his hideout to find the present. Your photos become an evidence strip and a diploma.</li></ol><p class="note">With an adult along. One phone per group; with the hunt code several phones play the same hunt. The photos stay on the phone. Outside: stay on the pavement, do not photograph strangers.</p></div>
+      <div id="howT" hidden><ol class="how"><li><b>With map:</b> the Light Thief hides at five, eight or eleven places nearby and creeps across the map. Walk there and catch him. <b>No map</b> or <b>indoors:</b> you get the challenges one after another, without places. Works anywhere.</li><li>Every time he dares you differently: a photo (a bench, a letterbox, the whole group as shadows; the phone checks whether it fits) or a game on the screen: catch him, find him with the torch, a puzzle, a lock, guessing shadows, counting lights, lighting lanterns, memory, finding his eyes in the dark. Every puzzle gives a golden digit. Choose <b>Easy</b> (pictures, the phone reads everything aloud) or <b>Tricky</b>.</li><li>If you succeed he flees, drops a light and shouts something. Sometimes he slips up: that is evidence and always true. Sometimes he claims something about himself: all true except one lie.</li><li>With all the lights your lantern is bright enough. Point out who he is and which claim was the lie. Open the lock of his hideout with the golden digits and find the present. Your photos become an album and a diploma.</li></ol><p class="note">With an adult along. One phone per group; with the hunt code several phones play the same hunt. The photos stay on the phone. Outside: stay on the pavement, do not photograph strangers.</p></div>
       <button class="btn ghost sm" id="bDemo">Practice round in Eindhoven city centre</button>
       
       
@@ -125,14 +135,14 @@
   <div id="load" hidden role="status"><div class="spin"></div><b id="loadT"></b><span>This usually takes 5 to 30 seconds. Stay on this page.</span></div>
   <div id="toast" hidden></div>
 </div>
-<script src="../shared/platform.js?v=mm8"></script>
+<script src="../shared/platform.js?v=mm9"></script>
 <script src="../shared/catalog.js?v=mm8"></script>
 <script src="../shared/walk.js?v=3"></script>
 <script src="../shared/party.js?v=1"></script>
 <script src="../shared/ort/ort.wasm.min.js?v=1"></script>
 <script src="../games/fotojacht/model/labels.js?v=1"></script>
-<script src="../games/jacht/data-en.js?v=3z"></script>
-<script src="../games/jacht/game.js?v=7z"></script>
+<script src="../games/jacht/data-en.js?v=8"></script>
+<script src="../games/jacht/game.js?v=8"></script>
 <script id="mm-demo">/* MiniMystery: ?oefen start direct de gratis oefenronde (link vanaf Inspiratie op de hub) */
 if(/[?&]oefen\b/.test(location.search)){var b=document.getElementById("bDemo");if(b)setTimeout(function(){b.click()},50)}</script>
 </body>

@@ -6,7 +6,7 @@
 <title>De Lichtjesdief – kinderspeurtocht voor feestjes, overal te spelen</title>
 <link rel="icon" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-<meta name="description" content="Om 03:03 stal de Lichtjesdief alle lichtjes van de straat, en het cadeau. Vang hem op acht plekken met foto's, puzzels en vangspellen, verzamel acht lichtjes en zie wie hij is. Met kaart in je eigen buurt, zonder kaart, of binnen. Eén telefoon per groepje. Oefenronde gratis.">
+<meta name="description" content="Om 03:03 stal de Lichtjesdief alle lichtjes van de straat, en het cadeau. Vang hem op vijf tot elf plekken met foto's, puzzels en vangspellen, verzamel zijn lichtjes, kraak zijn gouden slot en zie wie hij is. Met kaart in je eigen buurt, zonder kaart, of binnen. Eén telefoon per groepje. Oefenronde gratis.">
 <link rel="canonical" href="https://www.minimystery.nl/de-lichtjesdief.html">
 <link rel="alternate" hreflang="en" href="https://www.minimystery.nl/en/the-light-thief.html">
 <link rel="alternate" hreflang="nl" href="https://www.minimystery.nl/de-lichtjesdief.html">
@@ -22,7 +22,7 @@
 <meta name="theme-color" content="#1a1433">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Permanent+Marker&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600&display=swap">
 <link rel="stylesheet" href="shared/platform.css?v=1">
-<link rel="stylesheet" href="games/jacht/game.css?v=3">
+<link rel="stylesheet" href="games/jacht/game.css?v=8">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"De Lichtjesdief","url":"https://www.minimystery.nl/de-lichtjesdief.html","description":"Kinderspeurtocht voor feestjes: vang de Lichtjesdief op acht plekken, verzamel acht lichtjes in je lantaarn en ontdek wie hij is. Met kaart, zonder kaart of binnen. Oefenronde gratis.","inLanguage":"nl","gamePlatform":"Webbrowser","genre":["Kinderspel","Speurtocht","Detective"],"isAccessibleForFree":false,"offers":{"@type":"Offer","price":"3.99","priceCurrency":"EUR","description":"Feestpas"}}</script>
 </head>
 <body>
@@ -35,7 +35,7 @@
       <div class="masthead">
         <h1 id="ttl">De Lichtjesdief</h1><span class="tape">Vannacht om 03:03 stal iemand alle lichtjes van de straat. En het cadeau.</span>
       </div>
-      <p class="lead">De Lichtjesdief zit op acht plekken in de buurt. Vang hem, en hij laat van schrik een lichtje vallen. Acht lichtjes in je lantaarn, en je ziet wie hij overdag is. Dan weet je waar het cadeau ligt.</p>
+      <p class="lead">De Lichtjesdief zit op vijf, acht of elf plekken in de buurt: jij kiest. Vang hem, en hij laat van schrik een lichtje vallen. Elke puzzel geeft ook een gouden cijfer. Alle lichtjes in je lantaarn, en je ziet wie hij overdag is. Met de gouden cijfers kraak je het slot van zijn schuilplaats. Daar ligt het cadeau.</p>
       
       <button class="btn ghost sm" id="bHow">Hoe werkt het?</button>
       <div class="pline" hidden style="display:none"><b id="pRank">–</b><span><b id="pStreak">0</b> Dagen op rij</span><span><b id="pSolved">0</b> Gepakt</span></div>
@@ -45,13 +45,23 @@
         <button type="button" data-m="street" aria-pressed="false">Buiten<br>zonder kaart</button>
         <button type="button" data-m="in" aria-pressed="false">Binnen</button>
       </div>
+      <div class="optrow"><span>Hoe lang?</span><div class="seg" id="dur">
+        <button type="button" data-n="kort" aria-pressed="false">Kort<small>5 plekken<br>±30 min</small></button>
+        <button type="button" data-n="normaal" aria-pressed="true">Normaal<small>8 plekken<br>±50 min</small></button>
+        <button type="button" data-n="lang" aria-pressed="false">Lang<small>11 plekken<br>±75 min</small></button>
+      </div></div>
+      <div class="optrow"><span>Puzzels</span><div class="seg two" id="lvl">
+        <button type="button" data-l="easy" aria-pressed="true">Makkelijk<small>plaatjes, de telefoon leest voor</small></button>
+        <button type="button" data-l="hard" aria-pressed="false">Pittig<small>meer, sneller, lastiger</small></button>
+      </div></div>
+      <button type="button" class="btn ghost sm" id="bVoice" aria-pressed="true">🔊 Voorlezen aan</button>
       <button class="btn" id="bResume" hidden>Ga verder met de jacht</button>
       <button class="btn" id="bGps">Start de jacht van vandaag</button>
       <button class="btn ghost" id="bRandom">Extra jacht</button>
       <button class="btn ghost" id="bCode">Jachtcode invoeren</button>
       <button class="btn ghost" id="bPro" hidden></button>
       <p class="note" id="status"></p>
-      <div id="howT" hidden><ol class="how"><li><b>Met kaart:</b> de Lichtjesdief verstopt zich op acht plekken in de buurt en sluipt over de kaart. Loop ernaartoe en vang hem. <b>Zonder kaart</b> of <b>binnen:</b> je krijgt de opdrachten achter elkaar, zonder plekken. Werkt overal.</li><li>Elke keer daagt hij je anders uit: een foto (een bankje, een brievenbus, de hele groep als schaduw; de telefoon kijkt of het klopt) of een spel op het scherm: hem vangen, hem vinden met de zaklamp, een puzzel, een slot.</li><li>Lukt het, dan vlucht hij, laat een lichtje vallen en roept iets. Soms verspreekt hij zich: dat is bewijs en altijd waar. Soms beweert hij iets over zichzelf: drie keer waar, één keer gelogen.</li><li>Met acht lichtjes is je lantaarn fel genoeg. Wijs aan wie hij is en welke bewering de leugen was. Dan ga je zijn schuilplaats binnen om het cadeau te vinden. Jullie foto's worden een bewijsstrook en een diploma.</li></ol><p class="note">Met een volwassene erbij. Eén telefoon per groepje; met de jachtcode spelen meer telefoons dezelfde jacht. De foto's blijven op de telefoon. Buiten: blijf op de stoep, fotografeer geen vreemde mensen.</p></div>
+      <div id="howT" hidden><ol class="how"><li><b>Met kaart:</b> de Lichtjesdief verstopt zich op vijf, acht of elf plekken in de buurt en sluipt over de kaart. Loop ernaartoe en vang hem. <b>Zonder kaart</b> of <b>binnen:</b> je krijgt de opdrachten achter elkaar, zonder plekken. Werkt overal.</li><li>Elke keer daagt hij je anders uit: een foto (een bankje, een brievenbus, de hele groep als schaduw; de telefoon kijkt of het klopt) of een spel op het scherm: hem vangen, hem vinden met de zaklamp, een puzzel, een slot, schaduwen raden, lichtjes tellen, lantaarns aansteken, memory, zijn ogen zoeken in het donker. Elke puzzel geeft een gouden cijfer. Kies <b>Makkelijk</b> (plaatjes, de telefoon leest alles voor) of <b>Pittig</b>.</li><li>Lukt het, dan vlucht hij, laat een lichtje vallen en roept iets. Soms verspreekt hij zich: dat is bewijs en altijd waar. Soms beweert hij iets over zichzelf: allemaal waar, op één leugen na.</li><li>Met alle lichtjes is je lantaarn fel genoeg. Wijs aan wie hij is en welke bewering de leugen was. Open met de gouden cijfers het slot van zijn schuilplaats en vind het cadeau. Jullie foto's worden een album en een diploma.</li></ol><p class="note">Met een volwassene erbij. Eén telefoon per groepje; met de jachtcode spelen meer telefoons dezelfde jacht. De foto's blijven op de telefoon. Buiten: blijf op de stoep, fotografeer geen vreemde mensen.</p></div>
       <button class="btn ghost sm" id="bDemo">Proefronde in de binnenstad van Eindhoven</button>
       
       
@@ -125,14 +135,14 @@
   <div id="load" hidden role="status"><div class="spin"></div><b id="loadT"></b><span>Dit duurt meestal 5 tot 30 seconden. Blijf op deze pagina.</span></div>
   <div id="toast" hidden></div>
 </div>
-<script src="shared/platform.js?v=mm8"></script>
+<script src="shared/platform.js?v=mm9"></script>
 <script src="shared/catalog.js?v=mm8"></script>
 <script src="shared/walk.js?v=3"></script>
 <script src="shared/party.js?v=1"></script>
 <script src="shared/ort/ort.wasm.min.js?v=1"></script>
 <script src="games/fotojacht/model/labels.js?v=1"></script>
-<script src="games/jacht/data-nl.js?v=3z"></script>
-<script src="games/jacht/game.js?v=7z"></script>
+<script src="games/jacht/data-nl.js?v=8"></script>
+<script src="games/jacht/game.js?v=8"></script>
 <script id="mm-demo">/* MiniMystery: ?oefen start direct de gratis oefenronde (link vanaf Inspiratie op de hub) */
 if(/[?&]oefen\b/.test(location.search)){var b=document.getElementById("bDemo");if(b)setTimeout(function(){b.click()},50)}</script>
 </body>
