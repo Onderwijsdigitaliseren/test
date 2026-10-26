@@ -6,7 +6,7 @@
    Vereist platform.js en walk.js. Gebruik:
      var km=MW.KidsMap.create({ T:{...teksten}, map:{W,H,start,spots:[{x,y,k}],roads:[[i,j]],land,...}, draw:{landmark,decor,start,hero,runner,overlay},
                                G:()=>G, P:()=>P, dTo:fn, virt:()=>bool, mode:()=>G.mode, say:fn, onTap:fn });
-     km.mount();  // één keer, na het laden van de pagina (maakt #kids, #kidsMsg, #kidsHot en #bView in #play)
+     km.mount();  // één keer, na het laden van de pagina (maakt #kmBox, #kmMsg, #kmHot en #bView in #play)
      km.enter({kids:bool, virt:bool, map:map});  // bij het betreden van de kaart
      km.draw(t) in de teken-lus (geeft true als de verhaalkaart getekend is, anders teken je de echte kaart)
      km.leave(); km.virtSpots(n); km.stepLen(st,target); km.fk(spot); km.heat(d) */
@@ -39,18 +39,18 @@ function create(o){
     if(g.kd0==null||g.kdFi!==nr.fi){g.kd0=Math.max(d,40);g.kdFi=nr.fi}if(d>g.kd0)g.kd0=d;var tt=Math.max(0,Math.min(1,1-d/g.kd0));return{x:a.x+(b.x-a.x)*tt,y:a.y+(b.y-a.y)*tt}}
   function hoof(g,x,y,r,col){if(DR.mark)return DR.mark(g,x,y,r,col);g.save();g.fillStyle=col;g.beginPath();g.arc(x,y,r,0,7);g.fill();g.restore()}
   /* ---------- dom ---------- */
-  function mount(){var play=$("#play");if(!play||$("#kids"))return;
-    var k=document.createElement("div");k.id="kids";k.hidden=true;k.innerHTML='<canvas id="kidsC"></canvas><div id="kidsHot"></div><div id="kidsMsg"></div>';play.insertBefore(k,play.firstChild.nextSibling);
+  function mount(){var play=$(o.host||"#play");if(!play||$("#kmBox"))return;
+    var k=document.createElement("div");k.id="kmBox";k.hidden=true;k.innerHTML='<canvas id="kmC"></canvas><div id="kmHot"></div><div id="kmMsg"></div>';play.insertBefore(k,play.firstChild.nextSibling);
     bView=document.createElement("button");bView.type="button";bView.id="bView";play.appendChild(bView);bView.onclick=function(){KV=!KV;setView()};
-    cv=$("#kidsC");msgEl=$("#kidsMsg");hotEl=$("#kidsHot");
+    cv=$("#kmC");msgEl=$("#kmMsg");hotEl=$("#kmHot");
     cv.addEventListener("pointerdown",function(e){if(!o.onTap)return;var b=cv.getBoundingClientRect();o.onTap(e.clientX-b.left,e.clientY-b.top)});
-    addEventListener("resize",function(){if(!$("#play").hidden&&KV)size()})}
+    addEventListener("resize",function(){if(!$(o.host||"#play").hidden&&KV)size()})}
   function size(){var dpr=Math.min(2,devicePixelRatio||1),w=cv.clientWidth||innerWidth,h=cv.clientHeight||innerHeight;cv.width=w*dpr;cv.height=h*dpr;cv.dataset.dpr=dpr}
-  function setView(){$("#kids").hidden=!KV;$("#play").classList.toggle("kv",KV);bView.textContent=KV?T.map:T.kids;if(KV)size();else{if(map)map.resize();if(o.mode()==="map"&&T.mapTip)MW.Walk.toast(T.mapTip)}}
+  function setView(){$("#kmBox").hidden=!KV;$(o.host||"#play").classList.toggle("kv",KV);bView.textContent=KV?T.map:T.kids;if(KV)size();else{if(map)map.resize();if(o.mode()==="map"&&T.mapTip)MW.Walk.toast(T.mapTip)}}
   function enter(a){map=a.map||map;lastP=null;MOVB=null;KV=a.kids!==false;bView.hidden=!!a.virt;setView();stopHead();if(o.mode()==="map")startHead()}
   function leave(){stopHead()}
   /* ---------- tekenen ---------- */
-  function draw(t){if(!KV||$("#kids").hidden)return false;var g=cv.getContext("2d"),dpr=+cv.dataset.dpr||1,w=cv.width/dpr,h=cv.height/dpr;g.setTransform(dpr,0,0,dpr,0,0);
+  function draw(t){if(!KV||$("#kmBox").hidden)return false;var g=cv.getContext("2d"),dpr=+cv.dataset.dpr||1,w=cv.width/dpr,h=cv.height/dpr;g.setTransform(dpr,0,0,dpr,0,0);
     var GG=G(),nr=near(),nd=nr?dTo(nr):1e9,ht=heat(nd),col=HC[ht],top=M.top||120,bot=M.bot||200,sc=Math.min(w/M.W,(h-top-bot)/M.H),ox=(w-M.W*sc)/2,oy=top+(h-top-bot-M.H*sc)/2;
     g.fillStyle=M.sky||"#9ad7ff";g.fillRect(0,0,w,h);
     g.save();g.translate(ox,oy);g.scale(sc,sc);

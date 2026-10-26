@@ -323,3 +323,14 @@ a.btn{display:block;text-align:center;text-decoration:none}
 @keyframes toastIn{from{opacity:0;transform:translate(-50%,10px)}to{opacity:1;transform:translateX(-50%)}}
 /* Teamstand-knop op het eindscherm in spiegelstijl */
 .fin #mmpCmp{color:var(--gold);border:2px solid var(--gold);background:rgba(244,194,13,.1);font-family:var(--f-type);font-weight:600}
+
+/* ---- wandelroute: het Spiegelbos ---- */
+#walk{position:fixed;inset:0;z-index:50;background:#2a1d57;--km-sky:#2a1d57;--km-ink:#ffe9a8;--km-line:#9a7bd6;--km-paper:rgba(42,29,87,.92)}
+#walk[hidden]{display:none}
+#walk #kmBox{z-index:1}
+#wkBar{position:absolute;left:0;right:0;top:0;z-index:4;display:flex;align-items:center;gap:10px;padding:calc(10px + env(safe-area-inset-top,0px)) 12px 10px;background:linear-gradient(180deg,rgba(20,17,38,.95),rgba(20,17,38,.6));color:#ffe9a8;font-family:'Fredoka',sans-serif;font-weight:700;font-size:15px}
+#wkBack{background:rgba(255,255,255,.12);color:#fff;border:2px solid rgba(255,255,255,.4);border-radius:12px;padding:6px 10px;font:600 13px 'Fredoka',sans-serif}
+#wkAt{position:absolute;left:12px;right:12px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:4;width:auto}
+#walk #kmHot{top:calc(64px + env(safe-area-inset-top,0px))}
+#walk #kmMsg{bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+#walk #bView{display:none}

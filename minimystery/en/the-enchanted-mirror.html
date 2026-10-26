@@ -22,7 +22,8 @@
 <meta name="theme-color" content="#1f2a44">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600&display=swap">
 <link rel="stylesheet" href="../shared/platform.css?v=1">
-<link rel="stylesheet" href="../games/spiegel/game.css?v=8">
+<link rel="stylesheet" href="../shared/kidsmap.css?v=2">
+<link rel="stylesheet" href="../games/spiegel/game.css?v=10">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"The Enchanted Mirror","url":"https://www.minimystery.nl/en/the-enchanted-mirror.html","description":"A kids' party game where the phone is the magic mirror: seven ingredients, each a task with the phone's sensors. Indoors, no GPS, nothing to print. Practice round free.","inLanguage":"en","gamePlatform":"Web browser","genre":["Kids game","Party game","Fairy tale"],"isAccessibleForFree":false,"offers":{"@type":"Offer","price":"3.99","priceCurrency":"EUR","description":"Party Pass"}}</script>
 </head>
 <body>
@@ -37,7 +38,7 @@
       </div>
       <p class="lead">The phone is the magic mirror. It goes round the circle. Seven ingredients for the Counter-Potion: shake, tilt, blow, find something red, clap along, a group photo and shout the spell. Who is in the mirror?</p>
       <button class="btn ghost sm" id="bHow">How does it work?</button>
-      <div id="howT" hidden><ol class="how"><li><b>The phone is the magic mirror.</b> It goes round the circle. For each ingredient the mirror says who gets to hold it; the others help.</li><li><b>Seven ingredients,</b> each a task with the phone itself: shake, tilt, blow, find something red with the camera, clap along, a group photo and shout the spell.</li><li><b>After every ingredient a puzzle or circle game:</b> constellation, counting roses, moon sequence, fireflies, memory, mirror writing, magic bells, the half butterfly, the frog pond, the shadow cabinet, enchanted animals and the hot magic ball. Then you step through the mirror into Grimble's room.</li><li><b>Elf</b> is easy: the mirror says exactly what to do and the riddles use pictures. <b>Wizard</b> is harder: word riddles, and Grimble gives one false hint.</li><li>Along the way you see traces of Grimble: his colour, his hat and his eyes. At the end you pick him out of three mirror spirits.</li><li>Then you all blow the enchantment away together, the birthday child gets the crown in a photo, and every child gets a diploma to share. </li><li><b>Mirror hunt:</b> after each ingredient Mira asks for a photo of something real, indoors (something soft, a spoon, a cuddly toy…) or outdoors (a leaf, a cloud, something with wheels…), and sometimes for a group pose. All photos go into the mirror album, to save. Choose <b>Short</b> for no photos and 6 puzzles, <b>Long</b> for two photos per ingredient and 12 different puzzles.</li><li><b>Case code:</b> at the start the mirror shows the case code. With it you play the same case again, or at the same time on a second phone.</li></ol><p class="note">Tip for the grown-up: if the phone will not allow motion or listening, the mirror switches to tapping and swiping by itself. The menu (☰) has a cheat sheet and a skip button. Under 🎉 Party options you set a real treasure as the last clue and a team colour. Stuck? Hold the top line of a task for one second. Indoors, in the garden or on the back seat: no GPS, nothing to print.</p></div>
+      <div id="howT" hidden><ol class="how"><li><b>The phone is the magic mirror.</b> It goes round the circle. For each ingredient the mirror says who gets to hold it; the others help.</li><li><b>Seven ingredients,</b> each a task with the phone itself: shake, tilt, blow, find something red with the camera, clap along, a group photo and shout the spell.</li><li><b>After every ingredient a puzzle or circle game:</b> constellation, counting roses, moon sequence, fireflies, memory, mirror writing, magic bells, the half butterfly, the frog pond, the shadow cabinet, enchanted animals and the hot magic ball. Then you step through the mirror into Grimble's room.</li><li><b>Elf</b> is easy: the mirror says exactly what to do and the riddles use pictures. <b>Wizard</b> is harder: word riddles, and Grimble gives one false hint.</li><li>Along the way you see traces of Grimble: his colour, his hat and his eyes. At the end you pick him out of three mirror spirits.</li><li>Then you all blow the enchantment away together, the birthday child gets the crown in a photo, and every child gets a diploma to share. </li><li><b>Mirror hunt:</b> after each ingredient Mira asks for a photo of something real, indoors (something soft, a spoon, a cuddly toy…) or outdoors (a leaf, a cloud, something with wheels…), and sometimes for a group pose. All photos go into the mirror album, to save. Choose <b>Short</b> for no photos and 6 puzzles, <b>Long</b> for two photos per ingredient and 12 different puzzles.</li><li><b>Case code:</b> at the start the mirror shows the case code. With it you play the same case again, or at the same time on a second phone.</li><li><b>Add a walking route:</b> choose "With walking route" and the seven ingredients lie at seven places in the Mirror Forest, 100 to 300 metres around you. The children see a drawn map with a compass arrow and cold/warm/hot; the next task waits at every place. The grown-up can always tap "I'm here".</li></ol><p class="note">Tip for the grown-up: if the phone will not allow motion or listening, the mirror switches to tapping and swiping by itself. The menu (☰) has a cheat sheet and a skip button. Under 🎉 Party options you set a real treasure as the last clue and a team colour. Stuck? Hold the top line of a task for one second. Indoors, in the garden or on the back seat: no GPS, nothing to print.</p></div>
       <div class="namebox"><label for="name">Whose birthday is it? (may be empty)</label><input id="name" maxlength="24" autocomplete="off" placeholder="Birthday child"></div>
       <div class="namebox"><label for="kids">Who is playing? One name per line (2 to 10)</label><textarea id="kids" placeholder="Noor&#10;Sam&#10;Lina"></textarea></div>
       <div class="seg two" id="lvl">
@@ -49,6 +50,11 @@
         <button type="button" data-w="in" aria-pressed="true">Indoors</button>
         <button type="button" data-w="out" aria-pressed="false">Outdoors<small>garden or pavement</small></button>
         <button type="button" data-w="mix" aria-pressed="false">In + out</button>
+      </div>
+      <div class="seglbl">Add a walking route?</div>
+      <div class="seg two" id="route">
+        <button type="button" data-r="no" aria-pressed="true">Without map</button>
+        <button type="button" data-r="walk" aria-pressed="false">With walking route<small>GPS, 7 places nearby</small></button>
       </div>
       <div class="seglbl">How long?</div>
       <div class="seg" id="len">
@@ -68,6 +74,7 @@
       <button class="btn ghost sm" id="bWipe">Clear</button>
     </div>
   </section>
+  <div id="walk" hidden><div id="wkBar"><button type="button" id="wkBack">◂ Stop</button><span id="wkTitle"></span></div><button type="button" class="btn" id="wkAt"></button></div>
 
   <section class="screen" id="play" hidden>
     <div id="mirror">
@@ -84,9 +91,10 @@
 <script src="../shared/platform.js?v=mm9"></script>
 <script src="../shared/catalog.js?v=mm8"></script>
 <script src="../shared/walk.js?v=3"></script>
+<script src="../shared/kidsmap.js?v=3"></script>
 <script src="../shared/party.js?v=1"></script>
-<script src="../games/spiegel/data-en.js?v=5"></script>
-<script src="../games/spiegel/game.js?v=6"></script>
+<script src="../games/spiegel/data-en.js?v=6"></script>
+<script src="../games/spiegel/game.js?v=7"></script>
 <script id="mm-demo">/* MiniMystery: ?oefen start direct de gratis oefenronde (link vanaf Inspiratie op de hub) */
 if(/[?&]oefen\b/.test(location.search)){var b=document.getElementById("bDemo");if(b)setTimeout(function(){b.click()},50)}</script>
 </body>
