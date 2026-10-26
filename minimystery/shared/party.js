@@ -82,7 +82,7 @@ function sheet(){var p=get(),photo=p.photo||null;
 
 /* ---------- de echte schat: laatste aanwijzing na de ontmaskering ---------- */
 function hasTreasure(){return !!get().where}
-function say(t){try{var ss=window.speechSynthesis;if(!ss||LS.get("ss_voice_off",false))return;ss.cancel();var u=new SpeechSynthesisUtterance(t);u.lang=L==="nl"?"nl-NL":"en-GB";u.rate=.9;ss.speak(u)}catch(e){}}
+function say(t){try{if(LS.get("ss_voice_off",false))return;if(window.MMVoice)return MMVoice.say(t);var ss=window.speechSynthesis;if(!ss)return;ss.cancel();var u=new SpeechSynthesisUtterance(t);u.lang=L==="nl"?"nl-NL":"en-GB";u.rate=.9;ss.speak(u)}catch(e){}}
 function finale(then){var p=get();if(!p.where)return then();Wk.closeSheet();var ov=document.createElement("div");ov.id="mmFin";var what=p.what||T.finWhatDef,line=(CFG.fin&&CFG.fin[L])||T.gen;
   ov.innerHTML='<div class="k">'+T.finKick+'</div><p class="say" id="mmfS"></p><div class="go">'+T.finGo+'</div><div class="where">'+esc(p.where)+'</div><div class="what">'+esc(fill(T.finWhat,{w:what}))+'</div>'+
     (p.photo?'<img src="'+p.photo+'" alt=""><button type="button" class="btn ghost sm" id="mmfH">'+T.finHint+'</button>':'')+'<button type="button" class="btn" id="mmfOk" style="opacity:0;pointer-events:none;transition:opacity .5s">'+T.finFound+'</button>';

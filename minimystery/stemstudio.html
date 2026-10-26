@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Stemstudio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1f2a44;--room:#fff7e8;--card:#fff;--line:#eadfca;--mute:#6b7280;--gold:#f4c20d;--mint:#3ccfa8;--coral:#ff6b6b;--blue:#4fb3ff;--purple:#8b5cf6}
+*{box-sizing:border-box}
+body{margin:0;background:var(--room);color:var(--ink);font:15px/1.45 Nunito,system-ui,sans-serif}
+header{position:sticky;top:0;z-index:5;background:var(--ink);color:#fff;padding:12px 16px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+header h1{font:700 20px Fredoka,sans-serif;margin:0 12px 0 0}
+header select,header input[type=search]{font:inherit;border:0;border-radius:10px;padding:7px 10px}
+.stat{margin-left:auto;font-weight:800;font-size:14px}
+.bar{height:6px;background:#ffffff22;border-radius:9px;overflow:hidden;width:160px}.bar i{display:block;height:100%;background:var(--mint);width:0}
+main{max-width:1000px;margin:0 auto;padding:16px}
+details.box,section.box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin-bottom:14px}
+details.box summary{font:600 17px Fredoka,sans-serif;cursor:pointer}
+.box h2{font:600 17px Fredoka,sans-serif;margin:0 0 8px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0}
+label.f{display:flex;flex-direction:column;gap:3px;font-size:13px;font-weight:700;min-width:180px;flex:1}
+label.f input,label.f select{font:inherit;font-weight:400;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:#fff}
+.btn{font:700 14px Nunito,sans-serif;border:0;border-radius:999px;padding:9px 16px;background:var(--ink);color:#fff;cursor:pointer}
+.btn.mint{background:var(--mint);color:var(--ink)}.btn.gold{background:var(--gold);color:var(--ink)}.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn:disabled{opacity:.45;cursor:default}
+.note{color:var(--mute);font-size:13px;margin:6px 0}
+.chips{display:flex;flex-wrap:wrap;gap:6px}.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:5px 11px;font-weight:700;font-size:13px;cursor:pointer}.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:16px;overflow:hidden;border:1px solid var(--line)}
+td{border-top:1px solid var(--line);padding:8px 10px;vertical-align:top}
+tr.grp td{background:#fbf3e3;font:600 14px Fredoka,sans-serif;color:#7a5a20}
+td.n{width:42px;color:var(--mute);font-size:12px;text-align:right}
+td.w{width:86px}.wie{display:inline-block;font-size:11px;font-weight:800;border-radius:6px;padding:2px 7px;background:#eef;color:#334}
+.wie.fenna{background:#dcfce7;color:#14532d}.wie.verteller{background:#e0e7ff;color:#312e81}.wie.dieren{background:#fef3c7;color:#78350f}.wie.kato{background:#f3e8ff;color:#581c87}.wie.karel{background:#e5e7eb;color:#111}.wie.gerda{background:#ffe4e6;color:#881337}.wie.extra{background:#fee2e2;color:#7f1d1d}
+td.t{font-size:15px}
+td.s{width:178px;white-space:nowrap;text-align:right}
+.st{display:inline-block;width:22px;text-align:center;font-weight:800}
+.ib{border:1px solid var(--line);background:#fff;border-radius:9px;width:32px;height:32px;cursor:pointer;font-size:15px;vertical-align:middle}
+tr.drop td{background:#e6fbf4}
+.ok{color:#15803d}.new{color:#7c3aed}.no{color:#c2410c}
+#log{font-size:13px;color:var(--mute);min-height:1.2em}
+kbd{background:#eee;border-radius:4px;padding:0 5px}
+@media (max-width:640px){td.w,td.n{display:none}td.s{width:auto}.stat{margin-left:0}}
+</style>
+</head>
+<body>
+<header>
+  <h1>🎙️ Stemstudio</h1>
+  <select id="set" aria-label="Spel en taal">
+    <option value="pony_nl">Pony Pluis · Nederlands</option>
+    <option value="pony_en">Pony Fluff · English</option>
+  </select>
+  <input type="search" id="q" placeholder="Zoek in de zinnen…" aria-label="Zoeken">
+  <div class="stat"><span id="cnt">…</span><div class="bar"><i id="barI"></i></div></div>
+</header>
+<main>
+  <section class="box">
+    <h2>Zo werkt het</h2>
+    <p class="note" style="color:var(--ink)">Elke zin die het spel voorleest staat hieronder. Heeft een zin een mp3, dan speelt het spel die af. Zo niet, dan leest de telefoon die ene zin zelf voor. Je kunt dus in stukjes werken.</p>
+    <p class="note"><b>Met de hand:</b> kopieer een zin (📋), maak hem in je stemprogramma, en sleep de mp3 op de rij (of tik ⬆️). Veel bestanden tegelijk? Gebruik “mp3's op volgorde”.<br>
+    <b>Automatisch:</b> vul hieronder je ElevenLabs-sleutel en stem in, en tik “Maak alle ontbrekende”.<br>
+    <b>Klaar?</b> Tik “Download pakket” en stuur het zip-bestand naar Claude. Je werk blijft in deze browser bewaard tot je het wist.</p>
+  </section>
+
+  <details class="box" id="elBox">
+    <summary>ElevenLabs (automatisch maken)</summary>
+    <div class="row">
+      <label class="f">API-sleutel<input id="elKey" type="password" autocomplete="off" placeholder="sk_…"></label>
+      <label class="f">Model<select id="elModel"><option value="eleven_multilingual_v2">Multilingual v2 (mooiste)</option><option value="eleven_turbo_v2_5">Turbo v2.5 (sneller, goedkoper)</option><option value="eleven_flash_v2_5">Flash v2.5 (snelst)</option></select></label>
+    </div>
+    <div class="row">
+      <label class="f">Stem-ID voor alles<input id="elVoice" placeholder="bijv. de ID van een warme vertelstem"></label>
+    </div>
+    <p class="note">Wil je per personage een andere stem? Vul dan hieronder een stem-ID in. Leeg = de stem van hierboven.</p>
+    <div class="row" id="perWie"></div>
+    <div class="row">
+      <label class="f">Rustig ↔ levendig<input id="elStab" type="range" min="0" max="100" value="45"></label>
+      <label class="f">Expressie<input id="elStyle" type="range" min="0" max="100" value="30"></label>
+    </div>
+    <p class="note">De sleutel blijft alleen in deze browser. Gebruik voor een site die je verkoopt een abonnement waarmee commercieel gebruik mag.</p>
+  </details>
+
+  <section class="box">
+    <div class="row">
+      <button class="btn mint" id="bGen">⚡ Maak alle ontbrekende</button>
+      <button class="btn ghost" id="bStop" hidden>■ Stop</button>
+      <label class="btn ghost" for="multi">📂 mp3's op volgorde</label><input id="multi" type="file" accept="audio/*" multiple hidden>
+      <button class="btn ghost" id="bMiss">🔎 Ontbrekend uit het spel</button>
+      <button class="btn gold" id="bZip">⬇️ Download pakket</button>
+      <button class="btn ghost" id="bWipe">🗑️ Wis mijn opnames</button>
+    </div>
+    <div class="row chips" id="filt"></div>
+    <div id="log" role="status"></div>
+  </section>
+
+  <table><tbody id="rows"></tbody></table>
+  <input id="one" type="file" accept="audio/*" hidden>
+</main>
+
+<script src="shared/voice.js?v=1"></script>
+<script>
+(function(){
+"use strict";
+var $=function(s){return document.querySelector(s)},esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})};
+var SET=$("#set").value,LIST=[],HAVE={},NEW={},FILT="alle",Q="",GEN=null,player=new Audio();
+var WIES=["verteller","fenna","dieren","kato","karel","gerda"];
+var LSK=function(k,v){try{if(v===undefined)return localStorage.getItem("mms_"+k);localStorage.setItem("mms_"+k,v)}catch(e){}};
+
+/* ---------- opslag van eigen opnames (IndexedDB) ---------- */
+var dbp=new Promise(function(ok,no){var r=indexedDB.open("stemstudio",1);r.onupgradeneeded=function(){r.result.createObjectStore("mp3")};r.onsuccess=function(){ok(r.result)};r.onerror=function(){no(r.error)}});
+function tx(mode,fn){return dbp.then(function(db){return new Promise(function(ok,no){var t=db.transaction("mp3",mode),st=t.objectStore("mp3"),out=fn(st);t.oncomplete=function(){ok(out&&out.result!==undefined?out.result:out)};t.onerror=function(){no(t.error)}})})}
+function put(k,blob){return tx("readwrite",function(s){s.put(blob,SET+"/"+k)})}
+function del(k){return tx("readwrite",function(s){s.delete(SET+"/"+k)})}
+function loadNew(){NEW={};return dbp.then(function(db){return new Promise(function(ok){var t=db.transaction("mp3"),c=t.objectStore("mp3").openCursor();c.onsuccess=function(){var cu=c.result;if(!cu){ok();return}var k=String(cu.key);if(k.indexOf(SET+"/")===0)NEW[k.slice(SET.length+1)]=cu.value;cu.continue()}})})}
+
+/* ---------- lijst laden ---------- */
+function base(){var p=SET.split("_");return "games/"+p[0]+"/voice/"+p[1]+"/"}
+function script(src){return new Promise(function(ok){var s=document.createElement("script");s.src=src+"?t="+Date.now();s.onload=ok;s.onerror=ok;document.head.appendChild(s)})}
+function load(){LIST=[];HAVE={};$("#rows").innerHTML='<tr><td>Laden…</td></tr>';
+  Promise.all([script(base()+"script.js"),script(base()+"index.js"),loadNew()]).then(function(){
+    LIST=((window.MMV_SCRIPT||{})[SET]||[]).slice();HAVE=Object.assign({},(window.MMV_HAVE||{})[SET]||{});
+    extras().forEach(function(t){var k=MMVoice.key(t);if(!LIST.some(function(o){return o.k===k}))LIST.push({k:k,wie:"extra",waar:"Uit het spel (stond niet in de lijst)",t:t})});
+    chips();render()})}
+function extras(){try{return JSON.parse(LSK("extra_"+SET)||"[]")}catch(e){return[]}}
+
+/* ---------- weergave ---------- */
+function status(o){return NEW[o.k]?"new":HAVE[o.k]?"ok":"no"}
+function chips(){var wies=["alle","ontbrekend"].concat(WIES.filter(function(w){return LIST.some(function(o){return o.wie===w})}));if(LIST.some(function(o){return o.wie==="extra"}))wies.push("extra");
+  $("#filt").innerHTML=wies.map(function(w){return '<button class="chip'+(w===FILT?' on':'')+'" data-f="'+w+'">'+w+'</button>'}).join("");
+  var pw=$("#perWie");pw.innerHTML=WIES.map(function(w){return '<label class="f" style="min-width:140px"><span>'+w+'</span><input data-wie="'+w+'" value="'+esc(LSK("voice_"+w)||"")+'" placeholder="zelfde stem"></label>'}).join("")}
+function shown(){return LIST.filter(function(o){if(FILT==="ontbrekend"&&status(o)!=="no")return false;if(FILT!=="alle"&&FILT!=="ontbrekend"&&o.wie!==FILT)return false;if(Q&&o.t.toLowerCase().indexOf(Q)<0)return false;return true})}
+function render(){var h="",last=null,idx={};LIST.forEach(function(o,i){idx[o.k]=i+1});
+  shown().forEach(function(o){if(o.waar!==last){last=o.waar;h+='<tr class="grp"><td colspan="4">'+esc(o.waar)+'</td></tr>'}var st=status(o);
+    h+='<tr data-k="'+o.k+'"><td class="n">'+idx[o.k]+'</td><td class="w"><span class="wie '+o.wie+'">'+o.wie+'</span></td><td class="t">'+esc(o.t)+'</td><td class="s">'+
+      '<span class="st '+st+'" title="'+(st==="ok"?"staat op de site":st==="new"?"nieuw, nog niet op de site":"nog geen opname")+'">'+(st==="ok"?"✓":st==="new"?"●":"–")+'</span> '+
+      '<button class="ib" data-a="copy" title="Kopieer de zin">📋</button> '+
+      '<button class="ib" data-a="play" title="Afspelen"'+(st==="no"?" disabled":"")+'>▶️</button> '+
+      '<button class="ib" data-a="gen" title="Maak met ElevenLabs">⚡</button> '+
+      '<button class="ib" data-a="up" title="Kies een mp3">⬆️</button></td></tr>'});
+  $("#rows").innerHTML=h||'<tr><td>Niets gevonden.</td></tr>';count()}
+function count(){var n=LIST.length,d=LIST.filter(function(o){return status(o)!=="no"}).length,nw=LIST.filter(function(o){return status(o)==="new"}).length;
+  $("#cnt").textContent=d+" van "+n+" zinnen"+(nw?" · "+nw+" nieuw":"");$("#barI").style.width=(n?d/n*100:0)+"%"}
+function log(t){$("#log").textContent=t}
+function rowStatus(k){var tr=document.querySelector('tr[data-k="'+k+'"]');if(!tr)return;var o=LIST.filter(function(x){return x.k===k})[0],st=status(o),s=tr.querySelector(".st");
+  s.className="st "+st;s.textContent=st==="ok"?"✓":st==="new"?"●":"–";tr.querySelector('[data-a="play"]').disabled=st==="no";count()}
+
+/* ---------- acties per rij ---------- */
+var upFor=null;
+$("#rows").addEventListener("click",function(e){var b=e.target.closest("button[data-a]");if(!b)return;var k=b.closest("tr").dataset.k,o=LIST.filter(function(x){return x.k===k})[0],a=b.dataset.a;
+  if(a==="copy"){navigator.clipboard&&navigator.clipboard.writeText(o.t);log("Gekopieerd: "+o.t)}
+  else if(a==="play")play(k);
+  else if(a==="up"){upFor=k;$("#one").click()}
+  else if(a==="gen"){gen([o]).then(function(){play(k)})}});
+$("#one").addEventListener("change",function(){var f=this.files[0];this.value="";if(f&&upFor)attach(upFor,f)});
+function attach(k,file){var blob=new Blob([file],{type:"audio/mpeg"});NEW[k]=blob;return put(k,blob).then(function(){rowStatus(k);log("Opname gekoppeld.")})}
+function play(k){var src=NEW[k]?URL.createObjectURL(NEW[k]):HAVE[k]?base()+HAVE[k]:null;if(!src)return;player.pause();player.src=src;player.play().catch(function(){})}
+/* slepen op een rij */
+$("#rows").addEventListener("dragover",function(e){var tr=e.target.closest("tr[data-k]");if(!tr)return;e.preventDefault();[].forEach.call(document.querySelectorAll("tr.drop"),function(x){x.classList.remove("drop")});tr.classList.add("drop")});
+$("#rows").addEventListener("dragleave",function(e){var tr=e.target.closest("tr[data-k]");if(tr)tr.classList.remove("drop")});
+$("#rows").addEventListener("drop",function(e){var tr=e.target.closest("tr[data-k]");if(!tr)return;e.preventDefault();tr.classList.remove("drop");var f=e.dataTransfer.files[0];if(f)attach(tr.dataset.k,f)});
+/* meerdere mp3's: op volgorde aan de ontbrekende zinnen in de huidige weergave (bestandsnamen op alfabet) */
+$("#multi").addEventListener("change",function(){var fs=[].slice.call(this.files).sort(function(a,b){return a.name.localeCompare(b.name,undefined,{numeric:true})});this.value="";
+  var todo=shown().filter(function(o){return status(o)==="no"});if(!fs.length)return;
+  if(!confirm(fs.length+" bestanden koppelen aan de eerste "+Math.min(fs.length,todo.length)+" ontbrekende zinnen hieronder (op volgorde van bestandsnaam)?"))return;
+  var p=Promise.resolve();fs.slice(0,todo.length).forEach(function(f,i){p=p.then(function(){return attach(todo[i].k,f)})});p.then(function(){render();log(Math.min(fs.length,todo.length)+" opnames gekoppeld.")})});
+
+/* ---------- ElevenLabs ---------- */
+["elKey","elModel","elVoice","elStab","elStyle"].forEach(function(id){var el=$("#"+id),v=LSK(id);if(v!=null)el.value=v;el.addEventListener("change",function(){LSK(id,el.value)})});
+$("#perWie").addEventListener("change",function(e){var w=e.target.dataset.wie;if(w)LSK("voice_"+w,e.target.value.trim())});
+function vfor(w){return (LSK("voice_"+w)||"").trim()||$("#elVoice").value.trim()}
+function neighbours(o){var i=LIST.indexOf(o),p=LIST[i-1],n=LIST[i+1];return{prev:p&&p.waar===o.waar?p.t:"",next:n&&n.waar===o.waar?n.t:""}}
+function el(o){var key=$("#elKey").value.trim(),voice=vfor(o.wie),model=$("#elModel").value;if(!key||!voice)return Promise.reject(new Error("Vul eerst de sleutel en een stem-ID in (ElevenLabs, bovenaan)."));
+  var nb=neighbours(o),body={text:o.t,model_id:model,voice_settings:{stability:(100-+$("#elStab").value)/100,similarity_boost:.75,style:+$("#elStyle").value/100,use_speaker_boost:true}};
+  if(nb.prev)body.previous_text=nb.prev;if(nb.next)body.next_text=nb.next;if(model!=="eleven_multilingual_v2")body.language_code=SET.split("_")[1];
+  return fetch("https://api.elevenlabs.io/v1/text-to-speech/"+encodeURIComponent(voice)+"?output_format=mp3_44100_128",{method:"POST",headers:{"xi-api-key":key,"Content-Type":"application/json",Accept:"audio/mpeg"},body:JSON.stringify(body)})
+    .then(function(r){if(!r.ok)return r.text().then(function(t){var m=t;try{m=JSON.parse(t).detail.message||t}catch(e){}throw new Error("ElevenLabs "+r.status+": "+m)});return r.blob()})
+    .then(function(b){NEW[o.k]=b;return put(o.k,b)}).then(function(){rowStatus(o.k)})}
+function gen(list){if(GEN)return Promise.resolve();GEN={stop:false};$("#bGen").disabled=true;$("#bStop").hidden=false;var i=0,ok=0;
+  var nextOne=function(){if(GEN.stop||i>=list.length)return Promise.resolve();var o=list[i++];log("Bezig: "+i+" van "+list.length+" · "+o.t);
+    return el(o).then(function(){ok++;return nextOne()})};
+  return nextOne().then(function(){log(ok+" opnames gemaakt.")},function(e){log(e.message)}).then(function(){GEN=null;$("#bGen").disabled=false;$("#bStop").hidden=true})}
+$("#bGen").onclick=function(){var todo=shown().filter(function(o){return status(o)==="no"});if(!todo.length){log("Alles in deze weergave heeft al een opname.");return}
+  var chars=todo.reduce(function(a,o){return a+o.t.length},0);if(confirm(todo.length+" zinnen maken ("+chars+" tekens, ongeveer evenveel ElevenLabs-credits). Doorgaan?"))gen(todo)};
+$("#bStop").onclick=function(){if(GEN)GEN.stop=true};
+
+/* ---------- ontbrekende zinnen die het spel op dit toestel tegenkwam ---------- */
+$("#bMiss").onclick=function(){var got=[];try{got=JSON.parse(localStorage.getItem("mmv_missing_"+SET)||"[]")}catch(e){}
+  var known={};LIST.forEach(function(o){known[o.k]=1});var add=got.filter(function(t){return !known[MMVoice.key(t)]});
+  if(!add.length){log("Geen nieuwe zinnen. Speel het spel op deze browser met voorlezen aan; zinnen zonder opname verschijnen dan hier.");return}
+  var ex=extras();add.forEach(function(t){if(ex.indexOf(t)<0)ex.push(t)});LSK("extra_"+SET,JSON.stringify(ex));log(add.length+" zinnen toegevoegd onder ‘extra’.");load()};
+
+/* ---------- pakket: zip met de nieuwe mp3's + bijgewerkte index.js ---------- */
+var CRC=(function(){var t=[],c,n,k;for(n=0;n<256;n++){c=n;for(k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0}return t})();
+function crc(u){var c=0xFFFFFFFF;for(var i=0;i<u.length;i++)c=CRC[(c^u[i])&255]^(c>>>8);return(c^0xFFFFFFFF)>>>0}
+function zip(files){var enc=new TextEncoder(),parts=[],cen=[],off=0;
+  files.forEach(function(f){var name=enc.encode(f.name),d=f.data,c=crc(d),h=new DataView(new ArrayBuffer(30));
+    h.setUint32(0,0x04034b50,true);h.setUint16(4,20,true);h.setUint16(8,0,true);h.setUint16(12,33,true);h.setUint32(14,c,true);h.setUint32(18,d.length,true);h.setUint32(22,d.length,true);h.setUint16(26,name.length,true);
+    parts.push(new Uint8Array(h.buffer),name,d);var e=new DataView(new ArrayBuffer(46));e.setUint32(0,0x02014b50,true);e.setUint16(4,20,true);e.setUint16(6,20,true);e.setUint16(14,33,true);e.setUint32(16,c,true);e.setUint32(20,d.length,true);e.setUint32(24,d.length,true);e.setUint16(28,name.length,true);e.setUint32(42,off,true);
+    cen.push(new Uint8Array(e.buffer),name);off+=30+name.length+d.length});
+  var cs=cen.reduce(function(a,x){return a+x.length},0),end=new DataView(new ArrayBuffer(22));end.setUint32(0,0x06054b50,true);end.setUint16(8,files.length,true);end.setUint16(10,files.length,true);end.setUint32(12,cs,true);end.setUint32(16,off,true);
+  return new Blob(parts.concat(cen,[new Uint8Array(end.buffer)]),{type:"application/zip"})}
+$("#bZip").onclick=function(){var ks=Object.keys(NEW);if(!ks.length){log("Er zijn nog geen nieuwe opnames.");return}
+  var dir=base(),map=Object.assign({},HAVE);ks.forEach(function(k){map[k]=k+".mp3"});
+  var idx="/* Opnames van "+SET+": sleutel → bestand. Gemaakt door stemstudio.html op "+new Date().toISOString().slice(0,10)+" ("+Object.keys(map).length+" zinnen). */\nwindow.MMV_HAVE=window.MMV_HAVE||{};window.MMV_HAVE[\""+SET+"\"]="+JSON.stringify(map,null,0).replace(/,"/g,',\n"')+";\n";
+  Promise.all(ks.map(function(k){return NEW[k].arrayBuffer().then(function(b){return{name:dir+k+".mp3",data:new Uint8Array(b)}})})).then(function(files){
+    files.push({name:dir+"index.js",data:new TextEncoder().encode(idx)});
+    var a=document.createElement("a");a.href=URL.createObjectURL(zip(files));a.download="stem-"+SET+"-"+new Date().toISOString().slice(0,10)+".zip";document.body.appendChild(a);a.click();a.remove();
+    log(ks.length+" nieuwe opnames in het pakket. Stuur het zip-bestand naar Claude (of zet de map games/… in de site).")})};
+$("#bWipe").onclick=function(){var ks=Object.keys(NEW);if(!ks.length)return;if(!confirm("Je "+ks.length+" eigen opnames van deze set wissen? Wat al op de site staat blijft."))return;
+  Promise.all(ks.map(del)).then(function(){NEW={};render();log("Gewist.")})};
+
+/* ---------- filters ---------- */
+$("#filt").addEventListener("click",function(e){var b=e.target.closest(".chip");if(!b)return;FILT=b.dataset.f;chips();render()});
+var qt;$("#q").addEventListener("input",function(){clearTimeout(qt);var v=this.value;qt=setTimeout(function(){Q=v.trim().toLowerCase();render()},150)});
+$("#set").addEventListener("change",function(){SET=this.value;FILT="alle";load()});
+load();
+})();
+</script>
+</body>
+</html>
