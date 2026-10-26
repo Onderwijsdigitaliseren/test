@@ -1,18 +1,18 @@
-/* Agent voor Eén Dag – Nederlandse teksten en spelinhoud. Kinderwandeling (ca. 6 jaar) voor feestjes: politie spelen.
-   Zaak: de Bordendief (alle straatnaamborden gestolen). Acht politiepuzzels (geen lezen nodig, de telefoon leest voor), per puzzel een spoor:
+/* Agent voor Eén Dag – Nederlandse teksten en spelinhoud. Kinderwandeling voor feestjes: politie spelen.
+   Zaak: de Bordendief (alle straatnaamborden gestolen). Vijf, acht of elf politiepuzzels (Kort/Normaal/Lang), elk met een gouden cijfer voor de bewijskast (geen lezen nodig, de telefoon leest voor), per puzzel een spoor:
    drie keer echt bewijs (altijd waar, laat een kenmerk zien), vier keer een getuige (één liegt), één keer een bericht van de chef.
    Drie kenmerken (pet, shirt, schoenen) wijzen samen precies één van vijf boeven aan. Daarna: de confrontatie in 3D, handboeien, diploma en GEZOCHT-poster. */
 window.AG_DATA={lang:"nl",V:"de Bordendief",CHEF:"Chef Bos",
 T:{today:"Start de zaak van vandaag",todayAgain:"Nog een zaak van vandaag",extra:"Extra zaak",pro:"Feestpas",proOn:"De Feestpas staat aan: speel zo vaak je wilt.",proFree:"De oefenronde is gratis. De echte zaak speel je met de Feestpas.",proUsed:"De oefenronde is gratis. De echte zaak speel je met de Feestpas.",
   cancel:"Annuleren",close:"Sluiten",back:"Terug",saved:"De zaak is bewaard. Ga later verder.",wiped:"Gewist.",
   briefNo:"Zaakcode {c}",codeTip:"Spelen jullie met meer telefoons? Vul op elke telefoon deze zaakcode in, dan krijgt iedereen dezelfde zaak.",
-  voice:"Voorlezen",age6:"6–7 jaar",age8:"8 jaar en ouder",voiceOn:"De telefoon leest de opdrachten voor.",voiceOff:"Voorlezen staat uit.",
+  voice:"Voorlezen",age6:"Junior agent",age8:"Rechercheur",voiceOn:"De telefoon leest de opdrachten voor.",voiceOff:"Voorlezen staat uit.",
   cine:["Bureau Buurtwacht. Vanochtend, 07:40.","Jullie worden beëdigd: agent voor één dag.","Penning. Portofoon. Zwaailicht.","Dan kraakt de portofoon:","“Alle eenheden. Vannacht zijn alle straatnaamborden gestolen.”"],
-  task:"Spoor {i} van 8",wants:"Opdracht",hint2:"Tip",start:"Begin",listen:"🔊 Lees voor",
+  task:"Spoor {i} van {n}",wants:"Opdracht",hint2:"Tip",start:"Begin",listen:"🔊 Lees voor",
   shoot:"Maak de foto",skipPhoto:"Geen camera? Sla over",teamH:"Teamfoto voor de penning",teamT:"Alle agenten op de foto. Stoer kijken, armen over elkaar. De foto komt op het diploma.",arrestH:"Arrestatiefoto",arrestT:"Iedereen op de foto met de handen omhoog, net als de dief. Deze komt op de GEZOCHT-poster.",noFile:"Dat lukte niet. Probeer het nog een keer.",camNote:"De foto blijft op deze telefoon.",
-  clue:"Spoor {n} van 8",balloon:"Bord {n} terug!",reply:"Wat hebben we gevonden?",ev:"Bewijs!",evT:"Bewijs liegt nooit. Schrijf het op in je speurboekje.",wit:"Een getuige zegt",witT:"Getuigen vergissen zich weleens. Bewijs klopt altijd.",witT8:"Eén van de getuigen liegt. Welke verklaring klopt niet met het bewijs?",gag:"Bericht van de chef",
+  clue:"Spoor {n} van {t}",balloon:"Bord {n} terug!",reply:"Wat hebben we gevonden?",ev:"Bewijs!",evT:"Bewijs liegt nooit. Schrijf het op in je speurboekje.",wit:"Een getuige zegt",witT:"Getuigen vergissen zich weleens. Bewijs klopt altijd.",witT8:"Eén van de getuigen liegt. Welke verklaring klopt niet met het bewijs?",gag:"Bericht van de chef",
   next:"Naar het volgende spoor",last:"Naar de confrontatie",goOn:"Verder",
-  kinds:{print:"Vingerafdruk",face:"Compositietekening",shoe:"Voetspoor",siren:"Sirene",diff:"Verrekijker",radio:"Portofoon",maze:"Achtervolging",crowd:"Zoek de dief"},
+  kinds:{print:"Vingerafdruk",face:"Compositietekening",shoe:"Voetspoor",siren:"Sirene",diff:"Verrekijker",radio:"Portofoon",maze:"Achtervolging",crowd:"Zoek de dief",plate:"Kenteken",bag:"Bewijszakken",talk:"Verhoor",mapr:"Kaartlezen",lock:"Codeslot"},
   pz:{print:["Vingerafdruk afnemen","Veeg met je vinger het poeder weg. Welke afdruk is het?"],
       face:["Compositietekening","De getuige zag deze persoon. Tik op pet, shirt en schoenen tot het klopt."],
       shoe:["Voetspoor in de modder","Welke schoen hoort bij deze afdruk? Tik hem aan."],
@@ -21,11 +21,21 @@ T:{today:"Start de zaak van vandaag",todayAgain:"Nog een zaak van vandaag",extra
       radio:["Portofoon","Luister naar de kleurcode. Tik de kleuren na."],
       maze:["Achtervolging","Sleep de politieauto met je vinger door de straten naar de dief."],
       crowd:["Zoek de dief","Hij staat in de drukte. Zoek degene met precies deze pet en dit shirt."],
+      plate:["Kenteken onthouden","Kijk goed naar de vluchtauto: welke kleur en welk kenteken? Zoek hem daarna terug.","Kijk goed naar het kenteken. Je ziet het maar heel even! Zoek daarna de goede auto."],
+      bag:["Bewijszakken","Stop elk bewijsstuk in de zak met dezelfde kleur.","Stop elk bewijsstuk in de goede zak: kleren, gereedschap of snoep. De kleur maakt niet uit."],
+      talk:["Verhoor","De verdachte vertelt wat hij zag. Kijk naar de foto. Klopt het? Tik op duim omhoog of duim omlaag."],
+      mapr:["Kaartlezen","Volg de pijlen vanaf de politieauto. Waar komt hij uit? Tik dat vakje aan."],
+      lock:["Codeslot","Tel wat je ziet. Zet elk wieltje op het goede getal en open het slot.","Tel alleen de rode bolletjes. Zet elk wieltje op het goede getal en open het slot."],
       look:"Kijk…",yours:"Jouw beurt: {n} lampen",wrongSeq:"Nee. Kijk nog eens.",good:"Goed! Nog een keer.",again:"Nog eens zien",hits:"{n} / 3",
-      pick:"Welke is het?",found:"Gevonden!",nope:"Nee, die niet.",wipeMore:"Veeg verder…",code:"Code: {c}",listen:"Luister…",typeIt:"Tik de kleuren na",cols:["rood","blauw","geel","groen"],replay:"Nog eens horen",caught:"GEPAKT!",diffLeft:"Nog {n} te vinden",faceOk:"Dat is hem!"},
+      pick:"Welke is het?",found:"Gevonden!",nope:"Nee, die niet.",wipeMore:"Veeg verder…",code:"Code: {c}",listen:"Luister…",typeIt:"Tik de kleuren na",cols:["rood","blauw","geel","groen"],replay:"Nog eens horen",caught:"GEPAKT!",diffLeft:"Nog {n} te vinden",faceOk:"Dat is hem!",
+      plLook:"Kijk goed…",plPick:"Welke auto was het?",plAgain:"Nog eens zien",plSay:"Een {c} auto. Kenteken: {p}.",plCols:["rode","blauwe","gele","groene","witte"],
+      bagOk:"In de zak!",bagNo:"Nee, een andere zak.",bagLeft:"Nog {n} bewijsstukken",bagCat:["kleren","gereedschap","snoep"],
+      tYes:"Klopt",tNo:"Klopt niet",tLie:"Gelogen! Goed gezien.",tTrue:"Dat klopt, ja.",tWrong:"Kijk nog eens goed naar de foto.",tNext:"Volgende zin",tPhoto:"CAMERAFOTO",
+      mGo:"Tik waar de auto uitkomt",mDirs:["omhoog","naar rechts","omlaag","naar links"],mN:["","één keer","twee keer","drie keer","vier keer"],
+      lOpen:"Open het slot",lBad:"Het slot blijft dicht. Tel nog eens.",lOk:"Open!"},
   notebook:"Speurboekje",nbE:"Bewijs (altijd waar)",nbW:"Getuigen (let op: niet altijd waar)",nbNone:"Nog niks. Ga op zoek.",people:"Wie is de Bordendief?",peopleT:"Een van deze vijf verdachten. Kijk naar pet, shirt en schoenen.",
   menu:"Menu",mBack:"Verder speuren",mHome:"Naar het begin (zaak blijft bewaard)",mWipe:"Deze zaak wissen",
-  acH:"De confrontatie",acT:"Alle acht sporen zijn binnen. Kijk in je speurboekje: welke pet, welk shirt, welke schoenen? Vijf verdachten staan op een rij. Veeg om rond te kijken en tik op de dader.",acGo:"Naar de confrontatie",
+  acH:"De confrontatie",acT:"Alle sporen zijn binnen. Kijk in je speurboekje: welke pet, welk shirt, welke schoenen? Vijf verdachten staan op een rij. Veeg om rond te kijken en tik op de dader.",acGo:"Naar de confrontatie",
   lineHint:"Tik op de verdachte die bij al het bewijs past.",lineTip:"Veeg over het scherm om rond te kijken.",lineNo:"Nee, die niet. Kijk in je speurboekje.",lineYes:"GEPAKT!",lineOut:"Terug",
   cuffs:"KLIK!",confess:"De dief bekent",liarWas:"En {W} zat ernaast: {w}",
   won:"ZAAK OPGELOST",shareBtn:"Deel het rapport",shareTxt:"Wij hebben de Bordendief gepakt! Zaak {c} · {s} · {m} min · ",copied:"Gekopieerd.",home:"Terug naar het begin",dl:"Bewaar het rapport",
@@ -38,10 +48,18 @@ T:{today:"Start de zaak van vandaag",todayAgain:"Nog een zaak van vandaag",extra
   dipTitle:"POLITIEDIPLOMA",dipSub:"BUREAU BUURTWACHT · AGENT VOOR ÉÉN DAG",dipL1:"Bureau Buurtwacht verklaart dat",dipL2:"het team van {J}",dipL2b:"dit team",dipL3:"de Bordendief heeft gepakt.",dipL4:"Het was {K}. Met {KJ}, {KW} en {KD}.",dipDate:"{d} · {m} minuten · {s}",dipTeam:"De agenten",dipSign:"De Bordendief (met handboeien om)",dipFoot:"minimystery.nl · Agent voor Eén Dag · zaakcode {c}",
   posH:"GEZOCHT-poster",posTitle:"GEZOCHT",posSub:"DE BORDENDIEF",posL1:"Gepakt door deze agenten:",posL2:"Beloning: taart voor iedereen",posNote:"A4, om te printen. De foto blijft op deze telefoon.",
   stripT:"ZAAK {c}",stripSub:"minimystery.nl · Agent voor Eén Dag",
-  loc:"Waar zijn jullie? De chef zoekt plekken in de buurt…",pois:"Hij prikt acht sporen op de kaart…",nomap:"Geen plekken gevonden in de buurt. Speel zonder kaart.",noGps:"Deze telefoon geeft geen locatie door. Speel zonder kaart.",denied:"Locatie staat uit. Zet hem aan of speel zonder kaart.",fail:"Dat lukte niet",
-  radarAll:"Alle acht borden terug! Naar de confrontatie.",near:"Spoor op {d} m",warm:"Bijna! Nog {d} m",hot:"Hier is het. {d} m",here:"Hier ligt een spoor",look:"Onderzoeken",gps:"Ik sta hier echt",corner:"Hoek",
+  loc:"Waar zijn jullie? De chef zoekt plekken in de buurt…",pois:"Hij prikt de sporen op de kaart…",nomap:"Geen plekken gevonden in de buurt. Speel zonder kaart.",noGps:"Deze telefoon geeft geen locatie door. Speel zonder kaart.",denied:"Locatie staat uit. Zet hem aan of speel zonder kaart.",fail:"Dat lukte niet",
+  radarAll:"Alle borden terug! Naar de bewijskast.",near:"Spoor op {d} m",warm:"Bijna! Nog {d} m",hot:"Hier is het. {d} m",here:"Hier ligt een spoor",look:"Onderzoeken",gps:"Ik sta hier echt",corner:"Hoek",
   demo:"Proefronde in de binnenstad van Eindhoven",demoCase:"proefronde",demoTip:"Proefronde: tik op de kaart om te lopen.",walk:"Loop ernaartoe",
-  howH:"Hoe werkt het?"
+  howH:"Hoe werkt het?",
+  nw:{5:"vijf",8:"acht",11:"elf"},
+  gold:"Gouden cijfer",goldT:"Op de achterkant van het bord staat een gouden cijfer!",goldSay:"Op de achterkant van het bord staat een gouden cijfer: {d}.",nbG:"Gouden cijfers (voor de bewijskast)",goldBar:"Gouden cijfers",
+  twistH:"Oei! Een probleem",twistGo:"Naar de bewijskast",
+  vH:"De bewijskast",vT:"Tik de gouden cijfers in, van het eerste naar het laatste bord.",vTT:"Tik de gouden cijfers achterstevoren in: begin bij het laatste bord!",vHint:"💡 Tip",vBad:"Piep! Dat is niet het goede cijfer.",vBadT:"Piep! Fout. Begin opnieuw, achterstevoren.",vOk:"KLIK! De kast is open!",vIn:"De handboeien! Nu kunnen we de dief pakken.",vGo:"Naar de confrontatie",vHintT:"Zoek het cijfer dat nu oplicht.",
+  fin:["Sirene aan!","De dief zit in de handboeien.","Alle borden hangen weer op hun plek.","ZAAK OPGELOST!"],
+  missH:"Fotomissie",missNote:"De foto komt in het fotoalbum.",
+  alBtn:"Fotoalbum (afbeelding)",alH:"Fotoalbum",alT:"Alle foto's van vandaag in één plaatje. Bewaar het of deel het in de groepsapp.",alShare:"Deel het album",alDl:"Bewaar het album",alTitle:"FOTOALBUM",alCase:"Zaak {c}",alTeam:"Team {t}",alMade:"Gemaakt…",
+  posTime:"Gepakt in {m} minuten · {s}",dipCode:"Code van de bewijskast: {g}",dipTeamC:"Team {t}"
 },
 /* boeven: naam, wat ze doen, iets geks. Vijf per zaak, kenmerken worden per zaak geloot. */
 SUS:[["Ronnie de Vries","de buurjongen","fietst altijd te hard"],["Gerrit Bakker","van de bakkerij","heeft altijd kruimels op zijn trui"],["Greet Jansen","van de kapsalon","lacht het hardst van de hele straat"],["Sjaak Visser","de stille buurman","loopt altijd op zijn tenen"],
@@ -66,7 +84,7 @@ WIT:{hoofd:["“Ik zag hem wegrennen. Hij had {v} op. Echt waar.”","“De dief
      shirt:["“Hij rende langs me. Hij droeg {v}.”","“Ik zag {v}. Dat had de dief aan, ja.”"],
      voet:["“Ik keek naar zijn voeten. Hij had {v} aan.”","“Hij had {v} aan. Ik hoorde ze op de stoep.”"]},
 GAG:["“Hier de chef. Goed werk, team. Blijf scherp. Over.”","“Hier de chef. Camera 4 heeft iets gezien, maar het beeld is wazig. Zoek verder. Over.”","“Hier de chef. De postbode is verdwaald. Zonder borden weet niemand meer waar hij woont. Opschieten. Over.”","“Hier de chef. Ik zie jullie op de camera. De buurt rekent op jullie. Over.”","“Hier de chef. Mijn koffie is koud geworden van het wachten. Over.”"],
-OPEN:"Hier Chef Bos van Bureau Buurtwacht. Agenten, luister. Vannacht zijn {C} gestolen. Niemand kan de weg nog vinden. De dief liet overal sporen achter. Vijf mensen uit de buurt zijn verdacht. Zoek acht sporen. Bij elk spoor hoort een politiepuzzel. Bewijs is altijd waar. Getuigen helpen ook, maar die vergissen zich weleens. Als je weet wie het was: naar de confrontatie. Succes, agenten. Over en sluiten.",
+OPEN:"Hier Chef Bos van Bureau Buurtwacht. Agenten, luister. Vannacht zijn {C} gestolen. Niemand kan de weg nog vinden. De dief liet overal sporen achter. Vijf mensen uit de buurt zijn verdacht. Zoek {N} sporen. Bij elk spoor hoort een politiepuzzel. Bewijs is altijd waar. Getuigen helpen ook, maar die vergissen zich weleens. Als je weet wie het was: naar de confrontatie. Succes, agenten. Over en sluiten.",
 END:"“Oké. Jullie hebben me. Het was ik, {K}. Met {KJ}, {KW} en {KD}. Ik wilde één keer een straat met mijn eigen naam. Dus heb ik alle borden meegenomen om er één te maken. Het spijt me. Ik hang ze allemaal terug. En… mag ik misschien een stukje taart?”",
 CADEAU:"alle straatnaamborden in de buurt van {J}",CADEAU0:"alle straatnaamborden in de buurt",
 /* puzzels: wat (voor speurboekje en strook), wat de chef erbij zegt, reactie na afloop */
@@ -79,6 +97,28 @@ PUZ:{print:["de vingerafdruk","De dief heeft hier iets aangeraakt. Neem de vinge
      maze:["de achtervolging","De dief rijdt weg! Volg hem door de straten.","Je hebt hem bijna. Daar, een spoor!"],
      crowd:["de drukte","De dief verstopt zich in de drukte. Zoek hem!","Gevonden! Maar hij glipt weg. Hij liet wel iets vallen."]},
 STREETS:["Kerkstraat","Lindelaan","Molenweg","Dorpsplein","Schoolstraat","Beukenlaan","Stationsweg","Markt","Vijverpad","Hoge Brink","Zonnehof","Torenstraat","Brugstraat","Kastanjelaan"],
+/* nieuwe puzzels: wat, wat de chef zegt, reactie */
+PUZ2:{plate:["het kenteken","Daar rijdt een auto weg! Was dat de dief? Onthoud de auto.","Kenteken genoteerd. Die auto houden we in de gaten."],
+      bag:["de bewijszakken","Er ligt overal spul van de dief. Stop alles in de goede bewijszak.","Netjes opgeruimd. Alles zit in de zakken."],
+      talk:["het verhoor","Een verdachte zegt waar hij gisteren was. Maar klopt zijn verhaal? Vergelijk het met de camerafoto.","Goed verhoord. Leugens hebben korte beentjes."],
+      mapr:["het kaartlezen","Ik stuur jullie de route van de dief via de portofoon. Volg de pijlen op de kaart.","Precies! Daar heeft hij zich verstopt. Weg is hij weer, maar hij liet iets liggen."],
+      lock:["het codeslot","De dief heeft zijn tas aan een paal vastgezet met een codeslot. Kraak het slot!","Het slot is open. In de tas: een bord!"]},
+/* verhoor: wat de verdachte zegt; {c} = kleur van de auto, {n} = aantal */
+TALK:{sun:"De zon scheen.",cat:"Er zat een kat op de stoep.",bird:"Er vloog een vogel boven de huizen.",apples:"Er hingen rode appels in de boom.",car:"Er stond een {c} auto op straat.",flowers:"Er stonden {n} bloemen.",houses:"Ik zag {n} huizen."},
+CARC:["rode","blauwe","gele"],
+/* de dief duikt op tussen de plekken (nooit eng, wel brutaal) */
+TAUNT:["Hihi! Jullie vinden mij nooit. Ik ben zo stil als een muis.","Nog één bordje en dan heb ik de mooiste straat van de wereld!","Wie loopt daar? Agenten? Oei, snel weg!","Jullie zijn snel, hoor. Maar ik ben sneller!","Psst. Ik zit niet achter die boom. Echt niet.","Mijn tas wordt zwaar van al die borden. Pff!","Ik hoor een sirene… Dat zijn jullie toch niet?","Ik heb een ballon gezien. Ik heb hem NIET gepakt. Nou ja… misschien een beetje."],
+/* de chef via de portofoon, tussen de plekken. {p} = plek, {n} = aantal sporen dat nog moet */
+RADIO:["Hier de chef. Een buurvrouw zag iemand wegsluipen met een bord onder zijn arm. Blijf hem volgen. Over.","Hier de chef. De dief is gezien bij {p}. Snel! Over.","Hier de chef. Goed bezig! Nog {n} sporen te gaan. Over.","Hier de chef. De hond van de buren blaft ergens naar. Daar is hij langs geweest! Over.","Hier de chef. Pas op: hij laat expres valse sporen achter. Alleen bewijs telt. Over."],
+RADIOP:"de bakkerij",
+/* na elke plek een cliffhanger */
+CLIFF:["Maar wat is dat? Verse voetstappen, die kant op…","In de verte rinkelt een fietsbel. Is dat hem?","Achter de heg ritselt iets… Snel, naar het volgende spoor!","Op de stoep ligt een spoor van blauwe verf. Het gaat verder…","De portofoon kraakt: “Hij is nog in de buurt!”","Een kat kijkt geschrokken om. Daar is net iemand langs gerend!","Er waait een ballon voorbij. Waar komt die vandaan?","Een schroef rolt over de stoep. Hij heeft haast!","Verderop fluit iemand een liedje. Dat klinkt verdacht vrolijk…","Er hangt een briefje aan de paal: “Tot zo, agenten!”","Een deur valt dicht. Snel, voor hij verdwijnt!"],
+CLIFFLAST:"Alle borden zijn terug… Maar dan kraakt de portofoon. Chef Bos klinkt geschrokken.",
+TWIST:"Hier de chef. Agenten, er is iets geks gebeurd! De dief is het bureau binnengeslopen en heeft de bewijskast op slot gedraaid. Daar liggen de handboeien in! Maar kijk: op de achterkant van elk bord dat jullie terugvonden staat een gouden cijfer. Samen is dat de code. Over.",
+TWIST8:"Nog iets: de dief is slim. Hij heeft de code achterstevoren gezet. Begin bij het laatste cijfer! Over.",
+TWISTB:"Hahaa! De handboeien zitten veilig opgesloten. Die code raden jullie nooit!",
+/* fotomissies tussendoor: opdracht, emoji (voor het album) */
+MISS:[["Politiefoto! Kijk allemaal door een verrekijker van je handen.","👀"],["Bevries! Iedereen staat stil als een standbeeld van een agent.","🗿"],["Salueer voor de chef! Hand netjes tegen je hoofd.","🫡"],["Wijs allemaal naar waar de dief heen rende.","👉"],["Speurneus! Iedereen op zijn hurken, op zoek naar voetstappen.","🔎"]],
 TYPES:{kerk:"de kerk",hotel:"het hotel",bank:"de bank",apotheek:"de apotheek",cafe:"het café",bieb:"de bieb",park:"het park",school:"de school",kunst:"het kunstwerk",tank:"het tankstation",winkel:"de winkel",halte:"de bushalte",post:"de brievenbus",bankje:"het bankje",hoek:"de hoek"},
 ICON:{print:"M12 2a7 7 0 0 1 7 7v2M12 5a4 4 0 0 1 4 4v4M12 8a1.5 1.5 0 0 1 1.5 1.5V17M9 9a3 3 0 0 1 .3-1.3M8 12v5a4 4 0 0 0 4 4M5 9a7 7 0 0 1 1-3.6M5 13v3a7 7 0 0 0 3 5.7",face:"M12 13a5 5 0 1 0 0-10 5 5 0 0 0 0 10zM4 21c0-4 4-6 8-6s8 2 8 6M6 4h12l-1 3H7z",shoe:"M3 17h18v3H3zM3 17c0-5 3-8 6-8l3 3h4l5 5",siren:"M5 20h14M7 20v-7a5 5 0 0 1 10 0v7M12 3v3M4 7l2 2M20 7l-2 2",diff:"M3 10a4 4 0 1 0 8 0 4 4 0 0 0-8 0zM13 10a4 4 0 1 0 8 0 4 4 0 0 0-8 0zM11 10h2M7 6V3M17 6V3",radio:"M8 2h8v20H8zM10 6h4M10 9h4M11 14h2M12 2V0M6 10l2 1M18 10l-2 1",maze:"M3 3h18v18H3zM7 3v10M11 7v14M15 3v10M19 11h-8M3 15h4",crowd:"M6 9a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM12 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM18 9a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM2 20c0-4 2-6 4-6s4 2 4 6M8 19c0-5 2-7 4-7s4 2 4 7M14 20c0-4 2-6 4-6s4 2 4 6",
       team:"M8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM16 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM2 20c0-4 3-6 6-6s6 2 6 6M12 20c0-4 2-6 4-6s6 2 6 6"}

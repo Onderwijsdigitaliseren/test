@@ -3,17 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Officer for a Day – police treasure hunt for kids' parties (ages 6–10)</title>
+<title>Officer for a Day – police treasure hunt for kids' parties</title>
 <link rel="icon" href="../assets/favicon.png">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
-<meta name="description" content="Playing police at the kids' party: every street sign has been stolen. Eight police puzzles with no reading (the phone reads aloud), five crooks, one line-up. With a map in your own streets, without one, or indoors. Police diploma and WANTED poster to print. Practice round free.">
+<meta name="description" content="Playing police at the kids' party: every street sign has been stolen. Five, eight or eleven police puzzles with no reading (the phone reads aloud), golden digits for the evidence cabinet, five crooks, one line-up. With a map in your own streets, without one, or indoors. Photo album, police diploma and WANTED poster. Practice round free.">
 <link rel="canonical" href="https://www.minimystery.nl/en/officer-for-a-day.html">
 <link rel="alternate" hreflang="en" href="https://www.minimystery.nl/en/officer-for-a-day.html">
 <link rel="alternate" hreflang="nl" href="https://www.minimystery.nl/agent-voor-een-dag.html">
 <link rel="alternate" hreflang="x-default" href="https://www.minimystery.nl/agent-voor-een-dag.html">
 <meta property="og:site_name" content="MiniMystery">
 <meta property="og:title" content="MiniMystery – Officer for a Day">
-<meta property="og:description" content="Every street sign has been stolen. Eight police puzzles, five crooks, one line-up. Police treasure hunt for kids' parties, age 6 and up.">
+<meta property="og:description" content="Every street sign has been stolen. Police puzzles, golden digits, an evidence cabinet, five crooks and one line-up. Police treasure hunt for kids' parties.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.minimystery.nl/en/officer-for-a-day.html">
 <meta property="og:locale" content="en_GB">
@@ -22,8 +22,8 @@
 <meta name="theme-color" content="#0d2a66">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&display=swap">
 <link rel="stylesheet" href="../shared/platform.css?v=1">
-<link rel="stylesheet" href="../games/agent/game.css?v=8">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Officer for a Day","url":"https://www.minimystery.nl/en/officer-for-a-day.html","description":"Police treasure hunt for kids' parties, age 6 and up: the Balloon Bandit has escaped. Eight police puzzles with no reading, five crooks, one line-up. With a map, without one, or indoors. Police diploma and WANTED poster. Practice round free.","inLanguage":"en","gamePlatform":"Web browser","genre":["Kids' game","Treasure hunt","Police"],"isAccessibleForFree":false,"offers":{"@type":"Offer","price":"3.99","priceCurrency":"EUR","description":"Party Pass"}}</script>
+<link rel="stylesheet" href="../games/agent/game.css?v=9">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Officer for a Day","url":"https://www.minimystery.nl/en/officer-for-a-day.html","description":"Police treasure hunt for kids' parties: the Sign Thief has stolen every street sign. Five, eight or eleven police puzzles with no reading, five crooks, one line-up. With a map, without one, or indoors. Photo album, police diploma and WANTED poster. Practice round free.","inLanguage":"en","gamePlatform":"Web browser","genre":["Kids' game","Treasure hunt","Police"],"isAccessibleForFree":false,"offers":{"@type":"Offer","price":"3.99","priceCurrency":"EUR","description":"Party Pass"}}</script>
 </head>
 <body>
 <div id="app">
@@ -36,7 +36,7 @@
         <h1 id="ttl">Officer for a Day</h1><span class="tape">All units. Every street sign has been stolen.</span>
       </div>
       <div class="tapeline" aria-hidden="true"></div>
-      <p class="lead">Today you are the police. Follow eight leads, solve eight police puzzles and work out which of the five suspects has the street signs. Then: the line-up, the handcuffs and a real police diploma. For ages 6 to 10; pick the age and the puzzles adjust.</p>
+      <p class="lead">Today you are the police. Follow the leads, solve police puzzles, collect golden digits and work out which of the five suspects has the street signs. Then: the evidence cabinet, the line-up, the handcuffs and a real police diploma. Pick the level and the length; the puzzles adjust.</p>
       <button class="btn ghost sm" id="bHow">How does it work?</button>
       <div class="pline" hidden style="display:none"><b id="pRank">–</b><span><b id="pStreak">0</b> Day streak</span><span><b id="pSolved">0</b> Caught</span></div>
       <div class="namebox"><label for="name">Whose birthday is it? (optional)</label><input id="name" maxlength="24" autocomplete="off" placeholder="Name of the birthday child"></div>
@@ -46,8 +46,14 @@
         <button type="button" data-m="in" aria-pressed="false">Indoors</button>
       </div>
       <div class="seg two" id="age">
-        <button type="button" data-a="6" aria-pressed="true">Age 6–7</button>
-        <button type="button" data-a="8" aria-pressed="false">Age 8 and up</button>
+        <button type="button" data-a="6" aria-pressed="true">Junior officer<small>easy</small></button>
+        <button type="button" data-a="8" aria-pressed="false">Detective<small>trickier</small></button>
+      </div>
+      <div class="seglbl">How long?</div>
+      <div class="seg" id="dur">
+        <button type="button" data-n="kort" aria-pressed="false">Short<small>5 places<br>± 30 min</small></button>
+        <button type="button" data-n="normaal" aria-pressed="true">Normal<small>8 places<br>± 50 min</small></button>
+        <button type="button" data-n="lang" aria-pressed="false">Long<small>11 places<br>± 75 min</small></button>
       </div>
       <button class="btn ghost sm" id="bVoice" aria-pressed="true">🔊 Read aloud</button>
       <button class="btn" id="bResume" hidden>Continue the case</button>
@@ -56,7 +62,7 @@
       <button class="btn ghost" id="bCode">Enter a case code</button>
       <button class="btn ghost" id="bPro" hidden></button>
       <p class="note" id="status"></p>
-      <div id="howT" hidden><ol class="how"><li><b>With map:</b> the chief pins eight leads on places nearby. Walk there; a police puzzle is waiting. <b>Without map</b> or <b>indoors:</b> you get the puzzles one after another, without places. Works anywhere.</li><li>Pick the age: for 8 and up the puzzles are longer and one witness lies. The puzzles: taking a fingerprint, making a composite sketch, recognising a footprint, copying the siren, spotting differences through the binoculars, a colour code on the radio, a chase and finding the crook in a crowd. No reading needed: the phone reads everything aloud (Read aloud button).</li><li>After every puzzle you get a street sign back and a lead. Evidence is always true and shows a feature: hat, shirt or shoes. Witnesses help too, but they sometimes get it wrong: only the evidence really counts.</li><li>After eight leads you go to the line-up: five suspects in a row in 3D. Tap the culprit. Handcuffs on, a confession, and the group gets a police diploma and a WANTED poster with their own photos, as PDFs to print.</li></ol><p class="note">Tip for the grown-up: read the evidence aloud to the whole group, that is the best moment. For six-year-olds Indoors or Outside without map works best; the map mode is for children who can read a little. With an adult along. One phone per group; with the case code more phones play the same case. The photos stay on the phone. Outside: stay on the pavement.</p></div>
+      <div id="howT" hidden><ol class="how"><li><b>Pick the length:</b> Short (5 places, ± 30 min), Normal (8 places) or Long (11 places, ± 75 min). <b>With map:</b> the chief pins the leads on places nearby. Walk there; a police puzzle is waiting. <b>Without map</b> or <b>indoors:</b> you get the puzzles one after another, without places. Works anywhere.</li><li>Pick the level: as a Detective the puzzles are trickier and the evidence cabinet code goes in backwards. The puzzles: fingerprint, composite sketch, footprint, copying the siren, binoculars, a colour code on the radio, a chase, the thief in the crowd, remembering a number plate, sorting evidence bags, an interview, map reading and cracking a combination lock. No reading needed: the phone reads everything aloud (Read aloud button).</li><li>After every puzzle you get a street sign back, a lead and a golden digit. In between, the thief and the chief pop up, and sometimes there is a photo mission. Evidence is always true and shows a feature: hat, shirt or shoes. Witnesses help too, but they sometimes get it wrong: only the evidence really counts.</li><li>When all leads are in, it turns out the thief has locked the handcuffs in the evidence cabinet. Open it with the golden digits. Then the line-up: five suspects in a row in 3D. Tap the culprit. Handcuffs on, a confession, and the group gets a photo album, a police diploma and a WANTED poster with their own photos.</li></ol><p class="note">Tip for the grown-up: read the evidence aloud to the whole group, that is the best moment. For the youngest officers Indoors or Outside without map works best; the map mode is for children who can read a little. With an adult along. One phone per group; with the case code more phones play the same case. The photos stay on the phone. Outside: stay on the pavement.</p></div>
       <button class="btn ghost sm" id="bDemo">Practice round in the centre of Eindhoven</button>
       <button class="btn ghost" id="bArch">Solved cases</button>
       <button class="btn ghost sm" id="bWipe">Wipe</button>
@@ -85,6 +91,7 @@
       <div><div class="balls" id="hM"></div><span>Signs</span></div>
       <button type="button" id="zM2" aria-label="Menu">☰</button>
     </div>
+    <div class="goldbar" id="hG"></div>
     <div id="card"></div>
     <div id="bar">
       <button type="button" id="bNote">Notebook</button>
@@ -101,6 +108,7 @@
       <div><div class="balls" id="mM"></div><span>Signs</span></div>
       <button type="button" id="zM" aria-label="Menu">☰</button>
     </div>
+    <div class="goldbar" id="mG"></div>
     <div id="zoom">
       <button type="button" id="zIn" aria-label="Zoom in">+</button>
       <button type="button" id="zOut" aria-label="Zoom out">−</button>
@@ -128,12 +136,12 @@
   <div id="load" hidden role="status"><div class="spin"></div><b id="loadT"></b><span>This usually takes 5 to 30 seconds. Stay on this page.</span></div>
   <div id="toast" hidden></div>
 </div>
-<script src="../shared/platform.js?v=mm8"></script>
+<script src="../shared/platform.js?v=mm9"></script>
 <script src="../shared/catalog.js?v=mm8"></script>
 <script src="../shared/walk.js?v=3"></script>
 <script src="../shared/party.js?v=1"></script>
-<script src="../games/agent/data-en.js?v=4z"></script>
-<script src="../games/agent/game.js?v=12z"></script>
+<script src="../games/agent/data-en.js?v=5a"></script>
+<script src="../games/agent/game.js?v=13a"></script>
 <script id="mm-demo">/* MiniMystery: ?oefen start direct de gratis oefenronde (link vanaf Inspiratie op de hub) */
 if(/[?&]oefen\b/.test(location.search)){var b=document.getElementById("bDemo");if(b)setTimeout(function(){b.click()},50)}</script>
 </body>

@@ -197,3 +197,109 @@ h1,h2,h3{font-family:var(--f-type);font-weight:700;text-transform:uppercase;lett
 .cf{position:absolute;top:70%;width:18px;height:10px;border-radius:2px;animation:cf 2.4s ease-out forwards;pointer-events:none}
 @keyframes cf{0%{transform:translate(0,0);opacity:1}100%{transform:translate(var(--dx),-520px);opacity:0}}
 .paper .how{color:var(--ink);font-size:15px}
+/* ===== uitbreiding okt 2026: lengte, gouden cijfers, bewijskast, tussendoortjes, nieuwe puzzels, album ===== */
+.seg button small{display:block;font-weight:500;font-size:12px;opacity:.85;text-transform:none;letter-spacing:0;margin-top:2px}
+.seglbl{font-family:var(--f-type);font-size:15px;color:var(--fog);text-align:center;margin-bottom:-4px}
+.balls.many{gap:2px}.balls.many i{width:9px;height:8px}
+/* gouden cijfers */
+.coins{display:flex;flex-wrap:wrap;gap:5px;justify-content:center}
+.coin{position:relative;display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff3b0,#ffc21a 45%,#c98a00);color:#5a3a00;font-style:normal;box-shadow:0 2px 6px rgba(0,0,0,.35),inset 0 0 0 2px rgba(255,255,255,.4)}
+.coin span{font:700 17px/1 var(--f-type)}
+.coin small{position:absolute;bottom:-11px;font:600 9px/1 var(--f-type);color:var(--fog)}
+.coin.no{background:#1a3b85;color:#5f7fc8;box-shadow:inset 0 0 0 2px #2a4fa8}
+.coin.used{opacity:.35;transform:scale(.9)}
+.coin.next,.coin.hi{animation:coinpulse 1s ease-in-out infinite;box-shadow:0 0 0 3px #fff,0 0 18px #ffc21a}
+@keyframes coinpulse{50%{transform:scale(1.18)}}
+.coin.big{width:72px;height:72px}.coin.big span{font-size:44px}.coin.big small{bottom:-16px;font-size:12px;color:var(--ink2)}
+.goldbar{display:flex;align-items:center;gap:8px;justify-content:center;padding:6px 10px 14px;background:#0b2152;border-bottom:2px solid var(--street);position:sticky;z-index:4}
+.goldbar>b{font-family:var(--f-type);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--lamp);flex:0 0 auto}
+.goldbar .coin{width:22px;height:22px}.goldbar .coin span{font-size:14px}.goldbar .coin small{display:none}
+#mG{position:absolute;left:12px;top:66px;right:70px;z-index:2;border:2px solid var(--street);border-radius:14px;background:rgba(11,33,82,.92);padding:6px 10px;justify-content:flex-start;flex-wrap:wrap}
+#mG .coins{justify-content:flex-start}
+.coins.nb{background:#0d2a66;border-radius:14px;padding:10px 10px 18px}
+.goldget{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,#fff6d6,#ffe39a);border:2px solid #ffc21a;border-radius:16px;padding:14px 14px 20px}
+.goldget p{font-family:var(--f-type);font-size:17px;color:#7a5a00;line-height:1.25}
+.goldget .coin{flex:0 0 auto;animation:coinin .9s cubic-bezier(.2,1.6,.4,1) both}
+@keyframes coinin{0%{transform:scale(0) rotateY(0)}70%{transform:scale(1.15) rotateY(360deg)}100%{transform:none}}
+.cliff{font-family:var(--f-hand);font-style:italic;font-size:16px;line-height:1.4;color:var(--ink);background:#e3f2ff;border-left:4px solid #1d4ed8;border-radius:0 12px 12px 0;padding:10px 12px}
+/* de dief / de chef duikt even op */
+.taunt{position:fixed;left:12px;right:12px;top:calc(70px + env(safe-area-inset-top,0px));z-index:65;display:flex;gap:10px;align-items:center;background:#fff;color:var(--ink);border-radius:18px;padding:8px 12px 8px 8px;box-shadow:0 14px 34px rgba(0,0,0,.45);transform:translateX(115%) rotate(4deg);transition:transform .45s cubic-bezier(.2,1.4,.4,1);max-width:480px;margin-inline:auto;cursor:pointer}
+.taunt.in{transform:none}
+.taunt img{width:64px;height:64px;object-fit:contain;flex:0 0 64px;border-radius:12px;background:#fde68a}
+.taunt.chef img{background:#dbeafe;object-position:center 10%;object-fit:cover}
+.taunt em{font-style:normal;font-family:var(--f-type);font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink2)}
+.taunt p{font-family:var(--f-hand);font-size:16px;line-height:1.35}
+.taunt.boef{border:3px solid #ff3b3b}.taunt.chef{border:3px solid #1d4ed8}
+@media (prefers-reduced-motion: reduce){.taunt{transition:none}}
+/* twist */
+.twistpic{display:flex;justify-content:center;align-items:flex-end;gap:6px;background:linear-gradient(180deg,#7f1d1d,#0d2a66);border-radius:14px;padding:10px 10px 0;overflow:hidden}
+.twistpic .tw1{width:38%;height:auto}.twistpic .tw2{width:40%;height:auto;animation:sneak 2.4s ease-in-out infinite alternate}
+@keyframes sneak{from{transform:translateX(16px)}to{transform:translateX(-8px) rotate(-3deg)}}
+.boefmsg .bub{border:2px solid #ffb3b3;background:#fff5f5}
+/* de bewijskast */
+.vault{position:relative;perspective:900px;width:min(100%,330px);align-self:center;margin:4px auto 0}
+.vault.shake{animation:shake .45s}
+.vin{position:absolute;inset:0;border-radius:18px;background:radial-gradient(circle at 50% 40%,#fde68a,#b45309 80%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:16px;text-align:center;box-shadow:inset 0 0 40px rgba(0,0,0,.5)}
+.vin img{width:62%;filter:drop-shadow(0 6px 10px rgba(0,0,0,.5));transform:scale(.6);opacity:0;transition:transform .6s .5s cubic-bezier(.2,1.6,.4,1),opacity .4s .5s}
+.vin b{font-family:var(--f-type);font-size:20px;color:#3b2200;opacity:0;transition:opacity .4s .9s}
+.vault.open .vin img{transform:none;opacity:1}.vault.open .vin b{opacity:1}
+.vdoor{position:relative;border-radius:18px;background:linear-gradient(145deg,#94a3b8,#475569);border:4px solid #334155;padding:12px;display:flex;flex-direction:column;gap:10px;box-shadow:0 14px 30px rgba(0,0,0,.45),inset 0 2px 0 rgba(255,255,255,.4);transform-origin:left center;transition:transform 1.1s cubic-bezier(.5,0,.3,1)}
+.vault.open .vdoor{transform:rotateY(-104deg)}
+.vtop{display:flex;align-items:center;gap:8px;font-family:var(--f-type);font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#0f172a}
+.vtop span{flex:1;text-align:center}
+.vled{width:14px;height:14px;border-radius:50%;background:#ef4444;box-shadow:0 0 10px #ef4444}.vled.ok{background:#22c55e;box-shadow:0 0 12px #22c55e}
+.vbolt{width:16px;height:16px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#e2e8f0,#64748b)}
+.vdisp{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;background:#0f172a;border-radius:10px;padding:8px;min-height:42px}
+.vdisp i{width:22px;height:26px;border-bottom:3px solid #334155;font:700 22px/26px var(--f-type);color:#4ade80;text-align:center;font-style:normal;text-shadow:0 0 8px #22c55e}
+.vdisp i.on{border-color:#22c55e}
+.vpad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.vpad button{aspect-ratio:1.5/1;border-radius:12px;background:linear-gradient(180deg,#f8fafc,#cbd5e1);border:2px solid #334155;font:700 26px var(--f-type);color:#0f172a;box-shadow:0 4px 0 #1e293b}
+.vpad button.press{transform:translateY(3px);box-shadow:0 1px 0 #1e293b}
+.vpad button.glow{background:#ffc21a;box-shadow:0 0 18px #ffc21a,0 4px 0 #9a6a00;animation:coinpulse .6s ease-in-out infinite}
+.vgold{background:#0d2a66;border-radius:14px;padding:8px 10px 18px;display:flex;flex-direction:column;gap:8px;align-items:center}
+.vgold>b{font-family:var(--f-type);font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--lamp)}
+.vgold.rev .coins{flex-direction:row}
+/* finale */
+#cine.fin{background:#1d4ed8}
+/* puzzel: kenteken */
+.plopts{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:min(100%,300px)}
+.plopts button{border-radius:14px;border:3px solid #cbd5e1;background:#fff;padding:4px;overflow:hidden}
+.plopts button canvas{width:100%;height:auto;display:block;border-radius:8px}
+.plopts button.ok{border-color:#22c55e;box-shadow:0 0 0 3px #bbf7d0}.plopts button.no{border-color:#ef4444;animation:shake .5s}
+/* puzzel: bewijszakken */
+.bagit{width:120px;height:120px;border-radius:50%;background:var(--b,#fff);border:5px solid var(--c,#94a3b8);display:grid;place-items:center;box-shadow:0 10px 24px rgba(0,0,0,.25)}
+.bagit span{font-size:64px;line-height:1}
+.bagit.pop{animation:pop .35s cubic-bezier(.2,1.6,.4,1)}
+@keyframes pop{from{transform:scale(.3)}to{transform:none}}
+.bagit.fly{transition:transform .35s ease-in,opacity .35s;transform:translate(var(--dx,0),150px) scale(.3);opacity:0}
+.bags{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:min(100%,320px)}
+.bagb{position:relative;aspect-ratio:1/1.1;border-radius:14px 14px 22px 22px;background:var(--c);border:3px solid rgba(0,0,0,.25);box-shadow:0 6px 0 rgba(0,0,0,.25);display:grid;place-items:center}
+.bagb::before{content:"";position:absolute;top:-12px;left:30%;right:30%;height:18px;border:5px solid rgba(0,0,0,.35);border-bottom:0;border-radius:14px 14px 0 0}
+.bagb span{font-size:40px}
+.bagb.gulp{animation:pop .4s}.bagb.shake{animation:shake .5s}
+/* puzzel: verhoor */
+.tkb{width:min(100%,340px)}
+.yn{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:min(100%,340px)}
+.yn .btn{font-size:18px;padding:14px 6px}
+/* puzzel: kaartlezen */
+.arrows{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;background:#0d2a66;border-radius:14px;padding:8px 12px}
+.arrows span{display:flex;gap:2px;background:rgba(255,255,255,.1);border-radius:10px;padding:2px 6px}
+.ar{display:inline-block;font:700 28px/1 var(--f-type);color:var(--lamp);font-style:normal}
+.ar.d0{transform:rotate(-90deg)}.ar.d2{transform:rotate(90deg)}.ar.d3{transform:rotate(180deg)}
+/* puzzel: codeslot */
+.padlock{position:relative;width:min(100%,320px);padding-top:56px}
+.padlock .shackle{position:absolute;left:50%;top:4px;width:120px;height:110px;margin-left:-60px;border:16px solid #94a3b8;border-bottom:0;border-radius:60px 60px 0 0;transition:transform .5s cubic-bezier(.2,1.6,.4,1)}
+.padlock.open .shackle{transform:translateY(-26px) rotate(-14deg);transform-origin:left bottom}
+.padlock.shake{animation:shake .5s}
+.lbody{position:relative;background:linear-gradient(145deg,#fbbf24,#b45309);border:4px solid #7c2d12;border-radius:20px;padding:12px;box-shadow:0 10px 24px rgba(0,0,0,.3)}
+.lwins{display:flex;gap:10px;justify-content:center}
+.lwin{flex:1;display:flex;flex-direction:column;gap:8px;align-items:center;max-width:110px}
+.dots{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;align-content:center;background:#fffaf0;border-radius:12px;padding:8px;min-height:74px;width:100%;border:3px solid #7c2d12}
+.dots i{width:16px;height:16px;border-radius:50%;box-shadow:inset 0 -2px 0 rgba(0,0,0,.2)}
+.lwheel{display:flex;flex-direction:column;align-items:center;background:#1e293b;border-radius:12px;padding:4px;width:64px}
+.lwheel button{width:100%;height:34px;color:#fff;font-size:18px}
+.lwheel b{font:700 34px/1.1 var(--f-type);color:#4ade80}
+/* fotomissie */
+.task .ph .memo{font-size:40px}
+/* in een scrollend vel niet laten krimpen */
+.sheet .paper>*{flex-shrink:0}
