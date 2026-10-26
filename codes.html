@@ -20,7 +20,7 @@ ol{padding-left:20px;color:#c8d2e4}code{background:#182741;padding:1px 5px;borde
 
 <h2>1. Nieuwe code</h2>
 <label for="t">Soort</label>
-<select id="t"><option value="groep">Groepspas (48 uur na invoeren)</option><option value="pro">Pro (blijft voor altijd op het toestel)</option><option value="feest">MiniMystery Feestpas (één zaak, 1 maand na invoeren; alleen voor minimystery.nl)</option></select>
+<select id="t"><option value="groep">Groepspas (48 uur na invoeren)</option><option value="pro">Pro (blijft voor altijd op het toestel)</option><option value="feest">MiniMystery Feestpas (één zaak, 2 maanden na invoeren; alleen voor minimystery.nl)</option></select>
 <div id="spelBox" hidden><label for="spel">Voor welke zaak (MiniMystery)</label>
 <select id="spel"><option value="sj">De Lichtjesdief</option><option value="pp">Het Geheim van Pony Pluis</option><option value="ag">Agent voor Eén Dag</option><option value="ts">De Betoverde Toverspiegel</option><option value="alle">Alle zaken (bundel)</option></select></div>
 <label for="tot">Invoeren kan tot en met (leeg laten = geen einddatum)</label>
@@ -66,7 +66,7 @@ const $=s=>document.querySelector(s),A="ABCDEFGHJKLMNPQRSTUVWXYZ23456789",norm=s
 $("#mk").onclick=()=>{let c=norm($("#own").value),show;
   if(c){show=c;if(c.length<8&&!confirm("Deze code is kort en daardoor makkelijker te raden. Toch gebruiken?"))return}
   else{const r=new Uint8Array(12);crypto.getRandomValues(r);c=Array.from(r,x=>A[x%32]).join("");show=c.slice(0,4)+"-"+c.slice(4,8)+"-"+c.slice(8)}
-  const o={h:sha256("moordwandeling|"+c),t:$("#t").value};if(o.t==="feest"){o.spel=$("#spel").value;o.dagen=31}if($("#tot").value)o.tot=$("#tot").value;o.naam=({pro:"Pro ",groep:"Groep ",feest:"Feestpas "+$("#spel").selectedOptions[0].text+" "}[$("#t").value]||"")+new Date().toISOString().slice(0,10);
+  const o={h:sha256("moordwandeling|"+c),t:$("#t").value};if(o.t==="feest"){o.spel=$("#spel").value;o.dagen=61}if($("#tot").value)o.tot=$("#tot").value;o.naam=({pro:"Pro ",groep:"Groep ",feest:"Feestpas "+$("#spel").selectedOptions[0].text+" "}[$("#t").value]||"")+new Date().toISOString().slice(0,10);
   $("#code").textContent=show;$("#line").value="  "+JSON.stringify(o)+",";$("#out").hidden=false};
 $("#t").onchange=()=>{$("#spelBox").hidden=$("#t").value!=="feest"};
 $("#cp").onclick=()=>{$("#line").select();try{navigator.clipboard.writeText($("#line").value)}catch(e){document.execCommand("copy")}$("#cp").textContent="Gekopieerd"};
