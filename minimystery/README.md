@@ -8,6 +8,8 @@ Zusje van Moordwandeling / Murder Walk: zelfde motor, zelfde Pro/groepspas en de
 /de-lichtjesdief.html               De Lichtjesdief /en/the-light-thief.html           (logica in /games/jacht/, beeldherkenning via /games/fotojacht/model + /shared/ort)
 /het-geheim-van-pony-pluis.html     Pony Pluis      /en/the-secret-of-pony-fluff.html  (logica in /games/pony/)
 /agent-voor-een-dag.html            Agent           /en/officer-for-a-day.html         (logica in /games/agent/)
+/de-betoverde-toverspiegel.html     Toverspiegel    /en/the-enchanted-mirror.html      (logica in /games/spiegel/)
+/glitch-in-de-buurt.html            Glitch (8+)     /en/glitch-in-the-neighbourhood.html (logica in /games/glitch/: de buurt als videogame; elf levelmechanieken (PUZ), hartjes/XP/munten/power-ups/achievements, pixel-avatar, Glitch kaapt het scherm, eindbaas in drie fases (canvas pseudo-3D, microfoon, 3D-escape-room in #room), album en diploma. Alles pixel-art en chiptune in code; geen plaatjes nodig. Codes GL…)
 /shared/platform.js   gedeelde laag (Pro, groepspas, profiel, taal). Verschil met Moordwandeling: root = NL, /en/ = EN;
                       codes komen uit https://moordwandeling.nl/codes.json (één lijst voor beide sites), met /codes.json als terugval
 /shared/catalog.js    de zaken op de hub      /shared/hub.js + hub.css   hub
