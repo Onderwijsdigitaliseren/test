@@ -305,4 +305,5 @@ h1,h2,h3{font-family:var(--f-type);font-weight:700;text-transform:uppercase;lett
 .sheet .paper>*{flex-shrink:0}
 
 #play{--km-sky:#bfe0ff;--km-ink:#17203a;--km-line:#1e3a8a;--km-paper:rgba(255,255,255,.95)}
-#play.kv #kmHot{top:calc(132px + env(safe-area-inset-top,0px))}
+#kmTag,#kmHelp,#play:not(.kv) #bView{top:calc(132px + env(safe-area-inset-top,0px))}
+#play.kv #kmHot{top:calc(184px + env(safe-area-inset-top,0px))}

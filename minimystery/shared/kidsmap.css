@@ -2,7 +2,27 @@
 #kmBox{position:absolute;inset:0;z-index:1;background:var(--km-sky,#9ad7ff)}
 #kmBox[hidden]{display:none}
 #kmC{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:manipulation}
-#kmHot{position:absolute;left:14px;right:14px;top:calc(72px + env(safe-area-inset-top,0px));text-align:left;font-family:'Fredoka','Arial Rounded MT Bold',sans-serif;font-weight:700;font-size:clamp(20px,6vw,30px);pointer-events:none;text-shadow:0 2px 10px rgba(0,0,0,.4);transition:color .4s}
+#kmHot{position:absolute;left:14px;right:60px;top:calc(124px + env(safe-area-inset-top,0px));text-align:left;font-family:'Fredoka','Arial Rounded MT Bold',sans-serif;font-weight:700;font-size:clamp(20px,6vw,30px);pointer-events:none;text-shadow:0 2px 10px rgba(0,0,0,.4);transition:color .4s}
 #kmMsg{position:absolute;left:90px;right:14px;bottom:calc(150px + env(safe-area-inset-bottom,0px));text-align:center;font-family:'Fredoka','Arial Rounded MT Bold',sans-serif;font-weight:700;font-size:clamp(16px,4.6vw,21px);color:var(--km-ink,#3b2a14);background:var(--km-paper,rgba(255,250,240,.92));border:2px solid var(--km-line,#5b3a1e);border-radius:16px;padding:8px 12px;pointer-events:none;text-wrap:balance}
-#bView{position:absolute;right:12px;top:calc(72px + env(safe-area-inset-top,0px));z-index:3;width:auto;padding:8px 12px;border-radius:14px;background:var(--km-paper,rgba(255,250,240,.95));border:2px solid var(--km-line,#5b3a1e);font:600 13px 'Fredoka','Arial Rounded MT Bold',sans-serif;color:var(--km-ink,#3b2a14)}
+#bView{position:absolute;right:12px;top:calc(72px + env(safe-area-inset-top,0px));z-index:3;width:auto;padding:9px 13px;border-radius:14px;background:var(--km-paper,rgba(255,250,240,.95));border:2px solid var(--km-line,#5b3a1e);font:700 14px 'Fredoka','Arial Rounded MT Bold',sans-serif;color:var(--km-ink,#3b2a14);box-shadow:0 3px 12px rgba(0,0,0,.25)}
+#bView.kmPulse{animation:kmPulse 1.2s ease-in-out 6}
+@keyframes kmPulse{0%,100%{transform:scale(1);box-shadow:0 3px 12px rgba(0,0,0,.25)}50%{transform:scale(1.08);box-shadow:0 0 0 8px rgba(244,194,13,.45)}}
+/* label linksboven: wat zie je nu (tekening of echte straten) + ?-knop voor de uitleg; kleuren worden uit #bView overgenomen */
+#kmTag{position:absolute;left:12px;top:calc(72px + env(safe-area-inset-top,0px));z-index:3;max-width:calc(100% - 190px);padding:7px 11px;border-radius:14px;border:2px solid var(--km-line,#5b3a1e);background:var(--km-paper,rgba(255,250,240,.95));color:var(--km-ink,#3b2a14);font:500 12px 'Fredoka','Arial Rounded MT Bold',sans-serif;line-height:1.25;pointer-events:none;box-shadow:0 3px 12px rgba(0,0,0,.2)}
+#kmTag b{font-weight:700;font-size:13px}
+#kmTag[hidden],#kmHelp[hidden],#kmIntro[hidden]{display:none}
+#kmHelp{position:absolute;right:12px;top:calc(72px + env(safe-area-inset-top,0px));z-index:3;width:34px;height:34px;padding:0;border-radius:50%;border:2px solid var(--km-line,#5b3a1e);background:var(--km-paper,rgba(255,250,240,.95));color:var(--km-ink,#3b2a14);font:700 17px 'Fredoka','Arial Rounded MT Bold',sans-serif;transform:translateY(46px);box-shadow:0 3px 12px rgba(0,0,0,.2)}
+/* uitleg bij de eerste keer */
+#kmIntro{position:absolute;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(10,8,20,.72);backdrop-filter:blur(3px)}
+#kmIntro .kmCard{background:#fffaf0;color:#2b1d0e;border-radius:22px;padding:22px 20px 18px;max-width:420px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.45);font-family:'Fredoka','Arial Rounded MT Bold',sans-serif;text-align:left}
+#kmIntro .kmPic{font-size:40px;line-height:1;margin-bottom:8px}
+#kmIntro h3{margin:0 0 10px;font-size:22px;font-weight:700;line-height:1.15}
+#kmIntro p{margin:0 0 10px;font-size:15px;line-height:1.45}
+#kmIntro p b{font-weight:700}
+#kmIntro .kmBtns{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+#kmIntro .kmBtns button{width:100%;padding:13px 14px;border-radius:14px;border:0;font:700 16px 'Fredoka','Arial Rounded MT Bold',sans-serif;cursor:pointer}
+#kmIntro .kmGo{background:#f4c20d;color:#2b1d0e}
+#kmIntro .kmOk{background:#2b1d0e;color:#fffaf0}
 #play.kv #zoom,#play.kv #radar{display:none}
+/* op de echte plattegrond staat de terugknop links, uit de buurt van de zoomknoppen */
+#play:not(.kv) #bView{right:auto;left:12px}

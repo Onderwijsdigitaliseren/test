@@ -9,7 +9,7 @@
      km.mount();  // één keer, na het laden van de pagina (maakt #kmBox, #kmMsg, #kmHot en #bView in #play)
      km.enter({kids:bool, virt:bool, map:map});  // bij het betreden van de kaart
      km.draw(t) in de teken-lus (geeft true als de verhaalkaart getekend is, anders teken je de echte kaart)
-     km.leave(); km.virtSpots(n); km.stepLen(st,target); km.fk(spot); km.heat(d) */
+     km.intro(true) toont de uitleg nog eens; km.leave(); km.virtSpots(n); km.stepLen(st,target); km.fk(spot); km.heat(d) */
 (function(){
 "use strict";
 var MW=window.MW,$=function(s){return document.querySelector(s)};
@@ -39,15 +39,41 @@ function create(o){
     if(g.kd0==null||g.kdFi!==nr.fi){g.kd0=Math.max(d,40);g.kdFi=nr.fi}if(d>g.kd0)g.kd0=d;var tt=Math.max(0,Math.min(1,1-d/g.kd0));return{x:a.x+(b.x-a.x)*tt,y:a.y+(b.y-a.y)*tt}}
   function hoof(g,x,y,r,col){if(DR.mark)return DR.mark(g,x,y,r,col);g.save();g.fillStyle=col;g.beginPath();g.arc(x,y,r,0,7);g.fill();g.restore()}
   /* ---------- dom ---------- */
+  /* uitleg: de verhaalkaart is een tekening, de echte plattegrond zit achter de knop. Teksten per taal; de kaartnamen komen uit het spel (T.kids/T.map). */
+  var LG=(document.documentElement.lang||"nl").slice(0,2)==="en"?"en":"nl",tagEl=null,helpEl=null,introEl=null;
+  var X=LG==="en"?{tagKids:"drawing · not the real streets",toMap:"Real map",toKids:"Back to ",help:"What is this map?",
+      title:"This is the {kids}",p1:"It's a drawing that belongs to the story, not the real streets. The places are real, though: they're in your own neighbourhood. The arrow and the colours (cold → hot) show the children the way.",
+      p2:"Want to see where you really have to walk? Tap <b>{map}</b> at the top right: that shows the real map with streets and all the places on it, for the grown-up. Tap <b>{kids}</b> there to come back to the drawing.",
+      ok:"Got it",go:"Show the real map"}
+    :{tagKids:"tekening · niet de echte straten",toMap:"Echte plattegrond",toKids:"Terug naar ",help:"Wat is deze kaart?",
+      title:"Dit is de {kids}",p1:"Een tekening die bij het verhaal hoort, niet de echte straten. De plekken zijn wél echt: die liggen bij jou in de buurt. Het pijltje en de kleuren (koud → heet) wijzen de kinderen de weg.",
+      p2:"Wil je zien waar je écht moet lopen? Tik rechtsboven op <b>{map}</b>: dan zie je de echte plattegrond met straten en alle plekken erop, voor de begeleider. Tik daar op <b>{kids}</b> om terug te gaan naar de tekening.",
+      ok:"Begrepen",go:"Toon de echte plattegrond"};
+  function fillX(s){return s.replace(/\{kids\}/g,T.kids||"").replace(/\{map\}/g,X.toMap)}
+  var introPend=false,introChk=0;
+  /* de uitleg pas tonen als de verhaalkaart echt vrij in beeld is (geen vel, filmpje of ander scherm ervoor) */
+  function clear(){var r=cv.getBoundingClientRect(),e=document.elementFromPoint(r.left+r.width/2,r.top+r.height/2);return !!e&&(e===cv||e.closest("#kmBox")===$("#kmBox"))}
+  function introWhenClear(t){if(!introPend||t-introChk<500)return;introChk=t;if(!KV||bView.hidden){introPend=false;return}if(clear()){introPend=false;intro(false)}}
+  function intro(force){if(!introEl||bView.hidden)return;if(!force&&MW.LS.get("ss_kmintro"))return;MW.LS.set("ss_kmintro",1);
+    introEl.innerHTML='<div class="kmCard"><div class="kmPic">🎨</div><h3>'+fillX(X.title)+'</h3><p>'+fillX(X.p1)+'</p><p>'+fillX(X.p2)+'</p><div class="kmBtns"><button type="button" class="kmGo">🗺️ '+X.go+'</button><button type="button" class="kmOk">'+X.ok+'</button></div></div>';
+    introEl.hidden=false;introEl.querySelector(".kmOk").onclick=function(){introEl.hidden=true;bView.classList.add("kmPulse");setTimeout(function(){bView.classList.remove("kmPulse")},9000)};
+    introEl.querySelector(".kmGo").onclick=function(){introEl.hidden=true;KV=false;setView()}}
+  /* label en ?-knop nemen de kleuren van #bView over (per spel gestyled); hun plek staat in css (kidsmap.css, per spel te overschrijven) */
+  function placeTag(){if(!tagEl)return;var cs=getComputedStyle(bView);[tagEl,helpEl].forEach(function(e){e.style.background=cs.backgroundColor;e.style.borderColor=cs.borderTopColor;e.style.color=cs.color;e.style.fontFamily=cs.fontFamily});tagEl.style.borderRadius=cs.borderTopLeftRadius}
   function mount(){var play=$(o.host||"#play");if(!play||$("#kmBox"))return;
     var k=document.createElement("div");k.id="kmBox";k.hidden=true;k.innerHTML='<canvas id="kmC"></canvas><div id="kmHot"></div><div id="kmMsg"></div>';play.insertBefore(k,play.firstChild.nextSibling);
     bView=document.createElement("button");bView.type="button";bView.id="bView";play.appendChild(bView);bView.onclick=function(){KV=!KV;setView()};
+    tagEl=document.createElement("div");tagEl.id="kmTag";play.appendChild(tagEl);
+    helpEl=document.createElement("button");helpEl.type="button";helpEl.id="kmHelp";helpEl.textContent="?";helpEl.title=X.help;helpEl.setAttribute("aria-label",X.help);play.appendChild(helpEl);helpEl.onclick=function(){intro(true)};
+    introEl=document.createElement("div");introEl.id="kmIntro";introEl.hidden=true;play.appendChild(introEl);
     cv=$("#kmC");msgEl=$("#kmMsg");hotEl=$("#kmHot");
     cv.addEventListener("pointerdown",function(e){if(!o.onTap)return;var b=cv.getBoundingClientRect();o.onTap(e.clientX-b.left,e.clientY-b.top)});
     addEventListener("resize",function(){if(!$(o.host||"#play").hidden&&KV)size()})}
   function size(){var dpr=Math.min(2,devicePixelRatio||1),w=cv.clientWidth||innerWidth,h=cv.clientHeight||innerHeight;cv.width=w*dpr;cv.height=h*dpr;cv.dataset.dpr=dpr}
-  function setView(){$("#kmBox").hidden=!KV;$(o.host||"#play").classList.toggle("kv",KV);bView.textContent=KV?T.map:T.kids;if(KV)size();else{if(map)map.resize();if(o.mode()==="map"&&T.mapTip)MW.Walk.toast(T.mapTip)}}
-  function enter(a){map=a.map||map;lastP=null;MOVB=null;KV=a.kids!==false;bView.hidden=!!a.virt;setView();stopHead();if(o.mode()==="map")startHead()}
+  function setView(){$("#kmBox").hidden=!KV;$(o.host||"#play").classList.toggle("kv",KV);bView.textContent=KV?"🗺️ "+X.toMap:"🎨 "+X.toKids+(T.kids||"").toLowerCase();
+    if(tagEl){tagEl.hidden=helpEl.hidden=bView.hidden||!KV;tagEl.innerHTML="🎨 <b>"+(T.kids||"")+"</b> · "+X.tagKids;placeTag()}
+    if(KV)size();else{if(map)map.resize();if(o.mode()==="map"&&T.mapTip)MW.Walk.toast(T.mapTip)}}
+  function enter(a){map=a.map||map;lastP=null;MOVB=null;KV=a.kids!==false;bView.hidden=!!a.virt;setView();stopHead();if(o.mode()==="map")startHead();introPend=KV&&!a.virt&&!MW.LS.get("ss_kmintro")}
   function leave(){stopHead()}
   /* ---------- tekenen ---------- */
   function draw(t){if(!KV||$("#kmBox").hidden)return false;var g=cv.getContext("2d"),dpr=+cv.dataset.dpr||1,w=cv.width/dpr,h=cv.height/dpr;g.setTransform(dpr,0,0,dpr,0,0);
@@ -73,12 +99,12 @@ function create(o){
     g.restore();
     /* kompaspijl */var ang=nr?arrowAngle(nr):null,cx=52,cy=h-bot+58,R=36;g.save();g.shadowColor="rgba(0,0,0,.25)";g.shadowBlur=12;g.fillStyle="#fffaf0";g.beginPath();g.arc(cx,cy,R,0,7);g.fill();g.restore();g.lineWidth=5;g.strokeStyle="#f4c20d";g.beginPath();g.arc(cx,cy,R-4,0,7);g.stroke();
     if(nr&&ang!=null){g.save();g.translate(cx,cy);g.rotate(ang);g.fillStyle=col;g.beginPath();g.moveTo(R*.6,0);g.lineTo(-R*.25,-R*.32);g.lineTo(-R*.08,0);g.lineTo(-R*.25,R*.32);g.closePath();g.fill();g.restore()}else if(nr){g.fillStyle="#3b2a14";g.font="700 28px 'Fredoka',sans-serif";g.textAlign="center";g.textBaseline="middle";g.fillText("?",cx,cy+2)}
-    var ov=DR.overlay?DR.overlay(g,w,h,t):null;
+    var ov=DR.overlay?DR.overlay(g,w,h,t):null;introWhenClear(t);
     hotEl.textContent=!nr?"":T[ht];hotEl.style.color=col;
     var p=P(),m=o.mode(),inr=Math.max(35,Math.min(p.acc||0,60));
     if(!ov)msgEl.textContent=!nr?T.all:nd<=inr?T.here:m==="in"&&GG.in?MW.fill(T.inSteps,{n:Math.ceil(nd/GG.in.sl)}):ang==null&&m!=="demo"?(lastP?T.noDir:T.first):MW.fill(T.near,{d:Math.round(nd)});
     return true}
-  return{mount:mount,enter:enter,leave:leave,draw:draw,moved:moved,fk:fk,fspot:fspot,near:near,heat:heat,virtSpots:virtSpots,stepLen:stepLen,on:function(){return KV},setMsg:function(s){msgEl.textContent=s},size:size,hot:function(){var n=near();return n?HC[heat(dTo(n))]:"#6ec3ff"}}}
+  return{mount:mount,enter:enter,leave:leave,intro:intro,draw:draw,moved:moved,fk:fk,fspot:fspot,near:near,heat:heat,virtSpots:virtSpots,stepLen:stepLen,on:function(){return KV},setMsg:function(s){msgEl.textContent=s},size:size,hot:function(){var n=near();return n?HC[heat(dTo(n))]:"#6ec3ff"}}}
 /* eenvoudige tekeningetjes voor plekken (voor spellen zonder eigen landmarks) */
 var I={};
 I.tree=function(g,x,y,s,lf,lf2){g.fillStyle="rgba(0,0,0,.12)";g.beginPath();g.ellipse(x+s*.1,y+s*.05,s*.55,s*.18,0,0,7);g.fill();g.fillStyle="#7a4a1e";g.fillRect(x-s*.08,y-s*.5,s*.16,s*.5);g.fillStyle=lf||"#3f9a4a";g.beginPath();g.arc(x,y-s*.7,s*.42,0,7);g.fill();g.fillStyle=lf2||"#5fc46a";g.beginPath();g.arc(x-s*.12,y-s*.82,s*.26,0,7);g.fill()};

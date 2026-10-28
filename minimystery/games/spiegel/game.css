@@ -334,3 +334,4 @@ a.btn{display:block;text-align:center;text-decoration:none}
 #walk #kmHot{top:calc(64px + env(safe-area-inset-top,0px))}
 #walk #kmMsg{bottom:calc(96px + env(safe-area-inset-bottom,0px))}
 #walk #bView{display:none}
+#walk #kmTag,#walk #kmHelp,#walk #kmIntro{display:none}
