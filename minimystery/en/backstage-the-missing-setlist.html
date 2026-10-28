@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Backstage: The Missing Setlist – pop-star treasure hunt for kids' parties (8+)</title>
+<link rel="icon" href="../assets/favicon.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<meta name="description" content="One hour before girl band NOVA's show the setlist is gone. As the Crew you walk from backstage stop to backstage stop in your own neighbourhood: dancing, styling, a light show, scanning tickets, lip syncing. Who had the bag full of glitter? Then the show with the whole group and a Backstage Pass to print. Ages 8+. Free practice round.">
+<link rel="canonical" href="https://www.minimystery.nl/en/backstage-the-missing-setlist.html">
+<link rel="alternate" hreflang="en" href="https://www.minimystery.nl/en/backstage-the-missing-setlist.html">
+<link rel="alternate" hreflang="nl" href="https://www.minimystery.nl/backstage-de-verdwenen-setlist.html">
+<link rel="alternate" hreflang="x-default" href="https://www.minimystery.nl/backstage-de-verdwenen-setlist.html">
+<meta property="og:site_name" content="MiniMystery">
+<meta property="og:title" content="MiniMystery – Backstage: The Missing Setlist">
+<meta property="og:description" content="NOVA's show is off: the setlist is gone. Treasure hunt for kids' parties, ages 8+, with dancing, styling, a light show and a real show at the end.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.minimystery.nl/en/backstage-the-missing-setlist.html">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:image" content="https://www.minimystery.nl/assets/og-image.jpg">
+<meta name="theme-color" content="#1a0433">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;700;800&family=Permanent+Marker&display=swap">
+<link rel="stylesheet" href="../shared/platform.css?v=1">
+<link rel="stylesheet" href="../shared/kidsmap.css?v=2">
+<link rel="stylesheet" href="../games/backstage/game.css?v=1">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Game","name":"Backstage: The Missing Setlist","url":"https://www.minimystery.nl/en/backstage-the-missing-setlist.html","description":"Treasure hunt for kids' parties, ages 8+: one hour before girl band NOVA's show the setlist is gone. Backstage stops in your own neighbourhood, witnesses, a blurry photo and a real show at the end. With a map, without one, or indoors. Free practice round.","inLanguage":"en","genre":["Kids' game","Treasure hunt","Kids' party"],"isAccessibleForFree":false,"offers":{"@type":"Offer","price":"9.99","priceCurrency":"EUR","description":"Party Pass"}}</script>
+</head>
+<body>
+<div id="app">
+  <section class="screen" id="home">
+    <canvas id="hero" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <div class="row0"><div class="pills"><a class="pill" id="hub" href="./">◂ All cases</a><button type="button" class="pill" id="lang">Nederlands</button></div></div>
+      <div class="gap"></div>
+      <div class="masthead">
+        <h1 id="ttl">BACKSTAGE</h1><span class="sub">The Missing Setlist</span><span class="tape">NOVA LIVE · TONIGHT</span>
+      </div>
+      <p class="lead">One hour before girl band NOVA's show the setlist is gone. And more keeps vanishing from the dressing room: the glitter microphone, the light-show card, the drumstick. You are the Crew. Dance, style, scan and find everything, and find out who had that bag full of glitter. Then the show begins, with you in it.</p>
+      <button class="btn ghost sm" id="bHow">How does it work?</button>
+      <div class="namebox"><label for="name">Whose birthday is it? (optional)</label><input id="name" maxlength="24" autocomplete="off" placeholder="Name of the birthday child"></div>
+      <div class="seg two" id="lvl">
+        <button type="button" data-l="fan" aria-pressed="true">Fan<small>ages 8+</small></button>
+        <button type="button" data-l="ster" aria-pressed="false">Superstar<small>trickier</small></button>
+      </div>
+      <div class="seg" id="dur" aria-label="Length">
+        <button type="button" data-n="kort" aria-pressed="false">Short<small>5 stops · ±35 min</small></button>
+        <button type="button" data-n="normaal" aria-pressed="true">Normal<small>8 stops · ±55 min</small></button>
+        <button type="button" data-n="lang" aria-pressed="false">Long<small>11 stops · ±80 min</small></button>
+      </div>
+      <div class="seg" id="len">
+        <button type="button" data-m="map" aria-pressed="true">Outdoors<br>with map</button>
+        <button type="button" data-m="street" aria-pressed="false">Outdoors<br>without map</button>
+        <button type="button" data-m="in" aria-pressed="false">Indoors</button>
+      </div>
+      <button class="btn ghost sm" id="bVoice" aria-pressed="true">🔊 Read aloud</button>
+      <button class="btn" id="bResume" hidden>▶ Continue where you were</button>
+      <button class="btn" id="bGps">Start today's case</button>
+      <button class="btn ghost" id="bRandom">Extra case</button>
+      <button class="btn ghost" id="bCode">Enter a case code</button>
+      <button class="btn ghost" id="bPro" hidden></button>
+      <p class="note" id="status"></p>
+      <div id="howT" hidden><ol class="how"><li><b>Short, Normal or Long:</b> 5, 8 or 11 backstage stops. The length is in the case code, so other phones get the same case.</li><li><b>With a map:</b> Max places the stops at spots in your neighbourhood. You see a drawn <b>festival map</b>: the crew walks along the path to the next stop, an arrow and cold/warm/hot show the way. The grown-up can look at the real street map. Now and then a bag full of glitter shoots past: tap it for stars. <b>Indoors:</b> walk on the spot, phone in hand. <b>Without a map:</b> the stops one after another, works anywhere.</li><li><b>Every stop is a different game:</b> wiping a glitter trail, copying a dance, styling merch, rebuilding the light show, spotting the fake autograph, scanning tickets with the camera, lip syncing to the beat, guessing the band's food order, the photo booth (spot the differences), turning cables, VIP memory and the mixing desk. Three hearts per stop; none left = simply try again.</li><li><b>Every stop brings something back to the stage.</b> Along with it you find scraps of the setlist, traces of the bag-carrier (glitter, headwear, shoes) or a witness. Traces are always true. One witness has it wrong; at <b>Superstar</b> that witness really lies, and the setlist scraps become a puzzle.</li><li><b>The finale:</b> recognise the bag-carrier on Nour's blurry photo, talk to her, put the setlist in the right order and play the show: jumping, singing, waving, clapping and applause, with the whole group. Then an album with your photos and a <b>Backstage Pass</b> as a PDF to print.</li><li><b>Team vs team:</b> two phones, the same case code, and a team colour and result code for the standings via Party options.</li></ol><p class="note">Tip for the grown-up: the microphone and camera are only used on the phone itself, nothing goes to the internet. One phone per team. Outdoors: stay on the pavement, no running between stops.</p></div>
+      <button class="btn ghost sm" id="bDemo">Practice round in Eindhoven city centre</button>
+      <button class="btn ghost" id="bArch">Solved cases</button>
+      <button class="btn ghost sm" id="bWipe">Wipe</button>
+    </div>
+  </section>
+
+  <section class="screen" id="brief" hidden>
+    <div class="wrap">
+      <div class="paper">
+        <div class="eyebrow" id="bfNo"></div>
+        <div id="bfTip"></div>
+        <h2>One hour before the show</h2>
+        <div id="bfOpen"></div>
+        <div id="bfSus"></div>
+      </div>
+      <button class="btn" id="bGo">▶ Go backstage</button>
+      <button class="btn ghost" id="bBack">Back</button>
+    </div>
+  </section>
+
+  <section class="screen" id="cards" hidden>
+    <div id="hud">
+      <div><b id="hT">0:00</b><span>Time</span></div>
+      <div><b id="hS">0</b><span>Stops</span></div>
+      <div><b id="hL">1</b><span>Rank</span></div>
+      <div><b id="hX">0</b><span>Fans</span></div>
+      <div><b id="hC">0</b><span>Stars</span></div>
+      <button type="button" id="zM2" aria-label="Pause">☰</button>
+    </div>
+    <div id="card"></div>
+    <div id="bar">
+      <button type="button" id="bNote">Crew book</button>
+      <button type="button" id="bPeople">Stops</button>
+      <button type="button" id="bAcc2" class="red">Stage</button>
+    </div>
+  </section>
+
+  <section class="screen" id="play" hidden>
+    <canvas id="map"></canvas>
+    <div id="mhud">
+      <div><b id="mT">0:00</b><span>Time</span></div>
+      <div><b id="mS">0</b><span>Stops</span></div>
+      <div><b id="mL">1</b><span>Rank</span></div>
+      <div><b id="mX">0</b><span>Fans</span></div>
+      <div><b id="mC">0</b><span>Stars</span></div>
+      <button type="button" id="zM" aria-label="Pause">☰</button>
+    </div>
+    <div id="zoom">
+      <button type="button" id="zIn" aria-label="Zoom in">+</button>
+      <button type="button" id="zOut" aria-label="Zoom out">−</button>
+      <button type="button" id="zMe" aria-label="Centre on me">◎</button>
+    </div>
+    <div id="low">
+      <div id="radar">Heading to stop 1</div>
+      <div id="chip" hidden>
+        <div class="row"><b id="cName"></b><span id="cDist"></span></div>
+        <span id="cHint" class="note"></span>
+        <button class="btn" id="cAct"></button>
+      </div>
+      <div id="mbar">
+        <button type="button" id="mNote">Crew book</button>
+        <button type="button" id="mPeople">Stops</button>
+        <button type="button" id="mAcc" class="red">Stage</button>
+      </div>
+    </div>
+  </section>
+
+  <div id="cine" hidden><canvas id="cineC"></canvas><div id="cineT"></div><button type="button" class="btn" id="cineX">Skip ▸</button></div>
+  <div id="hide" hidden><div id="hideUI"><b id="hideHint"></b></div><div id="room"></div><div id="hideMsg"></div><button type="button" class="btn" id="hideX">◂ Back</button></div>
+  <input type="file" id="file" accept="image/*" capture="environment" aria-label="Take the photo">
+  <div class="sheet" id="sheet" hidden><div class="paper" id="sheetBody"></div></div>
+  <div id="load" hidden role="status"><div class="spin"></div><b id="loadT"></b><span>This usually takes 5 to 30 seconds. Stay on this page.</span></div>
+  <div id="toast" hidden></div>
+</div>
+<script src="../shared/platform.js?v=mm9"></script>
+<script src="../shared/catalog.js?v=mm9"></script>
+<script src="../shared/walk.js?v=3"></script>
+<script src="../shared/steps.js?v=1"></script>
+<script src="../shared/kidsmap.js?v=3"></script>
+<script src="../shared/party.js?v=2"></script>
+<script src="../shared/voice.js?v=1"></script>
+<script src="../games/backstage/data-en.js?v=1"></script>
+<script src="../games/backstage/game.js?v=1"></script>
+<script id="mm-demo">/* MiniMystery: ?oefen start direct de gratis oefenronde (link vanaf Inspiratie op de hub) */
+if(/[?&]oefen\b/.test(location.search)){var b=document.getElementById("bDemo");if(b)setTimeout(function(){b.click()},50)}</script>
+</body>
+</html>

@@ -10,6 +10,7 @@ Zusje van Moordwandeling / Murder Walk: zelfde motor, zelfde Pro/groepspas en de
 /agent-voor-een-dag.html            Agent           /en/officer-for-a-day.html         (logica in /games/agent/)
 /de-betoverde-toverspiegel.html     Toverspiegel    /en/the-enchanted-mirror.html      (logica in /games/spiegel/)
 /glitch-in-de-buurt.html            Glitch (8+)     /en/glitch-in-the-neighbourhood.html (logica in /games/glitch/: de buurt als videogame; elf levelmechanieken (PUZ), hartjes/XP/munten/power-ups/achievements, pixel-avatar, Glitch kaapt het scherm, eindbaas in drie fases (canvas pseudo-3D, microfoon, 3D-escape-room in #room), album en diploma. Alles pixel-art en chiptune in code; geen plaatjes nodig. Codes GL…)
+/backstage-de-verdwenen-setlist.html Backstage (8+) /en/backstage-the-missing-setlist.html (logica in /games/backstage/: popster-wandeling met meidenband NOVA; twaalf stop-mechanieken (PUZ), per stop een podium-onderdeel + setlist-snipper/spoor/getuige, festival-verhaalkaart met eigen plek per opdracht, finale: wazige foto (5 outfits), gesprek met Pip, setlist sorteren, de show met microfoon/beweging en tik-terugval, album en Backstage-pas. Figuren getekend op canvas, muziek in WebAudio. Codes BS…)
 /shared/platform.js   gedeelde laag (Pro, groepspas, profiel, taal). Verschil met Moordwandeling: root = NL, /en/ = EN;
                       codes komen uit https://moordwandeling.nl/codes.json (één lijst voor beide sites), met /codes.json als terugval
 /shared/catalog.js    de zaken op de hub      /shared/hub.js + hub.css   hub
