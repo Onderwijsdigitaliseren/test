@@ -39,7 +39,7 @@ T:{today:"Start de jacht van vandaag",todayAgain:"Nog een jacht van vandaag",ext
   demo:"Proefronde in de binnenstad van Eindhoven",demoCase:"proefronde",demoTip:"Proefronde: tik op de kaart om te lopen.",walk:"Loop ernaartoe",
   popTap:"Tik hem weg",popYou:"jarige",
   kv:{fp:["Lantaarn","Bankje","Speeltuin","School","Brug","Park","Kerk","Plein","Winkel","Bushalte","Brievenbus"],all:"Alle lichtjes! Naar de lantaarn.",near:"Lichtje op {d} m",cold:"Koud… loop een andere kant op",cool:"Lauw. Dichterbij komt-ie",warm:"Warm! Goed zo!",hot:"HEET! Kijk om je heen!",here:"Hier zit de Lichtjesdief!",first:"Loop maar, het kompas wijst de weg",noDir:"Loop een stukje, dan weet het kompas de richting",
-      map:"Plattegrond",kids:"Verhaalkaart",mapTip:"De echte plattegrond. Tik op Verhaalkaart voor de kindertekening.",inSteps:"Nog {n} stappen",
+      map:"Plattegrond",kids:"Verhaalkaart",mapTip:"De echte plattegrond. Tik op Verhaalkaart voor de kindertekening.",goDemo:"We lopen (nep) naar {p}…",inSteps:"Nog {n} stappen",
       virtOut:"Geen plattegrond van de buurt gevonden. Jullie lopen op de verhaalkaart: de pijl en warm/koud wijzen de weg.",
       noMapQ:"Geen locatie vandaag?",noMapT:"De telefoon geeft geen locatie door. Jullie kunnen dezelfde zaak gewoon zonder kaart spelen: de opdrachten komen dan achter elkaar.",noMapGo:"Verder zonder kaart",mNoMap:"Verder zonder kaart (zelfde zaak)",switched:"Verder zonder kaart. Dezelfde zaak, dezelfde opdrachten."},
   howH:"Hoe werkt het?",

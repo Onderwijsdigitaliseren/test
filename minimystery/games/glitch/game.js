@@ -257,7 +257,7 @@ function landmark(g,k,x,y,s){var d=C.ink;
   else if(k==="toren"){blk(g,x-s*.3,y-s*1.6,s*.6,s*1.6,"#475569");blk(g,x-s*.4,y-s*1.75,s*.8,s*.15,"#334155");blk(g,x-s*.1,y-s*1.3,s*.2,s*.2,C.yel);blk(g,x-s*.1,y-s*.8,s*.2,s*.2,C.yel)}
   else if(k==="tunnel"){blk(g,x-s*.7,y-s*.8,s*1.4,s*.8,"#64748b");blk(g,x-s*.4,y-s*.6,s*.8,s*.6,d);blk(g,x-s*.3,y-s*.5,s*.6,s*.1,C.pink)}
   else if(k==="antenne"){blk(g,x-s*.05,y-s*1.5,s*.1,s*1.5,"#94a3b8");for(i=1;i<4;i++){blk(g,x-s*.3*i/3-s*.05,y-s*1.5+i*s*.3,s*.6*i/3+s*.1,s*.06,"#94a3b8")}blk(g,x-s*.08,y-s*1.65,s*.16,s*.16,C.red)}}
-var KM=MW.KidsMap.create({T:T.kv,G:function(){return G},P:function(){return P},dTo:function(s){return dTo(s)},virt:function(){return !!(G&&G.virt)},mode:function(){return G&&G.mode},
+var KM=MW.KidsMap.create({T:T.kv,go:function(s){walkTo={x:s.x,y:s.y};sel=null},G:function(){return G},P:function(){return P},dTo:function(s){return dTo(s)},virt:function(){return !!(G&&G.virt)},mode:function(){return G&&G.mode},
   map:{W:1000,H:1400,start:START,spots:FP,roads:ROADS,vsc:.42,sky:"#12163a",land:"#1d2451",road:"#343f78",roadLine:"#22d3ee",label:"#e0f2fe",labelHalo:"rgba(18,22,58,.9)",heroHalo:"rgba(57,255,136,.2)"},
   draw:{mark:function(g,x,y,r,col){g.fillStyle=col;g.fillRect(x-r,y-r,r*2,r*2)},
     ground:function(g,t){g.fillStyle="rgba(34,211,238,.08)";for(var x=0;x<1000;x+=100)g.fillRect(x,0,1,1400);for(var y=0;y<1400;y+=100)g.fillRect(0,y,1000,1);g.fillStyle="#1b2a66";[[0,640,1000,90]].forEach(function(e){g.fillRect(e[0],e[1],e[2],e[3])});g.fillStyle="rgba(255,255,255,.25)";for(var i=0;i<8;i++)g.fillRect(60+i*120+(still?0:Math.sin(t/700+i)*10),670+(i%2)*20,40,4)},

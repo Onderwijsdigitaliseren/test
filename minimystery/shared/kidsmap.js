@@ -5,7 +5,7 @@
    De echte plattegrond blijft achter een knop voor de begeleider.
    Vereist platform.js en walk.js. Gebruik:
      var km=MW.KidsMap.create({ T:{...teksten}, map:{W,H,start,spots:[{x,y,k}],roads:[[i,j]],land,...}, draw:{landmark,decor,start,hero,runner,overlay},
-                               G:()=>G, P:()=>P, dTo:fn, virt:()=>bool, mode:()=>G.mode, say:fn, onTap:fn });
+                               G:()=>G, P:()=>P, dTo:fn, virt:()=>bool, mode:()=>G.mode, say:fn, onTap:fn, go:fn(st) (proefronde: loop naar deze plek) });
      km.mount();  // één keer, na het laden van de pagina (maakt #kmBox, #kmMsg, #kmHot en #bView in #play)
      km.enter({kids:bool, virt:bool, map:map});  // bij het betreden van de kaart
      km.draw(t) in de teken-lus (geeft true als de verhaalkaart getekend is, anders teken je de echte kaart)
@@ -14,7 +14,7 @@
 "use strict";
 var MW=window.MW,$=function(s){return document.querySelector(s)};
 function create(o){
-  var T=o.T,M=o.map,DR=o.draw||{},VSC=M.vsc||.42,KV=false,HEAD=null,MOVB=null,lastP=null,map=null,bView=null,msgEl=null,hotEl=null,cv=null;
+  var T=o.T,M=o.map,DR=o.draw||{},VSC=M.vsc||.42,VT=null,KV=false,HEAD=null,MOVB=null,lastP=null,map=null,bView=null,msgEl=null,hotEl=null,cv=null;
   var still=matchMedia("(prefers-reduced-motion: reduce)").matches;
   function G(){return o.G()}function P(){return o.P()}function dTo(s){return o.dTo(s)}
   function fk(s){return s.fk!=null?s.fk:s.fi%M.spots.length}
@@ -33,9 +33,25 @@ function create(o){
   function stopHead(){removeEventListener("deviceorientationabsolute",onHead);removeEventListener("deviceorientation",onHead);HEAD=null}
   function moved(d){var p=P();if(lastP&&d>6)MOVB=Math.atan2(p.y-lastP.y,p.x-lastP.x);if(!lastP||d>6)lastP={x:p.x,y:p.y}}
   function arrowAngle(tgt){var p=P(),b=Math.atan2(tgt.y-p.y,tgt.x-p.x),m=o.mode();if(m==="demo"||m==="in")return b;if(HEAD!=null)return b-Math.PI/2-(HEAD-90)*Math.PI/180;if(MOVB!=null)return b-Math.PI/2-MOVB;return null}
+  /* geo-indeling: de plekken staan op de verhaalkaart op dezelfde onderlinge plek als in het echt (noorden boven, start = waar je begon),
+     geschaald tot het stuk land past. Het groepje staat dan op zijn echte gps-positie. Zonder echte plekken (virtueel) geldt de vaste tekening. */
+  var LY=null;
+  function layout(){var g=G();if(o.virt()||!g||!g.st||!g.st.length)return LY=null;
+    var sig=g.st.length+":"+g.st.map(function(s){return s.fi+","+Math.round(s.x)+","+Math.round(s.y)}).join(";");if(LY&&LY.sig===sig)return LY;
+    var pts=[{x:0,y:0}].concat(g.st.map(function(s){return{x:s.x,y:s.y}})),x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;
+    pts.forEach(function(q){x0=Math.min(x0,q.x);x1=Math.max(x1,q.x);y0=Math.min(y0,q.y);y1=Math.max(y1,q.y)});
+    var mx=130,mt=200,mb=120,iw=M.W-2*mx,ih=M.H-mt-mb,bw=Math.max(60,x1-x0),bh=Math.max(60,y1-y0),sc=Math.min(iw/bw,ih/bh);
+    var ox=mx+(iw-bw*sc)/2-x0*sc,oy=mt+(ih-bh*sc)/2-y0*sc,to=function(q){return{x:ox+q.x*sc,y:oy+q.y*sc}};
+    var L={sig:sig,sc:sc,to:to,start:to({x:0,y:0}),by:{},list:[]};
+    g.st.forEach(function(s){var q=to(s);q.st=s;q.k=fspot(fk(s)).k;q.i=fk(s);L.by[s.fi]=q;L.list.push(q)});
+    /* wegen: een route van de start langs alle plekken (steeds de dichtstbijzijnde) */
+    L.roads=[];var left=L.list.slice(),cur=L.start;while(left.length){var bi=0,bd=1e9;left.forEach(function(q,i){var d=Math.hypot(q.x-cur.x,q.y-cur.y);if(d<bd){bd=d;bi=i}});L.roads.push([cur,left[bi]]);cur=left[bi];left.splice(bi,1)}
+    return LY=L}
+  function gpos(s){return LY&&LY.by[s.fi]?LY.by[s.fi]:fspot(fk(s))}
+  function gstart(){return LY?LY.start:M.start}
   /* plek van het groepje op de verhaalkaart */
-  function prevSpot(){var g=G(),last=null,lt=-1;g.st.forEach(function(s){if(s.done&&(s.doneAt||0)>lt){lt=s.doneAt||0;last=s}});return last?fspot(fk(last)):M.start}
-  function pos(nr){var g=G(),p=P();if(o.virt())return{x:M.start.x+p.x/VSC,y:M.start.y+p.y/VSC};if(!nr)return prevSpot();var a=prevSpot(),b=fspot(fk(nr)),d=dTo(nr);
+  function prevSpot(){var g=G(),last=null,lt=-1;g.st.forEach(function(s){if(s.done&&(s.doneAt||0)>lt){lt=s.doneAt||0;last=s}});return last?gpos(last):gstart()}
+  function pos(nr){var g=G(),p=P();if(o.virt())return{x:M.start.x+p.x/VSC,y:M.start.y+p.y/VSC};if(LY)return LY.to({x:p.x,y:p.y});if(!nr)return prevSpot();var a=prevSpot(),b=gpos(nr),d=dTo(nr);
     if(g.kd0==null||g.kdFi!==nr.fi){g.kd0=Math.max(d,40);g.kdFi=nr.fi}if(d>g.kd0)g.kd0=d;var tt=Math.max(0,Math.min(1,1-d/g.kd0));return{x:a.x+(b.x-a.x)*tt,y:a.y+(b.y-a.y)*tt}}
   function hoof(g,x,y,r,col){if(DR.mark)return DR.mark(g,x,y,r,col);g.save();g.fillStyle=col;g.beginPath();g.arc(x,y,r,0,7);g.fill();g.restore()}
   /* ---------- dom ---------- */
@@ -67,7 +83,10 @@ function create(o){
     helpEl=document.createElement("button");helpEl.type="button";helpEl.id="kmHelp";helpEl.textContent="?";helpEl.title=X.help;helpEl.setAttribute("aria-label",X.help);play.appendChild(helpEl);helpEl.onclick=function(){intro(true)};
     introEl=document.createElement("div");introEl.id="kmIntro";introEl.hidden=true;play.appendChild(introEl);
     cv=$("#kmC");msgEl=$("#kmMsg");hotEl=$("#kmHot");
-    cv.addEventListener("pointerdown",function(e){if(!o.onTap)return;var b=cv.getBoundingClientRect();o.onTap(e.clientX-b.left,e.clientY-b.top)});
+    cv.addEventListener("pointerdown",function(e){var b=cv.getBoundingClientRect(),x=e.clientX-b.left,y=e.clientY-b.top;if(o.onTap)o.onTap(x,y);
+      /* tik op een plek: in de proefronde loop je er (nep) heen, anders wordt hij even aangewezen */
+      if(!VT||!LY)return;var hit=null,hd=1e9;LY.list.forEach(function(q){var sx=VT.ox+q.x*VT.sc,sy=VT.oy+(q.y-50)*VT.sc,d=Math.hypot(x-sx,y-sy);if(d<hd){hd=d;hit=q}});
+      if(hit&&hd<64*Math.max(VT.sc,.5)+22){if(o.mode()==="demo"&&o.go&&!hit.st.done){o.go(hit.st);if(T.goDemo)MW.Walk.toast(MW.fill(T.goDemo,{p:T.fp[hit.i]||hit.st.name||""}))}else if(T.fp[hit.i]){MW.Walk.toast((T.fp[hit.i]||"")+(hit.st.done?" ✓":" · "+Math.round(dTo(hit.st))+" m"))}}});
     addEventListener("resize",function(){if(!$(o.host||"#play").hidden&&KV)size()})}
   function size(){var dpr=Math.min(2,devicePixelRatio||1),w=cv.clientWidth||innerWidth,h=cv.clientHeight||innerHeight;cv.width=w*dpr;cv.height=h*dpr;cv.dataset.dpr=dpr}
   function setView(){$("#kmBox").hidden=!KV;$(o.host||"#play").classList.toggle("kv",KV);bView.textContent=KV?"🗺️ "+X.toMap:"🎨 "+X.toKids+(T.kids||"").toLowerCase();
@@ -77,17 +96,21 @@ function create(o){
   function leave(){stopHead()}
   /* ---------- tekenen ---------- */
   function draw(t){if(!KV||$("#kmBox").hidden)return false;var g=cv.getContext("2d"),dpr=+cv.dataset.dpr||1,w=cv.width/dpr,h=cv.height/dpr;g.setTransform(dpr,0,0,dpr,0,0);
-    var GG=G(),nr=near(),nd=nr?dTo(nr):1e9,ht=heat(nd),col=HC[ht],top=M.top||120,bot=M.bot||200,sc=Math.min(w/M.W,(h-top-bot)/M.H),ox=(w-M.W*sc)/2,oy=top+(h-top-bot-M.H*sc)/2;
+    var GG=G(),nr=near(),nd=nr?dTo(nr):1e9,ht=heat(nd),col=HC[ht],top=M.top||120,bot=M.bot||200,sc=Math.min(w/M.W,(h-top-bot)/M.H),ox=(w-M.W*sc)/2,oy=top+(h-top-bot-M.H*sc)/2;layout();VT={sc:sc,ox:ox,oy:oy};
     g.fillStyle=M.sky||"#9ad7ff";g.fillRect(0,0,w,h);
     g.save();g.translate(ox,oy);g.scale(sc,sc);
     /* land */g.fillStyle=M.land||"#9fd98a";g.beginPath();g.moveTo(40,120);g.quadraticCurveTo(M.W/2,20,M.W-40,110);g.quadraticCurveTo(M.W+10,M.H/2,M.W-50,M.H-80);g.quadraticCurveTo(M.W/2,M.H,50,M.H-90);g.quadraticCurveTo(-10,M.H/2,40,120);g.closePath();g.fill();
     if(DR.ground)DR.ground(g,t,still);
     /* wegen */g.lineCap="round";g.lineJoin="round";var rd=function(r){var a=r[0]<0?M.start:M.spots[r[0]],b=r[1]<0?M.start:M.spots[r[1]];g.beginPath();g.moveTo(a.x,a.y);g.lineTo(b.x,b.y);g.stroke()};
-    M.roads.forEach(function(r){g.strokeStyle=M.road||"#e9d8a6";g.lineWidth=34;rd(r)});M.roads.forEach(function(r){g.strokeStyle=M.roadLine||"#fff7dd";g.lineWidth=4;g.setLineDash([14,18]);rd(r);g.setLineDash([])});
-    /* spoor naar de volgende plek */if(nr&&!o.virt()){var a=prevSpot(),b=fspot(fk(nr)),L=Math.hypot(b.x-a.x,b.y-a.y),n2=Math.floor(L/48);for(var i=1;i<n2;i++){var q=i/n2;hoof(g,a.x+(b.x-a.x)*q+(i%2?10:-10),a.y+(b.y-a.y)*q,8,"rgba(0,0,0,.28)")}}
-    if(DR.decor)DR.decor(g,t,still);
-    if(DR.start)DR.start(g,M.start.x,M.start.y,t,still);
-    /* plekken */M.spots.forEach(function(f,i){var st=GG.st.filter(function(s){return fk(s)===i})[0];if(!st)return;var dn=st.done,isN=nr&&fk(nr)===i;
+    var RDS=LY?LY.roads:M.roads,rdg=function(r){var a=LY?r[0]:(r[0]<0?M.start:M.spots[r[0]]),b=LY?r[1]:(r[1]<0?M.start:M.spots[r[1]]);g.beginPath();g.moveTo(a.x,a.y);g.lineTo(b.x,b.y);g.stroke()};
+    RDS.forEach(function(r){g.strokeStyle=M.road||"#e9d8a6";g.lineWidth=34;rdg(r)});RDS.forEach(function(r){g.strokeStyle=M.roadLine||"#fff7dd";g.lineWidth=4;g.setLineDash([14,18]);rdg(r);g.setLineDash([])});
+    /* spoor naar de volgende plek */if(nr&&!o.virt()){var a=LY?pos(nr):prevSpot(),b=gpos(nr),L=Math.hypot(b.x-a.x,b.y-a.y),n2=Math.floor(L/48);for(var i=1;i<n2;i++){var q=i/n2;hoof(g,a.x+(b.x-a.x)*q+(i%2?10:-10),a.y+(b.y-a.y)*q,8,"rgba(0,0,0,.28)")}}
+    if(DR.decor&&!LY)DR.decor(g,t,still);
+    var S0=gstart();if(DR.start)DR.start(g,S0.x,S0.y,t,still);
+    /* plekken: bij een geo-indeling elke echte plek op zijn eigen positie, anders de vaste tekening */
+    var PL=LY?LY.list.map(function(q){return{x:q.x,y:q.y,k:q.k,i:q.i,st:q.st}}):M.spots.map(function(f,i){return{x:f.x,y:f.y,k:f.k,i:i,st:GG.st.filter(function(s){return fk(s)===i})[0]}});
+    PL.sort(function(a,b){return a.y-b.y});
+    PL.forEach(function(f){var st=f.st,i=f.i;if(!st)return;var dn=st.done,isN=nr&&nr.fi===st.fi;
       if(DR.landmark)DR.landmark(g,f.k,f.x,f.y,62);
       g.fillStyle=M.label||"#3b2a14";g.font="700 26px 'Fredoka',sans-serif";g.textAlign="center";g.textBaseline="alphabetic";g.strokeStyle=M.labelHalo||"rgba(255,250,240,.9)";g.lineWidth=6;g.strokeText(T.fp[i]||"",f.x,f.y+36);g.fillText(T.fp[i]||"",f.x,f.y+36);
       if(dn){g.fillStyle="#22c55e";g.beginPath();g.arc(f.x+44,f.y-60,18,0,7);g.fill();g.strokeStyle="#fff";g.lineWidth=4;g.beginPath();g.moveTo(f.x+35,f.y-60);g.lineTo(f.x+41,f.y-54);g.lineTo(f.x+53,f.y-68);g.stroke()}
@@ -95,8 +118,10 @@ function create(o){
       else hoof(g,f.x,f.y-100,11,"rgba(0,0,0,.3)")});
     /* het groepje */var kp=pos(nr);g.fillStyle="rgba(0,0,0,.2)";g.beginPath();g.ellipse(kp.x,kp.y+6,30,10,0,0,7);g.fill();g.fillStyle=M.heroHalo||"rgba(231,111,81,.25)";g.beginPath();g.arc(kp.x,kp.y-20,46+(still?0:Math.sin(t/400)*4),0,7);g.fill();
     if(DR.hero)DR.hero(g,kp.x,kp.y,t);else{g.fillStyle=col;g.beginPath();g.arc(kp.x,kp.y-20,22,0,7);g.fill()}
-    if(nr&&DR.runner){var f2=fspot(fk(nr));DR.runner(g,f2.x,f2.y,t,still)}
+    if(nr&&DR.runner){var f2=gpos(nr);DR.runner(g,f2.x,f2.y,t,still)}
     g.restore();
+    /* noordpijl: de verhaalkaart ligt net als de echte kaart met het noorden boven */
+    if(LY){g.save();g.translate(w-30,h-bot+58);g.fillStyle="#fffaf0";g.shadowColor="rgba(0,0,0,.25)";g.shadowBlur=8;g.beginPath();g.arc(0,0,18,0,7);g.fill();g.shadowBlur=0;g.fillStyle="#e63946";g.beginPath();g.moveTo(0,-13);g.lineTo(6,4);g.lineTo(-6,4);g.closePath();g.fill();g.fillStyle="#3b2a14";g.font="700 11px 'Fredoka',sans-serif";g.textAlign="center";g.textBaseline="middle";g.fillText("N",0,10);g.restore()}
     /* kompaspijl */var ang=nr?arrowAngle(nr):null,cx=52,cy=h-bot+58,R=36;g.save();g.shadowColor="rgba(0,0,0,.25)";g.shadowBlur=12;g.fillStyle="#fffaf0";g.beginPath();g.arc(cx,cy,R,0,7);g.fill();g.restore();g.lineWidth=5;g.strokeStyle="#f4c20d";g.beginPath();g.arc(cx,cy,R-4,0,7);g.stroke();
     if(nr&&ang!=null){g.save();g.translate(cx,cy);g.rotate(ang);g.fillStyle=col;g.beginPath();g.moveTo(R*.6,0);g.lineTo(-R*.25,-R*.32);g.lineTo(-R*.08,0);g.lineTo(-R*.25,R*.32);g.closePath();g.fill();g.restore()}else if(nr){g.fillStyle="#3b2a14";g.font="700 28px 'Fredoka',sans-serif";g.textAlign="center";g.textBaseline="middle";g.fillText("?",cx,cy+2)}
     var ov=DR.overlay?DR.overlay(g,w,h,t):null;introWhenClear(t);

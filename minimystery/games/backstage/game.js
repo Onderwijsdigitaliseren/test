@@ -342,7 +342,7 @@ function landmark(g,k,x,y,s){g.save();g.lineJoin="round";
   else if(k==="lounge"){g.fillStyle="#a78bfa";rr(g,x-s*.7,y-s*.45,s*1.4,s*.45,s*.15);g.fill();rr(g,x-s*.7,y-s*.75,s*1.4,s*.35,s*.15);g.fill();g.fillStyle="#ffd166";g.fillRect(x-s*.8,y-s*1.15,s*1.6,s*.3);g.fillStyle="#14052b";g.font="700 "+Math.round(s*.22)+"px 'Fredoka',sans-serif";g.textAlign="center";g.fillText("VIP",x,y-s*.93)}
   else if(k==="meng"){g.fillStyle="#1f2937";rr(g,x-s*.75,y-s*.6,s*1.5,s*.6,s*.1);g.fill();for(i=0;i<5;i++){g.fillStyle="#94a3b8";g.fillRect(x-s*.6+i*s*.3,y-s*.5,s*.04,s*.4);g.fillStyle=["#ff2d95","#ffd166","#2dd4bf","#a78bfa","#fff"][i];g.fillRect(x-s*.64+i*s*.3,y-s*.4+((i*7)%3)*s*.1,s*.12,s*.07)}}
   g.restore()}
-var KM=MW.KidsMap.create({T:T.kv,G:function(){return G},P:function(){return P},dTo:function(s){return dTo(s)},virt:function(){return !!(G&&G.virt)},mode:function(){return G&&G.mode},
+var KM=MW.KidsMap.create({T:T.kv,go:function(s){walkTo={x:s.x,y:s.y};sel=null},G:function(){return G},P:function(){return P},dTo:function(s){return dTo(s)},virt:function(){return !!(G&&G.virt)},mode:function(){return G&&G.mode},
   map:{W:1000,H:1400,start:START,spots:FP,roads:ROADS,vsc:VSC,sky:"#12021f",land:"#2e0b52",road:"#5b21b6",roadLine:"#ffb3d9",label:"#fff1f8",labelHalo:"rgba(26,4,51,.9)",heroHalo:"rgba(255,45,149,.22)"},
   draw:{mark:function(g,x,y,r,col){sparkle(g,x,y,r*1.3,col,0)},
     ground:function(g,t){g.fillStyle="rgba(255,179,217,.05)";for(var i=0;i<60;i++){var q=(i*9301+49297)%233280/233280,q2=(i*4271+1013)%997/997;g.fillRect(80+q*840,140+q2*1120,3,3)}},

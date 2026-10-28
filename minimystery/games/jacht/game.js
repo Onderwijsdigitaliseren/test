@@ -164,7 +164,7 @@ var KI=MW.KidsMap.icons,START={x:500,y:1290};
 var FP=[{x:230,y:1040,k:"lamp"},{x:150,y:760,k:"bank"},{x:300,y:520,k:"speel"},{x:520,y:330,k:"school"},{x:760,y:420,k:"brug"},{x:860,y:700,k:"park"},{x:720,y:960,k:"kerk"},{x:500,y:760,k:"plein"},{x:150,y:300,k:"winkel"},{x:880,y:1060,k:"halte"},{x:620,y:1130,k:"post"}];
 var ROADS=[[-1,0],[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,-1],[7,2],[7,5],[7,0],[7,6],[8,2],[8,1],[9,6],[9,5],[10,-1],[10,6]];
 var TREES=[[80,1180],[120,320],[420,160],[640,180],[900,260],[950,900],[940,1180],[300,1300],[700,1300],[380,900],[640,600],[90,520],[820,1050],[560,1120]];
-var KM=MW.KidsMap.create({T:T.kv,G:function(){return G},P:function(){return P},dTo:function(s){return dTo(s)},virt:function(){return !!(G&&G.virt)},mode:function(){return G&&G.mode},
+var KM=MW.KidsMap.create({T:T.kv,go:function(s){walkTo={x:s.x,y:s.y};sel=null},G:function(){return G},P:function(){return P},dTo:function(s){return dTo(s)},virt:function(){return !!(G&&G.virt)},mode:function(){return G&&G.mode},
   map:{W:1000,H:1400,bot:250,start:START,spots:FP,roads:ROADS,vsc:.42,sky:"#140f2e",land:"#223a3a",road:"#4a3f86",roadLine:"#9f8cff",label:"#ffd36a",labelHalo:"rgba(20,15,46,.9)",heroHalo:"rgba(212,255,58,.25)"},
   draw:{mark:function(g,x,y,r,col){g.save();g.fillStyle=col==="#fff"?"#ffd36a":"rgba(255,211,106,.5)";g.shadowColor="#ffd36a";g.shadowBlur=8;g.beginPath();g.arc(x,y,r*.8,0,7);g.fill();g.restore()},
     ground:function(g,t,still){g.fillStyle="#1d3330";[[200,250,160],[760,900,200],[300,1150,140],[650,250,120]].forEach(function(e){g.beginPath();g.ellipse(e[0],e[1],e[2],e[2]*.5,0,0,7);g.fill()});
