@@ -215,8 +215,8 @@ function won(k){mg.stop();var ing=T.ing[k];if(G.pot.indexOf(k)<0)G.pot.push(k);v
   say(ing.done+" "+clue);
   $("#nx").onclick=function(){if(gw!=null)wordGet(gw,after);else if(gd!=null)digitGet(gd,after);else after()}}
 function wordGet(w,then){
-  glass('<div class="talk"><p>'+esc(T.wordGet)+'</p><div class="word">'+esc(w)+'</div><p class="note">'+esc(T.wordsSoFar)+' '+esc(G.c.words.slice(0,G.words).join(" · "))+'</p><button type="button" class="btn" id="nx">'+T.next+'</button></div>');
-  say(T.wordGet+" "+w);$("#nx").onclick=then}
+  glass('<div class="talk"><p>'+esc(T.wordGet)+'</p><div class="word">'+esc(w)+'</div><p class="note">'+esc(T.wordsSoFar)+' '+esc(G.c.words.slice(0,G.words).join(" · "))+'</p><p class="why">'+esc(T.wordWhy)+'</p><button type="button" class="btn" id="nx">'+T.next+'</button></div>');
+  say(T.wordGet+" "+w+". "+T.wordWhy);$("#nx").onclick=then}
 function after(){var per=G.len==="lang"?2:G.len==="kort"?0:1,doneHere=G.sj[G.i]||0;if(G.sjList&&doneHere<per){G.sj[G.i]=doneHere+1;save();return photoHunt(G.sjList[G.sjN++],after)}
   if(G.i<6&&!G.cl[G.i]){G.cl[G.i]=1;G.ph="cliff";save();return cliff(G.i,after)}
   G.i++;G.pi=0;G.ph="pass";save();
@@ -412,8 +412,8 @@ function pzMirror(done,n){var r=rngOf(G.seed^0xF66^G.i),signs=[String(n)];if(har
   glass(pzHead(PZ.mirH,hard()?PZ.mirTT:PZ.mirT)+'<div class="mirtxt">'+signs.map(function(s){return '<span>'+s+'</span>'}).join("")+'</div><div class="opts four">'+opts.map(function(v){return '<button type="button" data-v="'+v+'"><span>'+v+'</span></button>'}).join("")+'</div>');say(hard()?PZ.mirTT:PZ.mirT);
   $(".opts").onclick=function(e){var b=e.target.closest("button");if(!b)return;if(+b.dataset.v===n){toast(T.right);done()}else{if(pzMiss())return;buzz(80);b.classList.add("no")}}}
 function digitGet(d,then){
-  glass('<div class="talk"><p>'+esc(PZ.digitGet)+'</p><div class="word gold">'+d+'</div><p class="note">'+esc(PZ.digitsSoFar)+' '+G.c.digits.slice(0,G.digits).join(" · ")+'</p><button type="button" class="btn" id="nx">'+T.next+'</button></div>');
-  say(PZ.digitGet+" "+d);$("#nx").onclick=then}
+  glass('<div class="talk"><p>'+esc(PZ.digitGet)+'</p><div class="word gold">'+d+'</div><p class="note">'+esc(PZ.digitsSoFar)+' '+G.c.digits.slice(0,G.digits).join(" · ")+'</p><p class="why">'+esc(PZ.digitWhy)+'</p><button type="button" class="btn" id="nx">'+T.next+'</button></div>');
+  say(PZ.digitGet+" "+d+". "+PZ.digitWhy);$("#nx").onclick=then}
 /* ========== nieuwe puzzels ========== */
 function opts4(n,r){var o=[n];[n-1,n+1,n+2,n-2].forEach(function(v){if(v>=1&&v<=12&&o.length<4)o.push(v)});return shuffle(o,r).sort(function(a,b){return a-b})}
 /* A. de toverklokjes: kijk en luister, speel het liedje na (Elfje 3 tonen, Tovenaar 5) */

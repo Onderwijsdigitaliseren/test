@@ -13,10 +13,10 @@ var MW=window.MW,$=function(s){return document.querySelector(s)},$$=function(s){
 var me=document.currentScript,GID=(me&&me.dataset.game)||"",L=(document.documentElement.lang||"nl").slice(0,2)==="en"?"en":"nl";
 var X={nl:{where:"Waar spelen jullie?",edit:"Aanpassen",editX:"Klaar",set:"Instellingen",lvl:"Niveau",dur:"Lengte",vOn:"voorlezen aan",vOff:"voorlezen uit",forN:"voor {n}",kids:"{n} namen",kids0:"namen nog leeg",
     newH:"Nieuw hier?",newT:"Speel eerst gratis de proefronde: een paar minuten op een getekende stad, zodat je ziet hoe het werkt.",trial:"▶ Gratis proefronde",real:"De echte zaak",
-    how:"Hoe werkt het?",need:"Nodig: één telefoon per groepje en een volwassene erbij. Lezen hoeft niet: de telefoon leest voor.",more:"Alles voor de begeleider",close:"Sluiten",trialS:"Proefronde"},
+    how:"Hoe werkt het?",need:"Nodig: één telefoon per groepje en een volwassene erbij. Lezen hoeft niet: de telefoon leest voor.",more:"Alles voor de begeleider",close:"Sluiten",trialS:"Proefronde",moreB:"Meer"},
   en:{where:"Where are you playing?",edit:"Change",editX:"Done",set:"Settings",lvl:"Level",dur:"Length",vOn:"read aloud on",vOff:"read aloud off",forN:"for {n}",kids:"{n} names",kids0:"no names yet",
     newH:"New here?",newT:"Play the free practice round first: a few minutes on a drawn town, so you can see how it works.",trial:"▶ Free practice round",real:"The real case",
-    how:"How does it work?",need:"You need: one phone per group and a grown-up. No reading needed: the phone reads aloud.",more:"Everything for the grown-up",close:"Close",trialS:"Practice round"}}[L];
+    how:"How does it work?",need:"You need: one phone per group and a grown-up. No reading needed: the phone reads aloud.",more:"Everything for the grown-up",close:"Close",trialS:"Practice round",moreB:"More"}}[L];
 /* drie stappen per spel: [icoon, kop, uitleg] */
 var STEPS={
   pp:{nl:[["🐾","Volg de hoefafdrukken","Loop naar de volgende plek. De pijl en koud/warm/heet wijzen de weg. Binnen loop je op de plaats."],["🧩","Los de puzzel op","Elke puzzel geeft een spoor en een gouden hoefijzer met een cijfer."],["🏡","Waar is Pluis?","Met alle sporen kies je de plek waar Pluis is. Daarna krijg je het Ruiterpaspoort."]],
@@ -44,7 +44,7 @@ function css(){if(document.getElementById("mmStartCss"))return;var s=document.cr
   ".mmNew h3{margin:0 0 4px;font-size:17px}.mmNew p{margin:0 0 10px;font-size:14px;line-height:1.4;opacity:.92}.mmNew .btn{margin:0!important;width:100%}"+
   ".mmReal{margin:20px 0 0;font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;opacity:.8;text-align:left}"+
   ".mmGo{font-size:19px!important;padding-top:18px!important;padding-bottom:18px!important}"+
-  ".mmLinks{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:22px 0 8px}"+
+  ".mmLinks{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:22px 0 8px}.mmLinks.mmMore{margin-top:0}.mmLinks[hidden]{display:none}"+
   ".mmLinks>.btn{width:auto!important;flex:0 0 auto;min-height:0!important;padding:8px 12px!important;font-size:13px!important;margin:0!important;letter-spacing:normal!important}"+
   ".mmHow{list-style:none;margin:10px 0 12px;padding:0}.mmHow li{display:flex;gap:12px;align-items:flex-start;margin:0 0 12px;text-align:left}"+
   ".mmHow i{font-style:normal;font-size:26px;line-height:1;flex:0 0 34px;text-align:center}.mmHow b{display:block;font-size:16px;margin-bottom:2px}.mmHow span{font-size:14px;line-height:1.4}"+
@@ -77,16 +77,19 @@ function build(){var home=$("#home"),wrap=home&&home.querySelector(".wrap"),go=$
   var real=document.createElement("div");real.className="mmReal";real.textContent=X.real;add(real);
   add($("#bResume"));
   /* (b) waar spelen jullie + start */
-  if(modeSeg){var q=document.createElement("div");q.className="mmQ";q.textContent=X.where;add(q);var pl=modeSeg.previousElementSibling;if(pl&&pl.classList.contains("seglbl"))pl.remove();add(modeSeg)}
   /* Toverspiegel: de namen zijn nodig om te beginnen, dus die blijven in beeld */
   var kids=$("#kids");if(kids){var kb=kids.closest(".namebox")||kids;add(kb)}
   var sum=document.createElement("div");sum.className="mmSum";sum.innerHTML='<span></span><button type="button" aria-expanded="false">'+X.edit+' ▾</button>';add(sum);
   var set=document.createElement("div");set.className="mmSet";set.hidden=true;add(set);
   go.classList.add("mmGo");add(go);add($("#status"));add($("#bPro"));
-  var links=document.createElement("div");links.className="mmLinks";add(links);
+  var foot=document.createElement("div");foot.className="mmLinks";add(foot);
+  var moreB=document.createElement("button");moreB.type="button";moreB.className="btn ghost sm";moreB.textContent=X.moreB+" ▾";
+  var links=document.createElement("div");links.className="mmLinks mmMore";links.hidden=true;add(links);
+  moreB.onclick=function(){links.hidden=!links.hidden;moreB.textContent=X.moreB+(links.hidden?" ▾":" ▴")};
   anchor.parentNode.replaceChild(frag,anchor);
   /* (c) instellingen */
   var putIn=function(arr){(arr||[]).forEach(function(n){if(n)set.appendChild(n)})};
+  if(modeSeg){var pl=modeSeg.previousElementSibling;if(pl&&pl.classList.contains("seglbl"))pl.remove();set.appendChild(label(X.where));putIn([modeSeg])}
   var nm=$("#name");if(nm)putIn([nm.closest(".namebox")||nm]);
   if(lvlSeg){var u=unit(lvlSeg);if(u.length===1)set.appendChild(label(X.lvl));putIn(u)}
   if(durSeg){var u2=unit(durSeg);if(u2.length===1)set.appendChild(label(X.dur));putIn(u2)}
@@ -95,7 +98,8 @@ function build(){var home=$("#home"),wrap=home&&home.querySelector(".wrap"),go=$
   putIn([$("#bVoice")]);
   var party=$(".mmp-row");if(party)putIn([party]);
   /* overige knoppen klein onderaan */
-  [howB,$("#bRandom"),$("#bCode"),$("#bArch"),$("#bDemo"),$("#bWipe")].forEach(function(b){if(b){b.classList.add("ghost","sm");links.appendChild(b)}});
+  if(howB){howB.classList.add("ghost","sm");foot.appendChild(howB)}foot.appendChild(moreB);
+  [$("#bRandom"),$("#bCode"),$("#bArch"),$("#bDemo"),$("#bWipe")].forEach(function(b){if(b){b.classList.add("ghost","sm");links.appendChild(b)}});
   /* losse labels die nu leeg/verweesd zijn opruimen */
   $$("#home .wrap > .seglbl").forEach(function(e){e.remove()});
   var demo=$("#bDemo"),demoTxt=demo?demo.textContent:"";
@@ -106,12 +110,12 @@ function build(){var home=$("#home"),wrap=home&&home.querySelector(".wrap"),go=$
     var b=MW.Walk.sheet('<h2>'+X.how+'</h2><ol class="mmHow">'+st.map(function(s){return '<li><i>'+s[0]+'</i><div><b>'+s[1]+'</b><span>'+s[2]+'</span></div></li>'}).join("")+'</ol><p class="mmNeed">'+X.need+'</p>'+
       (full?'<details class="mmMoreD"><summary>'+X.more+'</summary>'+full.innerHTML+'</details>':'')+'<button type="button" class="btn ghost dk" id="mmHowX">'+X.close+'</button>');
     $("#mmHowX").onclick=MW.Walk.closeSheet};
-  function refresh(){var bits=[],lv=on(lvlSeg),du=on(durSeg),vb=$("#bVoice"),name=nm&&nm.value.trim();
-    if(lv)bits.push(txt(lv));if(du){var mm=(small(du)+" "+txt(du)).match(/±\s?\d+\s?min/);bits.push(mm?mm[0].replace(/±\s?/,"± "):txt(du))}
+  function refresh(){var bits=[],md=on(modeSeg),lv=on(lvlSeg),du=on(durSeg),vb=$("#bVoice"),name=nm&&nm.value.trim();
+    if(md)bits.push(txt(md));if(lv)bits.push(txt(lv));if(du){var mm=(small(du)+" "+txt(du)).match(/±\s?\d+\s?min/);bits.push(mm?mm[0].replace(/±\s?/,"± "):txt(du))}
     if(vb)bits.push(/🔇/.test(vb.textContent)||vb.getAttribute("aria-pressed")==="false"?X.vOff:X.vOn);
     if(name)bits.push(MW.fill(X.forN,{n:name}));
     sum.querySelector("span").textContent=bits.join(" · ");go.textContent=go.textContent.replace("🔒 ▶ ","🔒 ");
-    var lk=MW.pro&&MW.pro.locked?MW.pro.locked(GID):false;nw.hidden=!lk||!demo;real.hidden=!lk||!demo;var stt=$("#status");if(stt)stt.hidden=lk;
+    var lk=MW.pro&&MW.pro.locked?MW.pro.locked(GID):false;nw.hidden=!lk||!demo;real.hidden=true;var stt=$("#status");if(stt)stt.hidden=lk;
     if(demo){if(lk){nw.appendChild(demo);demo.classList.remove("sm");demo.textContent=X.trial}else{links.insertBefore(demo,$("#bWipe"));demo.classList.add("sm");demo.textContent=X.trialS}}}
   refresh();
   new MutationObserver(function(){if(!home.hidden)setTimeout(refresh,0)}).observe(home,{attributes:true,attributeFilter:["hidden"]});

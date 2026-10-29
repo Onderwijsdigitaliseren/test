@@ -10,13 +10,15 @@
 "use strict";
 var MW=window.MW,Wk=MW.Walk,esc=MW.esc,fill=MW.fill,$=function(s){return document.querySelector(s)};
 var L=(document.documentElement.lang||"nl").slice(0,2)==="en"?"en":"nl";
-var T={nl:{lost:"Hartje kwijt!",over:"Alle hartjes op!",overT:"Geeft niks. Even schudden en opnieuw, dat kan zo vaak als je wilt.",retry:"Opnieuw!",
+var T={nl:{lost:"Hartje kwijt!",tip:"Drie hartjes. Fout = hartje weg. Op? Gewoon opnieuw, zonder straf.",over:"Alle hartjes op!",overT:"Geeft niks. Even schudden en opnieuw, dat kan zo vaak als je wilt.",retry:"Opnieuw!",
     hjH:"⚠ Hij neemt het scherm over",hjGo:"Gedaan! ▸",hjAll:"Opdracht voor de hele groep",
     raH:"Samen!",raGo:"Klaar ▸",raT:"Iedereen tikt tegelijk op het scherm. Zo snel als je kunt!",raOk:"Gelukt!"},
-  en:{lost:"Lost a heart!",over:"Out of hearts!",overT:"No worries. Shake it off and try again, as often as you like.",retry:"Try again!",
+  en:{lost:"Lost a heart!",tip:"Three hearts. Wrong = lose one. All gone? Just try again, no penalty.",over:"Out of hearts!",overT:"No worries. Shake it off and try again, as often as you like.",retry:"Try again!",
     hjH:"⚠ He's taking over the screen",hjGo:"Done! ▸",hjAll:"Task for the whole group",
     raH:"Together!",raGo:"Done ▸",raT:"Everyone taps the screen at the same time. As fast as you can!",raOk:"You did it!"}}[L];
 function css(){if($("#mmCrewCss"))return;var s=document.createElement("style");s.id="mmCrewCss";s.textContent=
+  ".why{font-size:14px;line-height:1.4;opacity:.9;margin:6px 0 10px;padding:8px 12px;border-radius:12px;background:rgba(127,127,127,.12);text-align:left}"+
+  "#crHj .crLine{white-space:pre-line}"+
   ".crH{display:flex;justify-content:center;gap:6px;margin:4px 0 8px}.crH i{width:24px;height:22px;background:rgba(127,127,127,.35);clip-path:polygon(50% 100%,0 40%,0 15%,25% 0,50% 20%,75% 0,100% 15%,100% 40%);transition:transform .2s,background .2s}"+
   ".crH i.on{background:#ff4f7a;box-shadow:0 0 10px rgba(255,79,122,.7)}.crH i.pop{transform:scale(1.4)}"+
   ".crOver{text-align:center;padding:18px 10px}.crOver b{display:block;font-size:22px;margin-bottom:6px}.crOver p{margin:0 0 14px;font-size:15px;opacity:.85}"+
@@ -46,6 +48,7 @@ function say(t){try{if(!t)return;var ss=window.speechSynthesis;if(!ss)return;ss.
 function hearts(box,restart,opt){css();opt=typeof opt==="number"?{n:opt}:(opt||{});var n=opt.n||3;var el=document.createElement("div");el.className="crH";if(opt.mount){opt.mount.innerHTML="";opt.mount.appendChild(el)}else box.parentNode.insertBefore(el,box);var h=n,dead=false;
   function paint(){el.innerHTML="";for(var i=0;i<n;i++){var s=document.createElement("i");if(i<h)s.className="on";el.appendChild(s)}}
   paint();
+  try{if(!localStorage.getItem("mm_hearts_tip")){localStorage.setItem("mm_hearts_tip","1");setTimeout(function(){Wk.toast(T.tip)},700)}}catch(e){}
   return{el:el,left:function(){return h},dead:function(){return dead},
     miss:function(){if(dead)return true;h--;paint();var last=el.children[h];if(last){last.classList.add("pop");setTimeout(function(){last.classList.remove("pop")},250)}Wk.buzz(120);
       if(h>0){Wk.toast(T.lost);return false}
@@ -79,5 +82,6 @@ function rally(o){css();var hj=$("#crHj");if(hj){hj.hidden=true;hj.innerHTML=""}
     if(n>=goal&&!fin)setTimeout(done,350)};
   return{close:function(){clearInterval(iv);ov.hidden=true;ov.innerHTML=""}}}
 
+css();
 MW.Crew={hearts:hearts,hijack:hijack,rally:rally,T:T,busy:function(){var a=$("#crHj"),b=$("#crRa");return !!((a&&!a.hidden)||(b&&!b.hidden))}};
 })();

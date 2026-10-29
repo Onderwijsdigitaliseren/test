@@ -33,3 +33,18 @@
 #kmIntro.kmBanner .kmCard{pointer-events:auto;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:16px;max-width:none}
 #kmIntro.kmBanner p{margin:0;flex:1;font-size:14px;line-height:1.35}
 #kmIntro.kmBanner .kmOk{flex:0 0 auto;width:auto;padding:9px 14px;border-radius:12px;border:0;background:#2b1d0e;color:#fffaf0;font:700 15px 'Fredoka','Arial Rounded MT Bold',sans-serif}
+
+/* ===== speelkaart v2: één opdrachtkaart onderin (met kompas), kaartknop aan de zijkant ===== */
+#kmMsg,#kmHot,#kmTag,#kmHelp{display:none!important}
+#kmCard{position:absolute;left:12px;right:12px;bottom:calc(var(--km-card-b,84px) + env(safe-area-inset-bottom,0px));z-index:2;display:flex;align-items:center;gap:12px;padding:10px 14px 10px 10px;border-radius:20px;border:2px solid var(--km-line,#5b3a1e);background:var(--km-paper,rgba(255,250,240,.96));color:var(--km-ink,#3b2a14);box-shadow:0 10px 28px rgba(0,0,0,.28);pointer-events:none}
+#kmComp{width:64px;height:64px;flex:0 0 64px}
+#kmCard .kmTx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+#kmGoT{font:700 19px/1.2 'Fredoka','Arial Rounded MT Bold',sans-serif;overflow:hidden;text-overflow:ellipsis}
+#kmSub{font:600 14px/1.3 'Fredoka','Arial Rounded MT Bold',sans-serif;opacity:.85}
+#kmHeat{position:absolute;right:10px;top:-13px;font:700 12px 'Fredoka',sans-serif;font-style:normal;color:#fff;padding:3px 10px;border-radius:999px;box-shadow:0 2px 8px rgba(0,0,0,.25);text-transform:uppercase;letter-spacing:.06em}
+#kmHeat[hidden]{display:none}
+/* zijknop: klein en rond, rechts halverwege; op de echte kaart dezelfde plek (terug) */
+#play #bView.kmSide,#walk #bView.kmSide{position:absolute!important;right:10px!important;left:auto!important;top:50%!important;bottom:auto!important;transform:translateY(-50%);z-index:4;width:54px!important;height:54px;padding:0!important;border-radius:50%!important;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;box-shadow:0 6px 18px rgba(0,0,0,.3);line-height:1}
+#bView.kmSide i{font-style:normal;font-size:22px;line-height:1}
+#bView.kmSide small{font:700 10px 'Fredoka',sans-serif;margin-top:2px;letter-spacing:.02em}
+#bView.kmSide[hidden]{display:none!important}

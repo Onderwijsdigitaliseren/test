@@ -339,3 +339,5 @@ a.btn{display:block;text-align:center;text-decoration:none}
 /* hartjes (crew.js) boven de spiegel */
 #tsH{position:absolute;left:0;right:0;top:10px;z-index:4;pointer-events:none}#tsH .crH{margin:0}
 body.tsHearts #glass{padding-top:44px}
+
+#walk{--km-card-b:96px}

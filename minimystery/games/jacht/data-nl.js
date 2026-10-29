@@ -10,7 +10,7 @@ T:{today:"▶ Start de jacht",todayAgain:"▶ Speel de jacht van vandaag nog een
   task:"Plek {i} van {N}",wants:"De Lichtjesdief daagt je uit:",hint2:"Tip",shoot:"Maak de foto",start:"Begin",checking:"Even kijken…",tooOld:"Dat is een oude foto. Hij wil een nieuwe, nu.",tooDark:"Te donker. Zelfs een schaduw ziet hier niks.",noFile:"Dat lukte niet. Probeer het nog een keer.",
   camNote:"De foto blijft op deze telefoon. Fotografeer geen vreemde mensen.",
   mlLoad:"De Lichtjesdief zet zijn bril op…",mlOk:"De Lichtjesdief kijkt mee.",mlFail:"De Lichtjesdief ziet slecht vandaag; hij gelooft jullie op je woord.",mlCheck:"Hij bekijkt de foto…",mlNo:"“Dat is {x}. Ik vroeg om {w}. Opnieuw!”",mlYes:"“Hm. Ja. Dat is {x}. Goed dan.”",mlSkip:"Hij laat het zitten",mlSkipped:"“Vooruit. Maar dit telt niet mee voor de sterren.”",
-  shard:"Lichtje {n} van {N}",shardGot:"Lichtje gevangen!",reply:"Hij vlucht en roept",slip:"Oeps! Verspreking",slipT:"Dit is bewijs. Bewijs liegt nooit.",claim:"De Lichtjesdief beweert",claimT:"Hij liegt precies één keer. Welke keer?",gag:"De Lichtjesdief plaagt",
+  shard:"Lichtje {n} van {N}",shardGot:"Lichtje gevangen!",reply:"Hij vlucht en roept",slip:"Oeps! Verspreking",slipT:"Hij verspreekt zich! Dit is altijd waar. Welke buren passen hierbij?",claim:"De Lichtjesdief beweert",claimT:"Hij liegt precies één keer. Straks moet je zeggen welke keer.",gag:"De Lichtjesdief plaagt",
   next:"Achter hem aan!",last:"Schijn hem in zijn gezicht",
   kinds:{photo:"Foto",group:"Groepsfoto",catch:"Dief vangen",lamp:"Zaklamp",tiles:"Schuifpuzzel",seq:"Kleurcode",dust:"Veeg"},
   pz:{catch:["Daar is hij!","Een schaduw schiet over het scherm. Tik hem. Drie keer, dan laat hij van schrik een lichtje vallen."],
@@ -19,7 +19,7 @@ T:{today:"▶ Start de jacht",todayAgain:"▶ Speel de jacht van vandaag nog een
       seq:["Het slot van zijn kistje","De kleuren lichten op. Kijk, en tik ze in dezelfde volgorde na. Elke ronde komt er één bij."],
       dust:["Een beslagen ruit","Veeg hem schoon. Daarachter zit een lichtje."],
       look:"Kijk…",yours:"Jouw beurt: {n} kleuren",wrongSeq:"Fout. Kijk opnieuw.",good:"Goed! Eén erbij.",again:"Toon het nog eens",hits:"{n} / {m}"},
-  notebook:"Speurboekje",nbE:"Versprekingen (altijd waar)",nbW:"Wat hij beweert (één leugen)",nbNone:"Nog niks. Ga jagen.",people:"Wie is de Lichtjesdief?",peopleT:"Overdag is hij een van deze vijf. Kijk naar hoofd, rit en dier.",
+  notebook:"Speurboekje",nbE:"Versprekingen (altijd waar)",nbW:"Wat hij beweert (één leugen)",nbNone:"Nog niks. Ga jagen.",people:"Wie is de Lichtjesdief?",peopleT:"Overdag is hij een van deze vijf. Kijk wat ze op hun hoofd hebben, waarop ze rijden en welk dier ze hebben.",
   menu:"Menu",mBack:"Verder jagen",mHome:"Naar het begin (jacht blijft bewaard)",mWipe:"Deze jacht wissen",
   acH:"Wie is de Lichtjesdief?",acT:"Je lantaarn brandt fel. Wie zie je? Drie versprekingen wijzen hem aan, en één van zijn {nc} beweringen was een leugen. Raad je het goed? Dan weet je waar zijn schuilplaats is, en daar ligt het cadeau.",acWho:"Dit is hem",acLiar:"Dit was de leugen",acGo:"Ontmasker!",acNeed:"Kies allebei: wie hij is én welke bewering de leugen was.",
   wrong:"“HAHA! Fout! Kijk nog eens goed in je speurboekje.”",wrongTries:"Tip: de versprekingen zijn altijd waar. Welke buurtfiguur past bij alle drie?",
@@ -63,7 +63,7 @@ WIT:{hoofd:["“Even eerlijk: vandaag heb ik {v} op. Onthoud dat.”","“Ik dra
      rit:["“Ik ben hier gekomen op {v}. Sneller dan jullie!”","“Mijn voertuig? {v}. Daar ga ik zo op weg.”"],
      dier:["“Ik heb {v} bij me. Die bewaakt het cadeau.”","“Mijn beste vriend is {v}. Die staat naast me.”"]},
 GAG:["“Dit was een test. Jullie zijn geslaagd. Voor niks. HAHA.”","“Jullie lopen de verkeerde kant op. Grapje. Of niet. Of wel.”","“Ik heb net een stukje van de taart opgegeten. Was niet lekker. Toch nog een hap.”","“Zwaai eens naar links. Nu naar rechts. Dankjewel, dat was grappig om te zien.”","“Weet je wat ik hoor? Jullie voetstappen. Weet je wat ik niet hoor? Slimme ideeën.”"],
-OPEN:"Hallo kleine speurneuzen. Hier de Lichtjesdief. Vannacht heb ik alle lichtjes van jullie straat gepikt. En {C}. HAHA. Ik verstop me op {NW} plekken in de buurt. Vang me, en ik laat van schrik een lichtje vallen. Met genoeg licht zie je wie ik ben. Kom maar. Als je durft.",
+OPEN:"Hallo kleine speurneuzen. Hier de Lichtjesdief. Vannacht heb ik alle lichtjes van jullie straat gepikt. En {C}. HAHA. Ik verstop me op {NW} plekken in de buurt. Vang me, en ik laat van schrik een lichtje vallen. Met genoeg licht zie je wie ik ben. Elk lichtje gaat in jullie lantaarn. Overdag ben ik een van deze vijf buren. Maar dat verklap ik nooit… hoop ik. Kom maar. Als je durft.",
 END:"“AAAH, LICHT! Oké, oké. Jullie zien het. Overdag ben ik {K}, {KR}. Met {KJ}, op {KW}, met {KD}. En ja, ik loog over die ene. Volgende keer win ik. Lichtjesdief uit.”",
 CADEAU:"het cadeau van {J}",CADEAU0:"het verjaardagscadeau",
 /* foto-opdrachten buiten: id, wat, wat hij zegt, tip, zijn reactie, ImageNet-klassen */
@@ -116,7 +116,7 @@ LBL:{409:"een klok",412:"een afvalbak",414:"een rugzak",415:"een bakker",423:"ee
 (function(D){var T=D.T;
 Object.assign(T,{readAloud:"Lees voor",voiceOn:"Voorlezen aan",voiceOff:"Voorlezen uit",voiceHi:"Ik lees alles voor.",
   lenName:{kort:"Kort",normaal:"Normaal",lang:"Lang"},lenPl:"{n} plekken",lvlName:{easy:"Makkelijk",hard:"Pittig"},
-  goldBar:"Gouden cijfers",goldGot:"Gouden cijfer!",goldGotT:"Onthoud het goed: het hoort bij zijn slot.",goldSay:"Gouden cijfer: {d}.",nbG:"Gouden cijfers (voor zijn slot)",
+  goldBar:"Gouden cijfers",goldGot:"Gouden cijfer!",goldGotT:"Bewaar het goed. Zijn schuilplaats zit op slot, en dit cijfer hoort bij dat slot.",goldSay:"Gouden cijfer: {d}.",nbG:"Gouden cijfers (voor zijn slot)",
   twistGo:"Wacht… hij wil nog iets zeggen",twistH:"Plotwending!",
   lockH:"Het gouden slot",lockTap:"Tik op het slot",lockTip:"De deur van zijn schuilplaats zit op slot.",lockGo:"Open het slot",lockHint:"Tip: zet één wieltje goed",lockHinted:"Eén wieltje staat nu goed.",lockSome:"{n} van de {m} wieltjes staan goed.",lockOpen:"KLIK! Open!",
   albumH:"Jullie album",albumParty:"Het feest van {J}",albumSub:"Wij hebben hem gepakt!",albumTeam:"Team {t}",albumWas:"Het was {K}!",albumLine:"Jacht {c} · {n} plekken · {l}",
@@ -133,7 +133,7 @@ Object.assign(T.pz,{shadow:["Wiens schaduw?","Kijk naar de schaduw. Tik op het d
 Object.assign(D.PUZ,{shadow:["de schaduw op de muur","“Ik heb iets gepikt en het staat achter een laken. Je ziet alleen de schaduw. Wat is het?”","“Hmpf. Jullie herkennen alles. Hier, een lichtje.”"],
   count:["de lichtjes tellen","“Ik heb een paar lichtjes laten vliegen. Tel ze maar. Als je kan. HAHA.”","“Goed geteld. Ik kan zelf maar tot drie.”"],
   lights:["de lantaarns aansteken","“Ik heb alle lantaarns uitgeblazen. Steek ze maar weer aan. Ik blaas mee!”","“Pfff… mijn adem is op. Vooruit, een lichtje.”"],
-  memory:["zijn spullen","“Mijn spullen liggen omgekeerd. Vind de paren. Ik weet zelf niet meer wat waar ligt.”","“Hé, dat is mijn pet! Geef… oké, hou maar. Lichtje.”"],
+  memory:["zijn spullen","“Mijn spullen liggen omgekeerd. Vind de paren. Ik weet zelf niet meer wat waar ligt.”","“Hé, dat zijn mijn spullen! Oké, hou maar. Lichtje.”"],
   peek:["ogen in het donker","“Ik verstop me. Je ziet heel even mijn ogen. Waar zat ik?”","“Gevonden?! Hoe dan? Ik knipperde zo zachtjes.”"]});
 Object.assign(D.ICON,{shadow:"M3 21h18M7 21c0-6 2-10 5-10s5 4 5 10M12 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6z",count:"M6 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM16 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM10 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM18 16a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM7 21a2 2 0 1 0 0-4 2 2 0 0 0 0 4z",
   lights:"M9 3h6M12 3v2M7 7h10l-1 11H8zM7 7l1-2h8l1 2M12 11v3M9 21h6",memory:"M3 5h7v9H3zM14 10h7v9h-7zM6 9h1M17 14h1",peek:"M2 12s4-6 10-6 10 6 10 6-4 6-10 6S2 12 2 12zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"});
@@ -147,7 +147,7 @@ D.X={NUM:{2:"twee",3:"drie",4:"vier",5:"vijf",6:"zes",7:"zeven",8:"acht",11:"elf
   TAUNT_GOLD:["“Gouden cijfers verzamelen? Mijn slot kraak je toch nooit.”","“Ik ben {g} gouden cijfers kwijt. Geef terug! …Alsjeblieft?”","“Wie heeft mijn gouden cijfers? Jullie? Hmpf.”"],
   TAUNT_HALF:["“Al zoveel lichtjes?! Dat was niet de bedoeling.”","“Oké, jullie zijn best goed. Maar ik ben beter. Denk ik.”"],
   TAUNT_END:["“Nog maar {n}?! Dat kan niet! Ik ga me héél goed verstoppen.”","“Mijn knieën knikken. Niet omdat ik bang ben. Gewoon.”","“Ik hoor jullie lantaarn zoemen. Weg met dat licht!”"],
-  CLIFF:["Hij rent weg… maar er glimt iets achter hem. Wat zou dat zijn?","Daar! Een schaduw om de hoek. Snel, voor hij weer verdwijnt!","Hoor je dat? Gegiechel in het donker. Hij is vlakbij.","Er ligt een spoor van glitters. Hij gaat die kant op!","Hij roept nog: “De volgende krijgen jullie NOOIT!” Dat zullen we zien…","Je lantaarn wordt warmer. Nog {n} lichtjes te gaan.","Was dat zijn muts? Of een vogel? Kijk goed bij de volgende plek.","Hij struikelt bijna over zijn eigen schaduw. Hij wordt moe!","In de verte klinkt een fluitje. Dat is zijn teken. Erachteraan!","Hij liet een briefje vallen: “ik ben niet bang… nou ja, een beetje”. Hè?","Zijn voetstappen gaan in een rondje. Hij weet zelf niet meer waar hij heen moet!","De lichtjes in je lantaarn fluisteren: hij is niet ver."],
+  CLIFF:["Hij rent weg… maar er glimt iets achter hem. Wat zou dat zijn?","Daar! Een schaduw om de hoek. Snel, voor hij weer verdwijnt!","Hoor je dat? Gegiechel in het donker. Hij is vlakbij.","Er ligt een spoor van lichtstof. Hij gaat die kant op!","Hij roept nog: “De volgende krijgen jullie NOOIT!” Dat zullen we zien…","Je lantaarn wordt warmer. Nog {n} lichtjes te gaan.","Was dat hem? Of een vogel? Kijk goed bij de volgende plek.","Hij struikelt bijna over zijn eigen schaduw. Hij wordt moe!","In de verte klinkt een fluitje. Dat is zijn teken. Erachteraan!","Hij liet een briefje vallen: “ik ben niet bang… nou ja, een beetje”. Hè?","Zijn voetstappen gaan in een rondje. Hij weet zelf niet meer waar hij heen moet!","De lichtjes in je lantaarn fluisteren: hij is niet ver."],
   CLIFF_LAST:"Dat was zijn laatste lichtje! Je lantaarn straalt. Nu kan hij zich nergens meer verstoppen…",
   TWIST:"“Wacht! Voor jullie naar binnen gaan… moet ik iets eerlijk zeggen. Ik pakte de lichtjes niet om te pesten. Ik ben stiekem een beetje bang in het donker. En ik word nooit uitgenodigd op een feestje. Dus dacht ik: als ik de lichtjes heb, en het cadeau, dan komen jullie vanzelf naar mij toe.”",
   TWIST_LOCK:"“Mijn schuilplaats zit op slot. Een gouden slot met {n} wieltjes. De cijfers? Die hebben jullie zelf verzameld. Hihi. Maak hem maar open.”",

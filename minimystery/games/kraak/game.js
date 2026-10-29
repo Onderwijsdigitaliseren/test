@@ -427,7 +427,7 @@ $("#bNote").onclick=noteSheet;$("#bPeople").onclick=lvlSheet;$("#bAcc2").onclick
 /* ---------- de Baron (of een bewaker) kaapt het scherm ---------- */
 function visit(force){if(!G)return;G.lastVisit=Date.now();if(!force&&Math.random()<.35)return;var k=(G.vi==null?G.seed:G.vi+1)%D.HIJACK.length;G.vi=k;save();
   if(!$("#sheet").hidden||(MW.Crew&&MW.Crew.busy()))return;sfx("radio");buzz([30,30,30,30,120]);var h=D.HIJACK[k];say(h[1]);
-  MW.Crew.hijack({head:T.hijackH,who:NAMEOF(h[0])+" · "+D.PEOPLE[h[0]][1],line:h[1],secs:h[2]||12,say:false,then:function(){sfx("hit");if(G.mode==="map"||G.mode==="demo"||G.mode==="in")chip();else render()}})}
+  var first=!G.hjSeen;G.hjSeen=1;save();if(first)say(T.hijackIntro);MW.Crew.hijack({head:T.hijackH,who:NAMEOF(h[0])+" · "+D.PEOPLE[h[0]][1],line:(first?T.hijackIntro+"\n\n":"")+h[1],secs:h[2]||12,say:false,then:function(){sfx("hit");if(G.mode==="map"||G.mode==="demo"||G.mode==="in")chip();else render()}})}
 
 /* ---------- een stop: opdracht → puzzel → GELUKT ---------- */
 function taskSheet(i,spot){walkTo=null;if(spot&&spot.hide)return hideoutArrive(spot);if(i>=NN())return finaleGate();var s=G.c.slots[i];cur={i:i,spot:spot||null,h:3,t0:Date.now(),retries:cur&&cur.i===i?cur.retries:0,pu:G.pu,stat:{}};
@@ -460,11 +460,11 @@ function accept(){var i=cur.i,s=G.c.slots[i];G.ph[i]=cur.thumb;if(cur.spot){cur.
   var n=done(),N=NN(),last=n>=N,el=PRIO[Math.min(10,Math.round((n-1)/N*11))],rew='',said=[];
   rew+='<div class="rew"><canvas class="itc" data-k="'+el+'" width="80" height="80"></canvas><p>'+esc(fill(T.itemT,{it:D.ITEMS[el][0],on:D.ITEMS[el][1]}))+'</p></div>';said.push(fill(T.itemT,{it:D.ITEMS[el][0],on:D.ITEMS[el][1]}));
   if(s.cd>=0){var ct=fill(T.codeT,{p:s.cd+1,d:codeDigit(s.cd)});rew+='<div class="rew"><div class="digit"><small>'+esc(T.codeH)+'</small><b>'+codeDigit(s.cd)+'</b><span>'+(s.cd+1)+'/4</span></div><p>'+esc(ct)+'</p></div>';said.push(ct)}
-  if(s.e>=0){var e=G.c.ev[s.e],et=fill(e.t,{v:D.AT[e.k].v[e.v]});rew+='<div class="rew"><canvas class="evc" data-k="'+e.k+'" data-v="'+e.v+'" width="80" height="80"></canvas><p>'+esc(et)+'</p></div>';said.push(et)}
-  if(s.w>=0){var w=G.c.wits[s.w],wt=witText(w);rew+='<div class="rew">'+bubble(wt,NAMEOF(WITK[w.p])+" · "+D.PEOPLE[WITK[w.p]][1],"small",AV(WITK[w.p]))+'</div>';said.push(wt)}
+  if(s.e>=0){var e=G.c.ev[s.e],et=fill(e.t,{v:D.AT[e.k].v[e.v]});rew+='<div class="rew"><canvas class="evc" data-k="'+e.k+'" data-v="'+e.v+'" width="80" height="80"></canvas><p>'+esc(et)+'</p></div>';said.push(et);G.sn=G.sn||{};if(!G.sn.e){G.sn.e=1;rew+='<p class="why">'+esc(T.evT)+'</p>';said.push(T.evT)}}
+  if(s.w>=0){var w=G.c.wits[s.w],wt=witText(w);rew+='<div class="rew">'+bubble(wt,NAMEOF(WITK[w.p])+" · "+D.PEOPLE[WITK[w.p]][1],"small",AV(WITK[w.p]))+'</div>';said.push(wt);G.sn=G.sn||{};if(!G.sn.w){G.sn.w=1;rew+='<p class="why">'+esc(T.witT)+'</p>';said.push(T.witT)}}
   var cliff=last?D.OPA.cliffLast:D.OPA.cliff[(n-1+G.seed)%D.OPA.cliff.length],react=D.OPA.react[(n+G.seed)%D.OPA.react.length];
   sheet('<div class="clear"><div class="eyebrow">'+esc(fill(T.world,{i:i+1}))+'</div><h2 class="big">'+esc(T.clear)+'</h2><canvas id="clC" width="320" height="180"></canvas>'+
-    '<div class="tally"><span><b id="tXp">0</b>'+T.xp+'</span><span><b id="tCo">0</b>'+T.coins+'</span><span><b>'+cur.h+'</b>'+T.hearts+'</span><span><b>'+secs+'s</b>'+(secs<60?T.fast:T.timer)+'</span></div>'+
+    '<div class="tally"><span><b id="tXp">0</b>'+T.xp+'</span><span><b id="tCo">0</b>'+T.coins+'</span><span><b>'+cur.h+'</b>'+T.hearts+'</span><span><b>'+secs+'s</b>'+(secs<60?T.fast:T.timer)+'</span></div>'+(n===1&&T.tallyT?'<p class="why">'+esc(T.tallyT)+'</p>':'')+
     (G.tl>oldL?'<div class="lvlup">'+esc(fill(T.lvlUp,{l:rankName(G.tl)}))+'</div>':'')+
     '<div class="rep"><em>'+esc(T.found1)+'</em>'+rew+'</div>'+
     (!last?'<div class="eyebrow">'+esc(T.puH)+'</div><div class="pus" id="pus">'+s.pu.map(function(p){return '<button type="button" data-p="'+p+'"><b>'+esc(T.pu[p][0])+'</b><small>'+esc(T.pu[p][1])+'</small></button>'}).join("")+'</div>':'')+
@@ -735,7 +735,7 @@ function frzEl(){if(!FRZEL){FRZEL=document.createElement("div");FRZEL.id="frz";d
 function startFreeze(c){FRZ={car:c,t0:Date.now(),p0:{x:P.x,y:P.y},secs:hard()?7:5};G.esc.spotted++;save();var el=frzEl();el.innerHTML='<div class="frzBox"><div class="frzEb">🚔</div><b>'+esc(T.escFreeze)+'</b><div class="frzN" id="frzN">'+FRZ.secs+'</div><p>'+esc(T.escFreezeT)+'</p></div>';el.hidden=false;sfx("siren");buzz([300,100,300]);say(T.escFreeze+" "+T.escFreezeT)}
 function endFreeze(ok){if(!FRZ)return;var c=FRZ.car;FRZ=null;if(FRZEL)FRZEL.hidden=true;c.cool=Date.now()+20000;c.dir*=-1;
   if(ok===true){toast(T.escFreezeOk);say(T.escFreezeOk);sfx("coin")}else if(ok===false){G.esc.h--;save();sfx("hurt");buzz(200);toast(T.escMoved);say(T.escMoved);
-    if(G.esc.h<=0){G.esc.h=3;G.esc.caught++;save();MW.Crew.hijack({head:T.hijackH,who:NAMEOF("stella"),line:T.escCaught,secs:10,say:false});say(T.escCaught)}}}
+    if(G.esc.h<=0){G.esc.h=3;G.esc.caught++;save();MW.Crew.hijack({head:T.escCaughtH,who:NAMEOF("stella"),line:T.escCaught,secs:10,say:false});say(T.escCaught)}}}
 function escSheet(){var sp=hideSpot();sheet('<div class="eyebrow">'+esc(T.escH)+'</div><h2 class="big">'+esc(T.escH)+'</h2><canvas id="bC" class="endscene" width="320" height="200"></canvas>'+bubble(T.escIntro,NAMEOF("opa"),"big")+'<div class="tags"><i>⏱ '+mmss(escLeft()*1000)+'</i><i>🚔 '+G.esc.cars+'</i><i>❤ '+G.esc.h+'</i></div><button type="button" class="btn red" id="bGo2">'+esc(T.escGo)+'</button>',true);
   var cv=$("#bC"),g=cv.getContext("2d");(function f(ts){if(!cv.isConnected)return;nightBg(g,320,200,ts,{siren:true});carTop(g,80+((ts/12)%400)-40,150,0,16,true,ts);drawCrew(g,250,185,7,G.av,ts,"sneak");if(!still)requestAnimationFrame(f)})(0);say(T.escIntro);
   $("#bGo2").onclick=function(){closeSheet();if(sp){sel=sp;chip()}}}

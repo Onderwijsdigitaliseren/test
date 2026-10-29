@@ -453,12 +453,12 @@ function accept(){var i=cur.i,s=G.c.slots[i];G.ph[i]=cur.thumb;if(cur.spot){cur.
   if(cur.h===3&&!cur.retries)ach("flawless");if(secs<45)ach("speed");if(G.coins>=150)ach("rich");if(G.tl===10)ach("max");Object.keys(cur.stat).forEach(ach);
   var n=done(),N=NN(),last=n>=N,el=PRIO[Math.min(10,n-1)],rew='',said=[];
   rew+='<div class="rew"><canvas class="itc" data-k="'+el+'" width="80" height="80"></canvas><p>'+esc(fill(T.itemT,{it:D.ITEMS[el][0],on:D.ITEMS[el][1]}))+'</p></div>';said.push(fill(T.itemT,{it:D.ITEMS[el][0],on:D.ITEMS[el][1]}));
-  if(s.sg>=0){var st=songText(s.sg);rew+='<div class="rew"><div class="snip"><small>SETLIST</small>'+esc(songAt(G.c.so[s.sg]).t)+'</div><p>'+esc(st)+'</p></div>';said.push(st)}
-  if(s.e>=0){var e=G.c.ev[s.e],et=fill(e.t,{v:D.AT[e.k].v[e.v]});rew+='<div class="rew"><canvas class="evc" data-k="'+e.k+'" data-v="'+e.v+'" width="80" height="80"></canvas><p>'+esc(et)+'</p></div>';said.push(et)}
-  if(s.w>=0){var w=G.c.wits[s.w],wt=witText(w);rew+='<div class="rew">'+bubble(wt,NAMEOF(WITK[w.p])+" · "+D.PEOPLE[WITK[w.p]][1],"small",AV(WITK[w.p]))+'</div>';said.push(wt)}
+  if(s.sg>=0){var st=songText(s.sg);rew+='<div class="rew"><div class="snip"><small>SETLIST</small>'+esc(songAt(G.c.so[s.sg]).t)+'</div><p>'+esc(st)+'</p></div>';said.push(st);G.sn=G.sn||{};if(!G.sn.s){G.sn.s=1;rew+='<p class="why">'+esc(T.sgT)+'</p>';said.push(T.sgT)}}
+  if(s.e>=0){var e=G.c.ev[s.e],et=fill(e.t,{v:D.AT[e.k].v[e.v]});rew+='<div class="rew"><canvas class="evc" data-k="'+e.k+'" data-v="'+e.v+'" width="80" height="80"></canvas><p>'+esc(et)+'</p></div>';said.push(et);G.sn=G.sn||{};if(!G.sn.e){G.sn.e=1;rew+='<p class="why">'+esc(T.evT)+'</p>';said.push(T.evT)}}
+  if(s.w>=0){var w=G.c.wits[s.w],wt=witText(w);rew+='<div class="rew">'+bubble(wt,NAMEOF(WITK[w.p])+" · "+D.PEOPLE[WITK[w.p]][1],"small",AV(WITK[w.p]))+'</div>';said.push(wt);G.sn=G.sn||{};if(!G.sn.w){G.sn.w=1;rew+='<p class="why">'+esc(T.witT)+'</p>';said.push(T.witT)}}
   var cliff=last?D.MAXL.cliffLast:D.MAXL.cliff[(n-1+G.seed)%D.MAXL.cliff.length],react=fill(D.MAXL.react[(n+G.seed)%D.MAXL.react.length],{m:minsLeft()});
   sheet('<div class="clear"><div class="eyebrow">'+esc(fill(T.world,{i:i+1}))+'</div><h2 class="big">'+esc(T.clear)+'</h2><canvas id="clC" width="320" height="180"></canvas>'+
-    '<div class="tally"><span><b id="tXp">0</b>'+T.xp+'</span><span><b id="tCo">0</b>'+T.coins+'</span><span><b>'+cur.h+'</b>'+T.hearts+'</span><span><b>'+secs+'s</b>'+(secs<60?T.fast:T.timer)+'</span></div>'+
+    '<div class="tally"><span><b id="tXp">0</b>'+T.xp+'</span><span><b id="tCo">0</b>'+T.coins+'</span><span><b>'+cur.h+'</b>'+T.hearts+'</span><span><b>'+secs+'s</b>'+(secs<60?T.fast:T.timer)+'</span></div>'+(n===1&&T.tallyT?'<p class="why">'+esc(T.tallyT)+'</p>':'')+
     (G.tl>oldL?'<div class="lvlup">'+esc(fill(T.lvlUp,{l:rankName(G.tl)}))+'</div>':'')+
     '<div class="rep"><em>'+esc(T.found1)+'</em>'+rew+'</div>'+
     (!last?'<div class="eyebrow">'+esc(T.puH)+'</div><div class="pus" id="pus">'+s.pu.map(function(p){return '<button type="button" data-p="'+p+'"><b>'+esc(T.pu[p][0])+'</b><small>'+esc(T.pu[p][1])+'</small></button>'}).join("")+'</div>':'')+

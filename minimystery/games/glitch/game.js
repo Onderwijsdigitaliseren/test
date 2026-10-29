@@ -354,7 +354,7 @@ function accept(){var i=cur.i,s=G.c.slots[i];G.ph[i]=cur.thumb;if(cur.spot){cur.
   else{rwH=T.logH;rwT=T.logT;rw='<div class="rew">'+bubble(s.t,D.VILLAIN,"small",GLAV())+'</div>'}
   var cliff=last?D.BIT.cliffLast:D.BIT.cliff[(n-1+G.seed)%D.BIT.cliff.length],react=D.BIT.react[(n+G.seed)%D.BIT.react.length];
   sheet('<div class="clear"><div class="eyebrow">'+esc(fill(T.world,{i:i+1}))+'</div><h2 class="big">'+esc(T.clear)+'</h2><canvas id="clC" width="320" height="170"></canvas>'+
-    '<div class="tally"><span><b id="tXp">0</b>'+T.xp+'</span><span><b id="tCo">0</b>'+T.coins+'</span><span><b>'+cur.h+'</b>'+T.hearts+'</span><span><b>'+secs+'s</b>'+(secs<60?T.fast:T.timer)+'</span></div>'+
+    '<div class="tally"><span><b id="tXp">0</b>'+T.xp+'</span><span><b id="tCo">0</b>'+T.coins+'</span><span><b>'+cur.h+'</b>'+T.hearts+'</span><span><b>'+secs+'s</b>'+(secs<60?T.fast:T.timer)+'</span></div>'+(n===1&&T.tallyT?'<p class="why">'+esc(T.tallyT)+'</p>':'')+
     (G.tl>oldL?'<div class="lvlup">'+esc(fill(T.lvlUp,{l:G.tl}))+'</div>':'')+crystalHTML(n)+
     '<div class="rep"><em>'+esc(rwH)+'</em>'+rw+'<p class="note">'+esc(rwT)+'</p></div>'+
     (!last?'<div class="eyebrow">'+esc(T.puH)+'</div><div class="pus" id="pus">'+s.pu.map(function(p){return '<button type="button" data-p="'+p+'"><b>'+esc(T.pu[p][0])+'</b><small>'+esc(T.pu[p][1])+'</small></button>'}).join("")+'</div>':'')+

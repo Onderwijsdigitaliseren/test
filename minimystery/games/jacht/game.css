@@ -298,3 +298,6 @@ h1,h2,h3{font-family:var(--f-type);font-weight:700}
 #play{--km-sky:#140f2e;--km-ink:#ffd36a;--km-line:#7a5cff;--km-paper:rgba(20,15,46,.92)}
 #kmHot{text-shadow:0 2px 10px #000}
 #play.kv #kmMsg{bottom:calc(200px + env(safe-area-inset-bottom,0px))}
+
+#play{--km-card-b:84px}
+#play:has(#goldM .coin:not(.off)){--km-card-b:136px}

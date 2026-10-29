@@ -587,7 +587,7 @@ function hideout(){var ov=$("#hide"),room=$("#room"),k=G.c.sus[G.c.K],right=k.tr
   function laugh(){return '<div class="obj laugh" style="left:4%;bottom:4%">'+pose("laugh","pose")+'</div>'}
   function lamp(){return '<div class="obj lampo" style="left:38%;top:8%"></div>'}
   room.innerHTML=walls.map(function(w,i){return '<div class="wall w'+i+'" style="background-image:url('+IMGROOT+'wall-'+i+'.webp)">'+w.join("")+'</div>'}).join("")+'<div class="floor"></div>';
-  $("#hideHint").textContent=T.hideHint;$("#hideTip").textContent=T.hideTip;$("#hideMsg").textContent="";ov.hidden=true;ov.hidden=false;
+  $("#hideHint").textContent=T.hideHint;say(T.hideHint);$("#hideTip").textContent=T.hideTip;$("#hideMsg").textContent="";ov.hidden=true;ov.hidden=false;
   var rot=0,pd=null,fin=false,set=function(){room.style.transform="rotateY("+rot+"deg)"};set();
   ov.onpointerdown=function(e){if($("#sjDoor"))return;pd={x:e.clientX,r:rot,moved:false}};ov.onpointermove=function(e){if(!pd)return;var dx=e.clientX-pd.x;if(Math.abs(dx)>6)pd.moved=true;rot=pd.r+dx*.35;set()};
   ov.onpointerup=function(e){if(!pd)return;var moved=pd.moved;pd=null;if(moved||fin)return;var o=e.target.closest(".obj");if(!o)return;
@@ -618,7 +618,7 @@ function lockSheet(){var X=D.X,order=lockOrder(),n=order.length,hd=hard(),val=(G
   if(window.MMP)MMP.helper(function(){openLock()},function(){say(intro)})}
 function openLock(){G.lockOpen=1;save();hush();closeSheet();var ov=$("#hide"),d=$("#sjDoor");ov.hidden=false;
   buzz([60,40,60,40,200]);beep(520,.15);setTimeout(function(){beep(780,.2)},150);setTimeout(function(){beep(1040,.3)},320);say(T.lockOpen);
-  $("#hideHint").textContent=T.hideHint;$("#hideTip").textContent=T.hideTip;$("#hideMsg").textContent=T.lockOpen;setTimeout(function(){if($("#hideMsg").textContent===T.lockOpen)$("#hideMsg").textContent=""},1800);
+  $("#hideHint").textContent=T.hideHint;say(T.hideHint);$("#hideTip").textContent=T.hideTip;$("#hideMsg").textContent=T.lockOpen;setTimeout(function(){if($("#hideMsg").textContent===T.lockOpen)$("#hideMsg").textContent=""},1800);
   if(d){d.classList.add("open");setTimeout(function(){d.remove()},1500)}}
 function confetti(){var ov=$("#hide");for(var i=0;i<60;i++){var s=document.createElement("i");s.className="cf";s.style.left=50+(Math.random()-.5)*40+"%";s.style.background=COL[i%4];s.style.animationDelay=Math.random()*.4+"s";s.style.setProperty("--dx",(Math.random()-.5)*300+"px");ov.appendChild(s);setTimeout(function(x){x.remove()},1800,s)}}
 

@@ -338,7 +338,7 @@ function render(){hud();while(G.i<NN()&&G.ph[G.i])G.i++;var i=G.i,box=$("#card")
   $("#bOpen").onclick=function(){taskSheet(i)}}
 
 /* ---------- spelen met kaart: politiekaart, zwaailicht om de speler, de boef die rondsluipt met ballonnen ---------- */
-function enterMap(){show("play");
+function enterMap(){show("play");if(!G.thiefTip&&T.thiefTip&&G.mode!=="in"){G.thiefTip=1;save();setTimeout(function(){toast(T.thiefTip);say(T.thiefTip)},4000)}
   if(!map)map=Wk.createMap($("#map"),{player:function(){return P},ways:function(){return W},R:function(){return RR()},
     theme:{bg:"#15337a",water:"#1d6fd1",waterEdge:"#4fd3ff",ripple:"rgba(79,211,255,.3)",park:"#1f8a4c",parkEdge:"#5fd38a",river:"#1d6fd1",major:"#ffc21a",minor:"#4a6fc0",road:"#8fb0ff",label:"#ffe08a",waterLabel:"#bfeaff",ring:"rgba(255,194,26,.35)",me:"#ffc21a",meHalo:"rgba(255,194,26,.16)",meRing:"rgba(255,194,26,.7)",font:"700 12px 'Barlow Condensed',sans-serif"},
     items:items,onTap:function(hit,w){if(hit&&!hit.ref.done){sel=hit.ref;chip()}else if(G.mode==="demo"){walkTo=w;sel=null;map.follow();chip()}else{sel=null;chip()}}});
