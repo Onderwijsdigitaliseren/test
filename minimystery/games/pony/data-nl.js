@@ -3,7 +3,7 @@
    halsterkleuren, glimmertjes van de kraai, kat aaien, de wei door). Per spoor: bewijs (3x, altijd waar, wijst een kenmerk van de plek aan), een dier-getuige (4x, één zit ernaast)
    of een berichtje van Fenna (1x). Drie kenmerken (vlag, dieren, lekkers) wijzen precies één van vijf plekken aan waar Bibi logeert – en daar is Pluis. */
 window.PP_DATA={lang:"nl",CHEF:"Fenna",PONY:"Pluis",FRIEND:"Bibi",
-T:{today:"▶ Start de zaak",todayAgain:"▶ Speel de zaak van vandaag nog eens",extra:"Andere zaak",pro:"Feestpas",proOn:"De Feestpas staat aan: speel zo vaak je wilt.",proFree:"De oefenronde is gratis. De echte zaak speel je met de Feestpas.",proUsed:"De oefenronde is gratis. De echte zaak speel je met de Feestpas.",
+T:{today:"▶ Start de zaak",todayAgain:"▶ Speel de zaak van vandaag nog eens",extra:"Andere zaak",pro:"Feestpas",proOn:"De Feestpas staat aan: speel zo vaak je wilt.",proFree:"De proefronde is gratis. De echte zaak speel je met de Feestpas.",proUsed:"De proefronde is gratis. De echte zaak speel je met de Feestpas.",
   cancel:"Annuleren",close:"Sluiten",back:"Terug",saved:"De zaak is bewaard. Ga later verder.",wiped:"Gewist.",
   briefNo:"Zaakcode {c}",codeTip:"Spelen jullie met meer telefoons? Vul op elke telefoon deze zaakcode in, dan krijgt iedereen dezelfde zaak.",
   voice:"Voorlezen",voiceOn:"De telefoon leest de opdrachten voor.",voiceOff:"Voorlezen staat uit.",

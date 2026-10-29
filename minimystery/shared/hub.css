@@ -112,3 +112,8 @@ main{max-width:1100px;margin:0 auto;padding:0 16px}
 .try em{font-style:normal;font-size:14px;color:var(--soft);line-height:1.4}
 .try i{font:600 15px Fredoka,sans-serif;font-style:normal;color:var(--ink);margin-top:4px;text-decoration:underline;text-underline-offset:3px}
 @media (max-width:420px){.hero .btn{padding:11px 16px;font-size:16px}}
+
+/* één lijst met per zaak twee knoppen (proefronde + echte zaak) */
+.case .acts{display:flex;flex-direction:column;gap:8px;margin-top:auto}
+.case .acts .btn{margin-top:0}
+.case .acts .try1{font-size:15px;padding-top:10px;padding-bottom:10px}

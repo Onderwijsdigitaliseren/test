@@ -2,7 +2,7 @@
    Om 03:03 stal de Lichtjesdief alle lichtjes van de straat (en het cadeau). Op acht plekken vang je hem met een opdracht; hij vlucht en laat een lichtje achter.
    Acht lichtjes in de lantaarn = genoeg licht om zijn gezicht te zien. Wie hij overdag is, vertelt waar zijn schuilplaats is, en daar ligt het cadeau. */
 window.SJ_DATA={lang:"nl",V:"De Lichtjesdief",VS:"de Lichtjesdief",
-T:{today:"▶ Start de jacht",todayAgain:"▶ Speel de jacht van vandaag nog eens",extra:"Andere jacht",pro:"Feestpas",proOn:"De Feestpas staat aan: speel zo vaak je wilt.",proFree:"De oefenronde is gratis. De echte jacht speel je met de Feestpas.",proUsed:"De oefenronde is gratis. De echte jacht speel je met de Feestpas.",
+T:{today:"▶ Start de jacht",todayAgain:"▶ Speel de jacht van vandaag nog eens",extra:"Andere jacht",pro:"Feestpas",proOn:"De Feestpas staat aan: speel zo vaak je wilt.",proFree:"De proefronde is gratis. De echte jacht speel je met de Feestpas.",proUsed:"De proefronde is gratis. De echte jacht speel je met de Feestpas.",
   cancel:"Annuleren",close:"Sluiten",back:"Terug",saved:"Je jacht is bewaard. Ga later verder.",wiped:"Gewist.",
   brief:"Jacht",briefNo:"Jachtcode {c}",codeTip:"Spelen jullie met meer telefoons? Vul op elke telefoon deze jachtcode in, dan krijgt iedereen dezelfde jacht.",
   go:"Op jacht!",skipCine:"Overslaan ▸",

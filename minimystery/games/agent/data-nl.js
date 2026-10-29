@@ -3,7 +3,7 @@
    drie keer echt bewijs (altijd waar, laat een kenmerk zien), vier keer een getuige (één liegt), één keer een bericht van de chef.
    Drie kenmerken (pet, shirt, schoenen) wijzen samen precies één van vijf boeven aan. Daarna: de confrontatie in 3D, handboeien, diploma en GEZOCHT-poster. */
 window.AG_DATA={lang:"nl",V:"de Bordendief",CHEF:"Chef Bos",
-T:{today:"▶ Start de zaak",todayAgain:"▶ Speel de zaak van vandaag nog eens",extra:"Andere zaak",pro:"Feestpas",proOn:"De Feestpas staat aan: speel zo vaak je wilt.",proFree:"De oefenronde is gratis. De echte zaak speel je met de Feestpas.",proUsed:"De oefenronde is gratis. De echte zaak speel je met de Feestpas.",
+T:{today:"▶ Start de zaak",todayAgain:"▶ Speel de zaak van vandaag nog eens",extra:"Andere zaak",pro:"Feestpas",proOn:"De Feestpas staat aan: speel zo vaak je wilt.",proFree:"De proefronde is gratis. De echte zaak speel je met de Feestpas.",proUsed:"De proefronde is gratis. De echte zaak speel je met de Feestpas.",
   cancel:"Annuleren",close:"Sluiten",back:"Terug",saved:"De zaak is bewaard. Ga later verder.",wiped:"Gewist.",
   briefNo:"Zaakcode {c}",codeTip:"Spelen jullie met meer telefoons? Vul op elke telefoon deze zaakcode in, dan krijgt iedereen dezelfde zaak.",
   voice:"Voorlezen",age6:"Junior agent",age8:"Rechercheur",voiceOn:"De telefoon leest de opdrachten voor.",voiceOff:"Voorlezen staat uit.",

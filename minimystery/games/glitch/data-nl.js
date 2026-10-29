@@ -3,7 +3,7 @@
    sluipen, AR-jacht, geheimschrift, pixels herstellen, hacken, memory, ritme). Per level een beloning: bewijs over hoe Glitch eruitziet (3x), een logboek van Level 0,
    of (laatste) de sleutel. Drie kenmerken (kleur, ogen, antenne) wijzen Glitch aan tussen vier spiegelbeelden. Eindbaas in drie fases + de Serverkamer (escape-room). */
 window.GL_DATA={lang:"nl",HERO:"Bit",VILLAIN:"Glitch",SJEF:"Save-Sjef",
-T:{today:"▶ Start de game",todayAgain:"▶ Speel de game van vandaag nog eens",extra:"Andere game",pro:"Feestpas",proOn:"De Feestpas staat aan: speel zo vaak je wilt.",proFree:"De oefenronde is gratis. De echte game speel je met de Feestpas.",proUsed:"De oefenronde is gratis. De echte game speel je met de Feestpas.",
+T:{today:"▶ Start de game",todayAgain:"▶ Speel de game van vandaag nog eens",extra:"Andere game",pro:"Feestpas",proOn:"De Feestpas staat aan: speel zo vaak je wilt.",proFree:"De proefronde is gratis. De echte game speel je met de Feestpas.",proUsed:"De proefronde is gratis. De echte game speel je met de Feestpas.",
   cancel:"Annuleren",close:"Sluiten",back:"Terug",saved:"De game is opgeslagen (save-punt). Ga later verder.",wiped:"Gewist.",
   briefNo:"Gamecode {c}",voice:"Voorlezen",voiceOn:"Bit leest de opdrachten voor.",voiceOff:"Voorlezen staat uit.",
   lvl:{normaal:"Normaal",hard:"Hard"},lens:{kort:"Kort",normaal:"Normaal",lang:"Lang"},
@@ -16,7 +16,7 @@ T:{today:"▶ Start de game",todayAgain:"▶ Speel de game van vandaag nog eens"
   puH:"Kies een power-up voor het volgende level",pu:{time:["Tijdvertrager","+15 seconden bij een timer"],shield:["Schild","Eén fout telt niet"],hint:["Hintlamp","Eén gratis hint"],xp2:["Dubbele XP","Twee keer zoveel XP"],coin2:["Muntmagneet","Twee keer zoveel munten"]},puOn:"Power-up actief: {p}",puUsed:"Power-up gebruikt: {p}",
   next:"Verder ▸",toBoss:"Naar de eindbaas ▸",radarAll:"Alle stukjes! Het plein trilt… daar wacht Glitch.",radarFirst:"Op weg naar level 1",here:"Je bent er",look:"Start het level",walk:"Loop ernaartoe",gps:"Ik sta hier echt (gps wijkt af)",near:"Nog {d} m",warm:"Warm! {d} m",hot:"Heet! {d} m",nomap:"De plattegrond laadt niet; de levelkaart neemt het over.",
   loc:"Waar zijn jullie?",pois:"Levels plaatsen in de buurt…",noGps:"Geen gps op deze telefoon.",denied:"Locatie staat uit. Zet hem aan of speel zonder kaart.",fail:"Dat lukte niet",
-  corner:"de hoek",demoCase:"Oefenronde",demoTip:"Tik op de kaart om te lopen; tik op een level om te starten.",
+  corner:"de hoek",demoCase:"Proefronde",demoTip:"Tik op de kaart om te lopen; tik op een level om te starten.",
   howH:"Hoe werkt het?",menu:"Pauze",mBack:"Verder spelen",mHome:"Opslaan en naar het begin",mWipe:"Game wissen",
   notebook:"Speurboekje",nbE:"Datafragmenten over Glitch",nbL:"Logboek van Level 0",nbK:"De sleutel",nbNone:"Nog niets. Speel het eerste level.",nbAch:"Achievements",
   people:"Levels",peopleT:"Elke plek is een level. Je ziet wat je er moet doen.",

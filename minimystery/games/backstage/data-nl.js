@@ -3,7 +3,7 @@
    van de tas-drager of een getuige (één zit ernaast, of liegt op Superster). Drie kenmerken (glitter, hoofddeksel, schoenen) wijzen Pip aan op de wazige foto.
    Daarna het gesprek met Pip, de setlist in de goede volgorde en de show met de hele groep. */
 window.BS_DATA={lang:"nl",
-T:{today:"▶ Start de zaak",todayAgain:"▶ Speel de zaak van vandaag nog eens",extra:"Andere zaak",pro:"Feestpas",proOn:"De Feestpas staat aan: speel zo vaak je wilt.",proFree:"De oefenronde is gratis. De echte zaak speel je met de Feestpas.",proUsed:"De oefenronde is gratis. De echte zaak speel je met de Feestpas.",
+T:{today:"▶ Start de zaak",todayAgain:"▶ Speel de zaak van vandaag nog eens",extra:"Andere zaak",pro:"Feestpas",proOn:"De Feestpas staat aan: speel zo vaak je wilt.",proFree:"De proefronde is gratis. De echte zaak speel je met de Feestpas.",proUsed:"De proefronde is gratis. De echte zaak speel je met de Feestpas.",
   cancel:"Annuleren",close:"Sluiten",back:"Terug",saved:"De zaak is opgeslagen. Ga later verder.",wiped:"Gewist.",
   voice:"Voorlezen",voiceOn:"Max leest de opdrachten voor.",voiceOff:"Voorlezen staat uit.",musOn:"Muziek aan",musOff:"Muziek uit",
   lvl:{fan:"Fan",ster:"Superster"},lens:{kort:"Kort",normaal:"Normaal",lang:"Lang"},
@@ -18,7 +18,7 @@ T:{today:"▶ Start de zaak",todayAgain:"▶ Speel de zaak van vandaag nog eens"
   puH:"Kies een gadget voor de volgende stop",pu:{time:["Extra kwartier","+15 seconden bij een timer"],shield:["Bodyguard","Eén fout telt niet"],hint:["Tip van Max","Eén gratis hint"],xp2:["Viraal","Twee keer zoveel fans"],coin2:["Sterrenregen","Twee keer zoveel sterren"]},puOn:"Gadget actief: {p}",
   next:"Verder ▸",toBoss:"Naar het podium ▸",radarAll:"Alles terug! Snel naar het podium… maar wie had die tas?",here:"Je bent er",look:"Start de stop",walk:"Loop ernaartoe",gps:"Ik sta hier echt (gps wijkt af)",near:"Nog {d} m",warm:"Warm! {d} m",hot:"Heet! {d} m",nomap:"De plattegrond laadt niet; de festivalkaart neemt het over.",
   loc:"Waar zijn jullie?",pois:"Backstage-stops plaatsen in de buurt…",noGps:"Geen gps op deze telefoon.",denied:"Locatie staat uit. Zet hem aan of speel zonder kaart.",
-  corner:"de hoek",demoCase:"Oefenronde",demoTip:"Tik op de kaart om te lopen; tik op een stop om te starten.",
+  corner:"de hoek",demoCase:"Proefronde",demoTip:"Tik op de kaart om te lopen; tik op een stop om te starten.",
   howH:"Hoe werkt het?",menu:"Pauze",mBack:"Verder spelen",mHome:"Opslaan en naar het begin",mWipe:"Zaak wissen",
   notebook:"Crewboekje",nbE:"Sporen van de tas-drager",nbS:"Setlist-snippers",nbW:"Getuigen",nbNone:"Nog niets. Doe eerst een stop.",nbAch:"Badges",
   people:"Stops",peopleT:"Elke backstage-stop is een opdracht. Je ziet wat je er moet doen.",bandH:"Dit is NOVA",
