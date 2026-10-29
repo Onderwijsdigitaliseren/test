@@ -127,3 +127,4 @@ main{max-width:1100px;margin:0 auto;padding:0 16px}
 /* op maat */
 .custom{background:#fff;border:2px solid var(--line);border-left:6px solid var(--violet);border-radius:18px;padding:18px 20px;text-align:left}
 .custom p{margin:0 0 14px;font-size:16px;line-height:1.5;color:var(--ink)}.custom .btn{width:100%;margin-bottom:10px}.custom .note{margin:0;font-size:13px;color:var(--soft)}
+.rel2{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}.rel2 a{background:#fff;border:2px solid var(--line);border-radius:999px;padding:8px 14px;font:600 15px Nunito,sans-serif;color:var(--navy);text-decoration:none}
