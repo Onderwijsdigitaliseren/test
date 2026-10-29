@@ -117,3 +117,13 @@ main{max-width:1100px;margin:0 auto;padding:0 16px}
 .case .acts{display:flex;flex-direction:column;gap:8px;margin-top:auto}
 .case .acts .btn{margin-top:0}
 .case .acts .try1{font-size:15px;padding-top:10px;padding-bottom:10px}
+
+/* kop: vier feiten in één oogopslag + twee knoppen */
+.facts{list-style:none;margin:12px 0 14px;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:6px 10px;text-align:left}
+.facts li{display:flex;align-items:center;gap:8px;font:600 14px Nunito,sans-serif;color:var(--ink);background:var(--cream);border:1.5px solid var(--line);border-radius:12px;padding:7px 10px;line-height:1.2}
+.facts i{font-style:normal;font-size:18px;flex:0 0 auto}
+@media (max-width:400px){.facts{grid-template-columns:1fr}}
+.hero .cta{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}.hero .cta .btn{flex:1 1 auto}
+/* op maat */
+.custom{background:#fff;border:2px solid var(--line);border-left:6px solid var(--violet);border-radius:18px;padding:18px 20px;text-align:left}
+.custom p{margin:0 0 14px;font-size:16px;line-height:1.5;color:var(--ink)}.custom .btn{width:100%;margin-bottom:10px}.custom .note{margin:0;font-size:13px;color:var(--soft)}
