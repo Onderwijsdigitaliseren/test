@@ -3,7 +3,7 @@
    three times real evidence (always true, shows a feature), four times a witness (one lies), once a message from the chief.
    Three features (hat, shirt, shoes) point at exactly one of five crooks. Then: the line-up in 3D, handcuffs, diploma and WANTED poster. */
 window.AG_DATA={lang:"en",V:"the Sign Thief",CHEF:"Chief Hayes",
-T:{today:"Start today's case",todayAgain:"Another case for today",extra:"Extra case",pro:"Party Pass",proOn:"The Party Pass is on: play as often as you like.",proFree:"The practice round is free. You play the real case with the Party Pass.",proUsed:"The practice round is free. You play the real case with the Party Pass.",
+T:{today:"▶ Start the case",todayAgain:"▶ Play today's case again",extra:"Another case",pro:"Party Pass",proOn:"The Party Pass is on: play as often as you like.",proFree:"The practice round is free. You play the real case with the Party Pass.",proUsed:"The practice round is free. You play the real case with the Party Pass.",
   cancel:"Cancel",close:"Close",back:"Back",saved:"The case is saved. Continue later.",wiped:"Wiped.",
   briefNo:"Case code {c}",codeTip:"Playing with more phones? Enter this case code on every phone and everyone gets the same case.",
   voice:"Read aloud",age6:"Junior officer",age8:"Detective",voiceOn:"The phone reads the tasks aloud.",voiceOff:"Reading aloud is off.",
@@ -84,7 +84,7 @@ WIT:{hoofd:["“I saw him run away. He had {v} on. Honestly.”","“The thief? 
      shirt:["“He ran right past me. He wore {v}.”","“I saw {v}. That's what the thief had on, yes.”"],
      voet:["“I looked at his feet. He wore {v}.”","“He had {v} on. I heard them on the pavement.”"]},
 GAG:["“Chief here. Good work, team. Stay sharp. Over.”","“Chief here. Camera 4 picked something up, but the picture is blurry. Keep looking. Over.”","“Chief here. The postman is lost. Without signs nobody knows where he lives. Hurry. Over.”","“Chief here. I can see you on the camera. The neighbourhood is counting on you. Over.”","“Chief here. My coffee has gone cold from waiting. Hurry up, officers. Over.”"],
-OPEN:"Chief Hayes here, Neighbourhood Watch Station. Officers, listen up. Last night {C} were stolen. Nobody can find their way any more. The thief left leads everywhere. Five people from the neighbourhood are suspects. Find {N} leads. Each lead comes with a police puzzle. Evidence is always true. Witnesses help too, but they sometimes get it wrong. When you know who did it: to the line-up. Good luck, officers. Over and out.",
+OPEN:"Chief Hayes here, Neighbourhood Watch Station. Officers, listen up. Last night {C} were stolen. Nobody can find their way any more! One of these five people is the thief. Follow the leads and find out who did it. Over and out.",
 END:"“Okay. You got me. It was me, {K}. With {KJ}, {KW} and {KD}. I wanted a street with my own name, just once. So I took all the signs to make one. I'm sorry. I'll hang them all back. And… could I maybe have a slice of cake?”",
 CADEAU:"all the street signs around {J}'s home",CADEAU0:"all the street signs in the neighbourhood",
 PUZ:{print:["the fingerprint","The thief touched something here. Take the fingerprint.","Good work. That print goes in the file."],

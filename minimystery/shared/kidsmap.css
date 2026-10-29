@@ -26,3 +26,10 @@
 #play.kv #zoom,#play.kv #radar{display:none}
 /* op de echte plattegrond staat de terugknop links, uit de buurt van de zoomknoppen */
 #play:not(.kv) #bView{right:auto;left:12px}
+
+/* eerste keer: niet-blokkerende strook onderaan de kaart */
+#kmIntro.kmBanner{inset:auto 12px calc(214px + env(safe-area-inset-bottom,0px)) 12px;background:none;backdrop-filter:none;padding:0;pointer-events:none;display:block}
+#kmIntro.kmBanner[hidden]{display:none}
+#kmIntro.kmBanner .kmCard{pointer-events:auto;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:16px;max-width:none}
+#kmIntro.kmBanner p{margin:0;flex:1;font-size:14px;line-height:1.35}
+#kmIntro.kmBanner .kmOk{flex:0 0 auto;width:auto;padding:9px 14px;border-radius:12px;border:0;background:#2b1d0e;color:#fffaf0;font:700 15px 'Fredoka','Arial Rounded MT Bold',sans-serif}

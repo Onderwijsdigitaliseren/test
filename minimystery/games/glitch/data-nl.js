@@ -3,7 +3,7 @@
    sluipen, AR-jacht, geheimschrift, pixels herstellen, hacken, memory, ritme). Per level een beloning: bewijs over hoe Glitch eruitziet (3x), een logboek van Level 0,
    of (laatste) de sleutel. Drie kenmerken (kleur, ogen, antenne) wijzen Glitch aan tussen vier spiegelbeelden. Eindbaas in drie fases + de Serverkamer (escape-room). */
 window.GL_DATA={lang:"nl",HERO:"Bit",VILLAIN:"Glitch",SJEF:"Save-Sjef",
-T:{today:"Start de game van vandaag",todayAgain:"Nog een game van vandaag",extra:"Extra game",pro:"Feestpas",proOn:"De Feestpas staat aan: speel zo vaak je wilt.",proFree:"De oefenronde is gratis. De echte game speel je met de Feestpas.",proUsed:"De oefenronde is gratis. De echte game speel je met de Feestpas.",
+T:{today:"▶ Start de game",todayAgain:"▶ Speel de game van vandaag nog eens",extra:"Andere game",pro:"Feestpas",proOn:"De Feestpas staat aan: speel zo vaak je wilt.",proFree:"De oefenronde is gratis. De echte game speel je met de Feestpas.",proUsed:"De oefenronde is gratis. De echte game speel je met de Feestpas.",
   cancel:"Annuleren",close:"Sluiten",back:"Terug",saved:"De game is opgeslagen (save-punt). Ga later verder.",wiped:"Gewist.",
   briefNo:"Gamecode {c}",voice:"Voorlezen",voiceOn:"Bit leest de opdrachten voor.",voiceOff:"Voorlezen staat uit.",
   lvl:{normaal:"Normaal",hard:"Hard"},lens:{kort:"Kort",normaal:"Normaal",lang:"Lang"},

@@ -134,7 +134,7 @@ function begin(seed,demo){if(!demo&&KIDS.length<2){toast(T.namesErr);$("#kids").
   var kids=KIDS.length>=2?KIDS.slice():(L==="nl"?["Speurder 1","Speurder 2"]:["Sleuth 1","Sleuth 2"]);
   G={seed:seed,level:LEVEL,demo:!!demo,c:makeCase(seed),kids:kids,off:Math.floor(Math.random()*kids.length),i:0,pi:0,ph:"intro",pot:[],words:0,digits:0,photo:null,crown:null,t0:Date.now(),done:false,wrong:0,skips:0,where:WHERE,len:LEN,album:[],sj:{},sjN:0,who:{},cl:{}};G.sjList=sjPlan(seed);
   G.code=caseCode(seed,LEN);G.plan=makePlan(seed,LEN);save();
-  var go=function(){showPlay();wake(function(){if(demo)return intro();codeIntro()})};
+  var go=function(){showPlay();wake(function(){intro()})};/* de zaakcode staat in het menu/Speurboekje; geen apart scherm meer vooraf */
   if(ROUTE!=="walk")return go();
   Wk.loading(T.wk.loc);Wk.locate().then(function(pos){Wk.loading("");var lat=pos.coords.latitude,lon=pos.coords.longitude;G.walk={origin:{lat:lat,lon:lon,kx:111320*Math.cos(lat*Math.PI/180),ky:110540},st:KM.virtSpots(7).map(function(p,i){p.fi=i;p.done=false;return p}),mode:"map",virt:true,walked:{}};save();go()},
     function(){Wk.loading("");toast(T.wk.noGps);go()})}
@@ -197,7 +197,7 @@ function talk(lines,then,who){var i=0,av=who||"mira-talk";var show=function(){if
   glass('<div class="talk">'+(av==="frog"?pic("frog",svgFrog(),"av"):av==="cauldron"?pic("cauldron",svgFrog(),"av"):av==="grimmel"?'<div class="av">'+svgGrimmel(G.c.col,G.c.hat,G.c.eyes,{sad:true})+'</div>':av==="parel"?pic("parel-cheer",svgParel({cheer:true}),"av"):pic(av,svgMira(av==="mira-shock"?"shock":av==="mira-happy"?"happy":"talk"),"av"))+'<p class="big">'+esc(t)+'</p><button type="button" class="btn" id="nx">'+T.next+'</button></div>');
   say(t);$("#nx").onclick=show};show()}
 function intro(){G.ph="intro";save();
-  talk([T.in1,T.in2],function(){talk([T.in3],function(){talk([T.in4],function(){talk([T.in5,T.in6],function(){buzz(40);G.ph="pass";G.i=0;save();step()},"mira-talk")},"frog")},"mira-shock")},"mira-shock")}
+  talk([T.in1+" "+T.in2],function(){talk([T.in3],function(){talk([T.in4],function(){talk([T.in5+" "+T.in6],function(){buzz(40);G.ph="pass";G.i=0;save();step()},"mira-talk")},"frog")},"mira-shock")},"mira-shock")}
 function step(){if(G.done)return finish();if(G.i>=7)return G.room&&G.room.door?finale():room();if(G.demo&&G.i>=2)return demoEnd();
   if(G.ph==="intro")return intro();var k=G.c.order[G.i],ing=T.ing[k],who=kid(G.i);
   if(G.walk&&!G.walk.walked[G.i]&&G.pot.indexOf(k)<0)return walkTo(G.i,step);

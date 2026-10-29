@@ -307,3 +307,6 @@ h1,h2,h3{font-family:var(--f-type);font-weight:700;text-transform:uppercase;lett
 #play{--km-sky:#bfe0ff;--km-ink:#17203a;--km-line:#1e3a8a;--km-paper:rgba(255,255,255,.95)}
 #kmTag,#kmHelp,#play:not(.kv) #bView{top:calc(132px + env(safe-area-inset-top,0px))}
 #play.kv #kmHot{top:calc(184px + env(safe-area-inset-top,0px))}
+/* zolang er nog geen gouden cijfer is, is het cijferpaneel verborgen: label en knoppen schuiven omhoog */
+#play:has(#mG:not(:has(.coin:not(.no)))) #kmTag,#play:has(#mG:not(:has(.coin:not(.no)))) #kmHelp,#play:not(.kv):has(#mG:not(:has(.coin:not(.no)))) #bView{top:calc(72px + env(safe-area-inset-top,0px))}
+#play.kv:has(#mG:not(:has(.coin:not(.no)))) #kmHot{top:calc(124px + env(safe-area-inset-top,0px))}

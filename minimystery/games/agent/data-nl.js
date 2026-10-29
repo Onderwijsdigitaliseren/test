@@ -3,7 +3,7 @@
    drie keer echt bewijs (altijd waar, laat een kenmerk zien), vier keer een getuige (één liegt), één keer een bericht van de chef.
    Drie kenmerken (pet, shirt, schoenen) wijzen samen precies één van vijf boeven aan. Daarna: de confrontatie in 3D, handboeien, diploma en GEZOCHT-poster. */
 window.AG_DATA={lang:"nl",V:"de Bordendief",CHEF:"Chef Bos",
-T:{today:"Start de zaak van vandaag",todayAgain:"Nog een zaak van vandaag",extra:"Extra zaak",pro:"Feestpas",proOn:"De Feestpas staat aan: speel zo vaak je wilt.",proFree:"De oefenronde is gratis. De echte zaak speel je met de Feestpas.",proUsed:"De oefenronde is gratis. De echte zaak speel je met de Feestpas.",
+T:{today:"▶ Start de zaak",todayAgain:"▶ Speel de zaak van vandaag nog eens",extra:"Andere zaak",pro:"Feestpas",proOn:"De Feestpas staat aan: speel zo vaak je wilt.",proFree:"De oefenronde is gratis. De echte zaak speel je met de Feestpas.",proUsed:"De oefenronde is gratis. De echte zaak speel je met de Feestpas.",
   cancel:"Annuleren",close:"Sluiten",back:"Terug",saved:"De zaak is bewaard. Ga later verder.",wiped:"Gewist.",
   briefNo:"Zaakcode {c}",codeTip:"Spelen jullie met meer telefoons? Vul op elke telefoon deze zaakcode in, dan krijgt iedereen dezelfde zaak.",
   voice:"Voorlezen",age6:"Junior agent",age8:"Rechercheur",voiceOn:"De telefoon leest de opdrachten voor.",voiceOff:"Voorlezen staat uit.",
@@ -88,7 +88,7 @@ WIT:{hoofd:["“Ik zag hem wegrennen. Hij had {v} op. Echt waar.”","“De dief
      shirt:["“Hij rende langs me. Hij droeg {v}.”","“Ik zag {v}. Dat had de dief aan, ja.”"],
      voet:["“Ik keek naar zijn voeten. Hij had {v} aan.”","“Hij had {v} aan. Ik hoorde ze op de stoep.”"]},
 GAG:["“Hier de chef. Goed werk, team. Blijf scherp. Over.”","“Hier de chef. Camera 4 heeft iets gezien, maar het beeld is wazig. Zoek verder. Over.”","“Hier de chef. De postbode is verdwaald. Zonder borden weet niemand meer waar hij woont. Opschieten. Over.”","“Hier de chef. Ik zie jullie op de camera. De buurt rekent op jullie. Over.”","“Hier de chef. Mijn koffie is koud geworden van het wachten. Over.”"],
-OPEN:"Hier Chef Bos van Bureau Buurtwacht. Agenten, luister. Vannacht zijn {C} gestolen. Niemand kan de weg nog vinden. De dief liet overal sporen achter. Vijf mensen uit de buurt zijn verdacht. Zoek {N} sporen. Bij elk spoor hoort een politiepuzzel. Bewijs is altijd waar. Getuigen helpen ook, maar die vergissen zich weleens. Als je weet wie het was: naar de confrontatie. Succes, agenten. Over en sluiten.",
+OPEN:"Hier Chef Bos van Bureau Buurtwacht. Agenten, luister. Vannacht zijn {C} gestolen. Niemand kan de weg nog vinden! Eén van deze vijf mensen is de dief. Volg de sporen en zoek uit wie het was. Over en sluiten.",
 END:"“Oké. Jullie hebben me. Het was ik, {K}. Met {KJ}, {KW} en {KD}. Ik wilde één keer een straat met mijn eigen naam. Dus heb ik alle borden meegenomen om er één te maken. Het spijt me. Ik hang ze allemaal terug. En… mag ik misschien een stukje taart?”",
 CADEAU:"alle straatnaamborden in de buurt van {J}",CADEAU0:"alle straatnaamborden in de buurt",
 /* puzzels: wat (voor speurboekje en strook), wat de chef erbij zegt, reactie na afloop */

@@ -29,7 +29,7 @@ T:{
  wk:{fp:["Paddenstoel","Toververvijver","Oude eik","Wensput","Elfenbrug","Heksenhuisje","Kasteelpoort"],all:"Alle plekken gevonden!",near:"Nog {d} m",cold:"Koud… loop een andere kant op",cool:"Lauw. Dichterbij komt-ie",warm:"Warm! Goed zo!",hot:"HEET! Kijk om je heen!",here:"Hier is het! Tik op Ik ben er.",first:"Loop maar, het kompas wijst de weg",noDir:"Loop een stukje, dan weet het kompas de richting",map:"",kids:"",mapTip:"",
      loc:"Waar zijn jullie? De spiegel tekent het Spiegelbos…",noGps:"Geen locatie gevonden. De wandelroute slaan we over.",title:"Ingrediënt {i} van 7 · naar {p}",go:"Het volgende ingrediënt ligt bij {p}. Loop erheen!",at:"Ik ben er (begeleider)"},
  listen:"Lees voor",cancel:"Annuleren",back:"Terug",close:"Sluiten",next:"Verder ▸",ok:"Oké!",skip:"Overslaan",
- today:"Start de zaak van vandaag",todayAgain:"Nog een keer: de zaak van vandaag",extra:"Extra zaak",pro:"Feestpas",
+ today:"▶ Start de zaak",todayAgain:"▶ Speel de zaak van vandaag nog eens",extra:"Andere zaak",pro:"Feestpas",
  demoH:"Dit was de oefenronde",demoT:"Zo werkt de Toverspiegel. De hele zaak, met alle zeven ingrediënten, de spiegelgeest en de kroning, speel je met de Feestpas.",
  namesH:"Wie doen er mee?",namesT:"Eén naam per regel (2 tot 10). De spiegel zegt steeds wie hem mag vasthouden.",namesPh:"Noor\nSem\nLina",namesErr:"Vul minstens twee namen in.",
  wakeH:"De spiegel slaapt nog",wakeT:"Tik op de knop en roep samen: SPIEGEL, WORD WAKKER! De telefoon vraagt dan of hij mag bewegen en luisteren. Zeg ja, anders tovert hij met zijn handen op de rug.",

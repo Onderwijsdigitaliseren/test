@@ -23,7 +23,7 @@ T:{
  wk:{fp:["Toadstool","Magic pond","Old oak","Wishing well","Fairy bridge","Witch's hut","Castle gate"],all:"All places found!",near:"{d} m to go",cold:"Cold… try another direction",cool:"Lukewarm. Getting closer",warm:"Warm! Keep going!",hot:"HOT! Look around you!",here:"This is it! Tap I'm here.",first:"Start walking, the compass shows the way",noDir:"Walk a little, then the compass knows the direction",map:"",kids:"",mapTip:"",
      loc:"Where are you? The mirror is drawing the Mirror Forest…",noGps:"No location found. We skip the walking route.",title:"Ingredient {i} of 7 · to {p}",go:"The next ingredient is at {p}. Walk there!",at:"I'm here (grown-up)"},
  listen:"Read aloud",cancel:"Cancel",back:"Back",close:"Close",next:"Next ▸",ok:"Okay!",skip:"Skip",
- today:"Start today's case",todayAgain:"Once more: today's case",extra:"Extra case",pro:"Party Pass",
+ today:"▶ Start the case",todayAgain:"▶ Play today's case again",extra:"Another case",pro:"Party Pass",
  demoH:"That was the practice round",demoT:"That is how the Enchanted Mirror works. The whole case, with all seven ingredients, the mirror spirit and the coronation, you play with the Party Pass.",
  namesH:"Who is playing?",namesT:"One name per line (2 to 10). The mirror says who gets to hold it.",namesPh:"Noor\nSam\nLina",namesErr:"Enter at least two names.",
  wakeH:"The mirror is still asleep",wakeT:"Tap the button and shout together: MIRROR, WAKE UP! The phone will ask if it may move and listen. Say yes, or it has to do magic with its hands behind its back.",

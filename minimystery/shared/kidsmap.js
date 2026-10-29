@@ -60,18 +60,21 @@ function create(o){
   var X=LG==="en"?{tagKids:"drawing · not the real streets",toMap:"Real map",toKids:"Back to ",help:"What is this map?",
       title:"This is the {kids}",p1:"It's a drawing that belongs to the story, not the real streets. The places are real, though: they're in your own neighbourhood. The arrow and the colours (cold → hot) show the children the way.",
       p2:"Want to see where you really have to walk? Tap <b>{map}</b> at the top right: that shows the real map with streets and all the places on it, for the grown-up. Tap <b>{kids}</b> there to come back to the drawing.",
-      ok:"Got it",go:"Show the real map"}
+      ok:"OK",go:"Show the real map",short:"🎨 A drawing of your neighbourhood: the places lie where they really are. Real map? Button at the top right."}
     :{tagKids:"tekening · niet de echte straten",toMap:"Echte plattegrond",toKids:"Terug naar ",help:"Wat is deze kaart?",
       title:"Dit is de {kids}",p1:"Een tekening die bij het verhaal hoort, niet de echte straten. De plekken zijn wél echt: die liggen bij jou in de buurt. Het pijltje en de kleuren (koud → heet) wijzen de kinderen de weg.",
       p2:"Wil je zien waar je écht moet lopen? Tik rechtsboven op <b>{map}</b>: dan zie je de echte plattegrond met straten en alle plekken erop, voor de begeleider. Tik daar op <b>{kids}</b> om terug te gaan naar de tekening.",
-      ok:"Begrepen",go:"Toon de echte plattegrond"};
+      ok:"OK",go:"Toon de echte plattegrond",short:"🎨 Een tekening van jullie buurt: de plekken liggen zoals in het echt. Echte plattegrond? Knop rechtsboven."};
   function fillX(s){return s.replace(/\{kids\}/g,T.kids||"").replace(/\{map\}/g,X.toMap)}
   var introPend=false,introChk=0;
   /* de uitleg pas tonen als de verhaalkaart echt vrij in beeld is (geen vel, filmpje of ander scherm ervoor) */
   function clear(){var r=cv.getBoundingClientRect(),e=document.elementFromPoint(r.left+r.width/2,r.top+r.height/2);return !!e&&(e===cv||e.closest("#kmBox")===$("#kmBox"))}
   function introWhenClear(t){if(!introPend||t-introChk<500)return;introChk=t;if(!KV||bView.hidden){introPend=false;return}if(clear()){introPend=false;intro(false)}}
   function intro(force){if(!introEl||bView.hidden)return;if(!force&&MW.LS.get("ss_kmintro"))return;MW.LS.set("ss_kmintro",1);
-    introEl.innerHTML='<div class="kmCard"><div class="kmPic">🎨</div><h3>'+fillX(X.title)+'</h3><p>'+fillX(X.p1)+'</p><p>'+fillX(X.p2)+'</p><div class="kmBtns"><button type="button" class="kmGo">🗺️ '+X.go+'</button><button type="button" class="kmOk">'+X.ok+'</button></div></div>';
+    if(!force){/* eerste keer: korte strook die niet blokkeert; de volledige uitleg zit achter de ?-knop */
+      introEl.className="kmBanner";introEl.innerHTML='<div class="kmCard"><p>'+fillX(X.short)+'</p><button type="button" class="kmOk">'+X.ok+'</button></div>';introEl.hidden=false;
+      var hideB=function(){introEl.hidden=true;introEl.className=""};introEl.querySelector(".kmOk").onclick=hideB;setTimeout(hideB,14000);bView.classList.add("kmPulse");setTimeout(function(){bView.classList.remove("kmPulse")},9000);return}
+    introEl.className="";introEl.innerHTML='<div class="kmCard"><div class="kmPic">🎨</div><h3>'+fillX(X.title)+'</h3><p>'+fillX(X.p1)+'</p><p>'+fillX(X.p2)+'</p><div class="kmBtns"><button type="button" class="kmGo">🗺️ '+X.go+'</button><button type="button" class="kmOk">'+X.ok+'</button></div></div>';
     introEl.hidden=false;introEl.querySelector(".kmOk").onclick=function(){introEl.hidden=true;bView.classList.add("kmPulse");setTimeout(function(){bView.classList.remove("kmPulse")},9000)};
     introEl.querySelector(".kmGo").onclick=function(){introEl.hidden=true;KV=false;setView()}}
   /* label en ?-knop nemen de kleuren van #bView over (per spel gestyled); hun plek staat in css (kidsmap.css, per spel te overschrijven) */

@@ -3,7 +3,7 @@
    halter colours, the crow's shinies, petting the cat, through the meadow). Per lead: evidence (3x, always true, points at a feature of the place), an animal witness (4x, one is wrong)
    or a message from Fenna (1x). Three features (flag, animals, treats) point at exactly one of five places where Bibi is staying – and that is where Fluff is. */
 window.PP_DATA={lang:"en",CHEF:"Fenna",PONY:"Fluff",FRIEND:"Bibi",
-T:{today:"Start today's case",todayAgain:"Another case for today",extra:"Extra case",pro:"Party Pass",proOn:"The Party Pass is on: play as often as you like.",proFree:"The practice round is free. You play the real case with the Party Pass.",proUsed:"The practice round is free. You play the real case with the Party Pass.",
+T:{today:"▶ Start the case",todayAgain:"▶ Play today's case again",extra:"Another case",pro:"Party Pass",proOn:"The Party Pass is on: play as often as you like.",proFree:"The practice round is free. You play the real case with the Party Pass.",proUsed:"The practice round is free. You play the real case with the Party Pass.",
   cancel:"Cancel",close:"Close",back:"Back",saved:"The case is saved. Continue later.",wiped:"Wiped.",
   briefNo:"Case code {c}",codeTip:"Playing with more phones? Enter this case code on every phone and everyone gets the same case.",
   voice:"Read aloud",voiceOn:"The phone reads the tasks aloud.",voiceOff:"Read aloud is off.",
@@ -86,7 +86,7 @@ WIT:{vlag:["“I saw Fluff walking. She went to {v}. Honestly.”","“Fluff? Sh
      dier:["“She said she was going to her friend. {v} live there.”","“Where Bibi is, {v} live. Fluff told me herself.”"],
      voer:["“Fluff said: I get {v} there. And off she went.”","“She was on her way to {v}. That's what she said.”"]},
 GAG:["“Hi, Fenna here. Well done, detectives! Have a biscuit and walk on.”","“Fenna here. I've already cleaned the stable for when Fluff comes back. Quick, eh? On you go!”","“Fenna here. Gerda the goat just ate my cap. Not important. Keep searching!”","“Fenna here. I can see you from the stables. Wave! Yes, you. Hi!”","“Fenna here. Important message: Fluff loves cuddles. When you find her: cuddles.”"],
-OPEN:"Hi detectives, Fenna here from Hoofbeat Stables. This morning Fluff's stable was empty. The gate was open! Who did that? And where is she? I think she went to her friend Bibi, but Bibi is staying somewhere else this week. At one of five places. Find the leads. Each lead has a puzzle, and each puzzle gives you a golden horseshoe with a number. Keep them safe! Traces are always true. The animals help too, but they sometimes get it wrong. When you know where Bibi is, you know where Fluff is. Good luck!",
+OPEN:"Hi detectives, Fenna here from Hoofbeat Stables. This morning Fluff's stable was empty, and the gate was open! I think Fluff went to her friend Bibi. Bibi is staying at one of these five places. Follow the hoofprints and find out which one. Good luck!",
 END:"“Meow. I saw it all. Nobody opened the gate. Fluff did it herself, with her lip! She pushed the bolt open. And then she walked to Bibi. To {P}! With {PV}, {PD} and {PE}. She missed her friend.”",
 END2:"And there they are, Fluff and Bibi, nose to nose. Fluff whinnies softly. She's glad to see you. Will you take her back home? Or can Bibi come and stay at Hoofbeat Stables?",
 ENDA:"Fluff comes home",ENDB:"Bibi comes to stay",ENDAT:"Fluff happily walks along with you. Fenna is already at the gate with a carrot.",ENDBT:"Two ponies at Hoofbeat Stables! Fenna puts out an extra bucket of hay. Bibi whinnies: thank you.",

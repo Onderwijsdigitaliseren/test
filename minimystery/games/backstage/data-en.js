@@ -3,7 +3,7 @@
    a trace of the bag-carrier's outfit or a witness (one gets it wrong, or lies at Superstar level). Three traits (glitter, headwear, shoes) point out Pip
    on the blurry photo. Then the talk with Pip, the setlist in the right order and the show with the whole group. */
 window.BS_DATA={lang:"en",
-T:{today:"Start today's case",todayAgain:"Another case today",extra:"Extra case",pro:"Party Pass",proOn:"The Party Pass is on: play as often as you like.",proFree:"The practice round is free. You play the real case with the Party Pass.",proUsed:"The practice round is free. You play the real case with the Party Pass.",
+T:{today:"▶ Start the case",todayAgain:"▶ Play today's case again",extra:"Another case",pro:"Party Pass",proOn:"The Party Pass is on: play as often as you like.",proFree:"The practice round is free. You play the real case with the Party Pass.",proUsed:"The practice round is free. You play the real case with the Party Pass.",
   cancel:"Cancel",close:"Close",back:"Back",saved:"The case is saved. Carry on later.",wiped:"Wiped.",
   voice:"Read aloud",voiceOn:"Max reads the tasks aloud.",voiceOff:"Reading aloud is off.",musOn:"Music on",musOff:"Music off",
   lvl:{fan:"Fan",ster:"Superstar"},lens:{kort:"Short",normaal:"Normal",lang:"Long"},

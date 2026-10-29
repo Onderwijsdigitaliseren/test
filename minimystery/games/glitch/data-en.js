@@ -1,6 +1,6 @@
 /* Glitch in the Neighbourhood – English texts and game content. Kids' walk 8+ as a video game: the neighbourhood is the game, every place a level. See data-nl.js for the structure. */
 window.GL_DATA={lang:"en",HERO:"Bit",VILLAIN:"Glitch",SJEF:"Save Sam",
-T:{today:"Start today's game",todayAgain:"Another game today",extra:"Extra game",pro:"Party Pass",proOn:"The Party Pass is on: play as often as you like.",proFree:"The practice round is free. The real game needs the Party Pass.",proUsed:"The practice round is free. The real game needs the Party Pass.",
+T:{today:"▶ Start the game",todayAgain:"▶ Play today's game again",extra:"Another game",pro:"Party Pass",proOn:"The Party Pass is on: play as often as you like.",proFree:"The practice round is free. The real game needs the Party Pass.",proUsed:"The practice round is free. The real game needs the Party Pass.",
   cancel:"Cancel",close:"Close",back:"Back",saved:"The game is saved (save point). Continue later.",wiped:"Wiped.",
   briefNo:"Game code {c}",voice:"Read aloud",voiceOn:"Bit reads the tasks aloud.",voiceOff:"Read aloud is off.",
   lvl:{normaal:"Normal",hard:"Hard"},lens:{kort:"Short",normaal:"Normal",lang:"Long"},

@@ -209,3 +209,5 @@ i.coin{display:inline-block;width:13px;height:13px;background:var(--gold);vertic
 .sheet .paper>*,#pz>*,.clear>*{flex-shrink:0}
 #file{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;left:-9999px}
 @media (prefers-reduced-motion: reduce){.hijack,.lvlup{animation:none}}
+/* rang/team-level staat in het speurboekje (shared/start.js verbergt die cel): vier tellers + menu */
+#mhud,#hud{grid-template-columns:1fr 1fr 1fr 1fr 44px!important}

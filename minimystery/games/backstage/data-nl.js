@@ -3,7 +3,7 @@
    van de tas-drager of een getuige (één zit ernaast, of liegt op Superster). Drie kenmerken (glitter, hoofddeksel, schoenen) wijzen Pip aan op de wazige foto.
    Daarna het gesprek met Pip, de setlist in de goede volgorde en de show met de hele groep. */
 window.BS_DATA={lang:"nl",
-T:{today:"Start de zaak van vandaag",todayAgain:"Nog een zaak van vandaag",extra:"Extra zaak",pro:"Feestpas",proOn:"De Feestpas staat aan: speel zo vaak je wilt.",proFree:"De oefenronde is gratis. De echte zaak speel je met de Feestpas.",proUsed:"De oefenronde is gratis. De echte zaak speel je met de Feestpas.",
+T:{today:"▶ Start de zaak",todayAgain:"▶ Speel de zaak van vandaag nog eens",extra:"Andere zaak",pro:"Feestpas",proOn:"De Feestpas staat aan: speel zo vaak je wilt.",proFree:"De oefenronde is gratis. De echte zaak speel je met de Feestpas.",proUsed:"De oefenronde is gratis. De echte zaak speel je met de Feestpas.",
   cancel:"Annuleren",close:"Sluiten",back:"Terug",saved:"De zaak is opgeslagen. Ga later verder.",wiped:"Gewist.",
   voice:"Voorlezen",voiceOn:"Max leest de opdrachten voor.",voiceOff:"Voorlezen staat uit.",musOn:"Muziek aan",musOff:"Muziek uit",
   lvl:{fan:"Fan",ster:"Superster"},lens:{kort:"Kort",normaal:"Normaal",lang:"Lang"},

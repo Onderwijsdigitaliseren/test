@@ -2,7 +2,7 @@
    Om 03:03 stal de Lichtjesdief alle lichtjes van de straat (en het cadeau). Op acht plekken vang je hem met een opdracht; hij vlucht en laat een lichtje achter.
    Acht lichtjes in de lantaarn = genoeg licht om zijn gezicht te zien. Wie hij overdag is, vertelt waar zijn schuilplaats is, en daar ligt het cadeau. */
 window.SJ_DATA={lang:"nl",V:"De Lichtjesdief",VS:"de Lichtjesdief",
-T:{today:"Start de jacht van vandaag",todayAgain:"Nog een jacht van vandaag",extra:"Extra jacht",pro:"Feestpas",proOn:"De Feestpas staat aan: speel zo vaak je wilt.",proFree:"De oefenronde is gratis. De echte jacht speel je met de Feestpas.",proUsed:"De oefenronde is gratis. De echte jacht speel je met de Feestpas.",
+T:{today:"▶ Start de jacht",todayAgain:"▶ Speel de jacht van vandaag nog eens",extra:"Andere jacht",pro:"Feestpas",proOn:"De Feestpas staat aan: speel zo vaak je wilt.",proFree:"De oefenronde is gratis. De echte jacht speel je met de Feestpas.",proUsed:"De oefenronde is gratis. De echte jacht speel je met de Feestpas.",
   cancel:"Annuleren",close:"Sluiten",back:"Terug",saved:"Je jacht is bewaard. Ga later verder.",wiped:"Gewist.",
   brief:"Jacht",briefNo:"Jachtcode {c}",codeTip:"Spelen jullie met meer telefoons? Vul op elke telefoon deze jachtcode in, dan krijgt iedereen dezelfde jacht.",
   go:"Op jacht!",skipCine:"Overslaan ▸",
@@ -63,7 +63,7 @@ WIT:{hoofd:["“Even eerlijk: vandaag heb ik {v} op. Onthoud dat.”","“Ik dra
      rit:["“Ik ben hier gekomen op {v}. Sneller dan jullie!”","“Mijn voertuig? {v}. Daar ga ik zo op weg.”"],
      dier:["“Ik heb {v} bij me. Die bewaakt het cadeau.”","“Mijn beste vriend is {v}. Die staat naast me.”"]},
 GAG:["“Dit was een test. Jullie zijn geslaagd. Voor niks. HAHA.”","“Jullie lopen de verkeerde kant op. Grapje. Of niet. Of wel.”","“Ik heb net een stukje van de taart opgegeten. Was niet lekker. Toch nog een hap.”","“Zwaai eens naar links. Nu naar rechts. Dankjewel, dat was grappig om te zien.”","“Weet je wat ik hoor? Jullie voetstappen. Weet je wat ik niet hoor? Slimme ideeën.”"],
-OPEN:"Hallo kleine speurneuzen. Hier de Lichtjesdief. Vannacht om 03:03 heb ik alle lichtjes van jullie straat gepikt. En {C}. HAHA. Alles ligt in mijn schuilplaats. Waar die is? Dat weet je pas als je weet wie ik overdag ben. En mijn gezicht zie je alleen in héél veel licht. Ik zit op {NW} plekken in de buurt. Vang me, dan laat ik van schrik een lichtje vallen. Met {NW} lichtjes in je lantaarn zie je wie ik ben. Bij elk lichtje roep ik iets over mezelf. Maar pas op: één keer lieg ik. Kom maar. Als je durft.",
+OPEN:"Hallo kleine speurneuzen. Hier de Lichtjesdief. Vannacht heb ik alle lichtjes van jullie straat gepikt. En {C}. HAHA. Ik verstop me op {NW} plekken in de buurt. Vang me, en ik laat van schrik een lichtje vallen. Met genoeg licht zie je wie ik ben. Kom maar. Als je durft.",
 END:"“AAAH, LICHT! Oké, oké. Jullie zien het. Overdag ben ik {K}, {KR}. Met {KJ}, op {KW}, met {KD}. En ja, ik loog over die ene. Volgende keer win ik. Lichtjesdief uit.”",
 CADEAU:"het cadeau van {J}",CADEAU0:"het verjaardagscadeau",
 /* foto-opdrachten buiten: id, wat, wat hij zegt, tip, zijn reactie, ImageNet-klassen */
