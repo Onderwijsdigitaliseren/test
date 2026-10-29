@@ -23,8 +23,10 @@ function N(){return G&&G.c?G.c.slots.length:8}
 function hard(){return !!G&&G.level==="hard"}
 function isPuz(act){return act!=="photo"&&act!=="group"}
 /* voorlezen (makkelijk niveau: niemand hoeft te lezen) */
-function say(t){if(!VOICE||!t)return;try{var ss=window.speechSynthesis;if(!ss)return;ss.cancel();var u=new SpeechSynthesisUtterance(String(t).replace(/<[^>]+>/g,"").replace(/[“”"]/g,""));u.lang=L==="nl"?"nl-NL":"en-GB";u.rate=.92;u.pitch=1.05;ss.speak(u)}catch(e){}}
-function hush(){try{window.speechSynthesis&&window.speechSynthesis.cancel()}catch(e){}}
+/* stem: via shared/voice.js (beste stem van het toestel, zin voor zin, opnames als die er zijn); anders de kale browserstem */
+if(window.MMVoice)MMVoice.init("jacht",L);
+function say(t){if(!VOICE||!t)return;t=String(t).replace(/<[^>]+>/g,"");if(window.MMVoice)return MMVoice.say(t);try{var ss=window.speechSynthesis;if(!ss)return;ss.cancel();var u=new SpeechSynthesisUtterance(t.replace(/[“”"]/g,""));u.lang=L==="nl"?"nl-NL":"en-GB";u.rate=.92;u.pitch=1.05;ss.speak(u)}catch(e){}}
+function hush(){if(window.MMVoice)return MMVoice.hush();try{window.speechSynthesis&&window.speechSynthesis.cancel()}catch(e){}}
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest(".spk");if(b){var v=VOICE;VOICE=true;say(b.dataset.say);VOICE=v}});
 function spk(t){return '<button type="button" class="spk" data-say="'+esc(t)+'" aria-label="'+esc(T.readAloud||"🔊")+'">🔊</button>'}
 function nw(n){return (D.X.NUM&&D.X.NUM[n])||String(n)}
