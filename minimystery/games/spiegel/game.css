@@ -335,3 +335,7 @@ a.btn{display:block;text-align:center;text-decoration:none}
 #walk #kmMsg{bottom:calc(96px + env(safe-area-inset-bottom,0px))}
 #walk #bView{display:none}
 #walk #kmTag,#walk #kmHelp,#walk #kmIntro{display:none}
+
+/* hartjes (crew.js) boven de spiegel */
+#tsH{position:absolute;left:0;right:0;top:10px;z-index:4;pointer-events:none}#tsH .crH{margin:0}
+body.tsHearts #glass{padding-top:44px}

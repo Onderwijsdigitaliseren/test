@@ -37,8 +37,9 @@ function drawSign(g,cx,cy,w,text,n,glow){var h=w*.34,r=h*.18;g.save();if(glow){g
   if(n!=null){g.fillStyle="#ffc21a";g.beginPath();g.arc(cx+w/2-h*.1,cy-h/2+h*.1,h*.3,0,7);g.fill();g.fillStyle="#0d2a66";g.font="700 "+h*.36+"px 'Barlow Condensed',sans-serif";g.fillText(n,cx+w/2-h*.1,cy-h/2+h*.12)}g.restore()}
 function rr(g,x,y,w,h,r){g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath()}
 /* voorlezen */
-function say(t){if(!VOICE||!t)return;try{var ss=window.speechSynthesis;if(!ss)return;ss.cancel();var u=new SpeechSynthesisUtterance(String(t).replace(/[“”"]/g,"").replace(/\{[^}]+\}/g,""));u.lang=L==="nl"?"nl-NL":"en-GB";u.rate=.92;u.pitch=1.05;ss.speak(u)}catch(e){}}
-function hush(){try{window.speechSynthesis&&window.speechSynthesis.cancel()}catch(e){}}
+if(window.MMVoice)MMVoice.init("agent",L);
+function say(t){if(!VOICE||!t)return;if(window.MMVoice)return MMVoice.say(String(t).replace(/<[^>]+>/g,""));try{var ss=window.speechSynthesis;if(!ss)return;ss.cancel();var u=new SpeechSynthesisUtterance(String(t).replace(/[“”"]/g,"").replace(/\{[^}]+\}/g,""));u.lang=L==="nl"?"nl-NL":"en-GB";u.rate=.92;u.pitch=1.05;ss.speak(u)}catch(e){}}
+function hush(){if(window.MMVoice)return MMVoice.hush();try{window.speechSynthesis&&window.speechSynthesis.cancel()}catch(e){}}
 function bubble(txt,who,cls,av){return '<div class="msg '+(cls||"")+'">'+(av||CHEF)+'<div class="bub"><button type="button" class="spk" aria-label="'+esc(T.listen)+'" data-say="'+esc(txt)+'">🔊</button>'+(who?'<em>'+esc(who)+'</em>':'')+'<p>'+esc(txt)+'</p></div></div>'}
 document.addEventListener("click",function(e){var b=e.target.closest(".spk");if(b){var v=VOICE;VOICE=true;say(b.dataset.say);VOICE=v}});
 
@@ -399,14 +400,16 @@ function taskSheet(i,spot){walkTo=null;$$(".taunt").forEach(function(x){x.remove
   sheet(head+'<div class="pzh"><h2>'+esc(I[0])+'</h2><p class="hint">'+esc(hint)+'</p></div><div id="pz"></div><button type="button" class="btn ghost dk" id="shX">'+T.back+'</button>',true);
   $("#shX").onclick=function(){G.force=null;closeSheet()};
   say(s.ask+" "+hint);
-  var fin=false,o={box:$("#pz"),rng:rngOf(G.seed*7+i*131),done:function(){if(fin)return;fin=true;mg.stop();cur.thumb=ballThumb(i,s.act);accept()},
+  var fin=false,H=null,o={box:$("#pz"),rng:rngOf(G.seed*7+i*131),done:function(){if(fin)return;fin=true;mg.stop();if(H)H.remove();cur.thumb=ballThumb(i,s.act);accept()},
     canvas:function(hh){o.box.innerHTML='<canvas class="sq" width="280" height="'+(hh||280)+'"></canvas>';var c=o.box.firstChild;if(hh)c.style.aspectRatio="280/"+hh;return c},
     at:function(e,c){var b=c.getBoundingClientRect();return[(e.clientX-b.left)/b.width*280,(e.clientY-b.top)/b.height*(c.height)]},
     msg:function(t){var m=$("#pzM");if(!m){m=document.createElement("p");m.id="pzM";m.className="pzst";o.box.appendChild(m)}m.textContent=t},
-    say:say,good:function(){buzz(80);beep(660,.15);setTimeout(function(){beep(990,.2)},120)},bad:function(){G.oops=(G.oops||0)+1;buzz(120);beep(180,.2)}};
+    say:say,good:function(){buzz(80);beep(660,.15);setTimeout(function(){beep(990,.2)},120)},bad:function(){beep(180,.2);if(H)return H.miss();buzz(120);return false}};
   if(/debug/.test(location.search))window.AG_DBG=o;
-  if(window.MMP)MMP.helper(function(){G.t0-=120000;G.oops=(G.oops||0)+2;G.skips=(G.skips||0)+1;save();o.done()},function(){say(s.ask+" "+hint)});
-  PUZ[s.act](o)}
+  if(window.MMP)MMP.helper(function(){G.t0-=120000;G.skips=(G.skips||0)+1;save();o.done()},function(){say(s.ask+" "+hint)});
+  /* hartjes (crew.js): op = puzzel opnieuw, zonder straf */
+  var start=function(){mg.stop();fin=false;o.box.innerHTML="";if(window.MW.Crew)H=MW.Crew.hearts(o.box,function(){G.retries=(G.retries||0)+1;save();start()},{dead:function(){mg.stop()}});PUZ[s.act](o)};
+  start()}
 function accept(){var i=cur.i,s=G.c.slots[i];G.ph[i]=cur.thumb;if(cur.spot){cur.spot.done=true;cur.spot.doneAt=Date.now();G.kd0=null}G.force=null;if(G.mode!=="map"&&G.mode!=="demo")G.i=i+1;save();buzz([40,30,80]);beep(520,.15);
   var N=NN(),kind=s.kind,n=done(),dg=G.c.digits[i],last=n>=N,cliff=last?D.CLIFFLAST:D.CLIFF[(n-1+(G.seed%7))%D.CLIFF.length],
     head=kind==="ev"?T.ev:kind==="claim"?T.wit:T.gag,sub=kind==="ev"?T.evT:kind==="claim"?(HARD()?T.witT8:T.witT):"",txt=kind==="claim"?claimText(G.c.claims[s.w]):s.t,who=kind==="claim"?G.c.claims[s.w].who:D.CHEF,av=kind==="claim"?witAv(who):CHEF;
@@ -425,6 +428,9 @@ function afterLead(n){var N=NN(),go=function(){if(G.mode==="map"||G.mode==="demo
   if(mi>=0&&!G.miss[n]&&D.MISS){G.miss[n]=1;save();return photoSheet("miss",go,D.MISS[(mi+G.seed)%D.MISS.length])}
   go()}
 function interlude(n){var N=NN(),thief=n%2===1,t;
+  /* om de beurt: de dief kaapt het scherm met een opdracht voor de hele groep (crew.js) */
+  if(thief&&window.MW.Crew&&D.CREW&&n>=3&&Math.floor(n/2)%2===1){var hk=(G.hj==null?G.seed:G.hj+1)%D.CREW.CREW_HIJACK.length;G.hj=hk;save();
+    MW.Crew.hijack({who:cap(D.V),img:IMGROOT+"boef-sneak.webp?v=3",line:D.CREW.CREW_HIJACK[hk],secs:15,say:false});say(D.CREW.CREW_HIJACK[hk]);return}
   if(thief)t=D.TAUNT[(Math.floor(n/2)+G.seed)%D.TAUNT.length];
   else{var k=(Math.floor(n/2)-1+G.seed)%D.RADIO.length,open=G.st?G.st.filter(function(s){return !s.done}):[],sp=open.length?open[(n*7+G.seed)%open.length]:null;
     t=fill(D.RADIO[k],{p:sp?sp.name:D.RADIOP,n:N-n});if(sp&&/\{p\}/.test(D.RADIO[k])){TH.tgt=sp;TH.wait=0;TH.off={x:24,y:-12}}}
@@ -716,7 +722,9 @@ function twistSheet(){$$(".taunt").forEach(function(x){x.remove()});var hard=HAR
     '<div class="msg boefmsg"><span class="avatar boefav" style="background-image:url('+IMGROOT+'boef-sneak.webp?v=3)"></span><div class="bub"><button type="button" class="spk" aria-label="'+esc(T.listen)+'" data-say="'+esc(D.TWISTB)+'">🔊</button><em>'+esc(cap(D.V))+'</em><p>'+esc(D.TWISTB)+'</p></div></div>'+
     '<button type="button" class="btn red" id="twGo">'+esc(T.twistGo)+'</button><button type="button" class="btn ghost dk" id="shX">'+T.back+'</button>',true);
   say(t+" "+D.TWISTB);$("#shX").onclick=closeSheet;$("#twGo").onclick=vaultSheet}
-function vaultSheet(){var dg=G.c.digits,N=dg.length,hard=HARD(),order=[],k;for(k=0;k<N;k++)order.push(hard?N-1-k:k);var pos=0,fin=false,hiT=0;
+function vaultSheet(){if(window.MW.Crew&&D.CREW&&!G.rally){G.rally=1;save();hush();closeSheet();
+    return MW.Crew.rally({title:D.CREW.CREW_RALLY_T,text:D.CREW.CREW_RALLY_TXT,icon:"🗄️",iconDone:"🔓",color:"#ffc21a",goal:50,secs:15,okText:D.CREW.CREW_RALLY_OK,failText:D.CREW.CREW_RALLY_FAIL,then:function(){vaultSheet()}})}
+  var dg=G.c.digits,N=dg.length,hard=HARD(),order=[],k;for(k=0;k<N;k++)order.push(hard?N-1-k:k);var pos=0,fin=false,hiT=0;
   sheet('<div class="eyebrow">🔒 '+esc(T.vH)+'</div><div class="vault" id="vault"><div class="vin"><img src="'+IMGROOT+'icon-cuffs.webp?v=3" alt=""><b>'+esc(T.vIn)+'</b></div>'+
     '<div class="vdoor"><div class="vtop"><i class="vled" id="vLed"></i><span>'+esc(T.vH)+'</span><i class="vbolt"></i></div><div class="vdisp" id="vDisp"></div>'+
     '<div class="vpad" id="vPad">'+[1,2,3,4,5,6,7,8,9].map(function(d){return '<button type="button" data-d="'+d+'">'+d+'</button>'}).join("")+'</div></div></div>'+
@@ -820,7 +828,7 @@ function confess(){var c=G.c,k=c.sus[c.K],w=c.claims[c.Li];G.tEnd=G.tEnd||Date.n
 
 /* ---------- gewonnen ---------- */
 var RES=null,TEAM=LS.get("ss_ag_team","");
-function win(){if(window.MMP&&MMP.hasTreasure()&&!G.trDone){G.trDone=1;G.tEnd=G.tEnd||Date.now();save();$("#hide").hidden=true;return MMP.finale(win)}var c=G.c,min=((G.tEnd||Date.now())-G.t0)/60000,s2=G.tries===1,s3=(G.oops||0)<=3,stars=1+(s2?1:0)+(s3?1:0),xp=100+stars*50;
+function win(){if(window.MMP&&MMP.hasTreasure()&&!G.trDone){G.trDone=1;G.tEnd=G.tEnd||Date.now();save();$("#hide").hidden=true;return MMP.finale(win)}var c=G.c,min=((G.tEnd||Date.now())-G.t0)/60000,s2=G.tries===1,s3=true,stars=1+(s2?1:0)+(s3?1:0),xp=100+stars*50;
   var a=MW.profile.award({game:ID,xp:xp,stars:stars,gps:G.mode==="map",min:min,km:G.dist/1000,title:c.sus[c.K].name,code:G.code});
   if(G.daily){var p=MW.profile.get();p.games.ag.day=MW.today();MW.profile.save(p)}
   Wk.stopWatch();buzz([100,50,100,50,300]);

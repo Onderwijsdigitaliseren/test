@@ -19,8 +19,9 @@ function useMotion(){return SENS.motion&&(SMODE==="auto"||SMODE==="silent")}
 function useMic(){return SENS.mic&&(SMODE==="auto"||SMODE==="old")}
 function useCam(){return SMODE!=="tap"&&!!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia)}
 /* voorlezen */
-function say(t){if(t)LASTSAY=t;if(!VOICE||!t)return;try{var ss=window.speechSynthesis;if(!ss)return;ss.cancel();var u=new SpeechSynthesisUtterance(String(t).replace(/<[^>]+>/g,"").replace(/[“”"]/g,""));u.lang=L==="nl"?"nl-NL":"en-GB";u.rate=.92;u.pitch=1.05;ss.speak(u)}catch(e){}}
-function hush(){try{window.speechSynthesis&&window.speechSynthesis.cancel()}catch(e){}}
+if(window.MMVoice)MMVoice.init("spiegel",L);
+function say(t){if(t)LASTSAY=t;if(!VOICE||!t)return;if(window.MMVoice)return MMVoice.say(String(t).replace(/<[^>]+>/g,""));try{var ss=window.speechSynthesis;if(!ss)return;ss.cancel();var u=new SpeechSynthesisUtterance(String(t).replace(/<[^>]+>/g,"").replace(/[“”"]/g,""));u.lang=L==="nl"?"nl-NL":"en-GB";u.rate=.92;u.pitch=1.05;ss.speak(u)}catch(e){}}
+function hush(){if(window.MMVoice)return MMVoice.hush();try{window.speechSynthesis&&window.speechSynthesis.cancel()}catch(e){}}
 document.addEventListener("click",function(e){var b=e.target.closest(".spk");if(b){var v=VOICE;VOICE=true;say(b.dataset.say);VOICE=v}});
 
 /* ---------- plaatjes (Kellie's artwork, games/spiegel/img): als een plaatje er is, wint het van de SVG-tekening ---------- */
@@ -289,7 +290,7 @@ function tMist(ing,done){var m=useMic(),mist=1,hat=G.c.hat;
   tick();bindHelp(function(){riddle(done)})}
 function riddle(done){mg.stop();var hat=G.c.hat,opts=G.c.hatOpts,q=hard()?D.RIDDLE[hat]:T.riddleP;
   glass('<div class="talk"><h2>'+esc(hard()?T.riddleW:T.riddleP)+'</h2>'+(hard()?'<p class="big">'+esc(q)+'</p>':'')+'<div class="opts">'+opts.map(function(h){return '<button type="button" data-h="'+h+'">'+svgHat(h)+'<span>'+esc(cap(D.HATS1[h]))+'</span></button>'}).join("")+'</div></div>');
-  say(hard()?q:T.riddleP);bindHelp(done);$(".opts").onclick=function(e){var b=e.target.closest("button");if(!b)return;if(+b.dataset.h===hat){toast(T.right);done()}else{G.wrong++;save();toast(T.wrong);buzz(80);b.classList.add("no")}}}
+  say(hard()?q:T.riddleP);bindHelp(done);$(".opts").onclick=function(e){var b=e.target.closest("button");if(!b)return;if(+b.dataset.h===hat){toast(T.right);done()}else{if(pzMiss())return;buzz(80);b.classList.add("no")}}}
 /* ---------- 5. slaapliedje: ritme ---------- */
 function tRitme(ing,done){var bpm=hard()?100:80,per=60000/bpm,need=hard()?12:8,hits=0,t0,beatN=0,m=useMic(),lastClap=0;
   glass(taskHead(ing,ing.t)+'<div class="moon" id="mo">🌙</div><p class="big" id="rc">'+fill(T.beatCount,{n:0,m:need})+'</p><button type="button" class="btn big" id="rt">👏 '+esc(T.beat)+'</button>'+helpBtn());say(ing.t);
@@ -322,7 +323,7 @@ function snap(src,crown){var w=src.videoWidth||src.naturalWidth,h=src.videoHeigh
   return cv.toDataURL("image/jpeg",.8)}
 function silhouet(done){mg.stop();var s=G.c.sils;
   glass('<div class="talk"><h2>'+esc(T.silH)+'</h2><p>'+esc(T.silT)+'</p><div class="opts three">'+s.map(function(x,i){return '<button type="button" data-i="'+i+'">'+svgGrimmel(0,x.hat,x.eyes,{sil:true})+'</button>'}).join("")+'</div></div>');say(T.silH+" "+T.silT);
-  $(".opts").onclick=function(e){var b=e.target.closest("button");if(!b)return;if(s[+b.dataset.i].ok){toast(T.right);done()}else{G.wrong++;save();toast(T.wrong);buzz(80);b.classList.add("no")}}}
+  $(".opts").onclick=function(e){var b=e.target.closest("button");if(!b)return;if(s[+b.dataset.i].ok){toast(T.right);done()}else{if(pzMiss())return;buzz(80);b.classList.add("no")}}}
 /* ---------- 7. een vriendelijk woord: spreek de spreuk ---------- */
 function tSpreuk(ing,done){var m=useMic(),w=G.c.words;
   if(m){glass(taskHead(ing,ing.t)+'<div class="word spell">'+w.map(esc).join("<br>")+'</div><div class="vol"><i id="vb"></i></div><p class="note" id="vm">'+esc(fill(T.speak,{w:w.join(" ")}))+'</p>'+helpBtn());say(ing.t+" "+w.join(", "));
@@ -351,9 +352,18 @@ function pzTimer(){if(!hard())return;var el=document.createElement("div");el.cla
 function runPuzzles(done){var list=plan()[G.i]||[];var go=function(){if(G.pi>=list.length)return done();var slot=G.pi;G.ph="pz";save();puzzle(list[slot],slot,function(){G.pi=slot+1;save();go()})};go()}
 var PZFIN=null;
 function pg(html){glass(html);if(PZFIN)bindHelp(PZFIN)}
+var PZH=null;
+/* fout antwoord: hartje kwijt (crew.js); op = dezelfde puzzel opnieuw, zonder straf */
+var PZCUR=null;
+/* hartjes staan in een vaste strook boven de spiegel (#tsH), zodat ze blijven staan als de puzzel een nieuwe ronde tekent */
+function pzHearts(){if(PZH||!window.MW.Crew||!PZCUR)return;var m=$("#tsH");if(!m){m=document.createElement("div");m.id="tsH";var g=$("#glass");g.parentNode.insertBefore(m,g)}document.body.classList.add("tsHearts");var c=PZCUR;
+  PZH=MW.Crew.hearts($("#glass"),function(){G.retries=(G.retries||0)+1;save();PZH=null;puzzle(c.key,c.slot,c.done)},{mount:m,dead:function(){mg.stop()}})}
+function pzHeartsOff(){var m=$("#tsH");if(m)m.innerHTML="";document.body.classList.remove("tsHearts");PZH=null;PZCUR=null}
+function pzMiss(){pzHearts();if(PZH)return PZH.miss();return false}
 function puzzle(key,slot,done){var fn=PZF[key];if(!fn)return done();mg.stop();
   var n=(slot===0&&G.i%2===1&&G.i<6)?G.c.digits[(G.i-1)/2]:3+Math.floor(rngOf((G.seed^(G.i*977+slot*131))>>>0)()*5);
-  var fin=function(){if(PZFIN!==fin)return;PZFIN=null;mg.stop();done()};PZFIN=fin;fn(fin,n);
+  var fin=function(){if(PZFIN!==fin)return;PZFIN=null;mg.stop();pzHeartsOff();done()};PZFIN=fin;fn(fin,n);
+  PZH=null;PZCUR={key:key,slot:slot,done:done};if($("#glass .opts"))pzHearts();/* puzzels met keuzeknoppen tonen de hartjes meteen; andere pas bij de eerste fout */
   if(KRING.indexOf(key)<0)pzTimer();bindHelp(fin);peek()}
 /* Grimmel gluurt soms midden in een puzzel even om de hoek */
 function peek(){mg.later(function(){taunt(true)},9000+Math.random()*7000)}
@@ -373,13 +383,13 @@ function pzRoses(done,n){var r=rngOf(G.seed^0xB22^G.i),cells=[],tot=16;for(var i
     if(k==="tulip")return '<svg viewBox="-20 -24 40 48"><path d="M0,20 L0,0" stroke="#2a9d4b" stroke-width="2.5"/><path d="M-8,-2 L-8,-14 L-3,-8 L0,-16 L3,-8 L8,-14 L8,-2 Q0,6 -8,-2z" fill="#f4c20d"/></svg>';
     return '<svg viewBox="-20 -24 40 48"><path d="M0,20 L0,0" stroke="#2a9d4b" stroke-width="2.5"/>'+[0,60,120,180,240,300].map(function(a){return '<ellipse rx="3.5" ry="7" cy="-7" fill="#fff" transform="rotate('+a+' 0 -7)"/>'}).join("")+'<circle cy="-7" r="3.5" fill="#4fb3ff"/></svg>'};
   glass(pzHead(PZ.roseH,hard()?PZ.roseTT:PZ.roseT)+'<div class="garden">'+cells.map(fl).join("")+'</div><div class="opts four">'+opts.map(function(v){return '<button type="button" data-v="'+v+'"><span>'+v+'</span></button>'}).join("")+'</div>');say(hard()?PZ.roseTT:PZ.roseT);
-  $(".opts").onclick=function(e){var b=e.target.closest("button");if(!b)return;if(+b.dataset.v===n){toast(T.right);done()}else{G.wrong++;save();toast(T.wrong);buzz(80);b.classList.add("no")}}}
+  $(".opts").onclick=function(e){var b=e.target.closest("button");if(!b)return;if(+b.dataset.v===n){toast(T.right);done()}else{if(pzMiss())return;buzz(80);b.classList.add("no")}}}
 /* 3 maanreeks */
 function pzMoons(done){var M=["🌑","🌒","🌓","🌔","🌕","🌖","🌗","🌘"],r=rngOf(G.seed^0xC33),seq,ans,opts;
   if(hard()){var step=r()<.5?2:3,s0=Math.floor(r()*8),len=5;seq=[];for(var i=0;i<len;i++)seq.push(M[(s0+i*step)%8]);ans=M[(s0+len*step)%8];opts=shuffle([ans,M[(s0+len*step+3)%8],M[(s0+len*step+5)%8]],r)}
   else{/* Elfje: een herhalend patroon */var P=shuffle(["🌙","⭐","☁️","🌈"],r),k=2+Math.floor(r()*2),pat=P.slice(0,k);seq=[];for(i=0;i<(k===2?5:6);i++)seq.push(pat[i%k]);ans=pat[seq.length%k];opts=shuffle([ans].concat(P.filter(function(x){return x!==ans}).slice(0,2)),r)}
   glass(pzHead(PZ.moonH,PZ.moonT)+'<div class="moons">'+seq.map(function(m){return '<span>'+m+'</span>'}).join("")+'<span class="q">?</span></div><div class="opts three">'+opts.map(function(m){return '<button type="button" data-m="'+m+'"><span class="moonb">'+m+'</span></button>'}).join("")+'</div>');say(PZ.moonT);
-  $(".opts").onclick=function(e){var b=e.target.closest("button");if(!b)return;if(b.dataset.m===ans){toast(T.right);done()}else{G.wrong++;save();toast(T.wrong);buzz(80);b.classList.add("no")}}}
+  $(".opts").onclick=function(e){var b=e.target.closest("button");if(!b)return;if(b.dataset.m===ans){toast(T.right);done()}else{if(pzMiss())return;buzz(80);b.classList.add("no")}}}
 /* 4 vuurvliegjes vangen → gouden cijfer 2 (= aantal mint) */
 function pzFlies(done,n){var r=rngOf(G.seed^0xD44^G.i),fl=[],caught=0;
   for(var i=0;i<n+(hard()?6:4);i++)fl.push({x:r()*300+20,y:r()*300+20,a:r()*6.28,sp:(hard()?1.3:.8)+r()*.8,mint:i<n,on:true,ph:r()*6.28});
@@ -400,7 +410,7 @@ function pzMemory(done){var E=["🎵","🎶","🎻","🪈","🥁","🎺"],r=rngO
 function pzMirror(done,n){var r=rngOf(G.seed^0xF66^G.i),signs=[String(n)];if(hard()){signs=shuffle([String(n),"R","F","J"],r)}
   var opts=shuffle([n,(n+1)%10,(n+4)%10,(n+7)%10],r).map(String);
   glass(pzHead(PZ.mirH,hard()?PZ.mirTT:PZ.mirT)+'<div class="mirtxt">'+signs.map(function(s){return '<span>'+s+'</span>'}).join("")+'</div><div class="opts four">'+opts.map(function(v){return '<button type="button" data-v="'+v+'"><span>'+v+'</span></button>'}).join("")+'</div>');say(hard()?PZ.mirTT:PZ.mirT);
-  $(".opts").onclick=function(e){var b=e.target.closest("button");if(!b)return;if(+b.dataset.v===n){toast(T.right);done()}else{G.wrong++;save();toast(T.wrong);buzz(80);b.classList.add("no")}}}
+  $(".opts").onclick=function(e){var b=e.target.closest("button");if(!b)return;if(+b.dataset.v===n){toast(T.right);done()}else{if(pzMiss())return;buzz(80);b.classList.add("no")}}}
 function digitGet(d,then){
   glass('<div class="talk"><p>'+esc(PZ.digitGet)+'</p><div class="word gold">'+d+'</div><p class="note">'+esc(PZ.digitsSoFar)+' '+G.c.digits.slice(0,G.digits).join(" · ")+'</p><button type="button" class="btn" id="nx">'+T.next+'</button></div>');
   say(PZ.digitGet+" "+d);$("#nx").onclick=then}
@@ -416,7 +426,7 @@ function pzBells(done){var r=rngOf((G.seed^0x1B3^(G.i*7))>>>0),n=hard()?5:3,seq=
   var play=function(){busy=true;at=0;upd();seq.forEach(function(v,j){mg.later(function(){ring(v)},500+j*(hard()?560:700))});mg.later(function(){busy=false},500+n*(hard()?560:700))};
   mg.later(play,hard()?2600:3200);
   $(".bells").onclick=function(e){var b=e.target.closest("button");if(!b||busy)return;var i=+b.dataset.i;ring(i);buzz(15);
-    if(i===seq[at]){at++;upd();if(at>=n){busy=true;toast(T.right);mg.later(done,700)}}else{G.wrong++;save();toast(PZ.bellBad);buzz(100);busy=true;mg.later(play,900)}};
+    if(i===seq[at]){at++;upd();if(at>=n){busy=true;toast(T.right);mg.later(done,700)}}else{toast(PZ.bellBad);if(pzMiss())return;buzz(100);busy=true;mg.later(play,900)}};
   $("#bAg").onclick=function(){if(!busy)play()}}
 /* B. de halve vlinder: maak de vleugel in spiegelbeeld heel */
 function pzSym(done){var r=rngOf((G.seed^0x5E7^(G.i*13))>>>0),R=hard()?4:3,C=hard()?3:2,k=hard()?5:3,all=[],y,x;for(y=0;y<R;y++)for(x=0;x<C;x++)all.push(y*C+x);
@@ -437,7 +447,7 @@ function pzPond(done,n){var r=rngOf((G.seed^0x90D^(G.i*17))>>>0),ev=[],i;
     ev.forEach(function(e,q){mg.later(function(){if(e>0){var pi=free.shift(),f=document.createElement("span");f.className="frg";f.textContent="🐸";var fromL=r()<.5;f.style.left=(fromL?-12:104)+"%";f.style.top=(30+r()*40)+"%";pd.appendChild(f);void f.offsetWidth;f.style.left=PADS[pi][0]+"%";f.style.top=PADS[pi][1]+"%";f.classList.add("hop");onPad.push({el:f,p:pi});beep(300,.12);mg.later(function(){beep(220,.1)},120)}
       else{var o=onPad.splice(Math.floor(r()*onPad.length),1)[0];if(o){free.push(o.p);o.el.classList.remove("hop");void o.el.offsetWidth;o.el.classList.add("hop");o.el.style.left=(r()<.5?-14:106)+"%";beep(520,.1);mg.later(function(){o.el.remove()},800)}}},900+q*step)});
     mg.later(function(){if(hard())pd.classList.add("mist");$("#pq").innerHTML='<p class="big">'+esc(PZ.pondQ)+'</p><div class="opts four">'+opts.map(function(v){return '<button type="button" data-v="'+v+'"><span>'+v+'</span></button>'}).join("")+'</div><button type="button" class="btn ghost sm" id="pL">🔁 '+esc(PZ.pondLook)+'</button>';say(PZ.pondQ);
-      $("#pq .opts").onclick=function(e){var b=e.target.closest("button");if(!b)return;if(+b.dataset.v===n){toast(T.right);pd.classList.remove("mist");mg.later(done,900)}else{G.wrong++;save();toast(T.wrong);buzz(80);b.classList.add("no")}};
+      $("#pq .opts").onclick=function(e){var b=e.target.closest("button");if(!b)return;if(+b.dataset.v===n){toast(T.right);pd.classList.remove("mist");mg.later(done,900)}else{if(pzMiss())return;buzz(80);b.classList.add("no")}};
       $("#pL").onclick=run},900+ev.length*step+700)};run()}
 /* D. de schaduwkast: welke schaduw hoort bij dit ding? (Tovenaar: lijkende vormen, gespiegeld) */
 var SHG=[["🐸","🐢","🦎","🐊"],["👑","🎩","🧢","👒"],["🦄","🐴","🦌","🐐"],["🍄","🌂","🌳","🌵"],["🕯️","🔦","🏮","🔔"],["🔑","🪄","🥄","🗝️"],["🦋","🐝","🐞","🕊️"],["🐰","🐭","🐹","🦊"],["🏰","⛪","🏠","⛺"]];
@@ -446,7 +456,7 @@ function pzShadow(done){var r=rngOf((G.seed^0x5AD^(G.i*19))>>>0),m=hard()?3:2,gs
     if(hard())opts=shuffle(g.slice(),r);else{var oth=shuffle(SHG.filter(function(_,i){return i!==gi}),r).slice(0,2).map(function(x){return x[Math.floor(r()*4)]});opts=shuffle([t].concat(oth),r)}dbg(t);
     pg(pzHead(PZ.shH,hard()?PZ.shTT:PZ.shT)+'<span class="eyebrow">'+esc(fill(PZ.shRound,{n:round+1,m:m}))+'</span><div class="shObj">'+t+'</div><div class="opts '+(opts.length===4?"two2":"three")+' shs'+(hard()?" flip":"")+'">'+opts.map(function(o){return '<button type="button" data-o="'+o+'"><span>'+o+'</span></button>'}).join("")+'</div>');
     if(round===0)say(hard()?PZ.shTT:PZ.shT);
-    $(".shs").onclick=function(e){var b=e.target.closest("button");if(!b)return;if(b.dataset.o===t){b.classList.add("ok");beep(880,.12);buzz(20);round++;mg.later(function(){if(round>=m)done();else show()},700)}else{G.wrong++;save();toast(T.wrong);buzz(80);b.classList.add("no")}}};show()}
+    $(".shs").onclick=function(e){var b=e.target.closest("button");if(!b)return;if(b.dataset.o===t){b.classList.add("ok");beep(880,.12);buzz(20);round++;mg.later(function(){if(round>=m)done();else show()},700)}else{if(pzMiss())return;buzz(80);b.classList.add("no")}}};show()}
 /* E. kringspel: betoverde dieren (één kijkt stiekem, doet het dier na, de rest raadt) */
 function pzMime(done){var r=rngOf((G.seed^0x313^(G.i*23))>>>0),m=hard()?3:2,pool=shuffle(hard()?D.MIME.t:D.MIME.e,r),pk=0,round=0;
   var who=function(){return kid(G.i+1+round)};
@@ -601,7 +611,7 @@ function ask(){glass('<div class="talk"><div class="av">'+svgGrimmel(G.c.col,G.c
 function crown(){var txt=NAME?fill(T.crownT,{j:NAME}):T.crownT0;selfie({e:"👑",n:T.crownH},txt,function(url){G.crown=url;G.done=true;G.tEnd=G.tEnd||Date.now();try{save()}catch(e){G.crown=null;save()}award();treasure(finish)},true)}
 /* echte schat (Feestopties): na de kroning stuurt Grimmel de groep naar de echte verstopplek */
 function treasure(then){if(window.MMP&&MMP.hasTreasure()&&!G.trDone&&!G.demo){G.trDone=1;save();hush();return MMP.finale(then)}then()}
-function award(){if(G.awarded||G.demo)return;G.awarded=1;save();var min=(G.tEnd-G.t0)/60000,bad=(G.wrong||0)+2*(G.skips||0),stars=1+(bad===0?1:0)+(bad<=2?1:0);G.stars=stars;save();
+function award(){if(G.awarded||G.demo)return;G.awarded=1;save();var min=(G.tEnd-G.t0)/60000,bad=2*(G.skips||0),stars=1+(bad===0?1:0)+(bad<=2?1:0);G.stars=stars;save();
   MW.profile.award({game:ID,xp:0,stars:stars,gps:false,min:min,km:0,title:(L==="nl"?"Toverspiegel ":"Mirror ")+G.code,code:G.code})}
 function finish(){G.done=true;save();confetti();var nA=albumItems().length,secs=Math.round(((G.tEnd||Date.now())-G.t0)/1000);
   glass('<div class="talk fin"><span class="eyebrow">🏆 '+esc(T.doneH)+'</span>'+(G.crown?'<img class="shot" src="'+G.crown+'" alt="">':pic("parel-cheer",svgParel({cheer:true}),"av"))+'<p class="big">'+esc(NAME?fill(T.crownOk,{j:NAME}):T.crownOk0)+'</p><p>'+esc(T.doneT)+'</p><p class="stars">'+"★".repeat(G.stars||1)+"☆".repeat(3-(G.stars||1))+' · ⏱ '+Math.max(1,Math.round(secs/60))+' min</p>'+MW.codeBox(L,G.code,"zaak",true)+'<button type="button" class="btn big" id="dp">🎓 '+esc(T.dip)+'</button>'+(nA?'<button type="button" class="btn" id="ab">📷 '+esc(fill(T.albumBtn,{n:nA}))+'</button>':'')+'<button type="button" class="btn ghost" id="hm">'+esc(T.home)+'</button></div>');
@@ -671,7 +681,7 @@ function wipeSheet(){var has=!!LS.get(GK,null);sheet('<h2>'+T.wipe+'</h2>'+(has?
   $("#shX").onclick=closeSheet;var g=$("#wG");if(g)g.onclick=function(){LS.del(GK);G=null;closeSheet();home();toast(T.wiped)};
   $("#wA").onclick=function(){LS.del(GK);["ss_ts_kids","ss_ts_name","ss_ts_level","ss_ts_smode"].forEach(LS.del);KIDS=[];NAME="";G=null;closeSheet();home();toast(T.wiped)}}
 
-if(/[?&]debug\b/.test(location.search))window.TS_DBG={G:function(){return G},skip:function(){if(curSkip)curSkip()},ans:null,plan:makePlan,parse:parseCode};
+if(/[?&]debug\b/.test(location.search))window.TS_DBG={G:function(){return G},puzzle:puzzle,skip:function(){if(curSkip)curSkip()},ans:null,plan:makePlan,parse:parseCode};
 home();
 if(window.MMP)MMP.init({id:ID,fin:{nl:"Grimmel schuifelt naar voren: ‘Als sorry heb ik nog iets verstopt. Niet in de spiegel… maar echt. Kijk maar!’",en:"Grimble shuffles forward: ‘To say sorry, I hid something else. Not in the mirror… for real. Look!’"}});
 })();

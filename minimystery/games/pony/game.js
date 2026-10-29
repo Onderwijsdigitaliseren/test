@@ -418,14 +418,16 @@ function taskSheet(i,spot){walkTo=null;var vz=$("#visit");if(vz)vz.remove();var 
   sheet(head+'<div class="pzh"><h2>'+esc(I[0])+'</h2><p class="hint">'+esc(I[1])+'</p></div><div id="pz"></div><button type="button" class="btn ghost dk" id="shX">'+T.back+'</button>',true);
   $("#shX").onclick=function(){G.force=null;closeSheet()};
   say(s.ask+" "+I[1]);
-  var fin=false,o={box:$("#pz"),rng:rngOf(G.seed*7+i*131),done:function(){if(fin)return;fin=true;mg.stop();cur.thumb=shoeThumb(i,s.act);accept()},
+  var fin=false,H=null,o={box:$("#pz"),rng:rngOf(G.seed*7+i*131),done:function(){if(fin)return;fin=true;mg.stop();if(H)H.remove();cur.thumb=shoeThumb(i,s.act);accept()},
     canvas:function(hh){o.box.innerHTML='<canvas class="sq" width="280" height="'+(hh||280)+'"></canvas>';var c=o.box.firstChild;if(hh)c.style.aspectRatio="280/"+hh;return c},
     at:function(e,c){var b=c.getBoundingClientRect();return[(e.clientX-b.left)/b.width*280,(e.clientY-b.top)/b.height*(c.height)]},
     msg:function(t){var m=$("#pzM");if(!m){m=document.createElement("p");m.id="pzM";m.className="pzst";o.box.appendChild(m)}m.textContent=t},
-    say:say,good:function(){buzz(80);beep(660,.15);setTimeout(function(){beep(990,.2)},120)},bad:function(){G.oops=(G.oops||0)+1;buzz(120);beep(180,.2)}};
+    say:say,good:function(){buzz(80);beep(660,.15);setTimeout(function(){beep(990,.2)},120)},bad:function(){beep(180,.2);if(H)return H.miss();buzz(120);return false}};
   if(/debug/.test(location.search))window.PP_DBG=o;
-  if(window.MMP)MMP.helper(function(){G.t0-=120000;G.oops=(G.oops||0)+2;G.skips=(G.skips||0)+1;save();o.done()},function(){say(s.ask+" "+I[1])});
-  PUZ[s.act](o)}
+  if(window.MMP)MMP.helper(function(){G.t0-=120000;G.skips=(G.skips||0)+1;save();o.done()},function(){say(s.ask+" "+I[1])});
+  /* hartjes (crew.js): op = puzzel opnieuw, zonder straf */
+  var start=function(){mg.stop();fin=false;o.box.innerHTML="";if(window.MW.Crew)H=MW.Crew.hearts(o.box,function(){G.retries=(G.retries||0)+1;save();start()},{dead:function(){mg.stop()}});PUZ[s.act](o)};
+  start()}
 function accept(){var i=cur.i,s=G.c.slots[i];G.ph[i]=cur.thumb;if(cur.spot){cur.spot.done=true;cur.spot.doneAt=Date.now();G.kd0=null}G.force=null;if(G.mode!=="map"&&G.mode!=="demo")G.i=i+1;save();buzz([40,30,80]);beep(520,.15);
   var kind=s.kind,n=done(),N=NN(),last=n>=N,gd=G.c.gold[n-1],head=kind==="ev"?T.ev:kind==="ex"?T.exH:kind==="claim"?T.wit:T.gag,sub=kind==="ev"?T.evT:kind==="ex"?T.exT:kind==="claim"?(hard()?T.witT2:T.witT):"",
     txt=kind==="claim"?claimText(G.c.claims[s.w]):kind==="ex"?fill(s.t,{P:G.c.sus[s.j].name}):s.t,who=kind==="claim"?G.c.claims[s.w].who:D.CHEF,av=kind==="claim"?witAv(G.c.claims[s.w].kind):FENNA(),
@@ -441,7 +443,11 @@ function accept(){var i=cur.i,s=G.c.slots[i];G.ph[i]=cur.thumb;if(cur.spot){cur.
     var pa=(POSE_AT[N]||[]);if(pa.indexOf(n)>=0&&!G.poses[n]){G.poses[n]=1;save();return photoSheet("pose",function(){if(!last)visit(true);goOn()},n)}
     if(!last&&Math.random()<.75)visit(true);goOn()}}
 /* een dier (of Kraai Karel met zijn bluf) duikt even op: kaartje onderin, wordt voorgelezen */
-function visit(force){if(!G)return;G.lastVisit=Date.now();var list=D.VISIT,k=(G.vi==null?(G.seed%list.length):G.vi)%list.length;G.vi=k+1;var v=list[k],kind=v[0],txt=v[1];
+function visit(force){if(!G)return;G.lastVisit=Date.now();
+  /* om de beurt met een dierenbezoekje: Kraai Karel kaapt het scherm met een opdracht voor de hele groep (crew.js) */
+  if(window.MW.Crew&&D.CREW&&done()>0&&(G.vi||0)%2===1&&$("#sheet").hidden){var hk=(G.hj==null?G.seed:G.hj+1)%D.CREW.CREW_HIJACK.length;G.hj=hk;G.vi=(G.vi||0)+1;save();
+    MW.Crew.hijack({who:D.CREW.WHO,img:IMGROOT+"wit-crow.webp",line:D.CREW.CREW_HIJACK[hk],secs:15,say:false});say(D.CREW.CREW_HIJACK[hk]);return}
+  var list=D.VISIT,k=(G.vi==null?(G.seed%list.length):G.vi)%list.length;G.vi=k+1;var v=list[k],kind=v[0],txt=v[1];
   var old=$("#visit");if(old)old.remove();var el=document.createElement("div");el.id="visit";el.className="visit";el.setAttribute("role","status");
   el.innerHTML=(kind==="fenna"?FENNA():witAv(kind))+'<p>'+esc(txt)+'</p>';document.body.appendChild(el);beep(kind==="crow"?1100:760,.08);setTimeout(function(){beep(kind==="crow"?900:990,.1)},110);
   requestAnimationFrame(function(){el.classList.add("in")});var gone=function(){el.classList.remove("in");setTimeout(function(){el.remove()},400)};el.onclick=gone;setTimeout(gone,5200);
@@ -674,7 +680,9 @@ function twistSheet(){G.twist=1;save();
   sheet('<div class="eyebrow">'+esc(T.twistH)+'</div><canvas id="twC" class="endscene" width="320" height="200"></canvas>'+bubble(D.TWIST,D.WITS[4][0],"big",witAv("crow"))+bubble(D.TWIST2,D.CHEF,"")+'<button type="button" class="btn" id="twGo">'+esc(T.toLock)+'</button>',true);
   gateScene($("#twC"),{crow:true});buzz([60,40,60,40,200]);beep(1200,.08);setTimeout(function(){beep(1500,.08)},90);say(D.TWIST+" "+D.TWIST2);
   $("#twGo").onclick=function(){hush();lockSheet()}}
-function lockSheet(){var code=lockCode(),N=code.length,v=[],H=hard(),fin=false;
+function lockSheet(){if(window.MW.Crew&&D.CREW&&!G.rally){G.rally=1;save();hush();closeSheet();
+    return MW.Crew.rally({title:D.CREW.CREW_RALLY_T,text:D.CREW.CREW_RALLY_TXT,icon:"🚧",iconDone:"🐴",color:"#f4c20d",goal:50,secs:15,okText:D.CREW.CREW_RALLY_OK,failText:D.CREW.CREW_RALLY_FAIL,then:function(){lockSheet()}})}
+  var code=lockCode(),N=code.length,v=[],H=hard(),fin=false;
   var paint=function(){var d=$("#lkD");if(!d)return;d.innerHTML=code.map(function(x,i){return '<span class="'+(i<v.length?"on":"")+(i===v.length?" cur":"")+'">'+(i<v.length?v[i]:"")+'</span>'}).join("");
     /* Veulen: het hoefijzer dat je nu moet overtikken licht op (geen lezen nodig) */if(!H)$$("#sheetBody .stal.big span").forEach(function(e,i){e.classList.toggle("cur",i===v.length)})};
   sheet('<div class="eyebrow">'+esc(T.lockH)+'</div><canvas id="lkC" class="endscene" width="320" height="200"></canvas><p class="lockt">'+esc(H?T.lockT2:T.lockT)+'</p>'+stalHTML(NN(),true)+
@@ -768,7 +776,7 @@ function endScene(cv,hearts){var g=cv.getContext("2d"),t0=0,still=matchMedia("(p
 
 /* ---------- gewonnen ---------- */
 var RES=null,TEAM=LS.get("ss_pp_team",""),CLUB=LS.get("ss_pp_club","");
-function win(){if(window.MMP&&MMP.hasTreasure()&&!G.trDone){G.trDone=1;G.tEnd=G.tEnd||Date.now();save();$("#hide").hidden=true;return MMP.finale(win)}var c=G.c,min=((G.tEnd||Date.now())-G.t0)/60000,s2=G.tries===1,s3=(G.oops||0)<=3,stars=1+(s2?1:0)+(s3?1:0),xp=100+stars*50;
+function win(){if(window.MMP&&MMP.hasTreasure()&&!G.trDone){G.trDone=1;G.tEnd=G.tEnd||Date.now();save();$("#hide").hidden=true;return MMP.finale(win)}var c=G.c,min=((G.tEnd||Date.now())-G.t0)/60000,s2=G.tries===1,s3=true,stars=1+(s2?1:0)+(s3?1:0),xp=100+stars*50;
   var a=MW.profile.award({game:ID,xp:xp,stars:stars,gps:G.mode==="map",min:min,km:G.dist/1000,title:cap(c.sus[c.K].name),code:G.code});
   if(G.daily){var p=MW.profile.get();p.games.pp.day=MW.today();MW.profile.save(p)}
   Wk.stopWatch();buzz([100,50,100,50,300]);

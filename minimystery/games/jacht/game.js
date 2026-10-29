@@ -328,7 +328,7 @@ function ruilSheet(i,spot){walkTo=null;var s=G.c.slots[i];cur={i:i,spot:spot||nu
     miss:function(){return H?H.miss():false}};
   cur.solve=o.done;
   if(window.MMP)MMP.helper(function(){G.t0-=120000;G.skips=(G.skips||0)+1;save();o.done()},function(){say(I[0]+". "+instr)});
-  var start=function(){mg.stop();fin=false;o.box.innerHTML="";if(window.MW.Crew)H=MW.Crew.hearts(o.box,function(){G.retries=(G.retries||0)+1;save();start()});(PUZ[s.act]||PUZ.catch)(o)};
+  var start=function(){mg.stop();fin=false;o.box.innerHTML="";if(window.MW.Crew)H=MW.Crew.hearts(o.box,function(){G.retries=(G.retries||0)+1;save();start()},{dead:function(){mg.stop()}});(PUZ[s.act]||PUZ.catch)(o)};
   start()}
 function goldOf(i){var s=G.c.slots[i];return s.gold!=null?s.gold:1+(hashStr(G.seed+"|g"+i)%9)}
 function accept(seen){var i=cur.i,s=G.c.slots[i];G.ph[i]=cur.thumb;if(cur.spot){cur.spot.done=true;cur.spot.doneAt=Date.now();G.kd0=null}G.force=null;G.miss=0;if(G.mode!=="map"&&G.mode!=="demo")G.i=i+1;

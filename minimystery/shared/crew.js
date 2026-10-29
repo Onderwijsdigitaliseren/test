@@ -1,6 +1,6 @@
 /* MiniMystery – gedeelde speellaag "Crew": wat Glitch en Backstage leuker maakt, voor alle zaken. Laden na walk.js, vóór game.js.
    1. Hartjes: drie per puzzel. Fout = hartje kwijt. Op = "Opnieuw!" zonder straf (geen sterren of munten kwijt).
-        var H=MW.Crew.hearts(box, restartFn);  H.miss() → true als de puzzel opnieuw moet (de laag toont zelf het opnieuw-vak)
+        var H=MW.Crew.hearts(box, restartFn, {dead:stopLoops, mount:el});  // mount: vaste plek voor de hartjes (anders vlak boven box)  H.miss() → true als de puzzel opnieuw moet (de laag toont zelf het opnieuw-vak)
    2. Kaping: de schurk neemt het scherm over met een opdracht voor de hele groep, met klokje. Iedereen doet mee, niet alleen wie de telefoon vasthoudt.
         MW.Crew.hijack({who, img, line, secs, say, then})
    3. Samen-moment: iedereen tikt tegelijk tot de meter vol is (lantaarn opladen, motor starten, spreuk opbouwen…).
@@ -43,13 +43,13 @@ function css(){if($("#mmCrewCss"))return;var s=document.createElement("style");s
 function say(t){try{if(!t)return;var ss=window.speechSynthesis;if(!ss)return;ss.cancel();var u=new SpeechSynthesisUtterance(t);u.lang=L==="nl"?"nl-NL":"en-GB";ss.speak(u)}catch(e){}}
 
 /* ---------- 1. hartjes ---------- */
-function hearts(box,restart,n){css();n=n||3;var el=document.createElement("div");el.className="crH";box.parentNode.insertBefore(el,box);var h=n,dead=false;
+function hearts(box,restart,opt){css();opt=typeof opt==="number"?{n:opt}:(opt||{});var n=opt.n||3;var el=document.createElement("div");el.className="crH";if(opt.mount){opt.mount.innerHTML="";opt.mount.appendChild(el)}else box.parentNode.insertBefore(el,box);var h=n,dead=false;
   function paint(){el.innerHTML="";for(var i=0;i<n;i++){var s=document.createElement("i");if(i<h)s.className="on";el.appendChild(s)}}
   paint();
   return{el:el,left:function(){return h},dead:function(){return dead},
     miss:function(){if(dead)return true;h--;paint();var last=el.children[h];if(last){last.classList.add("pop");setTimeout(function(){last.classList.remove("pop")},250)}Wk.buzz(120);
       if(h>0){Wk.toast(T.lost);return false}
-      dead=true;box.innerHTML='<div class="crOver"><b>'+T.over+'</b><p>'+T.overT+'</p><button type="button" class="btn" id="crRetry">'+T.retry+'</button></div>';say(T.over+" "+T.overT);
+      dead=true;if(opt.dead)try{opt.dead()}catch(e){}box.innerHTML='<div class="crOver"><b>'+T.over+'</b><p>'+T.overT+'</p><button type="button" class="btn" id="crRetry">'+T.retry+'</button></div>';say(T.over+" "+T.overT);
       $("#crRetry").onclick=function(){el.remove();restart()};return true},
     reset:function(){h=n;dead=false;paint()},remove:function(){el.remove()}}}
 
@@ -64,7 +64,7 @@ function hijack(o){css();var ov=$("#crHj");if(!ov){ov=document.createElement("di
   return{close:function(){clearInterval(iv);ov.hidden=true;ov.innerHTML=""}}}
 
 /* ---------- 3. samen tikken ---------- */
-function rally(o){css();var ov=$("#crRa");if(!ov){ov=document.createElement("div");ov.id="crRa";document.body.appendChild(ov)}
+function rally(o){css();var hj=$("#crHj");if(hj){hj.hidden=true;hj.innerHTML=""}var ov=$("#crRa");if(!ov){ov=document.createElement("div");ov.id="crRa";document.body.appendChild(ov)}
   var goal=o.goal||60,secs=o.secs||15,n=0,fin=false;
   ov.style.setProperty("--cr",o.color||"#f5b800");
   ov.innerHTML='<div class="crBox"><div class="crEb">'+esc(o.head||T.raH)+'</div><h2>'+esc(o.title||"")+'</h2><p>'+esc(o.text||T.raT)+'</p><div class="crIco" id="crIco">'+(o.icon||"✨")+'</div><div class="crBar"><i id="crBar"></i></div><div class="crClk" id="crRaClk">'+secs+'</div><div id="crRaEnd"></div></div>';
