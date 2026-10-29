@@ -213,3 +213,5 @@ i.coin{display:inline-block;width:12px;height:12px;border-radius:50%;background:
 .sheet{z-index:58}
 .sheet .paper>*,#pz>*,.clear>*{flex-shrink:0}
 #file{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;left:-9999px}
+.sjefico{height:28px;width:auto;vertical-align:middle;margin-right:8px;image-rendering:pixelated}
+#home.photo .gap{height:380px}
