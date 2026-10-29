@@ -109,6 +109,8 @@ function create(o){
     RDS.forEach(function(r){g.strokeStyle=M.road||"#e9d8a6";g.lineWidth=34;rdg(r)});RDS.forEach(function(r){g.strokeStyle=M.roadLine||"#fff7dd";g.lineWidth=4;g.setLineDash([14,18]);rdg(r);g.setLineDash([])});
     /* spoor naar de volgende plek */if(nr&&!o.virt()){var a=LY?pos(nr):prevSpot(),b=gpos(nr),L=Math.hypot(b.x-a.x,b.y-a.y),n2=Math.floor(L/48);for(var i=1;i<n2;i++){var q=i/n2;hoof(g,a.x+(b.x-a.x)*q+(i%2?10:-10),a.y+(b.y-a.y)*q,8,"rgba(0,0,0,.28)")}}
     if(DR.decor&&!LY)DR.decor(g,t,still);
+    /* spel-eigen dingen in wereldcoördinaten (bv. politiewagens bij De Grote Kraak): to(q) = wereld → kaart, sc = kaarteenheden per meter */
+    if(DR.world)DR.world(g,t,function(q){return LY?LY.to(q):{x:M.start.x+q.x/VSC,y:M.start.y+q.y/VSC}},LY?LY.sc:1/VSC,still);
     var S0=gstart();if(DR.start)DR.start(g,S0.x,S0.y,t,still);
     /* plekken: bij een geo-indeling elke echte plek op zijn eigen positie, anders de vaste tekening */
     var PL=LY?LY.list.map(function(q){return{x:q.x,y:q.y,k:q.k,i:q.i,st:q.st}}):M.spots.map(function(f,i){return{x:f.x,y:f.y,k:f.k,i:i,st:GG.st.filter(function(s){return fk(s)===i})[0]}});

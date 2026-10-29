@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>De Grote Kraak – boef-en-politie speurtocht met vluchtspel voor kinderfeestjes (9–12)</title>
+<link rel="icon" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="description" content="Baron Von Glans heeft de Gouden Kroon van de Buurt. Opa Kluis roept jullie bende bij elkaar om hem terug te stelen. Kraak-puzzels op plekken in je eigen buurt, dan het alarm en de ontsnapping over de kaart langs politiewagens met zoeklichten. Welke schuilkluis? Kraak de code. Voor 9 tot 12 jaar. Proefronde gratis.">
+<link rel="canonical" href="https://www.minimystery.nl/de-grote-kraak.html">
+<link rel="alternate" hreflang="en" href="https://www.minimystery.nl/en/the-big-heist.html">
+<link rel="alternate" hreflang="nl" href="https://www.minimystery.nl/de-grote-kraak.html">
+<link rel="alternate" hreflang="x-default" href="https://www.minimystery.nl/de-grote-kraak.html">
+<meta property="og:site_name" content="MiniMystery">
+<meta property="og:title" content="MiniMystery – De Grote Kraak">
+<meta property="og:description" content="Steel de Gouden Kroon terug van Baron Von Glans. Speurtocht voor kinderfeestjes van 9 tot 12 jaar: kraak-puzzels, alarm, ontsnappen over de kaart en de kluis kraken.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.minimystery.nl/de-grote-kraak.html">
+<meta property="og:locale" content="nl_NL">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:image" content="https://www.minimystery.nl/assets/og-image.jpg">
+<meta name="theme-color" content="#0b1430">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;700;800&family=Permanent+Marker&display=swap">
+<link rel="stylesheet" href="shared/platform.css?v=2">
+<link rel="stylesheet" href="shared/kidsmap.css?v=4">
+<link rel="stylesheet" href="games/kraak/game.css?v=1">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Game","name":"De Grote Kraak","url":"https://www.minimystery.nl/de-grote-kraak.html","description":"Speurtocht voor kinderfeestjes van 9 tot 12 jaar: steel de Gouden Kroon terug van Baron Von Glans. Kraak-puzzels op plekken in de eigen buurt, dan het alarm en een ontsnapping over de kaart langs politiewagens met zoeklichten, de schuilkluis kiezen en de code kraken. Met kaart, zonder kaart of binnen. Proefronde gratis.","inLanguage":"nl","genre":["Kinderspel","Speurtocht","Kinderfeestje"],"isAccessibleForFree":false,"offers":{"@type":"Offer","price":"9.99","priceCurrency":"EUR","description":"Feestpas"}}</script>
+</head>
+<body>
+<div id="app">
+  <section class="screen" id="home">
+    <canvas id="hero" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <div class="row0"><div class="pills"><a class="pill" id="hub" href="./">◂ Alle zaken</a><button type="button" class="pill" id="lang">English</button></div></div>
+      <div class="gap"></div>
+      <div class="masthead">
+        <h1 id="ttl">DE GROTE KRAAK</h1><span class="sub">Steel de Kroon terug</span><span class="tape">TOP SECRET · 9–12 JAAR</span>
+      </div>
+      <p class="lead">Baron Von Glans heeft de Gouden Kroon van de Buurt “geleend” en verkoopt hem morgen. De politie kan niets bewijzen. Opa Kluis, meesterdief met pensioen, roept jullie bij elkaar: zijn laatste bende. Bereid de kraak voor op plekken in je eigen buurt, kraak de code… en ontsnap als het alarm afgaat.</p>
+      <button class="btn ghost sm" id="bHow">Hoe werkt het?</button>
+      <div class="namebox"><label for="name">Wie is er jarig? (mag leeg)</label><input id="name" maxlength="24" autocomplete="off" placeholder="Naam van de jarige"></div>
+      <div class="seg two" id="lvl">
+        <button type="button" data-l="rookie" aria-pressed="true">Rookie<small>vanaf 9</small></button>
+        <button type="button" data-l="meester" aria-pressed="false">Meesterdief<small>pittiger</small></button>
+      </div>
+      <div class="seg" id="dur" aria-label="Lengte">
+        <button type="button" data-n="kort" aria-pressed="false">Kort<small>5 stops · ±40 min</small></button>
+        <button type="button" data-n="normaal" aria-pressed="true">Normaal<small>8 stops · ±60 min</small></button>
+        <button type="button" data-n="lang" aria-pressed="false">Lang<small>11 stops · ±85 min</small></button>
+      </div>
+      <div class="seg" id="len">
+        <button type="button" data-m="map" aria-pressed="true">Buiten<br>met kaart</button>
+        <button type="button" data-m="street" aria-pressed="false">Buiten<br>zonder kaart</button>
+        <button type="button" data-m="in" aria-pressed="false">Binnen</button>
+      </div>
+      <button class="btn ghost sm" id="bVoice" aria-pressed="true">🔊 Voorlezen</button>
+      <button class="btn" id="bResume" hidden>▶ Verder waar jullie waren</button>
+      <button class="btn" id="bGps">Start de zaak</button>
+      <button class="btn ghost" id="bRandom">Extra zaak</button>
+      <button class="btn ghost" id="bCode">Zaakcode invullen</button>
+      <button class="btn ghost" id="bPro" hidden></button>
+      <p class="note" id="status"></p>
+      <div id="howT" hidden><ol class="how"><li><b>Kort, Normaal of Lang:</b> 5, 8 of 11 stops. De lengte zit in de zaakcode, dus andere telefoons krijgen dezelfde zaak.</li><li><b>Met kaart:</b> Opa Kluis zet de stops op plekken in jullie buurt. Jullie zien een getekende <b>kraakkaart</b> van de nachtstad: de bende loopt over de weg naar de volgende stop, een pijl en koud/warm/heet wijzen de weg. De begeleider kan de echte plattegrond bekijken. Af en toe rijdt de gouden auto van de Baron voorbij: tik hem voor goud. <b>Binnen:</b> lopen op de plaats met de telefoon in de hand. <b>Zonder kaart:</b> de stops achter elkaar en de ontsnapping op het scherm.</li><li><b>Deel 1, de voorbereiding.</b> Elke stop is een kraak-puzzel: bewakers tellen, het laser-doolhof (met de camera, als AR), een vermomming samenstellen, een kluisslot op het gehoor kraken (de telefoon trilt bij het goede getal), de blauwdruk langs draaiende camera's, kabels draaien, de bewerkte foto vinden, een stille tocht met de microfoon, vingerafdrukken wegvegen, de juiste sleutel, de alarmcode en de uitkijkpost. Drie hartjes per stop; op = gewoon opnieuw. Per stop komt er een onderdeel op het plan, plus een cijfer van de kluiscode, een spoor over de schuilkluis of een tipgever. Sporen kloppen altijd. Eén tipgever zit ernaast; op <b>Meesterdief</b> liegt die echt.</li><li><b>De kraak en de ontsnapping.</b> In het museum blijkt de Kroon nep en gaat het alarm af. Op de kaart rijden politiewagens met een zoeklicht: staan jullie in het licht, dan staat iedereen muisstil tot het klokje op nul staat (de telefoon merkt het als je toch loopt). Wegversperringen duiken op, soms vliegt een helikopter over (bukken!). Loop, niet rennen, naar het onderduikadres. Rookie: ruim de tijd, twee wagens. Meesterdief: krap, drie wagens.</li><li><b>De finale:</b> kies uit vijf plekken de echte schuilkluis van de Baron (drie sporen), zoek in de kluis in 3D het toetsenbord, tik de verzamelde cijfers in (op Meesterdief achterstevoren) en trek samen de deur open. Dan de twist met commissaris Stella Blauw, een foto met de Kroon, een album en een <b>Meesterdief-certificaat met politie-erepenning</b> als PDF om te printen.</li><li><b>Team tegen team:</b> twee telefoons, dezelfde zaakcode, en via Feestopties een teamkleur en uitslagcode voor de teamstand.</li></ol><p class="note">Tip voor de volwassene: microfoon, camera en bewegingssensor worden alleen op het toestel zelf gebruikt, er gaat niets naar internet. Eén telefoon per bende. Buiten: op de stoep blijven, oversteken bij een zebrapad en nooit rennen; tijdens de ontsnapping zegt het spel ook alleen "stilstaan", "bukken" en "omlopen".</p></div>
+      <button class="btn ghost sm" id="bDemo">Proefronde in de binnenstad van Eindhoven</button>
+      <button class="btn ghost" id="bArch">Opgeloste zaken</button>
+      <button class="btn ghost sm" id="bWipe">Wissen</button>
+    </div>
+  </section>
+
+  <section class="screen" id="brief" hidden>
+    <div class="wrap">
+      <div class="paper">
+        <div class="eyebrow" id="bfNo"></div>
+        <div id="bfTip"></div>
+        <h2>Het plan</h2>
+        <div id="bfOpen"></div>
+        <div id="bfSus"></div>
+      </div>
+      <button class="btn" id="bGo">▶ De bende gaat op pad</button>
+      <button class="btn ghost" id="bBack">Terug</button>
+    </div>
+  </section>
+
+  <section class="screen" id="cards" hidden>
+    <div id="hud">
+      <div><b id="hT">0:00</b><span>Tijd</span></div>
+      <div><b id="hS">0</b><span>Stops</span></div>
+      <div><b id="hL">1</b><span>Rang</span></div>
+      <div><b id="hX">0</b><span>Reputatie</span></div>
+      <div><b id="hC">0</b><span>Goud</span></div>
+      <button type="button" id="zM2" aria-label="Pauze">☰</button>
+    </div>
+    <div id="card"></div>
+    <div id="bar">
+      <button type="button" id="bNote">Het plan</button>
+      <button type="button" id="bPeople">Stops</button>
+      <button type="button" id="bAcc2" class="red">De kraak</button>
+    </div>
+  </section>
+
+  <section class="screen" id="play" hidden>
+    <canvas id="map"></canvas>
+    <div id="mhud">
+      <div><b id="mT">0:00</b><span>Tijd</span></div>
+      <div><b id="mS">0</b><span>Stops</span></div>
+      <div><b id="mL">1</b><span>Rang</span></div>
+      <div><b id="mX">0</b><span>Reputatie</span></div>
+      <div><b id="mC">0</b><span>Goud</span></div>
+      <button type="button" id="zM" aria-label="Pauze">☰</button>
+    </div>
+    <div id="zoom">
+      <button type="button" id="zIn" aria-label="Inzoomen">+</button>
+      <button type="button" id="zOut" aria-label="Uitzoomen">−</button>
+      <button type="button" id="zMe" aria-label="Centreer op mij">◎</button>
+    </div>
+    <div id="low">
+      <div id="radar">Op weg naar stop 1</div>
+      <div id="chip" hidden>
+        <div class="row"><b id="cName"></b><span id="cDist"></span></div>
+        <span id="cHint" class="note"></span>
+        <button class="btn" id="cAct"></button>
+      </div>
+      <div id="mbar">
+        <button type="button" id="mNote">Het plan</button>
+        <button type="button" id="mPeople">Stops</button>
+        <button type="button" id="mAcc" class="red">De kraak</button>
+      </div>
+    </div>
+  </section>
+
+  <div id="cine" hidden><canvas id="cineC"></canvas><div id="cineT"></div><button type="button" class="btn" id="cineX">Overslaan ▸</button></div>
+  <div id="hide" hidden><div id="hideUI"><b id="hideHint"></b></div><div id="room"></div><div id="hideMsg"></div><button type="button" class="btn" id="hideX">◂ Terug</button></div>
+  <input type="file" id="file" accept="image/*" capture="environment" aria-label="Maak de foto">
+  <div class="sheet" id="sheet" hidden><div class="paper" id="sheetBody"></div></div>
+  <div id="load" hidden role="status"><div class="spin"></div><b id="loadT"></b><span>Dit duurt meestal 5 tot 30 seconden. Blijf op deze pagina.</span></div>
+  <div id="toast" hidden></div>
+</div>
+<script src="shared/platform.js?v=mm12"></script>
+<script src="shared/catalog.js?v=mm10"></script>
+<script src="shared/walk.js?v=3"></script>
+<script src="shared/steps.js?v=1"></script>
+<script src="shared/kidsmap.js?v=7"></script>
+<script src="shared/party.js?v=2"></script>
+<script src="shared/crew.js?v=1"></script>
+<script src="shared/voice.js?v=1"></script>
+<script src="games/kraak/data-nl.js?v=1"></script>
+<script src="games/kraak/game.js?v=1"></script>
+<script src="shared/start.js?v=3" data-game="gk"></script>
+<script id="mm-demo">/* MiniMystery: ?oefen start direct de gratis proefronde (link vanaf de hub) */
+if(/[?&]oefen\b/.test(location.search)){var b=document.getElementById("bDemo");if(b)setTimeout(function(){b.click()},50)}</script>
+</body>
+</html>
