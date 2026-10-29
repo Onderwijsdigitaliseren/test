@@ -291,9 +291,11 @@ function popPlan(ms){clearTimeout(POP.t);if(!G||done()>=N())return;POP.t=setTime
 function tauntLine(){var X=D.X,n=done(),t=N(),pool=D.TAUNT.slice();
   if(n===0)pool=pool.concat(X.TAUNT_START);if((G.gold||[]).length)pool=pool.concat(X.TAUNT_GOLD);if(t-n<=2)pool=X.TAUNT_END.concat(X.TAUNT_END);else if(n>=t/2)pool=pool.concat(X.TAUNT_HALF);
   var last=POP.last,l;for(var k=0;k<6;k++){l=pool[Math.floor(Math.random()*pool.length)];if(l!==last)break}POP.last=l;return fill(l,{J:NAME||T.popYou,n:t-n,g:(G.gold||[]).length})}
-function popShow(){POP.t=0;if(!G||done()>=N())return;var busy=!$("#sheet").hidden||!$("#hide").hidden||!$("#cine").hidden||($("#play").hidden&&$("#cards").hidden)||document.hidden;if(busy)return popPlan(9000);
+function popShow(){POP.t=0;if(!G||done()>=N())return;var busy=!$("#sheet").hidden||!$("#hide").hidden||!$("#cine").hidden||($("#play").hidden&&$("#cards").hidden)||document.hidden||(window.MW.Crew&&MW.Crew.busy());if(busy)return popPlan(9000);
   if(!POP.el){POP.el=document.createElement("button");POP.el.type="button";POP.el.id="pop";POP.el.setAttribute("aria-label",T.popTap);POP.el.innerHTML='<img alt="" width="720" height="720"><span class="bub"><span></span></span>';$("#app").appendChild(POP.el);
     POP.el.onclick=function(){if(!POP.el.classList.contains("on"))return;POP.el.querySelector(".bub span").textContent=D.POPHIT[Math.floor(Math.random()*D.POPHIT.length)];POP.el.classList.add("hit");buzz([40,30,40]);beep(880,.08);setTimeout(function(){POP.el.classList.remove("on","hit")},900)}}
+  if(window.MW.Crew&&D.CREW&&POP.n%2===1&&done()>0){POP.n++;var hk=(G.hj==null?G.seed:G.hj+1)%D.CREW.CREW_HIJACK.length;G.hj=hk;save();
+    MW.Crew.hijack({who:D.V,img:IMGROOT+"thief-laugh.webp",line:D.CREW.CREW_HIJACK[hk],secs:15,say:false,then:function(){popPlan()}});say(D.CREW.CREW_HIJACK[hk]);return}
   var poses=["laugh","run","lamp","thief"],side=POP.n%2?"r":"l",lines=D.TAUNT;POP.n++;
   POP.el.className=side;POP.el.querySelector("img").src=IMGROOT+(function(k){return k==="thief"?"thief":"thief-"+k})(poses[POP.n%poses.length])+".webp";
   var line=tauntLine();POP.el.querySelector(".bub span").textContent=line;say(line);
@@ -316,13 +318,16 @@ function ruilSheet(i,spot){walkTo=null;var s=G.c.slots[i];cur={i:i,spot:spot||nu
   sheet(head+'<div class="pzh"><h2>'+esc(I[0])+'</h2><p class="hint">'+esc(instr)+' '+spk(I[0]+". "+instr)+'</p>'+(hard()?'<span class="chipL hard">'+esc(T.lvlName.hard)+'</span>':'')+'</div><div id="pz"></div><button type="button" class="btn ghost dk" id="shX">'+T.back+'</button>',true);
   say(I[0]+". "+instr);
   $("#shX").onclick=function(){G.force=null;hush();closeSheet()};
-  var fin=false,o={box:$("#pz"),hard:hard(),done:function(){if(fin)return;fin=true;mg.stop();cur.thumb=shardThumb(i,s.act);accept()},
+  var fin=false,H=null,o={box:$("#pz"),hard:hard(),done:function(){if(fin)return;fin=true;mg.stop();if(H)H.remove();cur.thumb=shardThumb(i,s.act);accept()},
     canvas:function(){o.box.innerHTML='<canvas class="sq" width="280" height="280"></canvas>';return o.box.firstChild},
     at:function(e,c){var b=c.getBoundingClientRect();return[(e.clientX-b.left)/b.width*280,(e.clientY-b.top)/b.height*280]},
-    st:function(t,talk){var e=$("#pzS");if(e)e.textContent=t;if(talk)say(t)}};
+    st:function(t,talk){var e=$("#pzS");if(e)e.textContent=t;if(talk)say(t)},
+    /* fout antwoord: hartje kwijt (crew.js). Op = opnieuw, zonder straf */
+    miss:function(){return H?H.miss():false}};
   cur.solve=o.done;
-  if(window.MMP)MMP.helper(function(){G.t0-=120000;G.oops=(G.oops||0)+2;G.skips=(G.skips||0)+1;save();o.done()},function(){say(I[0]+". "+instr)});
-  (PUZ[s.act]||PUZ.catch)(o)}
+  if(window.MMP)MMP.helper(function(){G.t0-=120000;G.skips=(G.skips||0)+1;save();o.done()},function(){say(I[0]+". "+instr)});
+  var start=function(){mg.stop();fin=false;o.box.innerHTML="";if(window.MW.Crew)H=MW.Crew.hearts(o.box,function(){G.retries=(G.retries||0)+1;save();start()});(PUZ[s.act]||PUZ.catch)(o)};
+  start()}
 function goldOf(i){var s=G.c.slots[i];return s.gold!=null?s.gold:1+(hashStr(G.seed+"|g"+i)%9)}
 function accept(seen){var i=cur.i,s=G.c.slots[i];G.ph[i]=cur.thumb;if(cur.spot){cur.spot.done=true;cur.spot.doneAt=Date.now();G.kd0=null}G.force=null;G.miss=0;if(G.mode!=="map"&&G.mode!=="demo")G.i=i+1;
   var gd=null;if(isPuz(s.act)){G.gold=G.gold||[];var had=G.gold.filter(function(x){return x.i===i})[0];if(had)gd=had.d;else{gd=goldOf(i);G.gold.push({i:i,d:gd,id:s.id})}}
@@ -400,7 +405,7 @@ var PUZ={
     var play=function(){Ls.forEach(function(l){l.classList.remove("on")});busy=true;pos=0;st.textContent=T.pz.look;for(var k=0;k<len;k++)(function(k){later(function(){lit(S[k],350)},600+k*600)})(k);later(function(){busy=false;st.textContent=fill(T.pz.yours,{n:len})},600+len*600)};
     $("#sqR").onclick=play;
     o.box.addEventListener("click",function(e){var b=e.target.closest(".lan");if(!b||busy)return;var i=+b.dataset.i;lit(i,200);
-      if(i!==S[pos]){st.textContent=T.pz.wrongSeq;buzz(120);beep(160,.2);later(play,900);busy=true;return}
+      if(i!==S[pos]){st.textContent=T.pz.wrongSeq;beep(160,.2);busy=true;if(o.miss())return;later(play,900);return}
       pos++;if(pos>=len){len++;if(len>(o.hard?6:4)){buzz(80);o.done();return}st.textContent=T.pz.good;later(play,800);busy=true}});
     later(play,300)},
   /* veegruit: wrijf de condens weg tot de scherf zichtbaar is */
@@ -428,7 +433,7 @@ var PUZ={
       o.st(T.pz.which,round>0)};
     o.box.addEventListener("click",function(e){var b=e.target.closest(".opt");if(!b||b.disabled)return;
       if(b.dataset.e===ans){b.classList.add("ok");beep(600+round*120,.12);buzz(40);round++;$$("#shO .opt").forEach(function(x){x.disabled=true});if(round>=rounds){mg.tm.push(setTimeout(o.done,450));return}mg.tm.push(setTimeout(go,600))}
-      else{b.classList.add("no");b.disabled=true;buzz(100);beep(180,.15);o.st(nope(),true)}});
+      else{b.classList.add("no");b.disabled=true;beep(180,.15);if(o.miss())return;o.st(nope(),true)}});
     go()},
   /* tel de lichtjes: makkelijk = stilstaande gele lichtjes, knoppen met stippen; pittig = ze zweven en knipperen, en er vliegen roze en blauwe neppers tussen */
   count:function(o){var round=0,rounds=2,ans=0,Ls=[],last=0;
@@ -449,7 +454,7 @@ var PUZ={
       mg.raf=requestAnimationFrame(f)};
     o.box.addEventListener("click",function(e){var b=e.target.closest(".opt");if(!b||b.disabled)return;
       if(+b.dataset.n===ans){b.classList.add("ok");beep(600+round*120,.12);buzz(40);round++;$$("#cnO .opt").forEach(function(x){x.disabled=true});if(round>=rounds){mg.tm.push(setTimeout(o.done,450));return}mg.tm.push(setTimeout(go,600))}
-      else{b.classList.add("no");buzz(100);beep(180,.15);o.st(T.pz.countNo,true);$$("#cnO .opt").forEach(function(x){x.disabled=true});mg.tm.push(setTimeout(go,1100))}});
+      else{b.classList.add("no");beep(180,.15);$$("#cnO .opt").forEach(function(x){x.disabled=true});if(o.miss())return;o.st(T.pz.countNo,true);mg.tm.push(setTimeout(go,1100))}});
     go();mg.raf=requestAnimationFrame(f)},
   /* lantaarns aansteken: makkelijk = tik ze aan, de dief blaast er af en toe één uit; pittig = elke tik zet ook de buren om (alles aan = klaar) */
   lights:function(o){var n=o.hard?9:6,cols=3,on=[],sol=[],i,taps=0,blows=0;
@@ -485,7 +490,7 @@ var PUZ={
     $("#pkA").onclick=function(){if(!busy)show(true)};
     $("#pkG").addEventListener("click",function(e){var b=e.target.closest(".hs");if(!b||busy)return;var k=+b.dataset.i;
       if(k===ans){b.classList.add("found");beep(600+round*150,.15);buzz(40);round++;busy=true;if(round>=rounds){o.st(T.pz.peekOk,false);later(o.done,700);return}later(function(){show(false)},900)}
-      else{b.classList.add("no");buzz(100);beep(180,.15);o.st(nope(),true);busy=true;later(function(){show(true)},1100)}});
+      else{b.classList.add("no");beep(180,.15);busy=true;if(o.miss())return;o.st(nope(),true);later(function(){show(true)},1100)}});
     later(function(){show(false)},400)}
 };
 
@@ -538,6 +543,8 @@ function menuSheet(){sheet('<h2>'+T.menu+'</h2><button type="button" class="btn"
 
 /* ---------- ontmaskeren ---------- */
 function accuseSheet(){var c=G.c,ps=null,pw=null;
+  if(window.MW.Crew&&D.CREW&&!G.rally){G.rally=1;save();popStop();hush();closeSheet();
+    return MW.Crew.rally({title:D.CREW.CREW_RALLY_T,text:D.CREW.CREW_RALLY_TXT,icon:"🏮",iconDone:"🔦",color:"#d4ff3a",goal:Math.round(50*(hard()?1.4:1)),secs:15,okText:D.CREW.CREW_RALLY_OK,failText:D.CREW.CREW_RALLY_FAIL,then:function(){accuseSheet()}})}
   sheet('<h2>'+T.acH+'</h2><p>'+esc(fill(T.acT,{nc:nw(c.claims.length)}))+'</p><div class="eyebrow">'+T.acWho+'</div><div class="list" id="vS">'+c.sus.map(function(s,i){return susCard(s,i,true)}).join("")+'</div>'+
     '<div class="eyebrow">'+T.acLiar+'</div><div class="list" id="vW">'+c.claims.map(function(w,i){return '<button type="button" class="sus" data-w="'+i+'"><small>'+esc(claimText(w))+'</small></button>'}).join("")+'</div>'+
     '<button type="button" class="btn red" id="vGo">'+T.acGo+'</button><p class="note err" id="vMsg"></p><button type="button" class="btn ghost dk" id="shX">'+T.back+'</button>');
@@ -809,7 +816,7 @@ hero();
 var hz=/[#&]z=([A-Z0-9]+)/i.exec(location.hash);
 if(window.MMP)MMP.init({id:ID,fin:{nl:'De Lichtjesdief zucht: oké, oké. Het cadeau ligt niet in mijn schuilplaats. Ik heb het echt verstopt. Hier.',en:'The Light Thief sighs: okay, okay. The present is not in my hideout. I really hid it. Here.'}});
 /* testhaakjes (voor de begeleider/ontwikkelaar; doet niks tenzij je ze aanroept) */
-window.SJ_T={begin:begin,G:function(){return G},solve:function(){if(cur&&cur.solve)cur.solve()},parse:parseCode,make:makeCode,gen:function(seed,mode,len){return genCase(seed,mode,len)},lock:function(){return lockOrder().map(function(x){return x.d}).join("")},open:function(i){var sp=G.st?G.st.filter(function(x){return x.fi===i})[0]:null;ruilSheet(i,sp||null)}};
+window.SJ_T={begin:begin,render:render,G:function(){return G},solve:function(){if(cur&&cur.solve)cur.solve()},parse:parseCode,make:makeCode,gen:function(seed,mode,len){return genCase(seed,mode,len)},lock:function(){return lockOrder().map(function(x){return x.d}).join("")},open:function(i){var sp=G.st?G.st.filter(function(x){return x.fi===i})[0]:null;ruilSheet(i,sp||null)}};
 home();if(hz){var pc=parseCode(hz[1]);if(pc)codeSheet(hz[1].toUpperCase())}
 MW.pro.ready.then(function(){if(!$("#home").hidden&&$("#sheet").hidden&&!G)home()});
 })();
