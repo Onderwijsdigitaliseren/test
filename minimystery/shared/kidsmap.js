@@ -57,10 +57,10 @@ function create(o){
   /* ---------- dom ---------- */
   /* uitleg: de verhaalkaart is een tekening, de echte plattegrond zit achter de knop. Teksten per taal; de kaartnamen komen uit het spel (T.kids/T.map). */
   var LG=(document.documentElement.lang||"nl").slice(0,2)==="en"?"en":"nl",introEl=null,cardEl=null,goEl=null,subEl=null,compEl=null,heatEl=null;
-  var X=LG==="en"?{toMap:"Real map",toMapS:"map",toKids:"Back",go:"Walk to",here:"You're there!",all:"All done!",help:"What is this map?",
+  var X=LG==="en"?{toMap:"Real map",toMapS:"map",you:"You",toKids:"Back",go:"Walk to",here:"You're there!",all:"All done!",help:"What is this map?",
       title:"The play map",p1:"The places on this map are real: they're in your own neighbourhood, where they really are. Walk and your group walks along. The arrow and cold → hot show the way.",
       p2:"Want to see the streets? Tap the 🗺️ button at the side for the real map. Tap it again to come back.",ok:"OK",goMap:"Show the real map"}
-    :{toMap:"Echte plattegrond",toMapS:"kaart",toKids:"Terug",go:"Ga lopen naar",here:"Je bent er!",all:"Alles gevonden!",help:"Wat is deze kaart?",
+    :{toMap:"Echte plattegrond",toMapS:"kaart",you:"Jullie",toKids:"Terug",go:"Ga lopen naar",here:"Je bent er!",all:"Alles gevonden!",help:"Wat is deze kaart?",
       title:"De speelkaart",p1:"De plekken op deze kaart zijn echt: ze liggen bij jou in de buurt, zoals ze in het echt liggen. Loop, en jullie groepje loopt mee. Het pijltje en koud → heet wijzen de weg.",
       p2:"Wil je de straten zien? Tik op het 🗺️-knopje aan de zijkant voor de echte plattegrond. Nog een keer tikken en je bent terug.",ok:"OK",goMap:"Toon de echte plattegrond"};
   function fillX(s){return s}
@@ -144,13 +144,18 @@ function create(o){
       if(dn){g.fillStyle="#22c55e";g.beginPath();g.arc(f.x+40,f.y-56,18,0,7);g.fill();g.strokeStyle="#fff";g.lineWidth=4;g.beginPath();g.moveTo(f.x+31,f.y-56);g.lineTo(f.x+37,f.y-50);g.lineTo(f.x+49,f.y-64);g.stroke()}});
     if(nextF){var f=nextF,bob=still?0:Math.abs(Math.sin(t/320))*14;
       if(!still){var ph=(t/1400)%1;g.strokeStyle=col;g.globalAlpha=.7*(1-ph);g.lineWidth=6;g.beginPath();g.ellipse(f.x,f.y,40+ph*70,(40+ph*70)*.45,0,0,7);g.stroke();g.globalAlpha=1}
-      if(DR.landmark)DR.landmark(g,f.k,f.x,f.y,70);
+      if(DR.landmark)DR.landmark(g,f.k,f.x,f.y,Math.max(70,34/CSC));
       var ps=Math.max(1.15,.42/CSC);pin(g,f.x,f.y-40-bob,col,ps,t);hoof(g,f.x,f.y-40-bob-70*ps,9*ps,col);
       pill(g,T.fp[f.i]||"",f.x,f.y+16+13/CSC,true,"#fff",col)}
     /* het groepje */
     g.fillStyle="rgba(0,0,0,.22)";g.beginPath();g.ellipse(kp.x,kp.y+6,32,11,0,0,7);g.fill();
+    /* het groepje altijd goed zichtbaar: minstens ± 60 px op het scherm */
+    var hs=Math.max(1,.62/CSC);g.save();g.translate(kp.x,kp.y);g.scale(hs,hs);g.translate(-kp.x,-kp.y);
     g.strokeStyle="#fff";g.lineWidth=5;g.fillStyle=M.heroHalo||"rgba(231,111,81,.3)";g.beginPath();g.arc(kp.x,kp.y-20,48+(still?0:Math.sin(t/400)*4),0,7);g.fill();g.stroke();
     if(DR.hero)DR.hero(g,kp.x,kp.y,t);else{g.fillStyle=col;g.beginPath();g.arc(kp.x,kp.y-20,22,0,7);g.fill()}
+    g.restore();
+    /* label "Jullie" onder het groepje */
+    pill(g,X.you,kp.x,kp.y+20+11/CSC,false,"#fff","rgba(0,0,0,.6)");
     if(nr&&DR.runner){var f2=gpos(nr);DR.runner(g,f2.x,f2.y,t,still)}
     g.restore();
     var ang=nr?arrowAngle(nr):null;compass(ang,col,nr);

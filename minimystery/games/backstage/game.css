@@ -218,3 +218,7 @@ i.coin{display:inline-block;width:13px;height:13px;background:var(--gold);vertic
 html[lang="en"] #cineT:after{content:"tap ▸"}
 /* briefing: Max' tekst groter en luchtiger */
 #bfOpen .bub p{font-size:19px!important;line-height:1.55}
+
+/* geen fans/rang/sterren meer in beeld: tijd, stops, menu */
+#hud>div:has(#hX),#hud>div:has(#hL),#hud>div:has(#hC),#mhud>div:has(#mX),#mhud>div:has(#mL),#mhud>div:has(#mC){display:none!important}
+#mhud,#hud{grid-template-columns:1fr 1fr 44px!important}

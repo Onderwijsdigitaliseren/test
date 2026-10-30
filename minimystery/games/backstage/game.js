@@ -214,7 +214,7 @@ function songText(j){var p=G.c.so[j],s=songAt(p);if(!G.c.ster)return fill(D.SONG
 function witText(w){return D.WITPRE[WITK[w.p]]+fill(D.WITT[w.k],{v:D.AT[w.k].v[w.v]})}
 function minsLeft(){return Math.max(3,Math.round((NN()-done())*6+3))}
 function vars(){return{J:NAME,tl:G?G.tl:1,xp:G?G.xp:0,co:G?G.coins:0}}
-function ach(k){if(!G||G.ach[k])return;G.ach[k]=1;save();toast("🏆 "+fill(T.achGot,{a:T.ach[k][0]}));sfx("levelup")}
+function ach(k){if(!G||G.ach[k])return;G.ach[k]=1;save()}
 
 /* ---------- startscherm ---------- */
 function home(){musicStop();var p=MW.profile.get();
@@ -338,7 +338,7 @@ $("#file").addEventListener("change",function(){var f=this.files&&this.files[0];
 function enter(){LEVEL=G.lvl||LEVEL;if(G.mode==="map"||G.mode==="demo"||G.mode==="in")enterMap();else{show("cards");render();music("map")}}
 function hudTxt(pre){var n=done();$("#"+pre+"T").textContent=mmss(Date.now()-G.t0);$("#"+pre+"S").textContent=n+"/"+NN();$("#"+pre+"X").textContent=G.xp;$("#"+pre+"L").textContent=G.tl;$("#"+pre+"C").textContent=G.coins}
 function hud(){if(!G)return;hudTxt("h")}
-function stageHTML(n){return '<div class="crys"><canvas id="crC" width="240" height="140"></canvas><div><b>'+esc(fill(T.stage,{n:n,N:NN()}))+'</b><span class="xpbar"><i style="width:'+Math.round((G.xp%150)/1.5)+'%"></i></span><small>'+esc(rankName(G.tl))+' · '+G.xp+' '+T.xp+' · '+G.coins+' '+T.coins+(G.pu?' · '+esc(fill(T.puOn,{p:T.pu[G.pu][0]})):'')+'</small></div></div>'}
+function stageHTML(n){return '<div class="crys"><canvas id="crC" width="240" height="140"></canvas><div><b>'+esc(fill(T.stage,{n:n,N:NN()}))+'</b></div></div>'}
 function paintStage(n){var cv=$("#crC");if(!cv)return;var g=cv.getContext("2d"),t0=0,f=function(ts){if(!cv.isConnected)return;if(!t0)t0=ts;drawStage(g,240,140,n,NN(),ts,false);if(!still&&ts-t0<15000)requestAnimationFrame(f)};requestAnimationFrame(f)}
 function render(){hud();while(G.i<NN()&&G.ph[G.i])G.i++;var i=G.i,box=$("#card");
   if(i>=NN()){box.innerHTML='<div class="pol done"><div class="grid">'+G.ph.map(function(p){return '<img src="'+p+'" alt="">'}).join("")+'</div></div>'+stageHTML(done())+bubble(T.radarAll,NAMEOF("max"))+'<button type="button" class="btn red" id="bAcc">'+T.toBoss+'</button>';paintStage(done());$("#bAcc").onclick=finaleGate;return}
@@ -389,7 +389,7 @@ KM.mount();
 function bagDraw(g,x,y,s,t){if(img("bag")){g.save();g.translate(x,y);g.rotate(still?0:Math.sin((t||0)/150)*.15);fit(g,"bag",0,0,s*2.4,s*2.4);g.restore();return}g.save();g.translate(x,y);g.rotate(still?0:Math.sin((t||0)/150)*.15);g.fillStyle="#5b21b6";rr(g,-s*.6,-s*.45,s*1.2,s*.9,s*.2);g.fill();g.strokeStyle="#5b21b6";g.lineWidth=s*.1;g.beginPath();g.arc(0,-s*.45,s*.35,Math.PI,0);g.stroke();
   var gc=G&&G.c?GC[G.c.sus[G.c.K].glit]:"#ffd166";for(var i=0;i<6;i++)sparkle(g,-s*.4+i*s*.16,-s*.1+(i%2)*s*.25,s*.1,gc,i+(t||0)/200);g.fillStyle="#fff";g.save();g.rotate(-.3);g.fillRect(s*.2,-s*.85,s*.35,s*.45);g.restore();g.restore()}
 function glimpseHit(){GL.on=false;G.gl=(G.gl||0)+1;G.coins+=10;save();buzz([40,30,80]);sfx("coin");KM.setMsg("");toast(fill(T.glimpseYes,{n:10}))}
-function glimpseTick(){if(GL.on||!G||(G.gl||0)>=3||!$("#sheet").hidden||Date.now()<GL.next)return;var open=G.st.filter(function(s){return !s.done});if(!open.length)return;if(!KM.on()&&G.mode!=="demo")return;GL.on=true;GL.t0=performance.now();GL.dir=Math.random()<.5?1:-1;GL.next=Date.now()+70000+Math.random()*60000;say(T.glimpse);sfx("whoosh");buzz([30,40,30])}
+function glimpseTick(){return;if(GL.on||!G||(G.gl||0)>=3||!$("#sheet").hidden||Date.now()<GL.next)return;var open=G.st.filter(function(s){return !s.done});if(!open.length)return;if(!KM.on()&&G.mode!=="demo")return;GL.on=true;GL.t0=performance.now();GL.dir=Math.random()<.5?1:-1;GL.next=Date.now()+70000+Math.random()*60000;say(T.glimpse);sfx("whoosh");buzz([30,40,30])}
 var dTo=function(t){return Math.hypot(t.x-P.x,t.y-P.y)},inRange=function(t){return dTo(t)<=Math.max(35,Math.min(P.acc||0,60))||G.force===t};
 function items(){var it=[],open=G.st.filter(function(s){return !s.done});
   G.st.forEach(function(s){it.push({x:s.x,y:s.y,ref:s,tap:!s.done,draw:function(cx,X,Y,t,api){var col=["#ff2d95","#2dd4bf","#ffd166","#a78bfa"][s.fi%4];
@@ -427,7 +427,7 @@ function visit(force){if(!G)return;G.lastVisit=Date.now();if(!force&&Math.random
 /* ---------- een stop: opdracht → puzzel → SPOT ON ---------- */
 function taskSheet(i,spot){walkTo=null;var s=G.c.slots[i];cur={i:i,spot:spot||null,h:3,t0:Date.now(),retries:cur&&cur.i===i?cur.retries:0,pu:G.pu,stat:{}};
   if(cur.pu){G.pu=null;save();if(cur.pu==="shield")cur.shield=true;if(cur.pu==="hint")cur.freeHint=true;if(cur.pu==="time")cur.extra=hard()?10:15}
-  var I=T.pz[s.act],head='<div class="eyebrow">'+esc(fill(T.world,{i:i+1}))+' · '+esc(T.kinds[s.act])+(spot?' · '+esc(spot.name):'')+'</div><div class="pzh"><div class="hearts" id="pzH"></div><div class="pzinfo"><b id="pzTm"></b><span>'+G.coins+' <i class="coin"></i></span></div></div>';
+  var I=T.pz[s.act],head='<div class="eyebrow">'+esc(fill(T.world,{i:i+1}))+' · '+esc(T.kinds[s.act])+(spot?' · '+esc(spot.name):'')+'</div><div class="pzh"><div class="hearts" id="pzH"></div><div class="pzinfo"><b id="pzTm"></b></div></div>';
   sheet(head+'<h2>'+esc(I[0])+'</h2>'+bubble(I[1],NAMEOF(I[2]||"max"),"small",AV(I[2]||"max"))+(cur.pu?'<p class="note pu">⚡ '+esc(fill(T.puOn,{p:T.pu[cur.pu][0]}))+'</p>':'')+'<div id="pz"></div><div id="pzB"></div><button type="button" class="btn ghost dk" id="shX">'+T.back+'</button>',true);
   $("#shX").onclick=function(){G.force=null;closeSheet()};paintHearts();say(I[1]);
   var fin=false,o={box:$("#pz"),rng:rngOf(G.seed*7+i*131),hard:hard(),extra:cur.extra||0,
@@ -439,8 +439,8 @@ function taskSheet(i,spot){walkTo=null;var s=G.c.slots[i];cur={i:i,spot:spot||nu
     bad:function(){if(fin)return false;if(cur.shield){cur.shield=false;toast(T.shieldUsed);sfx("hit");return false}cur.h--;G.lost++;paintHearts();buzz(120);sfx("hurt");if(cur.h<=0){dead();return true}toast(T.heartsLost);return false},
     dead:function(){return !cur.h},
     timer:function(sec,onEnd){sec+=o.extra;var el=$("#pzTm"),t0=Date.now(),iv=setInterval(function(){var left=Math.max(0,sec-(Date.now()-t0)/1000);el.textContent="⏱ "+Math.ceil(left);el.classList.toggle("low",left<8);if(left<=0){clearInterval(iv);onEnd&&onEnd()}},200);mg.iv.push(iv);return{left:function(){return Math.max(0,sec-(Date.now()-t0)/1000)},stop:function(){clearInterval(iv);el.textContent=""}}},
-    hint:function(fn){var b=document.createElement("button");b.type="button";b.className="btn ghost dk sm hintb";b.textContent="💡 "+(cur.freeHint?T.hintFree:fill(T.hintCost,{c:15}));$("#pzB").appendChild(b);
-      b.onclick=function(){if(cur.freeHint)cur.freeHint=false;else if(G.coins>=15)G.coins-=15;else{toast(fill(T.hintNo,{c:15}));return}cur.hinted=1;save();b.textContent="💡 "+fill(T.hintCost,{c:15});sfx("coin");fn()}}};
+    hint:function(fn){var b=document.createElement("button");b.type="button";b.className="btn ghost dk sm hintb";b.textContent="💡 "+T.hint1;$("#pzB").appendChild(b);
+      b.onclick=function(){cur.hinted=1;save();sfx("coin");fn()}}};
   if(/debug/.test(location.search))window.BS_DBG=o;
   if(window.MMP)MMP.helper(function(){G.t0-=120000;G.skips=(G.skips||0)+1;cur.h=1;save();o.done()},function(){say(I[1])});
   PUZ[s.act](o)}
@@ -459,18 +459,15 @@ function accept(){var i=cur.i,s=G.c.slots[i];G.ph[i]=cur.thumb;if(cur.spot){cur.
   if(s.w>=0){var w=G.c.wits[s.w],wt=witText(w);rew+='<div class="rew">'+bubble(wt,NAMEOF(WITK[w.p])+" · "+D.PEOPLE[WITK[w.p]][1],"small",AV(WITK[w.p]))+'</div>';said.push(wt);G.sn=G.sn||{};if(!G.sn.w){G.sn.w=1;rew+='<p class="why">'+esc(T.witT)+'</p>';said.push(T.witT)}}
   var cliff=last?D.MAXL.cliffLast:D.MAXL.cliff[(n-1+G.seed)%D.MAXL.cliff.length],react=fill(D.MAXL.react[(n+G.seed)%D.MAXL.react.length],{m:minsLeft()});
   sheet('<div class="clear"><div class="eyebrow">'+esc(fill(T.world,{i:i+1}))+'</div><h2 class="big">'+esc(T.clear)+'</h2><canvas id="clC" width="320" height="180"></canvas>'+
-    '<div class="tally"><span><b id="tXp">0</b>'+T.xp+'</span><span><b id="tCo">0</b>'+T.coins+'</span><span><b>'+cur.h+'</b>'+T.hearts+'</span><span><b>'+secs+'s</b>'+(secs<60?T.fast:T.timer)+'</span></div>'+(n===1&&T.tallyT?'<p class="why">'+esc(T.tallyT)+'</p>':'')+
-    (G.tl>oldL?'<div class="lvlup">'+esc(fill(T.lvlUp,{l:rankName(G.tl)}))+'</div>':'')+
     '<div class="rep"><em>'+esc(T.found1)+'</em>'+rew+'</div>'+
-    (!last?'<div class="eyebrow">'+esc(T.puH)+'</div><div class="pus" id="pus">'+s.pu.map(function(p){return '<button type="button" data-p="'+p+'"><b>'+esc(T.pu[p][0])+'</b><small>'+esc(T.pu[p][1])+'</small></button>'}).join("")+'</div>':'')+
-    '<div class="msg small">'+AV("max")+'<div class="bub"><p>'+esc(react)+'</p></div></div><p class="cliff">'+esc(cliff)+'</p><button type="button" class="btn" id="bNext"'+(!last?' disabled':'')+'>'+(last?T.toBoss:T.next)+'</button></div>',true);
-  clearAnim($("#clC"),n);countUp($("#tXp"),xp);countUp($("#tCo"),coins);
+    '<div class="msg small">'+AV("max")+'<div class="bub"><p>'+esc(react)+'</p></div></div><p class="cliff">'+esc(cliff)+'</p><button type="button" class="btn" id="bNext">'+(last?T.toBoss:T.next)+'</button></div>',true);
+  clearAnim($("#clC"),n);
   $$("#sheetBody .evc").forEach(function(cv){evDraw(cv.getContext("2d"),cv.dataset.k,+cv.dataset.v)});$$("#sheetBody .itc").forEach(function(cv){var g=cv.getContext("2d");g.fillStyle="#2a0a4a";rr(g,0,0,80,80,12);g.fill();drawItem(g,+cv.dataset.k,40,44,18)});
-  if(G.tl>oldL)setTimeout(function(){sfx("levelup")},700);
   say(T.clear+". "+said.join(" ")+" "+react+" "+cliff);
-  if(!last)$("#pus").onclick=function(e){var b=e.target.closest("button");if(!b)return;G.pu=b.dataset.p;save();$$("#pus button").forEach(function(x){x.classList.toggle("on",x===b)});$("#bNext").disabled=false;sfx("coin")};
   $("#bNext").onclick=function(){closeSheet();sel=null;cur=null;var goOn=function(){if(G.mode==="map"||G.mode==="demo"||G.mode==="in"){chip();if(last)finaleGate()}else{render();if(last)finaleGate()}};
     var pa=(POSE_AT[N]||[]);if(pa.indexOf(n)>=0&&!G.poses[n]){G.poses[n]=1;save();return photoSheet("pose",function(){if(Object.keys(G.poses).length>=pa.length&&(G.album||[]).length>=pa.length)ach("photo");goOn()},n)}goOn()}}
+/* memory: husselen tot geen enkel paar naast of onder elkaar ligt */
+function spreadPairs(c,cols,r){for(var t=0;t<300;t++){var bad=false;for(var i=0;i<c.length&&!bad;i++){if(i%cols<cols-1&&c[i]===c[i+1])bad=true;if(i+cols<c.length&&c[i]===c[i+cols])bad=true}if(!bad)return c;c=shuffle(c,r)}return c}
 function countUp(el,v){var t0=performance.now(),f=function(ts){var p=Math.min(1,(ts-t0)/900);el.textContent=Math.round(v*p);if(p<1&&!still)requestAnimationFrame(f);else el.textContent=v};requestAnimationFrame(f)}
 function clearAnim(cv,n){var g=cv.getContext("2d"),t0=0;var f=function(ts){if(!cv.isConnected)return;if(!t0)t0=ts;var t=(ts-t0)/1000;drawStage(g,320,180,n,NN(),ts,true);drawCrew(g,250,170,6.5,G.av,still?0:ts,Math.floor(t*2)%2?"up":"wave");
     if(t<1.2){g.fillStyle="rgba(255,255,255,"+(1-t/1.2)*.5+")";g.fillRect(0,0,320,180)}if(!still&&t<20)requestAnimationFrame(f)};requestAnimationFrame(f)}
@@ -636,7 +633,7 @@ cables:function(o){var N=o.hard?5:4,cv=o.canvas(280),g=cv.getContext("2d"),cs=24
     if(!bad)return;var k=path.indexOf(bad),prev=k?path[k-1]:[bad[0],-1],next=k<path.length-1?path[k+1]:[bad[0],N],a=dirOf(bad,prev),b=dirOf(bad,next),cell=grid[bad[0]][bad[1]];for(var i=0;i<4;i++){var op=opens(cell);if(op.indexOf(a)>=0&&op.indexOf(b)>=0)break;cell.rot=(cell.rot+1)%4}
     if(trace().ok){o.good();mg.tm.push(setTimeout(o.done,500))}})},
 /* 11 memory in de VIP-lounge */
-pairs:function(o){var n=o.hard?8:6,icons=shuffle([0,1,2,3,4,5,6,7,8,9,10],o.rng).slice(0,n),cards=shuffle(icons.concat(icons),o.rng),open=[],found=0,lock=false;
+pairs:function(o){var n=o.hard?8:6,icons=shuffle([0,1,2,3,4,5,6,7,8,9,10],o.rng).slice(0,n),cards=spreadPairs(shuffle(icons.concat(icons),o.rng),4,o.rng),open=[],found=0,lock=false;
   var U={};icons.forEach(function(k){U[k]=spriteURL(function(g){g.fillStyle="#2a0a4a";g.fillRect(0,0,64,64);drawItem(g,k,32,36,15)},64,64)});
   var paint=function(){o.box.innerHTML='<div class="mem c4">'+cards.map(function(k,i){var on=open.indexOf(i)>=0||k===null;return '<button type="button" data-i="'+i+'" class="'+(on?"on":"")+(k===null?" out":"")+'">'+(on&&k!==null?'<img src="'+U[k]+'" alt="">':'')+'</button>'}).join("")+'</div>';
     o.box.firstChild.onclick=function(e){var b=e.target.closest("button");if(!b||lock)return;var i=+b.dataset.i;if(cards[i]===null||open.indexOf(i)>=0)return;open.push(i);o.hit();paint();
