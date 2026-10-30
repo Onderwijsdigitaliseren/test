@@ -271,7 +271,8 @@ function build(seed,mode,pois,ways,origin,daily,len,virt){len=LENN[len]?len:"nor
 function brief(){var c=G.c;
   $("#bfNo").textContent=(G.mode==="demo"?T.demoCase:"");
   $("#bfOpen").innerHTML='<div class="chefpic"><img src="'+IMGROOT+'chef-talk.webp?v=3" alt="" class="chefimg"><img src="'+IMGROOT+'kids-row.webp?v=3" alt="" class="kidsimg"></div>'+bubble(fill(D.OPEN,{C:ballons(),N:(T.nw&&T.nw[NN()])||NN()}),D.CHEF,"big");
-  $("#bfSus").innerHTML=c.sus.map(susCard).join("");
+  /* geen rij verdachten/plekken bij de start: die staan onder de knop in de balk */
+  var bs=$("#bfSus");bs.innerHTML="";bs.style.display="none";if(bs.previousElementSibling&&bs.previousElementSibling.classList.contains("eyebrow"))bs.previousElementSibling.style.display="none";
   $("#bfTip").innerHTML=MW.codeBox(L,G.code,"zaak");MW.bindCodeBox($("#bfTip"),L);
   show("brief")}
 function chefScene(cv){var g=cv.getContext("2d"),t0=0,still=matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -292,9 +293,9 @@ function save(){if(G){G.px=P.x;G.py=P.y;LS.set(GK,G)}}
 function cine(then){var ov=$("#cine"),cv=$("#cineC"),g=cv.getContext("2d"),txt=$("#cineT"),still=matchMedia("(prefers-reduced-motion: reduce)").matches,w,h,dpr,t0=0,fin=false,raf=0;
   ov.hidden=false;var rs=function(){dpr=Math.min(2,devicePixelRatio||1);w=cv.clientWidth;h=cv.clientHeight;cv.width=w*dpr;cv.height=h*dpr};rs();
   var r=rngOf(7),bld=[],x=-20;while(x<w+60){var bw=40+r()*60,bh=50+r()*120;bld.push({x:x,w:bw,h:bh,c:["#f4a261","#e76f51","#8ecae6","#ffb703","#90be6d","#f8edeb"][Math.floor(r()*6)],win:[]});for(var i=0;i<bw/14-1;i++)for(var j=0;j<bh/18-1;j++)bld[bld.length-1].win.push([7+i*14,10+j*18]);x+=bw+6+r()*10}
-  var lines=T.cine,end=function(){if(fin)return;fin=true;cancelAnimationFrame(raf);hush();ov.hidden=true;then()};
+  var lines=T.cine,end=function(){if(fin)return;fin=true;cancelAnimationFrame(raf);hush();ov.hidden=true;txt.onclick=null;txt.style.visibility="";then()};
   $("#cineX").onclick=end;ov.onclick=function(e){if(e.target.id==="cine"||e.target.id==="cineC")end()};
-  var spoken=-1,f=function(ts){if(fin)return;if(!t0)t0=ts;var t=(ts-t0)/1000,ph=still?9:t;
+  var spoken=-1,f=function(ts){if(fin)return;if(!t0)t0=ts;var t=(ts-t0)/1000,tt0=t-skipT,ph=still?9:(tt0<TOTAL?tt0*7.2/TOTAL:7.2+tt0-TOTAL);
     g.setTransform(dpr,0,0,dpr,0,0);var sky=g.createLinearGradient(0,0,0,h);sky.addColorStop(0,"#1d4ed8");sky.addColorStop(.7,"#60a5fa");sky.addColorStop(1,"#fde68a");g.fillStyle=sky;g.fillRect(0,0,w,h);
     g.fillStyle="#fff7c2";g.shadowColor="#fff";g.shadowBlur=40;g.beginPath();g.arc(w*.8,h*.2,34,0,7);g.fill();g.shadowBlur=0;
     var base=h*.78;
@@ -306,8 +307,11 @@ function cine(then){var ov=$("#cine"),cv=$("#cineC"),g=cv.getContext("2d"),txt=$
     /* zwaailicht */if(ph>5.5){var on=Math.floor(ph*4)%2===0;g.fillStyle=on?"rgba(255,59,59,.28)":"rgba(79,211,255,.28)";g.fillRect(0,0,w,h)}
     /* de boef rent weg met ballonnen */if(ph>6.3&&ph<9){var sx=w*1.1-(ph-6.3)/2.7*w*1.3;if(!imgAt(g,"boef-run",sx,base+6,Math.min(170,h*.25)))drawFig(g,sx,base+6,Math.min(130,h*.2),{tr:{hoofd:1,shirt:0,voet:0},balloons:true})}
     if(ph>7.2){g.textAlign="center";g.fillStyle="#ffc21a";g.strokeStyle="#0d2a66";g.lineWidth=6;var sc2=Math.min(1,(ph-7.2)/.5),fs=Math.round(42*sc2+14);g.font="700 "+fs+"px 'Barlow Condensed','Arial Narrow',sans-serif";var tt=L==="nl"?["AGENT VOOR","EÉN DAG"]:["OFFICER FOR","A DAY"];g.strokeText(tt[0],w/2,h*.36);g.fillText(tt[0],w/2,h*.36);g.strokeText(tt[1],w/2,h*.36+fs*1.05);g.fillText(tt[1],w/2,h*.36+fs*1.05)}
-    var li=Math.min(lines.length-1,Math.floor(ph/1.5));txt.textContent=ph<7.2?lines[li]:"";if(li!==spoken&&ph<7.2&&!still){spoken=li;say(lines[li])}
-    if(ph>9.4)return end();raf=requestAnimationFrame(f)};raf=requestAnimationFrame(f)}
+    var li=0;while(li<lines.length-1&&tt0>=STARTS[li+1])li++;txt.textContent=ph<7.2?lines[li]:"";txt.style.visibility=ph<7.2?"":"hidden";if(li!==spoken&&ph<7.2&&!still){spoken=li;say(lines[li])}
+    if(ph>9.4)return end();raf=requestAnimationFrame(f)};
+  /* leestijd per zin: ± 15 tekens per seconde, minstens 4 s; tik op de tekst = volgende zin */
+  var STARTS=[],TOTAL=0,skipT=0;lines.forEach(function(l){STARTS.push(TOTAL);TOTAL+=Math.max(4,l.length/15+1.5)});
+  txt.style.pointerEvents="auto";txt.onclick=function(e){e.stopPropagation();var t=(performance.now()-t0)/1000-skipT,n=STARTS.filter(function(x){return x>t})[0];if(n==null)n=TOTAL;skipT-=(n-t)};raf=requestAnimationFrame(f)}
 function badgeDraw(g,x,y,s,name){g.save();g.translate(x,y);var star=function(R,r){g.beginPath();for(var i=0;i<14;i++){var a=-Math.PI/2+i*Math.PI/7,rad=i%2?r:R;g.lineTo(Math.cos(a)*rad,Math.sin(a)*rad)}g.closePath()};
   g.shadowColor="rgba(0,0,0,.4)";g.shadowBlur=20;g.fillStyle="#ffc21a";star(s,s*.72);g.fill();g.shadowBlur=0;g.strokeStyle="#9a6a00";g.lineWidth=s*.04;g.stroke();
   g.fillStyle="#1e3a8a";g.beginPath();g.arc(0,0,s*.52,0,7);g.fill();g.fillStyle="#ffc21a";g.font="700 "+Math.round(s*.22)+"px 'Barlow Condensed',sans-serif";g.textAlign="center";g.textBaseline="middle";g.fillText(String(name).toUpperCase().slice(0,10),0,-s*.06,s*.9);g.font="600 "+Math.round(s*.12)+"px 'Barlow Condensed',sans-serif";g.fillText(L==="nl"?"POLITIE":"POLICE",0,s*.18);g.restore()}

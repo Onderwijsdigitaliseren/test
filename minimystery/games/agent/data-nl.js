@@ -88,7 +88,7 @@ WIT:{hoofd:["“Ik zag hem wegrennen. Hij had {v} op. Echt waar.”","“De dief
      shirt:["“Hij rende langs me. Hij droeg {v}.”","“Ik zag {v}. Dat had de dief aan, ja.”"],
      voet:["“Ik keek naar zijn voeten. Hij had {v} aan.”","“Hij had {v} aan. Ik hoorde ze op de stoep.”"]},
 GAG:["“Hier de chef. Goed werk, team. Blijf scherp. Over.”","“Hier de chef. Camera 4 heeft iets gezien, maar het beeld is wazig. Zoek verder. Over.”","“Hier de chef. De postbode is verdwaald. Zonder borden weet niemand meer waar hij woont. Opschieten. Over.”","“Hier de chef. Ik zie jullie op de camera. De buurt rekent op jullie. Over.”","“Hier de chef. Mijn koffie is koud geworden van het wachten. Over.”"],
-OPEN:"Hier Chef Bos van Bureau Buurtwacht. Agenten, luister. Vannacht zijn {C} gestolen. Niemand kan de weg nog vinden! Eén van deze vijf mensen is de dief. Volg de sporen en zoek uit wie het was. Kijk goed naar hun pet, shirt en schoenen: de sporen vertellen wat de dief droeg. Over en sluiten.",
+OPEN:"Hier Chef Bos van Bureau Buurtwacht. Agenten, luister. Vannacht zijn {C} gestolen. Niemand kan de weg nog vinden! Eén van vijf buurtbewoners is de dief. Wie dat zijn, zie je onder Verdachten. Volg de sporen en zoek uit wie het was. Kijk goed naar hun pet, shirt en schoenen: de sporen vertellen wat de dief droeg. Over en sluiten.",
 END:"“Oké. Jullie hebben me. Het was ik, {K}. Met {KJ}, {KW} en {KD}. Ik wilde één keer een straat met mijn eigen naam. Dus heb ik alle borden meegenomen om er één te maken. Het spijt me. Ik hang ze allemaal terug. En… mag ik misschien een stukje taart?”",
 CADEAU:"alle straatnaamborden in de buurt van {J}",CADEAU0:"alle straatnaamborden in de buurt",
 /* puzzels: wat (voor speurboekje en strook), wat de chef erbij zegt, reactie na afloop */

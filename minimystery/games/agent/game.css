@@ -310,3 +310,11 @@ h1,h2,h3{font-family:var(--f-type);font-weight:700;text-transform:uppercase;lett
 /* zolang er nog geen gouden cijfer is, is het cijferpaneel verborgen: label en knoppen schuiven omhoog */
 #play:has(#mG:not(:has(.coin:not(.no)))) #kmTag,#play:has(#mG:not(:has(.coin:not(.no)))) #kmHelp,#play:not(.kv):has(#mG:not(:has(.coin:not(.no)))) #bView{top:calc(72px + env(safe-area-inset-top,0px))}
 #play.kv:has(#mG:not(:has(.coin:not(.no)))) #kmHot{top:calc(124px + env(safe-area-inset-top,0px))}
+
+/* intro: groter en rustiger te lezen, op een donkere balk */
+#cine:not(.fin) #cineT{top:auto;bottom:calc(96px + env(safe-area-inset-bottom,0px));font-size:clamp(20px,5.6vw,28px);line-height:1.4;background:rgba(8,12,30,.78);border-radius:18px;padding:14px 16px;cursor:pointer;text-shadow:none}
+#cine:not(.fin) #cineT:after{content:"tik ▸";display:block;font-size:12px;opacity:.6;margin-top:6px;letter-spacing:.08em}
+html[lang="en"] #cine:not(.fin) #cineT:after{content:"tap ▸"}
+#cineT:empty{visibility:hidden}
+/* briefing: tekst groter en luchtiger */
+#bfOpen .bub p{font-size:19px;line-height:1.55}

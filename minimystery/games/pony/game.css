@@ -229,3 +229,11 @@ h1,h2,h3{font-family:var(--f-type);font-weight:700}
 #cine.fin #cineT{top:calc(6% + env(safe-area-inset-top,0px));font-size:clamp(20px,6vw,28px)}
 .lockt{font-family:var(--f-type);font-size:17px;line-height:1.35;color:var(--ink);text-align:center;margin:4px 0}
 #play{--km-sky:#9ad7ff;--km-ink:#3b2a14;--km-line:#5b3a1e;--km-paper:rgba(255,250,240,.95)}
+
+/* intro: groter en rustiger te lezen, op een donkere balk */
+#cine:not(.fin) #cineT{top:auto;bottom:calc(96px + env(safe-area-inset-bottom,0px));font-size:clamp(20px,5.6vw,28px);line-height:1.4;background:rgba(8,12,30,.78);border-radius:18px;padding:14px 16px;cursor:pointer;text-shadow:none}
+#cine:not(.fin) #cineT:after{content:"tik ▸";display:block;font-size:12px;opacity:.6;margin-top:6px;letter-spacing:.08em}
+html[lang="en"] #cine:not(.fin) #cineT:after{content:"tap ▸"}
+#cineT:empty{visibility:hidden}
+/* briefing: tekst groter en luchtiger */
+#bfOpen .bub p{font-size:19px;line-height:1.55}
