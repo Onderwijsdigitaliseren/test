@@ -309,7 +309,7 @@ function popShow(){POP.t=0;if(!G||done()>=N())return;var busy=!$("#sheet").hidde
   setTimeout(function(){if(POP.el)POP.el.classList.remove("on")},5200);popPlan()}
 
 /* ---------- de ruil zelf: opdracht → (foto of puzzel) → scherf en antwoord ---------- */
-function ruilSheet(i,spot){walkTo=null;var s=G.c.slots[i];cur={i:i,spot:spot||null};var n=done()+1,photo=!isPuz(s.act);
+function ruilSheet(i,spot){walkTo=null;if(G.mode==="demo"&&!G.ph[i]&&done()>=(window.MMTrial?MMTrial.max:2)&&window.MMTrial){var _GK=GK;return MMTrial.end({buy:proSheet,home:function(){leavePlay();try{localStorage.removeItem(_GK)}catch(e){}}})}var s=G.c.slots[i];cur={i:i,spot:spot||null};var n=done()+1,photo=!isPuz(s.act);
   var head='<div class="eyebrow">'+esc(fill(T.task,{i:n,N:N()}))+' · '+esc(T.kinds[s.act])+(spot?' · '+esc(spot.name):'')+'</div>'+bubble(s.ask,T.wants);
   if(photo){say(s.ask);
     cur.solve=function(){cur.thumb=shardThumb(i,s.act);accept()};

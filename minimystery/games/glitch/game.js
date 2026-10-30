@@ -323,7 +323,7 @@ function visit(force){if(!G)return;G.lastVisit=Date.now();if(!force&&Math.random
   say(D.HIJACK[k]);$("#hjX").onclick=function(){sfx("hit");closeSheet();if(G.mode==="map"||G.mode==="demo"||G.mode==="in")chip();else render()}}
 
 /* ---------- een level: opdracht → puzzel → LEVEL CLEAR ---------- */
-function taskSheet(i,spot){walkTo=null;var s=G.c.slots[i];cur={i:i,spot:spot||null,h:3,t0:Date.now(),retries:cur&&cur.i===i?cur.retries:0,pu:G.pu,stat:{}};
+function taskSheet(i,spot){walkTo=null;if(G.mode==="demo"&&!G.ph[i]&&done()>=(window.MMTrial?MMTrial.max:2)&&window.MMTrial){var _GK=GK;return MMTrial.end({buy:proSheet,home:function(){leavePlay();try{localStorage.removeItem(_GK)}catch(e){}}})}var s=G.c.slots[i];cur={i:i,spot:spot||null,h:3,t0:Date.now(),retries:cur&&cur.i===i?cur.retries:0,pu:G.pu,stat:{}};
   if(cur.pu){G.pu=null;save();if(cur.pu==="shield")cur.shield=true;if(cur.pu==="hint")cur.freeHint=true;if(cur.pu==="time")cur.extra=hard()?5:15}
   var I=T.pz[s.act],head='<div class="eyebrow">'+esc(fill(T.world,{i:i+1}))+' · '+esc(T.kinds[s.act])+(spot?' · '+esc(spot.name):'')+'</div><div class="pzh"><div class="hearts" id="pzH"></div><div class="pzinfo"><b id="pzTm"></b></div></div>';
   sheet(head+'<h2>'+esc(I[0])+'</h2>'+bubble(I[1],D.HERO,"small")+(cur.pu?'<p class="note pu">⚡ '+esc(fill(T.puOn,{p:T.pu[cur.pu][0]}))+'</p>':'')+'<div id="pz"></div><div id="pzB"></div><button type="button" class="btn ghost dk" id="shX">'+T.back+'</button>',true);

@@ -122,5 +122,12 @@ function build(){var home=$("#home"),wrap=home&&home.querySelector(".wrap"),go=$
   if(MW.pro&&MW.pro.ready)MW.pro.ready.then(function(){setTimeout(refresh,50)});
   /* briefing: zaakcode-vak naar onderen (hij staat zelf al ingeklapt, zie platform.js) */
   var tip=$("#bfTip"),paper=tip&&tip.closest(".paper");if(tip&&paper)paper.appendChild(tip)}
+
+/* proefronde: na twee stops is het proeven klaar; daarna de Feestpas. Elk spel roept MMTrial.end({buy,home}) aan bij de derde stop. */
+window.MMTrial={max:2,end:function(o){var Y={nl:{h:"Dit was de proefronde",t:"Zo werkt het! Jullie hebben twee opdrachten geprobeerd. De hele zaak, met alle opdrachten, het verhaal, de ontknoping en het diploma, speel je met de Feestpas in je eigen buurt.",b:"Koop de Feestpas",c:"Ik heb al een code",h2:"Terug naar het begin"},
+    en:{h:"That was the practice round",t:"That's how it works! You tried two tasks. The whole case, with every task, the story, the big reveal and the diploma, you play with the Party Pass in your own neighbourhood.",b:"Get the Party Pass",c:"I have a code",h2:"Back to the start"}}[L];
+  try{if(MW.Walk&&MW.Walk.buzz)MW.Walk.buzz([60,40,60])}catch(e){}
+  MW.Walk.sheet('<div class="eyebrow">'+X.trialS+'</div><h2>'+Y.h+'</h2><p>'+Y.t+'</p><button type="button" class="btn" id="mmTb">'+Y.b+' · '+MW.cfg.price+'</button><button type="button" class="btn ghost dk" id="mmTc">'+Y.c+'</button><button type="button" class="btn ghost dk" id="mmTh">'+Y.h2+'</button>',true);
+  document.getElementById("mmTb").onclick=function(){o.buy()};document.getElementById("mmTc").onclick=function(){o.buy()};document.getElementById("mmTh").onclick=function(){MW.Walk.closeSheet();o.home()}}};
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",build);else build();
 })();

@@ -417,7 +417,7 @@ $("#mNote").onclick=noteSheet;$("#mPeople").onclick=susSheet;$("#mAcc").onclick=
 $("#bNote").onclick=noteSheet;$("#bPeople").onclick=susSheet;$("#bAcc2").onclick=function(){if(done()>=NN())finaleGate();else noteSheet()};
 
 /* ---------- een spoor: opdracht → puzzel → hoefijzer en spoor ---------- */
-function taskSheet(i,spot){walkTo=null;var vz=$("#visit");if(vz)vz.remove();var s=G.c.slots[i];cur={i:i,spot:spot||null};var n=done()+1,I=T.pz[s.act];
+function taskSheet(i,spot){walkTo=null;if(G.mode==="demo"&&!G.ph[i]&&done()>=(window.MMTrial?MMTrial.max:2)&&window.MMTrial){var _GK=GK;return MMTrial.end({buy:proSheet,home:function(){leavePlay();try{localStorage.removeItem(_GK)}catch(e){}}})}var vz=$("#visit");if(vz)vz.remove();var s=G.c.slots[i];cur={i:i,spot:spot||null};var n=done()+1,I=T.pz[s.act];
   var head='<div class="eyebrow">'+esc(fill(T.task,{i:n,N:NN()}))+' · '+esc(T.kinds[s.act])+(spot?' · '+esc(spot.name):'')+'</div>'+bubble(s.ask,D.CHEF);
   sheet(head+'<div class="pzh"><h2>'+esc(I[0])+'</h2><p class="hint">'+esc(I[1])+'</p></div><div id="pz"></div><button type="button" class="btn ghost dk" id="shX">'+T.back+'</button>',true);
   $("#shX").onclick=function(){G.force=null;closeSheet()};
