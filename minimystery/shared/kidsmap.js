@@ -146,16 +146,15 @@ function create(o){
       if(!still){var ph=(t/1400)%1;g.strokeStyle=col;g.globalAlpha=.7*(1-ph);g.lineWidth=6;g.beginPath();g.ellipse(f.x,f.y,40+ph*70,(40+ph*70)*.45,0,0,7);g.stroke();g.globalAlpha=1}
       if(DR.landmark)DR.landmark(g,f.k,f.x,f.y,Math.max(70,34/CSC));
       var ps=Math.max(1.15,.42/CSC);pin(g,f.x,f.y-40-bob,col,ps,t);hoof(g,f.x,f.y-40-bob-70*ps,9*ps,col);
-      pill(g,T.fp[f.i]||"",f.x,f.y+16+13/CSC,true,"#fff",col)}
+}
     /* het groepje */
-    g.fillStyle="rgba(0,0,0,.22)";g.beginPath();g.ellipse(kp.x,kp.y+6,32,11,0,0,7);g.fill();
-    /* het groepje altijd goed zichtbaar: minstens ± 60 px op het scherm */
-    var hs=Math.max(1,.62/CSC);g.save();g.translate(kp.x,kp.y);g.scale(hs,hs);g.translate(-kp.x,-kp.y);
-    g.strokeStyle="#fff";g.lineWidth=5;g.fillStyle=M.heroHalo||"rgba(231,111,81,.3)";g.beginPath();g.arc(kp.x,kp.y-20,48+(still?0:Math.sin(t/400)*4),0,7);g.fill();g.stroke();
+    /* het groepje: groot poppetje met alleen een schaduw, minstens ± 90 px op het scherm */
+    var hs=Math.max(1.7,.95/CSC);g.save();g.translate(kp.x,kp.y);g.scale(hs,hs);g.translate(-kp.x,-kp.y);
+    g.fillStyle="rgba(0,0,0,.28)";g.beginPath();g.ellipse(kp.x,kp.y+6,30,10,0,0,7);g.fill();
     if(DR.hero)DR.hero(g,kp.x,kp.y,t);else{g.fillStyle=col;g.beginPath();g.arc(kp.x,kp.y-20,22,0,7);g.fill()}
     g.restore();
-    /* label "Jullie" onder het groepje */
-    pill(g,X.you,kp.x,kp.y+20+11/CSC,false,"#fff","rgba(0,0,0,.6)");
+    /* naam van de volgende plek boven alles, zodat het poppetje hem nooit bedekt */
+    if(nextF)pill(g,T.fp[nextF.i]||"",nextF.x,nextF.y+16+13/CSC,true,"#fff",col);
     if(nr&&DR.runner){var f2=gpos(nr);DR.runner(g,f2.x,f2.y,t,still)}
     g.restore();
     var ang=nr?arrowAngle(nr):null;compass(ang,col,nr);

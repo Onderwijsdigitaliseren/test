@@ -269,7 +269,7 @@ function landmark(g,k,x,y,s){var d=C.ink;
   else if(k==="water"){blk(g,x-s*.7,y-s*.3,s*1.4,s*.3,C.cyan);blk(g,x-s*.5,y-s*.2,s*.3,s*.06,"#fff");blk(g,x+s*.1,y-s*.12,s*.3,s*.06,"#fff")}
   else if(k==="halte"){blk(g,x-s*.05,y-s*1.2,s*.1,s*1.2,"#94a3b8");blk(g,x-s*.3,y-s*1.3,s*.6,s*.3,C.blue);g.fillStyle="#fff";g.font="700 "+Math.round(s*.22)+"px 'Press Start 2P',monospace";g.textAlign="center";g.fillText("BUS",x,y-s*1.08);blk(g,x-s*.5,y-s*.35,s,s*.1,"#94a3b8")}
   else if(k==="school"){blk(g,x-s*.7,y-s*.8,s*1.4,s*.8,"#f4a261");blk(g,x-s*.8,y-s*.95,s*1.6,s*.15,"#7a3b2e");for(i=0;i<3;i++)blk(g,x-s*.55+i*s*.4,y-s*.65,s*.25,s*.25,C.cyan);blk(g,x+s*.5,y-s*1.4,s*.05,s*.5,d);blk(g,x+s*.55,y-s*1.4,s*.3,s*.18,C.red)}
-  else if(k==="plein"){blk(g,x-s*.9,y-s*.15,s*1.8,s*.15,"#4a5aa0");for(i=0;i<6;i++)blk(g,x-s*.85+i*s*.3,y-s*.6+(i%2)*s*.1,s*.12,s*.45,[C.green,C.pink,C.cyan,C.yel][i%4]);drawGlitch(g,x,y-s*.15,s*.06,G&&G.c?G.c.sus[G.c.K]:null,0,.9)}
+  else if(k==="plein"){blk(g,x-s*.9,y-s*.15,s*1.8,s*.15,"#4a5aa0");for(i=0;i<6;i++)blk(g,x-s*.85+i*s*.3,y-s*.6+(i%2)*s*.1,s*.12,s*.45,[C.green,C.pink,C.cyan,C.yel][i%4]);}
   else if(k==="toren"){blk(g,x-s*.3,y-s*1.6,s*.6,s*1.6,"#475569");blk(g,x-s*.4,y-s*1.75,s*.8,s*.15,"#334155");blk(g,x-s*.1,y-s*1.3,s*.2,s*.2,C.yel);blk(g,x-s*.1,y-s*.8,s*.2,s*.2,C.yel)}
   else if(k==="tunnel"){blk(g,x-s*.7,y-s*.8,s*1.4,s*.8,"#64748b");blk(g,x-s*.4,y-s*.6,s*.8,s*.6,d);blk(g,x-s*.3,y-s*.5,s*.6,s*.1,C.pink)}
   else if(k==="antenne"){blk(g,x-s*.05,y-s*1.5,s*.1,s*1.5,"#94a3b8");for(i=1;i<4;i++){blk(g,x-s*.3*i/3-s*.05,y-s*1.5+i*s*.3,s*.6*i/3+s*.1,s*.06,"#94a3b8")}blk(g,x-s*.08,y-s*1.65,s*.16,s*.16,C.red)}}
@@ -282,7 +282,7 @@ var KM=MW.KidsMap.create({T:T.kv,go:function(s){walkTo={x:s.x,y:s.y};sel=null},G
     start:function(g,x,y){blk(g,x-170,y-80,110,80,"#ff8fab");blk(g,x-180,y-92,130,14,C.red);blk(g,x+60,y-70,100,70,"#fcd34d");blk(g,x+50,y-82,120,14,C.blue);blk(g,x-150,y-50,24,24,C.cyan);blk(g,x+100,y-45,24,24,C.cyan);for(var i=0;i<8;i++)blk(g,x-150+i*44,y+6,10,30,"#cbd5e1")},
     landmark:landmark,
     hero:function(g,x,y,t){drawAvatar(g,x,y+6,6,G.av,t)},
-    runner:function(g,fx,fy,t){if(GL.on)return;var aa=t/2000;drawGlitch(g,fx+Math.cos(aa)*80,fy+40+Math.abs(Math.sin(aa*2))*-30,4,G.c.sus[G.c.K],t,.9)},
+    runner:function(g,fx,fy,t){return;var aa=t/2000;drawGlitch(g,fx+Math.cos(aa)*80,fy+40+Math.abs(Math.sin(aa*2))*-30,4,G.c.sus[G.c.K],t,.9)},
     overlay:function(g,w,h,t){if(!GL.on)return false;var gt=(t-GL.t0)/1000,gx=GL.dir>0?-80+gt/4*(w+160):w+80-gt/4*(w+160),gy=h*.5;GL.x=gx;GL.y=gy;drawGlitch(g,gx,gy,Math.max(5,h*.008),G.c.sus[G.c.K],t);if(gt>4){GL.on=false;KM.setMsg("");toast(T.glimpseNo);return false}KM.setMsg(T.glimpse);return true}},
   onTap:function(x,y){if(!GL.on)return;if(Math.hypot(x-GL.x,y-(GL.y-30))<70)glimpseHit()}});
 KM.mount();
@@ -457,7 +457,7 @@ pixelfix:function(o){var N=o.hard?4:3,cv=o.canvas(280),g=cv.getContext("2d"),src
 hack:function(o){var cv=o.canvas(200),g=cv.getContext("2d"),pos=0,dir=1,sp=o.hard?3.4:2.4,hits=0,miss=0,zone={x:0,w:o.hard?34:50};zone.x=60+o.rng()*140;
   var f=function(ts){if(o.dead())return;pos+=dir*sp;if(pos>270||pos<10)dir*=-1;scanBg(g,280,200,ts);g.fillStyle="#334155";g.fillRect(10,90,260,30);g.fillStyle=C.green;g.fillRect(zone.x,90,zone.w,30);g.fillStyle="#fff";g.fillRect(pos-3,80,6,50);
     for(var i=0;i<5;i++){g.fillStyle=i<hits?C.yel:"#475569";g.fillRect(70+i*30,150,20,20)}mg.raf=requestAnimationFrame(f)};mg.raf=requestAnimationFrame(f);
-  cv.onpointerdown=function(){if(pos>zone.x&&pos<zone.x+zone.w){hits++;o.hit();o.msg(fill(T.hackHit,{n:hits}));zone.x=40+o.rng()*180;sp+=.3;if(hits>=5){o.good();o.done()}}else{miss++;hits=0;o.msg(T.hackMiss);if(miss%3===0)o.bad()}}},
+  cv.onpointerdown=function(){if(pos>zone.x&&pos<zone.x+zone.w){hits++;o.hit();o.msg(fill(T.hackHit,{n:hits}));zone.x=40+o.rng()*180;sp+=.3;if(hits>=5){o.good();o.done()}}else{miss++;o.msg(T.hackMiss);if(miss%4===0)o.bad()}}},
 /* 10 memory */
 pairs:function(o){var n=o.hard?8:6,icons=shuffle(["bit","heart","coin","bomb","star","gl0","gl1","gl2"],o.rng).slice(0,n),cards=spreadPairs(shuffle(icons.concat(icons),o.rng),4,o.rng),open=[],found=0,lock=false;
   var face=function(k){return spriteURL(function(g){g.fillStyle=C.navy;g.fillRect(0,0,64,64);if(k==="bit")drawBit(g,32,60,4,0);else if(k[0]==="g"&&k.length===3)drawGlitch(g,32,58,4,{kleur:+k[2],ogen:+k[2],ant:+k[2]},0);else px(g,32,56,5,SPR[k],PAL)},64,64)};
