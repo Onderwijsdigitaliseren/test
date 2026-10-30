@@ -47,6 +47,31 @@ function proSheet(kind){sheet(MW.proHTML(L,kind)+'<button type="button" class="b
   $("#shX").onclick=closeSheet;MW.bindPro($("#sheetBody"),L,function(r,msg){closeSheet();refresh();toast(msg)})}
 function privacy(){sheet('<div class="eyebrow">Privacy</div><h2>'+H.privH+'</h2>'+H.privT+'<button type="button" class="btn ghost dk" id="shX">'+t.close+'</button>');$("#shX").onclick=closeSheet}
 
+
+/* ---------- speurtocht op maat: formulier → mail ---------- */
+var CF={nl:{btn:"✉️ Op maat",h:"Speurtocht op maat",lead:"Vertel wat je in gedachten hebt. Het formulier opent je mailprogramma met alles al ingevuld; verstuur de mail en je hoort snel wat er kan. Prijs in overleg.",
+    name:"Je naam",email:"Je e-mailadres",kids:"Aantal kinderen",age:"Leeftijd",where:"Waar (adres of buurt)",when:"Wanneer (datum, of ongeveer)",kind:"Wat voor feest?",kinds:["Kinderfeestje","Schoolkamp of klas","Buurt- of straatfeest","Bedrijfs- of familie-uitje","Iets anders"],
+    wish:"Jullie wensen",wishP:"Bijvoorbeeld: een piratenthema, de namen van de kinderen in het verhaal, start bij ons huis, eindigen bij de speeltuin…",send:"✉️ Open de mail en verstuur",copy:"Lukt het mailen niet? Kopieer de tekst",copied:"Gekopieerd. Plak hem in een mail aan kellievandekerkhof@gmail.com.",need:"Vul in elk geval je naam en wat je wilt in.",
+    subj:"Speurtocht op maat via MiniMystery",hi:"Hoi Kellie,",intro:"Ik zoek een speurtocht op maat.",bye:"Groet,"},
+  en:{btn:"✉️ Custom",h:"A custom treasure hunt",lead:"Tell me what you have in mind. The form opens your mail app with everything filled in; send the email and you'll hear quickly what's possible. Price on request.",
+    name:"Your name",email:"Your email address",kids:"Number of children",age:"Age",where:"Where (address or neighbourhood)",when:"When (date, or roughly)",kind:"What kind of party?",kinds:["Kids' party","School trip or class","Street or neighbourhood party","Company or family outing","Something else"],
+    wish:"Your wishes",wishP:"For example: a pirate theme, the children's names in the story, start at our house, finish at the playground…",send:"✉️ Open the email and send",copy:"Email not working? Copy the text",copied:"Copied. Paste it into an email to kellievandekerkhof@gmail.com.",need:"At least fill in your name and what you want.",
+    subj:"Custom treasure hunt via MiniMystery",hi:"Hi Kellie,",intro:"I'm looking for a custom treasure hunt.",bye:"Kind regards,"}}[L];
+var MAIL="kellievandekerkhof@gmail.com",CFK="ss_mm_custom";
+function customForm(){var v=MW.LS.get(CFK,{});var f=function(id,lab,ph,type){return '<label class="cf"><span>'+lab+'</span><input type="'+(type||"text")+'" id="'+id+'" autocomplete="'+(id==="cfN"?"name":id==="cfE"?"email":"off")+'" value="'+esc(v[id]||"")+'"'+(ph?' placeholder="'+esc(ph)+'"':'')+'></label>'};
+  sheet('<div class="eyebrow">MiniMystery</div><h2>'+CF.h+'</h2><p class="sub cfl">'+CF.lead+'</p><form id="cfF" novalidate>'+f("cfN",CF.name)+f("cfE",CF.email,"",'email')+'<div class="cf2">'+f("cfK",CF.kids,"8",'number')+f("cfA",CF.age,"6–12")+'</div>'+f("cfW",CF.where)+f("cfD",CF.when)+
+    '<label class="cf"><span>'+CF.kind+'</span><select id="cfT">'+CF.kinds.map(function(k){return '<option'+(v.cfT===k?' selected':'')+'>'+esc(k)+'</option>'}).join("")+'</select></label>'+
+    '<label class="cf"><span>'+CF.wish+'</span><textarea id="cfX" rows="4" placeholder="'+esc(CF.wishP)+'">'+esc(v.cfX||"")+'</textarea></label>'+
+    '<p class="note err" id="cfM"></p><button type="submit" class="btn">'+CF.send+'</button><button type="button" class="btn ghost dk" id="cfC">'+CF.copy+'</button><button type="button" class="btn ghost dk" id="shX">'+t.close+'</button></form>');
+  $("#shX").onclick=closeSheet;
+  var read=function(){var o={};["cfN","cfE","cfK","cfA","cfW","cfD","cfT","cfX"].forEach(function(id){o[id]=($("#"+id).value||"").trim()});MW.LS.set(CFK,o);return o};
+  var body=function(o){return CF.hi+"\n\n"+CF.intro+"\n\n"+CF.kind+": "+o.cfT+"\n"+CF.kids+": "+o.cfK+"\n"+CF.age+": "+o.cfA+"\n"+CF.where+": "+o.cfW+"\n"+CF.when+": "+o.cfD+"\n\n"+CF.wish+":\n"+o.cfX+"\n\n"+CF.bye+"\n"+o.cfN+(o.cfE?"\n"+o.cfE:"")+"\n"};
+  var ok=function(o){if(!o.cfN||!o.cfX){$("#cfM").textContent=CF.need;return false}$("#cfM").textContent="";return true};
+  $("#cfF").onsubmit=function(e){e.preventDefault();var o=read();if(!ok(o))return;location.href="mailto:"+MAIL+"?subject="+encodeURIComponent(CF.subj)+"&body="+encodeURIComponent(body(o))};
+  $("#cfC").onclick=function(){var o=read();if(!ok(o))return;var txt=CF.subj+"\n\n"+body(o);try{navigator.clipboard.writeText(txt).then(function(){toast(CF.copied)},function(){prompt(MAIL,txt)})}catch(err){prompt(MAIL,txt)}}}
+function customBtn(){var top=document.querySelector(".hero .top");if(top&&!$("#bCustom")){var b=document.createElement("button");b.type="button";b.className="pill custom-pill";b.id="bCustom";b.textContent=CF.btn;top.insertBefore(b,top.firstChild);b.onclick=customForm}
+  var a=document.querySelector("#custom a.btn");if(a){a.removeAttribute("href");a.setAttribute("role","button");a.onclick=function(e){e.preventDefault();customForm()}}}
+
 /* ---------- Pro-paneel ---------- */
 function proBox(){var b=$("#proBox"),s=$("#proSec");s.hidden=false;
   b.innerHTML=MW.proHTML(L,"pro");
@@ -55,7 +80,7 @@ function proBox(){var b=$("#proBox"),s=$("#proSec");s.hidden=false;
 function refresh(){profile();cases();proBox()}
 
 /* ---------- start ---------- */
-$("#bPriv").onclick=privacy;
+$("#bPriv").onclick=privacy;customBtn();
 var sw=$("#lang");if(sw)sw.onclick=function(e){e.preventDefault();var to=L==="nl"?"en":"nl";MW.lang.set(to);location.href=MW.hubUrl(to)};
 refresh();
 MW.pro.ready.then(refresh);

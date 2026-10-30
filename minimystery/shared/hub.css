@@ -8,7 +8,8 @@ h1,h2,h3,.btn,.pill,.chip{font-family:Fredoka,Nunito,system-ui,sans-serif}
 .skip{position:absolute;left:-999px}.skip:focus{left:16px;top:16px;z-index:9;background:#fff;padding:8px 12px;border-radius:10px}
 
 /* bovenbalk */
-.top{position:absolute;inset:0 0 auto;z-index:3;display:flex;justify-content:flex-end;align-items:center;padding:14px 16px;max-width:1100px;margin:0 auto}
+.top{position:absolute;inset:0 0 auto;z-index:3;display:flex;justify-content:space-between;align-items:center;gap:8px;padding:14px 16px;max-width:1100px;margin:0 auto}
+.top .pill:only-child{margin-left:auto}
 .pill{appearance:none;border:2px solid var(--ink);background:rgba(255,255,255,.92);color:var(--ink);border-radius:999px;padding:5px 14px;font-weight:600;font-size:15px;text-decoration:none;cursor:pointer}
 .pill:hover{background:#fff}
 
@@ -128,3 +129,10 @@ main{max-width:1100px;margin:0 auto;padding:0 16px}
 .custom{background:#fff;border:2px solid var(--line);border-left:6px solid var(--violet);border-radius:18px;padding:18px 20px;text-align:left}
 .custom p{margin:0 0 14px;font-size:16px;line-height:1.5;color:var(--ink)}.custom .btn{width:100%;margin-bottom:10px}.custom .note{margin:0;font-size:13px;color:var(--soft)}
 .rel2{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}.rel2 a{background:#fff;border:2px solid var(--line);border-radius:999px;padding:8px 14px;font:600 15px Nunito,sans-serif;color:var(--navy);text-decoration:none}
+
+/* formulier op maat */
+.cf{display:flex;flex-direction:column;gap:4px;margin:0 0 10px;text-align:left}.cf span{font:700 13px Nunito,sans-serif;color:var(--soft)}
+.cf input,.cf select,.cf textarea{width:100%;font:500 16px Nunito,sans-serif;text-transform:none;letter-spacing:0;border:2px solid var(--line);border-radius:12px;padding:10px 12px;background:#fff;color:var(--ink)}
+.cf input:focus,.cf select:focus,.cf textarea:focus{outline:none;border-color:var(--sky)}.cf textarea{resize:vertical;min-height:90px}
+.cf2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.cfl{text-align:left;margin:4px 0 14px}#cfF .btn{width:100%;margin-top:8px}
+.pill.custom-pill{background:#5b44b8;color:#fff;border-color:#fff;box-shadow:0 4px 14px rgba(0,0,0,.25)}.pill.custom-pill:hover{background:#4a36a0}
