@@ -10,9 +10,7 @@ window.MW_CATALOG={
     {id:"night",  icon:"🌑", nl:{n:"Nachtzaak",   t:"Jij bent geen speurder maar doelwit. Thriller: blijf lopen en kijk om je heen."},
                             en:{n:"Night case",   t:"You are not the detective but the target. A thriller: keep walking and look around you."}},
     {id:"cold",   icon:"📁", nl:{n:"Cold case",   t:"Een oud dossier, nieuwe ogen. De plekken zijn er nog; de getuigen ook, ouder."},
-                            en:{n:"Cold case",    t:"An old file, fresh eyes. The places are still there; so are the witnesses, older now."}},
-    {id:"kids",   icon:"🎈", nl:{n:"Kinderfeestje",t:"Eén telefoon per groepje, een volwassene erbij, overal te spelen. Gekke opdrachten, een brutale dief, een diploma."},
-                            en:{n:"Kids' party",  t:"One phone per group, an adult along, playable anywhere. Silly tasks, a cheeky thief, a diploma."}}
+                            en:{n:"Cold case",    t:"An old file, fresh eyes. The places are still there; so are the witnesses, older now."}}
   ],
   games:[
     {id:"mw", cat:"murder", status:"live", access:"trial", minutes:"45–90", km:"2–4", group:true,
@@ -55,20 +53,5 @@ window.MW_CATALOG={
           desc:"Not a whodunit: a thriller. At eight points a message from ‘Unknown’ is waiting, and someone is walking behind you. Who is following you, and who can you trust?"},
       nl:{slug:"nl/ooggetuige.html", title:"Ooggetuige", tag:"Jij hebt iets gezien wat je niet had mogen zien.",
           desc:"Geen detective maar een thriller. Op acht punten wacht een bericht van ‘Onbekend’, en iemand loopt achter je. Wie volgt je, en wie kun je vertrouwen?"}}
-    ,{id:"ag", cat:"kids", status:"new", access:"trial", minutes:"40–60", km:"0–2", group:false,
-      en:{slug:"officer-for-a-day.html", title:"Officer for a Day", tag:"A police case for ages 6 to 10. Every street sign in the neighbourhood is gone.",
-          desc:"Sworn in as officers, the group follows eight leads (age setting 6–7 or 8+): fingerprints, a composite sketch, footprints, the siren, binoculars, the radio, a chase and a crowd. No reading needed: the phone reads aloud. Evidence is true, one witness lies. Then the line-up in 3D, handcuffs, a police diploma and a WANTED poster with the group's own photos. With a map, without one, or indoors."},
-      nl:{slug:"nl/agent-voor-een-dag.html", title:"Agent voor Eén Dag", tag:"Een politiezaak voor 6 tot 10 jaar. Alle straatnaamborden in de buurt zijn weg.",
-          desc:"Beëdigd als agenten volgt de groep acht sporen (leeftijdsstand 6–7 of 8+): vingerafdruk, compositietekening, voetspoor, sirene, verrekijker, portofoon, achtervolging en de drukte. Lezen hoeft niet: de telefoon leest voor. Bewijs is waar, één getuige liegt. Dan de confrontatie in 3D, handboeien, een politiediploma en een GEZOCHT-poster met de eigen foto's van de groep. Met kaart, zonder kaart of binnen."}}
-    ,{id:"sj", cat:"kids", status:"new", access:"trial", minutes:"45–75", km:"0–2", group:false,
-      en:{slug:"the-light-thief.html", title:"The Light Thief", tag:"He stole every light in the street. Catch him, collect eight lights, see who he is.",
-          desc:"At 03:03 the lights went out and the present was gone. The Light Thief hides at eight places nearby: catch him with photos, group poses and catching games and he drops a light out of fright. Eight lights in your lantern show his face. Then into his hideout to find the present. With a map in your own streets, without one, or indoors."},
-      nl:{slug:"nl/de-lichtjesdief.html", title:"De Lichtjesdief", tag:"Hij stal alle lichtjes van de straat. Vang hem, verzamel er acht, zie wie hij is.",
-          desc:"Om 03:03 gingen de lichten uit en was het cadeau weg. De Lichtjesdief zit op acht plekken in de buurt: vang hem met foto's, groepsposes en vangspellen en hij laat van schrik een lichtje vallen. Acht lichtjes in je lantaarn tonen zijn gezicht. Dan zijn schuilplaats in en het cadeau vinden. Met kaart in je eigen buurt, zonder kaart, of binnen."}}
-    ,{id:"pp", cat:"kids", status:"new", access:"trial", minutes:"40–60", km:"0–2", group:false,
-      en:{slug:"the-secret-of-pony-fluff.html", title:"The Secret of Pony Fluff", tag:"Pony Fluff is gone. Five animal witnesses, one has it wrong. Where is she?",
-          desc:"Fluff's stable is empty and the gate was open. The group follows eight hoof prints: finding tracks in the sand, the binoculars, grooming, counting apples, the halter colours, the crow's shinies, petting Kato the cat and crossing the meadow. No reading needed: the phone reads aloud. Traces are true, one animal gets it wrong (or lies, at Rider level). Then choose where Fluff is, hear the secret of the open gate, and get a Rider's Passport with the group's own photos. With a map, without one, or indoors."},
-      nl:{slug:"nl/het-geheim-van-pony-pluis.html", title:"Het Geheim van Pony Pluis", tag:"Pony Pluis is weg. Vijf dieren-getuigen, één zit ernaast. Waar is ze?",
-          desc:"De stal van Pluis is leeg en het hek stond open. De groep volgt acht hoefafdrukken: sporen zoeken in het zand, de verrekijker, roskammen, appels tellen, de halsterkleuren, de glimmertjes van de kraai, kat Kato aaien en de wei door. Lezen hoeft niet: de telefoon leest voor. Sporen zijn waar, één dier zit ernaast (of liegt, op niveau Ruiter). Dan kiezen waar Pluis is, het geheim van het open hek horen en een Ruiterpaspoort met de eigen foto's van de groep. Met kaart, zonder kaart of binnen."}}
   ]
 };
