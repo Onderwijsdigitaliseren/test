@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script>(function(){var h=location.hash||"",L="";try{L=(localStorage.getItem("ss_lang")||"").replace(/"/g,"")}catch(e){}
+var q=location.search||"";if(/[?&](lang=)?en\b/i.test(q)){L="en";try{localStorage.setItem("ss_lang","en")}catch(e){}}
+var nl=h==="#nl"?true:h==="#en"?false:L==="nl"?true:L==="en"?false:/^nl/i.test(navigator.language||"nl");
+if(/^#z=TD/i.test(h)){location.replace((nl?"nl/tot-de-dood-ons-scheidt.html":"till-death-do-us-part.html")+h);return}
+if(/^#z=NG/i.test(h)){location.replace((nl?"nl/de-nacht-van-de-geesten.html":"night-of-the-ghosts.html")+h);return}
+if(/^#z=OG/i.test(h)){location.replace((nl?"nl/ooggetuige.html":"eyewitness.html")+h);return}
+if(/^#z=CC/i.test(h)){location.replace((nl?"nl/onopgelost.html":"unsolved.html")+h);return}
+if(/^#z=LB/i.test(h)){location.replace((nl?"nl/de-laatste-bus.html":"the-last-bus.html")+h);return}
+if(/^#z=VZ/i.test(h)){location.replace((nl?"nl/de-verdwijning.html":"the-vanishing.html")+h);return}
+if(/^#(z|g)=/.test(h)){location.replace((nl?"nl/moordwandeling.html":"murder-walk.html")+h);return}
+if(h==="#nl"||h==="#en"){try{localStorage.setItem("ss_lang",nl?"nl":"en")}catch(e){}}
+if(nl)location.replace("nl/");})();</script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Murder Walk – Detective games you walk in your own streets</title>
+<meta name="description" content="Walking detective games played on real places around you via GPS: a murder mystery, a missing-person case and more. One ticket per team (€ 9.95), start whenever you like. Free practice round, in English or Dutch.">
+<link rel="canonical" href="https://www.enigmamystery.com/wandel/">
+<link rel="alternate" hreflang="en" href="https://www.enigmamystery.com/wandel/">
+<link rel="alternate" hreflang="nl" href="https://www.enigmamystery.com/wandel/nl/">
+<link rel="alternate" hreflang="x-default" href="https://www.enigmamystery.com/wandel/">
+<meta property="og:site_name" content="Murder Walk">
+<meta property="og:title" content="Murder Walk – detective games you walk">
+<meta property="og:description" content="Eight leads at real places in your own streets. Puzzle together, rule out suspects and name the killer. One ticket per team, free practice round.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.enigmamystery.com/wandel/">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.enigmamystery.com/wandel/assets/hero.webp">
+<meta name="theme-color" content="#101a2b">
+<link rel="icon" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/logo-en-192.png">
+<meta property="og:image" content="https://www.enigmamystery.com/wandel/assets/hero.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600&display=swap">
+<link rel="stylesheet" href="shared/platform.css?v=1">
+<link rel="stylesheet" href="shared/hub.css?v=7">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"Murder Walk","url":"https://www.enigmamystery.com/wandel/","description":"Walking detective games played on real places around you.","inLanguage":"en","hasPart":[
+{"@type":"VideoGame","name":"Murder Walk","url":"https://www.enigmamystery.com/wandel/murder-walk.html","genre":["Detective","Location-based game"],"gamePlatform":"Web browser"},
+{"@type":"VideoGame","name":"The Vanishing","url":"https://www.enigmamystery.com/wandel/the-vanishing.html","genre":["Detective","Location-based game"],"gamePlatform":"Web browser"}]}
+</script>
+</head>
+<body>
+<canvas id="sky" aria-hidden="true"></canvas>
+<main>
+  <div class="wrap">
+    <header class="hero">
+      <div class="top"><div class="eyebrow">A detective walk for your team, in your own streets</div><a class="pill" id="lang" href="nl/" hreflang="nl" lang="nl">Nederlands</a></div>
+      <h1 id="ttl">Murder Walk</h1>
+      <img class="logo" src="assets/logo-en.webp" alt="Murder Walk" width="800" height="800" fetchpriority="high">
+      <p id="typed">Eight leads at real places around you.</p>
+      <p class="lead">The map puts the leads on real places around you: the church, the bus stop, the café. Walk there as a team, puzzle together, rule out suspects and name the killer.</p>
+      <div class="cta"><a class="btn" href="#cats">Choose your walk</a><p class="deal"><b>One ticket per team · € 9,95</b><span>Start whenever you like. One phone or several. Playing alone or as a couple works too.</span></p><span class="arrow" aria-hidden="true">▼</span></div>
+    </header>
+
+    <section class="profile" aria-label="Your profile">
+      <span class="pr" hidden><b id="pRank">Cadet</b><span class="xp"><i id="pXp" style="width:0%"></i></span></span>
+      <span hidden><b id="pStreak">0</b> day streak</span>
+      <span hidden><b id="pSolved">0</b> solved</span>
+      <span id="status" class="st"></span>
+      <span id="pNext" hidden></span>
+      <button class="plink" id="bPro">I have a team code</button>
+    </section>
+
+    <section>
+      <h2 class="eyebrow" style="margin-bottom:10px">Choose your walk</h2>
+      <div class="cats" id="cats">
+        <noscript><p>Games: <a href="murder-walk.html">Murder Walk</a> · <a href="the-vanishing.html">The Vanishing</a>. This site needs JavaScript to play.</p></noscript>
+      </div>
+    </section>
+
+    <section class="steps" aria-label="How it works">
+      <div><b>1</b><p>Try it for free: every walk has a practice round. Then buy one ticket for your team (€ 9,95). Everyone enters the same code on their own phone, and it stays valid for two months, so you start whenever you like.</p></div>
+      <div><b>2</b><p>Allow location and the map lays the leads on real places within a short walk of where you stand. Walk there. Within 35 metres a lead opens: a shade that saw something, a piece of evidence, a camera still, a message.</p></div>
+      <div><b>3</b><p>Puzzle it out together in the notebook: rule out suspects, catch the liar and name the killer. Share one phone, or each use your own.</p></div>
+    </section>
+
+    <section class="paper" id="proBox" aria-label="Pro"></section>
+
+
+    <section class="paper custom" id="custom" aria-label="Custom">
+      <div class="eyebrow">Custom Murder Walk</div>
+      <h2>Need a walk made to measure?</h2>
+      <p>For a company outing, a hen or stag party, a birthday or a class, I make a murder case of your own: in your town or neighbourhood, with your names and story in it, and a route that ends wherever you like.</p>
+      <div class="cgrid">
+        <div><b>Your story</b><span>The victim, the suspects and the motive fit your group. With a wink at the boss, the bride or the birthday girl or boy.</span></div>
+        <div><b>Your route</b><span>Start at the station, the office or the hotel and finish at the pub or restaurant you were heading to anyway.</span></div>
+        <div><b>Your group</b><span>From a couple to a hundred people: in teams against each other, with the fastest time and a winner at the end.</span></div>
+        <div><b>Your language</b><span>In English or Dutch, or mixed for international teams.</span></div>
+      </div>
+      <ol class="csteps"><li>Fill in the form with your wishes.</li><li>You'll hear quickly what's possible, with a proposal and a price.</li><li>You get your own link and codes for every team. Ready to walk.</li></ol>
+      <a class="btn" data-custom href="mailto:kellievandekerkhof@gmail.com?subject=Custom%20Murder%20Walk">✉ Ask for a custom walk</a>
+      <p class="note">Price on request. Nothing is fixed until you agree.</p>
+    </section>
+
+    <footer>
+      <button type="button" id="bPriv">Privacy</button>
+      <a href="#custom">Custom walk</a>
+      <a href="mailto:kellievandekerkhof@gmail.com">Contact</a>
+      <a href="https://www.enigmamystery.com/en/" rel="noopener">Enigma Mystery (online cases)</a>
+      <span>Stay on public roads and mind the traffic.</span>
+    </footer>
+  </div>
+</main>
+<div class="sheet" id="sheet" hidden><div class="paper" id="sheetBody"></div></div>
+<div id="toast" hidden></div>
+<script src="shared/platform.js?v=3"></script>
+<script src="shared/catalog.js?v=17"></script>
+<script src="shared/hub.js?v=20"></script>
+</body>
+</html>

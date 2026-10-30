@@ -1,0 +1,52 @@
+/* Catalogus van wandelspellen. Eén bron voor beide hubs (EN + NL) en voor het "meer wandelingen"-menu in de spellen.
+   Nieuw spel toevoegen = één object in games[] + de twee HTML-bestanden + twee regels in sitemap.xml.
+   status: "live" | "new" | "soon"   ·   access: "free" (helemaal gratis) | "trial" (eerste zaak gratis, daarna Pro) | "pro" */
+window.MW_CATALOG={
+  cats:[
+    {id:"murder", icon:"🔎", nl:{n:"Moordzaak",   t:"Wie heeft het gedaan? Bewijs is altijd waar; van de getuigen liegt er één."},
+                            en:{n:"Murder case",  t:"Who did it? Evidence never lies; one of the witnesses does."}},
+    {id:"missing",icon:"👤", nl:{n:"Vermissing",  t:"Iemand is weg. Alles wat je vindt is waar, maar niemand weet het hele verhaal."},
+                            en:{n:"Missing person",t:"Someone is gone. Everything you find is true, but nobody knows the whole story."}},
+    {id:"night",  icon:"🌑", nl:{n:"Nachtzaak",   t:"Jij bent geen speurder maar doelwit. Thriller: blijf lopen en kijk om je heen."},
+                            en:{n:"Night case",   t:"You are not the detective but the target. A thriller: keep walking and look around you."}},
+    {id:"cold",   icon:"📁", nl:{n:"Cold case",   t:"Een oud dossier, nieuwe ogen. De plekken zijn er nog; de getuigen ook, ouder."},
+                            en:{n:"Cold case",    t:"An old file, fresh eyes. The places are still there; so are the witnesses, older now."}}
+  ],
+  games:[
+    {id:"mw", cat:"murder", status:"live", access:"trial", minutes:"45–90", km:"2–4", group:true,
+      en:{slug:"murder-walk.html", title:"Murder Walk", tag:"A murder mystery you walk, in your own streets.",
+          desc:"Eight leads at real places around you, five witnesses, one liar. Four story series, rare shades to catch, group mode for up to ten phones."},
+      nl:{slug:"nl/moordwandeling.html", title:"Moordwandeling", tag:"Een moordzaak die je loopt, in je eigen straten.",
+          desc:"Acht sporen op echte plekken om je heen, vijf getuigen, één leugenaar. Vier verhaalseries, zeldzame schimmen, groepszaak voor maximaal tien telefoons."}},
+    {id:"vz", cat:"missing", status:"live", access:"trial", minutes:"40–75", km:"2–3", group:false,
+      en:{slug:"the-vanishing.html", title:"The Vanishing", tag:"Someone is gone. Their last eight traces lie in your streets.",
+          desc:"You hold the last message. Follow the route: camera stills, texts, statements, objects. Was it abduction, flight or a disappearance by choice, and who knows more?"},
+      nl:{slug:"nl/de-verdwijning.html", title:"De Verdwijning", tag:"Iemand is verdwenen. De laatste acht sporen liggen in jouw buurt.",
+          desc:"Jij hebt het laatste bericht. Volg de route: camerabeelden, berichten, verklaringen, voorwerpen. Ontvoerd, gevlucht of vrijwillig verdwenen, en wie weet er meer?"}},
+    {id:"lb", cat:"missing", status:"live", access:"trial", minutes:"40–75", km:"2–3", group:false,
+      en:{slug:"the-last-bus.html", title:"The Last Bus", tag:"Phone, travel card and camera say: got home. Home says: no.",
+          desc:"Someone takes the last bus home and never walks in the door. Eight leads from the last hour, and one by one the certainties fall away. Where did the journey really go, and why was nobody allowed to know?"},
+      nl:{slug:"nl/de-laatste-bus.html", title:"De Laatste Bus", tag:"Telefoon, OV-kaart en camera zeggen: thuisgekomen. Thuis zegt: nee.",
+          desc:"Iemand neemt de laatste bus naar huis en komt nooit binnen. Acht sporen uit het laatste uur, en één voor één vallen de zekerheden weg. Waar ging de reis werkelijk heen, en waarom mocht niemand dat weten?"}},
+    {id:"td", cat:"murder", status:"live", access:"trial", minutes:"40–75", km:"2–3", group:false,
+      en:{slug:"till-death-do-us-part.html", title:"Till Death Do Us Part", tag:"She was to be married today. Only the bride never arrived.",
+          desc:"A wedding mystery of love, jealousy and family secrets. Six guests, eight traces of her last evening, and a figure in a long dress at the end of your street. Who met her, and why?"},
+      nl:{slug:"nl/tot-de-dood-ons-scheidt.html", title:"Tot de Dood Ons Scheidt", tag:"Ze zou vandaag trouwen. Alleen de bruid kwam nooit aan.",
+          desc:"Een bruiloftsmysterie over liefde, jaloezie en familiegeheimen. Zes gasten, acht sporen van haar laatste avond, en een gestalte in een lange jurk aan het einde van je straat. Wie ontmoette haar, en waarom?"}},
+    {id:"cc", cat:"cold", status:"live", access:"trial", minutes:"40–75", km:"2–3", group:false,
+      en:{slug:"unsolved.html", title:"Unsolved", tag:"A file twenty years old. The places are still there.",
+          desc:"A disappearance that was never solved. Walk the old file: press cuttings, interviews, photographs, letters. Near each place you step back into that year. What happened, and who knew?"},
+      nl:{slug:"nl/onopgelost.html", title:"Onopgelost", tag:"Een dossier van twintig jaar oud. De plekken zijn er nog.",
+          desc:"Een vermissing die nooit is opgelost. Loop het oude dossier na: krantenknipsels, verhoren, foto's, brieven. Bij elke plek stap je terug naar dat jaar. Wat gebeurde er, en wie wist het?"}},
+    {id:"ng", cat:"night", status:"live", feature:{nl:"Speciaal voor Halloween",en:"Halloween special"}, access:"trial", minutes:"40–75", km:"2–3", group:false,
+      en:{slug:"night-of-the-ghosts.html", title:"Night of the Ghosts", tag:"Tonight the dead do not stay where they belong.",
+          desc:"A Halloween night case. Eight apparitions in your neighbourhood, a ninth nobody had counted, and rare ghosts to catch. No murderer: find out who she is, and why she appears tonight."},
+      nl:{slug:"nl/de-nacht-van-de-geesten.html", title:"De Nacht van de Geesten", tag:"Vanavond blijven de doden niet waar ze horen.",
+          desc:"Een Halloween-nachtzaak. Acht verschijningen in jouw buurt, een negende die niemand had geteld en zeldzame geesten om te vangen. Geen moordenaar: zoek uit wie zij is, en waarom ze juist vannacht verschijnt."}},
+    {id:"og", cat:"night", status:"live", access:"trial", minutes:"40–75", km:"2–3", group:false,
+      en:{slug:"eyewitness.html", title:"Eyewitness", tag:"You saw something you were never meant to see.",
+          desc:"Not a whodunit: a thriller. At eight points a message from ‘Unknown’ is waiting, and someone is walking behind you. Who is following you, and who can you trust?"},
+      nl:{slug:"nl/ooggetuige.html", title:"Ooggetuige", tag:"Jij hebt iets gezien wat je niet had mogen zien.",
+          desc:"Geen detective maar een thriller. Op acht punten wacht een bericht van ‘Onbekend’, en iemand loopt achter je. Wie volgt je, en wie kun je vertrouwen?"}}
+  ]
+};
