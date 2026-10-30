@@ -454,8 +454,8 @@ pixelfix:function(o){var N=o.hard?4:3,cv=o.canvas(280),g=cv.getContext("2d"),src
   var draw=function(){g.fillStyle=C.ink;g.fillRect(0,0,280,280);order.forEach(function(src2,k){var sx=(src2%N)*ts,sy=Math.floor(src2/N)*ts,dx=(k%N)*cs,dy=Math.floor(k/N)*cs;g.drawImage(src,sx,sy,ts,ts,dx+1,dy+1,cs-2,cs-2);if(selI===k){g.strokeStyle=C.yel;g.lineWidth=4;g.strokeRect(dx+3,dy+3,cs-6,cs-6)}})};
   cv.onpointerdown=function(e){var p=o.at(e,cv),k=Math.floor(p[0]/cs)+Math.floor(p[1]/cs)*N;if(selI<0){selI=k}else{var t=order[selI];order[selI]=order[k];order[k]=t;selI=-1;o.hit();if(order.every(function(v,j){return v===j})){draw();o.good();o.done();return}}draw()};draw()},
 /* 9 hack: tik als de balk in het groen is */
-hack:function(o){var cv=o.canvas(200),g=cv.getContext("2d"),pos=0,dir=1,sp=o.hard?3.4:2.4,hits=0,miss=0,zone={x:0,w:o.hard?34:50};zone.x=60+o.rng()*140;
-  var f=function(ts){if(o.dead())return;pos+=dir*sp;if(pos>270||pos<10)dir*=-1;scanBg(g,280,200,ts);g.fillStyle="#334155";g.fillRect(10,90,260,30);g.fillStyle=C.green;g.fillRect(zone.x,90,zone.w,30);g.fillStyle="#fff";g.fillRect(pos-3,80,6,50);
+hack:function(o){var cv=o.canvas(200),g=cv.getContext("2d"),pos=10,dir=1,sp=o.hard?3.4:2.4,hits=0,miss=0,zone={x:0,w:o.hard?34:50};zone.x=60+o.rng()*140;
+  var f=function(ts){if(o.dead())return;pos+=dir*sp;if(pos>=270){pos=270;dir=-1}else if(pos<=10){pos=10;dir=1}scanBg(g,280,200,ts);g.fillStyle="#334155";g.fillRect(10,90,260,30);g.fillStyle=C.green;g.fillRect(zone.x,90,zone.w,30);g.fillStyle="#fff";g.fillRect(pos-3,80,6,50);
     for(var i=0;i<5;i++){g.fillStyle=i<hits?C.yel:"#475569";g.fillRect(70+i*30,150,20,20)}mg.raf=requestAnimationFrame(f)};mg.raf=requestAnimationFrame(f);
   cv.onpointerdown=function(){if(pos>zone.x&&pos<zone.x+zone.w){hits++;o.hit();o.msg(fill(T.hackHit,{n:hits}));zone.x=40+o.rng()*180;sp+=.3;if(hits>=5){o.good();o.done()}}else{miss++;o.msg(T.hackMiss);if(miss%4===0)o.bad()}}},
 /* 10 memory */
