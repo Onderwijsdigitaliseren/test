@@ -217,7 +217,7 @@ function cine(then){var ov=$("#cine"),cv=$("#cineC"),g=cv.getContext("2d"),txt=$
   var r=rngOf(7),bld=[],x=-20;while(x<w+60){var bw=30+r()*50,bh=60+r()*160;bld.push({x:x,w:bw,h:bh,win:[]});for(var i=0;i<bw/12-1;i++)for(var j=0;j<bh/16-1;j++)if(r()<.45)bld[bld.length-1].win.push([6+i*12,8+j*16,r()]);x+=bw+4+r()*10}
   var lines=T.cine,end=function(){if(fin)return;fin=true;cancelAnimationFrame(raf);ov.hidden=true;then()};
   $("#cineX").onclick=end;ov.onclick=function(e){if(e.target.id==="cine"||e.target.id==="cineC")end()};
-  var f=function(ts){if(fin)return;if(!t0)t0=ts;var t=(ts-t0)/1000,ph=still?8:t;
+  var f=function(ts){if(fin)return;if(!t0)t0=ts;var t=(ts-t0)/1000,tt=t-skipT,ph=still?8:tt<TXT?tt/TXT*6.5:6.6+(tt-TXT);
     g.setTransform(dpr,0,0,dpr,0,0);var sky=g.createLinearGradient(0,0,0,h);sky.addColorStop(0,"#0a0718");sky.addColorStop(1,"#2a1a4a");g.fillStyle=sky;g.fillRect(0,0,w,h);
     g.fillStyle="#fff";for(i=0;i<60;i++){g.globalAlpha=.3+.7*Math.abs(Math.sin(t*2+i));g.fillRect((i*131)%w,(i*71)%(h*.6),1.5,1.5)}g.globalAlpha=1;
     var base=h*.78,off=ph>=2?Math.min(1,(ph-2)/1.6):0;
@@ -226,8 +226,12 @@ function cine(then){var ov=$("#cine"),cv=$("#cineC"),g=cv.getContext("2d"),txt=$
     for(i=0;i<w;i+=90){var on=off<1||ph>7;g.fillStyle=on?"#ffd36a":"#2a2150";if(on){g.shadowColor="#ffd36a";g.shadowBlur=18}g.beginPath();g.arc(i+45,base-34,4,0,7);g.fill();g.shadowBlur=0;g.fillStyle="#1a1433";g.fillRect(i+44,base-30,2,30)}
     if(ph>4.2&&ph<6.5){var sx=w*(ph-4.2)/2.3;shadowFig(g,sx,base-70,150,.95,true,"run")}
     if(ph>6.6){g.textAlign="center";g.fillStyle="#d4ff3a";g.shadowColor="#2d7a1f";g.shadowBlur=0;var sc=Math.min(1,(ph-6.6)/.5),fs=Math.round(60*sc+20);var tt=L==="nl"?"DE LICHTJESDIEF":"THE LIGHT THIEF";g.font="700 "+fs+"px 'Fredoka','Arial Rounded MT Bold',sans-serif";var tw=g.measureText(tt).width;if(tw>w-32){fs=Math.floor(fs*(w-32)/tw);g.font="700 "+fs+"px 'Fredoka','Arial Rounded MT Bold',sans-serif"}g.fillText(tt,w/2,h*.4)}
-    var li=Math.min(lines.length-1,Math.floor(ph/1.35));txt.textContent=ph<6.6?lines[li]:"";
-    if(ph>8.2)return end();raf=requestAnimationFrame(f)};raf=requestAnimationFrame(f)}
+    var li=0;while(li<lines.length-1&&tt>=STARTS[li+1])li++;txt.textContent=(still||tt<TXT)?lines[li]:"";txt.hidden=!txt.textContent;
+    if(ph>8.2&&!still)return end();raf=requestAnimationFrame(f)};
+  /* leestijd per zin: ± 15 tekens per seconde, minstens 4 s; tik op de tekst = volgende zin */
+  var STARTS=[],TXT=0,skipT=0;lines.forEach(function(l){STARTS.push(TXT);TXT+=Math.max(4,l.length/15+1.5)});
+  txt.style.pointerEvents="auto";txt.onclick=function(e){e.stopPropagation();var t=(performance.now()-t0)/1000-skipT,n=STARTS.filter(function(x){return x>t})[0];if(n==null)n=TXT;skipT-=(n-t)};
+  raf=requestAnimationFrame(f);if(still)setTimeout(end,6000)}
 
 /* ---------- spelen zonder kaart: kaartjes ---------- */
 function enter(){mlWarm();if(G.mode==="map"||G.mode==="demo")enterMap();else{show("cards");render()}}
@@ -338,7 +342,7 @@ function accept(seen){var i=cur.i,s=G.c.slots[i];G.ph[i]=cur.thumb;if(cur.spot){
   var X=D.X,cl=n>=t?X.CLIFF_LAST:X.CLIFF[(G.seed+n*7)%X.CLIFF.length];
   sheet('<div class="eyebrow">'+esc(fill(T.task,{i:n,N:t}))+' · '+esc(T.reply)+'</div><div class="shardwrap"><canvas id="shardC" width="320" height="200"></canvas><b>'+esc(fill(T.shard,{n:n,N:t}))+'</b></div>'+
     (gd!=null?'<div class="goldget"><span class="coin big">'+gd+'</span><div><b>'+esc(T.goldGot)+'</b><small>'+esc(T.goldGotT)+'</small></div></div>':'')+
-    '<div class="pol mini"><img src="'+cur.thumb+'" alt=""><p class="cap">'+esc(s.what)+(seen?' · '+esc(seen):'')+'</p></div>'+
+    
     '<div class="msg small">'+pose("run","shadow big")+'<div class="bub"><p>'+esc(s.react)+'</p></div></div><div class="rep k-'+kind+'"><em>'+esc(head)+'</em>'+bubble(txt)+(sub?'<p class="note">'+esc(sub)+'</p>':'')+'</div>'+
     '<p class="cliff">'+esc(fill(cl,{n:t-n,J:NAME||T.popYou}))+'</p>'+
     '<button type="button" class="btn" id="bNext">'+(n>=t?T.last:T.next)+'</button>',true);
@@ -473,7 +477,7 @@ var PUZ={
     if(o.hard)$("#lgH").onclick=function(){var k=sol.indexOf(true);if(k>=0){bs[k].classList.add("hint");G.hints=(G.hints||0)+1}};
     else mg.tm.push(setInterval(function(){if(fin)return;var lit=[];on.forEach(function(x,k){if(x)lit.push(k)});if(lit.length<2||lit.length>=n-1||blows>=3)return;blows++;var k=lit[Math.floor(Math.random()*lit.length)];on[k]=false;bs[k].classList.add("blow");setTimeout(function(){bs[k].classList.remove("blow")},600);beep(200,.12);draw()},3200))},
   /* zijn spullen: memory met plaatjes. Makkelijk 3 paar (eerst even spieken), pittig 6 paar */
-  memory:function(o){var pairs=o.hard?6:3,items=shuffle(D.X.STUFF,Math.random).slice(0,pairs),cards=shuffle(items.concat(items),Math.random),open=[],got=0,lock=true;
+  memory:function(o){var pairs=o.hard?6:3,items=shuffle(D.X.STUFF,Math.random).slice(0,pairs),cards=spreadPairs(shuffle(items.concat(items),Math.random),o.hard?4:3),open=[],got=0,lock=true;
     o.box.innerHTML='<div class="mem'+(o.hard?" h":"")+'" id="mmG">'+cards.map(function(e,k){return '<button type="button" class="card up" data-i="'+k+'" data-e="'+e+'"><span>'+e+'</span></button>'}).join("")+'</div><p class="pzst" id="pzS"></p>';
     var bs=$$("#mmG .card");o.st(T.pz.memLook,false);
     mg.tm.push(setTimeout(function(){bs.forEach(function(b){b.classList.remove("up")});lock=false;o.st(T.pz.memGo,false)},o.hard?1200:2600));
@@ -821,4 +825,7 @@ if(window.MMP)MMP.init({id:ID,fin:{nl:'De Lichtjesdief zucht: oké, oké. Het ca
 window.SJ_T={begin:begin,render:render,G:function(){return G},solve:function(){if(cur&&cur.solve)cur.solve()},parse:parseCode,make:makeCode,gen:function(seed,mode,len){return genCase(seed,mode,len)},lock:function(){return lockOrder().map(function(x){return x.d}).join("")},open:function(i){var sp=G.st?G.st.filter(function(x){return x.fi===i})[0]:null;ruilSheet(i,sp||null)}};
 home();if(hz){var pc=parseCode(hz[1]);if(pc)codeSheet(hz[1].toUpperCase())}
 MW.pro.ready.then(function(){if(!$("#home").hidden&&$("#sheet").hidden&&!G)home()});
+/* memory: husselen tot geen enkel paar naast of onder elkaar ligt */
+function spreadPairs(c,cols){for(var t=0;t<300;t++){var bad=false;for(var i=0;i<c.length&&!bad;i++){if(i%cols<cols-1&&c[i]===c[i+1])bad=true;if(i+cols<c.length&&c[i]===c[i+cols])bad=true}if(!bad)return c;c=shuffle(c,Math.random)}return c}
 })();
+

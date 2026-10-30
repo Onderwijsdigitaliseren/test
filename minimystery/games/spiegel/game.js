@@ -402,7 +402,7 @@ function pzFlies(done,n){var r=rngOf(G.seed^0xD44^G.i),fl=[],caught=0;
     if(best.mint){best.on=false;caught++;beep(900+caught*60,.1);buzz(15);$("#fcnt").textContent=caught+" / "+n;if(caught>=n){cancelAnimationFrame(mg.raf);toast(fill(PZ.flyDone,{n:n}));mg.later(done,600)}}else{toast(PZ.flyBad);buzz(120);G.wrong++;save();if(caught>0){caught--;$("#fcnt").textContent=caught+" / "+n;var back=fl.filter(function(f){return f.mint&&!f.on})[0];if(back)back.on=true}}});
   frame()}
 /* 5 memory */
-function pzMemory(done){var E=["🎵","🎶","🎻","🪈","🥁","🎺"],r=rngOf(G.seed^0xE55),pairs=hard()?6:3,cards=shuffle(E.slice(0,pairs).concat(E.slice(0,pairs)),r),open=[],found=0,lock=false;
+function pzMemory(done){var E=["🎵","🎶","🎻","🪈","🥁","🎺"],r=rngOf(G.seed^0xE55),pairs=hard()?6:3,cards=spreadPairs(shuffle(E.slice(0,pairs).concat(E.slice(0,pairs)),r),hard()?4:3,r),open=[],found=0,lock=false;
   glass(pzHead(PZ.memH,PZ.memT)+'<div class="mem '+(hard()?"six":"three")+'">'+cards.map(function(c,i){return '<button type="button" data-i="'+i+'"><i>'+c+'</i></button>'}).join("")+'</div>');say(PZ.memT);
   $(".mem").onclick=function(e){var b=e.target.closest("button");if(!b||lock||b.classList.contains("up"))return;b.classList.add("up");open.push(b);beep(600,.08);
     if(open.length===2){lock=true;var a=open[0],c=open[1];mg.later(function(){if(cards[+a.dataset.i]===cards[+c.dataset.i]){a.classList.add("ok");c.classList.add("ok");found++;beep(900,.12);if(found>=pairs)mg.later(done,500)}else{a.classList.remove("up");c.classList.remove("up")}open=[];lock=false},700)}}}
@@ -684,4 +684,7 @@ function wipeSheet(){var has=!!LS.get(GK,null);sheet('<h2>'+T.wipe+'</h2>'+(has?
 if(/[?&]debug\b/.test(location.search))window.TS_DBG={G:function(){return G},puzzle:puzzle,skip:function(){if(curSkip)curSkip()},ans:null,plan:makePlan,parse:parseCode};
 home();
 if(window.MMP)MMP.init({id:ID,fin:{nl:"Grimmel schuifelt naar voren: ‘Als sorry heb ik nog iets verstopt. Niet in de spiegel… maar echt. Kijk maar!’",en:"Grimble shuffles forward: ‘To say sorry, I hid something else. Not in the mirror… for real. Look!’"}});
+/* memory: husselen tot geen enkel paar naast of onder elkaar ligt */
+function spreadPairs(c,cols,r){for(var t=0;t<300;t++){var bad=false;for(var i=0;i<c.length&&!bad;i++){if(i%cols<cols-1&&c[i]===c[i+1])bad=true;if(i+cols<c.length&&c[i]===c[i+cols])bad=true}if(!bad)return c;c=shuffle(c,r)}return c}
 })();
+
