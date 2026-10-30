@@ -1,4 +1,12 @@
 {"codes":[
+  {"h": "00284679c21a3fe614e29c83731f2997c2361ce7187e99fc3c19fa2f25ca29f9", "t": "team", "spel": "mw", "dagen": 61, "naam": "Teamticket Moordwandeling 2026-10"},
+  {"h": "a95624b27a16fcebc3bee2a788092de5aace61e79b122eaf80d1fd96b29430bc", "t": "team", "spel": "vz", "dagen": 61, "naam": "Teamticket De Verdwijning 2026-10"},
+  {"h": "b6a1a7a3fb6166591e8772842812579b33c35425bb759de9b99f771c80a6959c", "t": "team", "spel": "lb", "dagen": 61, "naam": "Teamticket De Laatste Bus 2026-10"},
+  {"h": "68cd889238268119c48d28c3e20df777ecea2cebe3ded64f34a1427be80d0626", "t": "team", "spel": "td", "dagen": 61, "naam": "Teamticket Tot de Dood Ons Scheidt 2026-10"},
+  {"h": "ee89a35b22b0f6a01891897d8f1dafc83e629c5e4e7cf8f7db4dd90572636adf", "t": "team", "spel": "cc", "dagen": 61, "naam": "Teamticket Onopgelost 2026-10"},
+  {"h": "0748e6ed683a4805fd2f4f2e6a971718bd7ff7b974310c3b0211d88493549e27", "t": "team", "spel": "ng", "dagen": 61, "naam": "Teamticket De Nacht van de Geesten 2026-10"},
+  {"h": "b3e26961336bab3c3c4b2e3895e76fe048aa0ceb13685a6cebe58497084cf3e6", "t": "team", "spel": "og", "dagen": 61, "naam": "Teamticket Ooggetuige 2026-10"},
+  {"h": "119a43551398b59fb5e7b29c87323217f9e52b5bb3bfb71cbe24ef2fa6e4e562", "t": "team", "spel": "fj", "dagen": 61, "naam": "Teamticket De Fotojacht 2026-10"},
   {"h": "a35fd5a4cf1d35651822f2549d75422649dd6eb1b3c1c45afe011d8885af9cfb", "t": "feest", "spel": "sj", "dagen": 61, "naam": "Feestpas De Lichtjesdief 2026-10"},
   {"h": "d02a2cbeef3a4b61d8839777d876c1d1d0d622338b3a7b5ff229b0e139d74991", "t": "feest", "spel": "pp", "dagen": 61, "naam": "Feestpas Het Geheim van Pony Pluis 2026-10"},
   {"h": "d37c921e674e9f199d2cb961262edcf02225e7c3fba9c320dd3c5e6259ac4a51", "t": "feest", "spel": "ag", "dagen": 61, "naam": "Feestpas Agent voor Eén Dag 2026-10"},

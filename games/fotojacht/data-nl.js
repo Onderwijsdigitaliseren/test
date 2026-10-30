@@ -17,7 +17,7 @@ T:{
   missed1:"Niet in één keer: geen tweede ster.",missed2:"Langer dan {m} minuten: geen derde ster.",up:"Nieuwe rang: {r}.",pts:"{x} punten",streakTxt:"Dag 1 op rij",streakTxtP:"{n} dagen op rij",
   dH:"Zaakcode",dT:"Speel dezelfde zaak als iemand anders. Vraag de code en vul hem hier in.",dGo:"Start",dBad:"Die code klopt niet.",
   aH:"Archief",aNone:"Nog geen gesloten zaken.",aTip:"Tik op een zaak om hem opnieuw te spelen.",
-  wipe:"Wissen",wipeY:"Deze zaak wissen",wipeAll:"Alles wissen, ook rang en archief",wipeQ:"Zaak wissen?",wipeT:"Je foto's en aantekeningen van deze zaak gaan verloren.",allQ:"Alles wissen?",allT:"Rang, dagreeks, Pro-status en archief van alle wandelingen verdwijnen van dit toestel.",allY:"Ja, alles wissen",
+  wipe:"Wissen",wipeY:"Deze zaak wissen",wipeAll:"Alles wissen, ook rang en archief",wipeQ:"Zaak wissen?",wipeT:"Je foto's en aantekeningen van deze zaak gaan verloren.",allQ:"Alles wissen?",allT:"Rang, dagreeks en archief van alle wandelingen verdwijnen van dit toestel.",allY:"Ja, alles wissen",
   camNote:"De foto's blijven op je telefoon. Ze worden nergens heen gestuurd.",
   mlLoad:"Beeldherkenning laden… (eenmalig, ±15 MB; daarna werkt het ook offline)",mlOk:"Beeldherkenning staat aan.",mlFail:"Beeldherkenning kon niet laden. Foto's worden nu niet gecontroleerd.",mlCheck:"De foto bekijken…",
   mlNo:"Hier zie ik vooral: {x}. Ik zoek {w}. Kom dichterbij, zet het in het midden en probeer het nog eens.",mlYes:"Herkend: {x}",mlSkip:"Toch doorgaan (kost een ster)",mlSkipped:"Zonder controle doorgegaan.",

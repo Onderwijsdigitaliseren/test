@@ -56,7 +56,7 @@ window.NG_DATA={
   "wipeY": "Yes, erase",
   "wipeAll": "Erase everything, including rank and archive",
   "allQ": "Erase everything?",
-  "allT": "Rank, points, day streak and archive will be lost on this phone. Pro stays.",
+  "allT": "Rank, points, day streak and archive will be lost on this phone. Your ticket stays.",
   "allY": "Yes, erase everything",
   "wiped": "Erased.",
   "cancel": "Cancel",

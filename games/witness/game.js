@@ -102,14 +102,14 @@ function home(){
   $("#pXp").style.width=(nx?Math.round((p.xp-R)/(nx[0]-R)*100):100)+"%";
   $("#pNext").textContent=nx?MW.fill(t.pts,{x:p.xp,n:nx[0]-p.xp,r:MW.profile.RANKS[L][i+1][1]}):MW.fill(t.ptsTop,{x:p.xp});
   $("#bResume").hidden=!LS.get(GK,null);
-  var pro=MW.pro.isPro(),lk=MW.pro.locked(ID),playedToday=(p.games.og&&p.games.og.day)===MW.today();
+  var pro=MW.pro.has(ID),lk=MW.pro.locked(ID),playedToday=(p.games.og&&p.games.og.day)===MW.today();
   $("#bGps").textContent=(lk?"🔒 ":"")+(playedToday?T.todayAgain:T.today);$("#bRandom").textContent=(lk?"🔒 ":"")+T.extra;
-  $("#bPro").hidden=pro;$("#bPro").textContent=T.pro+" · "+MW.cfg.price;
-  $("#status").textContent=pro?T.proOn:lk?T.proUsed:T.proFree;
+  $("#bPro").hidden=pro;$("#bPro").textContent=MW.t(L).tBtn+" · "+MW.cfg.team.price;
+  $("#status").textContent=MW.statusText(L,ID);MW.homeOrder(lk);
   show("home")}
 function show(id){["home","brief","play"].forEach(function(s){$("#"+s).hidden=s!==id});if(id==="play"&&map)map.resize()}
-function proSheet(){sheet(MW.proHTML(L,"pro")+'<button type="button" class="btn ghost dk" id="shX">'+T.cancel+'</button>');$("#shX").onclick=closeSheet;
-  MW.bindPro($("#sheetBody"),L,function(r,msg){closeSheet();home();toast(msg)})}
+function proSheet(){sheet(MW.proHTML(L,"team",ID)+'<button type="button" class="btn ghost dk" id="shX">'+T.cancel+'</button>');$("#shX").onclick=closeSheet;
+  MW.bindPro($("#sheetBody"),L,function(r,msg){closeSheet();home();toast(msg)},ID)}
 $("#len").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;R0=+b.dataset.r;PAR=+b.dataset.par;$$("#len button").forEach(function(x){x.setAttribute("aria-pressed",x===b)})});
 function setLen(short){var b=$$("#len button")[short?0:1];if(b)b.click()}
 $("#bGps").onclick=function(){if(MW.pro.locked(ID))return proSheet();startGps(hashStr("og|"+MW.today()),true)};

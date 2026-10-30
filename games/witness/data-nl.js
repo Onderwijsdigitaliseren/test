@@ -130,7 +130,7 @@ window.OG_DATA={
   "wipeY": "Ja, wissen",
   "wipeAll": "Alles wissen, ook rang en archief",
   "allQ": "Alles wissen?",
-  "allT": "Rang, punten, dagstreak en archief gaan verloren op dit toestel. Pro blijft.",
+  "allT": "Rang, punten, dagstreak en archief gaan verloren op dit toestel. Je ticket blijft.",
   "allY": "Ja, alles wissen",
   "wiped": "Gewist.",
   "cancel": "Annuleren",

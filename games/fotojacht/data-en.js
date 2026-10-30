@@ -17,7 +17,7 @@ T:{
   missed1:"Not in one go: no second star.",missed2:"Longer than {m} minutes: no third star.",up:"New rank: {r}.",pts:"{x} points",streakTxt:"Day 1 in a row",streakTxtP:"{n} days in a row",
   dH:"Case code",dT:"Play the same case as someone else. Ask for the code and enter it here.",dGo:"Start",dBad:"That code is not right.",
   aH:"Archive",aNone:"No closed cases yet.",aTip:"Tap a case to play it again.",
-  wipe:"Wipe",wipeY:"Wipe this case",wipeAll:"Wipe everything, rank and archive too",wipeQ:"Wipe case?",wipeT:"Your photos and notes for this case will be lost.",allQ:"Wipe everything?",allT:"Rank, day streak, Pro status and the archive of every walk disappear from this phone.",allY:"Yes, wipe everything",
+  wipe:"Wipe",wipeY:"Wipe this case",wipeAll:"Wipe everything, rank and archive too",wipeQ:"Wipe case?",wipeT:"Your photos and notes for this case will be lost.",allQ:"Wipe everything?",allT:"Rank, day streak and the archive of every walk disappear from this phone.",allY:"Yes, wipe everything",
   camNote:"Your photos stay on your phone. They are never sent anywhere.",
   mlLoad:"Loading image recognition… (once, about 15 MB; after that it works offline too)",mlOk:"Image recognition is on.",mlFail:"Image recognition could not load. Photos are not being checked now.",mlCheck:"Looking at the photo…",
   mlNo:"Here I mostly see: {x}. That is not {w}. Get closer, put it in the middle, and try again.",mlYes:"Recognised: {x}",mlSkip:"Continue anyway (costs a star)",mlSkipped:"Continued without a check.",

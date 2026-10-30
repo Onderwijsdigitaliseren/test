@@ -289,7 +289,7 @@ a#hub{text-decoration:none;color:var(--paper)}
 </div>
 
 </div>
-<script src="../shared/platform.js?v=1"></script>
+<script src="../shared/platform.js?v=2"></script>
 <script src="../shared/catalog.js?v=16"></script>
 <script>
 /* ---------- zaakgenerator (puur, controleerbaar) ---------- */
@@ -396,8 +396,8 @@ function home(){
   $("#bResume").hidden=!LS.get("ss_game",null);
   const pro=isPro(),lk=locked();
   $("#bGps").textContent=(lk?"🔒 ":"")+(prof.last===today()?"Speel de zaak van vandaag opnieuw":"Start de zaak van vandaag");
-  $("#bRandom").textContent=(lk?"🔒 ":"")+T.pExtra;$("#bPro").hidden=pro;$("#bPro").textContent=T.pBtn+" · "+PRO.price;
-  $("#status").textContent=(pro?T.pOn:lk?T.pUsed:T.pFree)+(groupLeft()?" "+T.gpOn.replace("{h}",Math.ceil(groupLeft()/36e5)):"");$("#bGrp").textContent=(groupLeft()?"":"🔒 ")+T.bGrp;
+  $("#bRandom").textContent=(lk?"🔒 ":"")+T.pExtra;$("#bPro").hidden=pro;$("#bPro").textContent=MW.t("nl").tBtn+" · "+PRO.team.price;
+  $("#status").textContent=MW.statusText("nl","mw");MW.homeOrder(lk);$("#bGrp").textContent=(groupLeft()?"":"🔒 ")+T.bGrp;
   storyUI();show("home");heroStart();
 }
 $("#len").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;R0=+b.dataset.r;PAR=+b.dataset.par;document.querySelectorAll("#len button").forEach(x=>x.setAttribute("aria-pressed",x===b))});
@@ -412,18 +412,10 @@ $("#bBookHome").onclick=()=>bookSheet();
 const PRO=window.SS_PRO||{},GP=PRO.groep||{},proNorm=MW.norm,sha256=MW.sha256;
 let codesOk=MW.pro.codesOk(),CODES=MW.pro.codes();
 const codesP=MW.pro.ready.then(()=>{codesOk=MW.pro.codesOk();CODES=MW.pro.codes();if(!$("#home").hidden&&$("#sheet").hidden&&!G)home()});
-const isPro=()=>MW.pro.isPro(),locked=()=>MW.pro.locked("mw"),groupLeft=()=>MW.pro.groupLeft(),redeem=v=>MW.pro.redeem(v);
+const isPro=()=>MW.pro.has("mw"),locked=()=>MW.pro.locked("mw"),groupLeft=()=>MW.pro.has("mw"),redeem=v=>MW.pro.redeem(v);
 function proSheet(kind){
-  const g=kind==="groep",url=g?GP.url:PRO.url,price=g?GP.price:PRO.price,U=s=>s.replace(/\{u\}/g,GP.uren||48).replace(/\{n\}/g,GP.max||10);
-  sheet('<div class="eyebrow">'+(g?T.bGrp:"Pro")+'</div><h2>'+(g?T.gpH:T.pH)+'</h2><p>'+(g?U(T.gpT):T.pT)+'</p>'+(url?'<a class="btn" href="'+esc(url)+'" target="_blank" rel="noopener">'+(g?T.gpBtn:T.pBtn)+(price?' · '+esc(price):'')+'</a>':'')+'<div class="eyebrow">'+T.pHave+'</div><input class="inp" id="pCode" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="'+T.pHave+'"><button type="button" class="btn ghost dk" id="pOk">'+T.pUse+'</button><p class="note" id="pMsg" style="color:#a5392c"></p><button type="button" class="btn ghost dk" id="shX">'+T.cancel+'</button>');
-  let busy=false;
-  const go=async()=>{if(busy)return;busy=true;const v=$("#pCode").value,m=$("#pMsg");if(!codesOk){m.textContent=T.pWait;await codesP}
-    const r=redeem(v);busy=false;
-    if(r==="pro"){closeSheet();home();toast(T.pOk)}
-    else if(r==="groep"){closeSheet();home();toast(U(T.gpOk))}
-    else{const e=$("#pMsg");if(e)e.textContent=r==="exp"?T.pExp:r==="used"?T.pUsedC:!codesOk&&CODES.length===0?T.pNoNet:T.pBad;buzz(120)}};
-  $("#sheetBody").onclick=e=>{if(e.target.id==="shX")closeSheet();else if(e.target.id==="pOk")go()};
-  $("#pCode").onkeydown=e=>{if(e.key==="Enter")go()};
+  sheet(MW.proHTML("nl","team","mw")+'<button type="button" class="btn ghost dk" id="shX">'+T.cancel+'</button>');
+  $("#shX").onclick=closeSheet;MW.bindPro($("#sheetBody"),"nl",(r,msg)=>{closeSheet();home();toast(msg)},"mw");
 }
 
 /* ---------- wereld ophalen ---------- */

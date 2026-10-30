@@ -81,3 +81,7 @@ footer a,footer button{color:var(--fog);text-decoration:underline;font-size:13px
 .feature .meta i{font-style:normal;font-size:12px;background:rgba(255,255,255,.12);padding:2px 8px;border-radius:2px}
 .feature .btn{background:#ff7a1a;color:#140a02;margin-top:4px;box-shadow:0 0 22px rgba(255,122,26,.35)}
 @media(min-width:760px){.feature{min-height:480px;background-position:center top;background-size:cover}.feature .fbody{max-width:620px;padding:24px}.feature .btn{align-self:flex-start;width:auto;padding-inline:34px}}
+/* ---- teamticket ---- */
+.deal{display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;margin:4px auto 0;padding:10px 16px;border:1px dashed rgba(240,166,58,.6);border-radius:6px;background:rgba(12,18,30,.62);max-width:40ch;text-shadow:0 1px 6px #000}
+.deal b{font-family:var(--f-type);font-weight:400;font-size:18px;color:var(--lamp)}
+.deal span{font-size:13px;color:#d9e0ee}

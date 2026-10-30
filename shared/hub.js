@@ -3,13 +3,13 @@
 "use strict";
 var MW=window.MW,C=window.MW_CATALOG,L=MW.lang.page(),t=MW.t(L),esc=MW.esc,$=function(s){return document.querySelector(s)};
 var H={
-  nl:{choose:"Kies je wandeling",play:"Speel",resume:"Ga verder",soon:"Binnenkort",neu:"Nieuw",trial:"Eerste zaak gratis",pro:"Pro",free:"Gratis",min:"min",km:"km",grp:"Groepszaak",best:"Beste",
-      typed:["Acht sporen op echte plekken om je heen.","Elke wandeling is een ander dossier.","Loop. Kijk. Trek je conclusie."],privacy:"Privacy",privH:"Hoe met je gegevens wordt omgegaan",
-      privT:"<p><b>De spellen.</b> Alles draait in je browser. Je voortgang, rang, Pro-status en taalkeuze staan in de lokale opslag van je browser, op je eigen toestel. Ze verlaten het niet; browsergegevens wissen verwijdert ze. Geen cookies, geen analytics, geen tracking.</p><p><b>Locatie en camera.</b> Je locatie wordt alleen op je toestel gebruikt om sporen om je heen te leggen; voor de kaart worden alleen plekken in je buurt (zonder jouw positie als persoon) opgevraagd bij OpenStreetMap-servers. Camerabeeld blijft op je telefoon en wordt niet opgeslagen of verstuurd.</p><p><b>Betalen.</b> Pro en de groepspas koop je via Ko-fi; daar gelden de voorwaarden van Ko-fi. Je krijgt een code, die alleen op je toestel wordt gecontroleerd.</p><p><b>Hosting.</b> De site staat op GitHub Pages; GitHub kan standaard serverlogboeken bijhouden.</p>",
+  nl:{choose:"Kies je wandeling",play:"Speel",resume:"Ga verder",soon:"Binnenkort",neu:"Nieuw",trial:"Proefronde gratis",pro:"Pro",free:"Gratis",min:"min",km:"km",grp:"Groepszaak",best:"Beste",
+      typed:["Acht sporen op echte plekken om je heen.","Eén ticket per team, start wanneer jij wilt.","Samen puzzelen. Verdachten uitsluiten. De dader aanwijzen."],privacy:"Privacy",privH:"Hoe met je gegevens wordt omgegaan",
+      privT:"<p><b>De spellen.</b> Alles draait in je browser. Je voortgang, rang, tickets en taalkeuze staan in de lokale opslag van je browser, op je eigen toestel. Ze verlaten het niet; browsergegevens wissen verwijdert ze. Geen cookies, geen analytics, geen tracking.</p><p><b>Locatie en camera.</b> Je locatie wordt alleen op je toestel gebruikt om sporen om je heen te leggen; voor de kaart worden alleen plekken in je buurt (zonder jouw positie als persoon) opgevraagd bij OpenStreetMap-servers. Camerabeeld blijft op je telefoon en wordt niet opgeslagen of verstuurd.</p><p><b>Betalen.</b> Een teamticket koop je via Ko-fi; daar gelden de voorwaarden van Ko-fi. Je krijgt een code, die alleen op je toestel wordt gecontroleerd. Eerder gekochte Pro- en groepscodes blijven werken.</p><p><b>Hosting.</b> De site staat op GitHub Pages; GitHub kan standaard serverlogboeken bijhouden.</p>",
       contact:"Een vraag of een idee? ",other:"Liever binnen blijven? Speel de bureauzaken op "},
-  en:{choose:"Choose your walk",play:"Play",resume:"Continue",soon:"Coming soon",neu:"New",trial:"First case free",pro:"Pro",free:"Free",min:"min",km:"km",grp:"Group mode",best:"Best",
-      typed:["Eight leads at real places around you.","Every walk is a different file.","Walk. Look. Draw your conclusion."],privacy:"Privacy",privH:"How your data is handled",
-      privT:"<p><b>The games.</b> Everything runs in your browser. Your progress, rank, Pro status and language live in your browser's local storage, on your own device. They never leave it; clearing browser data removes them. No cookies, no analytics, no tracking.</p><p><b>Location and camera.</b> Your location is used on your device only, to place leads around you; the map asks OpenStreetMap servers for places near you (never for you as a person). Camera images stay on your phone and are not stored or sent.</p><p><b>Payments.</b> Pro and the group pass are bought through Ko-fi, under Ko-fi's terms. You receive a code that is checked on your device only.</p><p><b>Hosting.</b> The site is served by GitHub Pages, which may keep standard server logs.</p>",
+  en:{choose:"Choose your walk",play:"Play",resume:"Continue",soon:"Coming soon",neu:"New",trial:"Free practice round",pro:"Pro",free:"Free",min:"min",km:"km",grp:"Group mode",best:"Best",
+      typed:["Eight leads at real places around you.","One ticket per team, start whenever you like.","Puzzle together. Rule out suspects. Name the killer."],privacy:"Privacy",privH:"How your data is handled",
+      privT:"<p><b>The games.</b> Everything runs in your browser. Your progress, rank, tickets and language live in your browser's local storage, on your own device. They never leave it; clearing browser data removes them. No cookies, no analytics, no tracking.</p><p><b>Location and camera.</b> Your location is used on your device only, to place leads around you; the map asks OpenStreetMap servers for places near you (never for you as a person). Camera images stay on your phone and are not stored or sent.</p><p><b>Payments.</b> Team tickets are bought through Ko-fi, under Ko-fi's terms. You receive a code that is checked on your device only. Pro and group codes bought earlier keep working.</p><p><b>Hosting.</b> The site is served by GitHub Pages, which may keep standard server logs.</p>",
       contact:"A question or an idea? ",other:"Rather stay indoors? Play the desk cases at "}
 }[L];
 
@@ -18,7 +18,8 @@ function profile(){var p=MW.profile.get(),i=MW.profile.rank(p.xp),nx=MW.profile.
   $("#pRank").textContent=MW.profile.rankName(p.xp,L);$("#pStreak").textContent=p.streak||0;$("#pSolved").textContent=p.solved||0;
   $("#pXp").style.width=(nx?Math.round((p.xp-R)/(nx[0]-R)*100):100)+"%";
   $("#pNext").textContent=nx?MW.fill(t.pts,{x:p.xp,n:nx[0]-p.xp,r:MW.profile.RANKS[L][i+1][1]}):MW.fill(t.ptsTop,{x:p.xp});
-  $("#status").textContent=MW.statusText(L);var pro=MW.pro.isPro();$("#bPro").hidden=pro;if(pro){$("#proBox").hidden=true}}
+  $("#status").textContent=MW.statusText(L);var pro=MW.pro.isPro();$("#bPro").hidden=pro;$("#bPro").textContent=t.tHave;if(pro){$("#proBox").hidden=true}}
+function access(g){if(g.access==="free")return"<i>"+H.free+"</i>";if(MW.pro.has(g.id))return'<i class="pro">'+t.tAct+'</i>';return"<i>"+H.trial+"</i><i>"+esc(MW.cfg.team.price)+" "+t.tPer+"</i>"}
 
 /* ---------- catalogus ---------- */
 var ICON={
@@ -31,14 +32,14 @@ function resumeKey(g){return g.id==="mw"?(L==="nl"?"ss_game":"ss_game_en"):"ss_g
 function card(g){var x=g[L],p=MW.profile.get(),st=p.games&&p.games[g.id],soon=g.status==="soon",has=!soon&&!!MW.LS.get(resumeKey(g),null);
   var meta=[];if(g.status==="new")meta.push('<i class="new">'+H.neu+'</i>');if(soon)meta.push("<i>"+H.soon+"</i>");
   meta.push("<i>"+esc(g.minutes)+" "+H.min+"</i><i>"+esc(g.km)+" "+H.km+"</i>");
-  if(g.access==="free")meta.push("<i>"+H.free+"</i>");else if(MW.pro.isPro())meta.push('<i class="pro">'+H.pro+'</i>');else meta.push("<i>"+H.trial+"</i>");
+  meta.push(access(g));
   if(g.group)meta.push("<i>"+H.grp+"</i>");
   if(st&&st.best)meta.push('<i class="star">'+H.best+" "+"★".repeat(st.best)+"☆".repeat(3-st.best)+"</i>");
   var COV={mw:1,td:1,vz:1,og:1,cc:1,lb:1,ng:1,fj:1,ag:1,sj:1,pp:1};
   var cover=COV[g.id]?'<img class="cover" src="'+MW.root+'assets/cover-'+g.id+'.webp?v=2" alt="" width="400" height="400" loading="lazy">':'<div class="cover ico-'+g.cat+'" aria-hidden="true">'+(ICON[g.cat]||"")+'</div>';
   return '<article class="game'+(soon?' soon':'')+(g.status==="new"?' isnew':'')+'" data-id="'+g.id+'">'+(soon?'<span class="stamp">'+H.soon+'</span>':'')+(g.status==="new"?'<span class="ribbon">'+H.neu+'</span>':'')+cover+'<h3>'+esc(x.title)+'</h3><p class="tag">'+esc(x.tag)+'</p><p class="desc">'+esc(x.desc)+'</p><div class="meta">'+meta.join("")+'</div>'+
     (soon?'<button class="btn ghost dk" disabled>'+H.soon+'</button>':'<a class="btn" href="'+MW.root+esc(x.slug)+'">'+(has?H.resume:H.play)+' →</a>')+'</article>'}
-function feature(g){var x=g[L],has=!!MW.LS.get(resumeKey(g),null),p=MW.profile.get(),st=p.games&&p.games[g.id],meta="<i>"+esc(g.minutes)+" "+H.min+"</i><i>"+esc(g.km)+" "+H.km+"</i>"+(MW.pro.isPro()?'<i class="pro">'+H.pro+'</i>':"<i>"+H.trial+"</i>")+(st&&st.best?'<i class="star">'+H.best+" "+"★".repeat(st.best)+"☆".repeat(3-st.best)+"</i>":"");
+function feature(g){var x=g[L],has=!!MW.LS.get(resumeKey(g),null),p=MW.profile.get(),st=p.games&&p.games[g.id],meta="<i>"+esc(g.minutes)+" "+H.min+"</i><i>"+esc(g.km)+" "+H.km+"</i>"+access(g)+(st&&st.best?'<i class="star">'+H.best+" "+"★".repeat(st.best)+"☆".repeat(3-st.best)+"</i>":"");
   return '<a class="feature" href="'+MW.root+esc(x.slug)+'" style="background-image:linear-gradient(180deg,rgba(7,9,13,.05) 0,rgba(7,9,13,.15) 170px,#07090d 325px),url('+MW.root+'assets/feature-'+g.id+'.webp)"><span class="fbadge">🎃 '+esc(g.feature[L])+'</span><span class="fbody"><h2>'+esc(x.title)+'</h2><span class="tag">'+esc(x.tag)+'</span><span class="desc">'+esc(x.desc)+'</span><span class="meta">'+meta+'</span><span class="btn">'+(has?H.resume:H.play)+' →</span></span></a>'}
 function catalog(){
   var fe=$("#feat");if(!fe){fe=document.createElement("div");fe.id="feat";$("#cats").parentNode.insertBefore(fe,$("#cats"))}
@@ -56,8 +57,8 @@ function proSheet(kind){sheet(MW.proHTML(L,kind)+'<button type="button" class="b
 function privacy(){sheet('<div class="eyebrow">'+H.privacy+'</div><h2>'+H.privH+'</h2>'+H.privT+'<button type="button" class="btn ghost dk" id="shX">'+t.close+'</button>');$("#shX").onclick=closeSheet}
 
 /* ---------- Pro-paneel op de pagina ---------- */
-function proBox(){var b=$("#proBox");if(MW.pro.isPro()){b.hidden=true;return}b.innerHTML=MW.proHTML(L,"pro")+'<button type="button" class="btn ghost dk" id="bGrpP">'+t.gp+'</button>';
-  MW.bindPro(b,L,function(r,msg){profile();catalog();proBox();toast(msg)});$("#bGrpP").onclick=function(){proSheet("groep")}}
+function proBox(){var b=$("#proBox");if(MW.pro.isPro()){b.hidden=true;return}b.innerHTML=MW.proHTML(L,"team");
+  MW.bindPro(b,L,function(r,msg){profile();catalog();proBox();toast(msg)})}
 
 /* ---------- hemel: regen en lantaarnlicht ---------- */
 function sky(){var cv=$("#sky");if(!cv)return;var g=cv.getContext("2d"),still=matchMedia("(prefers-reduced-motion: reduce)").matches,w,h,drops=[],dpr=1,hero=$(".hero");
@@ -72,7 +73,7 @@ function typed(){var el=$("#typed");if(!el)return;var still=matchMedia("(prefers
   (function step(){var s=lines[li];if(ci<=s.length){el.textContent=s.slice(0,ci++)+(ci%2?"▌":"");setTimeout(step,38)}else{el.textContent=s;setTimeout(function(){li=(li+1)%lines.length;ci=0;step()},2600)}})()}
 
 /* ---------- start ---------- */
-$("#bPro").onclick=function(){proSheet("pro")};$("#bPriv").onclick=privacy;
+$("#bPro").onclick=function(){proSheet("team")};$("#bPriv").onclick=privacy;
 var sw=$("#lang");if(sw)sw.onclick=function(e){e.preventDefault();var to=L==="nl"?"en":"nl";MW.lang.set(to);location.href=MW.hubUrl(to)};
 profile();catalog();proBox();sky();typed();
 MW.pro.ready.then(function(){profile();catalog();proBox()});

@@ -18,14 +18,14 @@ if(h==="#nl"||h==="#en"){try{localStorage.setItem("ss_lang",nl?"nl":"en")}catch(
 if(nl)location.replace("nl/");})();</script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Murder Walk – Detective games you walk in your own streets</title>
-<meta name="description" content="Walking detective games played on real places around you via GPS: a murder mystery, a missing-person case and more. Free first case, in English or Dutch.">
+<meta name="description" content="Walking detective games played on real places around you via GPS: a murder mystery, a missing-person case and more. One ticket per team (€ 9.95), start whenever you like. Free practice round, in English or Dutch.">
 <link rel="canonical" href="https://murderwalk.com/">
 <link rel="alternate" hreflang="en" href="https://murderwalk.com/">
 <link rel="alternate" hreflang="nl" href="https://moordwandeling.nl/nl/">
 <link rel="alternate" hreflang="x-default" href="https://murderwalk.com/">
 <meta property="og:site_name" content="Murder Walk">
 <meta property="og:title" content="Murder Walk – detective games you walk">
-<meta property="og:description" content="Eight leads at real places in your own streets. A murder mystery, a missing-person case, more to come. Free first case.">
+<meta property="og:description" content="Eight leads at real places in your own streets. Puzzle together, rule out suspects and name the killer. One ticket per team, free practice round.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://murderwalk.com/">
 <meta property="og:locale" content="en_GB">
@@ -38,7 +38,7 @@ if(nl)location.replace("nl/");})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600&display=swap">
 <link rel="stylesheet" href="shared/platform.css?v=1">
-<link rel="stylesheet" href="shared/hub.css?v=3">
+<link rel="stylesheet" href="shared/hub.css?v=4">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebSite","name":"Murder Walk","url":"https://murderwalk.com/","description":"Walking detective games played on real places around you.","inLanguage":"en","hasPart":[
 {"@type":"VideoGame","name":"Murder Walk","url":"https://murderwalk.com/murder-walk.html","genre":["Detective","Location-based game"],"gamePlatform":"Web browser"},
@@ -50,12 +50,12 @@ if(nl)location.replace("nl/");})();</script>
 <main>
   <div class="wrap">
     <header class="hero">
-      <div class="top"><div class="eyebrow">Detective games in your own streets</div><a class="pill" id="lang" href="nl/" hreflang="nl" lang="nl">Nederlands</a></div>
+      <div class="top"><div class="eyebrow">A detective walk for your team, in your own streets</div><a class="pill" id="lang" href="nl/" hreflang="nl" lang="nl">Nederlands</a></div>
       <h1 id="ttl">Murder Walk</h1>
       <img class="logo" src="assets/logo-en.webp" alt="Murder Walk" width="800" height="800" fetchpriority="high">
       <p id="typed">Eight leads at real places around you.</p>
-      <p class="lead">The map puts the leads on real places around you: the church, the bus stop, the café. You walk there, find what is left behind, and draw your own conclusion.</p>
-      <div class="cta"><a class="btn" href="#cats">Choose your walk</a><span class="arrow" aria-hidden="true">▼</span></div>
+      <p class="lead">The map puts the leads on real places around you: the church, the bus stop, the café. Walk there as a team, puzzle together, rule out suspects and name the killer.</p>
+      <div class="cta"><a class="btn" href="#cats">Choose your walk</a><p class="deal"><b>One ticket per team · € 9,95</b><span>Start whenever you like. One phone or several. Playing alone or as a couple works too.</span></p><span class="arrow" aria-hidden="true">▼</span></div>
     </header>
 
     <section class="profile" aria-label="Your profile">
@@ -64,7 +64,7 @@ if(nl)location.replace("nl/");})();</script>
       <span><b id="pSolved">0</b> solved</span>
       <span id="status" class="st"></span>
       <span id="pNext" hidden></span>
-      <button class="plink" id="bPro">Go Pro</button>
+      <button class="plink" id="bPro">I have a team code</button>
     </section>
 
     <section>
@@ -75,9 +75,9 @@ if(nl)location.replace("nl/");})();</script>
     </section>
 
     <section class="steps" aria-label="How it works">
-      <div><b>1</b><p>Open a walk on your phone, allow location, and the map lays its leads on real places within a short walk of where you stand.</p></div>
-      <div><b>2</b><p>Walk there. Within 35 metres a lead opens: a shade that saw something, a piece of evidence, a camera still, a message.</p></div>
-      <div><b>3</b><p>Draw your conclusion in the notebook. Your rank, day streak and Pro status are shared across every walk on this site.</p></div>
+      <div><b>1</b><p>Try it for free: every walk has a practice round. Then buy one ticket for your team (€ 9,95). Everyone enters the same code on their own phone, and it stays valid for two months, so you start whenever you like.</p></div>
+      <div><b>2</b><p>Allow location and the map lays the leads on real places within a short walk of where you stand. Walk there. Within 35 metres a lead opens: a shade that saw something, a piece of evidence, a camera still, a message.</p></div>
+      <div><b>3</b><p>Puzzle it out together in the notebook: rule out suspects, catch the liar and name the killer. Share one phone, or each use your own.</p></div>
     </section>
 
     <section class="paper" id="proBox" aria-label="Pro"></section>
@@ -93,8 +93,8 @@ if(nl)location.replace("nl/");})();</script>
 </main>
 <div class="sheet" id="sheet" hidden><div class="paper" id="sheetBody"></div></div>
 <div id="toast" hidden></div>
-<script src="shared/platform.js?v=1"></script>
+<script src="shared/platform.js?v=2"></script>
 <script src="shared/catalog.js?v=16"></script>
-<script src="shared/hub.js?v=16"></script>
+<script src="shared/hub.js?v=17"></script>
 </body>
 </html>
