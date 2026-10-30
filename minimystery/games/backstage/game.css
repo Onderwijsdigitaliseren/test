@@ -211,3 +211,10 @@ i.coin{display:inline-block;width:13px;height:13px;background:var(--gold);vertic
 @media (prefers-reduced-motion: reduce){.hijack,.lvlup{animation:none}}
 /* rang/team-level staat in het speurboekje (shared/start.js verbergt die cel): vier tellers + menu */
 #mhud,#hud{grid-template-columns:1fr 1fr 1fr 1fr 44px!important}
+
+/* intro: groter en rustiger te lezen, op een donkere balk */
+#cineT{top:auto!important;bottom:calc(96px + env(safe-area-inset-bottom,0px));font-size:clamp(20px,5.6vw,28px)!important;line-height:1.4!important;background:rgba(10,2,20,.78);border:2px solid rgba(255,45,149,.45);border-radius:18px;padding:14px 16px;cursor:pointer}
+#cineT:after{content:"tik ▸";display:block;font-size:12px;opacity:.6;margin-top:6px;letter-spacing:.08em}
+html[lang="en"] #cineT:after{content:"tap ▸"}
+/* briefing: Max' tekst groter en luchtiger */
+#bfOpen .bub p{font-size:19px!important;line-height:1.55}
