@@ -233,7 +233,7 @@ def custom(region=None):
     subj = "Speurtocht op maat via MiniMystery" + (" (" + region + ")" if region else "")
     body = "Hoi Kellie,%0A%0AIk zoek een speurtocht op maat.%0A%0AVoor wie en hoeveel kinderen: %0ALeeftijd: %0AWaar (adres of buurt): %0AWanneer: %0AWat ik in gedachten heb: %0A%0AGroet,%0A"
     return ('<h2>Speurtocht op maat</h2><div class="custom"><p>Een speurtocht met de namen van de kinderen erin, rond jullie school of straat%s, voor een schoolkamp, buurtfeest of bedrijfsuitje? Mail wat je in gedachten hebt, dan hoor je snel wat er kan. Prijs in overleg.</p>'
-            '<a class="btn" href="mailto:%s?subject=%s&body=%s">✉️ Mail je idee</a><p class="note">Liever bellen? Zet je nummer in de mail, dan bel ik terug.</p></div>') % (
+            '<a class="btn" href="mailto:%s?subject=%s&body=%s">✉️ Mail je idee</a></div>') % (
         (" in " + region) if region else "", MAIL, subj.replace(" ", "%20"), body)
 
 def render(p):
