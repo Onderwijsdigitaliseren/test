@@ -85,3 +85,13 @@ footer a,footer button{color:var(--fog);text-decoration:underline;font-size:13px
 .deal{display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;margin:4px auto 0;padding:10px 16px;border:1px dashed rgba(240,166,58,.6);border-radius:6px;background:rgba(12,18,30,.62);max-width:40ch;text-shadow:0 1px 6px #000}
 .deal b{font-family:var(--f-type);font-weight:400;font-size:18px;color:var(--lamp)}
 .deal span{font-size:13px;color:#d9e0ee}
+
+/* ---- op maat ---- */
+.hero .top .tr{display:flex;gap:8px;align-items:center;flex:none}
+.pill.custom-pill{background:var(--lamp);color:var(--ink);border-color:var(--lamp);box-shadow:0 4px 14px rgba(0,0,0,.35);cursor:pointer}.pill.custom-pill:hover{background:#ffbb55}
+@media (max-width:460px){.hero .top{align-items:flex-start}.hero .top .tr{flex-direction:column;align-items:flex-end}}
+.custom h2{margin:4px 0 8px}.custom p{margin:0 0 14px}.custom .btn{width:100%;text-decoration:none;text-align:center;color:var(--ink)}
+.cf{display:flex;flex-direction:column;gap:4px;margin:0 0 10px;text-align:left}.cf span{font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.08em;font-size:12px;color:var(--ink2)}
+.cf input,.cf select,.cf textarea{width:100%;box-sizing:border-box;font:16px var(--f-body);border:1px solid var(--rule);border-radius:4px;padding:10px 12px;background:#fff;color:var(--ink)}
+.cf input:focus,.cf select:focus,.cf textarea:focus{outline:2px solid var(--lamp);border-color:var(--lamp)}.cf textarea{resize:vertical;min-height:90px}
+.cf2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.cfl{margin:4px 0 14px}#cfF .btn{width:100%;margin-top:8px}

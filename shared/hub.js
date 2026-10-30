@@ -60,6 +60,32 @@ function privacy(){sheet('<div class="eyebrow">'+H.privacy+'</div><h2>'+H.privH+
 function proBox(){var b=$("#proBox");if(MW.pro.isPro()){b.hidden=true;return}b.innerHTML=MW.proHTML(L,"team");
   MW.bindPro(b,L,function(r,msg){profile();catalog();proBox();toast(msg)})}
 
+
+/* ---------- moordwandeling op maat: formulier → mail ---------- */
+var CF={nl:{btn:"✉ Op maat",h:"Moordwandeling op maat",lead:"Een moordzaak voor jullie bedrijfsuitje, vrijgezellenfeest, verjaardag of klas, in jullie eigen stad, met jullie namen in het verhaal? Vertel wat je in gedachten hebt. Het formulier opent je mailprogramma met alles al ingevuld; verstuur de mail en je hoort snel wat er kan. Prijs in overleg.",
+    name:"Je naam",email:"Je e-mailadres",n:"Aantal deelnemers",teams:"Aantal teams",where:"Waar (stad, buurt of startadres)",when:"Wanneer (datum, of ongeveer)",kind:"Wat voor gelegenheid?",kinds:["Bedrijfsuitje of teamuitje","Vrijgezellenfeest","Verjaardag of feest","Familie- of vriendendag","School of klas","Iets anders"],
+    wish:"Jullie wensen",wishP:"Bijvoorbeeld: het slachtoffer is onze directeur (met een knipoog), start bij het station en eindigen in ons stamcafé, een bruiloftsthema, Engelstalig…",send:"✉ Open de mail en verstuur",copy:"Lukt het mailen niet? Kopieer de tekst",copied:"Gekopieerd. Plak hem in een mail aan kellievandekerkhof@gmail.com.",need:"Vul in elk geval je naam en jullie wensen in.",
+    subj:"Moordwandeling op maat",hi:"Hoi Kellie,",intro:"Ik zoek een moordwandeling op maat.",bye:"Groet,"},
+  en:{btn:"✉ Custom",h:"A custom Murder Walk",lead:"A murder case for your company outing, hen or stag party, birthday or class, in your own town, with your names in the story? Tell me what you have in mind. The form opens your mail app with everything filled in; send the email and you'll hear quickly what's possible. Price on request.",
+    name:"Your name",email:"Your email address",n:"Number of players",teams:"Number of teams",where:"Where (town, neighbourhood or start address)",when:"When (date, or roughly)",kind:"What's the occasion?",kinds:["Company or team outing","Hen or stag party","Birthday or party","Family or friends' day","School or class","Something else"],
+    wish:"Your wishes",wishP:"For example: the victim is our CEO (tongue in cheek), start at the station and finish at our local pub, a wedding theme, in Dutch…",send:"✉ Open the email and send",copy:"Email not working? Copy the text",copied:"Copied. Paste it into an email to kellievandekerkhof@gmail.com.",need:"At least fill in your name and your wishes.",
+    subj:"Custom Murder Walk",hi:"Hi Kellie,",intro:"I'm looking for a custom Murder Walk.",bye:"Kind regards,"}}[L];
+var MAIL="kellievandekerkhof@gmail.com",CFK="ss_mw_custom";
+function customForm(){var v=MW.LS.get(CFK,{});var f=function(id,lab,ph,type){return '<label class="cf"><span>'+lab+'</span><input type="'+(type||"text")+'" id="'+id+'" autocomplete="'+(id==="cfN"?"name":id==="cfE"?"email":"off")+'" value="'+esc(v[id]||"")+'"'+(ph?' placeholder="'+esc(ph)+'"':'')+'></label>'};
+  sheet('<div class="eyebrow">'+(L==="nl"?"Moordwandeling":"Murder Walk")+'</div><h2>'+CF.h+'</h2><p class="cfl">'+CF.lead+'</p><form id="cfF" novalidate>'+f("cfN",CF.name)+f("cfE",CF.email,"",'email')+'<div class="cf2">'+f("cfK",CF.n,"12",'number')+f("cfA",CF.teams,"3",'number')+'</div>'+f("cfW",CF.where)+f("cfD",CF.when)+
+    '<label class="cf"><span>'+CF.kind+'</span><select id="cfT">'+CF.kinds.map(function(k){return '<option'+(v.cfT===k?' selected':'')+'>'+esc(k)+'</option>'}).join("")+'</select></label>'+
+    '<label class="cf"><span>'+CF.wish+'</span><textarea id="cfX" rows="4" placeholder="'+esc(CF.wishP)+'">'+esc(v.cfX||"")+'</textarea></label>'+
+    '<p class="note" id="cfM" style="color:#a5392c"></p><button type="submit" class="btn">'+CF.send+'</button><button type="button" class="btn ghost dk" id="cfC">'+CF.copy+'</button><button type="button" class="btn ghost dk" id="shX">'+t.close+'</button></form>');
+  $("#shX").onclick=closeSheet;
+  var read=function(){var o={};["cfN","cfE","cfK","cfA","cfW","cfD","cfT","cfX"].forEach(function(id){o[id]=($("#"+id).value||"").trim()});MW.LS.set(CFK,o);return o};
+  var body=function(o){return CF.hi+"\n\n"+CF.intro+"\n\n"+CF.kind+": "+o.cfT+"\n"+CF.n+": "+o.cfK+"\n"+CF.teams+": "+o.cfA+"\n"+CF.where+": "+o.cfW+"\n"+CF.when+": "+o.cfD+"\n\n"+CF.wish+":\n"+o.cfX+"\n\n"+CF.bye+"\n"+o.cfN+(o.cfE?"\n"+o.cfE:"")+"\n"};
+  var ok=function(o){if(!o.cfN||!o.cfX){$("#cfM").textContent=CF.need;return false}$("#cfM").textContent="";return true};
+  $("#cfF").onsubmit=function(e){e.preventDefault();var o=read();if(!ok(o))return;location.href="mailto:"+MAIL+"?subject="+encodeURIComponent(CF.subj)+"&body="+encodeURIComponent(body(o))};
+  $("#cfC").onclick=function(){var o=read();if(!ok(o))return;var txt=CF.subj+"\n\n"+body(o);try{navigator.clipboard.writeText(txt).then(function(){toast(CF.copied)},function(){prompt(MAIL,txt)})}catch(err){prompt(MAIL,txt)}}}
+function customBtn(){var top=document.querySelector(".hero .top"),lg=$("#lang");if(top&&lg&&!$("#bCustom")){var w=document.createElement("span");w.className="tr";top.insertBefore(w,lg);
+    var b=document.createElement("button");b.type="button";b.className="pill custom-pill";b.id="bCustom";b.textContent=CF.btn;w.appendChild(b);w.appendChild(lg);b.onclick=customForm}
+  document.querySelectorAll("[data-custom]").forEach(function(a){a.removeAttribute("href");a.setAttribute("role","button");a.onclick=function(e){e.preventDefault();customForm()}})}
+
 /* ---------- hemel: regen en lantaarnlicht ---------- */
 function sky(){var cv=$("#sky");if(!cv)return;var g=cv.getContext("2d"),still=matchMedia("(prefers-reduced-motion: reduce)").matches,w,h,drops=[],dpr=1,hero=$(".hero");
   function rs(){dpr=Math.min(2,devicePixelRatio||1);w=cv.clientWidth;h=cv.clientHeight;cv.width=w*dpr;cv.height=h*dpr;drops=[];for(var i=0;i<(still?0:140);i++)drops.push([Math.random()*w,Math.random()*h,10+Math.random()*16,.35+Math.random()*.55])}
@@ -75,6 +101,6 @@ function typed(){var el=$("#typed");if(!el)return;var still=matchMedia("(prefers
 /* ---------- start ---------- */
 $("#bPro").onclick=function(){proSheet("team")};$("#bPriv").onclick=privacy;
 var sw=$("#lang");if(sw)sw.onclick=function(e){e.preventDefault();var to=L==="nl"?"en":"nl";MW.lang.set(to);location.href=MW.hubUrl(to)};
-profile();catalog();proBox();sky();typed();
+profile();catalog();proBox();customBtn();sky();typed();
 MW.pro.ready.then(function(){profile();catalog();proBox()});
 })();
