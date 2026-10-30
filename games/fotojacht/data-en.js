@@ -21,7 +21,7 @@ T:{
   camNote:"Your photos stay on your phone. They are never sent anywhere.",
   mlLoad:"Loading image recognition… (once, about 15 MB; after that it works offline too)",mlOk:"Image recognition is on.",mlFail:"Image recognition could not load. Photos are not being checked now.",mlCheck:"Looking at the photo…",
   mlNo:"Here I mostly see: {x}. That is not {w}. Get closer, put it in the middle, and try again.",mlYes:"Recognised: {x}",mlSkip:"Continue anyway (costs a star)",mlSkipped:"Continued without a check.",
-  stripT:"Evidence strip · case {c}",stripSub:"The Photo Hunt · murderwalk.com",dl:"Save as image"
+  stripT:"Evidence strip · case {c}",stripSub:"The Photo Hunt · moordwandeling.nl",dl:"Save as image"
 },
 AT:{jas:{n:"Coat",v:["a dark blue coat","a light raincoat","a green parka"],s:["dark blue coat","light raincoat","green parka"]},
     weg:{n:"Transport",v:["by bike","by car","on foot"],s:["bike","car","on foot"]},

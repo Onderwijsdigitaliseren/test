@@ -54,7 +54,7 @@ var LANG={
   /* ss_lang staat als ruwe tekst (zonder JSON-aanhalingstekens), zoals de oude loader hem schreef */
   get:function(){var l=null;try{l=localStorage.getItem("ss_lang")||localStorage.getItem("lr_lang")}catch(e){}if(l)l=l.replace(/"/g,"");return l==="nl"||l==="en"?l:null},
   set:function(l){if(l==="nl"||l==="en"){try{localStorage.setItem("ss_lang",l)}catch(e){}}},
-  guess:function(){return this.get()||(/moordwandeling/i.test(location.hostname)?"nl":/murderwalk/i.test(location.hostname)?"en":/^nl/i.test(navigator.language||"")?"nl":"en")},
+  guess:function(){return this.get()||(/^nl/i.test(navigator.language||"")?"nl":"en")},
   page:function(){return (document.documentElement.lang||"en").slice(0,2)==="nl"?"nl":"en"}
 };
 

@@ -2,5 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /codes.html
 
-Sitemap: https://murderwalk.com/sitemap.xml
 Sitemap: https://moordwandeling.nl/sitemap.xml

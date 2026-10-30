@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <script>(function(){var h=location.hash||"",L="";try{L=(localStorage.getItem("ss_lang")||"").replace(/"/g,"")}catch(e){}
-var nl=h==="#nl"?true:h==="#en"?false:L==="nl"?true:L==="en"?false:/moordwandeling/i.test(location.hostname);
+var q=location.search||"";if(/[?&](lang=)?en\b/i.test(q)){L="en";try{localStorage.setItem("ss_lang","en")}catch(e){}}
+var nl=h==="#nl"?true:h==="#en"?false:L==="nl"?true:L==="en"?false:/^nl/i.test(navigator.language||"nl");
 if(/^#z=TD/i.test(h)){location.replace((nl?"nl/tot-de-dood-ons-scheidt.html":"till-death-do-us-part.html")+h);return}
 if(/^#z=NG/i.test(h)){location.replace((nl?"nl/de-nacht-van-de-geesten.html":"night-of-the-ghosts.html")+h);return}
 if(/^#z=OG/i.test(h)){location.replace((nl?"nl/ooggetuige.html":"eyewitness.html")+h);return}
@@ -19,30 +20,30 @@ if(nl)location.replace("nl/");})();</script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Murder Walk – Detective games you walk in your own streets</title>
 <meta name="description" content="Walking detective games played on real places around you via GPS: a murder mystery, a missing-person case and more. One ticket per team (€ 9.95), start whenever you like. Free practice round, in English or Dutch.">
-<link rel="canonical" href="https://murderwalk.com/">
-<link rel="alternate" hreflang="en" href="https://murderwalk.com/">
+<link rel="canonical" href="https://moordwandeling.nl/">
+<link rel="alternate" hreflang="en" href="https://moordwandeling.nl/">
 <link rel="alternate" hreflang="nl" href="https://moordwandeling.nl/nl/">
-<link rel="alternate" hreflang="x-default" href="https://murderwalk.com/">
+<link rel="alternate" hreflang="x-default" href="https://moordwandeling.nl/">
 <meta property="og:site_name" content="Murder Walk">
 <meta property="og:title" content="Murder Walk – detective games you walk">
 <meta property="og:description" content="Eight leads at real places in your own streets. Puzzle together, rule out suspects and name the killer. One ticket per team, free practice round.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://murderwalk.com/">
+<meta property="og:url" content="https://moordwandeling.nl/">
 <meta property="og:locale" content="en_GB">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://murderwalk.com/assets/hero.webp">
+<meta name="twitter:image" content="https://moordwandeling.nl/assets/hero.webp">
 <meta name="theme-color" content="#101a2b">
 <link rel="icon" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/logo-en-192.png">
-<meta property="og:image" content="https://murderwalk.com/assets/hero.webp">
+<meta property="og:image" content="https://moordwandeling.nl/assets/hero.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600&display=swap">
 <link rel="stylesheet" href="shared/platform.css?v=1">
 <link rel="stylesheet" href="shared/hub.css?v=4">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebSite","name":"Murder Walk","url":"https://murderwalk.com/","description":"Walking detective games played on real places around you.","inLanguage":"en","hasPart":[
-{"@type":"VideoGame","name":"Murder Walk","url":"https://murderwalk.com/murder-walk.html","genre":["Detective","Location-based game"],"gamePlatform":"Web browser"},
-{"@type":"VideoGame","name":"The Vanishing","url":"https://murderwalk.com/the-vanishing.html","genre":["Detective","Location-based game"],"gamePlatform":"Web browser"}]}
+{"@context":"https://schema.org","@type":"WebSite","name":"Murder Walk","url":"https://moordwandeling.nl/","description":"Walking detective games played on real places around you.","inLanguage":"en","hasPart":[
+{"@type":"VideoGame","name":"Murder Walk","url":"https://moordwandeling.nl/murder-walk.html","genre":["Detective","Location-based game"],"gamePlatform":"Web browser"},
+{"@type":"VideoGame","name":"The Vanishing","url":"https://moordwandeling.nl/the-vanishing.html","genre":["Detective","Location-based game"],"gamePlatform":"Web browser"}]}
 </script>
 </head>
 <body>
