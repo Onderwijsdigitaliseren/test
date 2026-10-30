@@ -250,3 +250,8 @@ html[lang="en"] #cineT:after{content:"tap ▸"}
 /* geen rang/reputatie/goud meer in beeld: tijd, stops, menu */
 #hud>div:has(#hX),#hud>div:has(#hL),#hud>div:has(#hC),#mhud>div:has(#mX),#mhud>div:has(#mL),#mhud>div:has(#mC){display:none!important}
 #mhud,#hud{grid-template-columns:1fr 1fr 44px!important}
+/* kluisdeur van Kellie: plaatje dicht/open in plaats van de css-deur */
+.vdoor.imgdoor{background:none;border:0;box-shadow:none;border-radius:0;width:78%;margin:-39% 0 0 -39%;transform:none!important;display:grid;place-items:center}
+.vdoor.imgdoor img{width:100%;height:auto;filter:drop-shadow(0 20px 40px rgba(0,0,0,.6))}
+#room.unlocked .vdoor.imgdoor img{filter:drop-shadow(0 0 24px rgba(57,255,136,.7))}
+.crownIn.hid{display:none}
