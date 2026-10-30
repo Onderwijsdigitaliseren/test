@@ -14,7 +14,8 @@ var CFG={
     ag:"https://ko-fi.com/s/c868c6a623",   // Agent voor Eén Dag
     ts:"https://ko-fi.com/s/383e4beba3",   // De Betoverde Toverspiegel
     gl:"https://ko-fi.com/s/f013a0c1b7",   // Glitch in de Buurt
-    bs:"https://ko-fi.com/s/3a29b71aba"    // Backstage: De Verdwenen Setlist
+    bs:"https://ko-fi.com/s/3a29b71aba",   // Backstage: De Verdwenen Setlist
+    gk:"https://ko-fi.com/s/98e137183c"    // De Grote Kraak
   },
   url:"",                            // bundel "Alle zaken" (later; leeg = niet tonen)
   price:"€ 9,99",                    // prijs per zaak, staat op de koopknop
