@@ -21,7 +21,8 @@ var CFG={
     price:"€ 9,95",
     dagen:61,
     url:{ // Ko-fi-product per wandeling; leeg = nog geen koopknop
-      mw:"", fj:"", vz:"", lb:"", td:"", cc:"", ng:"", og:""
+      mw:"", fj:"", vz:"", lb:"", td:"", cc:"", ng:"", og:"",
+      alle:"https://ko-fi.com/s/dc0dfbafe5" // tijdelijk: algemeen teamticket (oude groepspas-product) tot de producten per wandeling er zijn
     }
   },
   kofi:"https://ko-fi.com/s/aa277497a2", // Ko-fi-knop op de hub; zet hier je Ko-fi-pagina (bijv. https://ko-fi.com/<jouwnaam>) als je die liever toont
@@ -152,7 +153,7 @@ var fill=function(s,o){return String(s).replace(/\{(\w+)\}/g,function(m,k){retur
 /* Pro-paneel: HTML + binding. Zelfde ids als in spel 1 (pCode/pOk/pMsg). kind: "pro"|"groep" */
 function gameTitle(id,lang){var c=window.MW_CATALOG,g=c&&c.games.filter(function(x){return x.id===id})[0];return g?g[lang==="nl"?"nl":"en"].title:id}
 function proHTML(lang,kind,game){var t=T[lang]||T.en,g=kind==="groep",U={u:CFG.groep.uren,n:CFG.groep.max};
-  if(kind==="team"||kind==="pro"){var P={p:CFG.team.price},url=game&&CFG.team.url[game];
+  if(kind==="team"||kind==="pro"){var P={p:CFG.team.price},url=game&&(CFG.team.url[game]||CFG.team.url.alle);
     return '<div class="eyebrow">'+t.tm+(game?' · '+esc(gameTitle(game,lang)):'')+'</div><h2>'+t.tH+'</h2><p>'+fill(game?t.tT:t.tHub,P)+'</p>'+
       (game?(url?'<a class="btn" href="'+esc(url)+'" target="_blank" rel="noopener">'+t.tBtn+' · '+esc(CFG.team.price)+'</a>':'<p class="note">'+t.tSoon+'</p>'):'')+
       '<div class="eyebrow">'+t.tHave+'</div><input class="inp" id="pCode" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="'+t.tHave+'"><button type="button" class="btn ghost dk" id="pOk">'+t.pUse+'</button><p class="note" id="pMsg" style="color:#a5392c"></p>'}
