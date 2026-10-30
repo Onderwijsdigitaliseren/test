@@ -1,6 +1,7 @@
 /* Moordwandeling / Murder Walk – gedeelde wandelmotor voor nieuwe wandelspellen.
    Wereld ophalen (OpenStreetMap via Overpass, met cache), plekken kiezen, nachtkaart tekenen, gps volgen, oefenwereld,
-   vellen/toasts/geluid. Vereist platform.js. Spel 1 (Moordwandeling) heeft nog zijn eigen, oudere kopie hiervan. */
+   vellen/toasts/geluid. Vereist platform.js. Spel 1 (Moordwandeling) heeft nog zijn eigen, oudere kopie hiervan.
+   Plattegrond: laad shared/plan.js vóór dit bestand; zonder kaartdienst komt de zaak op een getekende stad, en de kaart krijgt de knop ▦. */
 (function(){
 "use strict";
 var MW=window.MW,LS=MW.LS,$=function(s){return document.querySelector(s)};
@@ -27,15 +28,20 @@ function fetchWorld(o){var lat=o.lat,lon=o.lon,R=o.R,st=o.status||function(){};
   var kx=111320*Math.cos(lat*Math.PI/180),ky=110540,xy=function(la,lo){return[(lo-lon)*kx,-(la-lat)*ky]},A="(around:"+R+","+lat+","+lon+")",origin={lat:lat,lon:lon,kx:kx,ky:ky};
   var c=LS.get("ss_map",null);
   if(c&&c.R>=R&&c.pois&&c.pois.length&&Math.hypot((c.lon-lon)*kx,(c.lat-lat)*ky)<150){var ox=(c.lon-lon)*kx,oy=-(c.lat-lat)*ky;
-    return Promise.resolve({origin:origin,cached:true,pois:c.pois.map(function(p){return{x:p.x+ox,y:p.y+oy,type:p.type,name:p.name}}),ways:(c.ways||[]).map(function(w){return{w:w.w,n:w.n,p:w.p.map(function(v,i){return Math.round(v+(i%2?oy:ox))})}}),later:Promise.resolve(null)})}
-  st("pois");var pois=[],ways=[];
+    var cw=(c.ways||[]).map(function(w){return{w:w.w,n:w.n,p:w.p.map(function(v,i){return Math.round(v+(i%2?oy:ox))})}}),cp=c.pois.map(function(p){return{x:p.x+ox,y:p.y+oy,type:p.type,name:p.name}});
+    /* stond de buurt zonder straten in de cache (straten kwamen toen niet), dan nu opnieuw proberen */
+    return Promise.resolve({origin:origin,cached:true,pois:cp,ways:cw,later:cw.length?Promise.resolve(null):streets(lat,lon,R,xy).then(function(ws){if(ws&&ws.length)LS.set("ss_map",{lat:c.lat,lon:c.lon,R:c.R,pois:c.pois,ways:ws.map(function(w){return{w:w.w,n:w.n,p:w.p.map(function(v,i){return Math.round(v-(i%2?oy:ox))})}})});return ws&&ws.length?ws:null}).catch(function(){return null})})}
+  st("pois");var pois=[],ways=[],failed=false;
   return ask('[out:json][timeout:15];(nwr'+A+'[amenity~"^(place_of_worship|bank|atm|cafe|pub|bar|restaurant|pharmacy|post_box|library|school|fuel)$"];nwr'+A+'[tourism~"^(hotel|artwork|museum)$"];nwr'+A+'[shop~"^(supermarket|bakery|convenience)$"];node'+A+'[highway=bus_stop];nwr'+A+'[leisure~"^(park|playground)$"];);out center qt 400;',18000)
-  .then(function(d){(d.elements||[]).forEach(function(e){var ty=poiType(e.tags),q=e.type==="node"?[e.lat,e.lon]:e.center?[e.center.lat,e.center.lon]:null;if(!ty||!q)return;var p=xy(q[0],q[1]);pois.push({x:p[0],y:p[1],type:ty,name:e.tags.name||""})})},function(){st("nomap")})
+  .then(function(d){(d.elements||[]).forEach(function(e){var ty=poiType(e.tags),q=e.type==="node"?[e.lat,e.lon]:e.center?[e.center.lat,e.center.lon]:null;if(!ty||!q)return;var p=xy(q[0],q[1]);pois.push({x:p[0],y:p[1],type:ty,name:e.tags.name||""})})},function(){failed=true;st("nomap")})
   .then(function(){
-    var later=ask('[out:json][timeout:25];way(around:'+(R+150)+','+lat+','+lon+')[highway~"^(residential|tertiary|secondary|primary|unclassified|living_street|pedestrian|footway|path|cycleway|service)$"];out geom qt;',45000).then(function(d){
-      (d.elements||[]).forEach(function(e){if(!e.geometry)return;var p=[];e.geometry.forEach(function(g){var q=xy(g.lat,g.lon);p.push(Math.round(q[0]),Math.round(q[1]))});var h=(e.tags&&e.tags.highway)||"";ways.push({p:p,w:/primary|secondary|tertiary/.test(h)?3:/footway|path|cycleway/.test(h)?1:2,n:(e.tags&&e.tags.name)||""})});
+    /* kaartdienst onbereikbaar: de zaak komt op een getekende plattegrond rond de speler (shared/plan.js); gps en afstanden blijven echt */
+    if(failed&&MW.Plan){var v=MW.Plan.city(MW.Plan.seedOf(lat,lon),R);return{origin:origin,cached:false,virt:true,pois:v.pois,ways:v.ways,later:Promise.resolve(null)}}
+    var later=streets(lat,lon,R,xy).then(function(ws){ws.forEach(function(w){ways.push(w)});
       if(pois.length)LS.set("ss_map",{lat:lat,lon:lon,R:R,pois:pois,ways:ways});return ways}).catch(function(){if(pois.length)LS.set("ss_map",{lat:lat,lon:lon,R:R,pois:pois,ways:[]});return null});
     return{origin:origin,cached:false,pois:pois,ways:ways,later:later}})}
+function streets(lat,lon,R,xy){return ask('[out:json][timeout:25];way(around:'+(R+150)+','+lat+','+lon+')[highway~"^(residential|tertiary|secondary|primary|unclassified|living_street|pedestrian|footway|path|cycleway|service)$"];out geom qt;',45000).then(function(d){var ws=[];
+  (d.elements||[]).forEach(function(e){if(!e.geometry)return;var p=[];e.geometry.forEach(function(g){var q=xy(g.lat,g.lon);p.push(Math.round(q[0]),Math.round(q[1]))});var h=(e.tags&&e.tags.highway)||"";ws.push({p:p,w:/primary|secondary|tertiary/.test(h)?3:/footway|path|cycleway/.test(h)?1:2,n:(e.tags&&e.tags.name)||""})});return ws})}
 /* locate(cb(err,pos)) met nette foutafhandeling */
 function locate(){return new Promise(function(res,rej){if(!navigator.geolocation)return rej("nogps");navigator.geolocation.getCurrentPosition(function(p){res(p)},function(){rej("denied")},{enableHighAccuracy:true,timeout:20000})})}
 /* oefenwereld: een fictief stuk Londen rond de rivier. names = [[type,naam],...] (13 stuks) per taal.
@@ -116,8 +122,12 @@ function createMap(cv,o){var TH={bg:"#101a2b",water:"#0c2036",waterEdge:"#1f4a6e
   var P=function(){return o.player()},sx=function(x){return(x-(V.follow?P().x:V.ox))*V.s+cw/2},sy=function(y){return(y-(V.follow?P().y:V.oy))*V.s+ch/2};
   var api={V:V,sx:sx,sy:sy,ghost:ghost,still:still,cx:cx,resize:resize,fit:function(R){V.follow=true;V.s=Math.min(innerWidth,innerHeight)/(R*1.5)},zoom:function(f){V.s=Math.min(4,Math.max(.1,V.s*f))},follow:function(){V.follow=true},
     size:function(){return[cw,ch]}};
-  api.draw=function(t){var W=o.ways(),p=P();cx.setTransform(dpr,0,0,dpr,0,0);cx.fillStyle=TH.bg;cx.fillRect(0,0,cw,ch);cx.lineCap="round";cx.lineJoin="round";
-    var i,w,k,X,Y;
+  /* tweede weergave: de plattegrond (shared/plan.js); vanzelf aan als er geen straten zijn of de stad getekend is */
+  var PV=MW.Plan?MW.Plan.ctl({W:function(){return o.ways()},th:TH,toast:function(m){toast(m)}}):null;if(PV)PV.mount();
+  api.plan=function(){return !!(PV&&PV.on())};
+  api.draw=function(t){var W=o.ways(),p=P(),pl=PV&&PV.on(),A=pl?{sx:sx,sy:sy,s:V.s,cw:cw,ch:ch,t:t,P:p,R:o.R(),spots:o.spots?o.spots():o.items().filter(function(it){return it.ref&&it.tap!==false}),top:(function(){var h=document.getElementById("hud");return h?h.getBoundingClientRect().height:56})()}:null;
+    cx.setTransform(dpr,0,0,dpr,0,0);cx.fillStyle=TH.bg;cx.fillRect(0,0,cw,ch);cx.lineCap="round";cx.lineJoin="round";
+    var i,w,k,X,Y;if(pl){PV.bg(cx,A);W=[]}
     for(i=0;i<W.length;i++){w=W[i];if(w.w!=="water"&&w.w!=="park")continue;cx.beginPath();for(k=0;k<w.p.length;k+=2){X=sx(w.p[k]);Y=sy(w.p[k+1]);k?cx.lineTo(X,Y):cx.moveTo(X,Y)}cx.closePath();
       cx.fillStyle=w.w==="water"?TH.water:TH.park;cx.fill();cx.strokeStyle=w.w==="water"?TH.waterEdge:TH.parkEdge;cx.lineWidth=Math.max(1,2*V.s);cx.stroke();
       if(w.w==="water"&&V.s>.25){cx.save();cx.clip();cx.strokeStyle=TH.ripple;cx.lineWidth=1;for(var r=0;r<6;r++){cx.beginPath();for(k=0;k<w.p.length/2;k+=2){X=sx(w.p[k]);Y=sy(w.p[k+1])+(r+1)*22*V.s+Math.sin((w.p[k]+t/40)/60)*3*V.s;k?cx.lineTo(X,Y):cx.moveTo(X,Y)}cx.stroke()}cx.restore()}}
@@ -128,7 +138,8 @@ function createMap(cv,o){var TH={bg:"#101a2b",water:"#0c2036",waterEdge:"#1f4a6e
     cx.font=TH.font;cx.textAlign="center";
     o.items().forEach(function(it){it.draw(cx,sx(it.x),sy(it.y),t,api)});
     var X=sx(p.x),Y=sy(p.y);cx.fillStyle=TH.meHalo;cx.beginPath();cx.arc(X,Y,35*V.s,0,7);cx.fill();cx.strokeStyle=TH.meRing;cx.lineWidth=1;cx.stroke();
-    cx.fillStyle=TH.me;cx.beginPath();cx.arc(X,Y,7,0,7);cx.fill();cx.strokeStyle=TH.bg;cx.lineWidth=2;cx.stroke()};
+    cx.fillStyle=TH.me;cx.beginPath();cx.arc(X,Y,7,0,7);cx.fill();cx.strokeStyle=TH.bg;cx.lineWidth=2;cx.stroke();
+    if(pl){cx.lineCap="butt";PV.fg(cx,A)}};
   cv.addEventListener("pointerdown",function(e){pd={x:e.clientX,y:e.clientY,ox:V.follow?P().x:V.ox,oy:V.follow?P().y:V.oy,drag:false};try{cv.setPointerCapture(e.pointerId)}catch(err){}});
   cv.addEventListener("pointermove",function(e){if(!pd)return;var dx=e.clientX-pd.x,dy=e.clientY-pd.y;if(!pd.drag&&Math.hypot(dx,dy)>8)pd.drag=true;if(pd.drag){V.follow=false;V.ox=pd.ox-dx/V.s;V.oy=pd.oy-dy/V.s}});
   cv.addEventListener("pointerup",function(e){if(!pd)return;if(!pd.drag){var b=cv.getBoundingClientRect(),mx=e.clientX-b.left,my=e.clientY-b.top,hit=null;
