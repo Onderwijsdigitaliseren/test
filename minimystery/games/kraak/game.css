@@ -240,3 +240,13 @@ i.coin{display:inline-block;width:13px;height:13px;background:var(--gold);vertic
 @media (prefers-reduced-motion: reduce){.lvlup,.vdoor{animation:none;transition:none}}
 /* rang/team-level staat in het plan (shared/start.js verbergt die cel): vier tellers + menu */
 #mhud,#hud{grid-template-columns:1fr 1fr 1fr 1fr 44px!important}
+
+/* intro: groter en rustiger te lezen, op een donkere balk */
+#cineT{top:auto!important;bottom:calc(96px + env(safe-area-inset-bottom,0px));font-size:clamp(20px,5.6vw,28px)!important;line-height:1.4!important;background:rgba(6,11,28,.82);border:2px solid rgba(242,183,5,.5);border-radius:18px;padding:14px 16px;cursor:pointer}
+#cineT:after{content:"tik ▸";display:block;font-size:12px;opacity:.6;margin-top:6px;letter-spacing:.08em}
+html[lang="en"] #cineT:after{content:"tap ▸"}
+/* briefing: Opa's tekst groter en luchtiger */
+#bfOpen .bub p{font-size:19px!important;line-height:1.55}
+/* geen rang/reputatie/goud meer in beeld: tijd, stops, menu */
+#hud>div:has(#hX),#hud>div:has(#hL),#hud>div:has(#hC),#mhud>div:has(#mX),#mhud>div:has(#mL),#mhud>div:has(#mC){display:none!important}
+#mhud,#hud{grid-template-columns:1fr 1fr 44px!important}
