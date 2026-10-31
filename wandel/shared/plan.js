@@ -5,7 +5,7 @@
    Losstaand (geen walk.js nodig). Gebruik:
      var v=MW.Plan.city(seed,R)           → {pois,ways,virt:true}  (ways bevat ook w:"block"; de nachtkaart slaat die over)
      var pv=MW.Plan.ctl({W:()=>W, th:{bg,label,water,waterEdge,park,parkEdge,me,font}, toast:fn});
-     pv.mount();                           // knop ▦ in #zoom
+     pv.mount();                           // knop "▦ Plattegrond" / "Kaart" in #zoom
      pv.on()                               // true = teken de plattegrond
      pv.bg(cx,{sx,sy,s,cw,ch,t,R}) vóór de spelfiguren, pv.fg(cx,{sx,sy,s,cw,ch,P}) erna. */
 (function(){
@@ -14,14 +14,14 @@ var MW=window.MW=window.MW||{};
 var LG=(document.documentElement.lang||"en").slice(0,2)==="nl"?"nl":"en";
 var X={nl:{plan:"Plattegrond",vak:"Vak",btn:"Plattegrond of kaart",virt:"Geen kaart: je speelt op de plattegrond.",
     noReal:"De kaartdienst gaf geen kaart. Je speelt op de plattegrond.",wait:"De kaart laadt nog.",
-    loaded:"Kaart geladen. ▦ = plattegrond.",toPlan:"Plattegrond",toMap:"Kaart",
+    loaded:"De kaart is er. Met de knop rechtsboven wissel je tussen kaart en plattegrond.",toPlan:"Plattegrond",toMap:"Kaart",
     st:["Lindelaan","Kerkstraat","Molenweg","Nieuwe Gracht","Schoolstraat","Raadhuisstraat","Bleekveld","Oude Haven","Wilgenhof","Lange Dijk","Torenstraat","Brouwerssteeg","Kloosterlaan","Veldstraat","Marktstraat","Prinsenkade","Zuiderpad","Beukenlaan","Ketelstraat","Ridderhof","Smidsteeg","Hoogstraat","Vismarkt","Lijnbaan"],
     water:"Stille Gracht",park:"Stadspark",
     nm:{kerk:["Sint-Janskerk","Oude Kerk"],cafe:["Café De Zwaan","Eetcafé Het Anker","Café 't Hoekje"],halte:["Bushalte Marktplein","Bushalte Kerkstraat","Halte Lindelaan"],winkel:["Bakkerij Verhoeven","Buurtsuper","Slijterij De Ton"],
       bankje:["Bankje bij de gracht","Bankje op het plein"],school:["De Regenboog"],bieb:["Bibliotheek"],apotheek:["Apotheek Centrum"],post:["Brievenbus"],bank:["Geldautomaat"],hotel:["Hotel De Kroon"],kunst:["Beeld De Wachter"],park:["Stadspark"]}},
   en:{plan:"Street plan",vak:"Square",btn:"Street plan or map",virt:"No map: you're playing on the street plan.",
     noReal:"The map service sent no map. You're playing on the street plan.",wait:"The map is still loading.",
-    loaded:"Map loaded. ▦ = street plan.",toPlan:"Street plan",toMap:"Map",
+    loaded:"The map is here. Use the button top right to switch between map and street plan.",toPlan:"Street plan",toMap:"Map",
     st:["Linden Avenue","Church Street","Mill Road","New Canal","School Lane","Town Hall Street","Bleach Field","Old Harbour","Willow Court","Long Dyke","Tower Street","Brewers Alley","Cloister Lane","Field Street","Market Street","Princes Quay","South Path","Beech Avenue","Kettle Street","Knights Court","Smith Alley","High Street","Fish Market","Ropewalk"],
     water:"Still Canal",park:"Town Park",
     nm:{kerk:["St John's Church","Old Church"],cafe:["The Swan","The Anchor","The Corner Café"],halte:["Market Square stop","Church Street stop","Linden Avenue stop"],winkel:["Baker's","Corner Shop","Wine Merchant"],
@@ -87,8 +87,11 @@ function ctl(o){var th=o.th||{},pref=null,cache={w:null,n:-1,virt:false,str:fals
     if(was!==null&&was!==res){if(was&&!res&&!info().virt&&o.toast)o.toast(X.loaded)}
     var c=info();if(c.virt&&shown!==c.w){shown=c.w;if(o.toast)setTimeout(function(){o.toast(X.virt)},400)}
     was=res;ui(res);return res}
-  function ui(res){if(!btn)return;btn.setAttribute("aria-pressed",res?"true":"false");btn.style.opacity=res?1:.75;btn.title=res?X.toMap:X.toPlan}
-  function mount(){var z=document.getElementById("zoom");if(!z||document.getElementById("zPlan"))return;btn=document.createElement("button");btn.type="button";btn.id="zPlan";btn.textContent="▦";btn.setAttribute("aria-label",X.btn);
+  /* de knop zegt waar hij naartoe wisselt: op de kaart "▦ Plattegrond", op de plattegrond "Kaart" (zonder echte kaart gedimd) */
+  function ui(res){if(!btn)return;var c=info(),lab=res?X.toMap:"▦ "+X.toPlan;btn.setAttribute("aria-pressed",res?"true":"false");
+    var dim=res&&(c.virt||!c.str),key=lab+(dim?"·":"");if(btn.dataset.k!==key){btn.dataset.k=key;btn.innerHTML=dim?'<span style="opacity:.5">'+lab+'</span>':lab}btn.title=res?X.toMap:X.toPlan}
+  function mount(){var z=document.getElementById("zoom");if(!z||document.getElementById("zPlan"))return;btn=document.createElement("button");btn.type="button";btn.id="zPlan";btn.textContent="▦ "+X.toPlan;btn.setAttribute("aria-label",X.btn);
+    var bs=btn.style;bs.width="auto";bs.minWidth="42px";bs.padding="0 11px";bs.alignSelf="flex-end";bs.whiteSpace="nowrap";bs.fontSize="13px";bs.lineHeight="1";bs.letterSpacing=".02em";
     var me=document.getElementById("zMe");if(me&&me.nextSibling)z.insertBefore(btn,me.nextSibling);else z.appendChild(btn);
     btn.onclick=function(){var c=info();if(c.virt){o.toast&&o.toast(X.noReal);return}if(!c.str){o.toast&&o.toast(X.wait);return}
       pref=pref==="plan"?"map":"plan";try{localStorage.setItem("ss_plan",pref)}catch(e){}was=null;o.toast&&o.toast(pref==="plan"?X.toPlan:X.toMap)}}
@@ -104,9 +107,9 @@ function ctl(o){var th=o.th||{},pref=null,cache={w:null,n:-1,virt:false,str:fals
     for(g=Math.floor(y0/step)*step;g<=y1;g+=step){var mj=g%250===0;cx.strokeStyle=mix(B,LB,mj?(lt?.16:.12):(lt?.07:.05));cx.beginPath();cx.moveTo(0,Math.round(a.sy(g))+.5);cx.lineTo(a.cw,Math.round(a.sy(g))+.5);cx.stroke()}
     /* vlakken */
     for(i=0;i<W.length;i++){w=W[i];if(w.w==="water"){poly(cx,a,w.p);cx.closePath();cx.fillStyle=mix(B,th.waterEdge||"#3a5a78",lt?.35:.3);cx.fill();cx.save();cx.clip();cx.strokeStyle=mix(B,th.waterEdge||"#3a5a78",lt?.6:.55,.6);cx.lineWidth=1;
-        for(var h=-a.ch;h<a.cw+a.ch;h+=9){cx.beginPath();cx.moveTo(h,0);cx.lineTo(h-a.ch,a.ch);cx.stroke()}cx.restore();poly(cx,a,w.p);cx.closePath();cx.strokeStyle=ink;cx.lineWidth=1.4;cx.stroke()}
+        for(var h=-a.ch;h<a.cw+a.ch;h+=9){cx.beginPath();cx.moveTo(h,0);cx.lineTo(h-a.ch,a.ch);cx.stroke()}cx.restore();if(!w.ns){poly(cx,a,w.p);cx.closePath();cx.strokeStyle=ink;cx.lineWidth=1.4;cx.stroke()}}
       else if(w.w==="park"){poly(cx,a,w.p);cx.closePath();cx.fillStyle=mix(B,th.parkEdge||"#3a5a3a",lt?.35:.32);cx.fill();cx.save();cx.clip();cx.fillStyle=mix(B,th.parkEdge||"#3a5a3a",lt?.75:.7);var sp=Math.max(10,22*s*2);
-        for(var gx=Math.floor(a.sx(-2000)%sp);gx<a.cw;gx+=sp)for(var gy=Math.floor(a.sy(-2000)%sp);gy<a.ch;gy+=sp){cx.beginPath();cx.arc(gx+((gy/sp)%2?sp/2:0),gy,Math.max(1.4,3.2*s*2),0,7);cx.fill()}cx.restore();poly(cx,a,w.p);cx.closePath();cx.strokeStyle=ink;cx.lineWidth=1;cx.stroke()}}
+        for(var gx=Math.floor(a.sx(-2000)%sp);gx<a.cw;gx+=sp)for(var gy=Math.floor(a.sy(-2000)%sp);gy<a.ch;gy+=sp){cx.beginPath();cx.arc(gx+((gy/sp)%2?sp/2:0),gy,Math.max(1.4,3.2*s*2),0,7);cx.fill()}cx.restore();if(!w.ns){poly(cx,a,w.p);cx.closePath();cx.strokeStyle=ink;cx.lineWidth=1;cx.stroke()}}}
     /* bouwblokken met een schaduwrand */
     if(c.virt){var sh=mix(B,"#000",lt?.18:.4),bf=mix(B,LB,lt?.18:.16);
       for(i=0;i<W.length;i++){w=W[i];if(w.w!=="block")continue;cx.save();cx.translate(2,2);poly(cx,a,w.p);cx.closePath();cx.fillStyle=sh;cx.fill();cx.restore();

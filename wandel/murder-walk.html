@@ -291,7 +291,8 @@ a#hub{text-decoration:none;color:var(--paper)}
 </div>
 <script src="shared/platform.js?v=3"></script>
 <script src="shared/catalog.js?v=16"></script>
-<script src="shared/plan.js?v=1"></script>
+<script src="shared/tiles.js?v=1"></script>
+<script src="shared/plan.js?v=2"></script>
 <script>
 /* ---------- zaakgenerator (puur, controleerbaar) ---------- */
 function rngOf(seed){let a=seed>>>0;return function(){a=(a+0x6D2B79F5)>>>0;let t=a;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return((t^(t>>>14))>>>0)/4294967296}}
@@ -444,20 +445,26 @@ function startGps(seed){
     let pois=[],ways=[];const c=LS.get("ss_map",null);
     // deze buurt al eens geladen: meteen starten
     if(c&&c.R>=R&&c.pois&&c.pois.length&&Math.hypot((c.lon-lon)*kx,(c.lat-lat)*ky)<150){const ox=(c.lon-lon)*kx,oy=-(c.lat-lat)*ky;
-      pois=c.pois.map(p=>({x:p.x+ox,y:p.y+oy,type:p.type,name:p.name}));ways=(c.ways||[]).map(w=>({w:w.w,n:w.n,p:w.p.map((v,i)=>Math.round(v+(i%2?oy:ox)))}));
+      pois=c.pois.map(p=>({x:p.x+ox,y:p.y+oy,type:p.type,name:p.name}));ways=(c.ways||[]).map(w=>Object.assign({w:w.w,n:w.n,p:w.p.map((v,i)=>Math.round(v+(i%2?oy:ox)))},w.ns?{ns:1}:{}));
       st.textContent="";build(seed,"gps",pois,ways,{lat,lon,kx,ky});
       // buurt stond zonder straten in de cache: die nu alsnog ophalen (op de achtergrond)
-      if(!ways.length){const mine=G;ask('[out:json][timeout:25];way(around:'+(R+150)+','+lat+','+lon+')[highway~"^(residential|tertiary|secondary|primary|unclassified|living_street|pedestrian|footway|path|cycleway|service)$"];out geom qt;',45000).then(d=>{const ws=[];
+      if(!ways.length){const mine=G;(window.MW&&MW.Tiles?MW.Tiles.world({lat,lon,R:R+150,ms:9000}).then(t=>{if(!t.ways.length)throw 0;return{tiles:t.ways}}):Promise.reject(0)).catch(()=>ask('[out:json][timeout:25];way(around:'+(R+150)+','+lat+','+lon+')[highway~"^(residential|tertiary|secondary|primary|unclassified|living_street|pedestrian|footway|path|cycleway|service)$"];out geom qt;',45000)).then(d=>{const ws=d.tiles?d.tiles.slice():[];
         for(const e of d.elements||[]){if(!e.geometry)continue;const p=[];e.geometry.forEach(g=>{const q=xy(g.lat,g.lon);p.push(Math.round(q[0]),Math.round(q[1]))});const h=(e.tags&&e.tags.highway)||"";ws.push({p,w:/primary|secondary|tertiary/.test(h)?3:/footway|path|cycleway/.test(h)?1:2,n:(e.tags&&e.tags.name)||""})}
-        if(!ws.length)return;if(G&&G===mine){W=ws;LS.set(WK,W)}LS.set("ss_map",{lat:c.lat,lon:c.lon,R:c.R,pois:c.pois,ways:ws.map(w=>({w:w.w,n:w.n,p:w.p.map((v,i)=>Math.round(v-(i%2?oy:ox)))}))})}).catch(()=>{})}
+        if(!ws.length)return;if(G&&G===mine){W=ws;LS.set(WK,W)}LS.set("ss_map",{lat:c.lat,lon:c.lon,R:c.R,pois:c.pois,ways:ws.map(w=>Object.assign({w:w.w,n:w.n,p:w.p.map((v,i)=>Math.round(v-(i%2?oy:ox)))},w.ns?{ns:1}:{}))})}).catch(()=>{})}
       return}
     st.textContent="Finding places near you…";
+    // 1) vectortegels (shared/tiles.js): plekken én straten in één keer, snel via een CDN; Overpass is daarna de reserve
+    let tw=null;if(window.MW&&MW.Tiles){try{tw=await MW.Tiles.world({lat,lon,R:R+150,ms:8000})}catch(e){tw=null}}
+    const useT=pp=>{st.textContent="";build(seed,"gps",pp,tw.ways,{lat,lon,kx,ky});if(pp.length)LS.set("ss_map",{lat,lon,R,pois:pp,ways:tw.ways})};
+    if(tw&&tw.ways.length&&(GRP&&GRP.st||tw.pois.filter(p=>Math.hypot(p.x,p.y)<=R).length>=4)){useT(GRP&&GRP.st?[]:tw.pois);return}
     try{
-      const d=GRP&&GRP.st?{elements:[]}:await ask('[out:json][timeout:15];(nwr'+A+'[amenity~"^(place_of_worship|bank|atm|cafe|pub|bar|restaurant|pharmacy|post_box|library|school|fuel)$"];nwr'+A+'[tourism~"^(hotel|artwork|museum)$"];nwr'+A+'[shop~"^(supermarket|bakery|convenience)$"];node'+A+'[highway=bus_stop];nwr'+A+'[leisure~"^(park|playground)$"];);out center qt 400;',18000);
+      const d=GRP&&GRP.st?{elements:[]}:await ask('[out:json][timeout:15];(nwr'+A+'[amenity~"^(place_of_worship|bank|atm|cafe|pub|bar|restaurant|pharmacy|post_box|library|school|fuel)$"];nwr'+A+'[tourism~"^(hotel|artwork|museum)$"];nwr'+A+'[shop~"^(supermarket|bakery|convenience)$"];node'+A+'[highway=bus_stop];nwr'+A+'[leisure~"^(park|playground)$"];);out center qt 400;',tw?9000:12000);
       for(const e of d.elements||[]){const ty=poiType(e.tags),q=e.type==="node"?[e.lat,e.lon]:e.center?[e.center.lat,e.center.lon]:null;if(!ty||!q)continue;const p=xy(q[0],q[1]);pois.push({x:p[0],y:p[1],type:ty,name:e.tags.name||""})}
-    }catch(e){toast("The map service is not answering. Your leads are placed within walking distance.");
+    }catch(e){if(tw&&tw.ways.length){useT(tw.pois);return}
+      toast("The map service is not answering. Your leads are placed within walking distance.");
       // kaartdienst onbereikbaar: de zaak komt op een getekende plattegrond rond je (shared/plan.js); gps en afstanden blijven echt
       if(window.MW&&MW.Plan){const v=MW.Plan.city(MW.Plan.seedOf(lat,lon),R);st.textContent="";build(seed,"gps",v.pois,v.ways,{lat,lon,kx,ky});return}}
+    if(tw&&tw.ways.length){useT(!(GRP&&GRP.st)&&tw.pois.length>pois.length?tw.pois:pois);return}
     st.textContent="";build(seed,"gps",pois,[],{lat,lon,kx,ky});
     // straten komen op de achtergrond; het spel wacht er niet op
     const mine=G;
@@ -583,7 +590,8 @@ function draw(t){
   cx.setTransform(dpr,0,0,dpr,0,0);cx.fillStyle="#0c0a0b";cx.fillRect(0,0,cw,chh);
   cx.lineCap="round";cx.lineJoin="round";
   const pl=PV&&PV.on(),PA=pl?{sx,sy,s:V.s,cw,ch:chh,t,P,R:G.R,spots:G.st.filter(s=>!s.done),top:($("#hud")?$("#hud").getBoundingClientRect().height:56)}:null;if(pl)PV.bg(cx,PA);
-  if(!pl)for(const w of W){cx.strokeStyle=w.w===9?"#152026":w.w===1?"#1d1716":"#3d2f2b";cx.lineWidth=Math.max(1.2,(w.w===9?30:w.w===3?9:w.w===2?6:2.5)*V.s);cx.beginPath();for(let i=0;i<w.p.length;i+=2){const X=sx(w.p[i]),Y=sy(w.p[i+1]);i?cx.lineTo(X,Y):cx.moveTo(X,Y)}cx.stroke()}
+  if(!pl)for(const w of W){if(w.w!=="water"&&w.w!=="park")continue;cx.beginPath();for(let i=0;i<w.p.length;i+=2){const X=sx(w.p[i]),Y=sy(w.p[i+1]);i?cx.lineTo(X,Y):cx.moveTo(X,Y)}cx.closePath();cx.fillStyle=w.w==="water"?"#111c22":"#141912";cx.fill()}
+  if(!pl)for(const w of W){if(typeof w.w!=="number")continue;cx.strokeStyle=w.w===9?"#152026":w.w===1?"#1d1716":"#3d2f2b";cx.lineWidth=Math.max(1.2,(w.w===9?30:w.w===3?9:w.w===2?6:2.5)*V.s);cx.beginPath();for(let i=0;i<w.p.length;i+=2){const X=sx(w.p[i]),Y=sy(w.p[i+1]);i?cx.lineTo(X,Y):cx.moveTo(X,Y)}cx.stroke()}
   cx.font="italic 12px Georgia,serif";cx.textAlign="center";cx.fillStyle="#a8744a";if(!pl)for(const w of W){if(w.w===9&&w.n){const m=Math.floor(w.p.length/4)*2;cx.fillText(w.n,sx(w.p[m]),sy(w.p[m+1])+4)}}
   // speelveld
   cx.strokeStyle="rgba(200,188,175,.25)";cx.setLineDash([4,8]);cx.lineWidth=1;cx.beginPath();cx.arc(sx(0),sy(0),G.R*V.s,0,7);cx.stroke();cx.setLineDash([]);
@@ -604,6 +612,7 @@ function draw(t){
   const X=sx(P.x),Y=sy(P.y);cx.fillStyle="rgba(240,150,60,.12)";cx.beginPath();cx.arc(X,Y,35*V.s,0,7);cx.fill();cx.strokeStyle="rgba(240,150,60,.5)";cx.lineWidth=1;cx.stroke();
   cx.fillStyle="#f0963c";cx.beginPath();cx.arc(X,Y,7,0,7);cx.fill();cx.strokeStyle="#0c0a0b";cx.lineWidth=2;cx.stroke();
   if(pl){cx.lineCap="butt";PV.fg(cx,PA)}
+  if(window.MW&&MW.Tiles&&G.mode!=="demo")MW.Tiles.credit(cx,cw,chh,"#8d7f73",W);
 }
 function loop(t){
   if($("#play").hidden||!G)return;
