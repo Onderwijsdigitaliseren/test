@@ -345,3 +345,4 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .maatform .maat2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.maatform .maat2>div{display:grid;gap:12px}
 @media (max-width:480px){.maatform .maat2{grid-template-columns:1fr}}
 .maatform .knop{width:100%}
+.maatgroot{margin-top:16px;border-left:3px solid var(--lak)}.maatgroot h3{margin:0}

@@ -175,9 +175,10 @@ page("speurtocht-kinderfeestje-per-provincie.html",
 page("speurtocht-op-maat.html",
   "Speurtocht op maat voor kinderfeestje, school of kamp | MiniMystery",
   "Speurtocht op maat",
-  "Een speurtocht op maat voor het kinderfeestje, schoolkamp, buurtfeest of de bso: met de namen van de kinderen, jullie eigen plek en thema. 6 tot 12 jaar, op je eigen telefoon. Prijs in overleg.",
+  "Een speurtocht op maat voor het kinderfeestje, schoolkamp, buurtfeest of de bso: een van onze zaken omgebouwd met de namen van de kinderen en jullie eigen plek. 6 tot 12 jaar, op je eigen telefoon. Vaste prijs.",
   [], [], kind="maat",
-  faq=[("Wat kost een speurtocht op maat?", "Dat hangt af van de groep en hoeveel er op maat moet. Je krijgt altijd eerst een voorstel met een vaste prijs."),
+  faq=[("Wat kost een speurtocht op maat?", "Je krijgt vooraf een voorstel met een vaste prijs. Die hangt af van de groep en wat er omgebouwd moet worden."),
+       ("Kan ik daarna nog dingen veranderen?", "Na de ombouw is er één ronde aanpassingen. Daarna ligt de speurtocht vast. Wil je later toch iets anders, dan is dat nieuw werk met een nieuwe prijs."),
        ("Hoe ver van tevoren moet ik aanvragen?", "Liefst twee tot vier weken. Haast? Vraag het gewoon, vaak kan er meer dan je denkt."),
        ("Komt er iemand langs?", "Nee, jullie spelen zelf met een eigen telefoon. Zo blijft het betaalbaar en start je wanneer je wilt."),
        ("Kan het ook binnen?", "Ja. Een speurtocht op maat kan buiten met kaart, buiten zonder kaart of binnen in huis of op school.")])
@@ -242,8 +243,8 @@ def related(cur):
 
 def custom(region=None):
     subj = "Speurtocht op maat via MiniMystery" + (" (" + region + ")" if region else "")
-    body = "Hoi Kellie,%0A%0AIk zoek een speurtocht op maat.%0A%0AVoor wie en hoeveel kinderen: %0ALeeftijd: %0AWaar (adres of buurt): %0AWanneer: %0AThema of wensen: %0A%0AGroet,%0A"
-    return ('<h2>Liever een speurtocht op maat?</h2><div class="custom"><p>Een speurtocht die speciaal voor jullie gemaakt wordt: met de namen van de kinderen in het verhaal, langs jullie eigen plekken%s, in het thema dat jullie kiezen. Voor een kinderfeestje, schoolkamp, buurtfeest, bso of bedrijfsfeest. Prijs in overleg.</p>'
+    body = "Hoi Kellie,%0A%0AIk zoek een speurtocht op maat.%0A%0AVoor wie en hoeveel kinderen: %0ALeeftijd: %0AWaar (adres of buurt): %0AWanneer: %0AWelke zaak als basis: %0AWensen: %0A%0AGroet,%0A"
+    return ('<h2>Liever een speurtocht op maat?</h2><div class="custom"><p>Kies een van de zaken en ik bouw hem om naar jullie idee: met de namen van de kinderen in het verhaal, langs jullie eigen plekken%s. Voor een kinderfeestje, schoolkamp, buurtfeest, bso of bedrijfsfeest. Vaste prijs, één ronde aanpassingen.</p>'
             '<a class="btn" href="mailto:%s?subject=%s&body=%s">✉️ Vraag een speurtocht op maat aan</a><p class="note"><a href="speurtocht-op-maat.html">Wat er allemaal op maat kan →</a></p></div>') % (
         (" in " + region) if region else "", MAIL, subj.replace(" ", "%20"), body)
 
@@ -255,19 +256,20 @@ MAAT = dict(
        ("🏢 Bedrijfs- of familiedag", "Iets voor de kinderen terwijl de ouders bijpraten, in het thema van jullie dag."),
        ("⛺ Camping of vakantiepark", "Een speurtocht langs jullie eigen plekken voor de kinderen van jullie gasten.")],
   wat=[("Namen", "De kinderen, de jarige, de juf of opa in het verhaal."), ("Plek", "Rond jullie huis, school of terrein, met een start en finish die jullie kiezen."),
-       ("Thema", "Piraten, prinsessen, voetbal, dino's, toveren of iets heel anders."), ("Groep", "Van een klein feestje tot een hele school, in groepjes tegen elkaar."),
+       ("Basis", "Een van onze zaken: De Lichtjesdief, Pony Pluis, Agent voor Eén Dag, de Toverspiegel of een andere."), ("Groep", "Van een klein feestje tot een hele school, in groepjes tegen elkaar."),
        ("Leeftijd", "Van 6 tot 12 jaar, met puzzels die passen bij de groep."), ("Aandenken", "Een diploma of oorkonde met jullie naam, logo en foto's.")])
 
 def maat_body():
     b = []
-    b.append('<div class="intro"><p>Bij MiniMystery kun je een kant-en-klare zaak kiezen, maar ik maak ook speurtochten op maat. Dan wordt het verhaal speciaal voor jullie geschreven: met de namen van de kinderen erin, langs jullie eigen plekken en in het thema dat jullie willen.</p>'
+    b.append('<div class="intro"><p>Bij MiniMystery kun je een kant-en-klare zaak kiezen, maar ik maak ook speurtochten op maat. Jullie kiezen een van de zaken als basis en ik bouw die om naar jullie idee: met de namen van de kinderen erin, langs jullie eigen plekken, met jullie eigen details.</p>'
              '<p>Jullie spelen hem net als de andere zaken op een gewone telefoon, zonder app. De telefoon vertelt het verhaal, wijst de weg en geeft de opdrachten.</p></div>')
     b.append('<div class="cta2"><a class="btn" href="#aanvragen">Vraag een voorstel aan</a><a class="btn ghost" href="index.html#cases">Of kies een kant-en-klare zaak</a></div>')
     b.append('<h2>Waar het voor is</h2><div class="facts2">' + "".join('<div><b>%s</b><span>%s</span></div>' % (e(a), e(c)) for a, c in MAAT["gel"]) + '</div>')
     b.append('<h2>Wat er op maat kan</h2><ul class="ck">' + "".join("<li><b>%s.</b> %s</li>" % (e(a), e(c)) for a, c in MAAT["wat"]) + '</ul>')
-    b.append('<h2>Zo werkt het</h2><ol class="st"><li><b>Vertel wat je wilt</b>Mail je wensen: voor wie, hoeveel kinderen, welke leeftijd, waar, wanneer en welk thema.</li>'
-             '<li><b>Je krijgt een voorstel</b>Met een plan en een vaste prijs. Je zit nergens aan vast tot je akkoord geeft.</li>'
-             '<li><b>Spelen maar</b>Jullie krijgen een eigen link, klaar voor het feest. Een volwassene loopt mee met de telefoon.</li></ol>')
+    b.append('<h2>Zo werkt het</h2><ol class="st"><li><b>Kies een zaak en vertel wat je wilt</b>Mail welke zaak de basis wordt, voor wie, hoeveel kinderen, welke leeftijd, waar, wanneer en wat je wilt.</li>'
+             '<li><b>Je krijgt een voorstel met een vaste prijs</b> Je zit nergens aan vast tot je akkoord geeft.</li>'
+             '<li><b>Ik bouw hem om, jij kijkt één keer mee</b>Je krijgt de zaak te zien en geeft één ronde aanpassingen door. Daarna ligt hij vast en krijgen jullie een eigen link, klaar voor het feest.</li></ol>')
+    b.append('<h2>Iets helemaal nieuws?</h2><p>Een zaak vanaf nul, een eigen verhaal of nieuwe spelonderdelen: dat kan, maar dat is een apart traject met een eigen offerte. Zet het in je mail, dan bespreken we wat er kan.</p>')
     return b
 
 def render(p):
