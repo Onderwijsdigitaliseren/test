@@ -175,12 +175,12 @@ page("speurtocht-kinderfeestje-per-provincie.html",
 page("speurtocht-op-maat.html",
   "Speurtocht op maat: gepersonaliseerd kinderfeestje | MiniMystery",
   "Speurtocht op maat",
-  "Personaliseer een speurtocht voor het kinderfeestje, schoolkamp of de bso met foto's van de kinderen, hun namen en een thema voor € 24,95. Iets helemaal nieuws? Dien een aanvraag in.",
+  "Personaliseer een speurtocht voor het kinderfeestje, schoolkamp of de bso met foto's van de kinderen, hun namen en een thema voor € 29,95 inclusief Feestpas. Iets helemaal nieuws? Dien een aanvraag in.",
   [], [], kind="maat",
-  faq=[("Wat kost personaliseren?", "€ 24,95 per zaak. Daarvoor krijg je jullie eigen versie met foto's, namen en een thema."),
+  faq=[("Wat kost personaliseren?", "€ 29,95 inclusief Feestpas per zaak. Daarvoor krijg je jullie eigen versie met foto's, namen en een thema."),
        ("Kan de route ook anders?", "Bij personaliseren blijft de zaak zoals hij is. Een eigen route, verhaal of nieuwe puzzels is iets nieuws: dien daarvoor een aanvraag in, dan hoor je wat het kost."),
        ("Kan ik daarna nog dingen veranderen?", "Je mag één keer iets laten aanpassen als je jullie versie gezien hebt. Daarna ligt hij vast."),
-       ("Hoe ver van tevoren moet ik aanvragen?", "Liefst een week of twee. Voor iets helemaal nieuws liever langer.")])
+       ("Hoe ver van tevoren moet ik aanvragen?", "Minimaal twee weken van tevoren. Voor iets helemaal nieuws liever langer.")])
 
 # ---------- opmaak ----------
 CSS = """
@@ -242,9 +242,9 @@ def related(cur):
 
 def custom(region=None):
     subj = "Speurtocht op maat via MiniMystery" + (" (" + region + ")" if region else "")
-    body = "Hoi Kellie,%0A%0AIk wil graag een speurtocht op maat.%0A%0APersonaliseren (€ 24,95) of iets helemaal nieuws: %0AWelke zaak: %0ANamen en leeftijd van de kinderen: %0AThema: %0AWanneer: %0AWensen: %0A%0A(Foto's stuur ik als bijlage mee.)%0A%0AGroet,%0A"
-    return ('<h2>Jullie eigen versie?</h2><div class="custom"><p>Elke zaak kan gepersonaliseerd worden met foto\'s van de kinderen, hun namen in het verhaal en een thema dat bij het feest past, voor € 24,95. Iets helemaal nieuws, zoals een eigen route langs jullie plekken%s of een eigen verhaal? Dien een aanvraag in, de prijs bepalen we samen.</p>'
-            '<a class="btn" href="mailto:%s?subject=%s&body=%s">✉️ Personaliseren of iets nieuws aanvragen</a><p class="note"><a href="speurtocht-op-maat.html">Meer over speurtochten op maat →</a></p></div>') % (
+    body = "Hoi Kellie,%0A%0AIk wil graag een speurtocht op maat.%0A%0APersonaliseren (€ 29,95) of iets helemaal nieuws: %0AWelke zaak: %0ANamen en leeftijd van de kinderen: %0AThema: %0AWanneer: %0AWensen: %0A%0A(Foto's stuur ik als bijlage mee.)%0A%0AGroet,%0A"
+    return ('<h2>Jullie eigen versie?</h2><div class="custom"><p>Elke zaak kan gepersonaliseerd worden met foto\'s van de kinderen, hun namen in het verhaal en een thema dat bij het feest past, voor € 29,95 inclusief Feestpas. Iets helemaal nieuws, zoals een eigen route langs jullie plekken%s of een eigen verhaal? Dien een aanvraag in, de prijs bepalen we samen.</p>'
+            '<a class="btn" href="mailto:%s?subject=%s&body=%s">✉️ Personaliseren of iets nieuws aanvragen</a><p class="note">Vraag minimaal twee weken van tevoren aan. <a href="speurtocht-op-maat.html">Meer over speurtochten op maat →</a></p></div>') % (
         (" in " + region) if region else "", MAIL, subj.replace(" ", "%20"), body)
 
 MAAT = dict(
@@ -257,10 +257,10 @@ MAAT = dict(
 
 def maat_body():
     b = []
-    b.append('<div class="intro"><p>Bij MiniMystery kun je elke zaak van jullie maken. Kies een van de zaken en personaliseer hem met foto\'s van de kinderen, hun namen in het verhaal en een thema dat bij het feest past. Dat kost € 24,95. Het verhaal en de puzzels blijven hetzelfde, dus het werkt altijd.</p>'
+    b.append('<div class="intro"><p>Bij MiniMystery kun je elke zaak van jullie maken. Kies een van de zaken en personaliseer hem met foto\'s van de kinderen, hun namen in het verhaal en een thema dat bij het feest past. Dat kost € 29,95 inclusief Feestpas. Het verhaal en de puzzels blijven hetzelfde, dus het werkt altijd.</p>'
              '<p>Wil je iets wat nog niet bestaat, zoals een eigen route langs jullie plekken, een eigen verhaal of een speurtocht voor een hele school? Dat kan ook: dien een aanvraag in en we bepalen samen de prijs.</p></div>')
     b.append('<div class="cta2"><a class="btn" href="#aanvragen">Personaliseren of iets nieuws aanvragen</a><a class="btn ghost" href="index.html#cases">Eerst de zaken bekijken</a></div>')
-    b.append('<h2>Twee manieren</h2><div class="facts2"><div><b>📸 Personaliseren · € 24,95</b><span>Foto\'s van de kinderen in het spel, hun namen in het verhaal, een thema (verjaardag, schoolkamp, kerst…) en een diploma met jullie foto\'s. Verhaal, puzzels en route blijven zoals ze zijn. Je mag één keer iets laten aanpassen; daarna ligt hij vast.</span></div>'
+    b.append('<h2>Twee manieren</h2><div class="facts2"><div><b>📸 Personaliseren · € 29,95 incl. Feestpas</b><span>Foto\'s van de kinderen in het spel, hun namen in het verhaal, een thema (verjaardag, schoolkamp, kerst…) en een diploma met jullie foto\'s. Verhaal, puzzels en route blijven zoals ze zijn. Je mag één keer iets laten aanpassen; daarna ligt hij vast.</span></div>'
              '<div><b>✨ Iets helemaal nieuws · op aanvraag</b><span>Een eigen route met start en finish, een eigen verhaal, nieuwe puzzels of een speurtocht voor een school, camping of vereniging. Dien een aanvraag in, de prijs bepalen we samen.</span></div></div>')
     b.append('<h2>Waar het leuk voor is</h2><div class="facts2">' + "".join('<div><b>%s</b><span>%s</span></div>' % (e(x), e(y)) for x, y in MAAT["gel"]) + '</div>')
     b.append('<h2>Zo werkt personaliseren</h2><ol class="st"><li><b>Kies een zaak</b>Mail welke zaak, de namen en leeftijd van de kinderen en welk thema.</li>'
@@ -290,7 +290,7 @@ def render(p):
         body.append('<h2>Wat heb je nodig?</h2><ul class="ck">' + "".join("<li>%s</li>" % e(x) for x in NEED) + '</ul>')
         body.append('<h2>Zo werkt het</h2><ol class="st">' + "".join("<li><b>%s</b>%s</li>" % (e(a), e(b)) for a, b in STEPS) + '</ol>')
     body.append('<h2>Veelgestelde vragen</h2>' + "".join("<details><summary>%s</summary><p>%s</p></details>" % (e(q), e(a)) for q, a in faq))
-    body.append(custom(p["region"]) if p["kind"] != "maat" else '<div id="aanvragen"></div>' + custom().replace("<h2>Jullie eigen versie?</h2>", "<h2>Aanvragen</h2>").replace('<p class="note"><a href="speurtocht-op-maat.html">Meer over speurtochten op maat →</a></p>', '<p class="note">Liefst een week of twee van tevoren. Voor iets helemaal nieuws liever langer.</p>'))
+    body.append(custom(p["region"]) if p["kind"] != "maat" else '<div id="aanvragen"></div>' + custom().replace("<h2>Jullie eigen versie?</h2>", "<h2>Aanvragen</h2>").replace('<p class="note">Vraag minimaal twee weken van tevoren aan. <a href="speurtocht-op-maat.html">Meer over speurtochten op maat →</a></p>', '<p class="note">Vraag minimaal twee weken van tevoren aan. Voor iets helemaal nieuws liever langer.</p>'))
     body.append('<h2>Meer ideeën</h2>' + related(p))
     return """<!doctype html>
 <html lang="nl">
