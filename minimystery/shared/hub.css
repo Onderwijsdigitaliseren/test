@@ -136,3 +136,16 @@ main{max-width:1100px;margin:0 auto;padding:0 16px}
 .cf input:focus,.cf select:focus,.cf textarea:focus{outline:none;border-color:var(--sky)}.cf textarea{resize:vertical;min-height:90px}
 .cf2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.cfl{text-align:left;margin:4px 0 14px}#cfF .btn{width:100%;margin-top:8px}
 .pill.custom-pill{background:#5b44b8;color:#fff;border-color:#fff;box-shadow:0 4px 14px rgba(0,0,0,.25)}.pill.custom-pill:hover{background:#4a36a0}
+/* ---------- maatwerk ---------- */
+.maatlijn{margin:12px 0 0;text-align:center;font:600 15px Nunito,sans-serif;color:var(--soft)}.maatlijn a{color:var(--violet);text-underline-offset:3px}
+.maatcase{--c:#7a5cd6;background:linear-gradient(180deg,#fff,#f6f2ff);border:2px dashed var(--violet)}
+.maatcase .mc-ico{position:relative;width:140px;height:140px;border-radius:50%;margin:6px auto 12px;display:grid;place-items:center;font-size:54px;background:radial-gradient(circle at 35% 30%,#fff,#e4dcff);border:4px solid #fff;line-height:1;box-shadow:0 6px 16px -6px rgba(91,68,184,.6)}
+.maatcase h3{color:#4a36a0}.maatcase .tag{flex:1}
+.maatcase .acts .btn:not(.ghost){background:#5b44b8;color:#fff;border-color:#5b44b8}
+.custom .cintro{font-size:17px}
+.cgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 16px}
+@media (max-width:760px){.cgrid{grid-template-columns:1fr 1fr}}@media (max-width:460px){.cgrid{grid-template-columns:1fr}}
+.cgrid div{background:var(--cream);border:1.5px solid var(--line);border-radius:14px;padding:10px 12px;display:flex;flex-direction:column;gap:3px}
+.cgrid b{font:600 15px Fredoka,sans-serif;color:var(--navy)}.cgrid span{font-size:14px;line-height:1.45;color:var(--soft)}
+.csteps{margin:0 0 16px;padding-left:22px;color:var(--ink);line-height:1.5}.csteps li{margin:0 0 6px}
+.custom .note a{color:var(--violet)}

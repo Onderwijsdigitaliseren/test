@@ -172,6 +172,16 @@ page("speurtocht-kinderfeestje-per-provincie.html",
    "Hieronder vind je per provincie meer uitleg en tips."],
   [], kind="overzicht")
 
+page("speurtocht-op-maat.html",
+  "Speurtocht op maat voor kinderfeestje, school of kamp | MiniMystery",
+  "Speurtocht op maat",
+  "Een speurtocht op maat voor het kinderfeestje, schoolkamp, buurtfeest of de bso: met de namen van de kinderen, jullie eigen plek en thema. 6 tot 12 jaar, op je eigen telefoon. Prijs in overleg.",
+  [], [], kind="maat",
+  faq=[("Wat kost een speurtocht op maat?", "Dat hangt af van de groep en hoeveel er op maat moet. Je krijgt altijd eerst een voorstel met een vaste prijs."),
+       ("Hoe ver van tevoren moet ik aanvragen?", "Liefst twee tot vier weken. Haast? Vraag het gewoon, vaak kan er meer dan je denkt."),
+       ("Komt er iemand langs?", "Nee, jullie spelen zelf met een eigen telefoon. Zo blijft het betaalbaar en start je wanneer je wilt."),
+       ("Kan het ook binnen?", "Ja. Een speurtocht op maat kan buiten met kaart, buiten zonder kaart of binnen in huis of op school.")])
+
 # ---------- opmaak ----------
 CSS = """
 .lp{max-width:860px;margin:0 auto;padding:0 16px 30px}
@@ -196,6 +206,7 @@ CSS = """
 .lp .rel{display:flex;flex-wrap:wrap;gap:8px}.lp .rel a{background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:6px 12px;font:600 14px Nunito,sans-serif;color:var(--navy);text-decoration:none}
 .lp .prov{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}@media(max-width:620px){.lp .prov{grid-template-columns:1fr 1fr}}.lp .prov a{background:#fff;border:2px solid var(--line);border-radius:14px;padding:12px;text-align:center;font:600 16px Fredoka,sans-serif;color:var(--navy);text-decoration:none}
 .lp .custom{margin-top:8px}
+.lptop .lpk{display:flex;gap:8px}.lptop .lpk .btn.ghost{background:#fff}@media(max-width:460px){.lptop .lpk .btn.ghost{display:none}}
 .lptop{display:flex;align-items:center;justify-content:space-between;max-width:860px;margin:0 auto;padding:12px 16px}.lptop img{height:42px;width:auto;max-width:60vw}.lptop a.btn{padding:8px 14px;font-size:15px}
 """
 
@@ -231,14 +242,37 @@ def related(cur):
 
 def custom(region=None):
     subj = "Speurtocht op maat via MiniMystery" + (" (" + region + ")" if region else "")
-    body = "Hoi Kellie,%0A%0AIk zoek een speurtocht op maat.%0A%0AVoor wie en hoeveel kinderen: %0ALeeftijd: %0AWaar (adres of buurt): %0AWanneer: %0AWat ik in gedachten heb: %0A%0AGroet,%0A"
-    return ('<h2>Speurtocht op maat</h2><div class="custom"><p>Een speurtocht met de namen van de kinderen erin, rond jullie school of straat%s, voor een schoolkamp, buurtfeest of bedrijfsuitje? Mail wat je in gedachten hebt, dan hoor je snel wat er kan. Prijs in overleg.</p>'
-            '<a class="btn" href="mailto:%s?subject=%s&body=%s">✉️ Mail je idee</a></div>') % (
+    body = "Hoi Kellie,%0A%0AIk zoek een speurtocht op maat.%0A%0AVoor wie en hoeveel kinderen: %0ALeeftijd: %0AWaar (adres of buurt): %0AWanneer: %0AThema of wensen: %0A%0AGroet,%0A"
+    return ('<h2>Liever een speurtocht op maat?</h2><div class="custom"><p>Een speurtocht die speciaal voor jullie gemaakt wordt: met de namen van de kinderen in het verhaal, langs jullie eigen plekken%s, in het thema dat jullie kiezen. Voor een kinderfeestje, schoolkamp, buurtfeest, bso of bedrijfsfeest. Prijs in overleg.</p>'
+            '<a class="btn" href="mailto:%s?subject=%s&body=%s">✉️ Vraag een speurtocht op maat aan</a><p class="note"><a href="speurtocht-op-maat.html">Wat er allemaal op maat kan →</a></p></div>') % (
         (" in " + region) if region else "", MAIL, subj.replace(" ", "%20"), body)
+
+MAAT = dict(
+  gel=[("🎂 Kinderfeestje", "De jarige als held van het verhaal, de vriendjes als speurders, en de traktatie als laatste aanwijzing."),
+       ("🏕 Schoolkamp of klassenuitje", "Groepjes tegen elkaar op het kampterrein of in het dorp, met een teamstand aan het eind."),
+       ("🏘 Buurt- of straatfeest", "Een speurtocht door jullie eigen straat, met de buren als getuigen en het buurtplein als finish."),
+       ("🧸 Bso, club of vereniging", "Een vaste speurtocht voor jullie groep of terrein, die jullie vaker kunnen spelen."),
+       ("🏢 Bedrijfs- of familiedag", "Iets voor de kinderen terwijl de ouders bijpraten, in het thema van jullie dag."),
+       ("⛺ Camping of vakantiepark", "Een speurtocht langs jullie eigen plekken voor de kinderen van jullie gasten.")],
+  wat=[("Namen", "De kinderen, de jarige, de juf of opa in het verhaal."), ("Plek", "Rond jullie huis, school of terrein, met een start en finish die jullie kiezen."),
+       ("Thema", "Piraten, prinsessen, voetbal, dino's, toveren of iets heel anders."), ("Groep", "Van een klein feestje tot een hele school, in groepjes tegen elkaar."),
+       ("Leeftijd", "Van 6 tot 12 jaar, met puzzels die passen bij de groep."), ("Aandenken", "Een diploma of oorkonde met jullie naam, logo en foto's.")])
+
+def maat_body():
+    b = []
+    b.append('<div class="intro"><p>Bij MiniMystery kun je een kant-en-klare zaak kiezen, maar ik maak ook speurtochten op maat. Dan wordt het verhaal speciaal voor jullie geschreven: met de namen van de kinderen erin, langs jullie eigen plekken en in het thema dat jullie willen.</p>'
+             '<p>Jullie spelen hem net als de andere zaken op een gewone telefoon, zonder app. De telefoon vertelt het verhaal, wijst de weg en geeft de opdrachten.</p></div>')
+    b.append('<div class="cta2"><a class="btn" href="#aanvragen">Vraag een voorstel aan</a><a class="btn ghost" href="index.html#cases">Of kies een kant-en-klare zaak</a></div>')
+    b.append('<h2>Waar het voor is</h2><div class="facts2">' + "".join('<div><b>%s</b><span>%s</span></div>' % (e(a), e(c)) for a, c in MAAT["gel"]) + '</div>')
+    b.append('<h2>Wat er op maat kan</h2><ul class="ck">' + "".join("<li><b>%s.</b> %s</li>" % (e(a), e(c)) for a, c in MAAT["wat"]) + '</ul>')
+    b.append('<h2>Zo werkt het</h2><ol class="st"><li><b>Vertel wat je wilt</b>Mail je wensen: voor wie, hoeveel kinderen, welke leeftijd, waar, wanneer en welk thema.</li>'
+             '<li><b>Je krijgt een voorstel</b>Met een plan en een vaste prijs. Je zit nergens aan vast tot je akkoord geeft.</li>'
+             '<li><b>Spelen maar</b>Jullie krijgen een eigen link, klaar voor het feest. Een volwassene loopt mee met de telefoon.</li></ol>')
+    return b
 
 def render(p):
     url = SITE + p["slug"]
-    faq = p["faq"] + [("Wat kost het?", "Een zaak kost %s. Daarmee speel je die zaak twee maanden lang zo vaak je wilt. De proefronde is gratis." % PRICE),
+    faq = p["faq"] if p["kind"] == "maat" else p["faq"] + [("Wat kost het?", "Een zaak kost %s. Daarmee speel je die zaak twee maanden lang zo vaak je wilt. De proefronde is gratis." % PRICE),
                       ("Hoeveel kinderen kunnen meedoen?", FACTS_BASE[1][2])]
     ld = [{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]},
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "MiniMystery", "item": SITE}, {"@type": "ListItem", "position": 2, "name": p["h1"], "item": url}]}]
@@ -246,7 +280,9 @@ def render(p):
         ld.append({"@context": "https://schema.org", "@type": "ItemList", "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": G[k]["t"], "url": SITE + G[k]["slug"]} for i, k in enumerate(p["games"])]})
     body = []
     body.append('<div class="intro">' + "".join("<p>%s</p>" % e(x) for x in p["intro"]) + '</div>')
-    if p["kind"] == "overzicht":
+    if p["kind"] == "maat":
+        body.extend(maat_body())
+    elif p["kind"] == "overzicht":
         body.append('<div class="prov">' + "".join('<a href="%s">%s</a>' % (q["slug"], e(q["region"])) for q in P if q["kind"] == "regio") + '</div>')
     else:
         body.append(facts(p))
@@ -256,7 +292,7 @@ def render(p):
         body.append('<h2>Wat heb je nodig?</h2><ul class="ck">' + "".join("<li>%s</li>" % e(x) for x in NEED) + '</ul>')
         body.append('<h2>Zo werkt het</h2><ol class="st">' + "".join("<li><b>%s</b>%s</li>" % (e(a), e(b)) for a, b in STEPS) + '</ol>')
     body.append('<h2>Veelgestelde vragen</h2>' + "".join("<details><summary>%s</summary><p>%s</p></details>" % (e(q), e(a)) for q, a in faq))
-    body.append(custom(p["region"]))
+    body.append(custom(p["region"]) if p["kind"] != "maat" else '<div id="aanvragen"></div>' + custom().replace("<h2>Liever een speurtocht op maat?</h2>", "<h2>Vraag een speurtocht op maat aan</h2>").replace('<p class="note"><a href="speurtocht-op-maat.html">Wat er allemaal op maat kan →</a></p>', '<p class="note">Liefst twee tot vier weken van tevoren. Haast? Vraag het gewoon.</p>'))
     body.append('<h2>Meer ideeën</h2>' + related(p))
     return """<!doctype html>
 <html lang="nl">
@@ -282,7 +318,7 @@ def render(p):
 <script type="application/ld+json">%(ld)s</script>
 </head>
 <body>
-<header class="lptop"><a href="index.html"><img src="assets/logo-wide.webp" alt="MiniMystery" width="1222" height="378"></a><a class="btn" href="index.html#cases">Alle zaken</a></header>
+<header class="lptop"><a href="index.html"><img src="assets/logo-wide.webp" alt="MiniMystery" width="1222" height="378"></a><span class="lpk"><a class="btn ghost" href="speurtocht-op-maat.html">✨ Op maat</a><a class="btn" href="index.html#cases">Alle zaken</a></span></header>
 <main class="lp">
 <div class="crumb"><a href="index.html">MiniMystery</a> › %(h1)s</div>
 <h1>%(h1)s</h1>
@@ -291,8 +327,8 @@ def render(p):
 <footer class="foot">
   <img src="assets/logo-mark-wink.webp" alt="" width="576" height="472" loading="lazy">
   <p>Gemaakt in Nederland, met liefde voor speurneuzen.</p>
-  <a class="adult" href="https://www.moordwandeling.nl/nl/">Voor volwassenen: Moordwandeling →</a>
-  <div class="links"><a href="mailto:%(mail)s">Contact</a><a href="speurtocht-kinderfeestje-per-provincie.html">Per provincie</a></div>
+  <a class="adult" href="https://www.enigmamystery.com/nl/wandelingen/">Voor volwassenen: Enigma Mystery →</a>
+  <div class="links"><a href="speurtocht-op-maat.html">Op maat</a><a href="mailto:%(mail)s">Contact</a><a href="speurtocht-kinderfeestje-per-provincie.html">Per provincie</a></div>
 </footer>
 </body>
 </html>

@@ -34,7 +34,10 @@ function card(g){var x=g[L],p=MW.profile.get(),st=p.games&&p.games[g.id],has=!!M
     '<button type="button" class="more" aria-expanded="false">'+H.more+'</button><p class="desc" hidden>'+esc(x.desc)+'</p>'+
     /* één lijst: per zaak de gratis proefronde én de echte zaak */
     '<div class="acts"><a class="btn ghost try1" href="'+MW.root+esc(x.slug)+'?oefen">▶ '+H.try+'</a><a class="btn" href="'+MW.root+esc(x.slug)+'">'+(has?H.resume:H.play)+' →</a></div></article>'}
-function cases(){var el=$("#cases");el.innerHTML=C.games.filter(function(g){return g.status!=="soon"}).map(card).join("");
+function cases(){var el=$("#cases");el.innerHTML=C.games.filter(function(g){return g.status!=="soon"}).map(card).join("")+
+    /* laatste kaart: maatwerk */
+    '<article class="case maatcase"><div class="mc-ico" aria-hidden="true">✨</div><h3>'+esc(CF.card)+'</h3><p class="tag">'+esc(CF.cardT)+'</p><div class="acts"><a class="btn ghost" href="#custom">'+esc(CF.cardM)+'</a><button type="button" class="btn" data-mc>'+esc(CF.cardB)+' →</button></div></article>';
+  var mc=el.querySelector("[data-mc]");if(mc)mc.onclick=function(){customForm()};
   [].forEach.call(el.querySelectorAll(".more"),function(b){b.onclick=function(){var d=b.nextElementSibling,open=d.hidden;d.hidden=!open;b.textContent=open?H.less:H.more;b.setAttribute("aria-expanded",open)}})}
 
 /* ---------- vellen ---------- */
@@ -49,11 +52,11 @@ function privacy(){sheet('<div class="eyebrow">Privacy</div><h2>'+H.privH+'</h2>
 
 
 /* ---------- speurtocht op maat: formulier → mail ---------- */
-var CF={nl:{btn:"✉️ Op maat",h:"Speurtocht op maat",lead:"Vertel wat je in gedachten hebt. Het formulier opent je mailprogramma met alles al ingevuld; verstuur de mail en je hoort snel wat er kan. Prijs in overleg.",
+var CF={nl:{btn:"✨ Speurtocht op maat",card:"Speurtocht op maat",cardT:"Een eigen speurtocht met de namen van de kinderen, jullie plek en jullie thema. Voor feestjes, scholen en kampen.",cardB:"Vraag aan",cardM:"Meer weten",h:"Speurtocht op maat",lead:"Vertel wat je in gedachten hebt. Het formulier opent je mailprogramma met alles al ingevuld; verstuur de mail en je hoort snel wat er kan. Prijs in overleg.",
     name:"Je naam",email:"Je e-mailadres",kids:"Aantal kinderen",age:"Leeftijd",where:"Waar (adres of buurt)",when:"Wanneer (datum, of ongeveer)",kind:"Wat voor feest?",kinds:["Kinderfeestje","Schoolkamp of klas","Buurt- of straatfeest","Bedrijfs- of familie-uitje","Iets anders"],
     wish:"Jullie wensen",wishP:"Bijvoorbeeld: een piratenthema, de namen van de kinderen in het verhaal, start bij ons huis, eindigen bij de speeltuin…",send:"✉️ Open de mail en verstuur",copy:"Lukt het mailen niet? Kopieer de tekst",copied:"Gekopieerd. Plak hem in een mail aan kellievandekerkhof@gmail.com.",need:"Vul in elk geval je naam en wat je wilt in.",
     subj:"Speurtocht op maat via MiniMystery",hi:"Hoi Kellie,",intro:"Ik zoek een speurtocht op maat.",bye:"Groet,"},
-  en:{btn:"✉️ Custom",h:"A custom treasure hunt",lead:"Tell me what you have in mind. The form opens your mail app with everything filled in; send the email and you'll hear quickly what's possible. Price on request.",
+  en:{btn:"✨ Custom hunt",card:"A custom treasure hunt",cardT:"A hunt of your own, with the children's names, your place and your theme. For parties, schools and camps.",cardB:"Ask for one",cardM:"Find out more",h:"A custom treasure hunt",lead:"Tell me what you have in mind. The form opens your mail app with everything filled in; send the email and you'll hear quickly what's possible. Price on request.",
     name:"Your name",email:"Your email address",kids:"Number of children",age:"Age",where:"Where (address or neighbourhood)",when:"When (date, or roughly)",kind:"What kind of party?",kinds:["Kids' party","School trip or class","Street or neighbourhood party","Company or family outing","Something else"],
     wish:"Your wishes",wishP:"For example: a pirate theme, the children's names in the story, start at our house, finish at the playground…",send:"✉️ Open the email and send",copy:"Email not working? Copy the text",copied:"Copied. Paste it into an email to kellievandekerkhof@gmail.com.",need:"At least fill in your name and what you want.",
     subj:"Custom treasure hunt via MiniMystery",hi:"Hi Kellie,",intro:"I'm looking for a custom treasure hunt.",bye:"Kind regards,"}}[L];

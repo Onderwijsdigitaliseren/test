@@ -99,3 +99,11 @@ footer a,footer button{color:var(--fog);text-decoration:underline;font-size:13px
 .cgrid b{font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.08em;font-size:13px;color:#a5392c}.cgrid span{font-size:14px;line-height:1.45;color:var(--ink)}
 @media (max-width:460px){.cgrid{grid-template-columns:1fr}}
 .csteps{margin:0 0 16px;padding-left:22px;color:var(--ink)}.csteps li{margin:4px 0}.custom .note{margin:10px 0 0;font-size:13px;color:var(--ink2);text-align:center}
+/* maatwerk: strook tussen de wandelingen en de uitleg */
+.maatstrip{display:grid;grid-template-columns:auto 1fr auto;gap:8px 16px;align-items:center;margin:4px 0 0;padding:16px 18px;background:linear-gradient(135deg,rgba(240,168,80,.14),rgba(194,38,46,.10));border:1px solid rgba(240,168,80,.55);border-left:4px solid var(--lamp);border-radius:4px;color:var(--paper);text-decoration:none}
+.maatstrip:hover{background:linear-gradient(135deg,rgba(240,168,80,.22),rgba(194,38,46,.14))}
+.maatstrip .ms-k{font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.14em;font-size:12px;color:var(--lamp);white-space:nowrap}
+.maatstrip .ms-t{font-size:15px;line-height:1.45;color:var(--fog)}.maatstrip .ms-t b{color:var(--paper);font-weight:600}
+.maatstrip .ms-a{font-weight:600;color:var(--lamp);white-space:nowrap}
+@media (max-width:560px){.maatstrip{grid-template-columns:1fr}}
+.custom .note a{color:inherit}
