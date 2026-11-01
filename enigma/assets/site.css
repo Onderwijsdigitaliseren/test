@@ -346,3 +346,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 @media (max-width:480px){.maatform .maat2{grid-template-columns:1fr}}
 .maatform .knop{width:100%}
 .maatgroot{margin-top:16px;border-left:3px solid var(--lak)}.maatgroot h3{margin:0}
+.maattiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:18px}
+.maattier{background:linear-gradient(180deg,#21180e,#17120c);border:1px solid var(--goud-donker);padding:clamp(20px,3vw,28px);display:grid;gap:12px;align-content:start}
+.maattier.nieuw{background:var(--hout);border-color:var(--rand)}
+.maattier .prijs{font:700 clamp(1.7rem,4vw,2.2rem)/1 var(--kop);color:var(--goud-licht)}.maattier.nieuw .prijs{font-size:1.25rem;color:var(--perkament)}
+.maattier ul{margin:0;padding-left:1.1em;display:grid;gap:6px;color:var(--perkament-zacht)}.maattier p{margin:0}.maattier .knop{justify-self:start;margin-top:4px}
