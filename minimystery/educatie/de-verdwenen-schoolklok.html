@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Het mysterie van de verdwenen schoolklok – MiniMystery Educatie</title>
+<meta name="description" content="Een MiniMystery-avontuur voor je klas of BSO. De schoolklok is weg! Kinderen spelen in teams rond de eigen school of BSO: zes opdrachten, puzzels, een foto-opdracht, hints en een diploma. Zonder GPS, zonder voorbereiding.">
+<meta name="theme-color" content="#3a9be6">
+<link rel="icon" href="../assets/favicon.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Permanent+Marker&family=Nunito:wght@500;600;700&display=swap">
+<style>
+:root{--ink:#1b2550;--navy:#22327a;--cream:#fbf6ec;--paper:#fffaf0;--gold:#f5b800;--sky:#3a9be6;--sky2:#9ad7ff;--violet:#7a5cd6;--coral:#e0584f;--green:#3fa75f;--soft:#5a6385;--line:rgba(27,37,80,.14);--rule:#e0d4b4;
+  --f-head:'Fredoka','Arial Rounded MT Bold',system-ui,sans-serif;--f-hand:'Permanent Marker','Comic Sans MS',cursive;--f-body:'Nunito',system-ui,sans-serif}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100vh;min-height:100dvh;background:linear-gradient(180deg,var(--sky2) 0,#d8f0ff 260px,var(--cream) 520px);color:var(--ink);font:500 17px/1.5 var(--f-body)}
+h1,h2,h3{font-family:var(--f-head);font-weight:700;margin:0;color:var(--navy);text-wrap:balance}
+p{margin:0}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid var(--sky);outline-offset:3px}
+.screen{min-height:100vh;min-height:100dvh;padding:18px 0 40px}
+.wrap{max-width:540px;margin-inline:auto;display:flex;flex-direction:column;gap:16px;padding-inline:16px}
+.row0{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.pill{appearance:none;border:2px solid var(--ink);background:rgba(255,255,255,.92);color:var(--ink);border-radius:999px;padding:5px 14px;font:600 14px var(--f-head);text-decoration:none;display:inline-block;cursor:pointer}
+.eyebrow{font:600 13px var(--f-head);letter-spacing:.14em;text-transform:uppercase;color:var(--violet)}
+.lead{color:#39436a;max-width:46ch}
+.note{font-size:14px;color:var(--soft)}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;appearance:none;border:2px solid var(--ink);background:var(--gold);color:var(--ink);border-radius:16px;padding:14px 18px;font:600 18px var(--f-head);text-decoration:none;cursor:pointer;box-shadow:0 3px 0 var(--ink);transition:transform .08s,background .15s;text-align:center}
+.btn:hover{background:#ffc823}
+.btn:active{transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
+.btn.ghost{background:#fff}
+.btn.sky{background:var(--sky);color:#fff}
+.btn.coral{background:var(--coral);color:#fff}
+.btn.green{background:var(--green);color:#fff}
+.btn.sm{width:auto;align-self:center;padding:8px 16px;font-size:15px;box-shadow:0 2px 0 var(--ink)}
+.btn:disabled{opacity:.45;cursor:default;transform:none}
+.card{background:#fff;border:2px solid var(--line);border-radius:22px;padding:18px;box-shadow:0 14px 30px -20px rgba(27,37,80,.55);display:flex;flex-direction:column;gap:12px}
+.paper{background:var(--paper);border:2px solid var(--rule);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:10px}
+label.f{display:flex;flex-direction:column;gap:5px;font:600 15px var(--f-head)}
+.inp{width:100%;padding:12px 14px;border:2px solid var(--line);border-radius:14px;background:#fff;color:var(--ink);font:600 17px var(--f-body)}
+.inp.code{font:700 26px var(--f-head);text-transform:uppercase;letter-spacing:.14em;text-align:center}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.seg.three{grid-template-columns:1fr 1fr 1fr}
+.seg button{padding:10px 6px;border:2px solid var(--line);border-radius:14px;background:#fff;color:var(--soft);font:600 15px var(--f-head);line-height:1.2;display:flex;flex-direction:column;gap:2px;align-items:center}
+.seg button small{font:500 12px var(--f-body);color:var(--soft)}
+.seg button[aria-pressed="true"]{background:var(--gold);border-color:var(--ink);color:var(--ink)}
+.seg button[aria-pressed="true"] small{color:var(--ink)}
+.how{display:flex;flex-direction:column;gap:8px;color:#39436a;font-size:15px;padding-left:20px;margin:0}
+.tape{display:inline-block;background:var(--coral);color:#fff;font:400 19px var(--f-hand);line-height:1.1;padding:7px 16px;border-radius:6px;transform:rotate(-2deg);box-shadow:0 6px 16px rgba(0,0,0,.18);align-self:flex-start}
+.masthead{display:flex;flex-direction:column;gap:10px}
+#ttl{font-size:clamp(34px,9vw,52px);line-height:.98;color:var(--navy)}
+.hero{display:flex;justify-content:center}
+.hero svg{width:min(70vw,260px);height:auto;filter:drop-shadow(0 10px 20px rgba(27,37,80,.25))}
+/* bericht/bubbel */
+.msg{display:flex;gap:10px;align-items:flex-start}
+.avatar{width:46px;height:46px;flex:0 0 46px;border-radius:50%;display:grid;place-items:center;font:700 20px var(--f-head);color:#fff;background:var(--sky);box-shadow:0 3px 8px rgba(0,0,0,.2)}
+.avatar.v{background:var(--violet)}.avatar.c{background:var(--coral)}.avatar.g{background:var(--green)}
+.bub{background:#fff;border:2px solid var(--line);border-radius:18px 18px 18px 4px;padding:10px 14px;display:flex;flex-direction:column;gap:3px;flex:1}
+.bub em{font-style:normal;font:600 12px var(--f-head);text-transform:uppercase;letter-spacing:.06em;color:var(--soft)}
+.bub p{font-family:var(--f-hand);font-size:17px;line-height:1.35;color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:600 13px var(--f-head);background:var(--cream);border:1.5px solid var(--line);border-radius:999px;padding:3px 10px;color:var(--soft)}
+.chip.g{background:#e6f6ea;color:#1f6b3a}.chip.v{background:#efe9ff;color:var(--violet)}.chip.s{background:#e3f1ff;color:#1d5f9a}
+/* hud */
+#hud{position:sticky;top:0;z-index:5;background:var(--navy);color:#fff;display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:1px;padding-top:env(safe-area-inset-top,0px);border-bottom:3px solid var(--gold)}
+#hud>div{padding:8px 6px;text-align:center;background:var(--navy)}
+#hud b{display:block;font:700 20px var(--f-head);font-variant-numeric:tabular-nums}
+#hud span{font:600 11px var(--f-head);text-transform:uppercase;letter-spacing:.08em;opacity:.8}
+#hud .ltr{display:flex;justify-content:center;gap:4px;margin-top:2px}
+#hud .ltr i{width:22px;height:26px;border-radius:5px;background:rgba(255,255,255,.18);font:700 16px var(--f-head);font-style:normal;display:grid;place-items:center}
+#hud .ltr i.on{background:var(--gold);color:var(--ink)}
+.progress{height:10px;background:rgba(27,37,80,.12);border-radius:5px;overflow:hidden}
+.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--sky),var(--violet));transition:width .4s}
+.teamline{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.teamline b{font:700 20px var(--f-head);color:var(--navy)}
+/* opdrachtkaart */
+.step{display:flex;flex-direction:column;gap:14px}
+.step .no{font:700 14px var(--f-head);text-transform:uppercase;letter-spacing:.12em;color:var(--violet)}
+.step h2{font-size:26px}
+.act{background:#fff4d1;border:2px dashed #d9a400;border-radius:16px;padding:12px 14px;display:flex;gap:10px;align-items:flex-start}
+.act .ico{font-size:26px;line-height:1}
+.act b{font-family:var(--f-head)}
+.q{font:700 20px var(--f-head);color:var(--ink)}
+.choices{display:flex;flex-direction:column;gap:8px}
+.choices button{padding:12px 14px;border:2px solid var(--line);border-radius:14px;background:#fff;text-align:left;font:600 17px var(--f-body)}
+.choices button.ok{background:#e6f6ea;border-color:var(--green)}
+.choices button.no{background:#fde8e6;border-color:var(--coral)}
+.fb{padding:10px 14px;border-radius:14px;font:600 16px var(--f-body)}
+.fb.ok{background:#e6f6ea;color:#1f6b3a}
+.fb.no{background:#fde8e6;color:#9a2f27}
+.fb.hint{background:#efe9ff;color:var(--violet)}
+.cards{display:flex;flex-direction:column;gap:10px}
+.kcard{background:var(--paper);border:2px solid var(--rule);border-radius:16px;padding:14px;text-align:center;display:flex;flex-direction:column;gap:6px;min-height:150px;justify-content:center}
+.kcard .who{font:600 13px var(--f-head);text-transform:uppercase;letter-spacing:.1em;color:var(--violet)}
+.kcard .txt{font:400 22px var(--f-hand);color:var(--ink)}
+.photo{display:flex;flex-direction:column;gap:10px;align-items:center}
+.photo img{max-width:100%;max-height:260px;border-radius:14px;border:3px solid #fff;box-shadow:0 10px 24px -10px rgba(0,0,0,.4)}
+input[type=file]{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.ltrbig{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.ltrbig i{width:48px;height:56px;border-radius:10px;background:var(--gold);border:2px solid var(--ink);font:700 30px var(--f-head);font-style:normal;display:grid;place-items:center;box-shadow:0 3px 0 var(--ink)}
+.reward{text-align:center;display:flex;flex-direction:column;gap:12px;align-items:center;padding:10px 0}
+.reward .big{font:700 64px var(--f-head);line-height:1}
+.reward .ltr{width:70px;height:84px;border-radius:14px;background:var(--gold);border:3px solid var(--ink);font:700 48px var(--f-head);display:grid;place-items:center;box-shadow:0 5px 0 var(--ink);animation:pop .5s ease-out}
+@keyframes pop{0%{transform:scale(.3) rotate(-15deg);opacity:0}70%{transform:scale(1.15) rotate(3deg)}100%{transform:none;opacity:1}}
+/* dashboard */
+.code{font:700 clamp(30px,9vw,44px) var(--f-head);letter-spacing:.12em;text-align:center;background:var(--navy);color:#fff;border-radius:16px;padding:14px;word-break:break-all}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{padding:8px 6px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle}
+th{font:600 12px var(--f-head);text-transform:uppercase;letter-spacing:.08em;color:var(--soft)}
+td b{font-family:var(--f-head)}
+.st{display:inline-block;border-radius:999px;padding:2px 10px;font:600 13px var(--f-head)}
+.st.w{background:#eee;color:var(--soft)}.st.b{background:#fff4d1;color:#9a6b00}.st.d{background:#e6f6ea;color:#1f6b3a}
+.mini{padding:4px 10px;border:2px solid var(--line);border-radius:10px;background:#fff;font:600 13px var(--f-head)}
+.tabs{display:flex;gap:6px}
+.tabs button{flex:1;padding:10px;border-radius:14px;border:2px solid var(--line);background:#fff;font:600 15px var(--f-head);color:var(--soft)}
+.tabs button[aria-selected="true"]{background:var(--navy);color:#fff;border-color:var(--navy)}
+.ol{display:flex;flex-direction:column;gap:8px;padding-left:20px;margin:0;color:#39436a;font-size:15px}
+/* diploma */
+#dipC{width:100%;height:auto;border-radius:12px;border:3px solid #fff;box-shadow:0 14px 30px -14px rgba(27,37,80,.6)}
+/* sheet */
+.sheet{position:fixed;inset:0;background:rgba(16,22,50,.7);display:flex;align-items:flex-end;justify-content:center;z-index:50;padding:0}
+.sheet>.card{width:100%;max-width:560px;max-height:92%;overflow-y:auto;border-radius:22px 22px 0 0;padding-bottom:calc(18px + env(safe-area-inset-bottom,0px))}
+#toast{position:fixed;left:50%;top:70px;transform:translateX(-50%);background:var(--gold);color:var(--ink);padding:8px 16px;border-radius:12px;font:600 15px var(--f-head);z-index:90;max-width:88%;text-align:center;border:2px solid var(--ink)}
+#pause{position:fixed;inset:0;z-index:60;background:rgba(27,37,80,.96);color:#fff;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px}
+#pause h2{color:#fff;font-size:40px}
+#pause p{opacity:.85;margin-top:8px}
+.pinpad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.pinpad button{padding:14px;border-radius:14px;border:2px solid var(--line);background:#fff;font:700 22px var(--f-head)}
+@media print{body{background:#fff}.noprint{display:none!important}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- ===== START ===== -->
+<section class="screen" id="home">
+  <div class="wrap">
+    <div class="row0"><a class="pill" href="./">◂ MiniMystery Educatie</a><span class="pill" style="background:var(--navy);color:#fff;border-color:var(--navy)">School &amp; BSO</span></div>
+    <div class="hero" aria-hidden="true">
+      <svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="92" fill="#fff" stroke="#1b2550" stroke-width="6"/><circle cx="100" cy="100" r="80" fill="#fffaf0" stroke="#f5b800" stroke-width="4" stroke-dasharray="6 10"/>
+      <g font-family="Fredoka,sans-serif" font-weight="700" font-size="22" fill="#1b2550" text-anchor="middle"><text x="100" y="40">12</text><text x="166" y="108">3</text><text x="100" y="176">6</text><text x="34" y="108">9</text></g>
+      <path d="M100 100 L100 55" stroke="#22327a" stroke-width="8" stroke-linecap="round"/><path d="M100 100 L135 118" stroke="#e0584f" stroke-width="6" stroke-linecap="round"/><circle cx="100" cy="100" r="7" fill="#1b2550"/>
+      <text x="100" y="150" font-family="Permanent Marker,cursive" font-size="20" fill="#e0584f" text-anchor="middle" transform="rotate(-8 100 150)">weg?!</text></svg>
+    </div>
+    <div class="masthead">
+      <span class="eyebrow">MiniMystery Educatie · zaak 1</span>
+      <h1 id="ttl">Het mysterie van de verdwenen schoolklok</h1>
+      <span class="tape">De grote klok hangt er niet meer!</span>
+    </div>
+    <p class="lead">Vanmorgen was de schoolklok weg. Alleen een briefje bleef achter. Zes opdrachten rond jullie eigen school of BSO, zes letters, één plek. Spelen jullie in teams? Dan vinden jullie de klok terug.</p>
+    <button class="btn" id="bTeam">Wij zijn een team ▸</button>
+    <button class="btn ghost" id="bLead">Ik ben de begeleider</button>
+    <button class="btn ghost" id="bResume" hidden>Verder met onze zaak</button>
+    <button class="btn ghost sm" id="bHow">Hoe werkt het?</button>
+    <div class="card" id="howT" hidden>
+      <ol class="how">
+        <li><b>De begeleider</b> zet het avontuur klaar: naam van de school of BSO, schoolmodus of BSO-modus, leeftijd, speelduur, aantal teams en de startplek. Daar rolt een <b>startcode</b> uit.</li>
+        <li><b>Elk team</b> (4–6 kinderen, één telefoon of tablet) vult de startcode in, kiest een teamnummer en een teamnaam.</li>
+        <li>Zes opdrachten: bij elke opdracht een stukje verhaal, iets te doen in de buurt en een puzzel. Goed antwoord = een letter. Vastgelopen? Eén hint per opdracht.</li>
+        <li>Na zes letters weet het team waar de klok is. Dan volgt de onthulling en een <b>diploma</b> met teamnaam.</li>
+        <li>De begeleider ziet op het <b>dashboard</b> welk team waar is, kan het avontuur starten, pauzeren en afsluiten. Druk lang op de tijd bovenin een teamscherm voor het begeleidersmenu (met pincode).</li>
+      </ol>
+      <p class="note">Geen GPS, geen account, geen app-store. Werkt in de browser. Foto's blijven op het eigen apparaat.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BEGELEIDER: SETUP ===== -->
+<section class="screen" id="setup" hidden>
+  <div class="wrap">
+    <div class="row0"><button class="pill" data-go="home">◂ Terug</button><span class="pill">Begeleider</span></div>
+    <h2>Avontuur klaarzetten</h2>
+    <p class="lead">Duurt een minuut. Daarna krijg je een startcode voor de teams.</p>
+    <div class="card">
+      <label class="f">Naam van de school of BSO<input class="inp" id="sName" maxlength="40" placeholder="bijv. De Regenboog" autocomplete="off"></label>
+      <label class="f">Modus</label>
+      <div class="seg" id="sMode">
+        <button type="button" data-v="school" aria-pressed="true">Schoolmodus<small>licht educatief</small></button>
+        <button type="button" data-v="bso" aria-pressed="false">BSO-modus<small>speels, meer bewegen</small></button>
+      </div>
+      <label class="f">Leeftijd</label>
+      <div class="seg three" id="sAge">
+        <button type="button" data-v="0" aria-pressed="false">6–7 jaar<small>groep 3–4</small></button>
+        <button type="button" data-v="1" aria-pressed="true">8–9 jaar<small>groep 5–6</small></button>
+        <button type="button" data-v="2" aria-pressed="false">10–12 jaar<small>groep 7–8</small></button>
+      </div>
+      <label class="f">Speelduur</label>
+      <div class="seg three" id="sDur">
+        <button type="button" data-v="0" aria-pressed="false">±30 min<small>vlot</small></button>
+        <button type="button" data-v="1" aria-pressed="true">±45 min<small>normaal</small></button>
+        <button type="button" data-v="2" aria-pressed="false">±60 min<small>rustig</small></button>
+      </div>
+      <label class="f">Aantal teams<select class="inp" id="sTeams"></select></label>
+      <label class="f">Startplek (waar beginnen de teams?)<input class="inp" id="sStart" maxlength="60" placeholder="bijv. het schoolplein bij de fietsenstalling"></label>
+    </div>
+    <button class="btn" id="bMake">Klaarzetten en startcode maken ▸</button>
+  </div>
+</section>
+
+<!-- ===== BEGELEIDER: DASHBOARD ===== -->
+<section class="screen" id="dash" hidden>
+  <div class="wrap">
+    <div class="row0"><button class="pill" data-go="home">◂ Start</button><span class="pill" id="dName">Begeleider</span></div>
+    <h2>Begeleidersdashboard</h2>
+    <div class="tabs noprint" role="tablist">
+      <button role="tab" aria-selected="true" data-tab="dStart">Starten</button>
+      <button role="tab" aria-selected="false" data-tab="dTeams">Teams</button>
+      <button role="tab" aria-selected="false" data-tab="dInfo">Antwoorden</button>
+    </div>
+    <div id="dStart">
+      <div class="card">
+        <span class="eyebrow">Startcode voor de teams</span>
+        <div class="code" id="dCode">—</div>
+        <p class="note">Elk team typt deze code in op zijn eigen telefoon of tablet (knop "Wij zijn een team"). Of deel de link:</p>
+        <button class="btn ghost sm" id="bLink">Link kopiëren</button>
+        <p class="note">Pincode begeleidersmenu: <b id="dPin">—</b>. Lang drukken op de tijd bovenin een teamscherm.</p>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <span class="eyebrow">Zo start je</span>
+        <ol class="ol">
+          <li>Verdeel de kinderen in <b id="dT">—</b> teams van 4–6. Eén apparaat per team, batterij vol.</li>
+          <li>Lees het verhaal voor (tabblad Antwoorden heeft de tekst) of laat elk team de inleiding op het eigen scherm lezen.</li>
+          <li>Spreek af: op de stoep blijven, in de buurt van <b id="dStartPlek">de startplek</b>, en terug zijn na <b id="dDur">—</b> minuten.</li>
+          <li>Druk op <b>Start</b>. De tijd gaat lopen op dit dashboard; de teams starten zelf op hun apparaat.</li>
+        </ol>
+        <div class="teamline"><b id="dClock">00:00</b><span class="st w" id="dState">Nog niet gestart</span></div>
+        <button class="btn green" id="bStart">▶ Start het avontuur</button>
+        <button class="btn ghost" id="bPause">⏸ Pauze</button>
+        <button class="btn coral" id="bEnd">■ Afsluiten en uitslag</button>
+        <button class="btn ghost sm" id="bNew">Nieuw avontuur klaarzetten</button>
+      </div>
+    </div>
+    <div id="dTeams" hidden>
+      <div class="card">
+        <span class="eyebrow">Teamoverzicht</span>
+        <p class="note">De apparaten praten niet met elkaar (geen account, geen server). Werk de stand bij met de knoppen, of typ de <b>uitslagcode</b> die een team aan het eind op het scherm krijgt.</p>
+        <table id="dTable"><thead><tr><th>Team</th><th>Stand</th><th></th></tr></thead><tbody></tbody></table>
+        <label class="f">Uitslagcode van een team<input class="inp code" id="dRes" placeholder="SK3-2714X" autocomplete="off" style="font-size:20px"></label>
+        <button class="btn ghost sm" id="bRes">Invoeren</button>
+      </div>
+      <div class="card" id="dResult" hidden style="margin-top:14px">
+        <span class="eyebrow">Uitslag</span>
+        <div id="dRank"></div>
+        <button class="btn ghost sm" onclick="window.print()">Printen</button>
+      </div>
+    </div>
+    <div id="dInfo" hidden>
+      <div class="card">
+        <span class="eyebrow">Alleen voor de begeleider</span>
+        <h3>Het verhaal om voor te lezen</h3>
+        <p id="dIntro" style="font-size:15px;color:#39436a"></p>
+        <h3>Opdrachten en antwoorden</h3>
+        <ol class="ol" id="dAns"></ol>
+        <p class="note">De plek waar de klok is: <b>ZOLDER</b>. Daarna volgt de onthulling: juf Noor en meneer Tik hebben de klok naar zolder gebracht om er een nieuwe wijzerplaat op te schilderen — met de hele school, als verrassing.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TEAM: JOIN ===== -->
+<section class="screen" id="join" hidden>
+  <div class="wrap">
+    <div class="row0"><button class="pill" data-go="home">◂ Terug</button><span class="pill">Team</span></div>
+    <h2>Meedoen met jullie team</h2>
+    <div class="card">
+      <label class="f">Startcode van de begeleider<input class="inp code" id="jCode" maxlength="11" placeholder="S2BD-4729" autocomplete="off" autocapitalize="characters"></label>
+      <p class="fb no" id="jErr" hidden>Die code klopt niet. Kijk nog eens goed op het dashboard van de begeleider.</p>
+      <label class="f" id="jNameL">Naam van jullie school of BSO<input class="inp" id="jSchool" maxlength="40" placeholder="bijv. De Regenboog" autocomplete="off"></label>
+      <label class="f">Welk team zijn jullie?<select class="inp" id="jTeam"></select></label>
+      <label class="f">Teamnaam<input class="inp" id="jTeamName" maxlength="24" placeholder="Verzin er een of kies hieronder" autocomplete="off"></label>
+      <div class="chips" id="jSug"></div>
+      <label class="f">Namen van de teamleden (voor op het diploma, mag leeg)<input class="inp" id="jKids" maxlength="120" placeholder="Sam, Noa, Yusuf, Lotte"></label>
+    </div>
+    <button class="btn" id="bJoin">Start de zaak ▸</button>
+  </div>
+</section>
+
+<!-- ===== TEAM: BRIEFING ===== -->
+<section class="screen" id="brief" hidden>
+  <div class="wrap">
+    <span class="eyebrow" id="bfTeam"></span>
+    <h2>Het briefje</h2>
+    <div class="paper" id="bfBody"></div>
+    <button class="btn" id="bGo">We gaan zoeken! ▸</button>
+  </div>
+</section>
+
+<!-- ===== TEAM: SPELEN ===== -->
+<section class="screen" id="play" hidden style="padding-top:0">
+  <div id="hud">
+    <div id="hudT" role="button" tabindex="0" aria-label="Tijd (lang drukken: begeleidersmenu)"><b id="hT">00:00</b><span>Tijd</span></div>
+    <div><b id="hN">1/6</b><span>Opdracht</span></div>
+    <div><div class="ltr" id="hL"></div><span>Letters</span></div>
+  </div>
+  <div class="wrap" style="padding-top:16px">
+    <div class="teamline"><b id="pTeam"></b><span class="note" id="pSchool"></span></div>
+    <div class="progress"><i id="pBar" style="width:0"></i></div>
+    <div class="card step" id="stepBox"></div>
+  </div>
+</section>
+
+<!-- ===== TEAM: FINALE ===== -->
+<section class="screen" id="finale" hidden>
+  <div class="wrap">
+    <span class="eyebrow">De laatste stap</span>
+    <h2>Waar is de klok?</h2>
+    <div class="card">
+      <p>Jullie hebben zes letters. Door elkaar staan ze zo:</p>
+      <div class="ltrbig" id="fL"></div>
+      <p class="q">Zet de letters in de goede volgorde. Welke plek staat er?</p>
+      <input class="inp code" id="fIn" maxlength="12" placeholder="??????" autocomplete="off" autocapitalize="characters">
+      <div id="fFb"></div>
+      <button class="btn" id="bFin">Dat is de plek! ▸</button>
+      <button class="btn ghost sm" id="bFHint">Hint</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TEAM: ONTHULLING + DIPLOMA ===== -->
+<section class="screen" id="done" hidden>
+  <div class="wrap">
+    <span class="eyebrow">Opgelost!</span>
+    <h2>De klok is terecht</h2>
+    <div class="paper" id="reveal"></div>
+    <div class="card">
+      <span class="eyebrow">Diploma</span>
+      <canvas id="dipC" width="1200" height="850"></canvas>
+      <button class="btn ghost" id="bDip">Diploma opslaan (afbeelding)</button>
+      <button class="btn ghost sm" onclick="window.print()">Printen</button>
+    </div>
+    <div class="card">
+      <span class="eyebrow">Voor de begeleider</span>
+      <p>Laat deze uitslagcode zien aan de begeleider:</p>
+      <div class="code" id="resCode">—</div>
+      <p class="note" id="resTime"></p>
+    </div>
+    <button class="btn ghost sm" id="bAgain">Nog een team op dit apparaat</button>
+  </div>
+</section>
+
+<div id="pause" hidden><div><div style="font-size:70px">⏸</div><h2>Even pauze</h2><p>De begeleider heeft het spel stilgezet. Wacht tot het weer verdergaat.</p><button class="btn sm" id="bUnpause" style="margin:18px auto 0;background:#fff">Begeleider: verder</button></div></div>
+<div class="sheet" id="sheet" hidden><div class="card" id="sheetBody"></div></div>
+<input type="file" id="file" accept="image/*" capture="environment" aria-label="Maak de foto">
+<div id="toast" hidden></div>
+</div>
+
+<script>
+(function(){
+"use strict";
+var $=function(s,r){return (r||document).querySelector(s)},$$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var esc=function(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})};
+var KEY_LEAD="mme_sk_lead",KEY_TEAM="mme_sk_team";
+var load=function(k){try{return JSON.parse(localStorage.getItem(k)||"null")}catch(e){return null}};
+var save=function(k,v){try{if(v==null)localStorage.removeItem(k);else localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+var toast=function(t){var el=$("#toast");el.textContent=t;el.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(function(){el.hidden=true},2200)};
+var fmt=function(s){s=Math.max(0,Math.floor(s));return (Math.floor(s/60)<10?"0":"")+Math.floor(s/60)+":"+(s%60<10?"0":"")+(s%60)};
+var norm=function(s){return String(s||"").toLowerCase().replace(/[^a-z0-9:]/g,"").replace(/^(de|het|een)/,"")};
+var DUR=[30,45,60];
+var WORD="ZOLDER";
+
+/* ---------- schermen ---------- */
+function show(id){$$(".screen").forEach(function(s){s.hidden=s.id!==id});window.scrollTo(0,0)}
+$$("[data-go]").forEach(function(b){b.addEventListener("click",function(){show(b.getAttribute("data-go"))})});
+$("#bHow").addEventListener("click",function(){var h=$("#howT");h.hidden=!h.hidden});
+function seg(id,cb){$$("button",$(id)).forEach(function(b){b.addEventListener("click",function(){$$("button",$(id)).forEach(function(x){x.setAttribute("aria-pressed","false")});b.setAttribute("aria-pressed","true");if(cb)cb(b.getAttribute("data-v"))})})}
+function segVal(id){var b=$(id+' button[aria-pressed="true"]');return b?b.getAttribute("data-v"):null}
+
+/* ---------- startcode: [S|B][leeftijd 1-3][duur A-C][teams A-L]-[pin 4 cijfers] ---------- */
+function makeCode(c){return (c.mode==="bso"?"B":"S")+(c.age+1)+"ABC"[c.dur]+"ABCDEFGHIJKL"[c.teams-1]+"-"+c.pin}
+function parseCode(s){s=String(s||"").toUpperCase().replace(/[^A-Z0-9]/g,"");var m=/^([SB])([123])([ABC])([A-L])(\d{4})$/.exec(s);if(!m)return null;
+  return {mode:m[1]==="B"?"bso":"school",age:+m[2]-1,dur:"ABC".indexOf(m[3]),teams:"ABCDEFGHIJKL".indexOf(m[4])+1,pin:m[5],code:m[1]+m[2]+m[3]+m[4]+"-"+m[5]}}
+/* uitslagcode: SK<team>-<mmss><check> */
+function resCode(team,sec){var mm=Math.min(99,Math.floor(sec/60)),ss=sec%60,d=(mm<10?"0":"")+mm+(ss<10?"0":"")+ss,sum=0;for(var i=0;i<d.length;i++)sum+=+d[i];sum+=team*7;return "SK"+team+"-"+d+"ABCDEFGHJKLMNPQRSTUVWXYZ"[sum%24]}
+function parseRes(s){s=String(s||"").toUpperCase().replace(/[^A-Z0-9]/g,"");var m=/^SK(\d{1,2})(\d{4})([A-Z])$/.exec(s);if(!m)return null;var team=+m[1],d=m[2],sum=0;for(var i=0;i<4;i++)sum+=+d[i];sum+=team*7;if("ABCDEFGHJKLMNPQRSTUVWXYZ"[sum%24]!==m[3])return null;return {team:team,sec:+d.slice(0,2)*60+ +d.slice(2)}}
+
+/* =========================================================
+   VERHAAL EN OPDRACHTEN
+   Elke opdracht: verhaal (school/bso), actie buiten, puzzel per leeftijd (0/1/2), één hint, één letter.
+   ========================================================= */
+var INTRO={
+  school:"Vanmorgen kwam meneer Tik, de conciërge, als eerste binnen. Hij keek omhoog naar de grote klok in de hal, zoals elke dag. Maar de klok was weg. Op de muur zat alleen een lichte cirkel, en op de grond lag een briefje: <b>\"Zoek me. Zes letters wijzen de weg. – T.\"</b> Wie is T? En waar is de klok? Jullie zijn het speurteam van vandaag. Elke opdracht geeft een letter. Zes letters maken een woord, en dat woord is een plek.",
+  bso:"Vanmiddag kwam meneer Tik, de conciërge, fluitend de hal in. Hij wilde kijken hoe laat het was, maar... de grote klok was weg! Op de muur zat alleen een stoffige cirkel. Op de grond lag een briefje met rode letters: <b>\"Zoek me! Zes letters wijzen de weg. Wie het eerst de plek weet, mag me weer ophangen. – T.\"</b> Wie is T? Jullie team gaat het uitzoeken. Elke opdracht levert een letter op. Zes letters samen zijn een woord, en dat woord is de plek waar de klok verstopt is."
+};
+var REVEAL={
+  school:"<p>Op zolder brandt licht. Daar staat de klok op een tafel, zonder wijzerplaat. En naast de klok staan juf Noor en meneer Tik, allebei met een kwast in de hand.</p><p>\"Jullie hebben het gevonden,\" lacht juf Noor. \"De T op het briefje ben ik: ik heet eigenlijk Noor <b>T</b>immers. We wilden de klok een nieuwe wijzerplaat geven, geschilderd door alle kinderen van de school. Dat moest een verrassing blijven. Daarom hebben we 'm vannacht naar zolder gebracht.\"</p><p>Meneer Tik knikt. \"Maar we dachten: als we 'm gewoon weghalen, wordt iedereen ongerust. Dus hebben we er een speurtocht van gemaakt. En jullie waren goede speurders.\"</p><p>De klok krijgt een nieuwe wijzerplaat met jullie kleuren. En elke keer als jullie straks op de klok kijken, weten jullie weer: wij hebben 'm teruggevonden.</p>",
+  bso:"<p>Op zolder brandt een lampje. Daar staat de klok, op een oude tafel, zonder wijzerplaat. En naast de klok staat... meneer Tik zelf! Met verf op zijn neus.</p><p>\"Gesnapt!\" roept hij. \"De T op het briefje ben ik: <b>T</b>ik. Ik wilde de klok een nieuwe, superknalfelle wijzerplaat geven, door jullie geschilderd. Maar dat moest geheim blijven. Dus heb ik 'm gisteravond stiekem naar zolder gesjouwd. Poeh, zwaar ding.\"</p><p>Hij grijnst. \"En ik dacht: een klok die zomaar weg is, dat is saai. Een klok die je moet zóeken, dat is een avontuur. Jullie hebben alle zes de letters gevonden. Jullie mogen hem straks weer ophangen.\"</p><p>De nieuwe wijzerplaat krijgt jullie kleuren. En iedere keer als je op de klok kijkt, denk je: die hebben wij teruggevonden.</p>"
+};
+var STEPS=[
+ {id:"wijzer",letter:"Z",type:"Cijfercode",goal:["rekenen","tijd"],title:"De stilgevallen wijzers",
+  story:{school:"Op de lichte cirkel op de muur heeft iemand met potlood een klok getekend. De wijzers staan stil op een bepaalde tijd. \"Zo laat is de klok weggehaald,\" zegt meneer Tik. \"Als jullie uitrekenen hoe laat dat was, geef ik de eerste letter.\"",
+         bso:"Op de stoffige cirkel staat met vinger een klok getekend. \"Zo laat is de klok ontvoerd!\" fluistert meneer Tik. \"Reken uit hoe laat dat was, dan krijg je van mij de eerste letter.\""},
+  act:{school:"Loop naar buiten, naar de startplek. Ga in een kring staan. Eén teamlid leest de puzzel voor, de rest denkt mee.",bso:"Ren naar de startplek. Doe eerst samen twaalf sprongen, als twaalf klokslagen. Dán de puzzel!"},
+  puzzle:[
+   {kind:"text",q:"De kleine wijzer staat precies op de 7. De grote wijzer staat op de 12. Hoe laat is het? (typ alleen het cijfer)",a:["7","7uur","700"],hint:"De kleine wijzer vertelt het uur. Hij staat op de 7, dus het is... uur."},
+   {kind:"text",q:"De klok stopte om kwart over 8. Precies vier uur en een half uur eerder is hij voor het laatst opgewonden. Hoe laat was dat? Typ als uu:mm, bijvoorbeeld 09:30.",a:["3:45","03:45","345","0345"],hint:"Eerst vier uur terug vanaf 8:15, dan nog een half uur terug."},
+   {kind:"text",q:"De schoolklok loopt elke dag 3 minuten achter. Meneer Tik heeft hem 2 weken geleden gelijkgezet. Hoeveel minuten liep hij vanmorgen achter? (typ alleen het getal)",a:["42"],hint:"Twee weken is 14 dagen. Elke dag 3 minuten erbij: 14 × 3."}
+  ]},
+ {id:"woord",letter:"O",type:"Woordraadsel",goal:["taal","lezen"],title:"Het geheimschrift",
+  story:{school:"Achterop het briefje staat nog iets, in geheimschrift. \"Dat is een code,\" zegt meneer Tik. \"Wie hem kraakt, weet wat de klok de hele dag zegt.\"",
+         bso:"Achterop het briefje staat geheimschrift! Meneer Tik houdt het tegen het licht. \"Hmm. Dit is wat de klok de hele dag roept. Kraak de code!\""},
+  act:{school:"Zoek buiten een plek waar iets geschreven staat: een bord, een naam, een letter op een muur. Lees het hardop. Daarna de code.",bso:"Zoek buiten drie dingen die beginnen met de letter K. Roep ze om de beurt. Dan de code!"},
+  puzzle:[
+   {kind:"text",q:"De letters zijn door elkaar gehusseld: K · T · I · A · T · K. Welk woord zegt een klok de hele dag? (6 letters)",a:["tiktak"],hint:"Een klok zegt: tik... en dan?"},
+   {kind:"text",q:"Elke letter is een getal: A=1, B=2, C=3 ... Z=26. De code is: 20 · 9 · 11 · 20 · 1 · 11. Welk woord staat er?",a:["tiktak"],hint:"20 is de T (tel maar: A=1 ... T=20). 9 is de I."},
+   {kind:"text",q:"Geheimschrift: elke letter is één plek opgeschoven in het alfabet (A werd B, B werd C). De code is: U J L U B L. Welk woord staat er echt?",a:["tiktak"],hint:"Schuif elke letter één plek terúg: U wordt T, J wordt I..."}
+  ]},
+ {id:"zon",letter:"L",type:"Zoekopdracht + keuzevraag",goal:["natuur","tijd"],title:"De klok van de natuur",
+  story:{school:"\"Vroeger was er geen klok,\" vertelt meneer Tik. \"Mensen keken naar de zon en naar hun schaduw. Kijken jullie ook eens om je heen? De natuur heeft zijn eigen klok.\"",
+         bso:"\"Weet je wat de oudste klok is?\" vraagt meneer Tik. \"De zon! Ga eens kijken of je de zon kunt vinden, of je eigen schaduw. Dat is jullie klok van vandaag.\""},
+  act:{school:"Zoek buiten een schaduw (van een paal, een boom of jezelf). Ga met je rug naar de zon staan. Welke kant wijst je schaduw op? Bespreek het samen.",bso:"Maak samen de langste schaduw die je kunt (op elkaars schouders? armen omhoog?). Is het bewolkt? Zoek dan iets ronds, net als een klok."},
+  puzzle:[
+   {kind:"choice",q:"Hoeveel minuten duurt één uur?",c:["30 minuten","60 minuten","100 minuten"],a:1,hint:"Tel de streepjes op een klok: de grote wijzer doet een heel rondje in... minuten."},
+   {kind:"choice",q:"In welke richting komt de zon 's ochtends op?",c:["In het westen","In het noorden","In het oosten"],a:2,hint:"Rijmpje: in het oosten komt de zon op, in het westen gaat hij onder."},
+   {kind:"choice",q:"Een zonnewijzer werkt met de schaduw van een stokje. Waarom werkt hij 's nachts niet?",c:["Omdat de schaduw dan te lang is","Omdat er zonder zon geen schaduw is","Omdat het stokje dan slaapt"],a:1,hint:"Een schaduw heeft licht nodig. Waar komt dat licht overdag vandaan?"}
+  ]},
+ {id:"samen",letter:"D",type:"Samenwerkingsopdracht",goal:["samenwerken","logica"],title:"Vier stukjes, één getal",
+  story:{school:"\"Het kastje van de klok zat op slot met een cijferslot,\" zegt meneer Tik. \"De code was verdeeld over vier briefjes. Ik vond ze alle vier. Maar elk briefje zegt maar een stukje.\"",
+         bso:"\"De klok hing vast met een cijferslot!\" zegt meneer Tik. \"De dief heeft de code op vier snippers geschreven. Elke snipper weet maar een stukje. Jullie moeten ze samenvoegen!\""},
+  act:{school:"Geef de telefoon door. Elk teamlid krijgt één kaartje te zien en onthoudt het, zonder het aan de anderen te laten zien. Daarna vertellen jullie elkaar wat er stond.",bso:"Geef de telefoon door als een hete aardappel! Ieder krijgt één kaartje, leest het stiekem en legt de telefoon neer. Daarna: alles bij elkaar leggen."},
+  puzzle:[
+   {kind:"cards",cards:["Het getal is groter dan 5.","Het getal is kleiner dan 9.","Het getal is even.","Het getal is niet 6."],q:"Welk getal is de code? (één cijfer)",a:["8"],hint:"Groter dan 5 en kleiner dan 9: dat kan 6, 7 of 8 zijn. Even en niet 6..."},
+   {kind:"cards",cards:["Het getal heeft twee cijfers en is groter dan 20.","Het getal is kleiner dan 30.","Het getal is even.","Als je de twee cijfers optelt, krijg je 6."],q:"Welk getal is de code?",a:["24"],hint:"Tussen 20 en 30, even: 22, 24, 26, 28. Welke heeft cijfers die samen 6 zijn?"},
+   {kind:"cards",cards:["Het getal heeft drie cijfers en begint met een 1.","Het getal is deelbaar door 5.","Het middelste cijfer is twee keer het eerste cijfer.","Het getal is groter dan 123."],q:"Welk getal is de code?",a:["125"],hint:"Begint met 1, middelste cijfer is 2. Deelbaar door 5 betekent: eindigt op 0 of 5. Groter dan 123..."}
+  ]},
+ {id:"foto",letter:"E",type:"Foto-opdracht",goal:["samenwerken","bewegen"],title:"De levende klok",
+  story:{school:"\"Een klok zonder wijzers is niks,\" zegt meneer Tik. \"Laat maar zien dat jullie de tijd kunnen laten zien. Maak samen een klok van jullie eigen lijf.\"",
+         bso:"\"Zonder klok weet niemand hoe laat het is!\" roept meneer Tik. \"Dus: worden jullie zelf even de klok? Ik wil een foto zien van de mooiste mensenklok van de buurt!\""},
+  act:{school:"Ga in een kring staan als de cijfers van een klok. Twee teamleden zijn de wijzers: de grote wijzer op de 12, de kleine wijzer op de 3. Een ander maakt de foto.",bso:"Maak samen een mensenklok die 3 uur aanwijst (armen zijn de wijzers!). Maak de foto en doe daarna een gekke 'klok die kapot is'-dans."},
+  puzzle:[
+   {kind:"photo",q:"Maak de foto van jullie levende klok. De foto blijft op dit apparaat.",hint:"Zoek een plek met ruimte. Eén teamlid houdt de telefoon, de rest vormt de klok. Lachen mag."},
+   {kind:"photo",q:"Maak de foto van jullie levende klok die 3 uur aanwijst. De foto blijft op dit apparaat.",hint:"De grote wijzer wijst naar boven (12), de kleine wijzer wijst naar rechts (3)."},
+   {kind:"photo",q:"Maak de foto van jullie levende klok die kwart voor 6 aanwijst. De foto blijft op dit apparaat.",hint:"Kwart voor 6: grote wijzer op de 9, kleine wijzer bijna op de 6."}
+  ]},
+ {id:"patroon",letter:"R",type:"Creatief + logica",goal:["patronen","bewegen"],title:"Het ritme van de klok",
+  story:{school:"\"Nog één letter,\" zegt meneer Tik. \"De klok tikt in een vast ritme. Alles aan tijd gaat in patronen: seconden, minuten, uren, dagen. Snappen jullie het patroon?\"",
+         bso:"\"Laatste letter!\" zegt meneer Tik. \"Een klok tikt altijd in hetzelfde ritme. Kunnen jullie het ritme naklappen? En de puzzel kraken?\""},
+  act:{school:"Klap samen dit ritme: tik–tak–tik–tak, eerst langzaam, dan steeds sneller. Stop allemaal precies tegelijk. Dan de puzzel.",bso:"Verzin samen een klok-dansje van 8 tellen (tik = stap, tak = klap). Doe het drie keer achter elkaar. Dan de puzzel!"},
+  puzzle:[
+   {kind:"choice",q:"De klok tikt: tik – tak – tik – tak – tik – ? Wat komt er nu?",c:["tik","tak","boem"],a:1,hint:"Om en om: na tik komt altijd..."},
+   {kind:"text",q:"De klok slaat elk uur. Om 1 uur slaat hij 1 keer, om 2 uur 2 keer... Hoe vaak slaat hij in totaal van 1 uur tot en met 6 uur? (typ het getal)",a:["21"],hint:"Tel op: 1 + 2 + 3 + 4 + 5 + 6."},
+   {kind:"text",q:"Het patroon van de klok is: 1, 1, 2, 3, 5, 8, 13, ? Welk getal komt er nu?",a:["21"],hint:"Elk getal is de som van de twee getallen ervoor: 8 + 13 = ..."}
+  ]}
+];
+var NAMES=["De Tijdspeurders","Team Tiktak","De Wijzerwachters","De Klokkenjagers","De Minuutjes","Team Middernacht","De Secondenspringers","De Zonnewijzers","Team Kwartover","De Uurwerkers","De Snelle Seconden","Team Twaalfuur"];
+
+/* =========================================================
+   BEGELEIDER
+   ========================================================= */
+var lead=load(KEY_LEAD);
+(function initSetup(){var s=$("#sTeams");for(var i=2;i<=12;i++){var o=document.createElement("option");o.value=i;o.textContent=i+" teams";if(i===4)o.selected=true;s.appendChild(o)}
+ seg("#sMode");seg("#sAge");seg("#sDur");})();
+$("#bLead").addEventListener("click",function(){if(lead&&lead.code){renderDash();show("dash")}else show("setup")});
+$("#bMake").addEventListener("click",function(){
+  var name=$("#sName").value.trim();if(!name){toast("Vul de naam van de school of BSO in");$("#sName").focus();return}
+  lead={name:name,mode:segVal("#sMode"),age:+segVal("#sAge"),dur:+segVal("#sDur"),teams:+$("#sTeams").value,start:$("#sStart").value.trim()||"de startplek",pin:String(1000+Math.floor(Math.random()*9000)),state:"idle",t0:0,paused:0,pauseAt:0,teamsState:{}};
+  lead.code=makeCode(lead);for(var i=1;i<=lead.teams;i++)lead.teamsState[i]={step:0,done:false,sec:0,name:""};
+  save(KEY_LEAD,lead);renderDash();show("dash");
+});
+$("#bNew").addEventListener("click",function(){if(confirm("Nieuw avontuur klaarzetten? Het huidige dashboard wordt gewist."))
+  {lead=null;save(KEY_LEAD,null);show("setup")}});
+$$("#dash .tabs button").forEach(function(b){b.addEventListener("click",function(){$$("#dash .tabs button").forEach(function(x){x.setAttribute("aria-selected","false")});b.setAttribute("aria-selected","true");["dStart","dTeams","dInfo"].forEach(function(id){$("#"+id).hidden=id!==b.getAttribute("data-tab")})})});
+function leadElapsed(){if(!lead||lead.state==="idle")return 0;var end=lead.state==="paused"?lead.pauseAt:(lead.state==="ended"?lead.endAt:Date.now());return Math.floor((end-lead.t0-lead.paused)/1000)}
+function renderDash(){
+  if(!lead)return;
+  $("#dName").textContent=lead.name;$("#dCode").textContent=lead.code;$("#dPin").textContent=lead.pin;$("#dT").textContent=lead.teams;$("#dStartPlek").textContent=lead.start;$("#dDur").textContent=DUR[lead.dur];
+  var st=$("#dState");st.className="st "+(lead.state==="idle"?"w":lead.state==="ended"?"d":"b");st.textContent={idle:"Nog niet gestart",running:"Bezig",paused:"Pauze",ended:"Afgesloten"}[lead.state];
+  $("#bStart").hidden=lead.state!=="idle";$("#bPause").hidden=lead.state==="idle"||lead.state==="ended";$("#bPause").textContent=lead.state==="paused"?"▶ Verder na pauze":"⏸ Pauze";$("#bEnd").hidden=lead.state==="idle"||lead.state==="ended";
+  $("#dClock").textContent=fmt(leadElapsed());
+  var tb=$("#dTable tbody");tb.innerHTML="";
+  Object.keys(lead.teamsState).forEach(function(k){var t=lead.teamsState[k],tr=document.createElement("tr");
+    var stat=t.done?'<span class="st d">Klaar · '+fmt(t.sec)+'</span>':t.step>0?'<span class="st b">Bij opdracht '+Math.min(6,t.step+1)+'</span>':'<span class="st w">Nog niet gestart</span>';
+    tr.innerHTML='<td><b>Team '+k+'</b>'+(t.name?'<br><span class="note">'+esc(t.name)+'</span>':'')+'</td><td>'+stat+'</td><td style="white-space:nowrap;text-align:right"><button class="mini" data-k="'+k+'" data-d="-1">−</button> <button class="mini" data-k="'+k+'" data-d="1">+</button></td>';
+    tb.appendChild(tr)});
+  $$("#dTable .mini").forEach(function(b){b.addEventListener("click",function(){var t=lead.teamsState[b.getAttribute("data-k")],d=+b.getAttribute("data-d");
+    if(d>0){if(t.step>=6){t.done=true;t.sec=t.sec||leadElapsed()}else t.step++}else{if(t.done){t.done=false}else t.step=Math.max(0,t.step-1)}save(KEY_LEAD,lead);renderDash()})});
+  $("#dIntro").innerHTML=INTRO[lead.mode];
+  var ol=$("#dAns");ol.innerHTML="";STEPS.forEach(function(s){var p=s.puzzle[lead.age],li=document.createElement("li"),ans=p.kind==="photo"?"foto maken":p.kind==="choice"?p.c[p.a]:p.a[0].toUpperCase();
+    li.innerHTML="<b>"+esc(s.title)+"</b> ("+esc(s.type)+"): "+esc(p.q)+"<br>Antwoord: <b>"+esc(ans)+"</b> · letter <b>"+s.letter+"</b><br><span class='note'>Hint: "+esc(p.hint)+"</span>";ol.appendChild(li)});
+  renderRank();
+}
+function renderRank(){var done=Object.keys(lead.teamsState).filter(function(k){return lead.teamsState[k].done}).sort(function(a,b){return lead.teamsState[a].sec-lead.teamsState[b].sec});
+  var box=$("#dResult");box.hidden=!(lead.state==="ended"||done.length);if(box.hidden)return;
+  $("#dRank").innerHTML=done.length?"<ol class='ol'>"+done.map(function(k){var t=lead.teamsState[k];return "<li><b>Team "+k+(t.name?" · "+esc(t.name):"")+"</b> – "+fmt(t.sec)+"</li>"}).join("")+"</ol>":"<p class='note'>Nog geen team klaar. Typ de uitslagcodes van de teams hierboven.</p>"}
+$("#bStart").addEventListener("click",function(){lead.state="running";lead.t0=Date.now();lead.paused=0;save(KEY_LEAD,lead);renderDash();toast("Gestart! Succes, speurders.")});
+$("#bPause").addEventListener("click",function(){if(lead.state==="running"){lead.state="paused";lead.pauseAt=Date.now()}else if(lead.state==="paused"){lead.state="running";lead.paused+=Date.now()-lead.pauseAt}save(KEY_LEAD,lead);renderDash()});
+$("#bEnd").addEventListener("click",function(){if(!confirm("Avontuur afsluiten? De tijd stopt en de uitslag verschijnt."))return;lead.endAt=lead.state==="paused"?lead.pauseAt:Date.now();lead.state="ended";save(KEY_LEAD,lead);renderDash();$$("#dash .tabs button")[1].click()});
+$("#bRes").addEventListener("click",function(){var r=parseRes($("#dRes").value);if(!r||!lead.teamsState[r.team]){toast("Die uitslagcode klopt niet");return}var t=lead.teamsState[r.team];t.done=true;t.step=6;t.sec=r.sec;save(KEY_LEAD,lead);$("#dRes").value="";renderDash();toast("Team "+r.team+" staat op klaar: "+fmt(r.sec))});
+$("#bLink").addEventListener("click",function(){var u=location.origin+location.pathname+"?c="+lead.code.replace("-","")+"&n="+encodeURIComponent(lead.name);
+  var ok=function(){toast("Link gekopieerd")},fail=function(){prompt("Kopieer deze link:",u)};
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(u).then(ok,fail);else fail()});
+setInterval(function(){if(!$("#dash").hidden&&lead)$("#dClock").textContent=fmt(leadElapsed())},1000);
+
+/* =========================================================
+   TEAM
+   ========================================================= */
+var game=load(KEY_TEAM);
+(function initJoin(){var s=$("#jTeam");function fill(n){s.innerHTML="";for(var i=1;i<=n;i++){var o=document.createElement("option");o.value=i;o.textContent="Team "+i;s.appendChild(o)}}fill(12);
+  $("#jSug").innerHTML=NAMES.slice(0,6).map(function(n){return '<button type="button" class="chip">'+n+'</button>'}).join("");
+  $$("#jSug .chip").forEach(function(b){b.addEventListener("click",function(){$("#jTeamName").value=b.textContent})});
+  $("#jCode").addEventListener("input",function(){var c=parseCode(this.value);$("#jErr").hidden=true;if(c)fill(c.teams)});
+  var q=new URLSearchParams(location.search);if(q.get("c")){var c=parseCode(q.get("c"));if(c){$("#jCode").value=c.code;fill(c.teams)}}if(q.get("n")){$("#jSchool").value=q.get("n")}
+  if(game&&game.cfg){$("#bResume").hidden=false}
+})();
+$("#bTeam").addEventListener("click",function(){if(game&&game.cfg&&!game.finished){if(confirm("Er loopt al een zaak op dit apparaat. Verder met die zaak?")){resume();return}}show("join");if(new URLSearchParams(location.search).get("c")){$("#jTeamName").focus()}else $("#jCode").focus()});
+$("#bResume").addEventListener("click",resume);
+function resume(){if(!game)return;if(game.finished)finish();else if(game.started)startPlay();else{renderBrief();show("brief")}}
+$("#bJoin").addEventListener("click",function(){
+  var cfg=parseCode($("#jCode").value);if(!cfg){$("#jErr").hidden=false;$("#jCode").focus();return}
+  var school=$("#jSchool").value.trim();if(!school){toast("Vul de naam van jullie school of BSO in");$("#jSchool").focus();return}
+  var tn=$("#jTeamName").value.trim()||NAMES[(+$("#jTeam").value-1)%NAMES.length];
+  game={cfg:cfg,school:school,team:+$("#jTeam").value,teamName:tn,kids:$("#jKids").value.trim(),step:0,letters:[],hintUsed:{},photo:null,started:0,t0:0,paused:0,finished:false,sec:0,wrong:0};
+  save(KEY_TEAM,game);renderBrief();show("brief");
+});
+function renderBrief(){$("#bfTeam").textContent=game.teamName+" · "+game.school;
+  $("#bfBody").innerHTML='<div class="msg"><div class="avatar">T</div><div class="bub"><em>Meneer Tik, conciërge</em><p>'+INTRO[game.cfg.mode]+'</p></div></div>'+
+   '<p class="note">Spelregels: blijf bij elkaar, blijf op de stoep en in de buurt van '+(lead&&lead.start?esc(lead.start):"de startplek")+'. Eén apparaat per team. Vastgelopen? Eén hint per opdracht. Klaar na ongeveer '+DUR[game.cfg.dur]+' minuten.</p>'}
+$("#bGo").addEventListener("click",function(){if(!game.started){game.started=1;game.t0=Date.now();game.paused=0;save(KEY_TEAM,game)}startPlay()});
+function elapsed(){if(!game||!game.started)return 0;if(game.finished)return game.sec;var end=game.pauseAt?game.pauseAt:Date.now();return Math.floor((end-game.t0-game.paused)/1000)}
+function startPlay(){show("play");$("#pTeam").textContent=game.teamName;$("#pSchool").textContent=game.school;renderStep();if(game.pauseAt)$("#pause").hidden=false}
+setInterval(function(){if(!$("#play").hidden&&game)$("#hT").textContent=fmt(elapsed())},1000);
+
+function renderHud(){$("#hT").textContent=fmt(elapsed());$("#hN").textContent=Math.min(6,game.step+1)+"/6";
+  $("#hL").innerHTML=STEPS.map(function(s,i){return '<i class="'+(game.letters.indexOf(s.letter)>-1?"on":"")+'">'+(game.letters.indexOf(s.letter)>-1?s.letter:"?")+'</i>'}).join("");
+  $("#pBar").style.width=(game.step/6*100)+"%"}
+function renderStep(){
+  renderHud();if(game.step>=6){show("finale");renderFinale();return}
+  var s=STEPS[game.step],p=s.puzzle[game.cfg.age],m=game.cfg.mode,box=$("#stepBox");
+  var goals=m==="school"?'<div class="chips">'+s.goal.map(function(g){return '<span class="chip g">'+g+'</span>'}).join("")+'</div>':'';
+  var h='<div class="no">Opdracht '+(game.step+1)+' van 6 · '+esc(s.type)+'</div><h2>'+esc(s.title)+'</h2>'+goals+
+   '<div class="msg"><div class="avatar">T</div><div class="bub"><em>Meneer Tik</em><p>'+s.story[m]+'</p></div></div>'+
+   '<div class="act"><span class="ico">'+(m==="bso"?"🏃":"🔍")+'</span><div><b>'+(m==="bso"?"Doen!":"Opdracht buiten")+'</b><br>'+esc(s.act[m])+'</div></div>'+
+   '<p class="q">'+esc(p.q)+'</p>';
+  if(p.kind==="text")h+='<input class="inp code" id="ans" autocomplete="off" autocapitalize="characters" placeholder="antwoord" maxlength="12"><div id="fb"></div><button class="btn" id="bCheck">Controleer ▸</button>';
+  else if(p.kind==="choice")h+='<div class="choices" id="ch">'+p.c.map(function(c,i){return '<button type="button" data-i="'+i+'">'+esc(c)+'</button>'}).join("")+'</div><div id="fb"></div>';
+  else if(p.kind==="cards")h+='<div class="cards" id="kc"><div class="kcard"><div class="who">Kaartje 1 van 4</div><div class="txt">Geef de telefoon aan teamlid 1. Alleen jij mag kijken!</div><button class="btn sm" id="kNext">Laat kaartje zien</button></div></div><div id="kAns" hidden><input class="inp code" id="ans" autocomplete="off" placeholder="getal" maxlength="6" inputmode="numeric"><div id="fb"></div><button class="btn" id="bCheck">Controleer ▸</button></div>';
+  else if(p.kind==="photo")h+='<div class="photo" id="ph">'+(game.photo?'<img src="'+game.photo+'" alt="Jullie levende klok">':'')+'<button class="btn sky" id="bPhoto">📷 '+(game.photo?"Nog een keer":"Maak de foto")+'</button>'+(game.photo?'<button class="btn" id="bPhotoOk">Dit is hem! ▸</button>':'')+'</div><div id="fb"></div>';
+  h+='<button class="btn ghost sm" id="bHint"'+(game.hintUsed[s.id]?' disabled':'')+'>'+(game.hintUsed[s.id]?"Hint gebruikt":"💡 Hint (1 per opdracht)")+'</button>';
+  box.innerHTML=h;
+  if(game.hintUsed[s.id])$("#fb").innerHTML='<div class="fb hint">💡 '+esc(p.hint)+'</div>';
+  $("#bHint").addEventListener("click",function(){game.hintUsed[s.id]=1;save(KEY_TEAM,game);this.disabled=true;this.textContent="Hint gebruikt";$("#fb").innerHTML='<div class="fb hint">💡 '+esc(p.hint)+'</div>'});
+  if(p.kind==="text"||p.kind==="cards"){var chk=function(){var v=norm($("#ans").value);if(!v)return;if(p.a.some(function(a){return norm(a)===v}))win(s);else wrong(p)};
+    $("#bCheck").addEventListener("click",chk);$("#ans").addEventListener("keydown",function(e){if(e.key==="Enter")chk()})}
+  if(p.kind==="choice")$$("#ch button").forEach(function(b){b.addEventListener("click",function(){var i=+b.getAttribute("data-i");if(i===p.a){b.classList.add("ok");setTimeout(function(){win(s)},350)}else{b.classList.add("no");b.disabled=true;wrong(p)}})});
+  if(p.kind==="cards"){var k=0,shown=false,c=$("#kc .kcard");
+    var onK=function(){
+      if(!shown){shown=true;c.innerHTML='<div class="who">Kaartje '+(k+1)+' van 4 · teamlid '+(k+1)+'</div><div class="txt">'+esc(p.cards[k])+'</div><button class="btn sm" id="kNext">Onthouden! Volgende ▸</button>'}
+      else{shown=false;k++;
+        if(k<4)c.innerHTML='<div class="who">Kaartje '+(k+1)+' van 4</div><div class="txt">Geef de telefoon aan teamlid '+(k+1)+'. Alleen jij mag kijken!</div><button class="btn sm" id="kNext">Laat kaartje zien</button>';
+        else{c.innerHTML='<div class="who">Alle vier gezien</div><div class="txt">Vertel elkaar wat er op je kaartje stond. Samen weet je het getal!</div><button class="btn sm" id="kAgain">Kaartjes nog eens</button>';$("#kAns").hidden=false;$("#kAgain").addEventListener("click",function(){renderStep()});$("#ans").focus();return}}
+      $("#kNext").addEventListener("click",onK)};
+    $("#kNext").addEventListener("click",onK)}
+  if(p.kind==="photo"){$("#bPhoto").addEventListener("click",function(){$("#file").value="";$("#file").click()});if($("#bPhotoOk"))$("#bPhotoOk").addEventListener("click",function(){win(s)})}
+}
+$("#file").addEventListener("change",function(){var f=this.files&&this.files[0];if(!f)return;var img=new Image(),url=URL.createObjectURL(f);img.onload=function(){var mx=900,sc=Math.min(1,mx/Math.max(img.width,img.height)),c=document.createElement("canvas");c.width=Math.round(img.width*sc);c.height=Math.round(img.height*sc);c.getContext("2d").drawImage(img,0,0,c.width,c.height);game.photo=c.toDataURL("image/jpeg",.7);URL.revokeObjectURL(url);save(KEY_TEAM,game);renderStep();toast("Mooie klok!")};img.src=url});
+function wrong(p){game.wrong++;save(KEY_TEAM,game);var fb=$("#fb");fb.innerHTML='<div class="fb no">Nog niet goed. Overleg nog eens samen'+(game.hintUsed[STEPS[game.step].id]?'.':' of pak de hint.')+'</div>'+(game.hintUsed[STEPS[game.step].id]?'<div class="fb hint">💡 '+esc(p.hint)+'</div>':'');if($("#ans")){$("#ans").select()}}
+function win(s){game.letters.push(s.letter);game.step++;save(KEY_TEAM,game);
+  var box=$("#stepBox");box.innerHTML='<div class="reward"><div class="big">🎉</div><h2>Goed zo, '+esc(game.teamName)+'!</h2><p>Meneer Tik geeft jullie een letter:</p><div class="ltr">'+s.letter+'</div><p class="note">'+(game.step<6?"Nog "+(6-game.step)+" te gaan.":"Dat waren alle zes de letters!")+'</p><button class="btn" id="bNext">'+(game.step<6?"Volgende opdracht ▸":"Naar de laatste stap ▸")+'</button></div>';
+  renderHud();$("#bNext").addEventListener("click",renderStep)}
+
+/* finale */
+function renderFinale(){var l=game.letters.slice();if(!game.shuf){game.shuf=l.sort(function(){return Math.random()-.5}).join("");if(game.shuf===WORD)game.shuf="LODZER";save(KEY_TEAM,game)}
+  $("#fL").innerHTML=game.shuf.split("").map(function(c){return "<i>"+c+"</i>"}).join("");$("#fIn").value="";$("#fFb").innerHTML=""}
+$("#bFin").addEventListener("click",function(){var v=norm($("#fIn").value).replace(/^de/,"");if(v==="zolder"){finish()}else{game.wrong++;save(KEY_TEAM,game);$("#fFb").innerHTML='<div class="fb no">Dat is geen plek in school. Probeer de letters anders te leggen.</div>';$("#fIn").select()}});
+$("#bFHint").addEventListener("click",function(){$("#fFb").innerHTML='<div class="fb hint">💡 Het is een plek helemaal bovenin het gebouw, onder het dak. Het woord begint met een Z.</div>';this.disabled=true});
+$("#fIn").addEventListener("keydown",function(e){if(e.key==="Enter")$("#bFin").click()});
+function finish(){if(!game.finished){game.finished=true;game.sec=elapsed();game.pauseAt=0;save(KEY_TEAM,game)}
+  show("done");$("#reveal").innerHTML='<div class="msg"><div class="avatar v">N</div><div class="bub"><em>Op zolder</em><p>'+REVEAL[game.cfg.mode].replace(/<\/?p>/g,function(m){return m==="<p>"?"":"<br><br>"})+'</p></div></div>';
+  $("#resCode").textContent=resCode(game.team,game.sec);$("#resTime").textContent="Tijd: "+fmt(game.sec)+(game.wrong?" · "+game.wrong+" keer mis":" · foutloos!");drawDiploma()}
+$("#bAgain").addEventListener("click",function(){if(confirm("Deze zaak wissen zodat een ander team kan spelen?")){game=null;save(KEY_TEAM,null);$("#bResume").hidden=true;show("join")}});
+
+/* diploma */
+function drawDiploma(){var c=$("#dipC"),g=c.getContext("2d"),W=c.width,H=c.height;
+  g.fillStyle="#fffaf0";g.fillRect(0,0,W,H);
+  g.strokeStyle="#f5b800";g.lineWidth=18;g.strokeRect(30,30,W-60,H-60);g.strokeStyle="#1b2550";g.lineWidth=4;g.strokeRect(58,58,W-116,H-116);
+  /* klokje */
+  g.save();g.translate(W-170,170);g.beginPath();g.arc(0,0,78,0,Math.PI*2);g.fillStyle="#fff";g.fill();g.lineWidth=8;g.strokeStyle="#1b2550";g.stroke();
+  g.strokeStyle="#22327a";g.lineWidth=8;g.lineCap="round";g.beginPath();g.moveTo(0,0);g.lineTo(0,-50);g.stroke();g.strokeStyle="#e0584f";g.lineWidth=6;g.beginPath();g.moveTo(0,0);g.lineTo(36,18);g.stroke();g.restore();
+  g.textAlign="center";g.fillStyle="#7a5cd6";g.font="600 26px Fredoka,sans-serif";g.fillText("MINIMYSTERY EDUCATIE",W/2,140);
+  g.fillStyle="#22327a";g.font="700 72px Fredoka,sans-serif";g.fillText("Diploma Speurteam",W/2,230);
+  g.fillStyle="#39436a";g.font="500 30px Nunito,sans-serif";g.fillText("Dit diploma is voor",W/2,310);
+  g.fillStyle="#1b2550";g.font="700 64px Fredoka,sans-serif";fitText(g,game.teamName,W/2,390,W-260,64);
+  if(game.kids){g.fillStyle="#39436a";g.font="500 30px Nunito,sans-serif";fitText(g,game.kids,W/2,445,W-220,30)}
+  g.fillStyle="#39436a";g.font="500 30px Nunito,sans-serif";fitText(g,"van "+game.school,W/2,505,W-220,30);
+  g.fillStyle="#1b2550";g.font="700 36px Fredoka,sans-serif";g.fillText("Het mysterie van de verdwenen schoolklok",W/2,580);
+  g.fillStyle="#39436a";g.font="500 28px Nunito,sans-serif";g.fillText("opgelost in "+fmt(game.sec)+" · zes letters gevonden · "+(game.wrong?game.wrong+" keer mis":"foutloos"),W/2,630);
+  var d=new Date();g.fillText(d.toLocaleDateString("nl-NL",{day:"numeric",month:"long",year:"numeric"}),W/2,680);
+  g.fillStyle="#e0584f";g.font="400 44px 'Permanent Marker',cursive";g.save();g.translate(W/2,760);g.rotate(-.03);g.fillText("Meneer Tik, conciërge",0,0);g.restore();
+  /* letters */
+  var x=W/2-6*34;for(var i=0;i<6;i++){g.fillStyle="#f5b800";rr(g,x+i*68,790-62,54,54,10);g.fill();g.strokeStyle="#1b2550";g.lineWidth=3;g.stroke();g.fillStyle="#1b2550";g.font="700 36px Fredoka,sans-serif";g.fillText(WORD[i],x+i*68+27,790-22)}
+}
+function rr(g,x,y,w,h,r){g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath()}
+function fitText(g,t,x,y,maxW,size){var f=g.font;while(g.measureText(t).width>maxW&&size>14){size-=2;g.font=f.replace(/\d+px/,size+"px")}g.fillText(t,x,y)}
+$("#bDip").addEventListener("click",function(){var a=document.createElement("a");a.download="diploma-"+game.teamName.replace(/\W+/g,"-").toLowerCase()+".png";a.href=$("#dipC").toDataURL("image/png");document.body.appendChild(a);a.click();a.remove()});
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){if(game&&game.finished&&!$("#done").hidden)drawDiploma()});
+
+/* begeleidersmenu op het teamscherm: lang drukken op de tijd */
+(function(){var t,el=$("#hudT");function down(){t=setTimeout(openMenu,900)}function up(){clearTimeout(t)}
+  el.addEventListener("pointerdown",down);el.addEventListener("pointerup",up);el.addEventListener("pointerleave",up);el.addEventListener("keydown",function(e){if(e.key==="Enter")openMenu()})})();
+function openMenu(){var pin="";var body=$("#sheetBody");body.innerHTML='<span class="eyebrow">Begeleidersmenu</span><h3>Pincode</h3><div class="code" id="pinShow" style="font-size:30px">····</div><div class="pinpad">'+[1,2,3,4,5,6,7,8,9,"←",0,"✕"].map(function(k){return '<button type="button" data-k="'+k+'">'+k+'</button>'}).join("")+'</div><p class="fb no" id="pinErr" hidden>Pincode klopt niet.</p>';
+  $("#sheet").hidden=false;
+  $$(".pinpad button",body).forEach(function(b){b.addEventListener("click",function(){var k=b.getAttribute("data-k");if(k==="✕"){$("#sheet").hidden=true;return}if(k==="←")pin=pin.slice(0,-1);else if(pin.length<4)pin+=k;$("#pinShow").textContent=(pin+"····").slice(0,4).replace(/\d/g,"•")||"····";
+    if(pin.length===4){if(pin===game.cfg.pin)menu();else{$("#pinErr").hidden=false;pin=""}}})})}
+function menu(){var body=$("#sheetBody");body.innerHTML='<span class="eyebrow">Begeleidersmenu</span><h3>'+esc(game.teamName)+' · opdracht '+Math.min(6,game.step+1)+' van 6</h3>'+
+  '<button class="btn ghost" id="mPause">'+(game.pauseAt?"▶ Verder na pauze":"⏸ Pauze voor dit team")+'</button>'+(game.step<6?'<button class="btn ghost" id="mSkip">⏭ Opdracht overslaan (letter erbij)</button>':'')+
+  '<button class="btn coral" id="mEnd">■ Afsluiten voor dit team</button><button class="btn ghost sm" id="mX">Sluiten</button>';
+  $("#mX").addEventListener("click",function(){$("#sheet").hidden=true});
+  $("#mPause").addEventListener("click",function(){togglePause();$("#sheet").hidden=true});
+  if($("#mSkip"))$("#mSkip").addEventListener("click",function(){$("#sheet").hidden=true;win(STEPS[game.step])});
+  $("#mEnd").addEventListener("click",function(){if(confirm("Afsluiten? Het team krijgt dan meteen de onthulling en het diploma.")){$("#sheet").hidden=true;while(game.letters.length<6)game.letters.push(STEPS[game.letters.length].letter);game.step=6;finish()}})}
+function togglePause(){if(game.pauseAt){game.paused+=Date.now()-game.pauseAt;game.pauseAt=0;$("#pause").hidden=true}else{game.pauseAt=Date.now();$("#pause").hidden=false}save(KEY_TEAM,game)}
+$("#bUnpause").addEventListener("click",function(){var p=prompt("Pincode van de begeleider:");if(p===game.cfg.pin)togglePause();else toast("Pincode klopt niet")});
+$("#sheet").addEventListener("click",function(e){if(e.target===this)this.hidden=true});
+
+/* start */
+show("home");
+})();
+</script>
+</body>
+</html>
