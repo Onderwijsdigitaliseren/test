@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>De Tijdreizigers – geschiedenis-speurtocht voor school en BSO | MiniMystery Educatie</title>
+<link rel="icon" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="description" content="Geschiedenis-speurtocht voor groep 5–8 en BSO: de schoolklok blijkt een tijdmachine. Bij tien tijdlekken rond (of in) de school kijken teams een tijdvak in, doen een onderzoekje in de eigen buurt en verzamelen tijdsleutels. Finale: de tijdvakken op volgorde. Met kaart, zonder kaart of in het gebouw. Zaakcode, begeleidersblad met lesbrief, diploma.">
+<link rel="canonical" href="https://www.minimystery.nl/de-tijdreizigers.html">
+<meta property="og:site_name" content="MiniMystery">
+<meta property="og:title" content="MiniMystery Educatie – De Tijdreizigers">
+<meta property="og:description" content="De schoolklok is een tijdmachine. Tien tijdvakken in je eigen buurt, voor groep 5–8 en BSO.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.minimystery.nl/de-tijdreizigers.html">
+<meta property="og:locale" content="nl_NL">
+<meta property="og:image" content="https://www.minimystery.nl/assets/og-image.jpg">
+<meta name="theme-color" content="#d9c7f0">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Permanent+Marker&family=Nunito:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="shared/platform.css?v=2">
+<link rel="stylesheet" href="shared/kidsmap.css?v=6">
+<link rel="stylesheet" href="games/tijd/game.css?v=1">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"De Tijdreizigers","url":"https://www.minimystery.nl/de-tijdreizigers.html","description":"Geschiedenis-speurtocht voor basisschool (groep 5–8) en BSO: de schoolklok is een tijdmachine. Tien tijdvakken van de canon, onderzoekjes in de eigen buurt, finale op volgorde. Zaakcode, begeleidersblad met lesbrief, diploma.","inLanguage":"nl","gamePlatform":"Webbrowser","genre":["Kinderspel","Speurtocht","Educatie","Geschiedenis"],"audience":{"@type":"EducationalAudience","educationalRole":"student"}}</script>
+</head>
+<body>
+<div id="app">
+  <section class="screen" id="home">
+    <div class="wrap">
+      <div class="row0"><div class="pills"><a class="pill" id="hub" href="./">◂ Alle zaken</a><a class="pill" href="educatie/">Educatie</a></div></div>
+      <div class="hero" aria-hidden="true">
+        <svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="92" fill="#fff" stroke="#1b2550" stroke-width="6"/><circle cx="100" cy="100" r="80" fill="#fffaf0" stroke="#f5b800" stroke-width="4" stroke-dasharray="6 10"/>
+        <g font-family="Fredoka,sans-serif" font-weight="700" font-size="22" fill="#1b2550" text-anchor="middle"><text x="100" y="40">12</text><text x="166" y="108">3</text><text x="100" y="176">6</text><text x="34" y="108">9</text></g>
+        <path d="M100 100 L100 55" stroke="#22327a" stroke-width="8" stroke-linecap="round"/><path d="M100 100 L135 118" stroke="#e0584f" stroke-width="6" stroke-linecap="round"/><circle cx="100" cy="100" r="7" fill="#1b2550"/>
+        <text x="100" y="150" font-family="Permanent Marker,cursive" font-size="18" fill="#7a5cd6" text-anchor="middle" transform="rotate(-8 100 150)">tijdlek!</text></svg>
+      </div>
+      <div class="masthead">
+        <span class="eyebrow" style="color:#7a5cd6">MiniMystery Educatie · geschiedenis · groep 5–8</span>
+        <h1 id="ttl">De Tijdreizigers</h1><span class="tape">De schoolklok is een tijdmachine!</span>
+      </div>
+      <p class="lead">De klok in de hal is weg, en in een oud schrift uit 1923 staat waarom: wie hem verkeerd opwindt, maakt een lek in de tijd. Rond (of in) jullie school zitten nu tijdlekken. Bij elk lek kijk je een tijdvak in, doe je een onderzoek in je eigen buurt en verdien je een tijdsleutel. Leg de tijdvakken op volgorde en de klok komt terug. De tien tijdvakken van de canon, voor groep 5–8 en BSO.</p>
+      <button class="btn ghost sm" id="bHow">Hoe werkt het?</button>
+      <div class="pline" hidden style="display:none"><b id="pRank">–</b><span><b id="pStreak">0</b> Dagen op rij</span><span><b id="pSolved">0</b> Opgelost</span></div>
+      <div class="namebox"><label for="name">Teamnaam (mag leeg, komt op het diploma)</label><input id="name" maxlength="24" autocomplete="off" placeholder="bijv. De Tijdreizigers"></div>
+      <div class="seglbl">Voor wie</div>
+      <div class="seg two" id="route">
+        <button type="button" data-r="school" aria-pressed="true">School<small>licht educatief</small></button>
+        <button type="button" data-r="bso" aria-pressed="false">BSO<small>speels, meer bewegen</small></button>
+      </div>
+      <div class="seg" id="lvl">
+        <button type="button" data-l="0" aria-pressed="false">6–7 jaar<small>groep 3–4</small></button>
+        <button type="button" data-l="1" aria-pressed="true">8–9 jaar<small>groep 5–6</small></button>
+        <button type="button" data-l="2" aria-pressed="false">10–12 jaar<small>groep 7–8</small></button>
+      </div>
+      <div class="seg" id="dur" aria-label="Lengte">
+        <button type="button" data-n="kort" aria-pressed="false">Kort<small>6 tijdvakken · ±35 min</small></button>
+        <button type="button" data-n="normaal" aria-pressed="true">Normaal<small>10 tijdvakken · ±50 min</small></button>
+        <button type="button" data-n="lang" aria-pressed="false">Lang<small>12 · met nu en toekomst</small></button>
+      </div>
+      <div class="seg" id="len">
+        <button type="button" data-m="map" aria-pressed="true">Buiten<br>met kaart</button>
+        <button type="button" data-m="street" aria-pressed="false">Buiten<br>zonder kaart</button>
+        <button type="button" data-m="gebouw" aria-pressed="false">In het<br>gebouw</button>
+      </div>
+      <button class="btn ghost sm" id="bVoice" aria-pressed="true">🔊 Voorlezen</button>
+      <button class="btn" id="bResume" hidden>Verder met de tijdreis</button>
+      <button class="btn" id="bGps">Start de tijdreis van vandaag</button>
+      <button class="btn ghost" id="bRandom">Extra tijdreis</button>
+      <button class="btn ghost" id="bCode">Zaakcode invullen</button>
+      <button class="btn ghost" id="bPro" hidden></button>
+      <p class="note" id="status"></p>
+      <div id="howT" hidden><ol class="how"><li><b>Voor de begeleider:</b> kies School of BSO, de leeftijd en de lengte (6, 10 of 12 tijdvakken). Start de tijdreis op je eigen telefoon: in de briefing staat de <b>zaakcode</b>. Elk team vult die code in (knop Zaakcode invullen) en krijgt precies dezelfde tijdreis. Onder de briefing staat het <b>begeleidersblad</b>: het verhaal, een korte lesbrief vooraf en achteraf, alle missies met antwoorden en hints.</li><li><b>Buiten met kaart:</b> de tijdlekken zitten op plekken dicht bij elkaar (alles binnen ongeveer 300 meter). De kinderen zien een <b>verhaalkaart</b> met een pijl en koud/warm/heet. <b>Buiten zonder kaart:</b> de missies komen achter elkaar, het team loopt zelf naar een nieuwe plek. <b>In het gebouw:</b> de begeleider kiest plekken in de school (aula, gymzaal, bieb, trap…). Die keuze zit in de zaakcode. Per plek print je een kaartje met een code uit het begeleidersblad; het team loopt naar de plek en typt de code. Zonder kaartjes kan ook.</li><li><b>Elk tijdlek is een tijdvak</b> uit de canon: jagers en boeren, Grieken en Romeinen, monniken en ridders, steden en staten, ontdekkers en hervormers, regenten en vorsten, pruiken en revoluties, burgers en stoommachines, wereldoorlogen, televisie en computer. Lang voegt "jouw eigen tijd" en "de toekomst" toe. Eerst een korte tijdreis (verhaal), dan een <b>onderzoek</b> in de buurt of in het gebouw (sporen zoeken, tellen, vergelijken), dan een vraag op niveau 6–7, 8–9 of 10–12 jaar. Eén hint per missie.</li><li>Na elk goed antwoord: een <b>tijdsleutel</b>, een "wist je dat", en het <b>buurtonderzoek</b>: heeft het team een spoor uit dit tijdvak gezien? Dat komt in het logboek en op het diploma, en is de basis voor de nabespreking in de klas.</li><li><b>Finale:</b> de tijdvakken op volgorde leggen van oud naar nieuw (bij 6–9 jaar met jaartallen erbij). Klopt het, dan stroomt de tijd weer, komt de klok terug en krijgt het team een <b>diploma Tijdreiziger</b> (A4) met hun tijdlijn.</li></ol><p class="note">Tip: spreek het speelgebied en een eindtijd af. Teams blijven bij elkaar en op de stoep. Geen account, geen app: werkt in de browser.</p></div>
+      <button class="btn ghost sm" id="bDemo">Proefronde in de binnenstad van Eindhoven</button>
+      <button class="btn ghost" id="bArch">Eerdere tijdreizen</button>
+      <button class="btn ghost sm" id="bWipe">Wissen</button>
+    </div>
+  </section>
+
+  <section class="screen" id="brief" hidden>
+    <div class="wrap">
+      <div class="paper">
+        <div class="eyebrow" id="bfNo"></div>
+        <div id="bfTip"></div>
+        <h2>Het oude schrift</h2>
+        <div id="bfOpen"></div>
+      </div>
+      <button class="btn" id="bGo">We gaan zoeken! ▸</button>
+      <button class="btn ghost" id="bLead">🖨 Begeleidersblad (antwoorden)</button>
+      <button class="btn ghost" id="bBack">Terug</button>
+    </div>
+  </section>
+
+  <section class="screen" id="cards" hidden>
+    <div id="hud">
+      <div><b id="hT">0:00</b><span>Tijd</span></div>
+      <div><b id="hS">0</b><span>Tijdlekken</span></div>
+      <div><div class="tiles" id="hM"></div><span>Tijdsleutels</span></div>
+      <button type="button" id="zM2" aria-label="Menu">☰</button>
+    </div>
+    <div id="card"></div>
+    <div id="bar">
+      <button type="button" id="bNote">Logboek</button>
+      <button type="button" id="bAcc2" class="red">De tijdlijn</button>
+    </div>
+  </section>
+
+  <section class="screen" id="play" hidden>
+    <canvas id="map"></canvas>
+    <div id="mhud">
+      <div><b id="mT">0:00</b><span>Tijd</span></div>
+      <div><b id="mS">0</b><span>Tijdlekken</span></div>
+      <div><div class="tiles" id="mM"></div><span>Tijdsleutels</span></div>
+      <button type="button" id="zM" aria-label="Menu">☰</button>
+    </div>
+    <div id="zoom">
+      <button type="button" id="zIn" aria-label="Inzoomen">+</button>
+      <button type="button" id="zOut" aria-label="Uitzoomen">−</button>
+      <button type="button" id="zMe" aria-label="Centreer op mij">◎</button>
+    </div>
+    <div id="low">
+      <div id="radar">Op weg naar het eerste tijdlek</div>
+      <div id="chip" hidden>
+        <div class="row"><b id="cName"></b><span id="cDist"></span></div>
+        <span id="cHint" class="note"></span>
+        <button class="btn" id="cAct"></button>
+      </div>
+      <div id="mbar">
+        <button type="button" id="mNote">Logboek</button>
+        <button type="button" id="mAcc" class="red">De tijdlijn</button>
+      </div>
+    </div>
+  </section>
+
+  <input type="file" id="file" accept="image/*" capture="environment" aria-label="Maak de foto">
+  <div class="sheet" id="sheet" hidden><div class="paper" id="sheetBody"></div></div>
+  <div id="load" hidden role="status"><div class="spin"></div><b id="loadT"></b><span>Dit duurt meestal 5 tot 30 seconden. Blijf op deze pagina.</span></div>
+  <div id="toast" hidden></div>
+</div>
+<script src="shared/platform.js?v=mm16"></script>
+<script src="shared/catalog.js?v=mm13"></script>
+<script src="shared/tiles.js?v=1"></script>
+<script src="shared/walk.js?v=5"></script>
+<script src="shared/kidsmap.js?v=13"></script>
+<script src="shared/bonus.js?v=1"></script>
+<script src="shared/voice.js?v=1"></script>
+<script src="games/tijd/data-nl.js?v=1"></script>
+<script src="games/tijd/game.js?v=1"></script>
+<script src="shared/start.js?v=4" data-game="tr"></script>
+<script id="mm-demo">if(/[?&]oefen\b/.test(location.search)){var b=document.getElementById("bDemo");if(b)setTimeout(function(){b.click()},50)}</script>
+</body>
+</html>
