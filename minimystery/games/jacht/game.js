@@ -32,7 +32,7 @@ function spk(t){return '<button type="button" class="spk" data-say="'+esc(t)+'" 
 function nw(n){return (D.X.NUM&&D.X.NUM[n])||String(n)}
 /* oude bewaarde jachten (van vóór v8) aanvullen met de nieuwe velden */
 function fixG(g){if(!g)return g;g.len=g.len||"normaal";g.level=g.level||"easy";g.gold=g.gold||[];g.ph=g.ph||[];g.seen=g.seen||[];return g}
-var W=[],P={x:0,y:0,acc:0},R0=550,map=null,sel=null,arrived=null,lastT=0,cur=null,walkTo=null;
+var W=[],P={x:0,y:0,acc:0},R0=330,map=null,sel=null,arrived=null,lastT=0,cur=null,walkTo=null;
 var mg={raf:0,tm:[],stop:function(){cancelAnimationFrame(this.raf);this.raf=0;this.tm.forEach(clearTimeout);this.tm=[]}};
 var COL=["#d4ff3a","#ff4fa3","#f0b429","#38e8ff"];
 

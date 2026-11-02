@@ -18,7 +18,7 @@ var ATK=["omg","deur","naast"],ACTS=["scout","laser","disguise","dial","blueprin
 var EVPOS={5:[1,2,3],8:[1,3,5],11:[2,5,8]},CODEPOS={5:[0,1,3,4],8:[0,2,4,6],11:[0,3,6,9]},WITPOS={5:[2,4],8:[2,4,6,7],11:[1,3,6,9,10]},POSE_AT={5:[3],8:[4],11:[4,8]},PUL=["time","shield","hint","xp2","coin2"];
 var PRIO=[0,1,2,3,4,5,6,7,8,9,10],WITK=["bas","jet","tom","mies","henk"];
 function NN(){return (G&&G.n)||8}function lenOf(n){return n===5?"kort":n===11?"lang":"normaal"}function hard(){return LEVEL==="meester"}
-var W=[],P={x:0,y:0,acc:0},R0=550,map=null,sel=null,arrived=null,lastT=0,cur=null,walkTo=null,photoFor=null,lastFix=0,GL={on:false,t0:0,x:0,y:0,dir:1,next:0};
+var W=[],P={x:0,y:0,acc:0},R0=330,map=null,sel=null,arrived=null,lastT=0,cur=null,walkTo=null,photoFor=null,lastFix=0,GL={on:false,t0:0,x:0,y:0,dir:1,next:0};
 var mg={raf:0,tm:[],iv:[],stop:function(){cancelAnimationFrame(this.raf);this.raf=0;this.tm.forEach(clearTimeout);this.tm=[];this.iv.forEach(clearInterval);this.iv=[];if(this.off){this.off();this.off=null}}};
 var C={night:"#0b1430",deep:"#060b1c",blue:"#1a2b5e",gold:"#f2b705",red:"#ff3b3b",laser:"#39ff88",light:"#3aa0ff",paper:"#101c42",ink:"#eaf0ff",grey:"#94a3b8",white:"#ffffff"};
 var AVC=["#1f2937","#39ff88","#f2b705","#ff3b3b"],DOORC=["#e63946","#2a9d4b","#2563eb"],still=matchMedia("(prefers-reduced-motion: reduce)").matches;

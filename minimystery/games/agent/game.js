@@ -17,9 +17,9 @@ function RR(){return G&&G.R||R0}
 function NN(){return G&&G.c&&G.c.slots?G.c.slots.length:8}
 var ATK=["hoofd","shirt","voet"],NS=5,ALL=31,ORDER=["e0","w0","e1","w1","e2","w2","g","w3"],ACTS=["print","face","shoe","siren","diff","radio","maze","crowd","plate","bag","talk","mapr","lock"];
 var LEN=LS.get("ss_ag_len","normaal");if(!/^(kort|normaal|lang)$/.test(LEN))LEN="normaal";
-var LENN={kort:5,normaal:8,lang:11},LENR={kort:420,normaal:550,lang:650},MISSAT={kort:[2],normaal:[2,5],lang:[2,5,8]};
+var LENN={kort:5,normaal:8,lang:11},LENR={kort:260,normaal:330,lang:400},MISSAT={kort:[2],normaal:[2,5],lang:[2,5,8]};
 var PZD=Object.assign({},D.PUZ,D.PUZ2||{});
-var W=[],P={x:0,y:0,acc:0},R0=550,map=null,sel=null,arrived=null,lastT=0,cur=null,walkTo=null,photoFor=null;
+var W=[],P={x:0,y:0,acc:0},R0=330,map=null,sel=null,arrived=null,lastT=0,cur=null,walkTo=null,photoFor=null;
 var mg={raf:0,tm:[],stop:function(){cancelAnimationFrame(this.raf);this.raf=0;this.tm.forEach(clearTimeout);this.tm=[]}};
 var COL=["#ffc21a","#ff3b3b","#4fd3ff","#ffffff"],HATC=["#e63946","#2a9d4b","#f4c20d"],SKIN="#f5c9a3";
 

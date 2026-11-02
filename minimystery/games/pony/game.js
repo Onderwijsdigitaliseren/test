@@ -17,7 +17,7 @@ var ATK=["vlag","dier","voer"],NS=5,ALL=31,ACTS=["hoof","look","brush","apples",
 var POSE_AT={5:[3],8:[4],11:[4,8]};
 function NN(){return (G&&G.n)||8}
 function lenOf(n){return n===5?"kort":n===11?"lang":"normaal"}
-var W=[],P={x:0,y:0,acc:0},R0=550,map=null,sel=null,arrived=null,lastT=0,cur=null,walkTo=null,photoFor=null;
+var W=[],P={x:0,y:0,acc:0},R0=330,map=null,sel=null,arrived=null,lastT=0,cur=null,walkTo=null,photoFor=null;
 var lastFix=0,GL={on:false,t0:0,x:0,y:0,dir:1,next:0};
 var mg={raf:0,tm:[],stop:function(){cancelAnimationFrame(this.raf);this.raf=0;this.tm.forEach(clearTimeout);this.tm=[]}};
 var COL=["#e76f51","#f4c20d","#6ec3ff","#ff8fab"],FLAGC=["#e63946","#2a9d4b","#f4c20d"],RINGC=["#e63946","#2563eb","#f4c20d","#22c55e"],GRASS="#8fd47a",SKY="#9ad7ff";

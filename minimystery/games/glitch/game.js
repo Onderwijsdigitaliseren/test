@@ -13,7 +13,7 @@ var G=null,tick=0,MODE=LS.get("ss_gl_mode","map"),NAME=LS.get("ss_gl_name",""),V
 var LENS={kort:5,normaal:8,lang:11};if(!LENS[LEN])LEN="normaal";
 var ATK=["kleur","ogen","ant"],ACTS=["bugs","jump","shop","simon","stealth","ar","cipher","pixelfix","hack","pairs","rhythm"],EVPOS={5:[1,2,3],8:[1,3,5],11:[2,5,8]},POSE_AT={5:[3],8:[4],11:[4,8]},PUL=["time","shield","hint","xp2","coin2"];
 function NN(){return (G&&G.n)||8}function lenOf(n){return n===5?"kort":n===11?"lang":"normaal"}function hard(){return LEVEL==="hard"}
-var W=[],P={x:0,y:0,acc:0},R0=550,map=null,sel=null,arrived=null,lastT=0,cur=null,walkTo=null,photoFor=null,lastFix=0,GL={on:false,t0:0,x:0,y:0,dir:1,next:0};
+var W=[],P={x:0,y:0,acc:0},R0=330,map=null,sel=null,arrived=null,lastT=0,cur=null,walkTo=null,photoFor=null,lastFix=0,GL={on:false,t0:0,x:0,y:0,dir:1,next:0};
 var mg={raf:0,tm:[],iv:[],stop:function(){cancelAnimationFrame(this.raf);this.raf=0;this.tm.forEach(clearTimeout);this.tm=[];this.iv.forEach(clearInterval);this.iv=[];if(this.off){this.off();this.off=null}}};
 var C={pur:"#2b1055",navy:"#12163a",green:"#39ff88",cyan:"#22d3ee",pink:"#ff4fa3",yel:"#ffd23f",ink:"#0b0d22",white:"#f4f6ff",orange:"#f59e0b",blue:"#2563eb",red:"#ff3b3b"};
 var GCOL=["#b794f6","#3ccfa8","#ffd23f"],AVC=["#39ff88","#22d3ee","#ff4fa3","#ffd23f"],still=matchMedia("(prefers-reduced-motion: reduce)").matches;

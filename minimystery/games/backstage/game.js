@@ -18,7 +18,7 @@ var EVPOS={5:[1,2,3],8:[1,3,5],11:[2,5,8]},SONGPOS={5:[0,1,2,3,4],8:[0,2,4,6,7],
 /* volgorde waarin de podium-onderdelen aangaan (element-id's, zie drawStage) */
 var PRIO=[1,2,0,6,10,5,3,4,9,7,8];
 function NN(){return (G&&G.n)||8}function lenOf(n){return n===5?"kort":n===11?"lang":"normaal"}function hard(){return LEVEL==="ster"}
-var W=[],P={x:0,y:0,acc:0},R0=550,map=null,sel=null,arrived=null,lastT=0,cur=null,walkTo=null,photoFor=null,lastFix=0,GL={on:false,t0:0,x:0,y:0,dir:1,next:0};
+var W=[],P={x:0,y:0,acc:0},R0=330,map=null,sel=null,arrived=null,lastT=0,cur=null,walkTo=null,photoFor=null,lastFix=0,GL={on:false,t0:0,x:0,y:0,dir:1,next:0};
 var mg={raf:0,tm:[],iv:[],stop:function(){cancelAnimationFrame(this.raf);this.raf=0;this.tm.forEach(clearTimeout);this.tm=[];this.iv.forEach(clearInterval);this.iv=[];if(this.off){this.off();this.off=null}}};
 var C={pur:"#3b0764",deep:"#1a0433",night:"#12021f",mag:"#ff2d95",gold:"#ffd166",turq:"#2dd4bf",pink:"#ffb3d9",white:"#ffffff",ink:"#14052b",lil:"#a78bfa",red:"#ff4d6d",blue:"#60a5fa",green:"#4ade80"};
 var GC=["#ff6fb5","#ffd166","#2dd4bf"],AVC=["#ff2d95","#2dd4bf","#ffd166","#a78bfa"],still=matchMedia("(prefers-reduced-motion: reduce)").matches;

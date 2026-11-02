@@ -14,9 +14,12 @@
 "use strict";
 var MW=window.MW,$=function(s){return document.querySelector(s)};
 function create(o){
-  var ZM={z:1,auto:true,cx:0,cy:0},PTR={},PINCH=null,DRAG=null,T=o.T,M=o.map,DR=o.draw||{},VSC=M.vsc||.42,VT=null,KV=false,HEAD=null,MOVB=null,lastP=null,map=null,bView=null,msgEl=null,hotEl=null,cv=null;
+  var ZM={z:1,auto:true,cx:0,cy:0},PTR={},PINCH=null,DRAG=null,T=o.T,M=o.map,DR=o.draw||{},VSC=(M.vsc||.42)*.62,VT=null,KV=false,HEAD=null,MOVB=null,lastP=null,map=null,bView=null,msgEl=null,hotEl=null,cv=null;
   var still=matchMedia("(prefers-reduced-motion: reduce)").matches;
   function G(){return o.G()}function P(){return o.P()}function dTo(s){return o.dTo(s)}
+  /* bonusstops onderweg (shared/bonus.js) */
+  if(MW.Bonus)MW.Bonus.attach({G:o.G,P:o.P,mode:o.mode,go:o.go});
+  function bto(){return LY?function(q){return LY.to(q)}:o.virt()?function(q){return{x:M.start.x+q.x/VSC,y:M.start.y+q.y/VSC}}:null}
   function fk(s){return s.fk!=null?s.fk:s.fi%M.spots.length}
   function fspot(i){return M.spots[i%M.spots.length]}
   function near(){var g=G();if(!g||!g.st)return null;var best=null,bd=1e9;g.st.forEach(function(s){if(s.done)return;var d=dTo(s);if(d<bd){bd=d;best=s}});return best}
@@ -83,6 +86,7 @@ function create(o){
     introEl=document.createElement("div");introEl.id="kmIntro";introEl.hidden=true;play.appendChild(introEl);
     cv=$("#kmC");msgEl=$("#kmMsg");hotEl=$("#kmHot");cardEl=$("#kmCard");goEl=$("#kmGoT");subEl=$("#kmSub");compEl=$("#kmComp");heatEl=$("#kmHeat");
     function tap(x,y){if(o.onTap)o.onTap(x,y);
+      if(VT&&MW.Bonus){var bt=bto();if(bt&&MW.Bonus.hitKids(x,y,bt,VT))return}
       /* tik op een plek: in de proefronde loop je er (nep) heen, anders wordt hij even aangewezen */
       if(!VT||!LY)return;var hit=null,hd=1e9;LY.list.forEach(function(q){var sx=VT.ox+q.x*VT.sc,sy=VT.oy+(q.y-50)*VT.sc,d=Math.hypot(x-sx,y-sy);if(d<hd){hd=d;hit=q}});
       if(hit&&hd<64*Math.max(VT.sc,.5)+22){if(o.mode()==="demo"&&o.go&&!hit.st.done){o.go(hit.st);if(T.goDemo)MW.Walk.toast(MW.fill(T.goDemo,{p:T.fp[hit.i]||hit.st.name||""}))}else if(T.fp[hit.i]){MW.Walk.toast((T.fp[hit.i]||"")+(hit.st.done?" ✓":" · "+Math.round(dTo(hit.st))+" m"))}}}
@@ -164,6 +168,7 @@ function create(o){
       if(DR.landmark)DR.landmark(g,f.k,f.x,f.y,Math.max(70,34/CSC));
       var ps=Math.max(1.15,.42/CSC);pin(g,f.x,f.y-40-bob,col,ps,t);hoof(g,f.x,f.y-40-bob-70*ps,9*ps,col);
 }
+    if(MW.Bonus){var bt2=bto();if(bt2)MW.Bonus.drawKids(g,bt2,CSC,t,still)}
     /* het groepje */
     /* het groepje: groot poppetje met alleen een schaduw, minstens ± 90 px op het scherm */
     var hs=Math.max(1.7,.95/CSC);g.save();g.translate(kp.x,kp.y);g.scale(hs,hs);g.translate(-kp.x,-kp.y);
