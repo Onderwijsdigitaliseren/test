@@ -28,7 +28,15 @@ function inBuilding(){return G&&G.mode==="gebouw"}
 /* ---------- stem ---------- */
 function say(t){if(!VOICE||!t)return;t=String(t).replace(/<[^>]+>/g,"");if(window.MMVoice)return MMVoice.say(t);try{var ss=window.speechSynthesis;if(!ss)return;ss.cancel();var u=new SpeechSynthesisUtterance(t.replace(/[“”"]/g,"").replace(/\{[^}]+\}/g,""));u.lang="nl-NL";u.rate=.92;u.pitch=1.05;ss.speak(u)}catch(e){}}
 function hush(){if(window.MMVoice)return MMVoice.hush();try{window.speechSynthesis&&window.speechSynthesis.cancel()}catch(e){}}
+/* artwork van Kellie in games/tijd/img wint waar het er is (zie games/tijd/ARTWORK.md); anders getekende/tekst-versies */
+var IMGROOT=MW.root+"games/tijd/img/",IM={};
+["hero","noor","tik","klok","schrift","diploma-stempel"].concat(D.M.map(function(m){return "era-"+m.id})).forEach(function(k){var im=new Image();im.src=IMGROOT+k+".webp?v=1";IM[k]=im});
+function ok(k){var im=IM[k];return !!(im&&im.complete&&im.naturalWidth)}
+function avatarHTML(cls,letter,key){return '<span class="avatar '+cls+'" aria-hidden="true"'+(ok(key)?' style="background-image:url('+IMGROOT+key+'.webp?v=1)"':'')+'>'+(ok(key)?"":letter)+'</span>'}
 var TIKAV='<span class="avatar tik" aria-hidden="true">T</span>',NOORAV='<span class="avatar noor" aria-hidden="true">N</span>';
+function refreshAv(){TIKAV=avatarHTML("tik","T","tik");NOORAV=avatarHTML("noor","N","noor");if(ok("hero"))$("#home").classList.add("photo")}
+Promise.all(Object.keys(IM).map(function(k){return new Promise(function(res){var im=IM[k];if(im.complete)return res();im.onload=im.onerror=function(){res()}})})).then(refreshAv);
+function eraPic(m){return ok("era-"+m.id)?'<img class="erapic" src="'+IMGROOT+'era-'+m.id+'.webp?v=1" alt="">':''}
 function bubble(txt,who,cls,av){return '<div class="msg '+(cls||"")+'">'+(av||NOORAV)+'<div class="bub"><button type="button" class="spk" aria-label="'+esc(T.listen)+'" data-say="'+esc(txt.replace(/<[^>]+>/g,""))+'">🔊</button>'+(who?'<em>'+esc(who)+'</em>':'')+'<p>'+txt+'</p></div></div>'}
 document.addEventListener("click",function(e){var b=e.target.closest(".spk");if(b){hush();VOICE=true;say(b.dataset.say)}});
 
@@ -145,7 +153,7 @@ function build(seed,mode,pois,ways,origin,daily,len,virt){len=LENN[len]?len:"nor
   brief()}
 function brief(){
   $("#bfNo").textContent=(G.mode==="demo"?T.demoCase:"");
-  $("#bfOpen").innerHTML=bubble(fill(D.OPEN[modus()],{N:T.nw[NN()]||NN()}),D.NOOR,"big")+
+  $("#bfOpen").innerHTML=bubble(fill(openOf(modus()),{N:T.nw[NN()]||NN()}),D.NOOR,"big")+
     '<div class="chips"><span class="chip">'+esc(T.lvl[ageI()])+'</span><span class="chip">'+(modus()==="bso"?"BSO-modus":"Schoolmodus")+'</span><span class="chip">'+NN()+' tijdlekken</span><span class="chip">'+(inBuilding()?"in het gebouw":G.mode==="street"?"zonder kaart":"met kaart")+'</span></div>';
   $("#bfTip").innerHTML=MW.codeBox(L,G.code,"zaak");MW.bindCodeBox($("#bfTip"),L);
   show("brief")}
@@ -207,15 +215,19 @@ $("#mNote").onclick=noteSheet;$("#mAcc").onclick=toFinale;$("#bNote").onclick=no
 
 /* ---------- een tijdlek: de tijdreis → het onderzoek → de vraag → tijdsleutel + feit + buurtonderzoek ---------- */
 function puzzleOf(s){return MBY[s.m].lvl[ageI()]}
+function introOf(m){return ageI()===0&&m.intro0?m.intro0:m.intro}
+function feitOf(m){return ageI()===0&&m.feit0?m.feit0:m.feit}
+function openOf(md){return ageI()===0&&D.OPEN0?D.OPEN0[md]:D.OPEN[md]}
+function revealOf(md){return ageI()===0&&D.REVEAL0?D.REVEAL0[md]:D.REVEAL[md]}
 function taskSheet(i,spot){walkTo=null;
   if(G.mode==="demo"&&!G.ph[i]&&done()>=(window.MMTrial?MMTrial.max:2)&&window.MMTrial&&locked()){var _GK=GK;return MMTrial.end({buy:proSheet,home:function(){leavePlay();try{localStorage.removeItem(_GK)}catch(e){}}})}
-  var s=G.c.slots[i],m=MBY[s.m],p=puzzleOf(s),n=done()+1,md=modus(),sch=md==="school",act=inBuilding()?m.act.in:m.act.out;cur={i:i,spot:spot||null};
-  var head='<div class="eyebrow">'+esc(fill(T.task,{i:n,n:NN()}))+(spot?' · '+esc(spot.name):'')+'</div><div class="era" style="--c:'+m.col+'"><span class="ico">'+m.ico+'</span><div><b>'+esc(m.era)+'</b><small>'+esc(m.years)+'</small></div></div>'+
-    bubble(m.intro,sch?D.NOOR:D.TIK,"",sch?NOORAV:TIKAV)+
+  var s=G.c.slots[i],m=MBY[s.m],p=puzzleOf(s),n=done()+1,md=modus(),sch=md==="school",act=(ageI()===0&&m.act0?m.act0:m.act)[inBuilding()?"in":"out"];cur={i:i,spot:spot||null};
+  var head='<div class="eyebrow">'+esc(fill(T.task,{i:n,n:NN()}))+(spot?' · '+esc(spot.name):'')+'</div>'+eraPic(m)+'<div class="era" style="--c:'+m.col+'"><span class="ico">'+m.ico+'</span><div><b>'+esc(m.era)+'</b><small>'+esc(m.years)+'</small></div></div>'+
+    bubble(introOf(m),sch?D.NOOR:D.TIK,"",sch?NOORAV:TIKAV)+
     '<div class="act"><span class="ico">🔎</span><div><b>Onderzoek</b><br>'+esc(act)+'</div></div>';
   sheet(head+'<div id="pz"></div><button type="button" class="btn ghost dk" id="shX">'+T.back+'</button>',true);
   $("#shX").onclick=function(){G.force=null;closeSheet()};
-  say(m.era+". "+m.intro+" Onderzoek: "+act);
+  say(m.era+". "+introOf(m)+" Onderzoek: "+act);
   renderQ(s,p,$("#pz"))}
 function hintBox(s,p){var used=!!G.hints[s.m];return '<div id="fb">'+(used?'<div class="fb hint">💡 '+esc(p.hint)+'</div>':'')+'</div><button type="button" class="btn ghost dk sm" id="bHint"'+(used?' disabled':'')+'>'+(used?T.hintUsed:T.hintBtn)+'</button>'}
 function bindHint(s,p){var b=$("#bHint");if(!b)return;b.onclick=function(){G.hints[s.m]=1;save();b.disabled=true;b.textContent=T.hintUsed;$("#fb").innerHTML='<div class="fb hint">💡 '+esc(p.hint)+'</div>';say(p.hint)}}
@@ -232,10 +244,10 @@ $("#file").addEventListener("change",function(){var f=this.files&&this.files[0];
 function accept(){var i=cur.i,s=G.c.slots[i],m=MBY[s.m];if(G.ph[i])return;G.ph[i]=1;G.order.push(i);if(cur.spot){cur.spot.done=true;cur.spot.doneAt=Date.now()}G.force=null;if(G.mode!=="map"&&G.mode!=="demo")G.i=i+1;save();buzz([40,30,80]);beep(520,.15);setTimeout(function(){beep(780,.2)},130);
   var N=NN(),n=done(),last=n>=N,cliff=last?D.CLIFFLAST:D.CLIFF[(n-1+(G.seed%5))%D.CLIFF.length];
   sheet('<div class="eyebrow">'+esc(fill(T.clue,{n:n,t:N}))+'</div><div class="reward"><p>'+esc(T.keyGet)+'</p><div class="key" style="--c:'+m.col+'"><span class="ico">'+m.ico+'</span><b>'+esc(m.era)+'</b><small>'+esc(m.years)+'</small></div><div class="tiles">'+tilesHTML()+'</div></div>'+
-    '<div class="feit"><em>'+esc(T.feitH)+'</em><p>'+esc(m.feit)+'</p></div>'+
+    '<div class="feit"><em>'+esc(T.feitH)+'</em><p>'+esc(feitOf(m))+'</p></div>'+
     '<div class="spoor"><em>'+esc(T.spoorH)+'</em><p class="q">'+esc(T.spoorQ)+'</p><p class="note">'+esc(m.spoor)+'</p><div class="seg two sp"><button type="button" id="spY" aria-pressed="false">'+esc(T.spoorY)+'</button><button type="button" id="spN" aria-pressed="false">'+esc(T.spoorN)+'</button></div><input class="inp" id="spWhat" maxlength="60" placeholder="'+esc(T.spoorWhat)+'" hidden></div>'+
     bubble(cliff,D.TIK,"",TIKAV)+'<button type="button" class="btn" id="bNext">'+(last?T.finH:T.next)+'</button>',true);
-  say(T.keyGet+" "+m.era+". "+T.feitH+" "+m.feit+" "+cliff);
+  say(T.keyGet+" "+m.era+". "+T.feitH+" "+feitOf(m)+" "+cliff);
   var sp=null;$("#spY").onclick=function(){sp=1;this.setAttribute("aria-pressed","true");$("#spN").setAttribute("aria-pressed","false");$("#spWhat").hidden=false;$("#spWhat").focus()};
   $("#spN").onclick=function(){sp=0;this.setAttribute("aria-pressed","true");$("#spY").setAttribute("aria-pressed","false");$("#spWhat").hidden=true};
   $("#bNext").onclick=function(){if(sp!=null)G.spoor[s.m]={y:sp,t:($("#spWhat").value||"").trim().slice(0,60)};save();closeSheet();sel=null;cur=null;if(G.mode==="map"||G.mode==="demo")chip();else render();if(last)toFinale()}}
@@ -259,8 +271,8 @@ function sortSheet(){var ms=G.c.slots.map(function(s){return MBY[s.m]}).sort(fun
     else{pos=0;G.wrong++;save();b.classList.add("shake");buzz(140);beep(180,.25);$("#fb").innerHTML='<div class="fb no">'+esc(T.finBad)+'</div>';setTimeout(paint,350)}};
   $("#fHint").onclick=function(){G.hints.sort=1;save();this.disabled=true;$("#fb").innerHTML='<div class="fb hint">💡 '+esc(T.finHint)+' Volgende: '+esc(ms[pos].era)+'.</div>';say(T.finHint)}}
 function revealSheet(){G.tEnd=G.tEnd||Date.now();save();var md=modus();
-  sheet('<div class="eyebrow">'+esc(T.won)+'</div><h2>De klok is terug</h2><div class="msg"><span class="avatar noor" aria-hidden="true">'+(md==="bso"?"T":"N")+'</span><div class="bub"><em>In de hal</em>'+D.REVEAL[md]+'</div></div><button type="button" class="btn" id="bWin">'+T.next+'</button>',true);
-  say(D.REVEAL[md]);$("#bWin").onclick=win}
+  sheet('<div class="eyebrow">'+esc(T.won)+'</div><h2>De klok is terug</h2>'+(ok("klok")?'<img class="erapic" src="'+IMGROOT+'klok.webp?v=1" alt="">':'')+'<div class="msg">'+(md==="bso"?TIKAV:NOORAV)+'<div class="bub"><em>In de hal</em>'+revealOf(md)+'</div></div><button type="button" class="btn" id="bWin">'+T.next+'</button>',true);
+  say(revealOf(md));$("#bWin").onclick=win}
 
 /* ---------- gewonnen ---------- */
 var RES=null;
@@ -311,8 +323,8 @@ function drawDiploma(cv,r){var g=cv.getContext("2d"),W2=cv.width,H=cv.height;
 function answerOf(p){if(p.kind==="choice")return p.c[p.a];if(p.kind==="text")return p.a[0].toUpperCase();if(p.kind==="photo")return "foto maken";return "–"}
 function leadSheet(back){if(typeof back!=="function")back=null;var src=G||LS.get("ss_tr_last",null);if(!src||!(src.c||src.slots)){toast("Start eerst een tijdreis; het blad hoort bij een zaakcode.");return}
   var slots=src.c?src.c.slots:src.slots,age=Math.max(0,Math.min(2,+(src.age||0))),md=src.modus||"school",code=src.code,gb=src.mode==="gebouw",ro=src.roomOrder||[],seed=src.seed;
-  var rows=slots.map(function(s,i){var m=MBY[s.m],p=m.lvl[age],act=gb?m.act.in:m.act.out;
-    return '<li><b>'+esc(m.era)+'</b> <small>('+esc(m.years)+(gb&&ro[i]!=null?" · "+esc(D.ROOMS[ro[i]])+(src.nocards?"":" · code "+roomCode(seed,ro[i])):G&&G.st&&G.st[i]&&G.mode==="map"?" · "+esc(G.st[i].name):"")+')</small><br><i>Onderzoek:</i> '+esc(act)+'<br><i>Vraag:</i> '+esc(p.q)+'<br>Antwoord: <b>'+esc(answerOf(p))+'</b><br><small>Hint: '+esc(p.hint)+' · Wist je dat: '+esc(m.feit)+'</small></li>'}).join("");
+  var rows=slots.map(function(s,i){var m=MBY[s.m],p=m.lvl[age],act=(age===0&&m.act0?m.act0:m.act)[gb?"in":"out"];
+    return '<li><b>'+esc(m.era)+'</b> <small>('+esc(m.years)+(gb&&ro[i]!=null?" · "+esc(D.ROOMS[ro[i]])+(src.nocards?"":" · code "+roomCode(seed,ro[i])):G&&G.st&&G.st[i]&&G.mode==="map"?" · "+esc(G.st[i].name):"")+')</small><br><i>Onderzoek:</i> '+esc(act)+'<br><i>Vraag:</i> '+esc(p.q)+'<br>Antwoord: <b>'+esc(answerOf(p))+'</b><br><small>Hint: '+esc(p.hint)+' · Wist je dat: '+esc(age===0&&m.feit0?m.feit0:m.feit)+'</small></li>'}).join("");
   var tl=slots.map(function(s){return MBY[s.m]}).sort(function(a,b){return a.order-b.order}).map(function(m){return '<span class="chip" style="border-color:'+m.col+'">'+m.ico+' '+esc(m.era)+' <small>'+esc(m.years)+'</small></span>'}).join(" ");
   var cards="";if(gb&&!src.nocards){var seen={};ro.forEach(function(ri){if(seen[ri])return;seen[ri]=1;cards+='<div class="pcard"><em>'+esc(T.gbCardT)+' · De Tijdreizigers</em><b>'+esc(D.ROOMS[ri])+'</b><span class="pc">'+roomCode(seed,ri)+'</span><small>Typ deze code in het spel als je team hier is.</small></div>'})}
   var teams="";for(var t=1;t<=8;t++)teams+='<tr><td>'+T.leadTeam+' '+t+'</td><td></td><td></td></tr>';
@@ -320,7 +332,7 @@ function leadSheet(back){if(typeof back!=="function")back=null;var src=G||LS.get
     '<div class="chips"><span class="chip">'+esc(T.lvl[age])+'</span><span class="chip">'+(md==="bso"?"BSO-modus":"Schoolmodus")+'</span><span class="chip">'+slots.length+' tijdlekken</span><span class="chip">'+(gb?"in het gebouw":"buiten")+'</span></div>'+
     '<h3>Lesbrief · vooraf (10 min)</h3><ol class="ol small">'+D.LES.intro.map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ol><p class="small"><b>Kerndoelen:</b> '+esc(D.LES.doelen)+'</p>'+
     '<h3>De tijdlijn (de oplossing van de finale)</h3><div class="chips tl">'+tl+'</div>'+
-    '<h3>Het verhaal (voorlezen)</h3><p class="small">'+fill(D.OPEN[md],{N:T.nw[slots.length]||slots.length})+'</p>'+
+    '<h3>Het verhaal (voorlezen)</h3><p class="small">'+fill(age===0&&D.OPEN0?D.OPEN0[md]:D.OPEN[md],{N:T.nw[slots.length]||slots.length})+'</p>'+
     '<h3>De tijdlekken, in de volgorde van het spel</h3><ol class="ol small">'+rows+'</ol>'+
     '<h3>Lesbrief · nabespreking (20 min)</h3><ol class="ol small">'+D.LES.na.map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ol>'+
     '<h3>'+esc(T.leadTeams)+'</h3><table class="teams"><thead><tr><th>'+T.leadTeam+'</th><th>Teamnaam</th><th>'+T.leadDone+'</th></tr></thead><tbody>'+teams+'</tbody></table>'+

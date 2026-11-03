@@ -211,3 +211,9 @@ h1,h2,h3{font-family:var(--f-type);font-weight:700}
 .pcard em{font-style:normal;font:600 11px var(--f-type);text-transform:uppercase;letter-spacing:.08em;color:var(--violet)}
 .pcard b{font:700 18px var(--f-type)}.pcard .pc{font:700 44px var(--f-type);letter-spacing:.12em;color:var(--night2)}.pcard small{font-size:11px;color:var(--ink2)}
 @media print{.pbreak{page-break-before:always}.pcards{grid-template-columns:1fr 1fr}.pcard{height:220px;justify-content:center}}
+/* artwork (optioneel, games/tijd/img) */
+#home.photo{background:linear-gradient(180deg,rgba(43,31,74,0) 0,rgba(43,31,74,0) 380px,rgba(43,31,74,.92) 600px,var(--night) 700px),url("img/hero.webp") center 0/100% auto no-repeat,var(--night)}
+@media (min-width:600px){#home.photo{background:linear-gradient(90deg,var(--night) 0%,rgba(43,31,74,0) 25%,rgba(43,31,74,0) 75%,var(--night) 100%),linear-gradient(180deg,rgba(43,31,74,0) 0,rgba(43,31,74,0) 380px,rgba(43,31,74,.92) 600px,var(--night) 700px),url("img/hero.webp") center 0/min(100%,520px) auto no-repeat,var(--night)}}
+#home.photo .hero{display:none}#home.photo .masthead{padding-top:300px}#home.photo #ttl,#home.photo .lead{color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.5)}#home.photo .eyebrow{color:#e6dcff!important}
+.avatar{background-size:cover;background-position:center}
+.erapic{display:block;width:100%;height:auto;max-height:220px;object-fit:cover;border-radius:16px;box-shadow:0 8px 20px rgba(0,0,0,.15)}
