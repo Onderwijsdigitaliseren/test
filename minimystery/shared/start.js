@@ -1,7 +1,7 @@
 /* MiniMystery – rustiger startscherm en briefing, gedeeld door alle zaken. Laden ná game.js:
      <script src="shared/start.js" data-game="pp"></script>
    Wat het doet (zonder de spel-logica te veranderen; de bestaande knoppen en hun handlers worden alleen verplaatst):
-   1. Startscherm in drie lagen: (a) nieuw? → gratis proefronde; (b) "Waar spelen jullie?" + één grote startknop;
+   1. Startscherm in drie lagen: (a) nieuw? → gratis proefronde; (b) welke kaart (speelkaart of echte kaart, alleen buiten met kaart) + één grote startknop;
       (c) alle andere instellingen (naam, niveau, lengte, voorlezen, feestopties) achter "Aanpassen", met een samenvatting.
       Andere zaak, zaakcode, archief, wissen en "Hoe werkt het?" staan als kleine knoppen onderaan.
    2. "Hoe werkt het?" = drie stappen; de volledige uitleg staat ingeklapt onder "Alles voor de begeleider".
@@ -13,10 +13,14 @@ var MW=window.MW,$=function(s){return document.querySelector(s)},$$=function(s){
 var me=document.currentScript,GID=(me&&me.dataset.game)||"",L=(document.documentElement.lang||"nl").slice(0,2)==="en"?"en":"nl";
 var X={nl:{where:"Waar spelen jullie?",edit:"Aanpassen",editX:"Klaar",set:"Instellingen",lvl:"Niveau",dur:"Lengte",vOn:"voorlezen aan",vOff:"voorlezen uit",forN:"voor {n}",kids:"{n} namen",kids0:"namen nog leeg",
     newH:"Nieuw hier?",newT:"Speel eerst gratis de proefronde: een paar minuten op een getekende stad, zodat je ziet hoe het werkt.",trial:"▶ Gratis proefronde",real:"De echte zaak",
-    how:"Hoe werkt het?",need:"Nodig: één telefoon per groepje en een volwassene erbij. Lezen hoeft niet: de telefoon leest voor.",more:"Alles voor de begeleider",close:"Sluiten",trialS:"Proefronde",moreB:"Meer"},
+    how:"Hoe werkt het?",need:"Nodig: één telefoon per groepje en een volwassene erbij. Lezen hoeft niet: de telefoon leest voor.",more:"Alles voor de begeleider",close:"Sluiten",trialS:"Proefronde",moreB:"Meer",
+    viewQ:"Welke kaart zien de kinderen?",vKids:"🖍️ Speelkaart",vKidsS:"getekend · jonge kinderen",vReal:"🗺️ Echte kaart",vRealS:"met straten · oudere kinderen",
+    vNote:"De echte kaart helpt ook de begeleider: daarop zie je welke straat je in moet. Wisselen kan altijd, met het knopje aan de zijkant van de kaart."},
   en:{where:"Where are you playing?",edit:"Change",editX:"Done",set:"Settings",lvl:"Level",dur:"Length",vOn:"read aloud on",vOff:"read aloud off",forN:"for {n}",kids:"{n} names",kids0:"no names yet",
     newH:"New here?",newT:"Play the free practice round first: a few minutes on a drawn town, so you can see how it works.",trial:"▶ Free practice round",real:"The real case",
-    how:"How does it work?",need:"You need: one phone per group and a grown-up. No reading needed: the phone reads aloud.",more:"Everything for the grown-up",close:"Close",trialS:"Practice round",moreB:"More"}}[L];
+    how:"How does it work?",need:"You need: one phone per group and a grown-up. No reading needed: the phone reads aloud.",more:"Everything for the grown-up",close:"Close",trialS:"Practice round",moreB:"More",
+    viewQ:"Which map do the children see?",vKids:"🖍️ Play map",vKidsS:"drawn · young children",vReal:"🗺️ Real map",vRealS:"with streets · older children",
+    vNote:"The real map also helps the grown-up: it shows which street to take. You can always switch with the button at the side of the map."}}[L];
 /* drie stappen per spel: [icoon, kop, uitleg] */
 var STEPS={
   pp:{nl:[["🐾","Volg de hoefafdrukken","Loop naar de volgende plek. De pijl en koud/warm/heet wijzen de weg. Binnen loop je op de plaats."],["🧩","Los de puzzel op","Elke puzzel geeft een spoor en een gouden hoefijzer met een cijfer."],["🏡","Waar is Pluis?","Met alle sporen kies je de plek waar Pluis is. Daarna krijg je het Ruiterpaspoort."]],
@@ -47,6 +51,7 @@ function css(){if(document.getElementById("mmStartCss"))return;var s=document.cr
   ".mmNew{margin:16px 0 6px;padding:14px;border-radius:18px;background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.35);text-align:left}"+
   ".mmNew h3{margin:0 0 4px;font-size:17px}.mmNew p{margin:0 0 10px;font-size:14px;line-height:1.4;opacity:.92}.mmNew .btn{margin:0!important;width:100%}"+
   ".mmReal{margin:20px 0 0;font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;opacity:.8;text-align:left}"+
+  ".mmView{margin:4px 0 2px}.mmView[hidden]{display:none}.mmView .seg{margin:0!important}.mmView .mmVN{font-size:13px;line-height:1.4;margin:8px 0 0;text-align:left;opacity:.88}"+
   ".mmGo{font-size:19px!important;padding-top:18px!important;padding-bottom:18px!important}"+
   ".mmLinks{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:22px 0 8px}.mmLinks.mmMore{margin-top:0}.mmLinks[hidden]{display:none}"+
   ".mmLinks>.btn{width:auto!important;flex:0 0 auto;min-height:0!important;padding:8px 12px!important;font-size:13px!important;margin:0!important;letter-spacing:normal!important}"+
@@ -83,6 +88,12 @@ function build(){var home=$("#home"),wrap=home&&home.querySelector(".wrap"),go=$
   /* (b) waar spelen jullie + start */
   /* Toverspiegel: de namen zijn nodig om te beginnen, dus die blijven in beeld */
   var kids=$("#kids");if(kids){var kb=kids.closest(".namebox")||kids;add(kb)}
+  /* kaartkeuze (alleen als het spel "buiten met kaart" kent): speelkaart of echte kaart eerst; per spel onthouden, kidsmap.js leest MW.mapView */
+  var view=null,VK="ss_kmview",vp=(MW.LS.get(VK,{})||{})[GID]==="real"?"real":"kids";MW.mapView=vp;
+  if(modeSeg&&modeSeg.querySelector('[data-m="map"]')){view=document.createElement("div");view.className="mmView";
+    view.innerHTML='<div class="mmQ">'+X.viewQ+'</div><div class="seg two"><button type="button" data-v="kids">'+X.vKids+'<small>'+X.vKidsS+'</small></button><button type="button" data-v="real">'+X.vReal+'<small>'+X.vRealS+'</small></button></div><p class="mmVN">'+X.vNote+'</p>';
+    var vset=function(v){MW.mapView=v;[].forEach.call(view.querySelectorAll("[data-v]"),function(b){b.setAttribute("aria-pressed",b.dataset.v===v?"true":"false")});var all=MW.LS.get(VK,{})||{};all[GID]=v;MW.LS.set(VK,all)};
+    [].forEach.call(view.querySelectorAll("[data-v]"),function(b){b.setAttribute("aria-pressed",b.dataset.v===vp?"true":"false");b.onclick=function(){vset(b.dataset.v)}});add(view)}
   var sum=document.createElement("div");sum.className="mmSum";sum.innerHTML='<span></span><button type="button" aria-expanded="false">'+X.edit+' ▾</button>';add(sum);
   var set=document.createElement("div");set.className="mmSet";set.hidden=true;add(set);
   go.classList.add("mmGo");add(go);add($("#status"));add($("#bPro"));
@@ -118,6 +129,7 @@ function build(){var home=$("#home"),wrap=home&&home.querySelector(".wrap"),go=$
     if(md)bits.push(txt(md));if(lv)bits.push(txt(lv));if(du){var mm=(small(du)+" "+txt(du)).match(/±\s?\d+\s?min/);bits.push(mm?mm[0].replace(/±\s?/,"± "):txt(du))}
     if(vb)bits.push(/🔇/.test(vb.textContent)||vb.getAttribute("aria-pressed")==="false"?X.vOff:X.vOn);
     if(name)bits.push(MW.fill(X.forN,{n:name}));
+    if(view)view.hidden=!(md&&md.dataset.m==="map");
     sum.querySelector("span").textContent=bits.join(" · ");go.textContent=go.textContent.replace("🔒 ▶ ","🔒 ");
     var lk=MW.pro&&MW.pro.locked?MW.pro.locked(GID):false;nw.hidden=!lk||!demo;real.hidden=true;var stt=$("#status");if(stt)stt.hidden=lk;
     if(demo){if(lk){nw.appendChild(demo);demo.classList.remove("sm");demo.textContent=X.trial}else{links.insertBefore(demo,$("#bWipe"));demo.classList.add("sm");demo.textContent=X.trialS}}}

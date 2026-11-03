@@ -53,3 +53,5 @@
 #kmZoom button{width:54px;height:54px;padding:0;border-radius:50%;border:2px solid var(--km-line,#5b3a1e);background:var(--km-paper,rgba(255,250,240,.96));color:var(--km-ink,#3b2a14);font:700 26px/1 'Fredoka','Arial Rounded MT Bold',sans-serif;box-shadow:0 6px 18px rgba(0,0,0,.3);cursor:pointer}
 #kmZoom button[data-z=me]{font-size:22px}
 @media (max-height:640px){#kmZoom{top:calc(50% - 180px)}#kmZoom button{width:46px;height:46px}}
+/* zijknop mag een pil worden als het woord niet in het rondje past ("🖍️ speelkaart" op de echte kaart) */
+#play #bView.kmSide,#walk #bView.kmSide{width:auto!important;min-width:54px;padding:0 10px!important;border-radius:999px!important}

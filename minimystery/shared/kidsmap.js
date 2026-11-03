@@ -2,7 +2,7 @@
    Kinderen kunnen nog geen plattegrond lezen. In plaats van de echte kaart zien ze een getekend stukje land dat bij het verhaal hoort,
    met wegen, vaste plekken (één per spoor) en hun eigen groepje dat over de weg naar de volgende plek loopt: zo ver als ze in het echt
    al dichterbij zijn gekomen (gps), of op stappen (binnen). Een kompaspijl en koud/lauw/warm/heet wijzen de weg.
-   De echte plattegrond blijft achter een knop voor de begeleider.
+   De echte kaart zit achter een knop aan de zijkant; op het startscherm kiest de begeleider welke van de twee eerst komt (MW.mapView).
    Vereist platform.js en walk.js. Gebruik:
      var km=MW.KidsMap.create({ T:{...teksten}, map:{W,H,start,spots:[{x,y,k}],roads:[[i,j]],land,...}, draw:{landmark,decor,start,hero,runner,overlay},
                                G:()=>G, P:()=>P, dTo:fn, virt:()=>bool, mode:()=>G.mode, say:fn, onTap:fn, go:fn(st) (proefronde: loop naar deze plek) });
@@ -60,12 +60,12 @@ function create(o){
   /* ---------- dom ---------- */
   /* uitleg: de verhaalkaart is een tekening, de echte plattegrond zit achter de knop. Teksten per taal; de kaartnamen komen uit het spel (T.kids/T.map). */
   var LG=(document.documentElement.lang||"nl").slice(0,2)==="en"?"en":"nl",introEl=null,cardEl=null,goEl=null,subEl=null,compEl=null,heatEl=null;
-  var X=LG==="en"?{toMap:"Real map",toMapS:"map",you:"You",toKids:"Back",go:"Walk to",here:"You're there!",all:"All done!",help:"What is this map?",
+  var X=LG==="en"?{toMap:"Real map",toMapS:"map",you:"You",toKids:"play map",toKidsL:"Play map",realTip:"The real map, with the streets: handy for the grown-up. Tap 🖍️ for the play map.",go:"Walk to",here:"You're there!",all:"All done!",help:"What is this map?",
       title:"The play map",p1:"The places on this map are real: they're in your own neighbourhood, where they really are. Walk and your group walks along. The arrow and cold → hot show the way.",
-      p2:"Want to see the streets? Tap the 🗺️ button at the side for the real map. Tap it again to come back.",ok:"OK",goMap:"Show the real map"}
-    :{toMap:"Echte plattegrond",toMapS:"kaart",you:"Jullie",toKids:"Terug",go:"Ga lopen naar",here:"Je bent er!",all:"Alles gevonden!",help:"Wat is deze kaart?",
+      p2:"Want to see the streets? Tap the 🗺️ button at the side for the real map. Tap 🖍️ to come back.",ok:"OK",goMap:"Show the real map"}
+    :{toMap:"Echte kaart",toMapS:"kaart",you:"Jullie",toKids:"speelkaart",toKidsL:"Speelkaart",realTip:"De echte kaart, met de straten: handig voor de begeleider. Met 🖍️ ga je naar de speelkaart.",go:"Ga lopen naar",here:"Je bent er!",all:"Alles gevonden!",help:"Wat is deze kaart?",
       title:"De speelkaart",p1:"De plekken op deze kaart zijn echt: ze liggen bij jou in de buurt, zoals ze in het echt liggen. Loop, en jullie groepje loopt mee. Het pijltje en koud → heet wijzen de weg.",
-      p2:"Wil je de straten zien? Tik op het 🗺️-knopje aan de zijkant voor de echte plattegrond. Nog een keer tikken en je bent terug.",ok:"OK",goMap:"Toon de echte plattegrond"};
+      p2:"Wil je de straten zien? Tik op het 🗺️-knopje aan de zijkant voor de echte kaart. Met 🖍️ ben je terug.",ok:"OK",goMap:"Toon de echte kaart"};
   function fillX(s){return s}
   var introPend=false,introChk=0;
   /* de uitleg pas tonen als de verhaalkaart echt vrij in beeld is (geen vel, filmpje of ander scherm ervoor) */
@@ -105,9 +105,10 @@ function create(o){
     addEventListener("resize",function(){if(!$(o.host||"#play").hidden&&KV)size()})}
   function size(){var dpr=Math.min(2,devicePixelRatio||1),w=cv.clientWidth||innerWidth,h=cv.clientHeight||innerHeight;cv.width=w*dpr;cv.height=h*dpr;cv.dataset.dpr=dpr}
   function setView(){$("#kmBox").hidden=!KV;$(o.host||"#play").classList.toggle("kv",KV);
-    bView.innerHTML=KV?'<i>🗺️</i><small>'+X.toMapS+'</small>':'<i>↩</i><small>'+X.toKids+'</small>';bView.setAttribute("aria-label",KV?X.toMap:X.toKids);placeTag();
-    if(KV)size();else{if(map)map.resize();if(o.mode()==="map"&&T.mapTip)MW.Walk.toast(T.mapTip)}}
-  function enter(a){ZM.auto=true;map=a.map||map;lastP=null;MOVB=null;KV=a.kids!==false;bView.hidden=!!a.virt;setView();stopHead();if(o.mode()==="map")startHead();introPend=KV&&!a.virt&&!MW.LS.get("ss_kmintro")}
+    bView.innerHTML=KV?'<i>🗺️</i><small>'+X.toMapS+'</small>':'<i>🖍️</i><small>'+X.toKids+'</small>';bView.setAttribute("aria-label",KV?X.toMap:X.toKidsL);placeTag();
+    if(KV)size();else{if(map)map.resize();if(o.mode()==="map"||o.mode()==="demo")MW.Walk.toast(X.realTip)}}
+  /* welke kaart eerst: de keuze op het startscherm (shared/start.js zet MW.mapView op "kids" of "real"); alleen buiten met kaart en in de proefronde */
+  function enter(a){ZM.auto=true;map=a.map||map;lastP=null;MOVB=null;KV=a.kids!==false&&!(!a.virt&&MW.mapView==="real"&&(o.mode()==="map"||o.mode()==="demo"));bView.hidden=!!a.virt;setView();stopHead();if(o.mode()==="map")startHead();introPend=KV&&!a.virt&&!MW.LS.get("ss_kmintro")}
   function leave(){stopHead()}
   /* ---------- tekenen ---------- */
   /* hulpjes voor de mooiere kaart */
