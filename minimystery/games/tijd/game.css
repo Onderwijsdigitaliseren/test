@@ -220,3 +220,16 @@ h1,h2,h3{font-family:var(--f-type);font-weight:700}
 .pcard{background:#fffaf0 url("img/kaartje.webp") center/100% 100% no-repeat;border:0;aspect-ratio:3/2;justify-content:center;padding:14% 14% 10%;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 @media print{.pcard{height:auto}}
 #brief .erapic{margin-bottom:4px}
+/* 6–7 jaar: plaatjes als antwoord, tijdlijn van drie */
+.choices.pics{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.choices.pics button{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;padding:14px 8px;font:700 16px var(--f-type)}
+.choices.pics .pe,.pool0 .pe{font-size:56px;line-height:1}
+.line0{display:flex;align-items:center;justify-content:center;gap:6px;margin:6px 0}
+.line0 .sl{display:flex;flex-direction:column;align-items:center;gap:4px}
+.line0 .sl i{width:74px;height:74px;border-radius:16px;background:#efe9ff;border:3px dashed #b9b0d6;font-size:44px;font-style:normal;display:grid;place-items:center}
+.line0 .sl.on i{background:#fff4d1;border:3px solid var(--ink)}
+.line0 small{font:600 12px var(--f-type);color:var(--ink2)}
+.line0 .arr{font-size:22px;color:var(--ink2);margin-bottom:18px}
+.pool0{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.pool0 button{display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 4px;border-radius:16px;background:#fff;border:2px solid rgba(43,31,74,.2);box-shadow:0 3px 0 rgba(43,31,74,.2);font:700 14px var(--f-type);color:var(--ink)}
+.pool0 button.used{opacity:.25;box-shadow:none}.pool0 button.shake{animation:shake .35s}
