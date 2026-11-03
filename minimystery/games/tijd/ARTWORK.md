@@ -1,4 +1,4 @@
-# De Tijdreizigers – artwork-lijst
+# De Tijdreizigers – artwork-lijst (geleverd 3 nov 2026, alles gekoppeld)
 
 Alles is optioneel: het spel werkt zonder plaatjes (getekende klok, letter-avatars, gekleurde tijdvak-kaartjes). Zet een bestand in `games/tijd/img/` en het wordt automatisch gebruikt; staat het er niet, dan blijft de terugval. Formaat: WebP, bestandsnaam exact zoals hieronder, kleine letters.
 
@@ -37,9 +37,9 @@ Verschijnen boven het verhaal van dat tijdlek, als "wat je door het lek ziet". E
 
 | Bestand | Formaat | Waar | Wat |
 |---|---|---|---|
-| `schrift.webp` | 800×500 | Briefing ("Het oude schrift") – nog niet gekoppeld, zeg het als je 'm hebt | Het opengeslagen schrift uit 1923 met handschrift en een tekening van de klok. |
-| `diploma-stempel.webp` | 400×400, transparant (PNG mag) | Diploma A4, rechtsonder – nog niet gekoppeld | Rond stempel "Tijdreiziger" met de klok. |
-| `kaartje.webp` | 600×400 | Achtergrond van de plekkaartjes (gebouw-stand) – nog niet gekoppeld | Perkamentrand met een kleine klok, veel lege ruimte in het midden voor de code. |
+| `schrift.webp` | 800×500 | Briefing ("Het oude schrift") | Het opengeslagen schrift uit 1923 met handschrift en een tekening van de klok. |
+| `diploma-stempel.webp` | 400×400, transparant (PNG mag) | Diploma A4, rechtsonder | Rond stempel "Tijdreiziger" met de klok. |
+| `kaartje.webp` | 600×400 | Achtergrond van de plekkaartjes (gebouw-stand) | Perkamentrand met een kleine klok, veel lege ruimte in het midden voor de code. |
 
 ## Niet nodig
 

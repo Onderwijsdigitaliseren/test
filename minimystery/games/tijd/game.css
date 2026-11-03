@@ -214,6 +214,9 @@ h1,h2,h3{font-family:var(--f-type);font-weight:700}
 /* artwork (optioneel, games/tijd/img) */
 #home.photo{background:linear-gradient(180deg,rgba(43,31,74,0) 0,rgba(43,31,74,0) 380px,rgba(43,31,74,.92) 600px,var(--night) 700px),url("img/hero.webp") center 0/100% auto no-repeat,var(--night)}
 @media (min-width:600px){#home.photo{background:linear-gradient(90deg,var(--night) 0%,rgba(43,31,74,0) 25%,rgba(43,31,74,0) 75%,var(--night) 100%),linear-gradient(180deg,rgba(43,31,74,0) 0,rgba(43,31,74,0) 380px,rgba(43,31,74,.92) 600px,var(--night) 700px),url("img/hero.webp") center 0/min(100%,520px) auto no-repeat,var(--night)}}
-#home.photo .hero{display:none}#home.photo .masthead{padding-top:300px}#home.photo #ttl,#home.photo .lead{color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.5)}#home.photo .eyebrow{color:#e6dcff!important}
+#home.photo .hero{display:none}#home.photo .masthead{padding-top:230px}#home.photo #ttl,#home.photo .lead{color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.5)}#home.photo .eyebrow{color:#e6dcff!important}
 .avatar{background-size:cover;background-position:center}
 .erapic{display:block;width:100%;height:auto;max-height:220px;object-fit:cover;border-radius:16px;box-shadow:0 8px 20px rgba(0,0,0,.15)}
+.pcard{background:#fffaf0 url("img/kaartje.webp") center/100% 100% no-repeat;border:0;aspect-ratio:3/2;justify-content:center;padding:14% 14% 10%;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+@media print{.pcard{height:auto}}
+#brief .erapic{margin-bottom:4px}
