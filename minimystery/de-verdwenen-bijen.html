@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>De verdwenen bijen – natuur-speurtocht voor school en BSO | MiniMystery Educatie</title>
+<link rel="icon" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="description" content="Natuur-speurtocht voor groep 3–8 en BSO: de bijenkast bij school is leeg. Bij natuurstations rond (of in) de school doen teams echte waarnemingen: bloemen tellen, bomen herkennen, beestjes onder een steen, vogels luisteren, water, bodem, weer, zwerfafval, dierensporen, steen of groen. Drie niveaus, zaakcode, begeleidersblad met lesbrief, diploma.">
+<link rel="canonical" href="https://www.minimystery.nl/de-verdwenen-bijen.html">
+<meta property="og:site_name" content="MiniMystery">
+<meta property="og:title" content="MiniMystery Educatie – De verdwenen bijen">
+<meta property="og:description" content="De bijenkast is leeg. Natuuronderzoek in je eigen buurt, voor groep 3–8 en BSO.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.minimystery.nl/de-verdwenen-bijen.html">
+<meta property="og:locale" content="nl_NL">
+<meta property="og:image" content="https://www.minimystery.nl/assets/og-image.jpg">
+<meta name="theme-color" content="#dff3d4">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Permanent+Marker&family=Nunito:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="shared/platform.css?v=2">
+<link rel="stylesheet" href="shared/kidsmap.css?v=7">
+<link rel="stylesheet" href="games/natuur/game.css?v=1">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"De verdwenen bijen","url":"https://www.minimystery.nl/de-verdwenen-bijen.html","description":"Natuur-speurtocht voor basisschool (groep 3–8) en BSO: natuurstations in de eigen buurt of rond het schoolgebouw, met echte waarnemingen en tellingen. Drie niveaus. Zaakcode, begeleidersblad met lesbrief, diploma.","inLanguage":"nl","gamePlatform":"Webbrowser","genre":["Kinderspel","Speurtocht","Educatie","Natuur"],"audience":{"@type":"EducationalAudience","educationalRole":"student"}}</script>
+</head>
+<body>
+<div id="app">
+  <section class="screen" id="home">
+    <div class="wrap">
+      <div class="row0"><div class="pills"><a class="pill" id="hub" href="./">◂ Alle zaken</a><a class="pill" href="educatie/">Educatie</a></div></div>
+      <div class="hero" aria-hidden="true">
+        <svg viewBox="0 0 200 200"><rect x="40" y="70" width="120" height="90" rx="10" fill="#f5b800" stroke="#1f3a26" stroke-width="6"/><rect x="30" y="56" width="140" height="22" rx="6" fill="#fffaf0" stroke="#1f3a26" stroke-width="6"/><rect x="88" y="120" width="24" height="14" rx="4" fill="#1f3a26"/><g font-size="22" text-anchor="middle"><text x="60" y="52">🐝</text><text x="150" y="40">🐝</text></g>
+        <text x="100" y="186" font-family="Permanent Marker,cursive" font-size="18" fill="#3fa75f" text-anchor="middle" transform="rotate(-6 100 186)">kast leeg?!</text></svg>
+      </div>
+      <div class="masthead">
+        <span class="eyebrow" style="color:#3fa75f">MiniMystery Educatie · natuur · groep 3–8</span>
+        <h1 id="ttl">De verdwenen bijen</h1><span class="tape">Geen gezoem. De kast is leeg.</span>
+      </div>
+      <p class="lead">De bijenkast achter de school is leeg: de bijen zijn vertrokken. Bijen blijven alleen waar genoeg bloemen, water en schuilplekken zijn. Dus klopt er iets niet in de buurt. Op natuurstations rond (of in) de school doen jullie echte waarnemingen: bloemen tellen, bomen herkennen, beestjes onder een steen, één minuut luisteren naar vogels, water, bodem, weer, zwerfafval, steen of groen. Elk station geeft een natuursleutel; alle sleutels op volgorde en de kringloop klopt.</p>
+      <button class="btn ghost sm" id="bHow">Hoe werkt het?</button>
+      <div class="pline" hidden style="display:none"><b id="pRank">–</b><span><b id="pStreak">0</b> Dagen op rij</span><span><b id="pSolved">0</b> Opgelost</span></div>
+      <div class="namebox"><label for="name">Teamnaam (mag leeg, komt op het diploma)</label><input id="name" maxlength="24" autocomplete="off" placeholder="bijv. De Natuurspeurders"></div>
+      <div class="seglbl">Voor wie</div>
+      <div class="seg two" id="route">
+        <button type="button" data-r="school" aria-pressed="true">School<small>licht educatief</small></button>
+        <button type="button" data-r="bso" aria-pressed="false">BSO<small>speels, meer bewegen</small></button>
+      </div>
+      <div class="seg" id="lvl">
+        <button type="button" data-l="0" aria-pressed="false">Groep 3–4<small>kijken en tellen</small></button>
+        <button type="button" data-l="1" aria-pressed="true">Groep 5–6<small>soorten, voedselketen</small></button>
+        <button type="button" data-l="2" aria-pressed="false">Groep 7–8<small>ecosysteem, %</small></button>
+      </div>
+      <div class="seg" id="dur" aria-label="Lengte">
+        <button type="button" data-n="kort" aria-pressed="false">Kort<small>6 stations · ±35 min</small></button>
+        <button type="button" data-n="normaal" aria-pressed="true">Normaal<small>8 stations · ±45 min</small></button>
+        <button type="button" data-n="lang" aria-pressed="false">Lang<small>10 stations · ±60 min</small></button>
+      </div>
+      <div class="seg" id="len">
+        <button type="button" data-m="map" aria-pressed="true">Buiten<br>met kaart</button>
+        <button type="button" data-m="street" aria-pressed="false">Buiten<br>zonder kaart</button>
+        <button type="button" data-m="gebouw" aria-pressed="false">In het<br>gebouw</button>
+      </div>
+      <button class="btn ghost sm" id="bVoice" aria-pressed="true">🔊 Voorlezen</button>
+      <button class="btn" id="bResume" hidden>Verder met de zaak</button>
+      <button class="btn" id="bGps">Start de zaak van vandaag</button>
+      <button class="btn ghost" id="bRandom">Extra zaak</button>
+      <button class="btn ghost" id="bCode">Zaakcode invullen</button>
+      <button class="btn ghost" id="bPro" hidden></button>
+      <p class="note" id="status"></p>
+      <div id="howT" hidden><ol class="how"><li><b>Voor de begeleider:</b> kies School of BSO, de groep en de lengte (6, 8 of 10 stations). Start de zaak op je eigen telefoon: in de briefing staat de <b>zaakcode</b>. Elk team vult die code in en krijgt precies dezelfde zaak. Onder de briefing staat het <b>begeleidersblad</b>: het verhaal, een lesbrief vooraf en achteraf per groep, alle stations met antwoorden, hints en weetjes.</li><li><b>Buiten met kaart:</b> de stations staan dicht bij elkaar (alles binnen ongeveer 300 meter). De kinderen zien een <b>verhaalkaart</b> met een pijl en koud/warm/heet. <b>Buiten zonder kaart:</b> de stations komen achter elkaar, het team loopt zelf naar een nieuwe plek. <b>In het gebouw:</b> de begeleider kiest plekken in de school; de waarnemingen gebeuren dan aan het raam, bij planten in de klas of op het plein.</li><li><b>Elk station is een echte waarneming:</b> bloemen tellen, de boom herkennen aan het blad, beestjes onder een steen, één minuut stil luisteren naar vogels, water zoeken, de bodem voelen, het weer meten zonder apparaten, zwerfafval tellen, dierensporen, het seizoen aflezen, schuilplekken, bestuiving, steen of groen in tien stappen, wie eet wie, en wat kun je zelf doen. Het team typt eerst wat het telde; de vervolgvraag rekent daarmee verder. Zo heeft elk team een andere uitkomst en kun je ze in de klas vergelijken.</li><li><b>Drie niveaus:</b> groep 3–4 (kijken, tellen, meer/minder; twee plaatjes als antwoord en alles voorgelezen), groep 5–6 (soorten herkennen, voedselketen, seizoenen, meten) en groep 7–8 (ecosysteem, kringlopen, biodiversiteit, percentages, oorzaak en gevolg). Eén hint per station, na elk antwoord een weetje.</li><li><b>Finale:</b> de natuursleutels op volgorde van de kringloop: zon → plant → dier → bodem. Klopt het, dan komt het gezoem terug en krijgt het team een <b>diploma Natuurspeurder</b> (A4).</li></ol><p class="note">Regels buiten: stenen terugleggen, niets plukken, beestjes laten leven, afval niet met blote handen oprapen. Teams blijven bij elkaar en op de stoep. Geen account, geen app: werkt in de browser.</p></div>
+      <button class="btn ghost sm" id="bDemo">Proefronde in de binnenstad van Eindhoven</button>
+      <button class="btn ghost" id="bArch">Opgeloste zaken</button>
+      <button class="btn ghost sm" id="bWipe">Wissen</button>
+    </div>
+  </section>
+
+  <section class="screen" id="brief" hidden>
+    <div class="wrap">
+      <div class="paper">
+        <div class="eyebrow" id="bfNo"></div>
+        <div id="bfTip"></div>
+        <h2>De lege bijenkast</h2>
+        <div id="bfOpen"></div>
+      </div>
+      <button class="btn" id="bGo">We gaan zoeken! ▸</button>
+      <button class="btn ghost" id="bLead">🖨 Begeleidersblad (antwoorden)</button>
+      <button class="btn ghost" id="bBack">Terug</button>
+    </div>
+  </section>
+
+  <section class="screen" id="cards" hidden>
+    <div id="hud">
+      <div><b id="hT">0:00</b><span>Tijd</span></div>
+      <div><b id="hS">0</b><span>Stations</span></div>
+      <div><div class="tiles" id="hM"></div><span>Natuursleutels</span></div>
+      <button type="button" id="zM2" aria-label="Menu">☰</button>
+    </div>
+    <div id="card"></div>
+    <div id="bar">
+      <button type="button" id="bNote">Veldboekje</button>
+      <button type="button" id="bAcc2" class="red">De kringloop</button>
+    </div>
+  </section>
+
+  <section class="screen" id="play" hidden>
+    <canvas id="map"></canvas>
+    <div id="mhud">
+      <div><b id="mT">0:00</b><span>Tijd</span></div>
+      <div><b id="mS">0</b><span>Stations</span></div>
+      <div><div class="tiles" id="mM"></div><span>Natuursleutels</span></div>
+      <button type="button" id="zM" aria-label="Menu">☰</button>
+    </div>
+    <div id="zoom">
+      <button type="button" id="zIn" aria-label="Inzoomen">+</button>
+      <button type="button" id="zOut" aria-label="Uitzoomen">−</button>
+      <button type="button" id="zMe" aria-label="Centreer op mij">◎</button>
+    </div>
+    <div id="low">
+      <div id="radar">Op weg naar het eerste station</div>
+      <div id="chip" hidden>
+        <div class="row"><b id="cName"></b><span id="cDist"></span></div>
+        <span id="cHint" class="note"></span>
+        <button class="btn" id="cAct"></button>
+      </div>
+      <div id="mbar">
+        <button type="button" id="mNote">Veldboekje</button>
+        <button type="button" id="mAcc" class="red">De kringloop</button>
+      </div>
+    </div>
+  </section>
+
+  <input type="file" id="file" accept="image/*" capture="environment" aria-label="Maak de foto">
+  <div class="sheet" id="sheet" hidden><div class="paper" id="sheetBody"></div></div>
+  <div id="load" hidden role="status"><div class="spin"></div><b id="loadT"></b><span>Dit duurt meestal 5 tot 30 seconden. Blijf op deze pagina.</span></div>
+  <div id="toast" hidden></div>
+</div>
+<script src="shared/platform.js?v=mm16"></script>
+<script src="shared/catalog.js?v=mm13"></script>
+<script src="shared/tiles.js?v=1"></script>
+<script src="shared/walk.js?v=5"></script>
+<script src="shared/kidsmap.js?v=14"></script>
+<script src="shared/bonus.js?v=1"></script>
+<script src="shared/voice.js?v=1"></script>
+<script src="games/natuur/data-nl.js?v=1"></script>
+<script src="games/natuur/game.js?v=1"></script>
+<script src="shared/start.js?v=6" data-game="nt"></script>
+<script id="mm-demo">if(/[?&]oefen\b/.test(location.search)){var b=document.getElementById("bDemo");if(b)setTimeout(function(){b.click()},50)}</script>
+</body>
+</html>
