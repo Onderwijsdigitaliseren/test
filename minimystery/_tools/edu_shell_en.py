@@ -84,7 +84,7 @@ GAMES = {
  "Professor Nul en de verdwenen cijfers": "Professor Zero and the Missing Numbers",
  "MiniMystery Educatie · rekenen · groep 3–8": "MiniMystery Education · maths · ages 6–12",
  "Getallen? Overbodig! – Prof. Nul": "Numbers? Pointless! – Prof. Zero",
- "Alle cijfers van de school zijn weg: van de klok, de deuren, de kalender en de kassa. Professor Nul vindt getallen overbodig. Jullie bewijzen het tegendeel. Op rekenstations rond (of in) de school tellen, meten, schatten en rekenen jullie met echte dingen: stappen, ramen, huisnummers, de klok, de kassa, het verkeer. Elke station geeft een getalsleutel; alle sleutels op volgorde en de kluis gaat open.":
+ "Alle cijfers van de school zijn weg: van de klok, de deuren, de kalender en de kassa. Professor Nul vindt getallen overbodig. Jullie bewijzen het tegendeel. Op rekenstations rond (of in) de school tellen, meten, schatten en rekenen jullie met echte dingen: stappen, ramen, huisnummers, de klok, de kassa, het verkeer. Elk station geeft een getalsleutel; alle sleutels op volgorde en de kluis gaat open.":
    "All the numbers in the school are gone: from the clock, the doors, the calendar and the till. Professor Zero thinks numbers are pointless. You will prove him wrong. At maths stations around (or inside) the school you count, measure, estimate and calculate with real things: steps, windows, house numbers, the clock, the till, the traffic. Each station gives a number key; put all the keys in order and the safe opens.",
  "bijv. De Rekenspeurders": "e.g. The Number Detectives",
  "tot 20 en 100": "up to 20 and 100", "tafels, meten, klok": "times tables, measuring, clock", "komma, %, schaal": "decimals, %, scale",
