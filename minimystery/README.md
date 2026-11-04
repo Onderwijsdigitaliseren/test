@@ -32,3 +32,10 @@ Alles in `localStorage` onder `ss_*`, per domein. Wie Pro op moordwandeling.nl h
 
 ## Nieuwe zaak
 Spelmap in /games/<naam>/, twee shells (NL in de root, EN in /en/, paden met ../), één object in shared/catalog.js, cover in assets/cover-<id>.webp, twee regels in sitemap.xml.
+
+## MiniMystery Educatie: Engelse versies
+De educatieve wandelingen (tijd, reken, taal, natuur, klok) hebben een Engelse versie in `en/` (Charlie is NL-only: Engels voor Nederlandse kinderen).
+- Teksten van het spel staan in `games/<g>/data-en.js` (met de hand bijhouden naast `data-nl.js`).
+- `games/<g>/game-en.js` is **gegenereerd** uit `game.js`: na een wijziging in `game.js` draai je `python3 _tools/edu_en.py` (vertaalregels in `_tools/edu_en.json`; het script meldt wat nog Nederlands is).
+- De Engelse HTML-pagina's zijn **gegenereerd** uit de Nederlandse: `python3 _tools/edu_shell_en.py` (vertalingen in het script zelf; het meldt ontbrekende teksten).
+- Landing: `educatie/` (NL) en `en/education/` (EN).

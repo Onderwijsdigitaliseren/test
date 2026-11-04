@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Missing Bees – a nature walk for school and after-school clubs | MiniMystery Education</title>
+<link rel="icon" href="../assets/favicon.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<meta name="description" content="Nature walk for ages 6–12 and after-school clubs: the beehive by the school is empty. At nature stations around (or inside) the school, teams make real observations: counting flowers, recognising trees, minibeasts under a stone, listening to birds, water, soil, weather, litter, animal tracks. Three levels. Case code, leader's sheet with lesson plan, certificate.">
+<link rel="canonical" href="https://www.minimystery.nl/en/the-missing-bees.html">
+<link rel="alternate" hreflang="en" href="https://www.minimystery.nl/en/the-missing-bees.html">
+<link rel="alternate" hreflang="nl" href="https://www.minimystery.nl/de-verdwenen-bijen.html">
+<link rel="alternate" hreflang="x-default" href="https://www.minimystery.nl/de-verdwenen-bijen.html">
+<meta property="og:site_name" content="MiniMystery">
+<meta property="og:title" content="MiniMystery Education – The Missing Bees">
+<meta property="og:description" content="The beehive is empty. Nature investigation in your own neighbourhood, for ages 6–12 and after-school clubs.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.minimystery.nl/en/the-missing-bees.html">
+<meta property="og:locale" content="en_GB">
+<meta property="og:image" content="https://www.minimystery.nl/assets/og-image.jpg">
+<meta name="theme-color" content="#dff3d4">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Permanent+Marker&family=Nunito:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../shared/platform.css?v=2">
+<link rel="stylesheet" href="../shared/kidsmap.css?v=7">
+<link rel="stylesheet" href="../games/natuur/game.css?v=1">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "The Missing Bees", "url": "https://www.minimystery.nl/en/the-missing-bees.html", "description": "Nature walk for primary school (ages 6–12) and after-school clubs: nature stations in your own neighbourhood or around the school building, with real observations and counts. Three levels. Case code, leader's sheet with lesson plan, certificate.", "inLanguage": "en", "gamePlatform": "Webbrowser", "genre": ["Kinderspel", "Speurtocht", "Educatie", "Natuur"], "audience": {"@type": "EducationalAudience", "educationalRole": "student"}}</script>
+</head>
+<body>
+<div id="app">
+  <section class="screen" id="home">
+    <div class="wrap">
+      <div class="row0"><div class="pills"><a class="pill" id="hub" href="./">◂ All cases</a><a class="pill" href="education/">Education</a><button type="button" class="pill" id="lang">Nederlands</button></div></div>
+      <div class="hero" aria-hidden="true">
+        <svg viewBox="0 0 200 200"><rect x="40" y="70" width="120" height="90" rx="10" fill="#f5b800" stroke="#1f3a26" stroke-width="6"/><rect x="30" y="56" width="140" height="22" rx="6" fill="#fffaf0" stroke="#1f3a26" stroke-width="6"/><rect x="88" y="120" width="24" height="14" rx="4" fill="#1f3a26"/><g font-size="22" text-anchor="middle"><text x="60" y="52">🐝</text><text x="150" y="40">🐝</text></g>
+        <text x="100" y="186" font-family="Permanent Marker,cursive" font-size="18" fill="#3fa75f" text-anchor="middle" transform="rotate(-6 100 186)">hive empty?!</text></svg>
+      </div>
+      <div class="masthead">
+        <span class="eyebrow" style="color:#3fa75f">MiniMystery Education · nature · ages 6–12</span>
+        <h1 id="ttl">The Missing Bees</h1><span class="tape">No buzzing. The hive is empty.</span>
+      </div>
+      <p class="lead">The beehive behind the school is empty: the bees have left. Bees only stay where there are enough flowers, water and places to shelter. So something is wrong in the neighbourhood. At nature stations around (or inside) the school you make real observations: counting flowers, recognising trees, minibeasts under a stone, one minute of listening to birds, water, soil, weather, litter, stone or green. Each station gives a nature key; put all the keys in order and the cycle is complete.</p>
+      <button class="btn ghost sm" id="bHow">How does it work?</button>
+      <div class="pline" hidden style="display:none"><b id="pRank">–</b><span><b id="pStreak">0</b> Days in a row</span><span><b id="pSolved">0</b> Solved</span></div>
+      <div class="namebox"><label for="name">Team name (optional, goes on the certificate)</label><input id="name" maxlength="24" autocomplete="off" placeholder="e.g. The Nature Detectives"></div>
+      <div class="seglbl">Who is playing</div>
+      <div class="seg two" id="route">
+        <button type="button" data-r="school" aria-pressed="true">School<small>lightly educational</small></button>
+        <button type="button" data-r="bso" aria-pressed="false">After-school<small>playful, more moving</small></button>
+      </div>
+      <div class="seg" id="lvl">
+        <button type="button" data-l="0" aria-pressed="false">Ages 6–8<small>looking and counting</small></button>
+        <button type="button" data-l="1" aria-pressed="true">Ages 8–10<small>species, food chain</small></button>
+        <button type="button" data-l="2" aria-pressed="false">Ages 10–12<small>ecosystem, %</small></button>
+      </div>
+      <div class="seg" id="dur" aria-label="Length">
+        <button type="button" data-n="kort" aria-pressed="false">Short<small>6 stations · ±35 min</small></button>
+        <button type="button" data-n="normaal" aria-pressed="true">Normal<small>8 stations · ±45 min</small></button>
+        <button type="button" data-n="lang" aria-pressed="false">Long<small>10 stations · ±60 min</small></button>
+      </div>
+      <div class="seg" id="len">
+        <button type="button" data-m="map" aria-pressed="true">Outdoors<br>with map</button>
+        <button type="button" data-m="street" aria-pressed="false">Outdoors<br>without map</button>
+        <button type="button" data-m="gebouw" aria-pressed="false">In the<br>building</button>
+      </div>
+      <button class="btn ghost sm" id="bVoice" aria-pressed="true">🔊 Read aloud</button>
+      <button class="btn" id="bResume" hidden>Continue the case</button>
+      <button class="btn" id="bGps">Start today's case</button>
+      <button class="btn ghost" id="bRandom">Extra case</button>
+      <button class="btn ghost" id="bCode">Enter a case code</button>
+      <button class="btn ghost" id="bPro" hidden></button>
+      <p class="note" id="status"></p>
+      <div id="howT" hidden><ol class="how"><li><b>For the leader:</b> choose School or After-school, the age group and the length (6, 8 or 10 stations). Start the case on your own phone: the briefing shows the <b>case code</b>. Every team enters that code and gets exactly the same case. Below the briefing is the <b>leader's sheet</b>: the story, a lesson plan for before and after per age group, all stations with answers, hints and fun facts.</li><li><b>Outdoors with map:</b> the stations are close together (all within about 300 metres). The children see a <b>story map</b> with an arrow and cold/warm/hot. <b>Outdoors without map:</b> the stations come one after another; the team walks to a new spot by itself. <b>In the building:</b> the leader picks spots in the school; the observations then happen at the window, by plants in the classroom or in the playground.</li><li><b>Each station is a real observation:</b> counting flowers, recognising a tree by its leaf, minibeasts under a stone, one minute of quiet listening to birds, looking for water, feeling the soil, measuring the weather without instruments, counting litter, animal tracks, reading the season, shelters, pollination, stone or green in ten steps, who eats whom, and what you can do yourself. The team first types what it counted; the follow-up question calculates with that. So every team gets a different result, and you can compare them in class.</li><li><b>Three levels:</b> ages 6–8 (looking, counting, more/less; two pictures as answers and everything read aloud), ages 8–10 (recognising species, food chain, seasons, measuring) and ages 10–12 (ecosystem, cycles, biodiversity, percentages, cause and effect). One hint per station, and a fun fact after every answer.</li><li><b>Finale:</b> put the nature keys in the order of the cycle: sun → plant → animal → soil. If it's right, the buzzing comes back and the team gets a <b>Nature Detective certificate</b> (A4).</li></ol><p class="note">Outdoor rules: put stones back, don't pick anything, let minibeasts live, don't pick up litter with bare hands. Teams stay together and on the pavement. No account, no app: it works in the browser.</p></div>
+      <button class="btn ghost sm" id="bDemo">Practice round in Eindhoven city centre</button>
+      <button class="btn ghost" id="bArch">Solved cases</button>
+      <button class="btn ghost sm" id="bWipe">Clear</button>
+    </div>
+  </section>
+
+  <section class="screen" id="brief" hidden>
+    <div class="wrap">
+      <div class="paper">
+        <div class="eyebrow" id="bfNo"></div>
+        <div id="bfTip"></div>
+        <h2>The empty beehive</h2>
+        <div id="bfOpen"></div>
+      </div>
+      <button class="btn" id="bGo">Let's go! ▸</button>
+      <button class="btn ghost" id="bLead">🖨 Leader's sheet (answers)</button>
+      <button class="btn ghost" id="bBack">Back</button>
+    </div>
+  </section>
+
+  <section class="screen" id="cards" hidden>
+    <div id="hud">
+      <div><b id="hT">0:00</b><span>Time</span></div>
+      <div><b id="hS">0</b><span>Stations</span></div>
+      <div><div class="tiles" id="hM"></div><span>Nature keys</span></div>
+      <button type="button" id="zM2" aria-label="Menu">☰</button>
+    </div>
+    <div id="card"></div>
+    <div id="bar">
+      <button type="button" id="bNote">Field notebook</button>
+      <button type="button" id="bAcc2" class="red">The cycle</button>
+    </div>
+  </section>
+
+  <section class="screen" id="play" hidden>
+    <canvas id="map"></canvas>
+    <div id="mhud">
+      <div><b id="mT">0:00</b><span>Time</span></div>
+      <div><b id="mS">0</b><span>Stations</span></div>
+      <div><div class="tiles" id="mM"></div><span>Nature keys</span></div>
+      <button type="button" id="zM" aria-label="Menu">☰</button>
+    </div>
+    <div id="zoom">
+      <button type="button" id="zIn" aria-label="Zoom in">+</button>
+      <button type="button" id="zOut" aria-label="Zoom out">−</button>
+      <button type="button" id="zMe" aria-label="Centre on me">◎</button>
+    </div>
+    <div id="low">
+      <div id="radar">On the way to the first station</div>
+      <div id="chip" hidden>
+        <div class="row"><b id="cName"></b><span id="cDist"></span></div>
+        <span id="cHint" class="note"></span>
+        <button class="btn" id="cAct"></button>
+      </div>
+      <div id="mbar">
+        <button type="button" id="mNote">Field notebook</button>
+        <button type="button" id="mAcc" class="red">The cycle</button>
+      </div>
+    </div>
+  </section>
+
+  <input type="file" id="file" accept="image/*" capture="environment" aria-label="Take the photo">
+  <div class="sheet" id="sheet" hidden><div class="paper" id="sheetBody"></div></div>
+  <div id="load" hidden role="status"><div class="spin"></div><b id="loadT"></b><span>This usually takes 5 to 30 seconds. Please stay on this page.</span></div>
+  <div id="toast" hidden></div>
+</div>
+<script src="../shared/platform.js?v=mm16"></script>
+<script src="../shared/catalog.js?v=mm14"></script>
+<script src="../shared/tiles.js?v=1"></script>
+<script src="../shared/walk.js?v=5"></script>
+<script src="../shared/kidsmap.js?v=14"></script>
+<script src="../shared/bonus.js?v=1"></script>
+<script src="../shared/voice.js?v=1"></script>
+<script src="../games/natuur/data-en.js?v=1"></script>
+<script src="../games/natuur/game-en.js?v=1"></script>
+<script src="../shared/start.js?v=6" data-game="nt"></script>
+<script id="mm-demo">if(/[?&]oefen\b/.test(location.search)){var b=document.getElementById("bDemo");if(b)setTimeout(function(){b.click()},50)}</script>
+</body>
+</html>

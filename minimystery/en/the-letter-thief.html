@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Letter Thief – an English literacy walk for school and after-school clubs | MiniMystery Education</title>
+<link rel="icon" href="../assets/favicon.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<meta name="description" content="English literacy walk for ages 6–12 and after-school clubs: the Letter Thief has stolen letters from the school. At word stations around (or inside) the school, teams read, spell and build with real words from the neighbourhood: street signs, syllables, rhyme, compound words, word classes, punctuation. Three levels. Case code, leader's sheet with lesson plan, certificate.">
+<link rel="canonical" href="https://www.minimystery.nl/en/the-letter-thief.html">
+<link rel="alternate" hreflang="en" href="https://www.minimystery.nl/en/the-letter-thief.html">
+<link rel="alternate" hreflang="nl" href="https://www.minimystery.nl/de-letterdief.html">
+<link rel="alternate" hreflang="x-default" href="https://www.minimystery.nl/de-letterdief.html">
+<meta property="og:site_name" content="MiniMystery">
+<meta property="og:title" content="MiniMystery Education – The Letter Thief">
+<meta property="og:description" content="The Letter Thief stole the school's letters. Reading and spelling with real words from your own neighbourhood, for ages 6–12 and after-school clubs.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.minimystery.nl/en/the-letter-thief.html">
+<meta property="og:locale" content="en_GB">
+<meta property="og:image" content="https://www.minimystery.nl/assets/og-image.jpg">
+<meta name="theme-color" content="#d6f0ea">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Permanent+Marker&family=Nunito:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../shared/platform.css?v=2">
+<link rel="stylesheet" href="../shared/kidsmap.css?v=7">
+<link rel="stylesheet" href="../games/taal/game.css?v=1">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "The Letter Thief", "url": "https://www.minimystery.nl/en/the-letter-thief.html", "description": "English literacy walk for primary school (ages 6–12) and after-school clubs: word stations in your own neighbourhood or in the school building, with real words from signs and shops. Three levels. Case code, leader's sheet with lesson plan, certificate.", "inLanguage": "en", "gamePlatform": "Webbrowser", "genre": ["Kinderspel", "Speurtocht", "Educatie", "Taal"], "audience": {"@type": "EducationalAudience", "educationalRole": "student"}}</script>
+</head>
+<body>
+<div id="app">
+  <section class="screen" id="home">
+    <div class="wrap">
+      <div class="row0"><div class="pills"><a class="pill" id="hub" href="./">◂ All cases</a><a class="pill" href="education/">Education</a><button type="button" class="pill" id="lang">Nederlands</button></div></div>
+      <div class="hero" aria-hidden="true">
+        <svg viewBox="0 0 200 200"><rect x="14" y="60" width="172" height="80" rx="12" fill="#fff" stroke="#14403a" stroke-width="6"/><g font-family="Fredoka,sans-serif" font-weight="700" font-size="44" fill="#14403a" text-anchor="middle"><text x="48" y="116">S</text><text x="78" y="116" fill="#bfe0d8">_</text><text x="106" y="116">H</text><text x="134" y="116">O</text><text x="162" y="116" fill="#bfe0d8">_</text></g>
+        <text x="100" y="172" font-family="Permanent Marker,cursive" font-size="18" fill="#2a9d8f" text-anchor="middle" transform="rotate(-6 100 172)">letters gone!</text></svg>
+      </div>
+      <div class="masthead">
+        <span class="eyebrow" style="color:#2a9d8f">MiniMystery Education · literacy · ages 6–12</span>
+        <h1 id="ttl">The Letter Thief</h1><span class="tape">The sign on the wall says S_HO_L!</span>
+      </div>
+      <p class="lead">Last night the Letter Thief stole letters: from the sign on the wall, from the classroom doors, from the board in the hall. He left a note: whoever wants to find me must make my sentence. At word stations around (or inside) the school you read, spell and build with real words from the neighbourhood: street signs, rhymes, syllables, compound words, punctuation. Each station gives a word key; put all the words in order and his sentence appears.</p>
+      <button class="btn ghost sm" id="bHow">How does it work?</button>
+      <div class="pline" hidden style="display:none"><b id="pRank">–</b><span><b id="pStreak">0</b> Days in a row</span><span><b id="pSolved">0</b> Solved</span></div>
+      <div class="namebox"><label for="name">Team name (optional, goes on the certificate)</label><input id="name" maxlength="24" autocomplete="off" placeholder="e.g. The Word Detectives"></div>
+      <div class="seglbl">Who is playing</div>
+      <div class="seg two" id="route">
+        <button type="button" data-r="school" aria-pressed="true">School<small>lightly educational</small></button>
+        <button type="button" data-r="bso" aria-pressed="false">After-school<small>playful, more moving</small></button>
+      </div>
+      <div class="seg" id="lvl">
+        <button type="button" data-l="0" aria-pressed="false">Ages 6–8<small>letters, sounds, rhyme</small></button>
+        <button type="button" data-l="1" aria-pressed="true">Ages 8–10<small>spelling, word classes</small></button>
+        <button type="button" data-l="2" aria-pressed="false">Ages 10–12<small>grammar, figurative</small></button>
+      </div>
+      <div class="seg" id="dur" aria-label="Length">
+        <button type="button" data-n="kort" aria-pressed="false">Short<small>6 stations · ±35 min</small></button>
+        <button type="button" data-n="normaal" aria-pressed="true">Normal<small>8 stations · ±45 min</small></button>
+        <button type="button" data-n="lang" aria-pressed="false">Long<small>10 stations · ±60 min</small></button>
+      </div>
+      <div class="seg" id="len">
+        <button type="button" data-m="map" aria-pressed="true">Outdoors<br>with map</button>
+        <button type="button" data-m="street" aria-pressed="false">Outdoors<br>without map</button>
+        <button type="button" data-m="gebouw" aria-pressed="false">In the<br>building</button>
+      </div>
+      <button class="btn ghost sm" id="bVoice" aria-pressed="true">🔊 Read aloud</button>
+      <button class="btn" id="bResume" hidden>Continue the case</button>
+      <button class="btn" id="bGps">Start today's case</button>
+      <button class="btn ghost" id="bRandom">Extra case</button>
+      <button class="btn ghost" id="bCode">Enter a case code</button>
+      <button class="btn ghost" id="bPro" hidden></button>
+      <p class="note" id="status"></p>
+      <div id="howT" hidden><ol class="how"><li><b>For the leader:</b> choose School or After-school, the age group and the length (6, 8 or 10 stations). Start the case on your own phone: the briefing shows the <b>case code</b>. Every team enters that code and gets exactly the same case. Below the briefing is the <b>leader's sheet</b>: the story, a lesson plan for before and after per age group, all stations with answers, hints and language tips.</li><li><b>Outdoors with map:</b> the stations are close together (all within about 300 metres). The children see a <b>story map</b> with an arrow and cold/warm/hot. <b>Outdoors without map:</b> the stations come one after another; the team walks to a new spot by itself. <b>In the building:</b> the leader picks spots in the school; each spot gets a card with a code from the leader's sheet.</li><li><b>Each station uses real words from the neighbourhood:</b> copying the street sign and counting its letters, vowels or syllables, clapping the longest word, rhyming with what you see, gluing words into compound words, finding opposites, who does what (word classes), spelling, the alphabet, punctuation, building a sentence, plurals, figurative language, words from other languages, a note to the thief. At the sign stations the team first types the word; the follow-up question works with it, so every team has a different answer.</li><li><b>Three levels</b> building up step by step: ages 6–8 (sounds and letters, syllables, rhyme, capital letter and full stop; two pictures as answers and everything read aloud), ages 8–10 (spelling rules, word classes, compound words, synonyms and opposites, the alphabet, punctuation) and ages 10–12 (verb spelling, grammar, figurative language, loanwords, register). One hint per station, and a language tip after every answer.</li><li><b>Finale:</b> put the word keys in the right order to make a sentence (capital letter at the start, full stop at the end). Then the Letter Thief appears, brings the letters back and the team gets a <b>Word Detective certificate</b> (A4) with his sentence on it.</li></ol><p class="note">Tip: agree on the play area and a finish time. Teams stay together and on the pavement. No account, no app: it works in the browser.</p></div>
+      <button class="btn ghost sm" id="bDemo">Practice round in Eindhoven city centre</button>
+      <button class="btn ghost" id="bArch">Solved cases</button>
+      <button class="btn ghost sm" id="bWipe">Clear</button>
+    </div>
+  </section>
+
+  <section class="screen" id="brief" hidden>
+    <div class="wrap">
+      <div class="paper">
+        <div class="eyebrow" id="bfNo"></div>
+        <div id="bfTip"></div>
+        <h2>The Letter Thief's note</h2>
+        <div id="bfOpen"></div>
+      </div>
+      <button class="btn" id="bGo">Let's go! ▸</button>
+      <button class="btn ghost" id="bLead">🖨 Leader's sheet (answers)</button>
+      <button class="btn ghost" id="bBack">Back</button>
+    </div>
+  </section>
+
+  <section class="screen" id="cards" hidden>
+    <div id="hud">
+      <div><b id="hT">0:00</b><span>Time</span></div>
+      <div><b id="hS">0</b><span>Stations</span></div>
+      <div><div class="tiles" id="hM"></div><span>Word keys</span></div>
+      <button type="button" id="zM2" aria-label="Menu">☰</button>
+    </div>
+    <div id="card"></div>
+    <div id="bar">
+      <button type="button" id="bNote">Word book</button>
+      <button type="button" id="bAcc2" class="red">The sentence</button>
+    </div>
+  </section>
+
+  <section class="screen" id="play" hidden>
+    <canvas id="map"></canvas>
+    <div id="mhud">
+      <div><b id="mT">0:00</b><span>Time</span></div>
+      <div><b id="mS">0</b><span>Stations</span></div>
+      <div><div class="tiles" id="mM"></div><span>Word keys</span></div>
+      <button type="button" id="zM" aria-label="Menu">☰</button>
+    </div>
+    <div id="zoom">
+      <button type="button" id="zIn" aria-label="Zoom in">+</button>
+      <button type="button" id="zOut" aria-label="Zoom out">−</button>
+      <button type="button" id="zMe" aria-label="Centre on me">◎</button>
+    </div>
+    <div id="low">
+      <div id="radar">On the way to the first station</div>
+      <div id="chip" hidden>
+        <div class="row"><b id="cName"></b><span id="cDist"></span></div>
+        <span id="cHint" class="note"></span>
+        <button class="btn" id="cAct"></button>
+      </div>
+      <div id="mbar">
+        <button type="button" id="mNote">Word book</button>
+        <button type="button" id="mAcc" class="red">The sentence</button>
+      </div>
+    </div>
+  </section>
+
+  <input type="file" id="file" accept="image/*" capture="environment" aria-label="Take the photo">
+  <div class="sheet" id="sheet" hidden><div class="paper" id="sheetBody"></div></div>
+  <div id="load" hidden role="status"><div class="spin"></div><b id="loadT"></b><span>This usually takes 5 to 30 seconds. Please stay on this page.</span></div>
+  <div id="toast" hidden></div>
+</div>
+<script src="../shared/platform.js?v=mm16"></script>
+<script src="../shared/catalog.js?v=mm14"></script>
+<script src="../shared/tiles.js?v=1"></script>
+<script src="../shared/walk.js?v=5"></script>
+<script src="../shared/kidsmap.js?v=14"></script>
+<script src="../shared/bonus.js?v=1"></script>
+<script src="../shared/voice.js?v=1"></script>
+<script src="../games/taal/data-en.js?v=1"></script>
+<script src="../games/taal/game-en.js?v=1"></script>
+<script src="../shared/start.js?v=6" data-game="tl"></script>
+<script id="mm-demo">if(/[?&]oefen\b/.test(location.search)){var b=document.getElementById("bDemo");if(b)setTimeout(function(){b.click()},50)}</script>
+</body>
+</html>

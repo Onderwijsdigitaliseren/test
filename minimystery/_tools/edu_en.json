@@ -1,0 +1,765 @@
+{
+ "_comment": "Engelse vertaling van de vaste teksten in games/<spel>/game.js (MiniMystery Educatie). Gebruik: python3 _tools/edu_en.py. Langere zinnen eerst; per spel kunnen extra regels in 'games'.",
+ "common": [
+  [
+   "Loop samen naar een nieuwe plek in de buurt: een hoek, een gebouw, een stoep of een plein. Daar staat het volgende rekenstation: <b>",
+   "Walk together to a new place nearby: a corner, a building, a pavement or a square. The next maths station is there: <b>"
+  ],
+  [
+   "Loop samen naar een nieuwe plek in de buurt: een hoek, een gebouw, een stoep of een plein. Daar staat het volgende taalstation: <b>",
+   "Walk together to a new place nearby: a corner, a building, a pavement or a square. The next language station is there: <b>"
+  ],
+  [
+   "Loop samen naar een nieuwe plek in de buurt: een hoek, een gebouw, een stoep of een plein. Daar staat het volgende natuurstation: <b>",
+   "Walk together to a new place nearby: a corner, a building, a pavement or a square. The next nature station is there: <b>"
+  ],
+  [
+   "Loop samen naar een nieuwe plek in de buurt: een hoek, een gebouw, een boom of een bankje. Daar zit het volgende tijdlek.",
+   "Walk together to a new place nearby: a corner, a building, a tree or a bench. The next time leak is there."
+  ],
+  [
+   "Loop samen naar een nieuwe plek in de buurt, bijvoorbeeld een hoek, een boom of een bankje. ",
+   "Walk together to a new place nearby, for example a corner, a tree or a bench. "
+  ],
+  [
+   "Loop samen naar een nieuwe plek in de buurt. ",
+   "Walk together to a new place nearby. "
+  ],
+  [
+   "Daar ligt de volgende zaak: <b>",
+   "The next case is there: <b>"
+  ],
+  [
+   "Start eerst een tijdreis; het blad hoort bij een zaakcode.",
+   "Start a time journey first; the sheet belongs to a case code."
+  ],
+  [
+   "Start eerst een zaak; het blad hoort bij een zaakcode.",
+   "Start a case first; the sheet belongs to a case code."
+  ],
+  [
+   "Knip ze uit en hang ze op de plekken. De code hoort bij deze zaakcode.",
+   "Cut them out and put them up at the places. The code belongs to this case code."
+  ],
+  [
+   "Typ deze code in het spel als je team hier is.",
+   "Type this code in the game when your team is here."
+  ],
+  [
+   "De cijfers staan in het speurboekje, in de volgorde waarin jullie ze vonden.",
+   "The digits are in the notebook, in the order you found them."
+  ],
+  [
+   ", in te toetsen in de volgorde waarin het team ze vond (staat in hun speurboekje; zonder kaart is dat de volgorde van de zaken hierboven).",
+   ", to be keyed in in the order the team found them (shown in their notebook; without a map that is the order of the cases above)."
+  ],
+  [
+   " hebben de klok naar zolder gebracht om er met alle kinderen een nieuwe wijzerplaat op te schilderen.",
+   " took the clock down to the cellar to paint a new clock face on it with all the children."
+  ],
+  [
+   "juf Noor Timmers en meneer Tik",
+   "Miss Noor Timmers and Mr Tik"
+  ],
+  [
+   " Daarna de onthulling: ",
+   " Then the reveal: "
+  ],
+  [
+   " Het hangslot: de cijfers <b>",
+   " The padlock: the digits <b>"
+  ],
+  [
+   "<h3>De oplossing</h3><p class=\"small\">De plek: <b>",
+   "<h3>The solution</h3><p class=\"small\">The place: <b>"
+  ],
+  [
+   "<h3>De zaken, in volgorde</h3>",
+   "<h3>The cases, in order</h3>"
+  ],
+  [
+   "<h3>Het verhaal (voorlezen)</h3>",
+   "<h3>The story (read aloud)</h3>"
+  ],
+  [
+   "<h3>Lesbrief · vooraf (10 min)</h3>",
+   "<h3>Lesson plan · before (10 min)</h3>"
+  ],
+  [
+   "<h3>Lesbrief · nabespreking (20 min)</h3>",
+   "<h3>Lesson plan · follow-up (20 min)</h3>"
+  ],
+  [
+   "<h3>Lesbrief · nabespreking (",
+   "<h3>Lesson plan · follow-up ("
+  ],
+  [
+   "<h3>De tijdlijn (de oplossing van de finale)</h3>",
+   "<h3>The timeline (the solution to the finale)</h3>"
+  ],
+  [
+   "<h3>De tijdlekken, in de volgorde van het spel</h3>",
+   "<h3>The time leaks, in the order of the game</h3>"
+  ],
+  [
+   "<h3>De tijdvakken in dit spel</h3>",
+   "<h3>The eras in this game</h3>"
+  ],
+  [
+   "<h3>De finale</h3><p class=\"small\">Drie plaatjes van lang geleden naar nu, over <b>",
+   "<h3>The finale</h3><p class=\"small\">Three pictures from long ago to now, about <b>"
+  ],
+  [
+   ". Geen jaartallen.</p>",
+   ". No dates.</p>"
+  ],
+  [
+   "<h3>De getallenkluis (de oplossing van de finale, van klein naar groot)</h3>",
+   "<h3>The number vault (the solution to the finale, from small to large)</h3>"
+  ],
+  [
+   "<h3>De rekenstations, in de volgorde van het spel</h3>",
+   "<h3>The maths stations, in the order of the game</h3>"
+  ],
+  [
+   "<h3>De zin van de Letterdief (de oplossing van de finale)</h3>",
+   "<h3>The Letter Thief\\'s sentence (the solution to the finale)</h3>"
+  ],
+  [
+   "<h3>De taalstations, in de volgorde van het spel</h3>",
+   "<h3>The language stations, in the order of the game</h3>"
+  ],
+  [
+   "<h3>De kringloop (de oplossing van de finale)</h3>",
+   "<h3>The cycle (the solution to the finale)</h3>"
+  ],
+  [
+   "<h3>De natuurstations, in de volgorde van het spel</h3>",
+   "<h3>The nature stations, in the order of the game</h3>"
+  ],
+  [
+   "<b>Leerdoelen:</b> ",
+   "<b>Learning goals:</b> "
+  ],
+  [
+   "\"Leerdoelen\":\"Kerndoelen\"",
+   "\"Learning goals\":\"Curriculum goals\""
+  ],
+  [
+   "<i>Onderzoek:</i> ",
+   "<i>Investigate:</i> "
+  ],
+  [
+   "<i>Meten:</i> ",
+   "<i>Measure:</i> "
+  ],
+  [
+   "<i>Opdracht:</i> ",
+   "<i>Task:</i> "
+  ],
+  [
+   "<i>Waarnemen:</i> ",
+   "<i>Observe:</i> "
+  ],
+  [
+   "<i>Vraag:</i> ",
+   "<i>Question:</i> "
+  ],
+  [
+   "<br>Antwoord: <b>",
+   "<br>Answer: <b>"
+  ],
+  [
+   "<small>Hint: ",
+   "<small>Hint: "
+  ],
+  [
+   " · Wist je dat: ",
+   " · Did you know: "
+  ],
+  [
+   " · Rekentip: ",
+   " · Maths tip: "
+  ],
+  [
+   " · Taaltip: ",
+   " · Language tip: "
+  ],
+  [
+   " · getalsleutel <b>",
+   " · number key <b>"
+  ],
+  [
+   " · woordsleutel <b>",
+   " · word key <b>"
+  ],
+  [
+   " · natuursleutel <b>",
+   " · nature key <b>"
+  ],
+  [
+   " → vervolgvraag met hun getal/woord",
+   " → follow-up question with their number/word"
+  ],
+  [
+   " → vervolgvraag",
+   " → follow-up question"
+  ],
+  [
+   "rekent verder met hun eigen getal. Voorbeeld bij ",
+   "continues with their own number. Example for "
+  ],
+  [
+   "gaat verder met hun eigen woord. Voorbeeld bij ",
+   "continues with their own word. Example for "
+  ],
+  [
+   "gaat verder met hun eigen telling. Voorbeeld bij ",
+   "continues with their own count. Example for "
+  ],
+  [
+   "hangt af van wat ze invullen. Voorbeeld bij ",
+   "depends on what they enter. Example for "
+  ],
+  [
+   "de tijd op de klok (vast per zaakcode)",
+   "the time on the clock (fixed per case code)"
+  ],
+  [
+   "\"foto maken\"",
+   "\"take the photo\""
+  ],
+  [
+   "'letter <b>'",
+   "'letter <b>'"
+  ],
+  [
+   "'cijfer <b>'",
+   "'digit <b>'"
+  ],
+  [
+   "<div class=\"bub\"><em>Op zolder</em>",
+   "<div class=\"bub\"><em>In the cellar</em>"
+  ],
+  [
+   "<div class=\"bub\"><em>In de hal</em>",
+   "<div class=\"bub\"><em>In the hall</em>"
+  ],
+  [
+   "<div class=\"bub\"><em>Bij de kluis</em>",
+   "<div class=\"bub\"><em>At the vault</em>"
+  ],
+  [
+   "<div class=\"bub\"><em>Bij de fietsenstalling</em>",
+   "<div class=\"bub\"><em>By the bike racks</em>"
+  ],
+  [
+   "<div class=\"bub\"><em>Bij de bijenkast</em>",
+   "<div class=\"bub\"><em>At the beehive</em>"
+  ],
+  [
+   "<h2>De klok is terecht</h2>",
+   "<h2>The clock is found</h2>"
+  ],
+  [
+   "<h2>De klok is terug</h2>",
+   "<h2>The clock is back</h2>"
+  ],
+  [
+   "<h2>De cijfers zijn terug</h2>",
+   "<h2>The numbers are back</h2>"
+  ],
+  [
+   "<h2>De letters zijn terug</h2>",
+   "<h2>The letters are back</h2>"
+  ],
+  [
+   "<h2>Het gezoem is terug</h2>",
+   "<h2>The buzzing is back</h2>"
+  ],
+  [
+   "<h2>Eerdere tijdreizen</h2>",
+   "<h2>Previous time journeys</h2>"
+  ],
+  [
+   "<h2>Opgeloste zaken</h2>",
+   "<h2>Solved cases</h2>"
+  ],
+  [
+   "Nog geen tijdreis afgerond op deze telefoon.",
+   "No time journey finished on this phone yet."
+  ],
+  [
+   "Nog geen zaak opgelost op deze telefoon.",
+   "No case solved on this phone yet."
+  ],
+  [
+   " min · tijdreis ",
+   " min · time journey "
+  ],
+  [
+   " min · zaak ",
+   " min · case "
+  ],
+  [
+   " · tik om dezelfde tijdreis nog eens te spelen",
+   " · tap to play the same time journey again"
+  ],
+  [
+   " · tik om dezelfde zaak nog eens te spelen",
+   " · tap to play the same case again"
+  ],
+  [
+   "<b>Eerst doen!</b>",
+   "<b>Do this first!</b>"
+  ],
+  [
+   "<b>Onderzoek</b>",
+   "<b>Investigate</b>"
+  ],
+  [
+   "<b>Meten</b>",
+   "<b>Measure</b>"
+  ],
+  [
+   "<b>Opdracht</b>",
+   "<b>Task</b>"
+  ],
+  [
+   "<b>Waarnemen</b>",
+   "<b>Observe</b>"
+  ],
+  [
+   "\" Onderzoek: \"",
+   "\" Investigate: \""
+  ],
+  [
+   "\" Meten: \"",
+   "\" Measure: \""
+  ],
+  [
+   "\" Opdracht: \"",
+   "\" Task: \""
+  ],
+  [
+   "\" Waarnemen: \"",
+   "\" Observe: \""
+  ],
+  [
+   "Nog niet. Wat is het oudst?",
+   "Not yet. Which is the oldest?"
+  ],
+  [
+   ">anders</button>",
+   ">change</button>"
+  ],
+  [
+   "\"Typ een getal\"",
+   "\"Type a number\""
+  ],
+  [
+   "\"Typ het woord over\"",
+   "\"Copy the word\""
+  ],
+  [
+   "\"Typ het over\"",
+   "\"Copy it\""
+  ],
+  [
+   "\"Typ de naam over\"",
+   "\"Copy the name\""
+  ],
+  [
+   "\"Bewaard in het logboek\"",
+   "\"Saved in the logbook\""
+  ],
+  [
+   "\"Mooie klok!\"",
+   "\"Lovely clock!\""
+  ],
+  [
+   "id=\"a4Pr\">Printen</button>",
+   "id=\"a4Pr\">Print</button>"
+  ],
+  [
+   "\"Diploma Tijdreiziger\"",
+   "\"Time Traveller Certificate\""
+  ],
+  [
+   "\"Diploma Rekenspeurder\"",
+   "\"Maths Detective Certificate\""
+  ],
+  [
+   "\"Diploma Woordspeurder\"",
+   "\"Word Detective Certificate\""
+  ],
+  [
+   "\"Diploma Natuurspeurder\"",
+   "\"Nature Detective Certificate\""
+  ],
+  [
+   "\"Diploma Speurteam\"",
+   "\"Detective Team Certificate\""
+  ],
+  [
+   "\"Dit diploma is voor\"",
+   "\"This certificate is awarded to\""
+  ],
+  [
+   "\"MINIMYSTERY EDUCATIE\"",
+   "\"MINIMYSTERY EDUCATION\""
+  ],
+  [
+   "\"minimystery.nl/educatie\"",
+   "\"minimystery.nl/en/education\""
+  ],
+  [
+   "\"de tijdreizigers\"",
+   "\"the time travellers\""
+  ],
+  [
+   "\"de rekenspeurders\"",
+   "\"the maths detectives\""
+  ],
+  [
+   "\"de woordspeurders\"",
+   "\"the word detectives\""
+  ],
+  [
+   "\"de natuurspeurders\"",
+   "\"the nature detectives\""
+  ],
+  [
+   "\"het speurteam\"",
+   "\"the detective team\""
+  ],
+  [
+   "\"De Tijdreizigers\"",
+   "\"The Time Travellers\""
+  ],
+  [
+   "\"De Rekenspeurders\"",
+   "\"The Maths Detectives\""
+  ],
+  [
+   "\"De Woordspeurders\"",
+   "\"The Word Detectives\""
+  ],
+  [
+   "\"De Natuurspeurders\"",
+   "\"The Nature Detectives\""
+  ],
+  [
+   "\"Speurteam\"",
+   "\"Detective team\""
+  ],
+  [
+   "\"die de tijd hebben hersteld en de tijdvakken op volgorde legden:\"",
+   "\"who repaired time and put the eras in order:\""
+  ],
+  [
+   "\"die vroeger en nu uit elkaar wisten te houden, en deze tijden bezochten:\"",
+   "\"who could tell long ago from now, and visited these times:\""
+  ],
+  [
+   "\"die Professor Nul ongelijk gaven: geteld, gemeten, geschat en gerekend. De getalsleutels:\"",
+   "\"who proved Professor Zero wrong: counted, measured, estimated and calculated. The number keys:\""
+  ],
+  [
+   "\"die de Letterdief vonden: gelezen, gespeld en gebouwd. De zin van de Letterdief:\"",
+   "\"who found the Letter Thief: read, spelled and built. The Letter Thief's sentence:\""
+  ],
+  [
+   "\"die de bijen terughaalden: gekeken, geteld en geluisterd. De kringloop van de buurt:\"",
+   "\"who brought the bees back: looked, counted and listened. The neighbourhood's cycle:\""
+  ],
+  [
+   "\"hersteld in \"",
+   "\"repaired in \""
+  ],
+  [
+   "\"kluis gekraakt in \"",
+   "\"vault cracked in \""
+  ],
+  [
+   "\"gevonden in \"",
+   "\"found in \""
+  ],
+  [
+   "\"gespeurd in \"",
+   "\"investigated in \""
+  ],
+  [
+   "\"opgelost in \"",
+   "\"solved in \""
+  ],
+  [
+   "\" minuten · \"",
+   "\" minutes · \""
+  ],
+  [
+   "\" tijdlekken · \"",
+   "\" time leaks · \""
+  ],
+  [
+   "\" rekenstations · \"",
+   "\" maths stations · \""
+  ],
+  [
+   "\" taalstations · \"",
+   "\" language stations · \""
+  ],
+  [
+   "\" natuurstations · \"",
+   "\" nature stations · \""
+  ],
+  [
+   "\" zaken · \"",
+   "\" cases · \""
+  ],
+  [
+   "\" sporen in de buurt\"",
+   "\" traces in the neighbourhood\""
+  ],
+  [
+   "\" echte metingen\"",
+   "\" real measurements\""
+  ],
+  [
+   "\" woorden van de straat\"",
+   "\" words from the street\""
+  ],
+  [
+   "\" echte tellingen\"",
+   "\" real counts\""
+  ],
+  [
+   "\"zonder hints\"",
+   "\"no hints\""
+  ],
+  [
+   "\"geen hints\"",
+   "\"no hints\""
+  ],
+  [
+   "\" keer mis\"",
+   "\" wrong tries\""
+  ],
+  [
+   "\"foutloos\"",
+   "\"no mistakes\""
+  ],
+  [
+   "\" · zes letters gevonden · \"",
+   "\" · six letters found · \""
+  ],
+  [
+   "\"niveau \"",
+   "\"level \""
+  ],
+  [
+   "\" · tijdreis \"",
+   "\" · time journey \""
+  ],
+  [
+   "\" · zaak \"",
+   "\" · case \""
+  ],
+  [
+   "\" · code \"",
+   "\" · code \""
+  ],
+  [
+   "\"Juf Noor en meneer Tik\"",
+   "\"Miss Noor and Mr Tik\""
+  ],
+  [
+   "\"Meneer Tik, conciërge\"",
+   "\"Mr Tik, caretaker\""
+  ],
+  [
+   "\"Juf Noor, meneer Tik en (mopperend) Professor Nul\"",
+   "\"Miss Noor, Mr Tik and (grumbling) Professor Zero\""
+  ],
+  [
+   "\"Juf Noor, meneer Tik en de Letterdief\"",
+   "\"Miss Noor, Mr Tik and the Letter Thief\""
+  ],
+  [
+   "\"Juf Noor, meneer Tik en de bijen\"",
+   "\"Miss Noor, Mr Tik and the bees\""
+  ],
+  [
+   "\"Het mysterie van de verdwenen schoolklok\"",
+   "\"The Mystery of the Missing School Clock\""
+  ],
+  [
+   "<h2>Het mysterie van de verdwenen schoolklok</h2>",
+   "<h2>The Mystery of the Missing School Clock</h2>"
+  ],
+  [
+   "\"De verdwenen schoolklok\"",
+   "\"The Missing School Clock\""
+  ],
+  [
+   "<h2>De Tijdreizigers</h2>",
+   "<h2>The Time Travellers</h2>"
+  ],
+  [
+   "<h2>Professor Nul en de verdwenen cijfers</h2>",
+   "<h2>Professor Zero and the Missing Numbers</h2>"
+  ],
+  [
+   "\"Professor Nul en de verdwenen cijfers\"",
+   "\"Professor Zero and the Missing Numbers\""
+  ],
+  [
+   "<h2>De Letterdief</h2>",
+   "<h2>The Letter Thief</h2>"
+  ],
+  [
+   "\"De Letterdief\"",
+   "\"The Letter Thief\""
+  ],
+  [
+   "<h2>De verdwenen bijen</h2>",
+   "<h2>The Missing Bees</h2>"
+  ],
+  [
+   "\"De verdwenen bijen\"",
+   "\"The Missing Bees\""
+  ],
+  [
+   " · De Tijdreizigers</em>",
+   " · The Time Travellers</em>"
+  ],
+  [
+   " · Professor Nul</em>",
+   " · Professor Zero</em>"
+  ],
+  [
+   " · De Letterdief</em>",
+   " · The Letter Thief</em>"
+  ],
+  [
+   " · De verdwenen bijen</em>",
+   " · The Missing Bees</em>"
+  ],
+  [
+   " tijdlekken</span>",
+   " time leaks</span>"
+  ],
+  [
+   " stations</span>",
+   " stations</span>"
+  ],
+  [
+   " tijdlekken</i>",
+   " time leaks</i>"
+  ],
+  [
+   " sporen gevonden</i>",
+   " traces found</i>"
+  ],
+  [
+   " metingen</i>",
+   " measurements</i>"
+  ],
+  [
+   " woorden van de straat</i>",
+   " words from the street</i>"
+  ],
+  [
+   " tellingen</i>",
+   " counts</i>"
+  ],
+  [
+   " zaken</i>",
+   " cases</i>"
+  ],
+  [
+   " zaken</span>",
+   " cases</span>"
+  ],
+  [
+   " plekken</span>",
+   " places</span>"
+  ],
+  [
+   "\"BSO-modus\":\"Schoolmodus\"",
+   "\"After-school mode\":\"School mode\""
+  ],
+  [
+   "\"in het gebouw\":\"buiten\"",
+   "\"in the building\":\"outdoors\""
+  ],
+  [
+   "\"in het gebouw\"",
+   "\"in the building\""
+  ],
+  [
+   "\"zonder kaart\"",
+   "\"without map\""
+  ],
+  [
+   "\"met kaart\"",
+   "\"with map\""
+  ],
+  [
+   "\"BSO\":\"school\"",
+   "\"after-school\":\"school\""
+  ],
+  [
+   "\" uur\"",
+   "\" o'clock\""
+  ],
+  [
+   "\", of: \"",
+   "\", or: \""
+  ],
+  [
+   " Volgende: ",
+   " Next: "
+  ],
+  [
+   "'BSO-modus':'Schoolmodus'",
+   "'After-school mode':'School mode'"
+  ],
+  [
+   "\"Hoek\"",
+   "\"Corner\""
+  ],
+  [
+   "\"nl-NL\"",
+   "\"en-GB\""
+  ],
+  [
+   "\"Teamnaam\"",
+   "\"Team name\""
+  ],
+  [
+   "<th>Teamnaam</th>",
+   "<th>Team name</th>"
+  ],
+  [
+   "Teamnaam",
+   "Team name"
+  ],
+  [
+   "alt=\"Het oude schrift uit 1923\"",
+   "alt=\"The old notebook from 1923\""
+  ]
+ ],
+ "games": {
+  "klok": [
+   [
+    "\"Loop samen naar een nieuwe plek in de buurt. \":\"Loop samen naar een nieuwe plek in de buurt, bijvoorbeeld een hoek, een boom of een bankje. \"",
+    "\"Walk together to a new place nearby. \":\"Walk together to a new place nearby, for example a corner, a tree or a bench. \""
+   ],
+   [
+    "\"meneer Tik\"",
+    "\"Mr Tik\""
+   ]
+  ]
+ }
+}

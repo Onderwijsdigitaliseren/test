@@ -370,6 +370,7 @@ function wipeSheet(){var has=!!LS.get(GK,null);sheet('<h2>'+T.wipe+'</h2>'+(has?
 window.addEventListener("popstate",function(){if(!$("#sheet").hidden){closeSheet();history.pushState(null,"");return}if(!$("#brief").hidden){G=null;home();history.pushState(null,"");return}if(!$("#play").hidden||!$("#cards").hidden){leavePlay();toast(T.saved);history.pushState(null,"")}});
 history.pushState(null,"");
 
+(function(){var lb=$("#lang");if(lb)lb.onclick=function(){MW.switchLang(ID,L==="nl"?"en":"nl")}})();
 /* ---------- start ---------- */
 if(/debug/.test(location.search))window.TR_DBG={G:function(){return G},M:MBY,puzzle:function(){var s=G.c.slots[cur.i];return puzzleOf(s)},cur:function(){return cur},roomCode:roomCode,parse:parseCode};
 home();

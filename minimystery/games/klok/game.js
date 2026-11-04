@@ -253,7 +253,7 @@ function menuSheet(){var onMap=G&&(G.mode==="map"||G.mode==="in");sheet('<h2>'+T
 
 /* ---------- finale: het woord, het hangslot, de onthulling ---------- */
 function toFinale(){if(!G)return;if(done()<NN()){toast(fill(T.finNot,{n:NN()-done()}));return noteSheet()}if(G.word)return lockSheet();wordSheet()}
-function wordSheet(){var ls=letters();if(!G.shuf){var r=rngOf(G.seed^0x5a5a);G.shuf=shuffle(ls,r).join("");if(G.shuf===WORD)G.shuf="LODZER";save()}
+function wordSheet(){var ls=letters();if(!G.shuf){var r=rngOf(G.seed^0x5a5a);G.shuf=shuffle(ls,r).join("");if(G.shuf===WORD)G.shuf=ls.slice(1).concat(ls[0]).join("");save()}
   sheet('<div class="eyebrow">'+esc(T.finH)+'</div><h2>'+esc(T.finH)+'</h2><div class="ltrbig">'+G.shuf.split("").map(function(c){return "<i>"+c+"</i>"}).join("")+'</div><p class="q">'+esc(T.finT)+'</p><input class="inp code" id="fIn" maxlength="12" autocomplete="off" autocapitalize="characters" placeholder="??????"><div id="fb"></div><button type="button" class="btn" id="bFin">'+T.finGo+'</button><button type="button" class="btn ghost dk sm" id="fHint">'+T.hintBtn+'</button><button type="button" class="btn ghost dk" id="shX">'+T.back+'</button>',true);
   $("#shX").onclick=closeSheet;say(T.finT);
   var chk=function(){var v=norm($("#fIn").value);if(v===WORD.toLowerCase()){G.word=1;save();beep(660,.15);setTimeout(function(){beep(990,.2)},130);lockSheet()}else{G.wrong++;save();beep(180,.2);$("#fb").innerHTML='<div class="fb no">'+esc(T.finBad)+'</div>';$("#fIn").select()}};
@@ -346,6 +346,7 @@ function wipeSheet(){var has=!!LS.get(GK,null);sheet('<h2>'+T.wipe+'</h2>'+(has?
 window.addEventListener("popstate",function(){if(!$("#sheet").hidden){closeSheet();history.pushState(null,"");return}if(!$("#brief").hidden){G=null;home();history.pushState(null,"");return}if(!$("#play").hidden||!$("#cards").hidden){leavePlay();toast(T.saved);history.pushState(null,"")}});
 history.pushState(null,"");
 
+(function(){var lb=$("#lang");if(lb)lb.onclick=function(){MW.switchLang(ID,L==="nl"?"en":"nl")}})();
 /* ---------- start ---------- */
 if(/debug/.test(location.search))window.KL_DBG={G:function(){return G},Z:ZBY,accept:function(){accept()},puzzle:function(){var s=G.c.slots[cur.i];return puzzleOf(s)},cur:function(){return cur}};
 home();

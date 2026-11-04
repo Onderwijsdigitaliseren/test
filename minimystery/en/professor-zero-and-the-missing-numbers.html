@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Professor Zero and the Missing Numbers – a maths walk for school and after-school clubs | MiniMystery Education</title>
+<link rel="icon" href="../assets/favicon.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<meta name="description" content="Maths walk for ages 6–12 and after-school clubs: all the numbers in the school are gone. At maths stations around (or inside) the school, teams count, measure, estimate and calculate with real things: steps, windows, house numbers, the clock, the till, traffic. Three levels. Case code, leader's sheet with lesson plan, certificate.">
+<link rel="canonical" href="https://www.minimystery.nl/en/professor-zero-and-the-missing-numbers.html">
+<link rel="alternate" hreflang="en" href="https://www.minimystery.nl/en/professor-zero-and-the-missing-numbers.html">
+<link rel="alternate" hreflang="nl" href="https://www.minimystery.nl/professor-nul-en-de-verdwenen-cijfers.html">
+<link rel="alternate" hreflang="x-default" href="https://www.minimystery.nl/professor-nul-en-de-verdwenen-cijfers.html">
+<meta property="og:site_name" content="MiniMystery">
+<meta property="og:title" content="MiniMystery Education – Professor Zero and the Missing Numbers">
+<meta property="og:description" content="All the numbers are gone. Maths with real things in your own neighbourhood, for ages 6–12 and after-school clubs.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.minimystery.nl/en/professor-zero-and-the-missing-numbers.html">
+<meta property="og:locale" content="en_GB">
+<meta property="og:image" content="https://www.minimystery.nl/assets/og-image.jpg">
+<meta name="theme-color" content="#cfe6ff">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Permanent+Marker&family=Nunito:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../shared/platform.css?v=2">
+<link rel="stylesheet" href="../shared/kidsmap.css?v=7">
+<link rel="stylesheet" href="../games/reken/game.css?v=1">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Professor Zero and the Missing Numbers", "url": "https://www.minimystery.nl/en/professor-zero-and-the-missing-numbers.html", "description": "Maths walk for primary school (ages 6–12) and after-school clubs: maths stations in your own neighbourhood or in the school building, with real measurements. Three levels. Case code, leader's sheet with lesson plan, certificate.", "inLanguage": "en", "gamePlatform": "Webbrowser", "genre": ["Kinderspel", "Speurtocht", "Educatie", "Rekenen"], "audience": {"@type": "EducationalAudience", "educationalRole": "student"}}</script>
+</head>
+<body>
+<div id="app">
+  <section class="screen" id="home">
+    <div class="wrap">
+      <div class="row0"><div class="pills"><a class="pill" id="hub" href="./">◂ All cases</a><a class="pill" href="education/">Education</a><button type="button" class="pill" id="lang">Nederlands</button></div></div>
+      <div class="hero" aria-hidden="true">
+        <svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="92" fill="#fff" stroke="#13304f" stroke-width="6"/><circle cx="100" cy="100" r="80" fill="#fffaf0" stroke="#f5b800" stroke-width="4" stroke-dasharray="6 10"/>
+        <g font-family="Fredoka,sans-serif" font-weight="700" font-size="22" fill="#b9c8d8" text-anchor="middle"><text x="100" y="40">?</text><text x="166" y="108">?</text><text x="100" y="176">?</text><text x="34" y="108">?</text></g>
+        <path d="M100 100 L100 55" stroke="#1d4a78" stroke-width="8" stroke-linecap="round"/><path d="M100 100 L135 118" stroke="#e0584f" stroke-width="6" stroke-linecap="round"/><circle cx="100" cy="100" r="7" fill="#13304f"/>
+        <text x="100" y="150" font-family="Permanent Marker,cursive" font-size="18" fill="#3a9be6" text-anchor="middle" transform="rotate(-8 100 150)">numbers gone!</text></svg>
+      </div>
+      <div class="masthead">
+        <span class="eyebrow" style="color:#3a9be6">MiniMystery Education · maths · ages 6–12</span>
+        <h1 id="ttl">Professor Zero and the Missing Numbers</h1><span class="tape">Numbers? Pointless! – Prof. Zero</span>
+      </div>
+      <p class="lead">All the numbers in the school are gone: from the clock, the doors, the calendar and the till. Professor Zero thinks numbers are pointless. You will prove him wrong. At maths stations around (or inside) the school you count, measure, estimate and calculate with real things: steps, windows, house numbers, the clock, the till, the traffic. Each station gives a number key; put all the keys in order and the safe opens.</p>
+      <button class="btn ghost sm" id="bHow">How does it work?</button>
+      <div class="pline" hidden style="display:none"><b id="pRank">–</b><span><b id="pStreak">0</b> Days in a row</span><span><b id="pSolved">0</b> Solved</span></div>
+      <div class="namebox"><label for="name">Team name (optional, goes on the certificate)</label><input id="name" maxlength="24" autocomplete="off" placeholder="e.g. The Number Detectives"></div>
+      <div class="seglbl">Who is playing</div>
+      <div class="seg two" id="route">
+        <button type="button" data-r="school" aria-pressed="true">School<small>lightly educational</small></button>
+        <button type="button" data-r="bso" aria-pressed="false">After-school<small>playful, more moving</small></button>
+      </div>
+      <div class="seg" id="lvl">
+        <button type="button" data-l="0" aria-pressed="false">Ages 6–8<small>up to 20 and 100</small></button>
+        <button type="button" data-l="1" aria-pressed="true">Ages 8–10<small>times tables, measuring, clock</small></button>
+        <button type="button" data-l="2" aria-pressed="false">Ages 10–12<small>decimals, %, scale</small></button>
+      </div>
+      <div class="seg" id="dur" aria-label="Length">
+        <button type="button" data-n="kort" aria-pressed="false">Short<small>6 stations · ±35 min</small></button>
+        <button type="button" data-n="normaal" aria-pressed="true">Normal<small>8 stations · ±45 min</small></button>
+        <button type="button" data-n="lang" aria-pressed="false">Long<small>10 stations · ±60 min</small></button>
+      </div>
+      <div class="seg" id="len">
+        <button type="button" data-m="map" aria-pressed="true">Outdoors<br>with map</button>
+        <button type="button" data-m="street" aria-pressed="false">Outdoors<br>without map</button>
+        <button type="button" data-m="gebouw" aria-pressed="false">In the<br>building</button>
+      </div>
+      <button class="btn ghost sm" id="bVoice" aria-pressed="true">🔊 Read aloud</button>
+      <button class="btn" id="bResume" hidden>Continue the case</button>
+      <button class="btn" id="bGps">Start today's case</button>
+      <button class="btn ghost" id="bRandom">Extra case</button>
+      <button class="btn ghost" id="bCode">Enter a case code</button>
+      <button class="btn ghost" id="bPro" hidden></button>
+      <p class="note" id="status"></p>
+      <div id="howT" hidden><ol class="how"><li><b>For the leader:</b> choose School or After-school, the age group and the length (6, 8 or 10 stations). Start the case on your own phone: the briefing shows the <b>case code</b>. Every team enters that code and gets exactly the same case. Below the briefing is the <b>leader's sheet</b>: the story, a lesson plan for before and after per age group, all stations with the calculation, hints and maths tips.</li><li><b>Outdoors with map:</b> the stations are close together (all within about 300 metres). The children see a <b>story map</b> with an arrow and cold/warm/hot. <b>Outdoors without map:</b> the stations come one after another; the team walks to a new spot by itself. <b>In the building:</b> the leader picks spots in the school; each spot gets a card with a code from the leader's sheet.</li><li><b>Each station is a real measurement:</b> counting steps to a post, counting windows, finding a house number, lamp posts, counting traffic for one minute, paving stones, floors, shapes, the clock without numbers, the till, sharing fairly, map and scale. The team first types what it counted itself; the follow-up question calculates with that. So every team has a different answer, and the game still checks it.</li><li><b>Three levels</b> following the Dutch maths curriculum: ages 6–8 (counting to 20 and 100, more/less, odd/even, o'clock, money up to 10, two pictures as answers and everything read aloud), ages 8–10 (times tables, division with remainders, cm and m, quarter hours, money with decimals, rounding) and ages 10–12 (decimals, percentages, ratio and scale, area, large numbers). One hint per station, and a maths tip after every answer.</li><li><b>Finale:</b> the number keys from small to large (ages 10–12 with decimals, fractions and percentages mixed). If it's right, the number safe opens, the numbers come back and the team gets a <b>Maths Detective certificate</b> (A4).</li></ol><p class="note">Tip: agree on the play area and a finish time. Teams stay together and on the pavement. No account, no app: it works in the browser.</p></div>
+      <button class="btn ghost sm" id="bDemo">Practice round in Eindhoven city centre</button>
+      <button class="btn ghost" id="bArch">Solved cases</button>
+      <button class="btn ghost sm" id="bWipe">Clear</button>
+    </div>
+  </section>
+
+  <section class="screen" id="brief" hidden>
+    <div class="wrap">
+      <div class="paper">
+        <div class="eyebrow" id="bfNo"></div>
+        <div id="bfTip"></div>
+        <h2>Professor Zero's note</h2>
+        <div id="bfOpen"></div>
+      </div>
+      <button class="btn" id="bGo">Let's go! ▸</button>
+      <button class="btn ghost" id="bLead">🖨 Leader's sheet (answers)</button>
+      <button class="btn ghost" id="bBack">Back</button>
+    </div>
+  </section>
+
+  <section class="screen" id="cards" hidden>
+    <div id="hud">
+      <div><b id="hT">0:00</b><span>Time</span></div>
+      <div><b id="hS">0</b><span>Stations</span></div>
+      <div><div class="tiles" id="hM"></div><span>Number keys</span></div>
+      <button type="button" id="zM2" aria-label="Menu">☰</button>
+    </div>
+    <div id="card"></div>
+    <div id="bar">
+      <button type="button" id="bNote">Maths notebook</button>
+      <button type="button" id="bAcc2" class="red">The safe</button>
+    </div>
+  </section>
+
+  <section class="screen" id="play" hidden>
+    <canvas id="map"></canvas>
+    <div id="mhud">
+      <div><b id="mT">0:00</b><span>Time</span></div>
+      <div><b id="mS">0</b><span>Stations</span></div>
+      <div><div class="tiles" id="mM"></div><span>Number keys</span></div>
+      <button type="button" id="zM" aria-label="Menu">☰</button>
+    </div>
+    <div id="zoom">
+      <button type="button" id="zIn" aria-label="Zoom in">+</button>
+      <button type="button" id="zOut" aria-label="Zoom out">−</button>
+      <button type="button" id="zMe" aria-label="Centre on me">◎</button>
+    </div>
+    <div id="low">
+      <div id="radar">On the way to the first station</div>
+      <div id="chip" hidden>
+        <div class="row"><b id="cName"></b><span id="cDist"></span></div>
+        <span id="cHint" class="note"></span>
+        <button class="btn" id="cAct"></button>
+      </div>
+      <div id="mbar">
+        <button type="button" id="mNote">Maths notebook</button>
+        <button type="button" id="mAcc" class="red">The safe</button>
+      </div>
+    </div>
+  </section>
+
+  <input type="file" id="file" accept="image/*" capture="environment" aria-label="Take the photo">
+  <div class="sheet" id="sheet" hidden><div class="paper" id="sheetBody"></div></div>
+  <div id="load" hidden role="status"><div class="spin"></div><b id="loadT"></b><span>This usually takes 5 to 30 seconds. Please stay on this page.</span></div>
+  <div id="toast" hidden></div>
+</div>
+<script src="../shared/platform.js?v=mm16"></script>
+<script src="../shared/catalog.js?v=mm14"></script>
+<script src="../shared/tiles.js?v=1"></script>
+<script src="../shared/walk.js?v=5"></script>
+<script src="../shared/kidsmap.js?v=14"></script>
+<script src="../shared/bonus.js?v=1"></script>
+<script src="../shared/voice.js?v=1"></script>
+<script src="../games/reken/data-en.js?v=1"></script>
+<script src="../games/reken/game-en.js?v=1"></script>
+<script src="../shared/start.js?v=6" data-game="rk"></script>
+<script id="mm-demo">if(/[?&]oefen\b/.test(location.search)){var b=document.getElementById("bDemo");if(b)setTimeout(function(){b.click()},50)}</script>
+</body>
+</html>
