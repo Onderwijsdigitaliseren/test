@@ -30,7 +30,7 @@ function say(t){if(!VOICE||!t)return;t=String(t).replace(/<[^>]+>/g,"");if(windo
 function hush(){if(window.MMVoice)return MMVoice.hush();try{window.speechSynthesis&&window.speechSynthesis.cancel()}catch(e){}}
 /* artwork van Kellie in games/taal/img wint waar het er is (zie games/taal/ARTWORK.md); anders getekende/tekst-versies */
 var IMGROOT=MW.root+"games/taal/img/",IM={};
-["hero","noor","tik","dief","letters","diploma-stempel"].concat(D.S.map(function(m){return "st-"+m.id})).forEach(function(k){var im=new Image();im.src=IMGROOT+k+".webp?v=1";IM[k]=im});
+["hero","noor","tik","dief","briefje","diploma-stempel"].concat(D.S.map(function(m){return "st-"+m.id})).forEach(function(k){var im=new Image();im.src=IMGROOT+k+".webp?v=1";IM[k]=im});
 function ok(k){var im=IM[k];return !!(im&&im.complete&&im.naturalWidth)}
 function avatarHTML(cls,letter,key){return '<span class="avatar '+cls+'" aria-hidden="true"'+(ok(key)?' style="background:#fff8ec url('+IMGROOT+key+'.webp?v=1) center 18%/150% auto no-repeat"':'')+'>'+(ok(key)?"":letter)+'</span>'}
 var TIKAV='<span class="avatar tik" aria-hidden="true">T</span>',NOORAV='<span class="avatar noor" aria-hidden="true">N</span>';
@@ -154,7 +154,7 @@ function build(seed,mode,pois,ways,origin,daily,len,virt){len=LENN[len]?len:"nor
   brief()}
 function brief(){
   $("#bfNo").textContent=(G.mode==="demo"?T.demoCase:"");
-  $("#bfOpen").innerHTML=(ok("schrift")?'<img class="erapic" src="'+IMGROOT+'schrift.webp?v=1" alt="The old notebook from 1923">':'')+bubble(fill(openOf(modus()),{N:T.nw[NN()]||NN()}),D.NOOR,"big")+
+  $("#bfOpen").innerHTML=(ok("briefje")?'<img class="erapic" src="'+IMGROOT+'briefje.webp?v=1" alt="">':'')+bubble(fill(openOf(modus()),{N:T.nw[NN()]||NN()}),D.NOOR,"big")+
     '<div class="chips"><span class="chip">'+esc(T.lvl[ageI()])+'</span><span class="chip">'+(modus()==="bso"?"After-school mode":"School mode")+'</span><span class="chip">'+NN()+' stations</span><span class="chip">'+(inBuilding()?"in the building":G.mode==="street"?"without map":"with map")+'</span></div>';
   $("#bfTip").innerHTML=MW.codeBox(L,G.code,"zaak");MW.bindCodeBox($("#bfTip"),L);
   show("brief")}

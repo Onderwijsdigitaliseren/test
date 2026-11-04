@@ -154,7 +154,7 @@ function build(seed,mode,pois,ways,origin,daily,len,virt){len=LENN[len]?len:"nor
   brief()}
 function brief(){
   $("#bfNo").textContent=(G.mode==="demo"?T.demoCase:"");
-  $("#bfOpen").innerHTML=(ok("schrift")?'<img class="erapic" src="'+IMGROOT+'schrift.webp?v=1" alt="Het oude schrift uit 1923">':'')+bubble(fill(openOf(modus()),{N:T.nw[NN()]||NN()}),D.NOOR,"big")+
+  $("#bfOpen").innerHTML=(ok("bijenkast")?'<img class="erapic" src="'+IMGROOT+'bijenkast.webp?v=1" alt="">':'')+bubble(fill(openOf(modus()),{N:T.nw[NN()]||NN()}),D.NOOR,"big")+
     '<div class="chips"><span class="chip">'+esc(T.lvl[ageI()])+'</span><span class="chip">'+(modus()==="bso"?"BSO-modus":"Schoolmodus")+'</span><span class="chip">'+NN()+' stations</span><span class="chip">'+(inBuilding()?"in het gebouw":G.mode==="street"?"zonder kaart":"met kaart")+'</span></div>';
   $("#bfTip").innerHTML=MW.codeBox(L,G.code,"zaak");MW.bindCodeBox($("#bfTip"),L);
   show("brief")}
