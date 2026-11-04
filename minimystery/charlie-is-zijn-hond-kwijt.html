@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Charlie is zijn hond kwijt – Engels-speurtocht voor school en BSO | MiniMystery Educatie</title>
+<link rel="icon" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="description" content="Engels-speurtocht voor groep 5–8 (en vroeg-Engels) en BSO: Charlie uit Engeland is zijn hond Biscuit kwijt en spreekt alleen Engels. Bij stations rond (of in) de school helpen teams hem in het Engels: colours, numbers, animals, directions, the time, weather, clothes. Charlie wordt met een Engelse stem voorgelezen. Drie niveaus, zaakcode, begeleidersblad met lesbrief, diploma.">
+<link rel="canonical" href="https://www.minimystery.nl/charlie-is-zijn-hond-kwijt.html">
+<meta property="og:site_name" content="MiniMystery">
+<meta property="og:title" content="MiniMystery Educatie – Charlie is zijn hond kwijt">
+<meta property="og:description" content="Charlie is zijn hond kwijt en spreekt alleen Engels. Help hem, in het Engels, in je eigen buurt.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.minimystery.nl/charlie-is-zijn-hond-kwijt.html">
+<meta property="og:locale" content="nl_NL">
+<meta property="og:image" content="https://www.minimystery.nl/assets/og-image.jpg">
+<meta name="theme-color" content="#dfe6ff">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Permanent+Marker&family=Nunito:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="shared/platform.css?v=2">
+<link rel="stylesheet" href="shared/kidsmap.css?v=7">
+<link rel="stylesheet" href="games/engels/game.css?v=1">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Charlie is zijn hond kwijt","url":"https://www.minimystery.nl/charlie-is-zijn-hond-kwijt.html","description":"Engels-speurtocht voor basisschool en BSO: help Charlie uit Engeland zijn hond terug te vinden, in het Engels, bij stations in de eigen buurt of in het schoolgebouw. Drie niveaus. Zaakcode, begeleidersblad met lesbrief, diploma.","inLanguage":"nl","gamePlatform":"Webbrowser","genre":["Kinderspel","Speurtocht","Educatie","Engels"],"audience":{"@type":"EducationalAudience","educationalRole":"student"}}</script>
+</head>
+<body>
+<div id="app">
+  <section class="screen" id="home">
+    <div class="wrap">
+      <div class="row0"><div class="pills"><a class="pill" id="hub" href="./">◂ Alle zaken</a><a class="pill" href="educatie/">Educatie</a></div></div>
+      <div class="hero" aria-hidden="true">
+        <svg viewBox="0 0 200 200"><rect x="30" y="60" width="140" height="90" rx="14" fill="#fff" stroke="#1a2a5e" stroke-width="6"/><text x="100" y="118" font-family="Fredoka,sans-serif" font-weight="700" font-size="30" fill="#c8102e" text-anchor="middle">LOST DOG</text><text x="100" y="140" font-family="Fredoka,sans-serif" font-weight="600" font-size="14" fill="#1a2a5e" text-anchor="middle">His name is Biscuit</text><text x="100" y="48" font-size="28" text-anchor="middle">🐕</text>
+        <text x="100" y="182" font-family="Permanent Marker,cursive" font-size="18" fill="#c8102e" text-anchor="middle" transform="rotate(-6 100 182)">can you help?</text></svg>
+      </div>
+      <div class="masthead">
+        <span class="eyebrow" style="color:#c8102e">MiniMystery Educatie · Engels · groep 5–8</span>
+        <h1 id="ttl">Charlie is zijn hond kwijt</h1><span class="tape">"My dog ran away. Can you help me?"</span>
+      </div>
+      <p class="lead">Charlie woont hier sinds vorige week, komt uit Engeland en spreekt nog geen Nederlands. En zijn hond Biscuit is weggelopen. Helpen kan dus alleen in het Engels. Bij stations rond (of in) de school heeft iemand Biscuit gezien; daar krijgen jullie van Charlie een vraag of opdracht in het Engels: colours, numbers, animals, where is it, left or right, what time is it, the weather, Simon says. Elk station geeft een Engels woord; alle woorden op volgorde en Charlie's zin zegt waar Biscuit is.</p>
+      <button class="btn ghost sm" id="bHow">Hoe werkt het?</button>
+      <div class="pline" hidden style="display:none"><b id="pRank">–</b><span><b id="pStreak">0</b> Dagen op rij</span><span><b id="pSolved">0</b> Opgelost</span></div>
+      <div class="namebox"><label for="name">Teamnaam (mag leeg, komt op het diploma)</label><input id="name" maxlength="24" autocomplete="off" placeholder="bijv. The English Detectives"></div>
+      <div class="seglbl">Voor wie</div>
+      <div class="seg two" id="route">
+        <button type="button" data-r="school" aria-pressed="true">School<small>licht educatief</small></button>
+        <button type="button" data-r="bso" aria-pressed="false">BSO<small>speels, meer bewegen</small></button>
+      </div>
+      <div class="seg" id="lvl">
+        <button type="button" data-l="0" aria-pressed="false">Vroeg-Engels<small>groep 3–4, plaatjes</small></button>
+        <button type="button" data-l="1" aria-pressed="true">Groep 5–6<small>woorden, korte zinnen</small></button>
+        <button type="button" data-l="2" aria-pressed="false">Groep 7–8<small>zinnen en vragen</small></button>
+      </div>
+      <div class="seg" id="dur" aria-label="Lengte">
+        <button type="button" data-n="kort" aria-pressed="false">Kort<small>6 stations · ±35 min</small></button>
+        <button type="button" data-n="normaal" aria-pressed="true">Normaal<small>8 stations · ±45 min</small></button>
+        <button type="button" data-n="lang" aria-pressed="false">Lang<small>10 stations · ±60 min</small></button>
+      </div>
+      <div class="seg" id="len">
+        <button type="button" data-m="map" aria-pressed="true">Buiten<br>met kaart</button>
+        <button type="button" data-m="street" aria-pressed="false">Buiten<br>zonder kaart</button>
+        <button type="button" data-m="gebouw" aria-pressed="false">In het<br>gebouw</button>
+      </div>
+      <button class="btn ghost sm" id="bVoice" aria-pressed="true">🔊 Voorlezen</button>
+      <button class="btn" id="bResume" hidden>Verder met de zaak</button>
+      <button class="btn" id="bGps">Start de zaak van vandaag</button>
+      <button class="btn ghost" id="bRandom">Extra zaak</button>
+      <button class="btn ghost" id="bCode">Zaakcode invullen</button>
+      <button class="btn ghost" id="bPro" hidden></button>
+      <p class="note" id="status"></p>
+      <div id="howT" hidden><ol class="how"><li><b>Voor de begeleider:</b> kies School of BSO, het niveau en de lengte (6, 8 of 10 stations). Start de zaak op je eigen telefoon: in de briefing staat de <b>zaakcode</b>. Elk team vult die code in en krijgt precies dezelfde zaak. Onder de briefing staat het <b>begeleidersblad</b>: het verhaal, een lesbrief vooraf en achteraf per niveau, alle stations met Charlie's zin, antwoorden, hints en uitleg.</li><li><b>Buiten met kaart:</b> de stations staan dicht bij elkaar (alles binnen ongeveer 300 meter). De kinderen zien een <b>verhaalkaart</b> met een pijl en koud/warm/heet. <b>Buiten zonder kaart:</b> de stations komen achter elkaar, het team loopt zelf naar een nieuwe plek. <b>In het gebouw:</b> de begeleider kiest plekken in de school; per plek een kaartje met een code uit het begeleidersblad.</li><li><b>Elk station begint met Charlie in het Engels</b> (voorgelezen met een Engelse stem) en uitleg van juf Noor in het Nederlands. Dan een opdracht waarbij het team hardop Engels gebruikt met wat het ziet (colours, numbers, animals, where is it, directions, the time, food, weather, Simon says, clothes, question words, family, school, greetings), en een vraag. Het antwoord typ je in het Engels; hoofdletters en leestekens maken niet uit.</li><li><b>Drie niveaus:</b> vroeg-Engels (kleuren, tellen, dieren; twee plaatjes als antwoord), groep 5–6 (woorden en korte zinnen) en groep 7–8 (zinnen en vragen: directions, present continuous, don't, can I borrow). Eén hint per station, na elk antwoord een "good to know".</li><li><b>Finale:</b> de woordsleutels op volgorde tot Charlie's Engelse zin, die zegt waar Biscuit is. Dan de hereniging en een <b>diploma English Detective</b> (A4) met de zin erop.</li></ol><p class="note">Tip: laat de kinderen hardop Engels praten bij elk station; fouten zijn goed. Teams blijven bij elkaar en op de stoep. Geen account, geen app: werkt in de browser.</p></div>
+      <button class="btn ghost sm" id="bDemo">Proefronde in de binnenstad van Eindhoven</button>
+      <button class="btn ghost" id="bArch">Opgeloste zaken</button>
+      <button class="btn ghost sm" id="bWipe">Wissen</button>
+    </div>
+  </section>
+
+  <section class="screen" id="brief" hidden>
+    <div class="wrap">
+      <div class="paper">
+        <div class="eyebrow" id="bfNo"></div>
+        <div id="bfTip"></div>
+        <h2>Charlie</h2>
+        <div id="bfOpen"></div>
+      </div>
+      <button class="btn" id="bGo">We gaan zoeken! ▸</button>
+      <button class="btn ghost" id="bLead">🖨 Begeleidersblad (antwoorden)</button>
+      <button class="btn ghost" id="bBack">Terug</button>
+    </div>
+  </section>
+
+  <section class="screen" id="cards" hidden>
+    <div id="hud">
+      <div><b id="hT">0:00</b><span>Tijd</span></div>
+      <div><b id="hS">0</b><span>Stations</span></div>
+      <div><div class="tiles" id="hM"></div><span>Woordsleutels</span></div>
+      <button type="button" id="zM2" aria-label="Menu">☰</button>
+    </div>
+    <div id="card"></div>
+    <div id="bar">
+      <button type="button" id="bNote">Wordbook</button>
+      <button type="button" id="bAcc2" class="red">Charlie's zin</button>
+    </div>
+  </section>
+
+  <section class="screen" id="play" hidden>
+    <canvas id="map"></canvas>
+    <div id="mhud">
+      <div><b id="mT">0:00</b><span>Tijd</span></div>
+      <div><b id="mS">0</b><span>Stations</span></div>
+      <div><div class="tiles" id="mM"></div><span>Woordsleutels</span></div>
+      <button type="button" id="zM" aria-label="Menu">☰</button>
+    </div>
+    <div id="zoom">
+      <button type="button" id="zIn" aria-label="Inzoomen">+</button>
+      <button type="button" id="zOut" aria-label="Uitzoomen">−</button>
+      <button type="button" id="zMe" aria-label="Centreer op mij">◎</button>
+    </div>
+    <div id="low">
+      <div id="radar">Op weg naar het eerste station</div>
+      <div id="chip" hidden>
+        <div class="row"><b id="cName"></b><span id="cDist"></span></div>
+        <span id="cHint" class="note"></span>
+        <button class="btn" id="cAct"></button>
+      </div>
+      <div id="mbar">
+        <button type="button" id="mNote">Wordbook</button>
+        <button type="button" id="mAcc" class="red">Charlie's zin</button>
+      </div>
+    </div>
+  </section>
+
+  <input type="file" id="file" accept="image/*" capture="environment" aria-label="Maak de foto">
+  <div class="sheet" id="sheet" hidden><div class="paper" id="sheetBody"></div></div>
+  <div id="load" hidden role="status"><div class="spin"></div><b id="loadT"></b><span>Dit duurt meestal 5 tot 30 seconden. Blijf op deze pagina.</span></div>
+  <div id="toast" hidden></div>
+</div>
+<script src="shared/platform.js?v=mm16"></script>
+<script src="shared/catalog.js?v=mm13"></script>
+<script src="shared/tiles.js?v=1"></script>
+<script src="shared/walk.js?v=5"></script>
+<script src="shared/kidsmap.js?v=14"></script>
+<script src="shared/bonus.js?v=1"></script>
+<script src="shared/voice.js?v=1"></script>
+<script src="games/engels/data-nl.js?v=1"></script>
+<script src="games/engels/game.js?v=1"></script>
+<script src="shared/start.js?v=6" data-game="en"></script>
+<script id="mm-demo">if(/[?&]oefen\b/.test(location.search)){var b=document.getElementById("bDemo");if(b)setTimeout(function(){b.click()},50)}</script>
+</body>
+</html>
