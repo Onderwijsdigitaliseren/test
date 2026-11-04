@@ -28,6 +28,14 @@ function say(t){if(!VOICE||!t)return;t=String(t).replace(/<[^>]+>/g,"");if(windo
 function hush(){if(window.MMVoice)return MMVoice.hush();try{window.speechSynthesis&&window.speechSynthesis.cancel()}catch(e){}}
 function bubble(txt,who,cls,av){return '<div class="msg '+(cls||"")+'">'+(av||TIKAV)+'<div class="bub"><button type="button" class="spk" aria-label="'+esc(T.listen)+'" data-say="'+esc(txt.replace(/<[^>]+>/g,""))+'">🔊</button>'+(who?'<em>'+esc(who)+'</em>':'')+'<p>'+txt+'</p></div></div>'}
 var TIKAV='<span class="avatar tik" aria-hidden="true">T</span>',NOORAV='<span class="avatar noor" aria-hidden="true">N</span>';
+/* artwork van Kellie in games/klok/img wint waar het er is (zie games/klok/ARTWORK.md); anders getekende versies */
+var IMGROOT=MW.root+"games/klok/img/",IM={};
+["hero","noor","tik","briefje","onthulling","diploma-stempel"].concat(D.Z.map(function(z){return "st-"+z.id})).forEach(function(k){var im=new Image();im.src=IMGROOT+k+".webp?v=1";IM[k]=im});
+function ok(k){var im=IM[k];return !!(im&&im.complete&&im.naturalWidth)}
+function imgOf(k){return ok(k)?'<img class="erapic" src="'+IMGROOT+k+'.webp?v=1" alt="">':''}
+function avatarHTML(cls,letter,key){return '<span class="avatar '+cls+'" aria-hidden="true"'+(ok(key)?' style="background:#fff8ec url('+IMGROOT+key+'.webp?v=1) center 18%/150% auto no-repeat"':'')+'>'+(ok(key)?"":letter)+'</span>'}
+function refreshAv(){TIKAV=avatarHTML("tik","T","tik");NOORAV=avatarHTML("noor","N","noor");if(ok("hero"))$("#home").classList.add("photo")}
+Promise.all(Object.keys(IM).map(function(k){return new Promise(function(res){var im=IM[k];if(im.complete)return res();im.onload=im.onerror=function(){res()}})})).then(refreshAv);
 document.addEventListener("click",function(e){var b=e.target.closest(".spk");if(b){hush();VOICE=true;say(b.dataset.say)}});
 
 /* ---------- de zaak samenstellen: alleen uit de seed, zodat elke telefoon met dezelfde code dezelfde zaken krijgt ---------- */
@@ -144,7 +152,7 @@ function build(seed,mode,pois,ways,origin,daily,len,virt){len=LENN[len]?len:"nor
   brief()}
 function brief(){
   $("#bfNo").textContent=(G.mode==="demo"?T.demoCase:"");
-  $("#bfOpen").innerHTML=bubble(fill(D.OPEN[modus()],{N:T.nw[NN()]||NN()}),D.TIK,"big")+
+  $("#bfOpen").innerHTML=imgOf("briefje")+bubble(fill(D.OPEN[modus()],{N:T.nw[NN()]||NN()}),D.TIK,"big")+
     '<div class="chips"><span class="chip">'+esc(T.lvl[ageI()])+'</span><span class="chip">'+(modus()==="bso"?"After-school mode":"School mode")+'</span><span class="chip">'+NN()+' places</span></div>';
   $("#bfTip").innerHTML=MW.codeBox(L,G.code,"zaak");MW.bindCodeBox($("#bfTip"),L);
   show("brief")}
@@ -205,7 +213,7 @@ function puzzleOf(s){var z=ZBY[s.z],p=z.lvl[ageI()];return p}
 function taskSheet(i,spot){walkTo=null;
   if(G.mode==="demo"&&!G.ph[i]&&done()>=(window.MMTrial?MMTrial.max:2)&&window.MMTrial&&locked()){var _GK=GK;return MMTrial.end({buy:proSheet,home:function(){leavePlay();try{localStorage.removeItem(_GK)}catch(e){}}})}
   var s=G.c.slots[i],z=ZBY[s.z],p=puzzleOf(s),n=done()+1,md=modus(),sch=md==="school";cur={i:i,spot:spot||null};
-  var head='<div class="eyebrow">'+esc(fill(T.task,{i:n,n:NN()}))+' · '+esc(T.kinds[z.cat])+(spot?' · '+esc(spot.name):'')+'</div><h2>'+esc(z.title)+'</h2>'+
+  var head='<div class="eyebrow">'+esc(fill(T.task,{i:n,n:NN()}))+' · '+esc(T.kinds[z.cat])+(spot?' · '+esc(spot.name):'')+'</div>'+imgOf("st-"+z.id)+'<h2>'+esc(z.title)+'</h2>'+
     (sch?'<div class="chips">'+z.goal.map(function(g){return '<span class="chip g">'+esc(g)+'</span>'}).join("")+'</div>':'')+
     bubble(z.story[md],sch?D.NOOR:D.TIK,"",sch?NOORAV:TIKAV)+
     (md==="bso"&&z.move?'<div class="act"><span class="ico">🏃</span><div><b>Do this first!</b><br>'+esc(z.move)+'</div></div>':'');
@@ -266,7 +274,7 @@ function lockSheet(){var dg=digitSeq(),N=dg.length;if(!N||G.lock){return revealS
     else{pos=0;G.wrong++;save();buzz(140);beep(180,.25);$("#vMsg").textContent=T.lockBad;paint()}};
   $("#shX").onclick=closeSheet}
 function revealSheet(){G.tEnd=G.tEnd||Date.now();save();var md=modus();
-  sheet('<div class="eyebrow">'+esc(T.won)+'</div><h2>The clock is found</h2><div class="msg"><span class="avatar noor" aria-hidden="true">'+(md==="bso"?"T":"N")+'</span><div class="bub"><em>In the cellar</em>'+D.REVEAL[md]+'</div></div><button type="button" class="btn" id="bWin">'+T.next+'</button>',true);
+  sheet('<div class="eyebrow">'+esc(T.won)+'</div><h2>The clock is found</h2>'+imgOf("onthulling")+'<div class="msg">'+(md==="bso"?TIKAV:NOORAV)+'<div class="bub"><em>In the cellar</em>'+D.REVEAL[md]+'</div></div><button type="button" class="btn" id="bWin">'+T.next+'</button>',true);
   say(D.REVEAL[md]);$("#bWin").onclick=win}
 
 /* ---------- gewonnen ---------- */
@@ -309,6 +317,7 @@ function drawDiploma(cv,r){var g=cv.getContext("2d"),W2=cv.width,H=cv.height;
   var d=new Date();g.fillStyle="#39436a";g.font="500 30px Nunito,sans-serif";g.fillText(d.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"}),W2/2,1140);
   g.fillStyle="#e0584f";g.font="400 52px 'Permanent Marker',cursive";g.save();g.translate(W2/2,1300);g.rotate(-.03);g.fillText(r.modus==="bso"?"Mr Tik, caretaker":"Miss Noor and Mr Tik",0,0);g.restore();
   var x=W2/2-6*44;for(var i=0;i<6;i++){g.fillStyle="#f5b800";rr(g,x+i*88,1400,70,70,12);g.fill();g.strokeStyle="#1b2550";g.lineWidth=3;g.stroke();g.fillStyle="#1b2550";g.font="700 46px Fredoka,sans-serif";g.fillText(WORD[i],x+i*88+35,1452)}
+  if(ok("diploma-stempel")){g.save();g.translate(W2-235,295);g.rotate(.14);g.globalAlpha=.95;g.drawImage(IM["diploma-stempel"],-110,-110,220,220);g.restore()}
   g.fillStyle="#9aa3c0";g.font="500 24px Nunito,sans-serif";g.fillText("minimystery.nl/en/education",W2/2,H-120)}
 
 /* ---------- begeleidersblad: alle zaken van déze zaakcode, met antwoorden ---------- */

@@ -176,3 +176,9 @@ h1,h2,h3{font-family:var(--f-type);font-weight:700}
   .lead{font-size:12px}.lead .ol{font-size:12px}
 }
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+/* artwork (optioneel, games/klok/img, zie ARTWORK.md) */
+#home.photo{background:linear-gradient(180deg,rgba(27,37,80,0) 0,rgba(27,37,80,0) 380px,rgba(27,37,80,.92) 600px,var(--night) 700px),url("img/hero.webp") center 0/100% auto no-repeat,var(--night)}
+@media (min-width:600px){#home.photo{background:linear-gradient(90deg,var(--night) 0%,rgba(27,37,80,0) 25%,rgba(27,37,80,0) 75%,var(--night) 100%),linear-gradient(180deg,rgba(27,37,80,0) 0,rgba(27,37,80,0) 380px,rgba(27,37,80,.92) 600px,var(--night) 700px),url("img/hero.webp") center 0/min(100%,520px) auto no-repeat,var(--night)}}
+#home.photo .hero{display:none}#home.photo .masthead{padding-top:230px}#home.photo #ttl,#home.photo .lead{color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.5)}#home.photo .eyebrow{color:#dfe8ff!important}
+.avatar{background-size:cover;background-position:center}
+.erapic{display:block;width:100%;height:auto;max-height:220px;object-fit:cover;border-radius:16px;box-shadow:0 8px 20px rgba(0,0,0,.15);margin-bottom:8px}
