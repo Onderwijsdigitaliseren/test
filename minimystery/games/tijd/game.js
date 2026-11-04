@@ -329,7 +329,7 @@ function drawDiploma(cv,r){var g=cv.getContext("2d"),W2=cv.width,H=cv.height;
   g.fillStyle="#f5b800";g.font="700 70px Fredoka,sans-serif";g.fillText("★".repeat(r.stars)+"☆".repeat(3-r.stars),W2/2,yy+140);
   var d=new Date();g.fillStyle="#39436a";g.font="500 30px Nunito,sans-serif";g.fillText(d.toLocaleDateString("nl-NL",{day:"numeric",month:"long",year:"numeric"}),W2/2,yy+200);
   g.fillStyle="#e0584f";g.font="400 50px 'Permanent Marker',cursive";g.save();g.translate(W2/2,yy+310);g.rotate(-.03);g.fillText(r.modus==="bso"?"Meneer Tik, conciërge":"Juf Noor en meneer Tik",0,0);g.restore();
-  if(ok("diploma-stempel")){g.save();g.translate(W2-250,H-300);g.rotate(-.12);g.globalAlpha=.95;g.drawImage(IM["diploma-stempel"],-110,-110,220,220);g.restore()}
+  if(ok("diploma-stempel")){g.save();g.translate(W2-235,295);g.rotate(.14);g.globalAlpha=.95;g.drawImage(IM["diploma-stempel"],-110,-110,220,220);g.restore()}
   g.fillStyle="#9aa3c0";g.font="500 24px Nunito,sans-serif";g.fillText("minimystery.nl/educatie",W2/2,H-120)}
 
 /* ---------- begeleidersblad: verhaal, lesbrief, alle missies met antwoorden, plekkaartjes ---------- */

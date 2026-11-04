@@ -329,7 +329,7 @@ function drawDiploma(cv,r){var g=cv.getContext("2d"),W2=cv.width,H=cv.height;
   g.fillStyle="#2b1f4a";g.font="700 84px Fredoka,sans-serif";g.fillText("Diploma Natuurspeurder",W2/2,520);
   g.fillStyle="#39436a";g.font="500 34px Nunito,sans-serif";g.fillText("Dit diploma is voor",W2/2,600);
   g.fillStyle="#2b1f4a";fitText(g,r.team||"de natuurspeurders",W2/2,690,W2-260,74,"700 {s} Fredoka,sans-serif");
-  g.fillStyle="#39436a";g.font="500 30px Nunito,sans-serif";g.fillText("die de bijen terughaalden: gekeken, geteld en geluisterd. De kringloop van de buurt:",W2/2,760);
+  g.fillStyle="#39436a";fitText(g,"die de bijen terughaalden: gekeken, geteld en geluisterd. De kringloop van de buurt:",W2/2,760,W2-220,30,"500 {s} Nunito,sans-serif");
   /* de kringloop */
   var n=r.eras.length,cols=Math.min(n,5),rows=Math.ceil(n/cols),bw=Math.min(200,(W2-160)/cols),y0=820;
   r.eras.forEach(function(k,j){var cx=W2/2-(cols*bw)/2+(j%cols)*bw+bw/2,cy=y0+Math.floor(j/cols)*150;g.fillStyle="#e6f6ea";rr(g,cx-bw/2+10,cy,bw-20,110,16);g.fill();g.strokeStyle="#2b1f4a";g.lineWidth=4;g.stroke();g.fillStyle="#2b1f4a";g.font="700 44px sans-serif";g.fillText(k.e,cx,cy+56);g.font="700 20px Fredoka,sans-serif";g.fillText(k.s,cx,cy+94)});
@@ -340,7 +340,7 @@ function drawDiploma(cv,r){var g=cv.getContext("2d"),W2=cv.width,H=cv.height;
   g.fillStyle="#f5b800";g.font="700 70px Fredoka,sans-serif";g.fillText("★".repeat(r.stars)+"☆".repeat(3-r.stars),W2/2,yy+140);
   var d=new Date();g.fillStyle="#39436a";g.font="500 30px Nunito,sans-serif";g.fillText(d.toLocaleDateString("nl-NL",{day:"numeric",month:"long",year:"numeric"}),W2/2,yy+200);
   g.fillStyle="#e0584f";g.font="400 50px 'Permanent Marker',cursive";g.save();g.translate(W2/2,yy+310);g.rotate(-.03);g.fillText("Juf Noor, meneer Tik en de bijen",0,0);g.restore();
-  if(ok("diploma-stempel")){g.save();g.translate(W2-250,H-300);g.rotate(-.12);g.globalAlpha=.95;g.drawImage(IM["diploma-stempel"],-110,-110,220,220);g.restore()}
+  if(ok("diploma-stempel")){g.save();g.translate(W2-235,295);g.rotate(.14);g.globalAlpha=.95;g.drawImage(IM["diploma-stempel"],-110,-110,220,220);g.restore()}
   g.fillStyle="#9aa3c0";g.font="500 24px Nunito,sans-serif";g.fillText("minimystery.nl/educatie",W2/2,H-120)}
 
 /* ---------- begeleidersblad: verhaal, lesbrief, alle missies met antwoorden, plekkaartjes ---------- */
