@@ -32,7 +32,7 @@ function sayEN(en,nl){if(!VOICE)return;hush();say(en,"en-GB");if(nl)say(nl,"nl-N
 function hush(){if(window.MMVoice)return MMVoice.hush();try{window.speechSynthesis&&window.speechSynthesis.cancel()}catch(e){}}
 /* artwork van Kellie in games/engels/img wint waar het er is (zie games/engels/ARTWORK.md); anders getekende/tekst-versies */
 var IMGROOT=MW.root+"games/engels/img/",IM={};
-["hero","noor","tik","charlie","biscuit","diploma-stempel"].concat(D.S.map(function(m){return "st-"+m.id})).forEach(function(k){var im=new Image();im.src=IMGROOT+k+".webp?v=1";IM[k]=im});
+["hero","noor","tik","charlie","plein","biscuit","diploma-stempel"].concat(D.S.map(function(m){return "st-"+m.id})).forEach(function(k){var im=new Image();im.src=IMGROOT+k+".webp?v=1";IM[k]=im});
 function ok(k){var im=IM[k];return !!(im&&im.complete&&im.naturalWidth)}
 function avatarHTML(cls,letter,key){return '<span class="avatar '+cls+'" aria-hidden="true"'+(ok(key)?' style="background:#fff8ec url('+IMGROOT+key+'.webp?v=1) center 18%/150% auto no-repeat"':'')+'>'+(ok(key)?"":letter)+'</span>'}
 var TIKAV='<span class="avatar tik" aria-hidden="true">T</span>',NOORAV='<span class="avatar noor" aria-hidden="true">N</span>',CHAV='<span class="avatar charlie" aria-hidden="true">C</span>';
@@ -156,7 +156,7 @@ function build(seed,mode,pois,ways,origin,daily,len,virt){len=LENN[len]?len:"nor
   brief()}
 function brief(){
   $("#bfNo").textContent=(G.mode==="demo"?T.demoCase:"");
-  $("#bfOpen").innerHTML=(ok("schrift")?'<img class="erapic" src="'+IMGROOT+'schrift.webp?v=1" alt="Het oude schrift uit 1923">':'')+bubble(fill(openOf(modus()),{N:T.nw[NN()]||NN()}),D.NOOR,"big")+
+  $("#bfOpen").innerHTML=(ok("plein")?'<img class="erapic" src="'+IMGROOT+'plein.webp?v=1" alt="">':'')+bubble(fill(openOf(modus()),{N:T.nw[NN()]||NN()}),D.NOOR,"big")+
     '<div class="chips"><span class="chip">'+esc(T.lvl[ageI()])+'</span><span class="chip">'+(modus()==="bso"?"BSO-modus":"Schoolmodus")+'</span><span class="chip">'+NN()+' stations</span><span class="chip">'+(inBuilding()?"in het gebouw":G.mode==="street"?"zonder kaart":"met kaart")+'</span></div>';
   $("#bfTip").innerHTML=MW.codeBox(L,G.code,"zaak");MW.bindCodeBox($("#bfTip"),L);
   show("brief")}
