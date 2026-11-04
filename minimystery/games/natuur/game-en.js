@@ -165,7 +165,7 @@ function save(){if(G){G.px=P.x;G.py=P.y;LS.set(GK,G)}}
 function enter(){fixG(G);if(G.mode==="map"||G.mode==="demo")enterMap();else{show("cards");render()}}
 
 /* ---------- hud ---------- */
-function tilesHTML(){var out="";G.c.slots.map(function(s){return s}).sort(function(a,b){return a.key.v-b.key.v}).forEach(function(s){var i=G.c.slots.indexOf(s),got=!!G.ph[i];out+='<i class="tl'+(got?" on":"")+'">'+(got?s.key.e:"")+'</i>'});return out}
+function tilesHTML(){var out="";G.c.slots.map(function(s){return s}).sort(function(a,b){return ((a.key||{}).v||0)-((b.key||{}).v||0)}).forEach(function(s){var i=G.c.slots.indexOf(s),got=!!G.ph[i]&&!!s.key;out+='<i class="tl'+(got?" on":"")+'">'+(got?s.key.e:"")+'</i>'});return out}
 function hud(){if(!G)return;var n=done();$("#hT").textContent=mmss(Date.now()-G.t0);$("#hS").textContent=n+"/"+NN();$("#hM").innerHTML=tilesHTML()}
 function render(){hud();while(G.i<NN()&&G.ph[G.i])G.i++;var i=G.i,box=$("#card"),N=NN();
   if(i>=N){box.innerHTML='<div class="pol done"><div class="big">🕰️</div></div>'+bubble(T.radarAll,D.NOOR)+'<button type="button" class="btn red" id="bAcc">'+T.finH+'</button>';$("#bAcc").onclick=toFinale;return}
