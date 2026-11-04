@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Professor Nul en de verdwenen cijfers – reken-speurtocht voor school en BSO | MiniMystery Educatie</title>
+<link rel="icon" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="description" content="Reken-speurtocht voor groep 3–8 en BSO: alle cijfers van de school zijn weg. Bij rekenstations rond (of in) de school tellen, meten, schatten en rekenen teams met echte dingen: stappen, ramen, huisnummers, de klok, de kassa, verkeer. Drie niveaus (groep 3–4, 5–6, 7–8), zaakcode, begeleidersblad met lesbrief, diploma.">
+<link rel="canonical" href="https://www.minimystery.nl/professor-nul-en-de-verdwenen-cijfers.html">
+<meta property="og:site_name" content="MiniMystery">
+<meta property="og:title" content="MiniMystery Educatie – Professor Nul en de verdwenen cijfers">
+<meta property="og:description" content="Alle cijfers zijn weg. Rekenen met echte dingen in je eigen buurt, voor groep 3–8 en BSO.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.minimystery.nl/professor-nul-en-de-verdwenen-cijfers.html">
+<meta property="og:locale" content="nl_NL">
+<meta property="og:image" content="https://www.minimystery.nl/assets/og-image.jpg">
+<meta name="theme-color" content="#cfe6ff">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Permanent+Marker&family=Nunito:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="shared/platform.css?v=2">
+<link rel="stylesheet" href="shared/kidsmap.css?v=7">
+<link rel="stylesheet" href="games/reken/game.css?v=1">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Professor Nul en de verdwenen cijfers","url":"https://www.minimystery.nl/professor-nul-en-de-verdwenen-cijfers.html","description":"Reken-speurtocht voor basisschool (groep 3–8) en BSO: rekenstations in de eigen buurt of in het schoolgebouw, met echte metingen. Drie niveaus volgens de rekenleerlijn. Zaakcode, begeleidersblad met lesbrief, diploma.","inLanguage":"nl","gamePlatform":"Webbrowser","genre":["Kinderspel","Speurtocht","Educatie","Rekenen"],"audience":{"@type":"EducationalAudience","educationalRole":"student"}}</script>
+</head>
+<body>
+<div id="app">
+  <section class="screen" id="home">
+    <div class="wrap">
+      <div class="row0"><div class="pills"><a class="pill" id="hub" href="./">◂ Alle zaken</a><a class="pill" href="educatie/">Educatie</a></div></div>
+      <div class="hero" aria-hidden="true">
+        <svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="92" fill="#fff" stroke="#13304f" stroke-width="6"/><circle cx="100" cy="100" r="80" fill="#fffaf0" stroke="#f5b800" stroke-width="4" stroke-dasharray="6 10"/>
+        <g font-family="Fredoka,sans-serif" font-weight="700" font-size="22" fill="#b9c8d8" text-anchor="middle"><text x="100" y="40">?</text><text x="166" y="108">?</text><text x="100" y="176">?</text><text x="34" y="108">?</text></g>
+        <path d="M100 100 L100 55" stroke="#1d4a78" stroke-width="8" stroke-linecap="round"/><path d="M100 100 L135 118" stroke="#e0584f" stroke-width="6" stroke-linecap="round"/><circle cx="100" cy="100" r="7" fill="#13304f"/>
+        <text x="100" y="150" font-family="Permanent Marker,cursive" font-size="18" fill="#3a9be6" text-anchor="middle" transform="rotate(-8 100 150)">cijfers weg!</text></svg>
+      </div>
+      <div class="masthead">
+        <span class="eyebrow" style="color:#3a9be6">MiniMystery Educatie · rekenen · groep 3–8</span>
+        <h1 id="ttl">Professor Nul en de verdwenen cijfers</h1><span class="tape">Getallen? Overbodig! – Prof. Nul</span>
+      </div>
+      <p class="lead">Alle cijfers van de school zijn weg: van de klok, de deuren, de kalender en de kassa. Professor Nul vindt getallen overbodig. Jullie bewijzen het tegendeel. Op rekenstations rond (of in) de school tellen, meten, schatten en rekenen jullie met echte dingen: stappen, ramen, huisnummers, de klok, de kassa, het verkeer. Elke station geeft een getalsleutel; alle sleutels op volgorde en de kluis gaat open.</p>
+      <button class="btn ghost sm" id="bHow">Hoe werkt het?</button>
+      <div class="pline" hidden style="display:none"><b id="pRank">–</b><span><b id="pStreak">0</b> Dagen op rij</span><span><b id="pSolved">0</b> Opgelost</span></div>
+      <div class="namebox"><label for="name">Teamnaam (mag leeg, komt op het diploma)</label><input id="name" maxlength="24" autocomplete="off" placeholder="bijv. De Rekenspeurders"></div>
+      <div class="seglbl">Voor wie</div>
+      <div class="seg two" id="route">
+        <button type="button" data-r="school" aria-pressed="true">School<small>licht educatief</small></button>
+        <button type="button" data-r="bso" aria-pressed="false">BSO<small>speels, meer bewegen</small></button>
+      </div>
+      <div class="seg" id="lvl">
+        <button type="button" data-l="0" aria-pressed="false">Groep 3–4<small>tot 20 en 100</small></button>
+        <button type="button" data-l="1" aria-pressed="true">Groep 5–6<small>tafels, meten, klok</small></button>
+        <button type="button" data-l="2" aria-pressed="false">Groep 7–8<small>komma, %, schaal</small></button>
+      </div>
+      <div class="seg" id="dur" aria-label="Lengte">
+        <button type="button" data-n="kort" aria-pressed="false">Kort<small>6 stations · ±35 min</small></button>
+        <button type="button" data-n="normaal" aria-pressed="true">Normaal<small>8 stations · ±45 min</small></button>
+        <button type="button" data-n="lang" aria-pressed="false">Lang<small>10 stations · ±60 min</small></button>
+      </div>
+      <div class="seg" id="len">
+        <button type="button" data-m="map" aria-pressed="true">Buiten<br>met kaart</button>
+        <button type="button" data-m="street" aria-pressed="false">Buiten<br>zonder kaart</button>
+        <button type="button" data-m="gebouw" aria-pressed="false">In het<br>gebouw</button>
+      </div>
+      <button class="btn ghost sm" id="bVoice" aria-pressed="true">🔊 Voorlezen</button>
+      <button class="btn" id="bResume" hidden>Verder met de zaak</button>
+      <button class="btn" id="bGps">Start de zaak van vandaag</button>
+      <button class="btn ghost" id="bRandom">Extra zaak</button>
+      <button class="btn ghost" id="bCode">Zaakcode invullen</button>
+      <button class="btn ghost" id="bPro" hidden></button>
+      <p class="note" id="status"></p>
+      <div id="howT" hidden><ol class="how"><li><b>Voor de begeleider:</b> kies School of BSO, de groep en de lengte (6, 8 of 10 stations). Start de zaak op je eigen telefoon: in de briefing staat de <b>zaakcode</b>. Elk team vult die code in en krijgt precies dezelfde zaak. Onder de briefing staat het <b>begeleidersblad</b>: het verhaal, een lesbrief vooraf en achteraf per groep, alle stations met het rekenrecept, hints en rekentips.</li><li><b>Buiten met kaart:</b> de stations staan dicht bij elkaar (alles binnen ongeveer 300 meter). De kinderen zien een <b>verhaalkaart</b> met een pijl en koud/warm/heet. <b>Buiten zonder kaart:</b> de stations komen achter elkaar, het team loopt zelf naar een nieuwe plek. <b>In het gebouw:</b> de begeleider kiest plekken in de school; per plek een kaartje met een code uit het begeleidersblad.</li><li><b>Elk station is een echte meting:</b> stappen tellen naar een paal, ramen tellen, een huisnummer zoeken, lantaarnpalen, verkeer tellen in één minuut, stoeptegels, verdiepingen, vormen, de klok zonder cijfers, de kassa, eerlijk delen, kaart en schaal. Het team typt eerst wat het zelf heeft geteld; de vervolgvraag rekent daarmee verder. Daarom heeft elk team een ander antwoord, en controleert het spel toch.</li><li><b>Drie niveaus</b> volgens de rekenleerlijn: groep 3–4 (tellen tot 20 en 100, meer/minder, even/oneven, hele uren, geld tot 10, twee plaatjes als antwoord en alles voorgelezen), groep 5–6 (tafels, delen met rest, cm en m, kwartieren, geld met komma, afronden) en groep 7–8 (kommagetallen, procenten, verhoudingen en schaal, oppervlakte, grote getallen). Eén hint per station, en na elk antwoord een rekentip.</li><li><b>Finale:</b> de getalsleutels van klein naar groot (groep 7–8 met kommagetallen, breuken en procenten door elkaar). Klopt het, dan gaat de getallenkluis open, komen de cijfers terug en krijgt het team een <b>diploma Rekenspeurder</b> (A4).</li></ol><p class="note">Tip: spreek het speelgebied en een eindtijd af. Teams blijven bij elkaar en op de stoep. Geen account, geen app: werkt in de browser.</p></div>
+      <button class="btn ghost sm" id="bDemo">Proefronde in de binnenstad van Eindhoven</button>
+      <button class="btn ghost" id="bArch">Opgeloste zaken</button>
+      <button class="btn ghost sm" id="bWipe">Wissen</button>
+    </div>
+  </section>
+
+  <section class="screen" id="brief" hidden>
+    <div class="wrap">
+      <div class="paper">
+        <div class="eyebrow" id="bfNo"></div>
+        <div id="bfTip"></div>
+        <h2>Het briefje van Professor Nul</h2>
+        <div id="bfOpen"></div>
+      </div>
+      <button class="btn" id="bGo">We gaan zoeken! ▸</button>
+      <button class="btn ghost" id="bLead">🖨 Begeleidersblad (antwoorden)</button>
+      <button class="btn ghost" id="bBack">Terug</button>
+    </div>
+  </section>
+
+  <section class="screen" id="cards" hidden>
+    <div id="hud">
+      <div><b id="hT">0:00</b><span>Tijd</span></div>
+      <div><b id="hS">0</b><span>Stations</span></div>
+      <div><div class="tiles" id="hM"></div><span>Getalsleutels</span></div>
+      <button type="button" id="zM2" aria-label="Menu">☰</button>
+    </div>
+    <div id="card"></div>
+    <div id="bar">
+      <button type="button" id="bNote">Rekenboekje</button>
+      <button type="button" id="bAcc2" class="red">De kluis</button>
+    </div>
+  </section>
+
+  <section class="screen" id="play" hidden>
+    <canvas id="map"></canvas>
+    <div id="mhud">
+      <div><b id="mT">0:00</b><span>Tijd</span></div>
+      <div><b id="mS">0</b><span>Stations</span></div>
+      <div><div class="tiles" id="mM"></div><span>Getalsleutels</span></div>
+      <button type="button" id="zM" aria-label="Menu">☰</button>
+    </div>
+    <div id="zoom">
+      <button type="button" id="zIn" aria-label="Inzoomen">+</button>
+      <button type="button" id="zOut" aria-label="Uitzoomen">−</button>
+      <button type="button" id="zMe" aria-label="Centreer op mij">◎</button>
+    </div>
+    <div id="low">
+      <div id="radar">Op weg naar het eerste station</div>
+      <div id="chip" hidden>
+        <div class="row"><b id="cName"></b><span id="cDist"></span></div>
+        <span id="cHint" class="note"></span>
+        <button class="btn" id="cAct"></button>
+      </div>
+      <div id="mbar">
+        <button type="button" id="mNote">Rekenboekje</button>
+        <button type="button" id="mAcc" class="red">De kluis</button>
+      </div>
+    </div>
+  </section>
+
+  <input type="file" id="file" accept="image/*" capture="environment" aria-label="Maak de foto">
+  <div class="sheet" id="sheet" hidden><div class="paper" id="sheetBody"></div></div>
+  <div id="load" hidden role="status"><div class="spin"></div><b id="loadT"></b><span>Dit duurt meestal 5 tot 30 seconden. Blijf op deze pagina.</span></div>
+  <div id="toast" hidden></div>
+</div>
+<script src="shared/platform.js?v=mm16"></script>
+<script src="shared/catalog.js?v=mm13"></script>
+<script src="shared/tiles.js?v=1"></script>
+<script src="shared/walk.js?v=5"></script>
+<script src="shared/kidsmap.js?v=14"></script>
+<script src="shared/bonus.js?v=1"></script>
+<script src="shared/voice.js?v=1"></script>
+<script src="games/reken/data-nl.js?v=1"></script>
+<script src="games/reken/game.js?v=1"></script>
+<script src="shared/start.js?v=6" data-game="rk"></script>
+<script id="mm-demo">if(/[?&]oefen\b/.test(location.search)){var b=document.getElementById("bDemo");if(b)setTimeout(function(){b.click()},50)}</script>
+</body>
+</html>
