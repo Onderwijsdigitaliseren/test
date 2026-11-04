@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Enigma Mystery — Het Alibi-rooster</title>
+<meta name="description" content="Vijf avonden, vijf moorden. Zet iedereen op de juiste plek op het juiste kwartier en vind wie geen alibi heeft. Logicapuzzel in de tijd.">
+<link rel="canonical" href="https://www.enigmamystery.com/spel/alibi-rooster.html">
+<link rel="alternate" hreflang="nl" href="https://www.enigmamystery.com/spel/alibi-rooster.html#nl">
+<link rel="alternate" hreflang="en" href="https://www.enigmamystery.com/spel/alibi-rooster.html#en">
+<style>
+:root{
+  --nacht:#0a0d12; --paneel:#171d28; --rand:#2a3345;
+  --papier:#e9dfc9; --papier2:#dfd3b8; --inkt:#2b2620; --inktzwak:#5a5044;
+  --rood:#a83a2b; --goud:#c9a45c; --groen:#7d8f66;
+  --tekst:#d8d2c4; --tekstzwak:#9a9488;
+  --k0:#c9a45c; --k1:#8aa6c1; --k2:#c27c6a; --k3:#8fae7e; --k4:#b48ec4; --k5:#62b0a6; --k6:#d093a3; --k7:#aaa78a;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;height:100%}
+body{position:fixed;inset:0;overflow:hidden;
+  background:radial-gradient(120% 90% at 50% -10%, #1b2433 0%, #10151f 45%, #07090d 100%);
+  color:var(--tekst);font-family:-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;font-size:16px;line-height:1.55}
+#app{position:absolute;inset:0;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
+#kop{flex:0 0 auto;display:flex;align-items:center;gap:8px;padding:10px 12px 8px;border-bottom:1px solid #232c3c;
+  background:linear-gradient(180deg,rgba(20,26,37,.92),rgba(13,17,25,.85));z-index:5}
+#kop .reeks{font-family:Georgia,"Times New Roman",serif;letter-spacing:.22em;font-size:10px;color:var(--goud);text-transform:uppercase}
+#kop .titel{font-family:Georgia,serif;font-size:16px;letter-spacing:.04em;color:#efe9da;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#kop .vullen{flex:1;min-width:0}
+.kopknop{flex:0 0 auto;min-width:40px;height:40px;padding:0 10px;border:1px solid #38445c;border-radius:9px;background:#1a2231;color:#cfd6e4;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.kopknop:active{background:#232d40}
+#inhoud{flex:1 1 auto;overflow-y:auto;-webkit-overflow-scrolling:touch;position:relative}
+.scherm{display:none;max-width:760px;margin:0 auto;padding:20px 14px 80px;animation:opdoemen .45s ease}
+.scherm.actief{display:block}
+@keyframes opdoemen{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+h1.groot{font-family:Georgia,serif;font-weight:normal;font-size:32px;letter-spacing:.05em;color:#f0ead9;margin:8px 0 2px;text-align:center}
+.ondertitel{text-align:center;color:var(--goud);font-family:Georgia,serif;letter-spacing:.26em;font-size:11px;text-transform:uppercase;margin-bottom:22px}
+.proza{color:#cfc9bb;font-size:16px}
+.proza p{margin:0 0 12px}
+.proza em{color:#e4ddcc}
+.knop{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:10px 18px;border-radius:10px;border:1px solid #4a3a2a;
+  background:linear-gradient(180deg,#6b2f24,#4e2119);color:#f3e9d6;font-family:Georgia,serif;letter-spacing:.08em;font-size:15px;cursor:pointer;text-decoration:none}
+.knop.rustig{background:#1c2432;border-color:#38445c;color:#d8dde8}
+.knop.goud{background:linear-gradient(180deg,#b08a3f,#8a6a2a);border-color:#6b5020;color:#fff7e3}
+.knop:active{filter:brightness(1.12)}
+.knop[disabled]{opacity:.45;pointer-events:none}
+.rij{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:16px 0}
+/* dossierlijst */
+.dossiers{display:grid;gap:10px;margin:18px 0}
+.dossier{display:flex;gap:14px;align-items:center;padding:12px 14px;border:1px solid var(--rand);border-radius:12px;background:var(--paneel);cursor:pointer}
+.dossier.dicht{opacity:.5}
+.dossier .nr{flex:0 0 46px;height:46px;border-radius:50%;border:1px solid var(--goud);display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;color:var(--goud);font-size:18px}
+.dossier .t{font-family:Georgia,serif;font-size:17px;color:#efe9da}
+.dossier .s{font-size:13px;color:var(--tekstzwak)}
+.dossier .st{margin-left:auto;color:var(--goud);font-size:15px;letter-spacing:.1em;white-space:nowrap}
+/* papier */
+.papier{background:linear-gradient(180deg,var(--papier),var(--papier2));color:var(--inkt);border-radius:8px;padding:14px 14px 12px;
+  box-shadow:0 6px 24px rgba(0,0,0,.45), inset 0 0 0 1px rgba(0,0,0,.08);position:relative;margin:14px 0}
+.papier h2{font-family:Georgia,serif;font-weight:normal;font-size:20px;margin:0 0 6px;letter-spacing:.03em}
+.papier .klein{font-size:12.5px;color:var(--inktzwak);letter-spacing:.08em;text-transform:uppercase}
+.stempel{position:absolute;right:12px;top:10px;border:2px solid var(--rood);color:var(--rood);padding:2px 8px;border-radius:4px;font-family:Georgia,serif;letter-spacing:.14em;font-size:11px;transform:rotate(-6deg);opacity:.85}
+/* plattegrond */
+#plan{width:100%;height:auto;display:block}
+.kamer-rect{fill:#f3ecd9;stroke:var(--inkt);stroke-width:1.4}
+.kamer-lbl{font-family:Georgia,serif;font-size:10.5px;fill:var(--inkt);text-anchor:middle}
+.deur{stroke:var(--inkt);stroke-width:1.2;stroke-dasharray:3 2.5;fill:none}
+/* rooster */
+.rooster-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -6px;padding:0 6px}
+table.rooster{border-collapse:separate;border-spacing:3px;width:100%;table-layout:fixed}
+table.rooster th{font-family:Georgia,serif;font-weight:normal;font-size:11px;color:var(--inktzwak);padding:2px 0 4px;letter-spacing:.04em}
+table.rooster th.m{color:var(--rood);font-weight:bold}
+table.rooster th.pers{text-align:left;width:84px;padding-left:2px;position:sticky;left:0;z-index:2;background:linear-gradient(90deg,var(--papier) 85%,rgba(233,223,201,0))}
+table.rooster th.pers .n{font-size:12px;color:var(--inkt);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+table.rooster th.pers .r{font-size:10px;color:var(--inktzwak);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:none;letter-spacing:0}
+td.cel{height:40px;border:1px solid rgba(43,38,32,.35);border-radius:6px;background:rgba(255,255,255,.35);text-align:center;vertical-align:middle;cursor:pointer;position:relative;font-size:11px;font-family:Georgia,serif;padding:0 2px;overflow:hidden}
+td.cel.m{border-color:var(--rood)}
+td.cel.gezet{color:#1c1813;font-weight:bold}
+td.cel.dood{background:repeating-linear-gradient(135deg,rgba(0,0,0,.08) 0 4px,transparent 4px 8px);cursor:default;color:var(--inktzwak)}
+td.cel.fout{box-shadow:inset 0 0 0 2px var(--rood)}
+td.cel.goed{box-shadow:inset 0 0 0 2px var(--groen)}
+td.cel.actief{box-shadow:0 0 0 2px #2b2620}
+td.cel .pot{position:absolute;left:2px;right:2px;bottom:2px;display:flex;gap:2px;justify-content:center;flex-wrap:wrap}
+td.cel .pot i{width:6px;height:6px;border-radius:50%;display:block;opacity:.9}
+/* legenda */
+.legenda{display:flex;flex-wrap:wrap;gap:6px 10px;margin:10px 0 2px;font-size:12px}
+.legenda span{display:inline-flex;align-items:center;gap:5px}
+.legenda i{width:12px;height:12px;border-radius:3px;display:inline-block;border:1px solid rgba(0,0,0,.25)}
+/* verklaringen */
+.verklaringen{display:grid;gap:8px;margin-top:8px}
+.verklaring{padding:9px 12px;border-left:3px solid var(--goud);background:rgba(255,255,255,.3);border-radius:4px;cursor:pointer;line-height:1.5}
+.verklaringen .wie{font-family:Georgia,serif;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--inkt);margin:10px 0 0;padding-bottom:2px;border-bottom:1px solid rgba(43,38,32,.25)}
+.verklaringen .wie small{text-transform:none;letter-spacing:0;color:var(--inktzwak);font-size:12px}
+.verklaringen .wie:first-child{margin-top:0}
+.verklaring .q{font-style:italic;color:#2f2a24}
+.verklaring .q u{text-decoration:none;border-bottom:1.5px dotted var(--rood);font-style:normal;font-weight:bold;color:#1c1813}
+.verklaring.af{opacity:.42}
+.verklaring.af .q{text-decoration:line-through}
+/* onderbalk */
+#balk{flex:0 0 auto;display:none;gap:8px;padding:8px 12px calc(8px + env(safe-area-inset-bottom));border-top:1px solid #232c3c;background:rgba(13,17,25,.96);z-index:5}
+#balk.aan{display:flex}
+#balk .knop{flex:1;min-height:44px;padding:8px 10px;font-size:14px}
+/* sheet */
+#sheet{position:absolute;inset:0;background:rgba(5,7,10,.62);display:none;z-index:20;align-items:flex-end}
+#sheet.aan{display:flex}
+#sheet .vel{width:100%;max-width:760px;margin:0 auto;background:#151b26;border-top:1px solid #2f3a4f;border-radius:16px 16px 0 0;padding:14px 16px calc(18px + env(safe-area-inset-bottom));animation:omhoog .25s ease}
+@keyframes omhoog{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+#sheet h3{margin:0 0 10px;font-family:Georgia,serif;font-weight:normal;font-size:17px;color:#efe9da}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:44px;padding:8px 14px;border-radius:10px;border:1px solid rgba(0,0,0,.3);color:#1c1813;font-family:Georgia,serif;font-size:15px;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.chip.leeg{background:#232c3c;color:#cfd6e4;border-color:#38445c}
+.chip.aan{outline:3px solid #fff;outline-offset:-3px}
+.chip .st{width:10px;height:10px;border-radius:50%;background:#1c1813;opacity:.6}
+.schakel{display:flex;align-items:center;gap:10px;margin:12px 0 6px;color:var(--tekstzwak);font-size:14px}
+.schakel button{min-height:36px;padding:6px 12px;border-radius:8px;border:1px solid #38445c;background:#1a2231;color:#cfd6e4;cursor:pointer}
+.schakel button.aan{background:#3b3120;border-color:var(--goud);color:#f3e6c6}
+.verdachten{display:grid;gap:8px}
+.verdachte{display:flex;align-items:center;gap:12px;padding:10px 12px;border:1px solid #2f3a4f;border-radius:10px;background:#1a2231;color:#e8e1d3;cursor:pointer;font-size:15px}
+.verdachte .av{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;background:#2a3345;color:var(--goud)}
+.verdachte.uit{opacity:.4;pointer-events:none;text-decoration:line-through}
+.bericht{margin:10px 0;padding:10px 12px;border-radius:8px;background:#2a1b17;border:1px solid #5a2e24;color:#f0dcd3;font-size:14.5px}
+.bericht.goed{background:#1b2a1c;border-color:#3e5a3a;color:#dcefd8}
+.bericht.info{background:#1c2432;border-color:#38445c;color:#d8dde8}
+.sterren{font-size:22px;letter-spacing:.2em;color:var(--goud);text-align:center;margin:8px 0}
+.sterren small{display:block;font-size:12px;letter-spacing:.05em;color:var(--tekstzwak);margin-top:4px}
+/* help */
+#help{position:absolute;inset:0;background:rgba(5,7,10,.9);display:none;z-index:30;overflow-y:auto}
+#help.aan{display:block}
+#help .vel{max-width:680px;margin:30px auto;padding:20px 18px 40px}
+#help h2{font-family:Georgia,serif;font-weight:normal;color:var(--goud);letter-spacing:.1em;font-size:20px}
+#help h3{font-family:Georgia,serif;font-weight:normal;color:#efe9da;font-size:16px;margin:18px 0 4px}
+#help p,#help li{color:#cfc9bb;font-size:15px}
+#help ul{padding-left:20px}
+.av0{background:var(--k0)}.av1{background:var(--k1)}.av2{background:var(--k2)}.av3{background:var(--k3)}
+.av4{background:var(--k4)}.av5{background:var(--k5)}.av6{background:var(--k6)}.av7{background:var(--k7)}
+.einde{text-align:center;margin:24px 0}
+.einde .groot{font-family:Georgia,serif;font-size:26px;color:#f0ead9}
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="kop">
+    <button class="kopknop" id="kTerug" title="Dossiers">☰</button>
+    <div class="vullen"><div class="reeks">Enigma Mystery · Logica</div><div class="titel" id="kTitel">Het Alibi-rooster</div></div>
+    <button class="kopknop" id="kTaal">EN</button>
+    <button class="kopknop" id="kHelp">?</button>
+  </div>
+  <div id="inhoud">
+    <section class="scherm" id="sStart"></section>
+    <section class="scherm" id="sDossier"></section>
+  </div>
+  <div id="balk"></div>
+  <div id="sheet"><div class="vel" id="sheetVel"></div></div>
+  <div id="help"><div class="vel" id="helpVel"></div></div>
+</div>
+<script id="data" type="application/json">[{"id":"toost","T":4,"M":2,"start":"22:00","tijden":["22:00","22:15","22:30","22:45"],"kamers":[{"k":"hal","nl":"Hal","en":"Hall","x":4,"y":3,"w":4,"h":2},{"k":"salon","nl":"Salon","en":"Drawing room","x":0,"y":0,"w":4,"h":3},{"k":"eet","nl":"Eetkamer","en":"Dining room","x":8,"y":0,"w":4,"h":3},{"k":"bib","nl":"Bibliotheek","en":"Library","x":0,"y":3,"w":4,"h":2}],"adj":[[0,1],[0,2],[0,3],[1,3]],"personen":[{"naam":"Victor Aldenberg","nl":"gastheer","en":"host"},{"naam":"Hendrik Aldenberg","nl":"zijn broer","en":"his brother"},{"naam":"Clara Voss","nl":"de pianiste","en":"the pianist"},{"naam":"Tobias Reyn","nl":"de notaris","en":"the notary"}],"clues":[{"w":2,"a":["with",0,2,1]},{"w":2,"a":["count",2,3,3]},{"w":2,"a":["with",0,2,0]},{"w":3,"a":["move",3,0]},{"w":3,"a":["with",2,3,2]},{"w":3,"a":["in",3,1,2]},{"w":1,"a":["in",1,1,1]},{"w":1,"a":["stay",1,0,3]},{"w":1,"a":["alone",1,0]},{"w":1,"a":["never",0,0]},{"w":1,"a":["alone",1,1]}],"sol":[[3,3,1],[1,1,1,1],[3,3,0,1],[0,2,0,1]],"killer":1,"seed":2},{"id":"serre","T":5,"M":2,"start":"21:30","tijden":["21:30","21:45","22:00","22:15","22:30"],"kamers":[{"k":"hal","nl":"Hal","en":"Hall","x":4,"y":3,"w":4,"h":2},{"k":"salon","nl":"Salon","en":"Drawing room","x":0,"y":0,"w":4,"h":3},{"k":"eet","nl":"Eetkamer","en":"Dining room","x":8,"y":0,"w":4,"h":3},{"k":"bib","nl":"Bibliotheek","en":"Library","x":0,"y":3,"w":4,"h":2},{"k":"serre","nl":"Serre","en":"Conservatory","x":8,"y":3,"w":4,"h":2}],"adj":[[0,1],[0,2],[0,3],[0,4],[1,3],[2,4]],"personen":[{"naam":"Mathilde de Wit","nl":"gastvrouw","en":"hostess"},{"naam":"Pieter de Wit","nl":"haar echtgenoot","en":"her husband"},{"naam":"Lotte Brand","nl":"haar nicht","en":"her niece"},{"naam":"Dr. Emil Kaufmann","nl":"de huisarts","en":"the family doctor"},{"naam":"Jacob Steen","nl":"de tuinman","en":"the gardener"}],"clues":[{"w":4,"a":["visited",4,4]},{"w":4,"a":["never_with",2,4]},{"w":4,"a":["move",4,1]},{"w":1,"a":["count",1,2,2]},{"w":1,"a":["notin",0,2,3]},{"w":1,"a":["with",1,4,0]},{"w":1,"a":["move",1,0]},{"w":1,"a":["with",1,3,2]},{"w":1,"a":["never",1,0]},{"w":1,"a":["stay",0,0,1]},{"w":1,"a":["with",1,3,4]},{"w":1,"a":["in",1,2,2]},{"w":3,"a":["visited",3,4]},{"w":3,"a":["count",3,1,3]},{"w":3,"a":["step",3,3,0]},{"w":3,"a":["empty",2,3]},{"w":3,"a":["with",2,3,4]},{"w":2,"a":["in",2,1,2]},{"w":2,"a":["never",2,0]},{"w":2,"a":["empty",1,2]},{"w":2,"a":["alone",2,1]}],"sol":[[0,0,4],[2,4,2,4,2],[4,2,4,4,2],[3,0,2,4,2],[2,0,3,0,4]],"killer":2,"seed":4},{"id":"noodweer","T":6,"M":3,"start":"22:00","tijden":["22:00","22:15","22:30","22:45","23:00","23:15"],"kamers":[{"k":"hal","nl":"Hal","en":"Hall","x":4,"y":3,"w":4,"h":2},{"k":"salon","nl":"Salon","en":"Drawing room","x":0,"y":0,"w":4,"h":3},{"k":"eet","nl":"Eetkamer","en":"Dining room","x":8,"y":0,"w":4,"h":3},{"k":"bib","nl":"Bibliotheek","en":"Library","x":0,"y":3,"w":4,"h":2},{"k":"serre","nl":"Serre","en":"Conservatory","x":8,"y":3,"w":4,"h":2},{"k":"keuken","nl":"Keuken","en":"Kitchen","x":8,"y":5,"w":4,"h":2}],"adj":[[0,1],[0,2],[0,3],[0,4],[1,3],[2,4],[4,5]],"personen":[{"naam":"Augusta Hoogveld","nl":"de weduwe","en":"the widow"},{"naam":"Ernst Hoogveld","nl":"haar stiefzoon","en":"her stepson"},{"naam":"Marie Linde","nl":"de gezelschapsdame","en":"the companion"},{"naam":"Kapitein Bram Oosterling","nl":"een oude vriend","en":"an old friend"},{"naam":"Sophie Hoogveld","nl":"de kleindochter","en":"the granddaughter"},{"naam":"Willem Baks","nl":"de huisknecht","en":"the butler"}],"clues":[{"w":4,"a":["with",4,5,4]},{"w":4,"a":["with",3,4,1]},{"w":4,"a":["never",4,1]},{"w":4,"a":["count",0,2,3]},{"w":4,"a":["in",4,1,3]},{"w":4,"a":["stay",4,2,3]},{"w":4,"a":["alone",4,0]},{"w":5,"a":["visited",5,4]},{"w":5,"a":["alone",5,5]},{"w":5,"a":["never_with",1,5]},{"w":5,"a":["alone",0,1]},{"w":3,"a":["notwith",1,3,5]},{"w":3,"a":["step",3,2,4]},{"w":3,"a":["stay",3,0,1]},{"w":2,"a":["step",2,0,1]},{"w":2,"a":["in",2,3,2]},{"w":2,"a":["with",0,2,0]},{"w":2,"a":["never_with",2,5]},{"w":2,"a":["empty",4,5]},{"w":2,"a":["alone",2,4]},{"w":2,"a":["empty",3,2]},{"w":2,"a":["alone",2,1]},{"w":1,"a":["empty",2,5]},{"w":1,"a":["with",1,4,3]},{"w":1,"a":["step",0,0,3]},{"w":1,"a":["step",1,2,4]},{"w":1,"a":["notin",1,4,4]},{"w":1,"a":["stay",1,0,1]},{"w":1,"a":["notin",1,4,1]}],"sol":[[5,4,0,3],[2,2,4,0,2,0],[5,5,4,2,0,1],[3,3,0,2,4,5],[0,3,0,0,3,0],[4,0,1,3,3,3]],"killer":5,"seed":2},{"id":"verjaardag","T":7,"M":3,"start":"21:00","tijden":["21:00","21:15","21:30","21:45","22:00","22:15","22:30"],"kamers":[{"k":"hal","nl":"Hal","en":"Hall","x":4,"y":3,"w":4,"h":2},{"k":"salon","nl":"Salon","en":"Drawing room","x":0,"y":0,"w":4,"h":3},{"k":"eet","nl":"Eetkamer","en":"Dining room","x":8,"y":0,"w":4,"h":3},{"k":"bib","nl":"Bibliotheek","en":"Library","x":0,"y":3,"w":4,"h":2},{"k":"serre","nl":"Serre","en":"Conservatory","x":8,"y":3,"w":4,"h":2},{"k":"keuken","nl":"Keuken","en":"Kitchen","x":8,"y":5,"w":4,"h":2},{"k":"studeer","nl":"Studeerkamer","en":"Study","x":0,"y":5,"w":4,"h":2}],"adj":[[0,1],[0,2],[0,3],[0,4],[0,6],[1,3],[2,4],[4,5],[3,6]],"personen":[{"naam":"Leonard Vreeswijk","nl":"de jarige","en":"the birthday host"},{"naam":"Isabel Vreeswijk","nl":"zijn dochter","en":"his daughter"},{"naam":"Frederik Mol","nl":"haar verloofde","en":"her fiancé"},{"naam":"Agnes Dubois","nl":"de kunsthandelaar","en":"the art dealer"},{"naam":"Oom Casper","nl":"de oom","en":"the uncle"},{"naam":"Nina Roos","nl":"de secretaresse","en":"the secretary"}],"clues":[{"w":2,"a":["empty",6,4]},{"w":2,"a":["empty",3,2]},{"w":2,"a":["with",2,4,5]},{"w":2,"a":["stay",2,0,4]},{"w":2,"a":["alone",2,2]},{"w":2,"a":["step",2,0,1]},{"w":3,"a":["stay",3,2,4]},{"w":3,"a":["count",3,0,4]},{"w":3,"a":["in",3,1,2]},{"w":3,"a":["notin",3,3,2]},{"w":3,"a":["alone",3,6]},{"w":3,"a":["alone",3,1]},{"w":5,"a":["in",5,0,2]},{"w":5,"a":["stay",5,3,5]},{"w":5,"a":["with",4,5,6]},{"w":5,"a":["in",5,3,5]},{"w":5,"a":["stay",0,0,3]},{"w":4,"a":["move",4,4]},{"w":4,"a":["empty",5,2]},{"w":1,"a":["never_with",1,2]},{"w":1,"a":["step",1,0,2]},{"w":1,"a":["stay",1,3,6]},{"w":1,"a":["count",1,2,2]},{"w":1,"a":["alone",1,1]},{"w":1,"a":["empty",4,3]},{"w":1,"a":["with",1,3,2]},{"w":1,"a":["count",1,5,2]}],"sol":[[6,6,6,6],[2,4,0,2,2,2,2],[1,1,1,1,1,0,1],[2,2,0,0,0,2,0],[2,0,6,6,3,0,4],[2,0,4,5,5,5,4]],"killer":4,"seed":2},{"id":"feest","T":7,"M":4,"start":"22:00","tijden":["22:00","22:15","22:30","22:45","23:00","23:15","23:30"],"kamers":[{"k":"hal","nl":"Hal","en":"Hall","x":4,"y":3,"w":4,"h":2},{"k":"salon","nl":"Salon","en":"Drawing room","x":0,"y":0,"w":4,"h":3},{"k":"eet","nl":"Eetkamer","en":"Dining room","x":8,"y":0,"w":4,"h":3},{"k":"bib","nl":"Bibliotheek","en":"Library","x":0,"y":3,"w":4,"h":2},{"k":"serre","nl":"Serre","en":"Conservatory","x":8,"y":3,"w":4,"h":2},{"k":"keuken","nl":"Keuken","en":"Kitchen","x":8,"y":5,"w":4,"h":2},{"k":"terras","nl":"Terras","en":"Terrace","x":4,"y":5,"w":4,"h":2}],"adj":[[0,1],[0,2],[0,3],[0,4],[0,6],[1,3],[2,4],[4,5],[6,5],[6,3]],"personen":[{"naam":"Baron Rudolf van Essen","nl":"de baron","en":"the baron"},{"naam":"Barones Elise van Essen","nl":"de barones","en":"the baroness"},{"naam":"Arthur Sleedoorn","nl":"de bankier","en":"the banker"},{"naam":"Juliette Fabre","nl":"de actrice","en":"the actress"},{"naam":"Konrad Weiss","nl":"de componist","en":"the composer"},{"naam":"Mina Bakker","nl":"de kokkin","en":"the cook"},{"naam":"Rector Dirk Jansen","nl":"de rector","en":"the headmaster"}],"clues":[{"w":6,"a":["count",6,1,5]},{"w":6,"a":["count",6,6,3]},{"w":6,"a":["notwith",3,6,1]},{"w":6,"a":["step",6,0,2]},{"w":6,"a":["alone",6,4]},{"w":6,"a":["in",6,5,1]},{"w":4,"a":["stay",4,0,1]},{"w":4,"a":["count",0,0,2]},{"w":4,"a":["move",4,4]},{"w":4,"a":["stay",4,2,3]},{"w":4,"a":["with",4,6,5]},{"w":4,"a":["count",4,0,2]},{"w":2,"a":["step",2,2,4]},{"w":2,"a":["with",2,3,6]},{"w":2,"a":["in",2,1,4]},{"w":2,"a":["with",2,3,2]},{"w":2,"a":["notwith",2,6,0]},{"w":2,"a":["with",1,2,0]},{"w":2,"a":["stay",2,1,3]},{"w":2,"a":["with",2,3,5]},{"w":5,"a":["in",5,1,5]},{"w":5,"a":["step",5,0,4]},{"w":5,"a":["step",0,5,4]},{"w":5,"a":["stay",5,3,4]},{"w":5,"a":["stay",5,0,2]},{"w":5,"a":["count",5,2,2]},{"w":1,"a":["step",1,6,3]},{"w":1,"a":["empty",0,1]},{"w":1,"a":["in",1,2,5]},{"w":1,"a":["notwith",1,4,6]},{"w":1,"a":["stay",1,3,5]},{"w":3,"a":["with",3,6,6]},{"w":3,"a":["with",2,3,4]},{"w":3,"a":["with",3,4,0]},{"w":3,"a":["stay",3,3,5]},{"w":3,"a":["never_with",3,5]},{"w":3,"a":["step",0,5,6]}],"sol":[[5,4,4,5,6],[2,4,5,6,6,6,3],[2,4,4,4,2,2,0],[4,2,4,2,2,2,0],[4,4,0,0,3,1,1],[5,5,5,4,4,0,4],[0,4,0,2,0,1,0]],"killer":1,"seed":4}]</script>
+<script>
+'use strict';
+const DATA = JSON.parse(document.getElementById('data').textContent);
+const OPSLAGKEY = 'em_alibi_v1';
+let lang = location.hash === '#nl' ? 'nl' : location.hash === '#en' ? 'en' : (localStorage.getItem('hm_lang') || localStorage.getItem('mm_lang') || 'nl');
+if (lang !== 'nl') lang = 'en';
+let ST = {};
+try { ST = JSON.parse(localStorage.getItem(OPSLAGKEY) || '{}') || {}; } catch (e) { ST = {}; }
+function bewaar() { try { localStorage.setItem(OPSLAGKEY, JSON.stringify(ST)); } catch (e) {} }
+const ALLES = /alles/.test(location.search);
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+// ---------------- teksten ----------------
+const TXT = {
+nl:{
+  terug:'Dossiers', help:'Hulp', start:'Open dossier', verder:'Verder spelen', kies:'Kies een dossier',
+  intro:[
+   'Vijf avonden in vijf huizen. Vijf keer valt er een schot, een gil, een glas. En vijf keer zit iedereen daarna in de salon te zweren dat het ónmogelijk kan.',
+   'Het rooster is uw wapen. Elke rij is een persoon, elke kolom een kwartier. Zet iedereen in de juiste kamer op het juiste moment, en de moordenaar valt vanzelf door de mand: het is de enige die op het moordmoment bij het slachtoffer was.',
+   'Getuigen liegen niet. Maar ze vertellen ook niet alles.'
+  ],
+  regels:'Spelregels', plattegrond:'Plattegrond', rooster:'Het rooster', verklaringen:'Verklaringen',
+  moordmoment:'Moordmoment', slachtoffer:'slachtoffer', kamer:'Kamer', leeg:'Leeg', potlood:'Potlood',
+  zet:'Zet kamer', kandidaat:'Markeer als mogelijk', controleer:'Controleer', beschuldig:'Beschuldig',
+  wie:'Wie had geen alibi?', pogingen:n=>n===1?'Nog 1 poging.':`Nog ${n} pogingen.`,
+  controle:(f,n)=>n===0?'Het rooster is nog leeg.':f===0?`Alle ${n} ingevulde cellen kloppen.`:`${f} van de ${n} ingevulde cellen ${f===1?'klopt':'kloppen'} niet.`,
+  fout:naam=>`${naam} heeft een sluitend alibi. Kijk nog eens naar het rooster.`,
+  mis:'Drie keer mis. Het dossier gaat dicht; de oplossing staat in het rooster.',
+  goed:'Beschuldiging klopt.', opgelost:'Opgelost', dicht:'Vergrendeld', nieuw:'Nieuw',
+  sterUitleg:['opgelost','eerste beschuldiging raak, zonder controle','rooster volledig juist bij beschuldiging'],
+  volgende:'Volgende dossier', opnieuw:'Opnieuw beginnen', klaar:'Alle dossiers gesloten',
+  klaarTekst:'Vijf avonden, vijf moordenaars. Het archief kent uw naam nu.',
+  reset:'Alle voortgang wissen', resetVraag:'Alle voortgang wissen?',
+  getuige:'Verklaring', politie:'Politieverslag',
+  helpHtml:`<h2>Het Alibi-rooster</h2>
+  <p>Een logicapuzzel in de tijd. Elke rij is een persoon, elke kolom een kwartier, elke cel een kamer.</p>
+  <h3>De regels</h3>
+  <ul>
+  <li><b>Lopen.</b> Van het ene kwartier naar het volgende blijft iemand in dezelfde kamer, of gaat naar een kamer die er volgens de plattegrond direct aan grenst (verbonden met een stippellijn). Verder springen kan niet.</li>
+  <li><b>Het moordmoment</b> staat in het verslag en is rood gemarkeerd. Op dat moment is er <b>precies één</b> andere persoon in de kamer van het slachtoffer: de moordenaar. Na dat moment telt het slachtoffer niet meer mee.</li>
+  <li><b>Getuigen liegen niet.</b> Alleen het onderstreepte deel van een verklaring telt als feit; de rest is praat.</li>
+  <li>"Bij iemand zijn" of "samen" betekent: in dezelfde kamer. "Alleen" betekent: niemand anders in die kamer. "De hele avond" is het hele rooster. "Rechtstreeks van A naar B" is één stap in het rooster.</li>
+  </ul>
+  <h3>Spelen</h3>
+  <ul>
+  <li>Tik op een cel en kies een kamer. Met <b>Potlood</b> markeert u kamers die nog mogelijk zijn.</li>
+  <li>Tik op een verklaring om haar af te strepen zodra u haar hebt verwerkt.</li>
+  <li><b>Controleer</b> vertelt hoeveel ingevulde cellen fout zijn, niet welke. Dat kost een ster.</li>
+  <li><b>Beschuldig</b> als u het weet. U hebt drie pogingen.</li>
+  </ul>
+  <h3>Sterren</h3>
+  <p>★ opgelost · ★ eerste beschuldiging raak zonder controle · ★ rooster volledig juist op het moment van beschuldigen.</p>`
+},
+en:{
+  terug:'Files', help:'Help', start:'Open file', verder:'Continue', kies:'Choose a file',
+  intro:[
+   'Five evenings in five houses. Five times a shot, a scream, a glass. And five times everyone sits in the drawing room afterwards swearing it simply cannot be.',
+   'The grid is your weapon. Each row is a person, each column a quarter of an hour. Put everyone in the right room at the right moment and the killer falls out by themselves: the only one who was with the victim at the moment of the murder.',
+   'Witnesses do not lie. But they do not tell you everything either.'
+  ],
+  regels:'Rules', plattegrond:'Floor plan', rooster:'The grid', verklaringen:'Statements',
+  moordmoment:'Time of death', slachtoffer:'victim', kamer:'Room', leeg:'Clear', potlood:'Pencil',
+  zet:'Set room', kandidaat:'Mark as possible', controleer:'Check', beschuldig:'Accuse',
+  wie:'Who had no alibi?', pogingen:n=>n===1?'1 attempt left.':`${n} attempts left.`,
+  controle:(f,n)=>n===0?'The grid is still empty.':f===0?`All ${n} filled cells are correct.`:`${f} of the ${n} filled cells ${f===1?'is':'are'} wrong.`,
+  fout:naam=>`${naam} has a watertight alibi. Look at the grid again.`,
+  mis:'Three misses. The file closes; the solution is in the grid.',
+  goed:'Accusation correct.', opgelost:'Solved', dicht:'Locked', nieuw:'New',
+  sterUitleg:['solved','first accusation correct, no check used','grid fully correct when accusing'],
+  volgende:'Next file', opnieuw:'Start over', klaar:'All files closed',
+  klaarTekst:'Five evenings, five killers. The archive knows your name now.',
+  reset:'Clear all progress', resetVraag:'Clear all progress?',
+  getuige:'Statement', politie:'Police report',
+  helpHtml:`<h2>The Alibi Grid</h2>
+  <p>A logic puzzle in time. Each row is a person, each column a quarter of an hour, each cell a room.</p>
+  <h3>The rules</h3>
+  <ul>
+  <li><b>Moving.</b> From one quarter to the next a person stays in the same room, or goes to a room that borders it directly on the floor plan (joined by a dotted line). No further.</li>
+  <li><b>The time of death</b> is in the report and marked in red. At that moment there is <b>exactly one</b> other person in the victim's room: the killer. After that moment the victim no longer counts.</li>
+  <li><b>Witnesses don't lie.</b> Only the underlined part of a statement is a fact; the rest is talk.</li>
+  <li>"With someone" or "together" means: in the same room. "Alone" means: nobody else in that room. "All evening" is the whole grid. "Straight from A to B" is one step in the grid.</li>
+  </ul>
+  <h3>Playing</h3>
+  <ul>
+  <li>Tap a cell and choose a room. Use <b>Pencil</b> to mark rooms that are still possible.</li>
+  <li>Tap a statement to cross it off once you've used it.</li>
+  <li><b>Check</b> tells you how many filled cells are wrong, not which. It costs a star.</li>
+  <li><b>Accuse</b> when you know. You have three attempts.</li>
+  </ul>
+  <h3>Stars</h3>
+  <p>★ solved · ★ first accusation correct without checking · ★ grid fully correct at the moment of accusing.</p>`
+}};
+const T = () => TXT[lang];
+
+// Verhaal per dossier
+const VERHAAL = {
+toost:{nl:{t:'De eerste toost',h:'Huize Aldenberg',s:'Vier personen · vier kwartieren',
+  i:['Victor Aldenberg heft zijn glas om tien uur, en om half elf ligt hij dood in een van zijn eigen kamers. Drie mensen waren in huis: zijn broer Hendrik, de pianiste Clara Voss en notaris Reyn, die de nieuwe akte nog in zijn tas had.','<em>Het glas brak om 22:30.</em> Iedereen hoorde het. Niemand, zeggen ze, was erbij.'],
+  e:'De akte in de tas van de notaris was het motief; het glas in de salon was het bewijs. De rest was een kwestie van kwartieren.'},
+ en:{t:'The First Toast',h:'Aldenberg House',s:'Four people · four quarters',
+  i:['Victor Aldenberg raises his glass at ten, and by half past he lies dead in one of his own rooms. Three people were in the house: his brother Hendrik, the pianist Clara Voss and the notary Reyn, who still had the new deed in his bag.','<em>The glass broke at 22:30.</em> Everyone heard it. Nobody, they say, was there.'],
+  e:'The deed in the notary’s bag was the motive; the glass in the drawing room the proof. The rest was a matter of quarter hours.'}},
+serre:{nl:{t:'Het serrediner',h:'Villa De Wit',s:'Vijf personen · vijf kwartieren',
+  i:['Mathilde de Wit had de serre laten verwarmen voor een diner dat niemand wilde. Haar man Pieter, haar nicht Lotte, dokter Kaufmann en de tuinman Steen, die zij om half tien binnen riep met een smoes over de orchideeën.','<em>Om 22:00 klonk een doffe klap.</em> Het duurde acht minuten voor iemand ging kijken.'],
+  e:'De orchideeën waren geen smoes. Mathilde wilde een getuige in huis. Ze koos de verkeerde.'},
+ en:{t:'The Conservatory Dinner',h:'Villa De Wit',s:'Five people · five quarters',
+  i:['Mathilde de Wit had the conservatory heated for a dinner nobody wanted. Her husband Pieter, her niece Lotte, Dr Kaufmann and the gardener Steen, whom she called inside at half past nine with an excuse about the orchids.','<em>At 22:00 there was a dull thud.</em> It took eight minutes before anyone went to look.'],
+  e:'The orchids were not an excuse. Mathilde wanted a witness in the house. She chose the wrong one.'}},
+noodweer:{nl:{t:'De nacht van het noodweer',h:'Hoogveld',s:'Zes personen · zes kwartieren',
+  i:['De storm had de weg naar het dorp afgesloten, en zo zaten zes mensen opgesloten in Hoogveld: de weduwe Augusta, haar stiefzoon Ernst, gezelschapsdame Marie Linde, kapitein Oosterling, kleindochter Sophie en de huisknecht Baks, die om tien uur de laatste lamp aanstak.','<em>Om 22:45 viel het licht uit.</em> Toen het terugkwam, was de weduwe dood.'],
+  e:'In het donker was iedereen ergens. Het rooster wist waar.'},
+ en:{t:'The Night of the Storm',h:'Hoogveld',s:'Six people · six quarters',
+  i:['The storm had cut the road to the village, and so six people were shut in at Hoogveld: the widow Augusta, her stepson Ernst, the companion Marie Linde, Captain Oosterling, granddaughter Sophie and the butler Baks, who lit the last lamp at ten.','<em>At 22:45 the lights went out.</em> When they came back, the widow was dead.'],
+  e:'In the dark everyone was somewhere. The grid knew where.'}},
+verjaardag:{nl:{t:'De verjaardag',h:'Landgoed Vreeswijk',s:'Zes personen · zeven kwartieren',
+  i:['Leonard Vreeswijk werd zestig en vierde dat met de mensen die het meest van zijn dood zouden profiteren: dochter Isabel, haar verloofde Frederik Mol, kunsthandelaar Agnes Dubois, oom Casper en secretaresse Nina Roos. Om negen uur werd de taart aangesneden.','<em>Om 21:45 hoorde de keuken een schot.</em> Het feest was voorbij; het verhoor begon.'],
+  e:'Zestig kaarsjes, zes mensen, één schot. Leonard had zijn testament die middag veranderd. Eén persoon wist dat, en die persoon stond om kwart voor tien precies waar u hem gezet hebt.'},
+ en:{t:'The Birthday',h:'Vreeswijk Estate',s:'Six people · seven quarters',
+  i:['Leonard Vreeswijk turned sixty and celebrated with the people who would profit most from his death: daughter Isabel, her fiancé Frederik Mol, art dealer Agnes Dubois, Uncle Casper and secretary Nina Roos. At nine the cake was cut.','<em>At 21:45 the kitchen heard a shot.</em> The party was over; the questioning began.'],
+  e:'Sixty candles, six people, one shot. Leonard had changed his will that afternoon. One person knew, and that person stood at a quarter to ten exactly where you put them.'}},
+feest:{nl:{t:'Het laatste feest',h:'Kasteel Van Essen',s:'Zeven personen · zeven kwartieren',
+  i:['Het laatste feest van het seizoen op Kasteel Van Essen. De baron ontving de barones, bankier Sleedoorn, actrice Juliette Fabre, componist Weiss, rector Jansen en kokkin Mina Bakker, die het terras had laten verlichten voor een avond die niemand zou vergeten.','<em>Om 23:00 sloeg de klok, en viel de baron.</em> Zeven mensen, acht kamers, één leugen die geen leugen was.'],
+  e:'De baron had iedereen iets beloofd en niemand iets gegeven. Het rooster vergeeft dat niet, en de moordenaar ook niet.'},
+ en:{t:'The Last Party',h:'Van Essen Castle',s:'Seven people · seven quarters',
+  i:['The last party of the season at Van Essen Castle. The baron received the baroness, banker Sleedoorn, actress Juliette Fabre, composer Weiss, headmaster Jansen and cook Mina Bakker, who had the terrace lit for an evening nobody would forget.','<em>At 23:00 the clock struck, and the baron fell.</em> Seven people, eight rooms, one lie that was not a lie.'],
+  e:'The baron had promised everyone something and given nobody anything. The grid does not forgive that, and neither did the killer.'}}
+};
+
+// Lidwoorden
+const LID = {nl:{terras:'het'}, en:{}};
+function kamerNaam(d, r, hoofd) {
+  const k = d.kamers[r];
+  if (lang === 'en') return 'the ' + k.en.toLowerCase();
+  const lid = LID.nl[k.k] || 'de';
+  return lid + ' ' + k.nl.toLowerCase();
+}
+const KORT = {nl:{hal:'Hal',salon:'Salon',eet:'Eetk.',bib:'Bibl.',serre:'Serre',keuken:'Keuk.',studeer:'Stud.',terras:'Terr.',muziek:'Muz.'},
+              en:{hal:'Hall',salon:'Draw.',eet:'Dine',bib:'Libr.',serre:'Cons.',keuken:'Kitch.',studeer:'Study',terras:'Terr.',muziek:'Music'}};
+function kort(d, r) { const k = d.kamers[r]; return KORT[lang][k.k] || (lang === 'nl' ? k.nl : k.en).slice(0, 4); }
+function naam(d, p) { return d.personen[p].naam.replace(/^(Dr\.|Kapitein|Oom|Baron|Barones|Rector)\s+/, '').split(' ')[0]; }
+const TITEL_EN = {'Barones ':'Baroness ','Kapitein ':'Captain ','Oom ':'Uncle ','Rector ':'Headmaster '};
+function volNaam(d, p) { let n = d.personen[p].naam; if (lang === 'en') for (const k in TITEL_EN) n = n.replace(k, TITEL_EN[k]); return n; }
+
+// ---------- verklaringen in woorden ----------
+function rnd(seed) { let a = (seed * 2654435761) >>> 0; return () => { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+const PREF = {nl:['Ik weet het nog precies: ','Schrijft u dit maar op: ','Dat kan ik u zo vertellen. ','Als u het mij vraagt: ','Ik zweer het: ','Voor zover ik me herinner: ','Luister. ','Ik heb niets te verbergen. ','Het was een vreemde avond, maar dit staat vast: ','Daar hoef ik niet over na te denken. ',''],
+              en:['I remember it exactly: ','Write this down: ','I can tell you that right away. ','If you ask me: ','I swear it: ','As far as I recall: ','Listen. ','I have nothing to hide. ','It was a strange evening, but this is certain: ','I don’t have to think about that. ','']};
+const SUF = {nl:[' Meer weet ik niet.',' Dat zal niemand ontkennen.',' Vraag het de anderen maar.','',' Zo was het.',' U mag het nakijken.','','']
+             ,en:[' That’s all I know.',' Nobody will deny that.',' Ask the others.','',' That’s how it was.',' You may check it.','','']};
+
+function kern(d, w, a) {
+  const t = i => d.tijden[i];
+  const K = r => kamerNaam(d, r);
+  const N = p => naam(d, p);
+  const zelf = p => p === w;
+  const k = a[0];
+  if (lang === 'nl') {
+    switch (k) {
+      case 'in': return zelf(a[1]) ? `om ${t(a[2])} was ik in ${K(a[3])}` : `om ${t(a[2])} was ${N(a[1])} in ${K(a[3])}`;
+      case 'notin': return zelf(a[1]) ? `om ${t(a[2])} was ik niet in ${K(a[3])}` : `om ${t(a[2])} was ${N(a[1])} niet in ${K(a[3])}`;
+      case 'with': { const [x, y] = [a[1], a[2]]; if (zelf(x) || zelf(y)) { const o = zelf(x) ? y : x; return `om ${t(a[3])} was ik in dezelfde kamer als ${N(o)}`; } return `om ${t(a[3])} waren ${N(x)} en ${N(y)} in dezelfde kamer`; }
+      case 'notwith': { const [x, y] = [a[1], a[2]]; if (zelf(x) || zelf(y)) { const o = zelf(x) ? y : x; return `om ${t(a[3])} was ik niet in dezelfde kamer als ${N(o)}`; } return `om ${t(a[3])} waren ${N(x)} en ${N(y)} niet in dezelfde kamer`; }
+      case 'alone': return zelf(a[1]) ? `om ${t(a[2])} was ik alleen in mijn kamer` : `om ${t(a[2])} was ${N(a[1])} alleen in een kamer`;
+      case 'count': return zelf(a[1]) ? `om ${t(a[2])} waren we met z’n ${['','','tweeën','drieën','vieren','vijven','zessen','zevenen','achten'][a[3]]} in mijn kamer, mijzelf meegeteld` : `om ${t(a[2])} waren er precies ${a[3]} mensen in de kamer waar ${N(a[1])} was`;
+      case 'stay': return zelf(a[1]) ? `van ${t(a[2])} tot en met ${t(a[3])} ben ik in dezelfde kamer gebleven` : `${N(a[1])} is van ${t(a[2])} tot en met ${t(a[3])} in dezelfde kamer gebleven`;
+      case 'move': return zelf(a[1]) ? `tussen ${t(a[2])} en ${t(a[2] + 1)} ben ik naar een andere kamer gegaan` : `${N(a[1])} is tussen ${t(a[2])} en ${t(a[2] + 1)} naar een andere kamer gegaan`;
+      case 'never_with': { const [x, y] = [a[1], a[2]]; if (zelf(x) || zelf(y)) { const o = zelf(x) ? y : x; return `ik ben de hele avond nooit in dezelfde kamer geweest als ${N(o)}`; } return `${N(x)} en ${N(y)} zijn de hele avond nooit in dezelfde kamer geweest`; }
+      case 'visited': return zelf(a[1]) ? `ik ben die avond in ${K(a[2])} geweest` : `${N(a[1])} is die avond in ${K(a[2])} geweest`;
+      case 'never': return zelf(a[1]) ? `ik ben de hele avond niet in ${K(a[2])} geweest` : `${N(a[1])} is de hele avond niet in ${K(a[2])} geweest`;
+      case 'empty': return `om ${t(a[2])} was er niemand in ${K(a[1])}`;
+      case 'step': return zelf(a[1]) ? `ik ben op enig moment rechtstreeks van ${K(a[2])} naar ${K(a[3])} gegaan` : `${N(a[1])} is op enig moment rechtstreeks van ${K(a[2])} naar ${K(a[3])} gegaan`;
+    }
+  } else {
+    switch (k) {
+      case 'in': return zelf(a[1]) ? `at ${t(a[2])} I was in ${K(a[3])}` : `at ${t(a[2])} ${N(a[1])} was in ${K(a[3])}`;
+      case 'notin': return zelf(a[1]) ? `at ${t(a[2])} I was not in ${K(a[3])}` : `at ${t(a[2])} ${N(a[1])} was not in ${K(a[3])}`;
+      case 'with': { const [x, y] = [a[1], a[2]]; if (zelf(x) || zelf(y)) { const o = zelf(x) ? y : x; return `at ${t(a[3])} I was in the same room as ${N(o)}`; } return `at ${t(a[3])} ${N(x)} and ${N(y)} were in the same room`; }
+      case 'notwith': { const [x, y] = [a[1], a[2]]; if (zelf(x) || zelf(y)) { const o = zelf(x) ? y : x; return `at ${t(a[3])} I was not in the same room as ${N(o)}`; } return `at ${t(a[3])} ${N(x)} and ${N(y)} were not in the same room`; }
+      case 'alone': return zelf(a[1]) ? `at ${t(a[2])} I was alone in my room` : `at ${t(a[2])} ${N(a[1])} was alone in a room`;
+      case 'count': return zelf(a[1]) ? `at ${t(a[2])} there were ${['','','two','three','four','five','six','seven','eight'][a[3]]} of us in my room, counting myself` : `at ${t(a[2])} there were exactly ${a[3]} people in the room where ${N(a[1])} was`;
+      case 'stay': return zelf(a[1]) ? `from ${t(a[2])} through ${t(a[3])} I stayed in the same room` : `${N(a[1])} stayed in the same room from ${t(a[2])} through ${t(a[3])}`;
+      case 'move': return zelf(a[1]) ? `between ${t(a[2])} and ${t(a[2] + 1)} I moved to another room` : `${N(a[1])} moved to another room between ${t(a[2])} and ${t(a[2] + 1)}`;
+      case 'never_with': { const [x, y] = [a[1], a[2]]; if (zelf(x) || zelf(y)) { const o = zelf(x) ? y : x; return `all evening I was never in the same room as ${N(o)}`; } return `${N(x)} and ${N(y)} were never in the same room all evening`; }
+      case 'visited': return zelf(a[1]) ? `I was in ${K(a[2])} at some point that evening` : `${N(a[1])} was in ${K(a[2])} at some point that evening`;
+      case 'never': return zelf(a[1]) ? `I was not in ${K(a[2])} all evening` : `${N(a[1])} was not in ${K(a[2])} all evening`;
+      case 'empty': return `at ${t(a[2])} there was nobody in ${K(a[1])}`;
+      case 'step': return zelf(a[1]) ? `at some point I went straight from ${K(a[2])} to ${K(a[3])}` : `at some point ${N(a[1])} went straight from ${K(a[2])} to ${K(a[3])}`;
+    }
+  }
+  return JSON.stringify(a);
+}
+function zin(d, i) {
+  const c = d.clues[i];
+  const r = rnd(d.seed * 131 + i * 7919 + (lang === 'nl' ? 0 : 1));
+  const pre = PREF[lang][Math.floor(r() * PREF[lang].length)];
+  const suf = SUF[lang][Math.floor(r() * SUF[lang].length)];
+  let k = kern(d, c.w, c.a);
+  if (!pre || /\.\s$/.test(pre)) k = k.charAt(0).toUpperCase() + k.slice(1);
+  return esc(pre) + '<u>' + esc(k) + '</u>.' + esc(suf);
+}
+
+// ---------------- voortgang ----------------
+function prog(id) { ST[id] = ST[id] || {rooster:{}, pot:{}, af:{}, pog:3, check:false, sterren:0, klaar:false, eerste:true}; return ST[id]; }
+function ontgrendeld(i) { return ALLES || i === 0 || (ST[DATA[i - 1].id] && ST[DATA[i - 1].id].klaar); }
+
+// ---------------- startscherm ----------------
+function toonStart() {
+  $('kTitel').textContent = lang === 'nl' ? 'Het Alibi-rooster' : 'The Alibi Grid';
+  $('kTaal').textContent = lang === 'nl' ? 'EN' : 'NL';
+  $('balk').className = '';
+  const t = T();
+  let h = `<h1 class="groot">${lang === 'nl' ? 'Het Alibi-rooster' : 'The Alibi Grid'}</h1><div class="ondertitel">${lang === 'nl' ? 'Vijf avonden · vijf moorden' : 'Five evenings · five murders'}</div>`;
+  h += '<div class="proza">' + t.intro.map(p => `<p>${p}</p>`).join('') + '</div>';
+  h += `<div class="rij"><button class="knop rustig" id="bHelp">${t.regels}</button></div>`;
+  h += `<div class="ondertitel" style="margin-top:14px">${t.kies}</div><div class="dossiers">`;
+  DATA.forEach((d, i) => {
+    const v = VERHAAL[d.id][lang]; const p = ST[d.id]; const open = ontgrendeld(i);
+    let st = '';
+    if (p && p.klaar) st = '★'.repeat(p.sterren) + '☆'.repeat(3 - p.sterren);
+    else if (!open) st = '🔒';
+    else if (p && Object.keys(p.rooster).length) st = '…';
+    h += `<div class="dossier ${open ? '' : 'dicht'}" data-i="${i}"><div class="nr">${['I','II','III','IV','V'][i]}</div><div><div class="t">${v.t}</div><div class="s">${v.h} · ${v.s}</div></div><div class="st">${st}</div></div>`;
+  });
+  h += '</div>';
+  if (DATA.every(d => ST[d.id] && ST[d.id].klaar)) h += `<div class="einde"><div class="groot">${t.klaar}</div><p class="proza">${t.klaarTekst}</p></div>`;
+  h += `<div class="rij"><button class="knop rustig" id="bReset" style="font-size:12px;min-height:36px">${t.reset}</button></div>`;
+  $('sStart').innerHTML = h;
+  $('sStart').classList.add('actief'); $('sDossier').classList.remove('actief');
+  $('inhoud').scrollTop = 0;
+  $('bHelp').onclick = toonHelp;
+  $('bReset').onclick = () => { if (confirm(t.resetVraag)) { ST = {}; bewaar(); toonStart(); } };
+  document.querySelectorAll('.dossier').forEach(el => el.onclick = () => { const i = +el.dataset.i; if (ontgrendeld(i)) openDossier(i); });
+}
+
+// ---------------- dossier ----------------
+let D = null, DI = 0, P = null, potlood = false, actief = null;
+function openDossier(i) {
+  DI = i; D = DATA[i]; P = prog(D.id); potlood = false; actief = null;
+  const v = VERHAAL[D.id][lang]; const t = T();
+  $('kTitel').textContent = v.t;
+  let h = `<h1 class="groot" style="font-size:26px">${v.t}</h1><div class="ondertitel">${['I','II','III','IV','V'][i]} · ${v.h}</div>`;
+  h += '<div class="proza">' + v.i.map(p => `<p>${p}</p>`).join('') + '</div>';
+  // plattegrond
+  h += `<div class="papier"><div class="klein">${t.plattegrond} · ${v.h}</div>${plattegrondSVG()}<div class="legenda">${D.kamers.map((k, r) => `<span><i style="background:var(--k${r})"></i>${lang==='nl'?k.nl:k.en}</span>`).join('')}</div></div>`;
+  // rooster
+  h += `<div class="papier"><div class="stempel">${t.moordmoment} ${D.tijden[D.M]}</div><div class="klein">${t.rooster}</div><div class="rooster-wrap" id="roosterWrap"></div><div id="bericht"></div></div>`;
+  // verklaringen
+  h += `<div class="papier"><div class="klein">${t.verklaringen} · ${D.clues.length}</div><div class="verklaringen" id="verklaringen"></div></div>`;
+  h += `<div class="papier" id="epiloog" style="display:none"></div>`;
+  $('sDossier').innerHTML = h;
+  $('sStart').classList.remove('actief'); $('sDossier').classList.add('actief');
+  $('inhoud').scrollTop = 0;
+  tekenRooster(); tekenVerklaringen(); tekenBalk();
+  if (P.klaar) toonEinde(false);
+}
+
+function plattegrondSVG() {
+  const U = 30;
+  const x0 = Math.min(...D.kamers.map(k => k.x)) * U, y0 = Math.min(...D.kamers.map(k => k.y)) * U;
+  const x1 = Math.max(...D.kamers.map(k => k.x + k.w)) * U, y1 = Math.max(...D.kamers.map(k => k.y + k.h)) * U;
+  const c = k => [(k.x + k.w / 2) * U, (k.y + k.h / 2) * U];
+  let s = `<svg id="plan" viewBox="${x0 - 4} ${y0 - 4} ${x1 - x0 + 8} ${y1 - y0 + 8}" style="max-height:${Math.round((y1 - y0) * 1.6)}px" xmlns="http://www.w3.org/2000/svg">`;
+  D.adj.forEach(([a, b]) => { const [x1, y1] = c(D.kamers[a]), [x2, y2] = c(D.kamers[b]); s += `<line class="deur" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`; });
+  D.kamers.forEach((k, r) => {
+    const x = k.x * U + 3, y = k.y * U + 3, w = k.w * U - 6, hh = k.h * U - 6;
+    const n = lang === 'nl' ? k.nl : k.en;
+    s += `<rect x="${x}" y="${y}" width="${w}" height="${hh}" rx="3" fill="#f3ecd9"/><rect class="kamer-rect" x="${x}" y="${y}" width="${w}" height="${hh}" rx="3" style="fill:var(--k${r});fill-opacity:.55"/>`;
+    s += `<text class="kamer-lbl" x="${x + w / 2}" y="${y + hh / 2 + 3}">${esc(n)}</text>`;
+  });
+  s += '</svg>';
+  return s;
+}
+
+function tekenRooster() {
+  const t = T();
+  let h = `<table class="rooster" style="min-width:${84 + D.T * 46}px"><thead><tr><th class="pers"></th>`;
+  D.tijden.forEach((tt, i) => h += `<th class="${i === D.M ? 'm' : ''}">${tt}</th>`);
+  h += '</tr></thead><tbody>';
+  D.personen.forEach((p, pi) => {
+    const rol = lang === 'nl' ? p.nl : p.en;
+    h += `<tr><th class="pers"><span class="n">${pi === 0 ? '† ' : ''}${esc(naam(D, pi))}</span><span class="r">${esc(rol)}</span></th>`;
+    for (let ti = 0; ti < D.T; ti++) {
+      const key = pi + '_' + ti;
+      if (pi === 0 && ti > D.M) { h += `<td class="cel dood">†</td>`; continue; }
+      const r = P.rooster[key];
+      const cls = ['cel']; if (ti === D.M) cls.push('m');
+      if (r !== undefined) cls.push('gezet');
+      if (actief === key) cls.push('actief');
+      if (P.klaar) cls.push(r === D.sol[pi][ti] ? 'goed' : 'fout');
+      const kleur = r !== undefined ? `style="background:var(--k${r})"` : '';
+      let inner = r !== undefined ? esc(kort(D, r)) : '';
+      const pot = P.pot[key] || [];
+      if (r === undefined && pot.length) inner += '<span class="pot">' + pot.map(x => `<i style="background:var(--k${x})"></i>`).join('') + '</span>';
+      h += `<td class="${cls.join(' ')}" data-k="${key}" ${kleur}>${inner}</td>`;
+    }
+    h += '</tr>';
+  });
+  h += '</tbody></table>';
+  $('roosterWrap').innerHTML = h;
+  if (!P.klaar) document.querySelectorAll('td.cel:not(.dood)').forEach(td => td.onclick = () => kiesCel(td.dataset.k));
+}
+
+function tekenVerklaringen() {
+  const t = T();
+  let h = '', vorige = -1;
+  D.clues.forEach((c, i) => {
+    if (c.w !== vorige) { h += `<div class="wie">${esc(volNaam(D, c.w))} <small>· ${esc(lang === 'nl' ? D.personen[c.w].nl : D.personen[c.w].en)}</small></div>`; vorige = c.w; }
+    h += `<div class="verklaring ${P.af[i] ? 'af' : ''}" data-i="${i}"><span class="q">${zin(D, i)}</span></div>`;
+  });
+  $('verklaringen').innerHTML = h;
+  document.querySelectorAll('.verklaring').forEach(el => el.onclick = () => { const i = el.dataset.i; P.af[i] = !P.af[i]; bewaar(); el.classList.toggle('af', !!P.af[i]); });
+}
+
+function tekenBalk() {
+  const t = T(); const b = $('balk');
+  if (P.klaar) { b.className = 'aan'; b.innerHTML = `<button class="knop rustig" id="bTerug2">${t.terug}</button>` + (DI < DATA.length - 1 && ontgrendeld(DI + 1) ? `<button class="knop goud" id="bVolg">${t.volgende}</button>` : ''); $('bTerug2').onclick = toonStart; if ($('bVolg')) $('bVolg').onclick = () => openDossier(DI + 1); return; }
+  b.className = 'aan';
+  b.innerHTML = `<button class="knop rustig" id="bPot">✎ ${t.potlood}</button><button class="knop rustig" id="bCheck">${t.controleer}</button><button class="knop" id="bAcc">${t.beschuldig}</button>`;
+  $('bPot').onclick = () => { potlood = !potlood; $('bPot').style.borderColor = potlood ? 'var(--goud)' : ''; $('bPot').style.color = potlood ? '#f3e6c6' : ''; };
+  $('bCheck').onclick = controleer;
+  $('bAcc').onclick = beschuldig;
+}
+
+function kiesCel(key) {
+  actief = key; tekenRooster();
+  const [pi, ti] = key.split('_').map(Number);
+  const t = T();
+  let h = `<h3>${esc(naam(D, pi))} · ${D.tijden[ti]}${potlood ? ' · ✎' : ''}</h3><div class="chips">`;
+  const cur = P.rooster[key]; const pot = P.pot[key] || [];
+  D.kamers.forEach((k, r) => h += `<button class="chip ${potlood ? (pot.includes(r) ? 'aan' : '') : (cur === r ? 'aan' : '')}" data-r="${r}" style="background:var(--k${r})">${esc(lang === 'nl' ? k.nl : k.en)}</button>`);
+  h += `<button class="chip leeg" data-r="-1">${t.leeg}</button></div>`;
+  h += `<div class="schakel"><button id="sPot" class="${potlood ? 'aan' : ''}">✎ ${t.potlood}</button><span>${potlood ? t.kandidaat : t.zet}</span></div>`;
+  openSheet(h);
+  $('sPot').onclick = () => { potlood = !potlood; kiesCel(key); };
+  document.querySelectorAll('#sheet .chip').forEach(ch => ch.onclick = () => {
+    const r = +ch.dataset.r;
+    if (potlood) {
+      if (r < 0) { delete P.pot[key]; }
+      else { const a = P.pot[key] || []; const j = a.indexOf(r); if (j >= 0) a.splice(j, 1); else a.push(r); a.sort(); P.pot[key] = a; }
+      bewaar(); kiesCel(key); return;
+    }
+    if (r < 0) delete P.rooster[key]; else P.rooster[key] = r;
+    bewaar(); actief = null; sluitSheet(); tekenRooster();
+  });
+}
+
+function openSheet(h) { $('sheetVel').innerHTML = h; $('sheet').classList.add('aan'); }
+function sluitSheet() { $('sheet').classList.remove('aan'); actief = null; }
+$('sheet').onclick = e => { if (e.target === $('sheet')) { sluitSheet(); tekenRooster(); } };
+
+function bericht(txt, cls) { $('bericht').innerHTML = txt ? `<div class="bericht ${cls || ''}">${txt}</div>` : ''; }
+
+function controleer() {
+  const t = T(); let n = 0, f = 0;
+  for (const key in P.rooster) { const [pi, ti] = key.split('_').map(Number); n++; if (P.rooster[key] !== D.sol[pi][ti]) f++; }
+  if (n > 0) { P.check = true; bewaar(); }
+  bericht(t.controle(f, n), f === 0 && n > 0 ? 'goed' : 'info');
+}
+
+function roosterCompleetGoed() {
+  for (let pi = 0; pi < D.personen.length; pi++) for (let ti = 0; ti < (pi === 0 ? D.M + 1 : D.T); ti++) if (P.rooster[pi + '_' + ti] !== D.sol[pi][ti]) return false;
+  return true;
+}
+
+function beschuldig() {
+  const t = T();
+  let h = `<h3>${t.wie}</h3><div class="verdachten">`;
+  for (let pi = 1; pi < D.personen.length; pi++) h += `<button class="verdachte ${P.uit && P.uit.includes(pi) ? 'uit' : ''}" data-p="${pi}"><span class="av av${pi}">${esc(naam(D, pi)[0])}</span><span>${esc(volNaam(D, pi))}<br><small style="opacity:.7">${esc(lang === 'nl' ? D.personen[pi].nl : D.personen[pi].en)}</small></span></button>`;
+  h += `</div><p style="color:var(--tekstzwak);font-size:13px;margin:10px 0 0">${t.pogingen(P.pog)}</p>`;
+  openSheet(h);
+  document.querySelectorAll('.verdachte').forEach(el => el.onclick = () => {
+    const pi = +el.dataset.p; sluitSheet();
+    if (pi === D.killer) {
+      let st = 1; if (P.eerste && !P.check) st++; if (roosterCompleetGoed()) st++;
+      P.sterren = st; P.klaar = true; bewaar(); toonEinde(true);
+    } else {
+      P.eerste = false; P.pog--; P.uit = P.uit || []; P.uit.push(pi); bewaar();
+      if (P.pog <= 0) { P.sterren = 0; P.klaar = true; bewaar(); toonEinde(false, true); }
+      else bericht(t.fout(naam(D, pi)) + ' ' + t.pogingen(P.pog));
+    }
+  });
+}
+
+function toonEinde(net, mis) {
+  const t = T(); const v = VERHAAL[D.id][lang];
+  // oplossing in rooster
+  for (let pi = 0; pi < D.personen.length; pi++) for (let ti = 0; ti < (pi === 0 ? D.M + 1 : D.T); ti++) P.rooster[pi + '_' + ti] = D.sol[pi][ti];
+  bewaar(); tekenRooster(); tekenBalk();
+  bericht(mis ? t.mis : t.goed + ' ' + (lang === 'nl' ? 'De moordenaar:' : 'The killer:') + ' <b>' + esc(volNaam(D, D.killer)) + '</b>, ' + kamerNaam(D, D.sol[0][D.M]) + ', ' + D.tijden[D.M] + '.', mis ? '' : 'goed');
+  const e = $('epiloog'); e.style.display = 'block';
+  e.innerHTML = `<div class="klein">${lang === 'nl' ? 'Epiloog' : 'Epilogue'}</div><p class="proza" style="color:var(--inkt);margin:8px 0">${v.e}</p><div class="sterren" style="color:#8a6a2a">${'★'.repeat(P.sterren)}${'☆'.repeat(3 - P.sterren)}<small style="color:var(--inktzwak)">${t.sterUitleg.map((s, i) => (i < P.sterren ? '★ ' : '☆ ') + s).join(' · ')}</small></div>`;
+  if (net) setTimeout(() => e.scrollIntoView({behavior: 'smooth', block: 'center'}), 200);
+}
+
+// ---------------- hulp / taal ----------------
+function toonHelp() { $('helpVel').innerHTML = T().helpHtml + `<div class="rij"><button class="knop rustig" id="hSluit">OK</button></div>`; $('help').classList.add('aan'); $('hSluit').onclick = () => $('help').classList.remove('aan'); }
+$('kHelp').onclick = toonHelp;
+$('help').onclick = e => { if (e.target === $('help')) $('help').classList.remove('aan'); };
+$('kTaal').onclick = () => { lang = lang === 'nl' ? 'en' : 'nl'; try { localStorage.setItem('hm_lang', lang); } catch (e) {} history.replaceState(null, '', '#' + lang); document.documentElement.lang = lang; $('kTaal').textContent = lang === 'nl' ? 'EN' : 'NL'; if ($('sDossier').classList.contains('actief')) openDossier(DI); else toonStart(); };
+$('kTerug').onclick = () => { sluitSheet(); toonStart(); };
+function init() { document.documentElement.lang = lang; toonStart(); }
+init();
+</script>
+</body>
+</html>
