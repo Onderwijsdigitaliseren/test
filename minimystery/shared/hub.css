@@ -10,6 +10,8 @@ h1,h2,h3,.btn,.pill,.chip{font-family:Fredoka,Nunito,system-ui,sans-serif}
 /* bovenbalk */
 .top{position:absolute;inset:0 0 auto;z-index:3;display:flex;justify-content:space-between;align-items:center;gap:8px;padding:14px 16px;max-width:1100px;margin:0 auto}
 .top .pill:only-child{margin-left:auto}
+.top .tr{display:flex;gap:8px;margin-left:auto;flex-wrap:wrap;justify-content:flex-end}
+@media (max-width:440px){.top{gap:6px;padding:12px 10px}.top .pill{padding:5px 10px;font-size:13px;white-space:nowrap}.top .tr{flex-wrap:nowrap;gap:6px}}
 .pill{appearance:none;border:2px solid var(--ink);background:rgba(255,255,255,.92);color:var(--ink);border-radius:999px;padding:5px 14px;font-weight:600;font-size:15px;text-decoration:none;cursor:pointer}
 .pill:hover{background:#fff}
 
