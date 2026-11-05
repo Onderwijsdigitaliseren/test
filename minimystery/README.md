@@ -39,3 +39,8 @@ De educatieve wandelingen (tijd, reken, taal, natuur, klok) hebben een Engelse v
 - `games/<g>/game-en.js` is **gegenereerd** uit `game.js`: na een wijziging in `game.js` draai je `python3 _tools/edu_en.py` (vertaalregels in `_tools/edu_en.json`; het script meldt wat nog Nederlands is).
 - De Engelse HTML-pagina's zijn **gegenereerd** uit de Nederlandse: `python3 _tools/edu_shell_en.py` (vertalingen in het script zelf; het meldt ontbrekende teksten).
 - Landing: `educatie/` (NL) en `en/education/` (EN).
+
+## Afdeling Educatie
+- Spellen met `"line": "educatie"` in `shared/catalog.js` staan niet op de feest-hub (index.html, en/), maar alleen in `educatie/` en `en/education/`. De feest-hub toont één verwijskaart "MiniMystery Educatie".
+- De terug-knop in de educatieve spellen gaat naar de afdeling Educatie.
+- Betaald maken: zet in `games/<g>/data-*.js` `FREE` uit; een code in codes.json met `"t":"feest","spel":"educatie"` opent dan alle educatieve spellen (per spel kan ook met de spel-id). Let op: `"spel":"alle"` opent ze ook.

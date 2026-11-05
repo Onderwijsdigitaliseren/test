@@ -102,7 +102,7 @@ var PRO={
   codes:function(){return CODES},
   /* MiniMystery: een Feestpas per zaak (codetype "feest", veld "spel": sj/pp/ag/ts of "alle").
      Geldig "dagen" dagen (standaard 31) vanaf het invoeren. Opgeslagen in ss_feest = {spel:{h,t0}}. Alleen de proefrondes zijn gratis. */
-  pass:function(game){var all=LS.get("ss_feest",{}),best=null;[game,"alle"].forEach(function(k){var x=all[k];if(!x)return;var e=entry(x.h);
+  pass:function(game){var all=LS.get("ss_feest",{}),best=null,cg=window.MW_CATALOG&&window.MW_CATALOG.games.filter(function(x){return x.id===game})[0];[game,"alle"].concat(cg&&cg.line==="educatie"?["educatie"]:[]).forEach(function(k){var x=all[k];if(!x)return;var e=entry(x.h);
       if(e&&(e.uit||e.t!=="feest"))return;if(!e&&codesOk)return;
       var end=x.t0+((e&&e.dagen)||CFG.dagen)*864e5;if(end>Date.now()&&(!best||end>best.end))best={spel:k,end:end}});return best},
   isPro:function(game){if(!game)return false;return !!this.pass(game)},

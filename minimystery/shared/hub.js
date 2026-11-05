@@ -21,7 +21,7 @@ function profile(){$("#status").textContent=""}
 
 /* ---------- inspiratie: de gratis proefrondes ---------- */
 function inspo(){var el=$("#inspo");if(!el)return;
-  el.innerHTML=C.games.filter(function(g){return g.status!=="soon"}).map(function(g){var x=g[L];
+  el.innerHTML=C.games.filter(function(g){return g.status!=="soon"&&g.line!=="educatie"}).map(function(g){var x=g[L];
     return '<a class="try" style="--c:'+esc(g.theme||"#f5b800")+'" href="'+MW.root+esc(x.slug)+'?oefen"><img src="'+MW.root+'assets/cover-'+g.id+'.webp" alt="" width="300" height="300" loading="lazy"><span><small>'+H.tryT+'</small><b>'+esc(x.title)+'</b><em>'+esc(x.tag)+'</em><i>'+H.try+' →</i></span></a>'}).join("")}
 
 /* ---------- zaken ---------- */
@@ -34,7 +34,11 @@ function card(g){var x=g[L],p=MW.profile.get(),st=p.games&&p.games[g.id],has=!!M
     '<button type="button" class="more" aria-expanded="false">'+H.more+'</button><p class="desc" hidden>'+esc(x.desc)+'</p>'+
     /* één lijst: per zaak de gratis proefronde én de echte zaak */
     '<div class="acts"><a class="btn ghost try1" href="'+MW.root+esc(x.slug)+'?oefen">▶ '+H.try+'</a><a class="btn" href="'+MW.root+esc(x.slug)+'">'+(has?H.resume:H.play)+' →</a></div></article>'}
-function cases(){var el=$("#cases");el.innerHTML=C.games.filter(function(g){return g.status!=="soon"}).map(card).join("")+
+/* MiniMystery Educatie is een eigen afdeling (educatie/ en en/education/): op de feest-hub alleen één verwijskaart */
+var EDU={nl:{k:"Voor scholen en BSO",h:"MiniMystery Educatie",t:"Speurtochten met echte lesstof: geschiedenis, rekenen, taal, natuur en Engels. Zaakcode voor de hele klas, begeleidersblad met lesbrief, diploma.",b:"Naar Educatie",u:"educatie/"},
+  en:{k:"For schools and after-school clubs",h:"MiniMystery Education",t:"Walks with real school subjects: history, maths, literacy and nature. One case code for the whole class, leader's sheet with lesson plan, certificate.",b:"Go to Education",u:"en/education/"}}[L];
+function eduCard(){return '<article class="case educase" style="--c:#d9c7f0"><img class="cov" src="'+MW.root+'assets/cover-tr.webp" alt="" width="300" height="300" loading="lazy"><h3>'+esc(EDU.h)+'</h3><p class="tag">'+esc(EDU.t)+'</p><ul class="meta"><li>🏫 '+esc(EDU.k)+'</li></ul><div class="acts"><a class="btn" href="'+MW.root+EDU.u+'">'+esc(EDU.b)+' →</a></div></article>'}
+function cases(){var el=$("#cases");el.innerHTML=C.games.filter(function(g){return g.status!=="soon"&&g.line!=="educatie"}).map(card).join("")+eduCard()+
     /* laatste kaart: maatwerk */
     '<article class="case maatcase"><div class="mc-ico" aria-hidden="true">✨</div><h3>'+esc(CF.card)+'</h3><p class="tag">'+esc(CF.cardT)+'</p><div class="acts"><a class="btn ghost" href="#custom">'+esc(CF.cardM)+'</a><button type="button" class="btn" data-mc>'+esc(CF.cardB)+' →</button></div></article>';
   var mc=el.querySelector("[data-mc]");if(mc)mc.onclick=function(){customForm()};

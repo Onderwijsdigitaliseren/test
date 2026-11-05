@@ -6,7 +6,7 @@ Na een wijziging in een NL-schil: dit script opnieuw draaien; ontbrekende vertal
 import re, sys, json, os
 
 COMMON = {
- "◂ Alle zaken": "◂ All cases", "Educatie": "Education", "English": "Nederlands",
+ "◂ Alle zaken": "◂ All cases", "Educatie": "Education", "◂ Educatie": "◂ Education", "English": "Nederlands",
  "Hoe werkt het?": "How does it work?", "Dagen op rij": "Days in a row", "Opgelost": "Solved",
  "Teamnaam (mag leeg, komt op het diploma)": "Team name (optional, goes on the certificate)",
  "Voor wie": "Who is playing", "School": "School", "BSO": "After-school",

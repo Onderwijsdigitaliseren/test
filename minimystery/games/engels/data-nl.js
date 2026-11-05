@@ -64,9 +64,9 @@ var REVEAL0={
 };
 /* Charlie's zin (waar Biscuit is): per niveau zinnen van 6, 8 en 10 woorden */
 var ZIN={
-  0:{6:["Biscuit is in the park.","The dog is under a tree.","My dog is at the school."],8:["Biscuit is sleeping under the big tree.","The brown dog is in the sunny park.","My dog is at the bus stop now."],10:["Biscuit is sleeping in the sun next to the school.","The little brown dog is under a tree in the park."]},
-  1:{6:["Biscuit is behind the school.","The dog is near the bridge.","Biscuit sleeps under the tree."],8:["Biscuit is sleeping in the park near school.","The brown dog is under the old bridge.","My dog is behind the bus stop, sleeping."],10:["Biscuit is sleeping in the sun behind the old school.","The little dog is waiting next to the bus stop now."]},
-  2:{6:["Biscuit is waiting near school.","The dog ran to the park."],8:["Biscuit ran to the park and fell asleep.","My dog is sleeping behind the old church."],10:["Biscuit ran to the park and fell asleep there.","I think Biscuit is sleeping behind the old school."]}
+  0:{6:["Biscuit is in the big park.","The dog is under a tree.","My dog is at the school."],8:["Biscuit is sleeping under the big green tree.","The brown dog is in the sunny park.","My dog is at the bus stop now."],10:["Biscuit is sleeping in the sun next to the school.","The little brown dog is under a big tree now."]},
+  1:{6:["Biscuit is behind the old school.","The dog is near the bridge.","Biscuit sleeps under the big tree."],8:["Biscuit is sleeping in the park near school.","The brown dog is under the old bridge.","My dog is behind the bus stop, sleeping."],10:["Biscuit is sleeping in the sun behind the old school.","The little dog is waiting next to the bus stop."]},
+  2:{6:["Biscuit is waiting near the school.","The dog ran to the park."],8:["Biscuit ran to the park and fell asleep.","My dog is sleeping behind the old church."],10:["Biscuit ran to the park and fell asleep over there.","I think that Biscuit is sleeping behind the old school."]}
 };
 var NUM=["zero","one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen","twenty"];
 var numEN=function(n){if(n<=20)return [NUM[n]];var t=["","","twenty","thirty","forty","fifty","sixty","seventy","eighty","ninety"][Math.floor(n/10)],u=n%10;return u?[t+"-"+NUM[u],t+" "+NUM[u],t+NUM[u]]:[t]};
