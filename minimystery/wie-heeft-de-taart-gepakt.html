@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Wie heeft de taart gepakt? – detectivespel voor kinderfeestjes binnen</title>
+<link rel="icon" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="description" content="Kinderfeestje binnen: de taart is weg en zeven verdachten waren in huis. Verhoren, opdrachten in huis, sporen verzamelen en wegstrepen. Eén telefoon, de hele groep rond de tafel. Geheime missies, diploma. Proefronde gratis.">
+<link rel="canonical" href="https://www.minimystery.nl/wie-heeft-de-taart-gepakt.html">
+<meta property="og:site_name" content="MiniMystery">
+<meta property="og:title" content="MiniMystery – Wie heeft de taart gepakt?">
+<meta property="og:description" content="De taart is weg. Zeven verdachten. Detectivespel voor kinderfeestjes binnen, met één telefoon rond de tafel.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.minimystery.nl/wie-heeft-de-taart-gepakt.html">
+<meta property="og:locale" content="nl_NL">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:image" content="https://www.minimystery.nl/assets/og-image.jpg">
+<meta name="theme-color" content="#f7a9c2">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Permanent+Marker&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600&display=swap">
+<link rel="stylesheet" href="shared/platform.css?v=2">
+<link rel="stylesheet" href="games/taart/game.css?v=1">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Wie heeft de taart gepakt?","url":"https://www.minimystery.nl/wie-heeft-de-taart-gepakt.html","description":"Detectivespel voor kinderfeestjes binnen: de taart is weg, zeven verdachten, verhoren, opdrachten in huis en sporen. Eén telefoon voor de hele groep. Geheime missies, diploma. Proefronde gratis.","inLanguage":"nl","gamePlatform":"Webbrowser","genre":["Kinderspel","Detective","Binnen"],"isAccessibleForFree":false,"offers":{"@type":"Offer","price":"9.99","priceCurrency":"EUR","description":"Feestpas"}}</script>
+</head>
+<body>
+<div id="app">
+  <section class="screen" id="home">
+    <div class="wrap">
+      <div class="row0"><div class="pills"><a class="pill" id="hub" href="./">◂ Alle zaken</a><button type="button" class="pill" id="lang" hidden>English</button></div></div>
+      <div class="gap"></div>
+      <div class="cakehero" aria-hidden="true">🎂</div>
+      <div class="masthead">
+        <h1 id="ttl">Wie heeft de taart gepakt?</h1><span class="tape">Binnen · de hele groep · één telefoon</span>
+      </div>
+      <p class="lead">De taart is weg en zeven verdachten waren in huis: Oma Toos, Opa Bertus, Buurvrouw Fien, Neefje Teun, Tante Lot, Hond Bo en Kat Mimi. Verhoor ze, doe de opdrachten, verzamel sporen en streep weg wie het niet kan zijn.</p>
+      <button class="btn ghost sm" id="bHow">Hoe werkt het?</button>
+      <div id="howT" hidden></div>
+      <div class="namebox"><label for="name">Wie is er jarig? (mag leeg)</label><input id="name" maxlength="24" autocomplete="off" placeholder="Naam van de jarige"></div>
+      <div class="namebox"><label for="kids">Namen van de kinderen (met komma, mag leeg)</label><div class="two"><input id="kids" maxlength="200" autocomplete="off" placeholder="Sam, Noor, Daan…"><input id="nkids" type="number" min="2" max="12" inputmode="numeric" placeholder="of: aantal"></div></div>
+      <div class="seg two" id="lvl">
+        <button type="button" data-l="0" aria-pressed="true">Kruimel<small>4–6 jaar · met hulp</small></button>
+        <button type="button" data-l="1" aria-pressed="false">Speurneus<small>7–10 jaar · de dief liegt</small></button>
+      </div>
+      <div class="seg" id="len">
+        <button type="button" data-n="kort" aria-pressed="false">Kort<small>4 rondes · ±30 min</small></button>
+        <button type="button" data-n="normaal" aria-pressed="true">Normaal<small>6 rondes · ±45 min</small></button>
+        <button type="button" data-n="lang" aria-pressed="false">Lang<small>8 rondes · ±60 min</small></button>
+      </div>
+      <button class="btn ghost sm" id="bVoice" aria-pressed="true">🔊 Voorlezen</button>
+      <button class="btn ghost sm" id="bTreat">Verrassing na afloop</button>
+      <button class="btn" id="bResume" hidden>Verder met de zaak</button>
+      <button class="btn" id="bStart">Start de zaak</button>
+      <button class="btn ghost" id="bDemo">Gratis proefronde (2 rondes)</button>
+      <button class="btn ghost" id="bCode">Zaakcode invullen</button>
+      <button class="btn ghost" id="bPro" hidden></button>
+      <p class="note" id="status"></p>
+      <button class="btn ghost" id="bArch">Opgeloste zaken</button>
+      <button class="btn ghost sm" id="bWipe">Wissen</button>
+    </div>
+  </section>
+  <section class="screen" id="brief" hidden>
+    <div class="wrap">
+      <div class="paper" id="bfBody"></div>
+      <button class="btn" id="bGo">We gaan speuren!</button>
+      <button class="btn ghost" id="bBack" onclick="location.reload()">Terug</button>
+    </div>
+  </section>
+  <section class="screen" id="play" hidden>
+    <div id="hud">
+      <div><b id="hR">–</b><span>Ronde</span></div>
+      <div><b id="hT">0:00</b><span>Tijd</span></div>
+      <div><b id="hS">0</b><span>Sporen</span></div>
+      <button type="button" id="zM" aria-label="Naar het begin" onclick="location.reload()">⌂</button>
+    </div>
+    <div id="card"></div>
+  </section>
+  <div class="sheet" id="sheet" hidden><div class="paper" id="sheetBody"></div></div>
+  <div id="toast" hidden></div>
+</div>
+<script src="shared/platform.js?v=mm17"></script>
+<script src="shared/catalog.js?v=mm16"></script>
+<script src="shared/voice.js?v=1"></script>
+<script src="games/taart/data-nl.js?v=1"></script>
+<script>document.getElementById("howT").innerHTML=WT_DATA.T.howT</script>
+<script src="games/taart/game.js?v=1"></script>
+</body>
+</html>
