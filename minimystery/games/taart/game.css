@@ -255,3 +255,51 @@ h2{font-size:24px;color:var(--pink)}
 #toast{top:auto;height:auto;min-height:0;bottom:calc(24px + env(safe-area-inset-bottom,0px));padding:10px 18px;line-height:1.3;text-align:center}
 .dg{max-width:340px;margin:0 auto;width:100%}
 .dg span,.dg button{aspect-ratio:auto;height:54px;font-size:30px}
+/* ================= spellen, ronde 2 ================= */
+.tnum{color:#fff;opacity:.9;margin-bottom:-6px}
+/* legpuzzel */
+.jig{position:relative;width:100%;touch-action:none}
+.jb{position:absolute;left:0;top:0;border-radius:6px;background-color:#fff;background-repeat:no-repeat;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+.jb::before{content:"";position:absolute;inset:0;background:rgba(255,255,255,.75);border-radius:6px}
+.jb::after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(90,42,63,.3) 1px,transparent 1px),linear-gradient(90deg,rgba(90,42,63,.3) 1px,transparent 1px);background-size:var(--cell) var(--cell);border-radius:6px}
+.jb.done::before,.jb.done::after{opacity:0}
+.jp{position:absolute;border-radius:4px;box-shadow:0 3px 8px rgba(0,0,0,.35);touch-action:none;cursor:grab;transition:box-shadow .15s}
+.jp.drag{box-shadow:0 12px 24px rgba(0,0,0,.45);cursor:grabbing}
+.jp.ok{box-shadow:none;border-radius:0;cursor:default}
+/* drie op een rij */
+.ttt{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;background:#5a2a3f;padding:8px;border-radius:18px;max-width:340px;margin:0 auto;width:100%}
+.ttt button{aspect-ratio:1/1;border-radius:12px;background:#fff6e8;border:0;font-size:56px;line-height:1}
+.ttt button:disabled{opacity:1}
+/* memory */
+.mem{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.mc{position:relative;aspect-ratio:3/4;border:0;padding:0;background:none;perspective:600px}
+.mc span{position:absolute;inset:0;border-radius:12px;display:grid;place-items:center;backface-visibility:hidden;transition:transform .35s}
+.mc .back{background:repeating-linear-gradient(45deg,#e8456b 0 10px,#f7a9c2 10px 20px);font-size:30px;border:3px solid #fff}
+.mc .front{background:#fff;transform:rotateY(180deg);border:3px solid #fff}
+.mc .front .face{width:80%;height:auto}
+.mc .front .face.emo{font-size:40px;line-height:1.2;width:auto}
+.mc.up .back{transform:rotateY(180deg)}.mc.up .front{transform:none}
+.mc.got .front{border-color:#3f9a4f;box-shadow:0 0 0 3px #3f9a4f}
+/* sudoku */
+.sudo{display:grid;gap:4px;background:#c98a4b;padding:10px;border-radius:16px;max-width:320px;margin:0 auto;width:100%;box-shadow:inset 0 0 0 4px #a46a35}
+.sudo button{aspect-ratio:1/1;border-radius:50%;border:0;background:#fff6e8;font-size:34px;line-height:1}
+.sudo.n3 button{font-size:44px}
+.sudo button.fix{background:#f1e2c6;cursor:default}
+.sudo button.bad{background:#ffd6d6;box-shadow:0 0 0 3px var(--pink)}
+.sudo.n4 button.br{margin-right:6px}.sudo.n4 button.bb{margin-bottom:6px}
+.sudo.ok button{background:#dff3d4}
+/* taart rapen */
+.holes{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:340px;margin:0 auto;width:100%}
+.hole{aspect-ratio:1/1;border-radius:50%;border:0;background:radial-gradient(circle at 50% 70%,#3b1d2a 0 45%,#5a2a3f 46% 60%,#7a3a55 61%);overflow:hidden;position:relative}
+.hole span{position:absolute;left:0;right:0;bottom:-70%;font-size:46px;transition:bottom .12s ease-out;line-height:1}
+.hole.up span{bottom:22%}
+.hole.up.bad span{filter:none}
+/* patroon */
+.pat{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;background:#fff;border-radius:16px;padding:12px 6px;color:var(--ink);background-image:linear-gradient(transparent 46%,#e0d4b4 46% 50%,transparent 50%)}
+.pat span{font-size:34px;line-height:1.2}
+.pat .qm{font-family:var(--f-type);font-weight:700;color:var(--pink);width:40px;text-align:center;border:3px dashed var(--pink);border-radius:10px}
+/* zoekplaat */
+.zp{position:relative;width:100%;background:#fff6e8;border-radius:16px;box-shadow:inset 0 0 0 6px #e0d4b4;background-image:radial-gradient(#f0e2c8 2px,transparent 2px);background-size:22px 22px}
+.zp button{position:absolute;border:0;background:none;padding:2px;line-height:1}
+.zp button.found{box-shadow:0 0 0 3px #3f9a4f;border-radius:50%;background:#dff3d4}
+.zp button.nope{animation:shk .3s}
