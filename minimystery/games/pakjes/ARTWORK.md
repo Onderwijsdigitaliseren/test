@@ -1,4 +1,5 @@
 # Artwork – Operatie Pakjesavond (games/pakjes/img)
+Stand 8 november 2026: alle bestanden hieronder zijn geleverd en staan in games/pakjes/img (plus assets/cover-pa.webp).
 Alles optioneel: zonder bestand tekent het spel zelf (canvas/SVG/emoji). Een bestand met deze naam wint. Formaat: webp.
 Stijl: dezelfde warme, vrolijke kinderboekstijl als de MiniMystery-promo (de vier kinderen). Winteravond 5 december: donkerblauwe lucht, sneeuw op de daken, verlichte raampjes, volle maan. Piet is een roetveegpiet: gewone huidskleur met roetvegen, kleurige pietenmuts met veer.
 
