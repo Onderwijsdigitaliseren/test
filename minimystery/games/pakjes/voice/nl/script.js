@@ -1,4 +1,4 @@
-/* Alle vaste zinnen die dit spel kan uitspreken (175). Gemaakt door _tools/stemscript.js uit data-nl.js; k = sleutel uit shared/voice.js. Niet met de hand bewerken: draai het gereedschap opnieuw. */
+/* Alle vaste zinnen die dit spel kan uitspreken (176). Gemaakt door _tools/stemscript.js uit data-nl.js; k = sleutel uit shared/voice.js. Niet met de hand bewerken: draai het gereedschap opnieuw. */
 window.MMV_SCRIPT=window.MMV_SCRIPT||{};window.MMV_SCRIPT["pakjes_nl"]=[
 {"k":"7ac74931","wie":"piet","waar":"T","t":"Piet leest alles voor"},
 {"k":"2e0814fa","wie":"piet","waar":"T","t":"Alle stukjes gevonden!"},
@@ -9,7 +9,7 @@ window.MMV_SCRIPT=window.MMV_SCRIPT||{};window.MMV_SCRIPT["pakjes_nl"]=[
 {"k":"471d5bed","wie":"piet","waar":"T","t":"Op de kaart staat een vlek… Piet kan hem niet lezen."},
 {"k":"87c2218e","wie":"piet","waar":"T","t":"Een grote mens in dit huis weet het nog wel: vraag de hoofdpiet van dit huis om de laatste aanwijzing!"},
 {"k":"f7116dc2","wie":"piet","waar":"T","t":"Opgeslagen."},
-{"k":"456dee3d","wie":"piet","waar":"T","t":"Piet weet het nu ook."},
+{"k":"456dee3d","wie":"piet","waar":"† T","t":"Piet weet het nu ook."},
 {"k":"db784815","wie":"piet","waar":"PIET","t":"Piet Pepernoot"},
 {"k":"62d3d803","wie":"piet","waar":"Opening","t":"Psst!"},
 {"k":"8a2b2414","wie":"piet","waar":"Opening","t":"Hier, bij de schoorsteen."},
@@ -174,5 +174,6 @@ window.MMV_SCRIPT=window.MMV_SCRIPT||{};window.MMV_SCRIPT["pakjes_nl"]=[
 {"k":"e9010300","wie":"piet","waar":"Proef: Schaduwen op het dak","t":"De maan schijnt op het dak en ik zie alleen schaduwen."},
 {"k":"a3f41a61","wie":"piet","waar":"Proef: Schaduwen op het dak","t":"Welke schaduw is het?"},
 {"k":"2cbdb253","wie":"piet","waar":"LEADNOTE","t":"Tip: speel de opdrachten één keer zelf voor, dan weet je hoe ze gaan."},
-{"k":"768e9377","wie":"piet","waar":"LEADNOTE","t":"De Ouderhoek blijft open: je kunt de verstopplekken ook tijdens het spel nog aanpassen."}
+{"k":"768e9377","wie":"piet","waar":"† LEADNOTE","t":"De Ouderhoek blijft open: je kunt de verstopplekken ook tijdens het spel nog aanpassen."},
+{"k":"2bedf39c","wie":"piet","waar":"LEADNOTE","t":"Hoofdpiet blijft open: je kunt de verstopplekken ook tijdens het spel nog aanpassen."}
 ];

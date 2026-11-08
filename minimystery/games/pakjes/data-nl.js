@@ -13,8 +13,8 @@ var T={
   near:"Volgend stukje op {d} m",warm:"Warm! Nog {d} m",hot:"Heet! Hier moet het liggen",radarAll:"Alle stukjes gevonden! Leg de kaart in elkaar.",
   here:"Hier ligt een stukje",look:"Pak het stukje",walk:"Loop erheen",gps:"We staan er echt (gps twijfelt)",
   notebook:"De verstopkaart",nbZ:"Gevonden stukjes",nbNone:"Nog geen stukje. Loop naar de eerste plek.",
-  menu:"Menu",mBack:"Terug naar de zaak",mHome:"Pauze, later verder",mWipe:"Deze zaak wissen",mParent:"🎁 Ouderhoek",mSkip:"Begeleider: deze proef overslaan",saved:"Opgeslagen. Je kunt later verdergaan.",
-  wipe:"Wissen",wipeY:"Deze zaak wissen",wipeAll:"Alles wissen (ook het archief)",wipeQ:"Zaak wissen?",wipeT:"De voortgang van deze zaak is dan weg. De verstopplekken van de ouders blijven staan.",allQ:"Alles wissen?",allT:"Zaak, archief en instellingen worden gewist. De Ouderhoek ook.",allY:"Ja, alles wissen",wiped:"Gewist",
+  menu:"Menu",mBack:"Terug naar de zaak",mHome:"Pauze, later verder",mWipe:"Deze zaak wissen",mParent:"🎄 Hoofdpiet (grote mensen)",mSkip:"Begeleider: deze proef overslaan",saved:"Opgeslagen. Je kunt later verdergaan.",
+  wipe:"Wissen",wipeY:"Deze zaak wissen",wipeAll:"Alles wissen (ook het archief)",wipeQ:"Zaak wissen?",wipeT:"De voortgang van deze zaak is dan weg. De verstopplekken van de ouders blijven staan.",allQ:"Alles wissen?",allT:"Zaak, archief en instellingen worden gewist. De Hoofdpiet-instellingen ook.",allY:"Ja, alles wissen",wiped:"Gewist",
   dH:"Zaakcode invullen",dT:"Met een zaakcode spelen meer telefoons dezelfde zaak: dezelfde plekken, dezelfde proeven. Handig met twee groepjes.",dGo:"Zaak ophalen",dBad:"Die code kennen we niet. Codes beginnen met PA.",
   demoCase:"Proefronde · getekende stad",demoTip:"Tik op een plek op de kaart: jullie lopen er vanzelf heen.",
   howH:"Hoe werkt het?",
@@ -29,13 +29,13 @@ var T={
   finT:"Alle stukjes liggen op tafel. Tik op elk stukje om het om te draaien.",finGo:"De kaart is compleet ▸",
   letH:"Piet leest de kaart",
   trH:"De laatste aanwijzing",trFound:"Gevonden! 🎉",trMore:"Er ligt nog meer…",trHelp:"We vinden het niet",trExact:"Piet fluistert: {w}",trNone:"Op de kaart staat een vlek… Piet kan hem niet lezen. Een grote mens in dit huis weet het nog wel: vraag de hoofdpiet van dit huis om de laatste aanwijzing!",trNoneBtn:"De hoofdpiet heeft het verteld ▸",
-  prH:"Ouderhoek",prLead:"Voor de ouders. Vul dit in zonder dat de kinderen meekijken. Pas als de kinderen alle stukjes van de kaart hebben, laat Piet dit zien.",
+  prH:"Hoofdpiet",prLead:"Voor de ouders. Vul dit in zonder dat de kinderen meekijken. Pas als de kinderen alle stukjes van de kaart hebben, laat Piet dit zien.",
   prPinNew:"Kies een pietencode van 4 cijfers, zodat de kinderen hier niet bij kunnen.",prPinAsk:"Pietencode",prPinBad:"Die code klopt niet.",prPinSet:"Code opslaan ▸",prPinGo:"Open ▸",prPinForgot:"Code vergeten? Wis alles (knop Wissen op het startscherm), dan kun je opnieuw beginnen.",
   prSpots:"De verstopplekken",prSpotsT:"Eén plek voor alle pakjes, of per kind een eigen plek. Piet laat ze één voor één zien.",
   prWhat:"Wat ligt er?",prWhatP:"bijv. de pakjes voor Noor en Sam",prHint:"Aanwijzing (mag een raadsel zijn)",prHintP:"bijv. Waar het altijd warm is en de sokken drogen…",prWhere:"Precieze plek (alleen als ze het niet vinden)",prWhereP:"bijv. in de wasmand op zolder",prPhoto:"📷 Foto van de plek (mag)",prPhotoOk:"Foto staat erin ✓",prDel:"Weg",prAdd:"+ Nog een verstopplek",
-  prSave:"Opslaan",prSaved:"Opgeslagen. Piet weet het nu ook.",prEmpty:"Nog geen verstopplek ingevuld. Dat kan altijd nog, ook tijdens het spel.",prOk:"{n} verstopplek(ken) klaar ✓",
+  prSave:"Opslaan",prSaved:"Opgeslagen.",prEmpty:"Nog geen verstopplek ingevuld. Dat kan altijd nog, ook tijdens het spel.",prOk:"Ingesteld ✓",
   prAns:"Antwoorden van deze zaak",prAnsT:"Alleen voor de begeleider: de proeven van deze zaak en wat er uit moet komen.",prChange:"Pietencode veranderen",
-  prBtn:"🎁 Ouderhoek: waar liggen de pakjes?",prBtnOk:"🎁 Ouderhoek · {n} verstopplek(ken) klaar",
+  prBtn:"🎄 Hoofdpiet (voor de grote mensen)",prBtnOk:"🎄 Hoofdpiet · ingesteld ✓",
   lvl:["Pepernoot","Hoofdpiet"],lvlAge:["6–7 jaar","8–10 jaar"],
   nw:{6:"zes",8:"acht",10:"tien"},
   kv:{fp:["Bakker","Bushalte","Speeltuin","Plein","Brug","Park","Kerk","Fontein","Winkel","Brievenbus","Kiosk","Bankje"],
@@ -119,6 +119,6 @@ var Z=[
  {id:"gym",title:"Pietengym",story:"Pieten moeten lenig zijn voor op het dak! Houd de telefoon vast en spring met z'n allen: tel de sprongen hardop mee.",lvl:[{secs:15,target:10,hint:"Spring met de telefoon in je hand, dan telt hij mee. Of tik op Klaar als jullie klaar zijn."},{secs:15,target:15,hint:"Spring met de telefoon in je hand, dan telt hij mee."}]},
  {id:"schaduw",title:"Schaduwen op het dak",story:"De maan schijnt op het dak en ik zie alleen schaduwen. Welke schaduw is het?",lvl:[{opts:3,rounds:2,hint:"Kijk naar de vorm aan de buitenkant."},{opts:4,rounds:3,hint:"Draai de telefoon desnoods even, dat helpt soms."}]}
 ];
-var LEADNOTE="Tip: speel de opdrachten één keer zelf voor, dan weet je hoe ze gaan. De Ouderhoek blijft open: je kunt de verstopplekken ook tijdens het spel nog aanpassen.";
+var LEADNOTE="Tip: speel de opdrachten één keer zelf voor, dan weet je hoe ze gaan. Hoofdpiet blijft open: je kunt de verstopplekken ook tijdens het spel nog aanpassen.";
 return{lang:"nl",FREE:false,T:T,TYPES:TYPES,PIET:PIET,SINT:SINT,ROOMS:ROOMS,OPEN:OPEN,CLIFF:CLIFF,CLIFFLAST:CLIFFLAST,LETTER:LETTER,SINTTXT:SINTTXT,ZOEK:ZOEK,KIJK:KIJK,BOEK:BOEK,RIJM:RIJM,SYM:SYM,CODEW:CODEW,CODEW1:CODEW1,SHAD:SHAD,Z:Z,LEADNOTE:LEADNOTE};
 })();

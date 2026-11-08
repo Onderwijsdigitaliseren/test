@@ -95,7 +95,7 @@ setTimeout(function(){var b=$("#bParent"),go=$("#bGps");if(b&&go&&go.parentNode)
 /* ---------- Ouderhoek: pincode, verstopplekken, antwoorden ---------- */
 function savePar(){LS.set(PK,PAR);parentBtn()}
 function parentSheet(after){if(!PAR.pin)return pinSheet(true,function(){parentEdit(after)});pinSheet(false,function(){parentEdit(after)})}
-function pinSheet(isNew,then){sheet('<div class="eyebrow">🎁 '+esc(T.prH)+'</div><h2>'+esc(T.prPinAsk)+'</h2><p class="note">'+esc(isNew?T.prPinNew:T.prLead)+'</p><input class="inp code" id="pin" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="••••"><p class="note err" id="pinMsg"></p><button type="button" class="btn" id="pinOk">'+(isNew?T.prPinSet:T.prPinGo)+'</button>'+(isNew?'':'<p class="note small">'+esc(T.prPinForgot)+'</p>')+'<button type="button" class="btn ghost dk" id="shX">'+T.cancel+'</button>');
+function pinSheet(isNew,then){sheet('<div class="eyebrow">🎄 '+esc(T.prH)+'</div><h2>'+esc(T.prPinAsk)+'</h2><p class="note">'+esc(isNew?T.prPinNew:T.prLead)+'</p><input class="inp code" id="pin" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="••••"><p class="note err" id="pinMsg"></p><button type="button" class="btn" id="pinOk">'+(isNew?T.prPinSet:T.prPinGo)+'</button>'+(isNew?'':'<p class="note small">'+esc(T.prPinForgot)+'</p>')+'<button type="button" class="btn ghost dk" id="shX">'+T.cancel+'</button>');
   $("#shX").onclick=closeSheet;var go=function(){var v=$("#pin").value.replace(/\D/g,"");if(v.length!==4){$("#pinMsg").textContent=T.prPinNew;return}if(isNew){PAR.pin=v;savePar();then()}else if(v===PAR.pin)then();else{$("#pinMsg").textContent=T.prPinBad;buzz(100);$("#pin").select()}};
   $("#pinOk").onclick=go;$("#pin").onkeydown=function(e){if(e.key==="Enter")go()};setTimeout(function(){var p=$("#pin");if(p)p.focus()},80)}
 var PHOTO_FOR=null;
@@ -106,7 +106,7 @@ function parentEdit(after){if(!PAR.spots.length)PAR.spots.push({what:"",hint:"",
     '<label>'+esc(T.prWhere)+'<input data-k="where" maxlength="90" value="'+esc(s.where||"")+'" placeholder="'+esc(T.prWhereP)+'"></label>'+
     '<div class="spotP">'+(s.photo?'<img src="'+s.photo+'" alt="">':'')+'<button type="button" class="btn ghost dk sm" data-ph="'+i+'">'+(s.photo?T.prPhotoOk:T.prPhoto)+'</button></div></div>'}).join("");
   var ans=G?'<details class="prAns"><summary>'+esc(T.prAns)+'</summary><p class="note small">'+esc(T.prAnsT)+'</p>'+answersHTML()+'</details>':'';
-  sheet('<div class="eyebrow">🎁 '+esc(T.prH)+'</div><h2>'+esc(T.prSpots)+'</h2><p class="note small">'+esc(T.prLead)+' '+esc(T.prSpotsT)+'</p><div id="spots">'+rows+'</div><button type="button" class="btn ghost dk sm" id="prAdd">'+esc(T.prAdd)+'</button>'+
+  sheet('<div class="eyebrow">🎄 '+esc(T.prH)+'</div><h2>'+esc(T.prSpots)+'</h2><p class="note small">'+esc(T.prLead)+' '+esc(T.prSpotsT)+'</p><div id="spots">'+rows+'</div><button type="button" class="btn ghost dk sm" id="prAdd">'+esc(T.prAdd)+'</button>'+
     '<button type="button" class="btn" id="prSave">'+esc(T.prSave)+'</button>'+ans+'<p class="note small">'+esc(D.LEADNOTE)+'</p><button type="button" class="btn ghost dk sm" id="prPin">'+esc(T.prChange)+'</button><button type="button" class="btn ghost dk" id="shX">'+T.close+'</button>',true);
   var collect=function(){$$("#spots .spot").forEach(function(el){var i=+el.dataset.i,s=PAR.spots[i];if(!s)return;$$("[data-k]",el).forEach(function(inp){s[inp.dataset.k]=inp.value.trim()})})};
   function $$(sel,root){return [].slice.call((root||document).querySelectorAll(sel))}
@@ -196,7 +196,7 @@ function brief(){var N=NN();
   $("#bfNo").textContent=(G.mode==="demo"?T.demoCase:"");
   $("#bfOpen").innerHTML=imgOf("brief")+bubble(fill(D.OPEN[G.mode==="in"?"binnen":"buiten"],{N:T.nw[N]||N}),D.PIET,"big")+
     '<div class="chips"><span class="chip">'+esc(T.lvl[lvI()])+' · '+esc(T.lvlAge[lvI()])+'</span><span class="chip">'+N+' stukjes</span><span class="chip">'+(G.mode==="in"?"Binnen in huis":G.mode==="street"?"Buiten zonder kaart":"Buiten met kaart")+'</span></div>'+
-    (spotsReady().length?'':'<div class="act warn"><span class="ico">🎁</span><div><b>Voor de ouders:</b> de verstopplekken zijn nog niet ingevuld. Doe dat in de Ouderhoek (kan ook tijdens het spel).</div></div>');
+    (spotsReady().length?'':'<div class="act warn"><span class="ico">🎄</span><div><b>Voor de grote mensen:</b> tik eerst even op Hoofdpiet, zonder dat de kinderen meekijken. Kan ook later, via het menu.</div></div>');
   $("#bfTip").innerHTML=MW.codeBox(L,G.code,"zaak");MW.bindCodeBox($("#bfTip"),L);
   show("brief")}
 $("#bGo").onclick=function(){if(!G.t0){G.t0=Date.now();if(G.mode!=="demo")MW.pro.setFree(ID)}save();hush();enter()};
