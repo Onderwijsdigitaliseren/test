@@ -23,6 +23,14 @@ const SKIP_KEYS=/^(id|slug|img|image|src|file|files|url|href|kleur|color|colour|
 const LOOKS_CODE=/^(#|\.|\/|https?:|www\.|[a-z0-9_-]+\.(webp|png|jpg|svg|mp3|js|html|css)$|[A-Z]{2,}-[A-Z0-9]{4,}$|[0-9a-f]{6}$)/;
 
 const RULES={
+ pakjes:{
+  skip:["T","TYPES","SYM","CODEW","CODEW1","ROOMS","KIJK"],   // knoppen, sleutels, kamers en de tel-vragen (die typt de speler zelf in) staan alleen op het scherm
+  keep:[["T","voiceOn"],["T","radarAll"],["T","pieceGet"],["T","finT"],["T","trNone"],["T","trExact"],["T","prSaved"]],
+  skipKeys:/^(id|title|hint)$/,
+  expand:{"{N}":["zes","acht","tien"],"{z}":null,"{h}":null,"{w}":null,"{n}":null,"{i}":null,"{t}":null,"{d}":null},
+  wie:(p,o)=>p[0]==="SINTTXT"?"sinterklaas":"piet",
+  waar:(p,o)=>({OPEN:"Opening",CLIFF:"Na een stukje",CLIFFLAST:"Laatste stukje",LETTER:"Finale",SINTTXT:"Sinterklaas",ZOEK:"Zoekopdracht",BOEK:"Het Grote Boek",RIJM:"Rijmpiet",SHAD:"Schaduwen",Z:"Proef"+(o&&o.title?": "+o.title:"")}[p[0]]||p[0])
+ },
  taart:{
   skip:["T","MISSIONS","ROLES","CV"],                  // knoppen, missiekaartjes en rolbeschrijvingen staan alleen op het scherm
   skipKeys:/^(name|short|kleurNaam|thing|strike|em|word|draw|label|a|o)$/,
