@@ -42,6 +42,16 @@ tr.drop td{background:#e6fbf4}
 .ok{color:#15803d}.new{color:#7c3aed}.no{color:#c2410c}
 #log{font-size:13px;color:var(--mute);min-height:1.2em}
 kbd{background:#eee;border-radius:4px;padding:0 5px}
+#rec[hidden]{display:none}
+#rec{position:fixed;inset:0;background:rgba(31,42,68,.92);z-index:50;display:flex;align-items:center;justify-content:center;padding:12px}
+.recIn{background:#fff;border-radius:20px;padding:18px;max-width:640px;width:100%;display:flex;flex-direction:column;gap:10px;max-height:96vh;overflow:auto}
+.recTop{display:flex;justify-content:space-between;align-items:center;font-weight:800;color:var(--mute)}
+.recPrev,.recNext{font-size:13px;color:var(--mute);min-height:1.2em}
+.recWie{align-self:flex-start}
+.recT{font:600 26px/1.3 Fredoka,sans-serif;background:#fbf3e3;border-radius:14px;padding:16px}
+#recLv{width:100%;height:40px;border-radius:8px;background:#f3f3f3}
+#recGo.on{background:var(--coral);animation:pulse 1s infinite}
+@keyframes pulse{50%{opacity:.6}}
 @media (max-width:640px){td.w,td.n{display:none}td.s{width:auto}.stat{margin-left:0}}
 </style>
 </head>
@@ -66,10 +76,32 @@ kbd{background:#eee;border-radius:4px;padding:0 5px}
   <section class="box">
     <h2>Zo werkt het</h2>
     <p class="note" style="color:var(--ink)">Elke zin die het spel voorleest staat hieronder. Heeft een zin een mp3, dan speelt het spel die af. Zo niet, dan leest de telefoon die ene zin zelf voor. Je kunt dus in stukjes werken.</p>
-    <p class="note"><b>Met de hand:</b> kopieer een zin (📋), maak hem in je stemprogramma, en sleep de mp3 op de rij (of tik ⬆️). Veel bestanden tegelijk? Gebruik “mp3's op volgorde”.<br>
-    <b>Automatisch:</b> vul hieronder je ElevenLabs-sleutel en stem in, en tik “Maak alle ontbrekende”.<br>
+    <p class="note"><b>Zelf inspreken:</b> tik “Start met inspreken”. Je krijgt zin voor zin in beeld: opnemen, luisteren, goedkeuren, volgende. Stiltes aan begin en eind worden afgeknipt en de opname wordt een kleine mp3. Per rij kan het ook met 🎙️.<br>
+    <b>Met de hand:</b> kopieer een zin (📋), maak hem in je stemprogramma en sleep de mp3 op de rij (of tik ⬆️). Veel bestanden tegelijk? Gebruik “mp3's op volgorde”.<br>
     <b>Klaar?</b> Tik “Download pakket” en stuur het zip-bestand naar Claude. Je werk blijft in deze browser bewaard tot je het wist.</p>
   </section>
+
+  <section class="box" id="recBox">
+    <h2>🎙️ Zelf inspreken</h2>
+    <div class="row">
+      <button class="btn mint" id="bRecStart">▶ Start met inspreken</button>
+      <label class="note" style="margin:0"><input type="checkbox" id="recAll"> ook zinnen die al een opname hebben</label>
+      <label class="note" style="margin:0"><input type="checkbox" id="recTrim" checked> stiltes afknippen</label>
+    </div>
+    <p class="note">Werkt in Chrome, Edge, Safari en Firefox. Gebruik een rustige kamer en houd de telefoon of microfoon op een vaste afstand. Spatie = opnemen/stoppen, Enter = goed en volgende, → = overslaan.</p>
+  </section>
+
+  <details class="box" id="cloneBox">
+    <summary>Stemvoorbeeld voor een stemkloon (optie 3)</summary>
+    <p class="note" style="color:var(--ink)">Lees onderstaande tekst rustig en natuurlijk voor, ongeveer 45 seconden. Download daarna het bestand en stuur het naar Claude; die maakt er met een open-source stemmodel (XTTS) alle zinnen van in jouw stem. Eén opname per stem: wil je ook een ‘oma-stem’, lees de tekst dan nog eens als oma.</p>
+    <p id="cloneText" style="background:#fbf3e3;border-radius:12px;padding:12px;font-size:15px">Welkom bij MiniMystery. Vandaag gaan we samen een zaak oplossen. In de keuken stond vanochtend een prachtige taart, met slagroom, aardbeien en zeven kaarsjes. Maar toen we terugkwamen, was de taart verdwenen. Alleen een paar kruimels lagen er nog. Wie kan dat gedaan hebben? Kijk goed om je heen, luister naar wat iedereen zegt, en onthoud: een echte detective trekt pas een conclusie als alle sporen zijn bekeken. Soms is de dief degene die het hardst roept dat hij het niet was. Soms zit de oplossing verstopt in een klein detail, zoals een draadje aan de deurklink of een afdruk in de slagroom. Ben je er klaar voor? Dan gaan we beginnen. Pak je vergrootglas, zet je pet recht, en volg mij!</p>
+    <div class="row">
+      <button class="btn" id="bCloneRec">● Opnemen</button>
+      <button class="btn ghost" id="bClonePlay" disabled>▶ Luister</button>
+      <button class="btn gold" id="bCloneDl" disabled>⬇️ Download stemvoorbeeld</button>
+      <span class="note" id="cloneT">0:00</span>
+    </div>
+  </details>
 
   <details class="box" id="elBox">
     <summary>ElevenLabs (automatisch maken)</summary>
@@ -104,15 +136,35 @@ kbd{background:#eee;border-radius:4px;padding:0 5px}
 
   <table><tbody id="rows"></tbody></table>
   <input id="one" type="file" accept="audio/*" hidden>
+  <div id="rec" hidden>
+    <div class="recIn">
+      <div class="recTop"><span id="recCnt"></span><button class="btn ghost" id="recX">✕ Sluiten</button></div>
+      <div class="recPrev" id="recPrev"></div>
+      <div class="recWie" id="recWie"></div>
+      <div class="recT" id="recT"></div>
+      <div class="recNext" id="recNext"></div>
+      <canvas id="recLv" width="600" height="40"></canvas>
+      <div class="row" style="justify-content:center">
+        <button class="btn" id="recGo" style="font-size:18px;padding:14px 26px">● Opnemen</button>
+        <button class="btn ghost" id="recPlay" disabled>▶ Luister</button>
+      </div>
+      <div class="row" style="justify-content:center">
+        <button class="btn ghost" id="recSkip">Overslaan →</button>
+        <button class="btn mint" id="recOk" disabled>✓ Goed, volgende</button>
+      </div>
+      <div class="note" id="recMsg" style="text-align:center"></div>
+    </div>
+  </div>
 </main>
 
+<script src="shared/lame.min.js"></script>
 <script src="shared/voice.js?v=1"></script>
 <script>
 (function(){
 "use strict";
 var $=function(s){return document.querySelector(s)},esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})};
 var SET=$("#set").value,LIST=[],HAVE={},NEW={},FILT="alle",Q="",GEN=null,player=new Audio();
-var WIES=["verteller","fenna","dieren","kato","karel","gerda"];
+var WIES=["verteller","fenna","dieren","kato","karel","gerda"];function wies(){var w=[];LIST.forEach(function(o){if(o.wie!=="extra"&&w.indexOf(o.wie)<0)w.push(o.wie)});return w}
 var LSK=function(k,v){try{if(v===undefined)return localStorage.getItem("mms_"+k);localStorage.setItem("mms_"+k,v)}catch(e){}};
 
 /* ---------- opslag van eigen opnames (IndexedDB) ---------- */
@@ -134,9 +186,9 @@ function extras(){try{return JSON.parse(LSK("extra_"+SET)||"[]")}catch(e){return
 
 /* ---------- weergave ---------- */
 function status(o){return NEW[o.k]?"new":HAVE[o.k]?"ok":"no"}
-function chips(){var wies=["alle","ontbrekend"].concat(WIES.filter(function(w){return LIST.some(function(o){return o.wie===w})}));if(LIST.some(function(o){return o.wie==="extra"}))wies.push("extra");
-  $("#filt").innerHTML=wies.map(function(w){return '<button class="chip'+(w===FILT?' on':'')+'" data-f="'+w+'">'+w+'</button>'}).join("");
-  var pw=$("#perWie");pw.innerHTML=WIES.map(function(w){return '<label class="f" style="min-width:140px"><span>'+w+'</span><input data-wie="'+w+'" value="'+esc(LSK("voice_"+w)||"")+'" placeholder="zelfde stem"></label>'}).join("")}
+function chips(){var ws=["alle","ontbrekend"].concat(wies());if(LIST.some(function(o){return o.wie==="extra"}))ws.push("extra");
+  $("#filt").innerHTML=ws.map(function(w){return '<button class="chip'+(w===FILT?' on':'')+'" data-f="'+w+'">'+w+'</button>'}).join("");
+  var pw=$("#perWie");pw.innerHTML=wies().map(function(w){return '<label class="f" style="min-width:140px"><span>'+w+'</span><input data-wie="'+w+'" value="'+esc(LSK("voice_"+w)||"")+'" placeholder="zelfde stem"></label>'}).join("")}
 function shown(){return LIST.filter(function(o){if(FILT==="ontbrekend"&&status(o)!=="no")return false;if(FILT!=="alle"&&FILT!=="ontbrekend"&&o.wie!==FILT)return false;if(Q&&o.t.toLowerCase().indexOf(Q)<0)return false;return true})}
 function render(){var h="",last=null,idx={};LIST.forEach(function(o,i){idx[o.k]=i+1});
   shown().forEach(function(o){if(o.waar!==last){last=o.waar;h+='<tr class="grp"><td colspan="4">'+esc(o.waar)+'</td></tr>'}var st=status(o);
@@ -144,6 +196,7 @@ function render(){var h="",last=null,idx={};LIST.forEach(function(o,i){idx[o.k]=
       '<span class="st '+st+'" title="'+(st==="ok"?"staat op de site":st==="new"?"nieuw, nog niet op de site":"nog geen opname")+'">'+(st==="ok"?"✓":st==="new"?"●":"–")+'</span> '+
       '<button class="ib" data-a="copy" title="Kopieer de zin">📋</button> '+
       '<button class="ib" data-a="play" title="Afspelen"'+(st==="no"?" disabled":"")+'>▶️</button> '+
+      '<button class="ib" data-a="rec" title="Zelf inspreken">🎙️</button> '+
       '<button class="ib" data-a="gen" title="Maak met ElevenLabs">⚡</button> '+
       '<button class="ib" data-a="up" title="Kies een mp3">⬆️</button></td></tr>'});
   $("#rows").innerHTML=h||'<tr><td>Niets gevonden.</td></tr>';count()}
@@ -159,7 +212,8 @@ $("#rows").addEventListener("click",function(e){var b=e.target.closest("button[d
   if(a==="copy"){navigator.clipboard&&navigator.clipboard.writeText(o.t);log("Gekopieerd: "+o.t)}
   else if(a==="play")play(k);
   else if(a==="up"){upFor=k;$("#one").click()}
-  else if(a==="gen"){gen([o]).then(function(){play(k)})}});
+  else if(a==="gen"){gen([o]).then(function(){play(k)})}
+  else if(a==="rec")recOpen([o]);});
 $("#one").addEventListener("change",function(){var f=this.files[0];this.value="";if(f&&upFor)attach(upFor,f)});
 function attach(k,file){var blob=new Blob([file],{type:"audio/mpeg"});NEW[k]=blob;return put(k,blob).then(function(){rowStatus(k);log("Opname gekoppeld.")})}
 function play(k){var src=NEW[k]?URL.createObjectURL(NEW[k]):HAVE[k]?base()+HAVE[k]:null;if(!src)return;player.pause();player.src=src;player.play().catch(function(){})}
@@ -209,14 +263,66 @@ function zip(files){var enc=new TextEncoder(),parts=[],cen=[],off=0;
   var cs=cen.reduce(function(a,x){return a+x.length},0),end=new DataView(new ArrayBuffer(22));end.setUint32(0,0x06054b50,true);end.setUint16(8,files.length,true);end.setUint16(10,files.length,true);end.setUint32(12,cs,true);end.setUint32(16,off,true);
   return new Blob(parts.concat(cen,[new Uint8Array(end.buffer)]),{type:"application/zip"})}
 $("#bZip").onclick=function(){var ks=Object.keys(NEW);if(!ks.length){log("Er zijn nog geen nieuwe opnames.");return}
-  var dir=base(),map=Object.assign({},HAVE);ks.forEach(function(k){map[k]=k+".mp3"});
+  var dir=base(),map=Object.assign({},HAVE);ks.forEach(function(k){map[k]=k+ext(NEW[k])});
   var idx="/* Opnames van "+SET+": sleutel → bestand. Gemaakt door stemstudio.html op "+new Date().toISOString().slice(0,10)+" ("+Object.keys(map).length+" zinnen). */\nwindow.MMV_HAVE=window.MMV_HAVE||{};window.MMV_HAVE[\""+SET+"\"]="+JSON.stringify(map,null,0).replace(/,"/g,',\n"')+";\n";
-  Promise.all(ks.map(function(k){return NEW[k].arrayBuffer().then(function(b){return{name:dir+k+".mp3",data:new Uint8Array(b)}})})).then(function(files){
+  Promise.all(ks.map(function(k){return NEW[k].arrayBuffer().then(function(b){return{name:dir+k+ext(NEW[k]),data:new Uint8Array(b)}})})).then(function(files){
     files.push({name:dir+"index.js",data:new TextEncoder().encode(idx)});
     var a=document.createElement("a");a.href=URL.createObjectURL(zip(files));a.download="stem-"+SET+"-"+new Date().toISOString().slice(0,10)+".zip";document.body.appendChild(a);a.click();a.remove();
     log(ks.length+" nieuwe opnames in het pakket. Stuur het zip-bestand naar Claude (of zet de map games/… in de site).")})};
 $("#bWipe").onclick=function(){var ks=Object.keys(NEW);if(!ks.length)return;if(!confirm("Je "+ks.length+" eigen opnames van deze set wissen? Wat al op de site staat blijft."))return;
   Promise.all(ks.map(del)).then(function(){NEW={};render();log("Gewist.")})};
+
+
+/* ---------- zelf inspreken: microfoon → stilte knippen → mp3 (lamejs) ---------- */
+function ext(b){var t=(b&&b.type)||"";return /mpeg|mp3/.test(t)?".mp3":/mp4|aac|m4a/.test(t)?".m4a":/ogg/.test(t)?".ogg":/webm/.test(t)?".webm":/wav/.test(t)?".wav":".mp3"}
+var REC={stream:null,mr:null,chunks:[],ctx:null,an:null,raf:0,queue:[],i:0,blob:null,busy:false};
+function mime(){var c=["audio/webm;codecs=opus","audio/webm","audio/mp4","audio/ogg;codecs=opus"];for(var i=0;i<c.length;i++)if(window.MediaRecorder&&MediaRecorder.isTypeSupported(c[i]))return c[i];return ""}
+function mic(){if(REC.stream)return Promise.resolve(REC.stream);return navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:true,autoGainControl:true,channelCount:1}}).then(function(st){REC.stream=st;
+  REC.ctx=REC.ctx||new (window.AudioContext||window.webkitAudioContext)();var src=REC.ctx.createMediaStreamSource(st);REC.an=REC.ctx.createAnalyser();REC.an.fftSize=1024;src.connect(REC.an);return st})}
+function meter(cv){var c=cv.getContext("2d"),buf=new Uint8Array(REC.an.fftSize),W=cv.width,H=cv.height,hist=[];
+  (function draw(){REC.raf=requestAnimationFrame(draw);REC.an.getByteTimeDomainData(buf);var m=0;for(var i=0;i<buf.length;i++){var v=Math.abs(buf[i]-128)/128;if(v>m)m=v}hist.push(m);if(hist.length>150)hist.shift();
+    c.clearRect(0,0,W,H);c.fillStyle=REC.mr&&REC.mr.state==="recording"?"#ff6b6b":"#3ccfa8";hist.forEach(function(v,i){var h=Math.max(2,v*H);c.fillRect(i*4,(H-h)/2,3,h)})})()}
+function startRec(){REC.chunks=[];var mr=new MediaRecorder(REC.stream,mime()?{mimeType:mime(),audioBitsPerSecond:96000}:undefined);REC.mr=mr;mr.ondataavailable=function(e){if(e.data.size)REC.chunks.push(e.data)};mr.start(100)}
+function stopRec(){return new Promise(function(ok){var mr=REC.mr;if(!mr||mr.state!=="recording")return ok(null);mr.onstop=function(){REC.mr=null;ok(new Blob(REC.chunks,{type:mr.mimeType||mime()||"audio/webm"}))};mr.stop()})}
+/* decodeer, knip stilte, zet om naar mono mp3 */
+function toMp3(blob,rate,kbps,trim){if(!window.lamejs)return Promise.resolve(blob);rate=rate||22050;kbps=kbps||64;
+  return blob.arrayBuffer().then(function(ab){return REC.ctx.decodeAudioData(ab)}).then(function(buf){
+    var ch=buf.numberOfChannels,n=buf.length,mono=new Float32Array(n),c;for(c=0;c<ch;c++){var d=buf.getChannelData(c);for(var i=0;i<n;i++)mono[i]+=d[i]/ch}
+    var s=0,e=n;if(trim){var th=0.012,pad=Math.round(buf.sampleRate*0.12);while(s<n&&Math.abs(mono[s])<th)s++;while(e>s&&Math.abs(mono[e-1])<th)e--;s=Math.max(0,s-pad);e=Math.min(n,e+pad)}
+    if(e-s<buf.sampleRate*0.15)throw new Error("Te kort of te stil. Probeer opnieuw, iets dichter bij de microfoon.");
+    var cut=mono.subarray(s,e),fade=Math.min(cut.length>>1,Math.round(buf.sampleRate*0.02));for(var k=0;k<fade;k++){cut[k]*=k/fade;cut[cut.length-1-k]*=k/fade}
+    var peak=0;for(var q=0;q<cut.length;q++)if(Math.abs(cut[q])>peak)peak=Math.abs(cut[q]);var g=peak>0?Math.min(4,0.85/peak):1;
+    var off=new OfflineAudioContext(1,Math.ceil(cut.length*rate/buf.sampleRate),rate),b2=off.createBuffer(1,cut.length,buf.sampleRate);b2.getChannelData(0).set(cut);
+    var src=off.createBufferSource(),gn=off.createGain();gn.gain.value=g;src.buffer=b2;src.connect(gn);gn.connect(off.destination);src.start();return off.startRendering()})
+  .then(function(r){var pcm=r.getChannelData(0),i16=new Int16Array(pcm.length);for(var i=0;i<pcm.length;i++){var v=Math.max(-1,Math.min(1,pcm[i]));i16[i]=v<0?v*32768:v*32767}
+    var enc=new lamejs.Mp3Encoder(1,rate,kbps),out=[],B=1152;for(var p=0;p<i16.length;p+=B){var m=enc.encodeBuffer(i16.subarray(p,p+B));if(m.length)out.push(m)}var end=enc.flush();if(end.length)out.push(end);
+    return new Blob(out,{type:"audio/mpeg"})})}
+/* het inspreekvenster */
+function recOpen(list){if(!navigator.mediaDevices||!window.MediaRecorder){alert("Deze browser kan niet opnemen. Probeer Chrome, Edge, Safari of Firefox.");return}
+  REC.queue=list;REC.i=0;if(!list.length){log("Niets om in te spreken in deze weergave.");return}
+  mic().then(function(){$("#rec").hidden=false;meter($("#recLv"));recShow()},function(){alert("Geen toegang tot de microfoon. Sta de microfoon toe voor deze site en probeer opnieuw.")})}
+function recClose(){cancelAnimationFrame(REC.raf);stopRec();$("#rec").hidden=true;REC.blob=null;render()}
+function recShow(){var o=REC.queue[REC.i];if(!o){recClose();log("Klaar met inspreken.");return}var nb=neighbours(o);REC.blob=null;
+  $("#recCnt").textContent=(REC.i+1)+" van "+REC.queue.length;$("#recPrev").textContent=nb.prev?"← "+nb.prev:"";$("#recNext").textContent=nb.next?"→ "+nb.next:"";
+  $("#recWie").innerHTML='<span class="wie '+esc(o.wie)+'">'+esc(o.wie)+'</span> <span class="note">'+esc(o.waar)+'</span>';$("#recT").textContent=o.t;
+  $("#recGo").textContent="● Opnemen";$("#recGo").classList.remove("on");$("#recPlay").disabled=$("#recOk").disabled=true;$("#recMsg").textContent=status(o)!=="no"?"Deze zin heeft al een opname; een nieuwe vervangt hem.":""}
+function recToggle(){if(REC.busy)return;var b=$("#recGo");
+  if(REC.mr&&REC.mr.state==="recording"){REC.busy=true;b.textContent="…";stopRec().then(function(raw){return toMp3(raw,22050,64,$("#recTrim").checked)}).then(function(mp3){REC.blob=mp3;b.textContent="● Opnieuw opnemen";b.classList.remove("on");$("#recPlay").disabled=$("#recOk").disabled=false;$("#recMsg").textContent=(mp3.size/1024).toFixed(0)+" kB · luister even, dan ✓";player.pause();player.src=URL.createObjectURL(mp3);player.play().catch(function(){})},function(e){$("#recMsg").textContent=e.message||"Mislukt, probeer opnieuw.";b.textContent="● Opnemen";b.classList.remove("on")}).then(function(){REC.busy=false})}
+  else{if(REC.ctx.state==="suspended")REC.ctx.resume();player.pause();startRec();b.textContent="■ Stop";b.classList.add("on");$("#recMsg").textContent="Spreek de zin in…";$("#recPlay").disabled=$("#recOk").disabled=true}}
+function recAccept(){var o=REC.queue[REC.i];if(!REC.blob||!o)return;NEW[o.k]=REC.blob;put(o.k,REC.blob).then(function(){rowStatus(o.k);REC.i++;recShow()})}
+$("#recGo").onclick=recToggle;$("#recOk").onclick=recAccept;$("#recX").onclick=recClose;
+$("#recSkip").onclick=function(){REC.i++;recShow()};
+$("#recPlay").onclick=function(){if(!REC.blob)return;player.pause();player.src=URL.createObjectURL(REC.blob);player.play().catch(function(){})};
+document.addEventListener("keydown",function(e){if($("#rec").hidden||e.target.tagName==="INPUT")return;if(e.code==="Space"){e.preventDefault();recToggle()}else if(e.key==="Enter"){e.preventDefault();recAccept()}else if(e.key==="ArrowRight"){REC.i++;recShow()}else if(e.key==="Escape")recClose()});
+$("#bRecStart").onclick=function(){var all=$("#recAll").checked;recOpen(shown().filter(function(o){return all||status(o)==="no"}))};
+
+/* ---------- stemvoorbeeld voor een stemkloon ---------- */
+var CL={blob:null,t0:0,iv:0};
+$("#bCloneRec").onclick=function(){var b=this;
+  if(REC.mr&&REC.mr.state==="recording"){clearInterval(CL.iv);b.textContent="…";stopRec().then(function(raw){return toMp3(raw,44100,128,true)}).then(function(mp3){CL.blob=mp3;b.textContent="● Opnieuw opnemen";$("#bClonePlay").disabled=$("#bCloneDl").disabled=false;log("Stemvoorbeeld klaar: "+(mp3.size/1024).toFixed(0)+" kB.")},function(e){b.textContent="● Opnemen";log(e.message)});return}
+  mic().then(function(){if(REC.ctx.state==="suspended")REC.ctx.resume();startRec();CL.t0=Date.now();b.textContent="■ Stop";CL.iv=setInterval(function(){var s=Math.round((Date.now()-CL.t0)/1000);$("#cloneT").textContent=Math.floor(s/60)+":"+String(s%60).padStart(2,"0")},500)},function(){alert("Geen toegang tot de microfoon.")})};
+$("#bClonePlay").onclick=function(){if(!CL.blob)return;player.pause();player.src=URL.createObjectURL(CL.blob);player.play().catch(function(){})};
+$("#bCloneDl").onclick=function(){if(!CL.blob)return;var a=document.createElement("a");a.href=URL.createObjectURL(CL.blob);a.download="stemvoorbeeld-"+SET+".mp3";document.body.appendChild(a);a.click();a.remove()};
 
 /* ---------- filters ---------- */
 $("#filt").addEventListener("click",function(e){var b=e.target.closest(".chip");if(!b)return;FILT=b.dataset.f;chips();render()});
