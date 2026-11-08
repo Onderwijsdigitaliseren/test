@@ -58,17 +58,7 @@ kbd{background:#eee;border-radius:4px;padding:0 5px}
 <body>
 <header>
   <h1>🎙️ Stemstudio</h1>
-  <select id="set" aria-label="Spel en taal">
-    <option value="pony_nl">Pony Pluis · Nederlands</option>
-    <option value="pony_en">Pony Fluff · English</option>
-    <option value="jacht_nl">De Lichtjesdief · Nederlands</option>
-    <option value="jacht_en">The Light Thief · English</option>
-    <option value="taart_nl">Wie heeft de taart gepakt? · Nederlands</option>
-    <option value="agent_nl">Agent voor Eén Dag · Nederlands</option>
-    <option value="agent_en">Officer for a Day · English</option>
-    <option value="spiegel_nl">De Betoverde Toverspiegel · Nederlands</option>
-    <option value="spiegel_en">The Enchanted Mirror · English</option>
-  </select>
+  <select id="set" aria-label="Spel en taal"></select>
   <input type="search" id="q" placeholder="Zoek in de zinnen…" aria-label="Zoeken">
   <div class="stat"><span id="cnt">…</span><div class="bar"><i id="barI"></i></div></div>
 </header>
@@ -158,11 +148,15 @@ kbd{background:#eee;border-radius:4px;padding:0 5px}
 </main>
 
 <script src="shared/lame.min.js"></script>
+<script src="shared/platform.js?v=mm17"></script>
+<script src="shared/catalog.js?v=mm16"></script>
 <script src="shared/voice.js?v=1"></script>
 <script>
 (function(){
 "use strict";
 var $=function(s){return document.querySelector(s)},esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})};
+/* het keuzemenu komt uit de catalogus: elk spel in beide talen (de lijst zelf maakt _tools/stemscript.js) */
+(function(){var sel=$("#set"),h="";((window.MW_CATALOG&&MW_CATALOG.games)||[]).forEach(function(g){var dir=g.dir||g.id;["nl","en"].forEach(function(l){if(!g[l]||(l==="en"&&g.en.slug===g.nl.slug))return;h+='<option value="'+dir+"_"+l+'">'+esc(g[l].title)+" · "+(l==="nl"?"Nederlands":"English")+"</option>"})});sel.innerHTML=h;var last=null;try{last=localStorage.getItem("mms_set")}catch(e){}if(last&&sel.querySelector('option[value="'+last+'"]'))sel.value=last})();
 var SET=$("#set").value,LIST=[],HAVE={},NEW={},FILT="alle",Q="",GEN=null,player=new Audio();
 var WIES=["verteller","fenna","dieren","kato","karel","gerda"];function wies(){var w=[];LIST.forEach(function(o){if(o.wie!=="extra"&&w.indexOf(o.wie)<0)w.push(o.wie)});return w}
 var LSK=function(k,v){try{if(v===undefined)return localStorage.getItem("mms_"+k);localStorage.setItem("mms_"+k,v)}catch(e){}};
@@ -327,7 +321,7 @@ $("#bCloneDl").onclick=function(){if(!CL.blob)return;var a=document.createElemen
 /* ---------- filters ---------- */
 $("#filt").addEventListener("click",function(e){var b=e.target.closest(".chip");if(!b)return;FILT=b.dataset.f;chips();render()});
 var qt;$("#q").addEventListener("input",function(){clearTimeout(qt);var v=this.value;qt=setTimeout(function(){Q=v.trim().toLowerCase();render()},150)});
-$("#set").addEventListener("change",function(){SET=this.value;FILT="alle";load()});
+$("#set").addEventListener("change",function(){SET=this.value;LSK("set",SET);FILT="alle";load()});
 load();
 })();
 </script>

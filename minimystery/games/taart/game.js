@@ -17,16 +17,7 @@ var SBY={};D.S.forEach(function(s){SBY[s.id]=s});
 var G=null,tick=0,tmr=0;
 
 /* ---------- plekken (deel 2) ---------- */
-var PLACES=[
- {id:"schuur",name:"de schuur",buiten:true,hoog:false,koud:true,alibi:"Niet in de schuur: daar zit een slot op en de sleutel is al weken zoek."},
- {id:"koelkast",name:"de koelkast",buiten:false,hoog:false,koud:true,alibi:"Niet in de koelkast: die zit propvol limonade, er past geen taart meer bij."},
- {id:"zolder",name:"de zolder",buiten:false,hoog:true,koud:false,alibi:"Niet op zolder: de zoldertrap kraakt enorm en niemand heeft dat gehoord."},
- {id:"bank",name:"onder de bank",buiten:false,hoog:false,koud:false,alibi:"Niet onder de bank: Hond Bo heeft daar net gezocht naar zijn sok."},
- {id:"boom",name:"in de boom",buiten:true,hoog:true,koud:false,alibi:"Niet in de boom: de ladder ligt op de grond en niemand kan zo hoog klimmen."}];
-var PC={
- buiten:{true:{t:"Modder aan de doos",d:"Op de vloer ligt een stukje van de taartdoos met modder eraan. De taart is buiten!",strike:"binnen"},false:{t:"Geen modder",d:"Nergens modder, geen natte voetstappen. De taart is binnen gebleven.",strike:"buiten"}},
- hoog:{true:{t:"Slagroom op de leuning",d:"Op een trapleuning en een ladder zit slagroom. De taart is naar boven gegaan: hij ligt hoog!",strike:"laag"},false:{t:"Slagroom op de vloer",d:"Een slagroomspoor over de vloer, en nergens hoger. De taart ligt laag.",strike:"hoog"}},
- koud:{true:{t:"Stijve slagroom",d:"Een klodder slagroom die we vonden is nog stijf en koud. De taart staat op een koude plek!",strike:"warm"},false:{t:"Gesmolten slagroom",d:"De slagroom die we vonden is helemaal gesmolten. De taart staat op een warme plek.",strike:"koud"}}};
+var PLACES=D.PLACES,PC=D.PC;
 
 /* ---------- hulpjes ---------- */
 function rngOf(seed){var a=seed>>>0;return function(){a=(a+0x6D2B79F5)>>>0;var t=a;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return((t^(t>>>14))>>>0)/4294967296}}
@@ -287,22 +278,22 @@ function verdict(s){if(s.id===G.c.culprit){G.won=true;G.stars=G.tries===3?3:G.tr
 
 /* ---------- deel 2: waar is de taart? ---------- */
 function part2(){show("play");hud();var c=SBY[G.c.culprit];
-  var txt=c.name+" geeft toe, maar zegt niet waar de taart is. Vijf verstopplekken. Doe de opdrachten, verzamel plek-sporen en streep weg waar de taart níet kan zijn.";
+  var txt=c.name+" "+ST.part2;
   card('<h2>Waar is de taart?</h2>'+bubble(esc(txt))+'<div class="grid">'+PLACES.map(function(p){return '<div class="sc">'+placePic(p)+'<b>'+esc(cap(p.name))+'</b></div>'}).join("")+'</div>','<button type="button" class="btn" id="bNext">'+esc(T.go)+'</button>');
   say(txt);$("#bNext").onclick=function(){hush();G.phase="task";save();route()}}
 function pfind(){show("play");hud();
-  card('<h2>Waar is de taart?</h2>'+bubble("Jullie hebben alle plek-sporen. Waar ligt de taart? Kies samen.")+'<p class="note">'+esc(fill(T.tries,{n:G.ptries}))+'</p><div class="grid" id="gr">'+PLACES.map(function(p){var out=G.paccused&&G.paccused.indexOf(p.id)>=0;return '<button type="button" class="sc'+(out||G.pstruck[p.id]?" x":"")+'" data-id="'+p.id+'"'+(out?' disabled':'')+'>'+placePic(p)+'<b>'+esc(cap(p.name))+'</b></button>'}).join("")+'</div>','');
-  say("Waar ligt de taart? Kies samen.");
+  card('<h2>Waar is de taart?</h2>'+bubble(esc(ST.pfind))+'<p class="note">'+esc(fill(T.tries,{n:G.ptries}))+'</p><div class="grid" id="gr">'+PLACES.map(function(p){var out=G.paccused&&G.paccused.indexOf(p.id)>=0;return '<button type="button" class="sc'+(out||G.pstruck[p.id]?" x":"")+'" data-id="'+p.id+'"'+(out?' disabled':'')+'>'+placePic(p)+'<b>'+esc(cap(p.name))+'</b></button>'}).join("")+'</div>','');
+  say(ST.pfind);
   $("#gr").onclick=function(e){var b=e.target.closest(".sc");if(!b||b.disabled)return;var p=PLACES.filter(function(x){return x.id===b.dataset.id})[0];
     if(p.id===G.c.place){G.found=true;if(G.ptries<2&&G.stars>0)G.stars--;save();cheer();buzz([80,50,200]);return finale()}
     G.ptries--;G.paccused=(G.paccused||[]).concat([p.id]);G.pstruck[p.id]=true;beep(180,400,"sawtooth");buzz(300);
-    if(G.ptries<=0){G.found=true;if(G.stars>0)G.stars--;save();toast("Inspecteur Kruimel: de taart lag "+PLACES.filter(function(x){return x.id===G.c.place})[0].name+"!");return setTimeout(finale,1200)}
+    if(G.ptries<=0){G.found=true;if(G.stars>0)G.stars--;save();toast(fill(ST.pfindLast,{p:PLACES.filter(function(x){return x.id===G.c.place})[0].name}));return setTimeout(finale,1200)}
     save();sheet('<h2>'+esc(cap(p.name))+'</h2>'+bubble(esc(p.alibi))+'<button type="button" class="btn" id="shX">'+esc(T.again)+'</button>');say(p.alibi);$("#shX").onclick=function(){closeSheet();pfind()}}}
 
 /* ---------- finale ---------- */
 function finale(){clearInterval(tmr);show("play");var c=SBY[G.c.culprit],p=PLACES.filter(function(x){return x.id===G.c.place})[0];
   if(!G.logged){G.logged=true;var min=(Date.now()-(G.t0||Date.now()))/6e4;MW.profile.award({game:ID,xp:40+G.stars*20,stars:G.stars,gps:false,min:min,km:0,title:"Wie heeft de taart gepakt?",code:G.code});save()}
-  var end=ST.end+(LENR[G.len][1]?" Hij lag "+p.name+".":"");
+  var end=ST.end+(LENR[G.len][1]?" "+fill(ST.endPlace,{p:p.name}):"");
   var h='<h2>'+esc(T.won)+'</h2><div class="stars">'+"★".repeat(G.stars)+"☆".repeat(3-G.stars)+'</div>'+(ok("taart")?'<img class="hero" src="'+IMGROOT+'taart.webp?v=1" alt="">':'<div class="cake dark">🎂</div>')+bubble(esc(end));
   if(G.treat)h+=bubble(esc(fill(ST.treat,{treat:G.treat})));
   if(kids().length>=2)h+=bubble(esc(ST.missionsReveal))+'<ul class="ms">'+G.missions.map(function(m){return '<li>'+esc(D.MISSIONS[m])+'</li>'}).join("")+'</ul>';

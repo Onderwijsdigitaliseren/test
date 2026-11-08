@@ -24,6 +24,12 @@ Zusje van Moordwandeling / Murder Walk: zelfde motor, zelfde Pro/groepspas en de
 /sitemap.xml /robots.txt /404.html /CNAME
 ```
 
+## Stemmen (stemstudio)
+- `stemstudio.html` (noindex): per spel en taal alle zinnen; zelf inspreken via de microfoon (stilte knippen → mp3 met shared/lame.min.js), mp3's koppelen of ElevenLabs. Menu komt uit `shared/catalog.js` (`dir` = map onder games/).
+- Zinnenlijsten: `games/<spel>/voice/<taal>/script.js`, gemaakt door `node _tools/stemscript.js` (alle spellen) of `node _tools/stemscript.js <map> <taal>` (één spel, ook voor de met de hand samengestelde lijsten van pony/jacht/agent/spiegel). Draai dit na elke tekstwijziging en bij elk nieuw spel; bestaande wie/waar blijven staan, vervallen zinnen krijgen een †.
+- Spelregels per spel (welke sleutels geen spraak zijn, wie wat zegt, plaatshouders) staan in `RULES` in het gereedschap. Zinnen met een niet-ingevulde {plaatshouder} blijven browserstem.
+- Opnames: `games/<spel>/voice/<taal>/<sleutel>.mp3` + `index.js` (uit het zip-pakket van de studio). `shared/voice.js` speelt een mp3 als die er is en laat anders de telefoon voorlezen.
+
 ## Codes
 Nieuwe codes maak je zoals altijd met codes.html op Moordwandeling. MiniMystery leest die lijst direct mee.
 Werk /codes.json hier af en toe bij als terugval (gewoon een kopie).

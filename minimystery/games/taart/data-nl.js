@@ -57,6 +57,17 @@ C:{
         false:{t:"Kruimels bovenop de kast",d:"Bovenop de hoge kast liggen kruimels. Daar komt alleen iemand bij die groot is. De dief is groot!",strike:"klein"}},
  kleur:{t:"Een draadje van {k}",d:"Aan de deurklink hangt een draadje. Het is {k}! De dief had iets {k}s bij zich.",strike:"niks {k}s"}
 },
+/* ---------- verstopplekken (deel 2) en plek-sporen ---------- */
+PLACES:[
+ {id:"schuur",name:"de schuur",buiten:true,hoog:false,koud:true,alibi:"Niet in de schuur: daar zit een slot op en de sleutel is al weken zoek."},
+ {id:"koelkast",name:"de koelkast",buiten:false,hoog:false,koud:true,alibi:"Niet in de koelkast: die zit propvol limonade, er past geen taart meer bij."},
+ {id:"zolder",name:"de zolder",buiten:false,hoog:true,koud:false,alibi:"Niet op zolder: de zoldertrap kraakt enorm en niemand heeft dat gehoord."},
+ {id:"bank",name:"onder de bank",buiten:false,hoog:false,koud:false,alibi:"Niet onder de bank: Hond Bo heeft daar net gezocht naar zijn sok."},
+ {id:"boom",name:"in de boom",buiten:true,hoog:true,koud:false,alibi:"Niet in de boom: de ladder ligt op de grond en niemand kan zo hoog klimmen."}],
+PC:{
+ buiten:{true:{t:"Modder aan de doos",d:"Op de vloer ligt een stukje van de taartdoos met modder eraan. De taart is buiten!",strike:"binnen"},false:{t:"Geen modder",d:"Nergens modder, geen natte voetstappen. De taart is binnen gebleven.",strike:"buiten"}},
+ hoog:{true:{t:"Slagroom op de leuning",d:"Op een trapleuning en een ladder zit slagroom. De taart is naar boven gegaan: hij ligt hoog!",strike:"laag"},false:{t:"Slagroom op de vloer",d:"Een slagroomspoor over de vloer, en nergens hoger. De taart ligt laag.",strike:"hoog"}},
+ koud:{true:{t:"Stijve slagroom",d:"Een klodder slagroom die we vonden is nog stijf en koud. De taart staat op een koude plek!",strike:"warm"},false:{t:"Gesmolten slagroom",d:"De slagroom die we vonden is helemaal gesmolten. De taart staat op een warme plek.",strike:"koud"}}},
 /* ---------- opdrachten: huis (met timer) en telefoon (minispel) ---------- */
 TASKS:[
  {id:"rond",kind:"house",t:"Sporenjacht: rond",d:"Zoek samen in anderhalve minuut vijf dingen die rond zijn en leg ze op tafel. Een bord, een bal, een knoop…",sec:90,ok:"Vijf ronde dingen gevonden!"},
@@ -98,6 +109,8 @@ STORY:{
  right:"Ja! {s} heeft de taart gepakt! {reveal}",
  end:"De taart is terug. Hij is wel een beetje gedeukt, maar nog steeds heerlijk. Zaak gesloten, team!",
  treat:"En Inspecteur Kruimel heeft nog één spoor… {treat}",
+ part2:"geeft toe, maar zegt niet waar de taart is. Vijf verstopplekken. Doe de opdrachten, verzamel plek-sporen en streep weg waar de taart níet kan zijn.",
+ pfind:"Jullie hebben alle plek-sporen. Waar ligt de taart? Kies samen.",pfindLast:"Inspecteur Kruimel: de taart lag {p}!",endPlace:"Hij lag {p}.",
  missionsReveal:"Nu de geheime missies. Wie had welke missie? Raad om de beurt, en vertel dan of het gelukt is."
 },
 /* ---------- knoppen en korte teksten ---------- */
