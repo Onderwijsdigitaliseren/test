@@ -20,7 +20,7 @@ var CFG={
   },
   /* MiniMystery Educatie: één Schoolpas voor alle educatieve wandelingen (catalog "line":"educatie"), codes met "spel":"educatie" */
   edu:{
-    shop:"",                         // Ko-fi-product Schoolpas MiniMystery Educatie (leeg = nog geen koopknop)
+    shop:"https://ko-fi.com/s/76c337bb9e", // Ko-fi-product Schoolpas MiniMystery Educatie
     price:"€ 39,99",
     dagen:183                        // zes maanden vanaf het invoeren (staat ook als "dagen" bij de code in codes.json)
   },
