@@ -140,3 +140,118 @@ h2{font-size:24px;color:var(--pink)}
 #card .cluecard,#card .clist .chip{color:var(--ink)}
 #card .timer,#card .stars{color:var(--lamp)}
 #toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:20px;font-family:var(--f-type);z-index:60;max-width:90%}
+/* ================= nieuwe opdrachten ================= */
+.c{text-align:center}
+#card .c{display:block}
+.hold-em{display:block;font-size:64px;line-height:1.1;margin-bottom:6px}
+.hold .hid{display:block}
+/* onthulling van een spoor */
+.reveal{background:#fff;border-radius:22px;padding:18px;text-align:center;color:var(--ink);box-shadow:0 10px 30px rgba(0,0,0,.25);animation:pop .5s cubic-bezier(.2,1.6,.4,1)}
+.rv-em{font-size:110px;line-height:1.1}
+.rv-word{display:inline-block;font-family:var(--f-type);font-weight:700;font-size:34px;letter-spacing:.08em;background:var(--lamp);color:var(--ink);padding:4px 18px;border-radius:10px;transform:rotate(-2deg)}
+@keyframes pop{0%{transform:scale(.3);opacity:0}100%{transform:scale(1);opacity:1}}
+.cl-em{float:right;font-size:52px;line-height:1;margin:0 0 6px 8px}
+.cluecard::after{content:"";display:block;clear:both}
+.cluecard small{color:var(--ink2)}
+.drawn{display:block;width:100%;max-width:340px;margin:0 auto;border-radius:14px;border:3px solid #fff;box-shadow:0 6px 18px rgba(0,0,0,.25);background:#fff}
+.drawn.sm{max-width:180px;margin-top:10px}
+.drawn.photo{max-width:100%}
+/* tekenen */
+.dpad{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+.dpad canvas{display:block;touch-action:none;cursor:crosshair}
+.pal{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.sw{width:38px;height:38px;border-radius:50%;border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.sw.on{outline:3px solid var(--lamp);outline-offset:2px;transform:scale(1.12)}
+.sw.wipe{width:auto;border-radius:20px;padding:0 14px;background:#fff;color:var(--ink);font-family:var(--f-type);font-weight:600}
+.tbar{height:10px;background:rgba(255,255,255,.25);border-radius:6px;overflow:hidden}.tbar i{display:block;height:100%;width:100%;background:var(--lamp);transition:width .25s linear}
+.opts.three{grid-template-columns:repeat(3,1fr)}
+.dopt{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 4px}
+.oe{font-size:40px;line-height:1.1}
+.dopt small{font-size:12px;font-family:var(--f-type);color:var(--ink2)}
+.opt:disabled{opacity:.45}
+/* bloem wegvegen */
+.scr{position:relative;width:100%;aspect-ratio:1/1;border-radius:20px;overflow:hidden;background:#fff;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+.scr-in{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--ink)}
+.scr canvas{position:absolute;inset:0;touch-action:none}
+/* kaarsjes */
+.bcake{position:relative;height:250px;margin-top:10px;color:var(--ink)}
+.layer{position:absolute;left:8%;right:8%;border-radius:16px 16px 10px 10px}
+.l1{bottom:0;height:80px;background:repeating-linear-gradient(90deg,#e8456b 0 22px,#f7a9c2 22px 44px);border:3px solid #7a3a55}
+.l2{bottom:76px;left:14%;right:14%;height:66px;background:#fff6e8;border:3px solid #7a3a55;box-shadow:inset 0 10px 0 #fff}
+.cdls{position:absolute;left:14%;right:14%;bottom:138px;height:90px}
+.cdl{position:absolute;bottom:0;width:16px;height:58px;margin-left:-8px;border-radius:5px;border:2px solid #7a3a55;padding:0;background:repeating-linear-gradient(160deg,#fff 0 6px,#3a8fe0 6px 12px)}
+.cdl.c1{background:repeating-linear-gradient(160deg,#fff 0 6px,#f4c20d 6px 12px)}.cdl.c2{background:repeating-linear-gradient(160deg,#fff 0 6px,#3f9a4f 6px 12px)}.cdl.c3{background:repeating-linear-gradient(160deg,#fff 0 6px,#8e5bd6 6px 12px)}
+.fl{position:absolute;left:50%;bottom:58px;width:18px;height:28px;margin-left:-9px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:radial-gradient(circle at 50% 70%,#fff6b0 0,#ffd23f 35%,#ff8a1f 70%,rgba(255,80,0,0) 72%);animation:flick .35s infinite alternate;transform-origin:50% 100%}
+.bcake.wob .fl{animation-duration:.08s}
+@keyframes flick{from{transform:scale(1,1) rotate(-3deg)}to{transform:scale(.9,1.12) rotate(3deg)}}
+.cdl.out .fl{display:none}
+.cdl.out::after{content:"💨";position:absolute;left:50%;bottom:56px;transform:translateX(-50%);font-size:22px;animation:smoke 1.4s forwards}
+@keyframes smoke{to{transform:translate(-50%,-50px) scale(1.6);opacity:0}}
+.cdls.tap .cdl:not(.out){cursor:pointer;box-shadow:0 0 0 4px rgba(244,194,13,.6)}
+.smoke{position:absolute;left:0;right:0;top:-10px;display:flex;flex-direction:column;align-items:center;opacity:0;transform:translateY(30px);transition:all 1.4s ease-out;pointer-events:none}
+.smoke span{font-size:70px;filter:drop-shadow(0 0 12px #fff)}.smoke b{font-family:var(--f-type);font-size:30px;color:#fff;text-shadow:0 0 12px #000;letter-spacing:.1em}
+.smoke.on{opacity:1;transform:none}
+.meter{height:14px;background:rgba(255,255,255,.25);border-radius:8px;overflow:hidden;position:relative}
+.meter i{display:block;height:100%;width:0;background:linear-gradient(90deg,#3f9a4f,#f4c20d,#e8456b);transition:width .08s}
+.meter.big{height:22px}.meter.big b{position:absolute;left:70%;top:-3px;bottom:-3px;width:3px;background:var(--ink)}
+/* kruimelzak */
+.bag{position:relative;height:200px;display:grid;place-items:center;color:var(--ink);cursor:pointer;user-select:none}
+.bag-em{font-size:130px;line-height:1;display:block}
+.bag.shk .bag-em{animation:shk .25s}
+@keyframes shk{25%{transform:rotate(-14deg) translateX(-8px)}75%{transform:rotate(14deg) translateX(8px)}}
+.crumbp{position:absolute;left:50%;top:45%;font-size:24px;animation:fly .8s ease-out forwards;pointer-events:none}
+@keyframes fly{to{transform:translate(var(--dx),var(--dy)) rotate(200deg);opacity:0}}
+/* puzzel */
+.pz{display:grid;gap:3px;background:#fff;padding:3px;border-radius:12px;aspect-ratio:1/1;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+.tile{border:0;padding:0;border-radius:4px;aspect-ratio:1/1;background-repeat:no-repeat;transition:transform .12s}
+.tile.sel{outline:4px solid var(--lamp);outline-offset:-4px;transform:scale(.92)}
+.pz.done{gap:0}.pz.done .tile{border-radius:0}
+.pzex{display:flex;align-items:center;gap:10px;justify-content:center}.pzex img{width:76px;border-radius:8px;border:2px solid #fff}.pzex small{color:#fff;font-family:var(--f-type)}
+/* geheimschrift */
+.npaper{background:#fffaf0;border-radius:6px;padding:16px 10px;transform:rotate(-1deg);box-shadow:0 8px 20px rgba(0,0,0,.25);background-image:repeating-linear-gradient(#fffaf0 0 30px,#e0d4b4 30px 31px);color:var(--ink)}
+.coded,.ans{display:flex;justify-content:center;gap:6px;flex-wrap:wrap}
+.coded span{font-size:34px;width:40px;text-align:center}
+.ans span{width:40px;height:44px;border-bottom:3px solid var(--ink);font-family:var(--f-type);font-size:30px;font-weight:700;text-align:center;line-height:44px}
+.ans span.g{color:#2a6b3a}.ans span.b{color:var(--pink)}
+.key{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;background:#fff;border-radius:14px;padding:8px;color:var(--ink)}
+.key span{display:flex;align-items:center;justify-content:center;gap:4px;font-family:var(--f-type);font-weight:700;font-size:18px;background:#fff3d6;border-radius:8px;padding:4px}
+.key b{font-size:22px;font-weight:400}
+.kp{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.kp button{background:#fff;color:var(--ink);border-radius:12px;padding:12px 0;font-family:var(--f-type);font-size:22px;font-weight:700;border:2px solid var(--rule)}
+.kp .del{background:var(--lamp)}
+/* sluipdetector */
+.guard{background:#dff3d4;border-radius:22px;padding:16px;display:flex;flex-direction:column;gap:12px;align-items:center;color:#2a6b3a;transition:background .2s}
+.guard.alarm{background:#e8456b;color:#fff;animation:blink .24s infinite alternate}
+.guard.win{background:#fff3d6;color:var(--ink)}
+@keyframes blink{to{background:#7a1030}}
+.g-em{font-size:90px;line-height:1}
+.g-st{font-family:var(--f-type);font-weight:700;font-size:24px;text-align:center}
+.guard .meter{width:100%;background:rgba(0,0,0,.12)}
+.touch{width:100%;min-height:150px;border-radius:18px;background:#fff;color:var(--ink);font-family:var(--f-type);font-weight:700;font-size:22px;border:4px dashed #2a6b3a}
+/* taart dragen */
+.plate{position:relative;width:min(100%,320px);aspect-ratio:1/1;margin:0 auto;border-radius:50%;background:radial-gradient(circle,#fff 0 60%,#f0e6d2 61% 66%,#fff 67% 100%);box-shadow:0 10px 30px rgba(0,0,0,.3),inset 0 0 0 6px #e0d4b4;touch-action:none;display:grid;place-items:center}
+.pcake{font-size:90px;line-height:1;will-change:transform}
+.pcake.fall{animation:fall2 .6s forwards}
+@keyframes fall2{to{transform:translateY(160px) rotate(120deg);opacity:0}}
+/* keukenorkest */
+.simon{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.spad{aspect-ratio:1/1;border-radius:24px;border:0;background:var(--c);font-size:64px;box-shadow:0 8px 0 rgba(0,0,0,.25);opacity:.7;transition:all .1s}
+.spad.lit{opacity:1;transform:scale(1.06);box-shadow:0 0 0 6px #fff,0 0 30px var(--c)}
+/* verschillen */
+.dg{display:grid;gap:4px;background:#e8dcc8;border-radius:14px;padding:8px}
+.dg span,.dg button{display:grid;place-items:center;aspect-ratio:1/1;font-size:34px;background:#fff6e8;border-radius:10px;border:0;padding:0}
+.dg.bot{background:#f6c7d6}
+.dg button.found{box-shadow:0 0 0 4px #2a6b3a inset;background:#dff3d4}
+.dg button.nope{animation:shk .3s}
+/* doolhof */
+.mz{display:flex;justify-content:center}.mz canvas{border-radius:12px;touch-action:none;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+/* dossier */
+.dos{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.dos figure{margin:0;background:#fff;padding:6px 6px 4px;border-radius:6px;box-shadow:0 6px 14px rgba(0,0,0,.25);transform:rotate(-1.5deg)}
+.dos figure:nth-child(even){transform:rotate(1.5deg)}
+.dos img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:3px;display:block}
+.dos figcaption{font-family:var(--f-hand);font-size:13px;color:var(--ink);text-align:center;padding-top:4px;line-height:1.2}
+.dipdos{display:flex;gap:6px;justify-content:center}.dipdos img{width:70px;height:70px;object-fit:cover;border-radius:4px;border:2px solid var(--rule)}
+#toast{top:auto;height:auto;min-height:0;bottom:calc(24px + env(safe-area-inset-bottom,0px));padding:10px 18px;line-height:1.3;text-align:center}
+.dg{max-width:340px;margin:0 auto;width:100%}
+.dg span,.dg button{aspect-ratio:auto;height:54px;font-size:30px}

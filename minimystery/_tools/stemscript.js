@@ -24,8 +24,8 @@ const LOOKS_CODE=/^(#|\.|\/|https?:|www\.|[a-z0-9_-]+\.(webp|png|jpg|svg|mp3|js|
 
 const RULES={
  taart:{
-  skip:["T","MISSIONS","ROLES"],                  // knoppen, missiekaartjes en rolbeschrijvingen staan alleen op het scherm
-  skipKeys:/^(name|short|kleurNaam|thing|strike)$/,
+  skip:["T","MISSIONS","ROLES","CV"],                  // knoppen, missiekaartjes en rolbeschrijvingen staan alleen op het scherm
+  skipKeys:/^(name|short|kleurNaam|thing|strike|em|word|draw|label|a|o)$/,
   keep:[["T","freezeGo"],["T","freezeStop"]],     // maar deze twee spreekt het spel wel uit
   expand:{"{k}":["paars","groen","rood","geel","oranje","blauw","roze"],"{naam}":null,"{n}":null,"{s}":null,"{role}":null,"{timer}":null,"{strike}":null,"{p}":null,"{reveal}":null,"{alibi}":null,"{treat}":null},
   wie:(p,o)=>p[0]==="S"&&/^(truth|lie)$/.test(p[2])?o.id:"verteller",

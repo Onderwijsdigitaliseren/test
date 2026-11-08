@@ -70,22 +70,67 @@ PC:{
  koud:{true:{t:"Stijve slagroom",d:"Een klodder slagroom die we vonden is nog stijf en koud. De taart staat op een koude plek!",strike:"warm"},false:{t:"Gesmolten slagroom",d:"De slagroom die we vonden is helemaal gesmolten. De taart staat op een warme plek.",strike:"koud"}}},
 /* ---------- opdrachten: huis (met timer) en telefoon (minispel) ---------- */
 TASKS:[
- {id:"rond",kind:"house",t:"Sporenjacht: rond",d:"Zoek samen in anderhalve minuut vijf dingen die rond zijn en leg ze op tafel. Een bord, een bal, een knoop…",sec:90,ok:"Vijf ronde dingen gevonden!"},
- {id:"kleur",kind:"house",t:"Sporenjacht: de kleur van de dag",d:"Zoek in één minuut drie dingen in de kleur van de slingers (of: drie gele dingen). Leg ze bij elkaar.",sec:60,ok:"Gevonden!"},
- {id:"sluip",kind:"house",t:"Sluipen",d:"Een dief sluipt. Iedereen sluipt zo stil mogelijk van de ene kant van de kamer naar de andere. De Tijdbaas luistert met gesloten ogen: hoort hij of zij een kraak, dan opnieuw!",sec:0,ok:"Niemand gehoord. Echte sluipers!"},
- {id:"toren",kind:"house",t:"Taarttoren",d:"Bouw in één minuut een toren van kussens, boeken of dozen. Zo hoog als een taart van tien lagen. Hij moet drie tellen blijven staan.",sec:60,ok:"De toren staat!"},
- {id:"letter",kind:"house",t:"De letter T",d:"Maak met jullie lichamen samen op de grond de letter T, van Taart. De begeleider kijkt van bovenaf.",sec:0,ok:"Een prachtige T!"},
- {id:"dieren",kind:"house",t:"Dierentocht",d:"Loop als Hond Bo naar de deur (op handen en voeten, met geblaf) en kom als Kat Mimi terug (sluipend, met gemiauw).",sec:0,ok:"Woef en miauw!"},
- {id:"standbeeld",kind:"freeze",t:"Standbeeld!",d:"Loop door de kamer. Als de telefoon STOP roept, sta je stil als een standbeeld. Wie beweegt, doet een gek dansje. Drie keer.",sec:0,ok:"Prachtige standbeelden!"},
- {id:"schat",kind:"house",t:"Kruimelspoor",d:"De begeleider verstopt (terwijl iedereen de ogen dicht heeft) een lepel ergens in de kamer. Zoek hem. Warm… warmer… heet!",sec:120,ok:"De lepel is terecht!"},
+ /* geeft het spoor zelf: het spoor zit in de opdracht verstopt */
+ {id:"teken",kind:"draw",give:1,t:"Tekenspoor",d:"Eén detective ziet het spoor in het geheim en tekent het op de telefoon. Niet praten, niet schrijven! De rest raadt hardop."},
+ {id:"kras",kind:"scratch",give:1,t:"Bloem op het aanrecht",d:"Het spoor ligt onder een dikke laag bloem. Veeg om de beurt met je vinger de bloem weg."},
+ {id:"blaas",kind:"blow",give:1,t:"Kaarsjes uitblazen",d:"Blaas om de beurt in de telefoon tot alle kaarsjes uit zijn. In de rook verschijnt het spoor!"},
+ {id:"puzzel",kind:"puzzle",give:1,t:"De gescheurde foto",d:"De bewijsfoto is in stukjes gescheurd. Tik twee stukjes aan om ze te wisselen, tot de foto weer heel is."},
+ {id:"code",kind:"code",give:1,lv:1,t:"Geheimschrift",d:"De dief liet een briefje achter in geheimschrift. Zoek elk teken op in de sleutel en kraak het woord."},
+ {id:"schud",kind:"shake",give:1,t:"De kruimelzak",d:"In de zak zitten kruimels, en het spoor! Schud de telefoon om de beurt flink, tot de zak leeg is."},
+ /* de telefoon meet mee */
+ {id:"sluip",kind:"sneak",t:"Sluipdetector",d:"Leg de telefoon op de grond: hij bewaakt de taart. Sluip er om de beurt naartoe en tik op het scherm. Maak je geluid? Dan gaat het alarm af en moet je terug naar de deur!"},
+ {id:"draag",kind:"tilt",t:"Taart dragen",d:"Houd de telefoon plat als een dienblad. Loop naar de deur en terug zonder dat de taart van het bord glijdt. Om de beurt, drie keer moet het lukken!"},
+ {id:"orkest",kind:"simon",t:"Het keukenorkest",d:"De pannen spelen een liedje. Luister goed en speel het precies na. Het liedje wordt steeds langer!"},
+ {id:"foto",kind:"photo",t:"Fotobewijs",d:"Een echte detective maakt bewijsfoto's voor het dossier."},
+ /* puzzels op de telefoon */
+ {id:"verschil",kind:"diff",t:"Vóór en na",d:"Bovenaan het aanrecht vóór de diefstal, onderaan erna. Tik in de onderste foto alles aan wat veranderd is."},
+ {id:"doolhof",kind:"maze",t:"Het muizenpad",d:"Muis Kruimel moet door de gangetjes onder de vloer naar de taartkruimels. Trek met je vinger een pad."},
+ {id:"raadsel",kind:"riddle",t:"Het raadsel van Kruimel",d:"Inspecteur Kruimel heeft een raadsel. Overleg en tik het goede antwoord aan."},
  {id:"kruimels",kind:"mini",t:"Kruimels vangen",d:"De dief liet een kruimelspoor achter. Tik zo snel mogelijk alle kruimels aan, voordat ze op de grond vallen."},
  {id:"vinger",kind:"mini",t:"Vingerafdruk",d:"Op de taartschep zit een afdruk. Welke van de vier afdrukken is precies dezelfde?"},
  {id:"geheugen",kind:"mini",t:"Wat is er weg?",d:"Kijk goed naar het aanrecht. Onthoud alles. Daarna is er één ding weg. Welk?"},
  {id:"slot",kind:"mini",t:"Het koelkastslot",d:"De koelkast zit op slot met plaatjes. Tik de plaatjes aan in de volgorde van het rijmpje."},
- {id:"spiegel",kind:"mini",t:"Spiegelschrift",d:"De dief schreef een woord in spiegelschrift op het raam. Houd de telefoon tegen een spiegel, of lees het achterstevoren. Welk woord staat er?"},
+ {id:"spiegel",kind:"mini",lv:1,t:"Spiegelschrift",d:"De dief schreef een woord in spiegelschrift op het raam. Welk woord staat er?"},
  {id:"schaduw",kind:"mini",t:"De schaduw",d:"Iemand liep langs de lamp. Van welke verdachte is deze schaduw?"},
- {id:"kaarsjes",kind:"mini",t:"Kaarsjes tellen",d:"Hoeveel kaarsjes stonden er op de taart? Tel ze snel, want ze gaan uit!"}
+ /* samen bewegen */
+ {id:"standbeeld",kind:"freeze",t:"Standbeeld!",d:"Loop door de kamer. Als de telefoon STOP roept, sta je stil als een standbeeld. Wie beweegt, doet een gek dansje. Drie keer.",ok:"Prachtige standbeelden!"}
 ],
+/* ---------- zo ziet een spoor eruit in tekening, puzzel, krasbloem en geheimschrift ----------
+   em = plaatje, word = woord voor geheimschrift, draw = wat de tekenaar moet tekenen (leeg = niet geschikt om te tekenen) */
+CV:{
+ "vacht:true":{em:"🐾",word:"VACHT",draw:"Een pootafdruk van een dier",label:"pootafdruk"},
+ "vacht:false":{em:"🧹",word:"SCHOON",draw:"Een bezem (de vloer is schoon)",label:"bezem"},
+ "hoed:true":{em:"🎩",word:"HOED",draw:"Een hoed of een pet",label:"hoed"},
+ "hoed:false":{em:"🪑",word:"TAFEL",draw:"Een lage tafel",label:"tafel"},
+ "klein:true":{em:"🐭",word:"KLEIN",draw:"Een klein muisje",label:"muisje"},
+ "klein:false":{em:"🦒",word:"GROOT",draw:"Een giraf (de dief is groot)",label:"giraf"},
+ "kleur":{em:"🧵",word:"{K}",draw:"Een draadje in de kleur {k}",label:"{k} draadje"},
+ "buiten:true":{em:"🥾",word:"BUITEN",draw:"Een laars met modder",label:"laars"},
+ "buiten:false":{em:"🏠",word:"BINNEN",draw:"Een huis",label:"huis"},
+ "hoog:true":{em:"🪜",word:"HOOG",draw:"Een ladder",label:"ladder"},
+ "hoog:false":{em:"🐌",word:"LAAG",draw:"Een slak (laag bij de grond)",label:"slak"},
+ "koud:true":{em:"🧊",word:"KOUD",draw:"Een ijsblokje",label:"ijsblokje"},
+ "koud:false":{em:"☀️",word:"WARM",draw:"Een zon",label:"zon"},
+ "alibi:toos":{em:"☎️",word:"TOOS"},"alibi:bertus":{em:"😴",word:"BERTUS"},"alibi:fien":{em:"💬",word:"FIEN"},"alibi:teun":{em:"🎤",word:"TEUN"},
+ "alibi:lot":{em:"👋",word:"LOT"},"alibi:bo":{em:"🛏️",word:"BO"},"alibi:mimi":{em:"🚪",word:"MIMI"},
+ "alibi:schuur":{em:"🔒",word:"SLOT"},"alibi:koelkast":{em:"🧃",word:"VOL"},"alibi:zolder":{em:"🔇",word:"STIL"},"alibi:bank":{em:"🧦",word:"SOK"},"alibi:boom":{em:"🪵",word:"LADDER"}
+},
+/* ---------- raadsels: lv 0 = Kruimel, 1 = Speurneus ---------- */
+RIDDLES:[
+ {lv:0,q:"Ik ben rond en rood, ik zit bovenop de taart en ik ben een vrucht. Wat ben ik?",a:"🍓",o:["🍓","🍌","🥕","🍋"]},
+ {lv:0,q:"Ik brand op een taart, en als je jarig bent blaas je mij uit. Wat ben ik?",a:"🕯️",o:["🕯️","🎈","🎁","🔦"]},
+ {lv:0,q:"Ik zeg miauw en ik heb snorharen. Wie ben ik?",a:"🐱",o:["🐱","🐶","🐭","🐮"]},
+ {lv:0,q:"Ik ben koud en ik smelt in de zon. Je eet mij op een stokje. Wat ben ik?",a:"🍦",o:["🍦","🍕","🥪","🍪"]},
+ {lv:0,q:"Je doet mij op je hoofd als het koud is, of als je een detective bent. Wat ben ik?",a:"🎩",o:["🎩","🧦","👟","🧤"]},
+ {lv:1,q:"Ik heb een gezicht en twee handen, maar geen armen en geen benen. Wat ben ik?",a:"🕰️",o:["🕰️","🧸","🤖","🖼️"]},
+ {lv:1,q:"Hoe meer je ervan weghaalt, hoe groter ik word. Wat ben ik?",a:"🕳️",o:["🕳️","🎈","🍰","🌳"]},
+ {lv:1,q:"Ik heb veel tanden, maar ik kan niet bijten. Wat ben ik?",a:"🪮",o:["🪮","🦈","🍴","🔑"]},
+ {lv:1,q:"Ik ga altijd omhoog en nooit omlaag. Ieder jaar op je verjaardag word ik meer. Wat ben ik?",a:"🎂",o:["🎂","🎈","🪜","🚀"]},
+ {lv:1,q:"Ik ben vol gaatjes, maar ik kan toch water vasthouden. Wat ben ik?",a:"🧽",o:["🧽","🪣","🧀","🥅"]},
+ {lv:1,q:"Wat wordt natter, hoe meer het afdroogt?",a:"🧺",o:["🧺","☂️","🌊","🧴"]}
+],
+/* ---------- fotobewijs: één opdracht per zaak ---------- */
+PHOTOS:["Maak een foto van het hele team, met jullie allerverdachtste gezicht.","Maak een foto van iets in huis dat precies zo rond is als een taart.","Maak een foto van iets in de kleur van de slingers.","Maak een foto van de plek waar de taart stond. Kijk goed of je nog kruimels ziet!","Maak een foto van jullie handen samen: dat zijn de handen van het beste speurteam."],
 /* ---------- geheime missies: ieder kind krijgt er één, in het geheim ---------- */
 MISSIONS:["Zeg drie keer het woord ‘kruimel’ zonder dat iemand het merkt.","Ga één keer stiekem op een stoel staan en weer af.","Zeg bij een opdracht hardop: ‘Ik ben een echte detective!’","Geef de jarige een high five.","Doe alsof je heel hard moet niezen.","Vraag aan iemand: ‘Heb jij de kat gezien?’","Zeg een keer ‘Hmmm… verdacht…’ met je hand onder je kin.","Kijk tien tellen door je hand alsof het een verrekijker is.","Snuffel aan iets in de kamer, net als een speurhond.","Loop een keer achteruit de kamer uit en weer in.","Zeg: ‘Ik weet wie het is!’ en haal dan je schouders op.","Fluister tegen iemand: ‘De koekjes zijn veilig.’","Klop drie keer op tafel en kijk dan heel onschuldig.","Zeg tegen Inspecteur Kruimel (de telefoon): ‘Goed bezig, inspecteur!’"],
 /* ---------- rollen die per ronde rouleren ---------- */
@@ -120,6 +165,16 @@ T:{
  lvl:[["Kruimel","4–6 jaar · met hulp"],["Speurneus","7–10 jaar · de dief liegt"]],
  len:[["Kort","4 rondes · ±30 min"],["Normaal","6 rondes · ±45 min"],["Lang","8 rondes · ±60 min"]],
  voice:"🔊 Voorlezen",wipe:"Wissen",arch:"Opgeloste zaken",treatBtn:"Verrassing na afloop",treatQ:"Waar ligt de echte verrassing (taart, cadeautje, koekjes)? Dat komt pas aan het eind in beeld. Mag leeg.",treatPh:"In de kast onder de trap",
+ drawSomeone:"Eén speurder",drawWho:"{k} is de tekenaar. De rest kijkt even weg!",drawHold:"Houd ingedrukt: alleen de tekenaar kijkt!",drawGo:"Ik weet het: start!",drawRule:"Niet praten, niet schrijven. Raden mag hardop!",drawDone:"Geraden!",drawWipe:"Wis",drawQ:"Wat was de tekening?",drawRight:"Goed geraden!",drawWrong:"Bijna! Het was: {x}",drawBy:"Tekening van {k}",
+ scratchT:"Veeg de bloem weg…",blowT:"Blaas in de telefoon!",blowTap:"Tik de kaarsjes uit",blowNoMic:"De microfoon doet niet mee. Tik de kaarsjes dan maar uit!",micAsk:"De telefoon wil even luisteren. Tik op Toestaan.",micStart:"Start",
+ puzzleEx:"Zo moet het worden",codeKey:"Sleutel",codeDel:"⌫",codeWrong:"Nog niet goed, kijk nog eens in de sleutel.",
+ shakeT:"Schud! Schud! Schud!",shakeTap:"Geen schudsensor: tik op de zak",
+ sneakArm:"Leg de telefoon op de grond en ga allemaal bij de deur staan.",sneakGo:"Alarm staat aan",sneakTouch:"Tik hier als je er bent!",sneakAlarm:"ALARM! Betrapt! Terug naar de deur!",sneakSafe:"Niet betrapt! Sluipers: {n}",sneakNoMic:"De microfoon doet niet mee. De volwassene speelt het alarm: hoort hij of zij iets, dan terug!",calib:"Even stil… de telefoon luistert naar de kamer.",
+ tiltGo:"Start met dragen",tiltHold:"Nog {n} tellen…",tiltDrop:"Plof! De taart is gevallen. Opnieuw!",tiltOk:"Gelukt! {n} van 3",tiltNoSens:"Geen bewegingssensor: houd je vinger op het scherm en houd de taart in het midden.",tiltPerm:"Tik op Start en kies Toestaan",
+ simonListen:"Luister…",simonYou:"Jullie beurt!",simonAgain:"Oei, nog een keer!",simonLen:"Liedje {n} van {m}",
+ photoBtn:"📷 Maak de foto",photoSkip:"Geen foto, toch verder",photoOk:"Bewijs in het dossier!",
+ diffLeft:"Nog {n} verschillen",mazeT:"Trek een pad naar de kruimels",
+ reveal:"Het spoor is…",dossier:"Het dossier",dossierT:"Tekeningen en foto's van deze zaak",
  go:"We gaan speuren!",back:"Terug",next:"Verder ▸",ready:"Klaar!",done:"Gelukt ▸",again:"Opnieuw",skip:"Overslaan",
  secret:"Geheime missie",secretHold:"Houd ingedrukt om jouw missie te lezen. Laat niemand meekijken!",secretNext:"Geef de telefoon door aan {k}",secretDone:"Iedereen heeft een missie. Houd hem geheim tot het eind!",
  roles:"Rollen deze ronde",pick:"iemand",everyone:"iedereen",
@@ -135,7 +190,7 @@ T:{
  accuseWho:"Wie was het?",tries:"Nog {n} kansen",confirmQ:"Beschuldigen: {s}?",yes:"Ja, zeker!",no:"Toch niet",
  won:"Zaak gesloten!",stars:"Sterren",diploma:"Diploma printen",home:"Naar het begin",playAgain:"Nog een zaak",
  dipTitle:"Diploma Taartdetective",dipText:"heeft de zaak van de verdwenen taart opgelost",dipTeam:"Het speurteam",dipDate:"Datum",dipThief:"De dief was",
- howT:"<ol class='how'><li><b>Binnen, samen, één telefoon.</b> De telefoon is Inspecteur Kruimel. Iedereen zit rond de tafel of in de kamer.</li><li><b>Zeven verdachten.</b> Oma Toos, Opa Bertus, Buurvrouw Fien, Neefje Teun, Tante Lot, Hond Bo en Kat Mimi. Eén van hen heeft de taart gepakt. Elke zaak een andere dader, elke keer andere sporen.</li><li><b>Elke ronde:</b> een verhoor (de telefoon speelt de verdachte), een opdracht in huis of op de telefoon, en dan een spoor. Sporen liegen nooit. Streep op het sporenbord weg wie het niet kan zijn.</li><li><b>Kruimel</b> (4–6 jaar): alles wordt voorgelezen, de verdachten spreken de waarheid en een Help-knop laat zien wie afvalt. <b>Speurneus</b> (7–10): de dief liegt bij het verhoor, zelf wegstrepen.</li><li><b>Rollen</b> wisselen per ronde: Verhoorder, Spoorzoeker en Tijdbaas. Vul de namen in, dan wijst de telefoon ze aan.</li><li><b>Geheime missies:</b> elk kind krijgt aan het begin een eigen geheime missie. Aan het eind raden de anderen wie welke had.</li><li><b>Finale:</b> beschuldigen, drie kansen. Daarna het verhaal van de dief, de verrassing (als je die hebt ingevuld) en een diploma om te printen.</li></ol><p class='note'>Tip voor de volwassene: jij hoeft niets te verstoppen of voor te bereiden. Leg eventueel wel een lepel klaar en bedenk waar de echte taart staat.</p>",
+ howT:"<ol class='how'><li><b>Binnen, samen, één telefoon.</b> De telefoon is Inspecteur Kruimel. Iedereen zit rond de tafel of in de kamer.</li><li><b>Zeven verdachten.</b> Eén van hen heeft de taart gepakt. Elke zaak een andere dader, andere sporen en andere opdrachten.</li><li><b>Elke ronde:</b> een verhoor (de telefoon speelt de verdachte), een opdracht en een spoor. Sporen liegen nooit. Streep op het sporenbord weg wie het niet kan zijn.</li><li><b>De opdrachten:</b> een kind tekent het spoor en de rest raadt, kaarsjes uitblazen in de telefoon, bloem wegvegen, de kruimelzak schudden, een gescheurde foto leggen, geheimschrift kraken, langs de sluipdetector sluipen, de taart door de kamer dragen zonder te morsen, het keukenorkest nadoen, een doolhof, verschillen zoeken, raadsels en een bewijsfoto voor het dossier.</li><li><b>Kruimel</b> (4–6 jaar): alles wordt voorgelezen, makkelijker opdrachten, een Help-knop. <b>Speurneus</b> (7–10): de dief liegt bij het verhoor, geheimschrift en moeilijkere puzzels.</li><li><b>Rollen</b> wisselen per ronde: Verhoorder, Spoorzoeker (die tekent ook) en Tijdbaas. <b>Geheime missies:</b> elk kind krijgt er één.</li><li><b>Finale:</b> beschuldigen, drie kansen. Daarna het verhaal van de dief, de verrassing, het dossier met alle tekeningen en foto's, en een diploma om te printen.</li></ol><p class='note'>Tip voor de volwassene: de telefoon vraagt soms om de microfoon (blazen, sluipen) of de bewegingssensor (schudden, dragen). Tik dan op Toestaan. Er wordt niets opgenomen of verstuurd.</p>",
  wipeQ:"Alles wissen?",wipeT:"Opgeslagen zaak en de opgeloste zaken verdwijnen van deze telefoon.",wipeY:"Ja, wissen",wiped:"Gewist",cancel:"Annuleren",
  codeT:"Zaakcode",codeQ:"Typ de zaakcode van de andere telefoon.",codeBad:"Die code klopt niet.",codeOk:"Zelfde zaak geladen",
  proOn:"Feestpas actief",proOff:"Proefronde gratis · Feestpas € 9,99"
