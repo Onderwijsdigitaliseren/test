@@ -24,9 +24,10 @@ const LOOKS_CODE=/^(#|\.|\/|https?:|www\.|[a-z0-9_-]+\.(webp|png|jpg|svg|mp3|js|
 
 const RULES={
  pakjes:{
-  skip:["T","TYPES","SYM","CODEW","CODEW1","ROOMS","KIJK"],   // knoppen, sleutels, kamers en de tel-vragen (die typt de speler zelf in) staan alleen op het scherm
+  skip:["T","X","TYPES","SYM","CODEW","CODEW1","ROOMS","KIJK"],   // knoppen, sleutels, kamers en de tel-vragen (die typt de speler zelf in) staan alleen op het scherm
   keep:[["T","voiceOn"],["T","radarAll"],["T","pieceGet"],["T","finT"],["T","trNone"],["T","trExact"],["T","prSaved"]],
   skipKeys:/^(id|title|hint)$/,
+  byLang:{en:{expand:{"{N}":["six","eight","ten"],"{z}":null,"{h}":null,"{w}":null,"{n}":null,"{i}":null,"{t}":null,"{d}":null}}},
   expand:{"{N}":["zes","acht","tien"],"{z}":null,"{h}":null,"{w}":null,"{n}":null,"{i}":null,"{t}":null,"{d}":null},
   wie:(p,o)=>p[0]==="SINTTXT"?"sinterklaas":"piet",
   waar:(p,o)=>({OPEN:"Opening",CLIFF:"Na een stukje",CLIFFLAST:"Laatste stukje",LETTER:"Finale",SINTTXT:"Sinterklaas",ZOEK:"Zoekopdracht",BOEK:"Het Grote Boek",RIJM:"Rijmpiet",SHAD:"Schaduwen",Z:"Proef"+(o&&o.title?": "+o.title:"")}[p[0]]||p[0])
@@ -66,7 +67,7 @@ function waarOf(p,o,rule){if(rule.waar){try{const w=rule.waar(p,o);if(w)return w
   return String(p[0])+(typeof p[1]==="number"?" "+(p[1]+1):"")+(title?" · "+title.replace(/<[^>]+>/g,"").trim():"")}
 function wieOf(p,o,rule){if(rule.wie){try{const w=rule.wie(p,o);if(w)return w}catch(e){}}return "verteller"}
 
-function build(game,lang,force){const D=loadData(game,lang);if(!D)return null;const rule=RULES[game]||{};
+function build(game,lang,force){const D=loadData(game,lang);if(!D)return null;const rule=Object.assign({},RULES[game]||{});if(rule.byLang&&rule.byLang[lang])Object.assign(rule,rule.byLang[lang]);
   const raw=[];walk(D,[],raw,rule,D);
   const out=[],seen={};
   raw.forEach(r=>{V.split(r.t).forEach(s=>{if(s.indexOf("\u0007")>=0)return;if(!/\s/.test(s.trim())&&!/[.!?…]$/.test(s.trim()))return;const k=V.key(s);if(seen[k])return;seen[k]=1;out.push({k,wie:wieOf(r.p,r.o,rule),waar:waarOf(r.p,r.o,rule),t:s})})});

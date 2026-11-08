@@ -5,7 +5,7 @@
    vooraf (achter een pincode) in waar de echte pakjes liggen, met een raadsel, de precieze plek en een foto. Zaakcode PA…, diploma A4. */
 (function(){
 "use strict";
-var MW=window.MW,Wk=MW.Walk,LS=MW.LS,D=window.PA_DATA,T=D.T,L=D.lang,esc=MW.esc,fill=MW.fill,$=function(s){return document.querySelector(s)},$$=function(s){return [].slice.call(document.querySelectorAll(s))};
+var MW=window.MW,Wk=MW.Walk,LS=MW.LS,D=window.PA_DATA,T=D.T,X=D.X,L=D.lang,esc=MW.esc,fill=MW.fill,$=function(s){return document.querySelector(s)},$$=function(s){return [].slice.call(document.querySelectorAll(s))};
 var ID="pa",GK="ss_game_pa",WK="ss_ways_pa",PK="ss_pa_parent",hashStr=MW.hashStr,rngOf=Wk.rngOf,shuffle=Wk.shuffle;
 var toast=Wk.toast,sheet=Wk.sheet,buzz=Wk.buzz,beep=Wk.beep;function closeSheet(){mg.stop();hush();Wk.closeSheet()}
 var G=null,tick=0,MODE=LS.get("ss_pa_mode","in"),NAME=LS.get("ss_pa_name",""),VOICE=LS.get("ss_pa_voice",true),LVL=String(LS.get("ss_pa_lvl","0"));
@@ -27,7 +27,7 @@ function rnd(r,a,b){return a+Math.floor(r()*(b-a+1))}
 function rr(g,x,y,w,h,r){r=Math.min(r,w/2,h/2);g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath()}
 
 /* ---------- stem ---------- */
-function say(t){if(!VOICE||!t)return;t=String(t).replace(/<[^>]+>/g,"");if(window.MMVoice)return MMVoice.say(t);try{var ss=window.speechSynthesis;if(!ss)return;ss.cancel();var u=new SpeechSynthesisUtterance(t.replace(/[“”"]/g,"").replace(/\{[^}]+\}/g,""));u.lang="nl-NL";u.rate=.92;u.pitch=1.05;ss.speak(u)}catch(e){}}
+function say(t){if(!VOICE||!t)return;t=String(t).replace(/<[^>]+>/g,"");if(window.MMVoice)return MMVoice.say(t);try{var ss=window.speechSynthesis;if(!ss)return;ss.cancel();var u=new SpeechSynthesisUtterance(t.replace(/[“”"]/g,"").replace(/\{[^}]+\}/g,""));u.lang=L==="nl"?"nl-NL":"en-GB";u.rate=.92;u.pitch=1.05;ss.speak(u)}catch(e){}}
 function hush(){if(window.MMVoice)return MMVoice.hush();try{window.speechSynthesis&&window.speechSynthesis.cancel()}catch(e){}}
 function bubble(txt,who,cls,av){return '<div class="msg '+(cls||"")+'">'+(av||PIETAV)+'<div class="bub"><button type="button" class="spk" aria-label="'+esc(T.listen)+'" data-say="'+esc(txt.replace(/<[^>]+>/g,""))+'">🔊</button>'+(who?'<em>'+esc(who)+'</em>':'')+'<p>'+txt+'</p></div></div>'}
 var PIETAV='<span class="avatar piet" aria-hidden="true">P</span>',SINTAV='<span class="avatar sint" aria-hidden="true">S</span>';
@@ -119,22 +119,22 @@ function parentEdit(after){if(!PAR.spots.length)PAR.spots.push({what:"",hint:"",
     if(t.dataset.ph!=null){collect();PHOTO_FOR={par:+t.dataset.ph,after:after};$("#file").value="";$("#file").click()}};
   $("#sheetBody").onsubmit=function(e){e.preventDefault()}}
 function spotsReady(){return PAR.spots.filter(function(s){return s.what||s.hint||s.where||s.photo})}
-function answersHTML(){if(!G)return"";return '<ol class="ol small">'+G.c.slots.map(function(s,i){var z=ZBY[s.z],p=puzzleOf(s);return '<li><b>'+esc(z.title)+'</b>'+(G.ph[i]?" ✓":"")+'<br>'+esc(answerOf(s,p))+'<br><small>Hint: '+esc(hintOf(s,p))+'</small></li>'}).join("")+'</ol>'}
+function answersHTML(){if(!G)return"";return '<ol class="ol small">'+G.c.slots.map(function(s,i){var z=ZBY[s.z],p=puzzleOf(s);return '<li><b>'+esc(z.title)+'</b>'+(G.ph[i]?" ✓":"")+'<br>'+esc(answerOf(s,p))+'<br><small>'+esc(X.hint)+': '+esc(hintOf(s,p))+'</small></li>'}).join("")+'</ol>'}
 function answerOf(s,p){var z=s.z,l=lvI();
   if(z==="boek"){var q=D.BOEK[l][s.qi%D.BOEK[l].length];return q[0]+" → "+q[1][q[2]]}
   if(z==="rijm"){var r=D.RIJM[l][s.ri%D.RIJM[l].length];return r[0]+" → "+r[1]}
-  if(z==="code"){return "het woord: "+codeWord(s).toUpperCase()}
-  if(z==="zoek"){return "foto van "+D.ZOEK[s.zi][0]}
-  if(z==="kijk"){return D.KIJK[G.mode==="in"?"binnen":"buiten"][s.ki][0]+(l?" → dat getal plus 3":" → even of oneven")}
-  if(z==="tel")return "het aantal pepernoten dat valt (staat in beeld na het tellen)";
-  if(z==="vang")return "vang minstens "+p.need+" pepernoten in "+p.secs+" seconden";
-  if(z==="dak")return p.hits+" keer raak tikken boven de rode schoorsteen";
-  if(z==="ritme")return "de hoefslag nakloppen, "+p.rounds.length+" rondes";
-  if(z==="sorteer")return p.by==="size"?"van klein naar groot aantikken":"van het laagste naar het hoogste getal";
-  if(z==="verschil")return "het pakje met de andere strik";
-  if(z==="memory")return p.pairs+" paren vinden";
-  if(z==="gym")return "springen tot de tijd om is";
-  if(z==="schaduw")return "de juiste naam bij de schaduw, "+p.rounds+" keer";return "–"}
+  if(z==="code"){return X.aWord+codeWord(s).toUpperCase()}
+  if(z==="zoek"){return X.aPhoto+D.ZOEK[s.zi][0]}
+  if(z==="kijk"){return D.KIJK[G.mode==="in"?"binnen":"buiten"][s.ki][0]+(l?X.aKijk1:X.aKijk0)}
+  if(z==="tel")return X.aTel;
+  if(z==="vang")return fill(X.aVang,{n:p.need,s:p.secs});
+  if(z==="dak")return fill(X.aDak,{n:p.hits});
+  if(z==="ritme")return fill(X.aRitme,{n:p.rounds.length});
+  if(z==="sorteer")return p.by==="size"?X.aSort0:X.aSort1;
+  if(z==="verschil")return X.aVerschil;
+  if(z==="memory")return fill(X.aMemory,{n:p.pairs});
+  if(z==="gym")return X.aGym;
+  if(z==="schaduw")return fill(X.aSchaduw,{n:p.rounds});return "–"}
 function hintOf(s,p){if(s.z==="zoek")return D.ZOEK[s.zi][1];return p.hint}
 
 /* ---------- proefronde: de binnenstad van Eindhoven, getekend ---------- */
@@ -195,8 +195,8 @@ function build(seed,mode,pois,ways,origin,daily,len,virt){len=LENN[len]?len:"nor
 function brief(){var N=NN();
   $("#bfNo").textContent=(G.mode==="demo"?T.demoCase:"");
   $("#bfOpen").innerHTML=imgOf("brief")+bubble(fill(D.OPEN[G.mode==="in"?"binnen":"buiten"],{N:T.nw[N]||N}),D.PIET,"big")+
-    '<div class="chips"><span class="chip">'+esc(T.lvl[lvI()])+' · '+esc(T.lvlAge[lvI()])+'</span><span class="chip">'+N+' stukjes</span><span class="chip">'+(G.mode==="in"?"Binnen in huis":G.mode==="street"?"Buiten zonder kaart":"Buiten met kaart")+'</span></div>'+
-    (spotsReady().length?'':'<div class="act warn"><span class="ico">🎄</span><div><b>Voor de grote mensen:</b> tik eerst even op Hoofdpiet, zonder dat de kinderen meekijken. Kan ook later, via het menu.</div></div>');
+    '<div class="chips"><span class="chip">'+esc(T.lvl[lvI()])+' · '+esc(T.lvlAge[lvI()])+'</span><span class="chip">'+esc(fill(X.pieces,{n:N}))+'</span><span class="chip">'+(G.mode==="in"?X.mIn:G.mode==="street"?X.mStreet:X.mMap)+'</span></div>'+
+    (spotsReady().length?'':'<div class="act warn"><span class="ico">🎄</span><div>'+X.warnPar+'</div></div>');
   $("#bfTip").innerHTML=MW.codeBox(L,G.code,"zaak");MW.bindCodeBox($("#bfTip"),L);
   show("brief")}
 $("#bGo").onclick=function(){if(!G.t0){G.t0=Date.now();if(G.mode!=="demo")MW.pro.setFree(ID)}save();hush();enter()};
@@ -211,8 +211,8 @@ function hud(){if(!G)return;var n=done();$("#hT").textContent=mmss(Date.now()-G.
 function roomOf(s){return D.ROOMS[s.room]}
 function render(){hud();while(G.i<NN()&&G.ph[G.i])G.i++;var i=G.i,box=$("#card"),N=NN();
   if(i>=N){box.innerHTML='<div class="pol done"><div class="big">🗺️</div></div>'+bubble(T.radarAll,D.PIET)+'<button type="button" class="btn red" id="bAcc">'+T.finH+'</button>';$("#bAcc").onclick=toFinale;return}
-  var s=G.c.slots[i],z=ZBY[s.z],room=roomOf(s),where=G.mode==="in"?"Loop samen naar <b>"+esc(room[1])+"</b>. ":"Loop samen naar een nieuwe plek in de buurt, bijvoorbeeld een hoek, een lantaarnpaal of een bankje. ";
-  box.innerHTML='<div class="pol empty"><div class="ph">'+(G.mode==="in"?room[2]:"🧩")+'</div><p class="cap">'+esc(fill(T.task,{i:i+1,n:N}))+(G.mode==="in"?' · '+esc(cap(room[0])):'')+'</p></div>'+bubble(where+"Daar ligt stukje "+(i+1)+". Piet heeft er een proef bij: <b>"+esc(z.title)+"</b>.",D.PIET)+'<button type="button" class="btn" id="bOpen">▶ '+T.start+'</button>';
+  var s=G.c.slots[i],z=ZBY[s.z],room=roomOf(s),where=G.mode==="in"?fill(X.goRoom,{r:"<b>"+esc(room[1])+"</b>"}):X.goOut;
+  box.innerHTML='<div class="pol empty"><div class="ph">'+(G.mode==="in"?room[2]:"🧩")+'</div><p class="cap">'+esc(fill(T.task,{i:i+1,n:N}))+(G.mode==="in"?' · '+esc(cap(room[0])):'')+'</p></div>'+bubble(where+fill(X.pieceThere,{i:i+1,t:"<b>"+esc(z.title)+"</b>"}),D.PIET)+'<button type="button" class="btn" id="bOpen">▶ '+T.start+'</button>';
   $("#bOpen").onclick=function(){taskSheet(i)}}
 
 /* ---------- spelen met kaart ---------- */
@@ -279,9 +279,9 @@ var PUZ={
  tel:function(s,p,box,h){var r=rngOf(s.seed),n=rnd(r,p.min,p.max),W2=300,H=200;
   box.innerHTML='<p class="pzst" id="st">'+esc(T.ready)+'</p>';var cv=canvas(box,"cv",W2,H),g=cv.getContext("2d");var ctl=document.createElement("div");ctl.id="ctl";box.appendChild(ctl);
   var nuts=[];for(var i=0;i<n;i++)nuts.push({x:20+r()*(W2-40),t:i*(1100/p.speed)+r()*300,vx:(r()-.5)*20,r:7+r()*4});var dur=n*(1100/p.speed)+2200;
-  var run=function(){mg.stop();ctl.innerHTML="";$("#st").textContent="Tel mee…";var t0=performance.now();var f=function(ts){var t=ts-t0;sky(g,W2,H);g.fillStyle="#e9f1fb";g.fillRect(0,H-18,W2,18);
+  var run=function(){mg.stop();ctl.innerHTML="";$("#st").textContent=X.telGo;var t0=performance.now();var f=function(ts){var t=ts-t0;sky(g,W2,H);g.fillStyle="#e9f1fb";g.fillRect(0,H-18,W2,18);
       nuts.forEach(function(q){var dt=(t-q.t)/1000;if(dt<0)return;var y=-10+dt*dt*220,x=q.x+q.vx*dt;if(y>H-24){y=H-24;g.fillStyle="rgba(0,0,0,.15)";g.beginPath();g.ellipse(x,y+q.r,q.r,3,0,0,7);g.fill()}pepernoot(g,x,y,q.r)});
-      if(t<dur&&cv.isConnected)mg.raf=requestAnimationFrame(f);else{$("#st").textContent="Hoeveel pepernoten waren het?";ask()}};mg.raf=requestAnimationFrame(f)};
+      if(t<dur&&cv.isConnected)mg.raf=requestAnimationFrame(f);else{$("#st").textContent=X.telQ;ask()}};mg.raf=requestAnimationFrame(f)};
   var ask=function(){var r2=rngOf(s.seed^7);if(p.choice){var opts=shuffled([n,n+rnd(r2,1,2),Math.max(1,n-rnd(r2,1,2))],r2);ctl.innerHTML=choices(opts.map(String))+'<button type="button" class="btn ghost dk sm" id="bAg">'+esc(T.again)+'</button>'+hintBox(s,p,h);bindChoice(opts.indexOf(n),s,h)}
     else{ctl.innerHTML='<input class="inp code" id="ans" inputmode="numeric" maxlength="2" placeholder="0"><button type="button" class="btn" id="bCheck">'+T.ok+'</button><button type="button" class="btn ghost dk sm" id="bAg">'+esc(T.again)+'</button>'+hintBox(s,p,h);var chk=function(){var v=parseInt($("#ans").value,10);if(v===n)accept();else wrong(s,h)};$("#bCheck").onclick=chk;$("#ans").onkeydown=function(e){if(e.key==="Enter")chk()}}
     bindHint(s,h);$("#bAg").onclick=run};
@@ -294,22 +294,22 @@ var PUZ={
   var draw=function(){sky(g,W2,H);g.fillStyle="#e9f1fb";g.fillRect(0,H-14,W2,14);items.forEach(function(q){if(q.coal){g.fillStyle="#222";g.beginPath();g.ellipse(q.x,q.y,9,8,0,0,7);g.fill()}else pepernoot(g,q.x,q.y,8)});
     /* de schoen */g.fillStyle="#7a3b1e";rr(g,bx-30,H-40,60,22,8);g.fill();g.fillStyle="#5a2a12";rr(g,bx-30,H-48,24,14,6);g.fill();g.fillStyle="#f2b705";g.fillRect(bx-24,H-30,48,4);
     g.fillStyle="#fff";g.font="700 16px Fredoka,sans-serif";g.textAlign="left";g.fillText("🥜 "+score+" / "+p.need,8,22);g.textAlign="right";g.fillText("⏱ "+left,W2-8,22)};
-  var run=function(){mg.stop();ctl.innerHTML="";items=[];score=0;left=p.secs;on=true;$("#st").textContent="Vang de pepernoten, niet de kolen!";var last=performance.now(),acc=0;
+  var run=function(){mg.stop();ctl.innerHTML="";items=[];score=0;left=p.secs;on=true;$("#st").textContent=X.vangGo;var last=performance.now(),acc=0;
     mg.iv.push(setInterval(function(){left--;if(left<=0)end()},1000));
     var f=function(ts){var dt=Math.min(.05,(ts-last)/1000);last=ts;acc+=dt*p.rate;while(acc>1){acc-=1;items.push({x:20+r()*(W2-40),y:-10,v:70+r()*60,coal:r()<p.coal})}
       items.forEach(function(q){q.y+=q.v*dt;if(q.y>H-44&&q.y<H-24&&Math.abs(q.x-bx)<30&&!q.hit){q.hit=true;if(q.coal){score=Math.max(0,score-1);SFX.bad();buzz(60)}else{score++;SFX.coin()}}});
       items=items.filter(function(q){return q.y<H+10&&!q.hit});draw();if(on&&cv.isConnected)mg.raf=requestAnimationFrame(f)};mg.raf=requestAnimationFrame(f)};
-  var end=function(){on=false;mg.stop();draw();if(score>=p.need){$("#st").textContent="Gelukt! "+score+" pepernoten.";SFX.good();ctl.innerHTML=passBtn();$("#bPass").onclick=accept}else{$("#st").textContent="Nog niet genoeg: "+score+" van de "+p.need+".";ctl.innerHTML='<button type="button" class="btn" id="bAg">'+esc(T.again)+'</button>'+hintBox(s,p,h);bindHint(s,h);$("#bAg").onclick=run;G.wrong++;save()}};
+  var end=function(){on=false;mg.stop();draw();if(score>=p.need){$("#st").textContent=fill(X.vangOk,{n:score});SFX.good();ctl.innerHTML=passBtn();$("#bPass").onclick=accept}else{$("#st").textContent=fill(X.vangNo,{n:score,m:p.need});ctl.innerHTML='<button type="button" class="btn" id="bAg">'+esc(T.again)+'</button>'+hintBox(s,p,h);bindHint(s,h);$("#bAg").onclick=run;G.wrong++;save()}};
   ctl.innerHTML='<button type="button" class="btn" id="bGo2">'+esc(T.go)+'</button>'+hintBox(s,p,h);bindHint(s,h);$("#bGo2").onclick=run;draw()},
  /* Schoenen-memory */
  memory:function(s,p,box,h){var r=rngOf(s.seed),pick=shuffled(D.SHAD,r).slice(0,p.pairs),cards=shuffled(pick.concat(pick),r),open=[],found=0,lock=false;
-  box.innerHTML='<div class="mem c'+(p.pairs>4?4:4)+'" id="mem">'+cards.map(function(c,i){return '<button type="button" data-i="'+i+'"><span class="front">👢</span><span class="back">'+c[0]+'</span></button>'}).join("")+'</div><p class="pzst" id="st">0 van '+p.pairs+'</p>'+hintBox(s,p,h);bindHint(s,h);
+  box.innerHTML='<div class="mem c'+(p.pairs>4?4:4)+'" id="mem">'+cards.map(function(c,i){return '<button type="button" data-i="'+i+'"><span class="front">👢</span><span class="back">'+c[0]+'</span></button>'}).join("")+'</div><p class="pzst" id="st">'+esc(fill(X.of,{i:0,n:p.pairs}))+'</p>'+hintBox(s,p,h);bindHint(s,h);
   $$("#mem button").forEach(function(b){b.onclick=function(){if(lock||b.classList.contains("on")||b.classList.contains("done"))return;b.classList.add("on");SFX.tick();open.push(b);if(open.length<2)return;lock=true;
-    var a=cards[+open[0].dataset.i],c=cards[+open[1].dataset.i];if(a[0]===c[0]){found++;open.forEach(function(x){x.classList.add("done")});open=[];lock=false;SFX.good();$("#st").textContent=found+" van "+p.pairs;if(found>=p.pairs)setTimeout(accept,500)}
+    var a=cards[+open[0].dataset.i],c=cards[+open[1].dataset.i];if(a[0]===c[0]){found++;open.forEach(function(x){x.classList.add("done")});open=[];lock=false;SFX.good();$("#st").textContent=fill(X.of,{i:found,n:p.pairs});if(found>=p.pairs)setTimeout(accept,500)}
     else{G.wrong++;mg.tm.push(setTimeout(function(){open.forEach(function(x){x.classList.remove("on")});open=[];lock=false},800))}}})},
  /* Het dak op */
  dak:function(s,p,box,h){var W2=300,H=180,hits=0,miss=0,x=30,dir=1,on=true,flash=0;
-  box.innerHTML='<p class="pzst" id="st">Tik als Piet boven de rode schoorsteen is · 0 van '+p.hits+'</p>';var cv=canvas(box,"cv",W2,H),g=cv.getContext("2d");box.insertAdjacentHTML("beforeend",hintBox(s,p,h));bindHint(s,h);
+  box.innerHTML='<p class="pzst" id="st">'+esc(fill(X.dakGo,{n:p.hits}))+'</p>';var cv=canvas(box,"cv",W2,H),g=cv.getContext("2d");box.insertAdjacentHTML("beforeend",hintBox(s,p,h));bindHint(s,h);
   var CH=W2/2,speed=90*p.speed;var last=performance.now();
   var draw=function(ts){sky(g,W2,H);/* daken */g.fillStyle="#2b2f4a";[[0,120,80],[70,105,70],[130,112,45],[170,100,60],[225,115,75]].forEach(function(d){g.beginPath();g.moveTo(d[0],H);g.lineTo(d[0],d[1]);g.lineTo(d[0]+d[2]/2,d[1]-22);g.lineTo(d[0]+d[2],d[1]);g.lineTo(d[0]+d[2],H);g.fill()});
     g.fillStyle="#e9f1fb";[[0,120,80],[70,105,70],[130,112,45],[170,100,60],[225,115,75]].forEach(function(d){g.beginPath();g.moveTo(d[0]-2,d[1]+3);g.lineTo(d[0]+d[2]/2,d[1]-20);g.lineTo(d[0]+d[2]+2,d[1]+3);g.lineTo(d[0]+d[2],d[1]+8);g.lineTo(d[0]+d[2]/2,d[1]-12);g.lineTo(d[0],d[1]+8);g.fill()});
@@ -318,23 +318,23 @@ var PUZ={
     /* Piet als silhouet met muts */var py=72-Math.abs(Math.sin(x/18))*6;g.fillStyle="#141a3a";g.beginPath();g.arc(x,py-20,7,0,7);g.fill();rr(g,x-6,py-14,12,16,4);g.fill();g.fillStyle=COL[0];g.beginPath();g.moveTo(x-8,py-22);g.lineTo(x+8,py-22);g.lineTo(x+2,py-34);g.closePath();g.fill();g.fillStyle="#fff";g.fillRect(x+2,py-40,2,8);
     g.strokeStyle="#141a3a";g.lineWidth=3;g.beginPath();g.moveTo(x-4,py+2);g.lineTo(x-9,py+10);g.moveTo(x+4,py+2);g.lineTo(x+9,py+10);g.stroke()};
   var f=function(ts){var dt=Math.min(.05,(ts-last)/1000);last=ts;x+=dir*speed*dt;if(x>W2-20){x=W2-20;dir=-1}if(x<20){x=20;dir=1}if(flash>0)flash-=dt;draw(ts);if(on&&cv.isConnected)mg.raf=requestAnimationFrame(f)};mg.raf=requestAnimationFrame(f);
-  cv.addEventListener("pointerdown",function(){if(!on)return;if(Math.abs(x-CH)<16){hits++;flash=.4;SFX.good();buzz(40);$("#st").textContent="Raak! "+hits+" van "+p.hits;if(hits>=p.hits){on=false;mg.tm.push(setTimeout(accept,500))}}else{miss++;SFX.bad();G.wrong++;$("#st").textContent="Mis! Piet stuitert door. "+hits+" van "+p.hits}})},
+  cv.addEventListener("pointerdown",function(){if(!on)return;if(Math.abs(x-CH)<16){hits++;flash=.4;SFX.good();buzz(40);$("#st").textContent=fill(X.dakHit,{i:hits,n:p.hits});if(hits>=p.hits){on=false;mg.tm.push(setTimeout(accept,500))}}else{miss++;SFX.bad();G.wrong++;$("#st").textContent=fill(X.dakMiss,{i:hits,n:p.hits})}})},
  /* De hoefslag van Ozosnel */
  ritme:function(s,p,box,h){var r=rngOf(s.seed),round=0,seq=[],at=0,busy=true,HC=["#e63946","#f2b705","#2a9d8f","#4f6ab8"];
-  box.innerHTML='<p class="pzst" id="st">Luister…</p><div class="hoef" id="hoef">'+[0,1,2,3].map(function(i){return '<button type="button" data-i="'+i+'" style="--c:'+HC[i]+'"><span class="u"></span></button>'}).join("")+'</div>'+hintBox(s,p,h);bindHint(s,h);
+  box.innerHTML='<p class="pzst" id="st">'+esc(X.listen)+'</p><div class="hoef" id="hoef">'+[0,1,2,3].map(function(i){return '<button type="button" data-i="'+i+'" style="--c:'+HC[i]+'"><span class="u"></span></button>'}).join("")+'</div>'+hintBox(s,p,h);bindHint(s,h);
   var light=function(i,ms){var b=$('#hoef [data-i="'+i+'"]');if(!b)return;b.classList.add("on");SFX.hoof(i);mg.tm.push(setTimeout(function(){b.classList.remove("on")},ms||350))};
-  var play=function(){busy=true;at=0;seq=[];for(var i=0;i<p.rounds[round];i++)seq.push(rnd(r,0,3));$("#st").textContent="Ronde "+(round+1)+" van "+p.rounds.length+": luister…";
-    seq.forEach(function(k,i){mg.tm.push(setTimeout(function(){light(k)},700+i*600))});mg.tm.push(setTimeout(function(){busy=false;$("#st").textContent="Nu jullie! Klop het na."},700+seq.length*600))};
+  var play=function(){busy=true;at=0;seq=[];for(var i=0;i<p.rounds[round];i++)seq.push(rnd(r,0,3));$("#st").textContent=fill(X.round,{i:round+1,n:p.rounds.length});
+    seq.forEach(function(k,i){mg.tm.push(setTimeout(function(){light(k)},700+i*600))});mg.tm.push(setTimeout(function(){busy=false;$("#st").textContent=X.yourTurn},700+seq.length*600))};
   $("#hoef").onclick=function(e){var b=e.target.closest("button");if(!b||busy)return;var k=+b.dataset.i;light(k,200);
-    if(k===seq[at]){at++;if(at>=seq.length){busy=true;round++;if(round>=p.rounds.length){$("#st").textContent="Precies goed!";SFX.good();mg.tm.push(setTimeout(accept,600))}else{$("#st").textContent="Goed zo!";mg.tm.push(setTimeout(play,900))}}}
-    else{busy=true;wrong(s,h,"Oeps, dat was een andere hoef. Luister nog eens.");mg.tm.push(setTimeout(play,1100))}};
+    if(k===seq[at]){at++;if(at>=seq.length){busy=true;round++;if(round>=p.rounds.length){$("#st").textContent=X.exact;SFX.good();mg.tm.push(setTimeout(accept,600))}else{$("#st").textContent=X.good;mg.tm.push(setTimeout(play,900))}}}
+    else{busy=true;wrong(s,h,X.ritmeNo);mg.tm.push(setTimeout(play,1100))}};
   mg.tm.push(setTimeout(play,600))},
  /* De inpakpiet */
  sorteer:function(s,p,box,h){var r=rngOf(s.seed),n=p.n,arr=[];
   for(var i=0;i<n;i++)arr.push({size:p.by==="size"?34+i*14:40,num:p.by==="num"?rnd(r,1+i*18,15+i*18):0,col:["#e63946","#2a9d8f","#4f6ab8","#f2b705","#9b5de5"][i%5],k:i});
   var view=shuffled(arr,r),next=0;
-  var paint=function(){box.innerHTML='<p class="pzst" id="st">'+(p.by==="size"?"Tik het kleinste pakje aan":"Tik het pakje met het laagste getal aan")+'</p><div class="pak" id="pak">'+view.map(function(a){return '<button type="button" data-k="'+a.k+'" class="'+(a.k<next?"done":"")+'"><span style="width:'+a.size+'px;height:'+a.size+'px;background-color:'+a.col+'"></span>'+(a.num?'<b>'+a.num+'</b>':'')+'</button>'}).join("")+'</div>'+hintBox(s,p,h);bindHint(s,h);
-    $("#pak").onclick=function(e){var b=e.target.closest("button");if(!b||b.classList.contains("done"))return;var k=+b.dataset.k;if(k===next){next++;b.classList.add("done");SFX.coin();if(next>=n){$("#st").textContent="Alles in de zak!";mg.tm.push(setTimeout(accept,500))}else $("#st").textContent="Goed! En nu de volgende."}else{b.classList.add("shake");wrong(s,h,"Die is nog te groot. Begin opnieuw bij de kleinste.");next=0;mg.tm.push(setTimeout(paint,700))}}};
+  var paint=function(){box.innerHTML='<p class="pzst" id="st">'+esc(p.by==="size"?X.sort0:X.sort1)+'</p><div class="pak" id="pak">'+view.map(function(a){return '<button type="button" data-k="'+a.k+'" class="'+(a.k<next?"done":"")+'"><span style="width:'+a.size+'px;height:'+a.size+'px;background-color:'+a.col+'"></span>'+(a.num?'<b>'+a.num+'</b>':'')+'</button>'}).join("")+'</div>'+hintBox(s,p,h);bindHint(s,h);
+    $("#pak").onclick=function(e){var b=e.target.closest("button");if(!b||b.classList.contains("done"))return;var k=+b.dataset.k;if(k===next){next++;b.classList.add("done");SFX.coin();if(next>=n){$("#st").textContent=X.sortOk;mg.tm.push(setTimeout(accept,500))}else $("#st").textContent=X.sortNext}else{b.classList.add("shake");wrong(s,h,X.sortNo);next=0;mg.tm.push(setTimeout(paint,700))}}};
   paint()},
  /* Het verkeerde pakje */
  verschil:function(s,p,box,h){var r=rngOf(s.seed),odd=rnd(r,0,8),box_c=["#e63946","#2a9d8f","#4f6ab8"][rnd(r,0,2)],lint=["#f2b705","#fff","#ffb3c6"][rnd(r,0,2)],bow=lint,bow2=p.subtle?lint:"#1b2550";
@@ -346,11 +346,11 @@ var PUZ={
   var extra=Object.keys(D.SYM).filter(function(c){return letters.indexOf(c)<0});shuffled(extra,r).slice(0,4).forEach(function(c){letters.push(c)});letters=shuffled(letters,r);
   var key='<div class="key">'+letters.map(function(c){return '<i>'+D.SYM[c]+'<b>'+c.toUpperCase()+'</b></i>'}).join("")+'</div>',cipher='<div class="cipher">'+word.split("").map(function(c){return '<i>'+D.SYM[c]+'</i>'}).join("")+'</div>';
   if(!p.text){var cw=D.CODEW[s.ci%D.CODEW.length],opts=shuffled(cw[1],r);box.innerHTML=key+cipher+choices(opts.map(function(x){return x.toUpperCase()}))+hintBox(s,p,h);bindHint(s,h);bindChoice(opts.indexOf(word),s,h)}
-  else{box.innerHTML=key+cipher+'<input class="inp code" id="ans" autocomplete="off" autocapitalize="characters" maxlength="10" placeholder="woord"><button type="button" class="btn" id="bCheck">'+T.ok+'</button>'+hintBox(s,p,h);bindHint(s,h);var chk=function(){if(norm($("#ans").value)===word)accept();else wrong(s,h)};$("#bCheck").onclick=chk;$("#ans").onkeydown=function(e){if(e.key==="Enter")chk()}}},
+  else{box.innerHTML=key+cipher+'<input class="inp code" id="ans" autocomplete="off" autocapitalize="characters" maxlength="10" placeholder="'+esc(X.phWord)+'"><button type="button" class="btn" id="bCheck">'+T.ok+'</button>'+hintBox(s,p,h);bindHint(s,h);var chk=function(){if(norm($("#ans").value)===word)accept();else wrong(s,h)};$("#bCheck").onclick=chk;$("#ans").onkeydown=function(e){if(e.key==="Enter")chk()}}},
  /* De Rijmpiet */
  rijm:function(s,p,box,h){var l=lvI(),q=D.RIJM[l][s.ri%D.RIJM[l].length],r=rngOf(s.seed);
   if(!p.text){var opts=shuffled(q[2],r);box.innerHTML='<p class="q rijm">'+esc(q[0])+'</p>'+choices(opts)+hintBox(s,p,h);bindHint(s,h);bindChoice(opts.indexOf(q[1]),s,h);say(q[0])}
-  else{box.innerHTML='<p class="q rijm">'+esc(q[0])+'</p><input class="inp code" id="ans" autocomplete="off" autocapitalize="characters" maxlength="12" placeholder="rijmwoord"><button type="button" class="btn" id="bCheck">'+T.ok+'</button>'+hintBox(s,p,h);bindHint(s,h);say(q[0]);var chk=function(){var v=norm($("#ans").value);if(q[2].some(function(a){return norm(a)===v}))accept();else wrong(s,h)};$("#bCheck").onclick=chk;$("#ans").onkeydown=function(e){if(e.key==="Enter")chk()}}},
+  else{box.innerHTML='<p class="q rijm">'+esc(q[0])+'</p><input class="inp code" id="ans" autocomplete="off" autocapitalize="characters" maxlength="12" placeholder="'+esc(X.phRhyme)+'"><button type="button" class="btn" id="bCheck">'+T.ok+'</button>'+hintBox(s,p,h);bindHint(s,h);say(q[0]);var chk=function(){var v=norm($("#ans").value);if(q[2].some(function(a){return norm(a)===v}))accept();else wrong(s,h)};$("#bCheck").onclick=chk;$("#ans").onkeydown=function(e){if(e.key==="Enter")chk()}}},
  /* Het Grote Boek */
  boek:function(s,p,box,h){var l=lvI(),q=D.BOEK[l][s.qi%D.BOEK[l].length],r=rngOf(s.seed),idx=shuffled([0,1,2],r);
   box.innerHTML='<p class="q">'+esc(q[0])+'</p>'+choices(idx.map(function(i){return q[1][i]}))+hintBox(s,p,h);bindHint(s,h);bindChoice(idx.indexOf(q[2]),s,h);say(q[0])},
@@ -360,32 +360,32 @@ var PUZ={
  /* Kijk en tel */
  kijk:function(s,p,box,h){var pre=D.KIJK[G.mode==="in"?"binnen":"buiten"][s.ki][0],obs=G.obs[s.z];
   if(obs==null){box.innerHTML='<p class="q">'+esc(pre)+'</p><input class="inp code" id="obs" inputmode="numeric" maxlength="3" placeholder="0"><button type="button" class="btn" id="bObs">'+T.countGo+'</button>'+hintBox(s,p,h);bindHint(s,h);say(pre);
-    var go=function(){var v=parseInt($("#obs").value.replace(/\D/g,""),10);if(!(v>=0)||v>200){toast("Typ een getal");return}G.obs[s.z]=v;save();PUZ.kijk(s,p,box,h)};$("#bObs").onclick=go;$("#obs").onkeydown=function(e){if(e.key==="Enter")go()};return}
+    var go=function(){var v=parseInt($("#obs").value.replace(/\D/g,""),10);if(!(v>=0)||v>200){toast(X.typeNum);return}G.obs[s.z]=v;save();PUZ.kijk(s,p,box,h)};$("#bObs").onclick=go;$("#obs").onkeydown=function(e){if(e.key==="Enter")go()};return}
   var r=rngOf(s.seed),q,opts,ans;
-  if(!lvI()){q="Jullie telden "+obs+". Is dat een even of een oneven getal?";opts=["Even","Oneven"];ans=obs%2===0?0:1}
-  else{q="Jullie telden "+obs+". Piet legt bij elk ervan één pepernoot en stopt er nog 3 in zijn zak. Hoeveel pepernoten heeft hij nodig?";var a=obs+3,o=shuffled([a,a+1,a-1>0?a-1:a+2],r);opts=o.map(String);ans=o.indexOf(a)}
-  box.innerHTML='<p class="note">'+esc(pre)+' <b>'+obs+'</b> <button type="button" class="lnk" id="bReObs">anders</button></p><p class="q">'+esc(q)+'</p>'+choices(opts)+hintBox(s,p,h);bindHint(s,h);say(q);
+  if(!lvI()){q=fill(X.kijk0,{n:obs});opts=X.evenOdd;ans=obs%2===0?0:1}
+  else{q=fill(X.kijk1,{n:obs});var a=obs+3,o=shuffled([a,a+1,a-1>0?a-1:a+2],r);opts=o.map(String);ans=o.indexOf(a)}
+  box.innerHTML='<p class="note">'+esc(pre)+' <b>'+obs+'</b> <button type="button" class="lnk" id="bReObs">'+esc(X.other)+'</button></p><p class="q">'+esc(q)+'</p>'+choices(opts)+hintBox(s,p,h);bindHint(s,h);say(q);
   $("#bReObs").onclick=function(){delete G.obs[s.z];save();PUZ.kijk(s,p,box,h)};bindChoice(ans,s,h)},
  /* Pietengym */
  gym:function(s,p,box,h){var left=p.secs,jumps=0,lastJ=0,on=false,sens=false;
-  box.innerHTML='<div class="gym"><b id="gT">'+p.secs+'</b><span>seconden</span><b id="gJ">0</b><span>sprongen geteld</span></div><p class="pzst" id="st">'+esc(T.ready)+'</p><div id="ctl"><button type="button" class="btn" id="bGo2">'+esc(T.go)+'</button></div>'+hintBox(s,p,h);bindHint(s,h);
+  box.innerHTML='<div class="gym"><b id="gT">'+p.secs+'</b><span>'+esc(X.secs)+'</span><b id="gJ">0</b><span>'+esc(X.jumps)+'</span></div><p class="pzst" id="st">'+esc(T.ready)+'</p><div id="ctl"><button type="button" class="btn" id="bGo2">'+esc(T.go)+'</button></div>'+hintBox(s,p,h);bindHint(s,h);
   var onMotion=function(e){if(!on)return;var a=e.accelerationIncludingGravity||e.acceleration;if(!a)return;var m=Math.hypot(a.x||0,a.y||0,a.z||0),t=Date.now();sens=true;if(m>19&&t-lastJ>350){lastJ=t;jumps++;$("#gJ").textContent=jumps;SFX.tick()}};
-  var start=function(){on=true;$("#ctl").innerHTML="";$("#st").textContent="Springen maar! Tel hardop mee.";
+  var start=function(){on=true;$("#ctl").innerHTML="";$("#st").textContent=X.gymGo;
     var go=function(){window.addEventListener("devicemotion",onMotion);mg.off=function(){window.removeEventListener("devicemotion",onMotion)}};
     try{if(window.DeviceMotionEvent&&typeof DeviceMotionEvent.requestPermission==="function")DeviceMotionEvent.requestPermission().then(function(st){if(st==="granted")go()}).catch(function(){});else go()}catch(e){}
     mg.iv.push(setInterval(function(){left--;$("#gT").textContent=left;if(left<=0)end()},1000))};
-  var end=function(){on=false;mg.stop();SFX.good();buzz([60,40,60]);$("#st").textContent=sens?(jumps>=p.target?"Wauw, "+jumps+" sprongen! Echte daklopers.":"Goed gesprongen: "+jumps+" geteld. Pieten zijn lenig!"):"Goed gesprongen! Pieten zijn lenig.";$("#ctl").innerHTML=passBtn();$("#bPass").onclick=accept};
+  var end=function(){on=false;mg.stop();SFX.good();buzz([60,40,60]);$("#st").textContent=sens?(jumps>=p.target?fill(X.gymTop,{n:jumps}):fill(X.gymOk,{n:jumps})):X.gymNoSens;$("#ctl").innerHTML=passBtn();$("#bPass").onclick=accept};
   $("#bGo2").onclick=start},
  /* Schaduwen op het dak */
  schaduw:function(s,p,box,h){var r=rngOf(s.seed),round=0;
   var next=function(){if(round>=p.rounds)return accept();var pool=shuffled(D.SHAD,r).slice(0,p.opts),ans=rnd(r,0,p.opts-1);
-    box.innerHTML='<p class="pzst">'+(round+1)+' van '+p.rounds+'</p><div class="shadow">'+pool[ans][0]+'</div>'+choices(pool.map(function(x){return cap(x[1])}))+hintBox(s,p,h);bindHint(s,h);
+    box.innerHTML='<p class="pzst">'+esc(fill(X.of,{i:round+1,n:p.rounds}))+'</p><div class="shadow">'+pool[ans][0]+'</div>'+choices(pool.map(function(x){return cap(x[1])}))+hintBox(s,p,h);bindHint(s,h);
     bindChoice(ans,s,h,function(){round++;next()})};next()}
 };
 function codeWord(s){return lvI()?D.CODEW1[s.ci%D.CODEW1.length]:D.CODEW[s.ci%D.CODEW.length][0]}
 $("#file").addEventListener("change",function(){var f=this.files&&this.files[0];if(!f)return;var img=new Image(),url=URL.createObjectURL(f);img.onload=function(){var mx=900,sc=Math.min(1,mx/Math.max(img.width,img.height)),c=document.createElement("canvas");c.width=Math.round(img.width*sc);c.height=Math.round(img.height*sc);c.getContext("2d").drawImage(img,0,0,c.width,c.height);var data=c.toDataURL("image/jpeg",.7);URL.revokeObjectURL(url);
     if(PHOTO_FOR&&PHOTO_FOR.par!=null){var sp=PAR.spots[PHOTO_FOR.par];if(sp)sp.photo=data;savePar();var af=PHOTO_FOR.after;PHOTO_FOR=null;parentEdit(af);toast(T.prPhotoOk);return}
-    if(!G||!cur)return;G.photo=data;save();if(cur.rePaint)cur.rePaint();toast("Mooie foto!")};img.src=url});
+    if(!G||!cur)return;G.photo=data;save();if(cur.rePaint)cur.rePaint();toast(X.nicePhoto)};img.src=url});
 function accept(){if(!cur)return;var i=cur.i,s=G.c.slots[i];if(G.ph[i])return;G.ph[i]=1;if(cur.spot){cur.spot.done=true;cur.spot.doneAt=Date.now()}G.force=null;if(G.mode!=="map"&&G.mode!=="demo")G.i=i+1;
   var pep=10+(G.hints[s.z]?0:5);G.pep+=pep;save();mg.stop();buzz([40,30,80]);SFX.win();
   var N=NN(),n=done(),last=n>=N,cliff=last?D.CLIFFLAST:D.CLIFF[(n-1+(G.seed%5))%D.CLIFF.length];
@@ -411,20 +411,20 @@ function pieceThumb(cv,i){var N=NN(),gd=grid(N),g=cv.getContext("2d"),w=cv.width
   g.fillStyle="#fff";g.fillRect(0,0,w,h);g.save();g.translate(w/2,h/2);g.rotate(-.08);g.drawImage(full,(i%gd.c)*160,Math.floor(i/gd.c)*120,160,120,-w*.42,-h*.42,w*.84,h*.84);g.strokeStyle="#c9ab6a";g.lineWidth=3;g.setLineDash([5,4]);g.strokeRect(-w*.42,-h*.42,w*.84,h*.84);g.restore()}
 function noteSheet(){var N=NN(),open=G.ph.slice(),all=[];for(var i=0;i<N;i++)all[i]=true;
   var solved=[];G.c.slots.forEach(function(s,i){if(G.ph[i])solved.push('<li>'+esc(ZBY[s.z].title)+(G.mode==="in"?' <small>'+esc(roomOf(s)[0])+'</small>':'')+'</li>')});
-  sheet('<h2>'+T.notebook+'</h2>'+MW.codeBox(L,G.code,"zaak",true)+'<canvas id="kaart" class="kaart" width="640" height="400"></canvas><p class="note small" style="text-align:center">'+done()+' van '+N+' stukjes · 🥜 '+G.pep+' pepernoten</p><div class="eyebrow">'+esc(T.nbZ)+'</div>'+(solved.length?'<ol class="ol">'+solved.join("")+'</ol>':'<p class="note">'+T.nbNone+'</p>')+
+  sheet('<h2>'+T.notebook+'</h2>'+MW.codeBox(L,G.code,"zaak",true)+'<canvas id="kaart" class="kaart" width="640" height="400"></canvas><p class="note small" style="text-align:center">'+esc(fill(X.noteLine,{i:done(),n:N,p:G.pep}))+'</p><div class="eyebrow">'+esc(T.nbZ)+'</div>'+(solved.length?'<ol class="ol">'+solved.join("")+'</ol>':'<p class="note">'+T.nbNone+'</p>')+
     '<button type="button" class="btn ghost dk" id="shX">'+T.close+'</button>');MW.bindCodeBox($("#sheetBody"),L);drawKaart($("#kaart"),N,open,all);$("#shX").onclick=closeSheet}
 function menuSheet(){var onMap=G&&G.mode==="map";sheet('<h2>'+T.menu+'</h2><button type="button" class="btn" id="mBack">'+T.mBack+'</button>'+(onMap?'<button type="button" class="btn ghost dk" id="mNoMap">'+T.kv.mNoMap+'</button>':'')+'<button type="button" class="btn ghost dk" id="mPar">'+T.mParent+'</button>'+(cur&&!$("#sheet").hidden?'':'')+'<button type="button" class="btn ghost dk" id="mSkip">'+T.mSkip+'</button><button type="button" class="btn ghost dk" id="mHome">'+T.mHome+'</button><button type="button" class="btn ghost dk" id="mWipe">'+T.mWipe+'</button>');
   $("#sheetBody").onclick=function(e){var i=e.target.id;if(i==="mBack")closeSheet();else if(i==="mNoMap"){closeSheet();dropMap()}else if(i==="mPar")parentSheet(closeSheet);else if(i==="mSkip")skipSheet();else if(i==="mHome"){closeSheet();leavePlay();toast(T.saved)}else if(i==="mWipe")confirmSheet(T.wipeQ,T.wipeT,T.wipeY,wipeGame)}}
 /* begeleider: de volgende open proef overslaan (achter de pincode) */
 function skipSheet(){var i=G.i;while(i<NN()&&G.ph[i])i++;if(G.mode==="map"||G.mode==="demo"){var o=G.st.filter(function(s){return !s.done})[0];if(!o){toast(T.radarAll);return}i=o.fi}if(i>=NN()){toast(T.radarAll);return}
   var go=function(){closeSheet();cur={i:i,spot:G.st?G.st.filter(function(s){return s.fi===i})[0]:null,fails:0};G.hints[G.c.slots[i].z]=1;accept()};
-  if(!PAR.pin)return confirmSheet(T.mSkip,"Stukje "+(i+1)+" wordt dan zonder proef gegeven (telt als hint).","Overslaan",go);pinSheet(false,go)}
+  if(!PAR.pin)return confirmSheet(T.mSkip,fill(X.skipT,{i:i+1}),X.skipY,go);pinSheet(false,go)}
 
 /* ---------- finale: de kaart omdraaien, Piet leest voor, de echte pakjes ---------- */
 function toFinale(){if(!G)return;if(done()<NN()){toast(fill(T.finNot,{n:NN()-done()}));return noteSheet()}if(G.kaart)return letterSheet();kaartSheet()}
 function kaartSheet(){var N=NN(),all=[];for(var i=0;i<N;i++)all[i]=true;if(G.flip.length<N)for(var k=0;k<N;k++)G.flip[k]=!!G.flip[k];
   sheet('<div class="eyebrow">'+esc(T.finH)+'</div><h2>'+esc(T.finH)+'</h2><p class="q">'+esc(T.finT)+'</p><canvas id="kaart" class="kaart tap" width="640" height="400"></canvas><p class="pzst" id="kMsg"></p><div id="kBtn"></div><button type="button" class="btn ghost dk" id="shX">'+T.back+'</button>',true);
-  var cv=$("#kaart"),paint=function(){drawKaart(cv,N,all,G.flip);var n=G.flip.filter(Boolean).length;$("#kMsg").textContent=n+" van "+N+" omgedraaid";if(n>=N){$("#kBtn").innerHTML='<button type="button" class="btn" id="bFin">'+esc(T.finGo)+'</button>';$("#bFin").onclick=function(){G.kaart=1;save();SFX.win();letterSheet()}}};
+  var cv=$("#kaart"),paint=function(){drawKaart(cv,N,all,G.flip);var n=G.flip.filter(Boolean).length;$("#kMsg").textContent=fill(X.flipped,{i:n,n:N});if(n>=N){$("#kBtn").innerHTML='<button type="button" class="btn" id="bFin">'+esc(T.finGo)+'</button>';$("#bFin").onclick=function(){G.kaart=1;save();SFX.win();letterSheet()}}};
   paint();say(T.finT);
   cv.addEventListener("pointerdown",function(e){var r=cv.getBoundingClientRect(),gd=grid(N),x=(e.clientX-r.left)/r.width*gd.c|0,y=(e.clientY-r.top)/r.height*gd.r|0,i=y*gd.c+x;if(i<0||i>=N||G.flip[i])return;G.flip[i]=true;save();SFX.tick();buzz(20);paint()});
   $("#shX").onclick=closeSheet}
@@ -435,49 +435,49 @@ function treasureSheet(){var spots=spotsReady(),k=G.found.length;
   if(!spots.length)spots=[D.DEFSPOT]; /* niets ingevuld: dan wijst de kaart naar de woonkamer */
   if(k>=spots.length)return win();
   var sp=spots[k],txt=(sp.what?"<b>"+esc(sp.what)+"</b>. ":"")+(sp.hint?esc(sp.hint):sp.where?esc(sp.where):"");
-  sheet('<div class="eyebrow">'+esc(T.trH)+(spots.length>1?' · '+(k+1)+' van '+spots.length:'')+'</div><div class="reward"><div class="big">🎁</div></div>'+bubble("Op de kaart staat: "+txt,D.PIET,"big")+(sp.photo?'<div class="photo"><img src="'+sp.photo+'" alt=""></div>':'')+
+  sheet('<div class="eyebrow">'+esc(T.trH)+(spots.length>1?' · '+fill(X.of,{i:k+1,n:spots.length}):'')+'</div><div class="reward"><div class="big">🎁</div></div>'+bubble(X.onMap+txt,D.PIET,"big")+(sp.photo?'<div class="photo"><img src="'+sp.photo+'" alt=""></div>':'')+
     '<div id="trX"></div><button type="button" class="btn" id="trF">'+esc(T.trFound)+'</button>'+(sp.hint&&sp.where?'<button type="button" class="btn ghost dk sm" id="trH">'+esc(T.trHelp)+'</button>':''),true);
-  say("Op de kaart staat: "+(sp.what||"")+". "+(sp.hint||sp.where||""));
+  say(X.onMap+(sp.what||"")+". "+(sp.hint||sp.where||""));
   var th=$("#trH");if(th)th.onclick=function(){G.hints.tr=1;save();th.disabled=true;$("#trX").innerHTML='<div class="fb hint">🤫 '+esc(fill(T.trExact,{w:sp.where}))+'</div>';say(fill(T.trExact,{w:sp.where}))};
   $("#trF").onclick=function(){G.found.push(k);save();SFX.win();buzz([80,40,80,40,200]);if(G.found.length<spots.length){toast(T.trMore);treasureSheet()}else win()}}
 
 /* ---------- gewonnen ---------- */
 var RES=null;
 function win(){var min=((G.tEnd||Date.now())-G.t0)/60000,nh=Object.keys(G.hints).filter(function(k){return k!=="tr"}).length,stars=nh===0?3:nh<=2?2:1,xp=100+stars*50;
-  MW.profile.award({game:ID,xp:xp,stars:stars,gps:G.mode==="map",min:min,km:G.dist/1000,title:"Operatie Pakjesavond",code:G.code});
+  MW.profile.award({game:ID,xp:xp,stars:stars,gps:G.mode==="map",min:min,km:G.dist/1000,title:X.title,code:G.code});
   Wk.stopWatch();buzz([100,50,100,50,300]);
   RES={code:G.code,stars:stars,min:Math.round(min),team:NAME,photo:G.photo,wrong:G.wrong,hints:nh,lvl:lvI(),N:NN(),pep:G.pep};
   LS.set("ss_pa_last",RES);winBack()}
-function winBack(){var r=RES;sheet('<div class="eyebrow">'+T.won+' · '+esc(r.code)+'</div>'+bubble(D.SINTTXT,D.SINT,"big",SINTAV)+'<div class="stars">'+"★".repeat(r.stars)+"☆".repeat(3-r.stars)+'</div><h2>'+esc(r.team||"De Speurpieten")+'</h2>'+
-    '<div class="tags"><i>'+r.min+' min</i><i>'+r.N+' stukjes</i><i>🥜 '+r.pep+'</i><i>'+(r.hints?r.hints+" hint"+(r.hints>1?"s":""):"geen hints")+'</i></div>'+(r.stars<3?'<p class="note">'+T.missed1+'</p>':'')+
+function winBack(){var r=RES;sheet('<div class="eyebrow">'+T.won+' · '+esc(r.code)+'</div>'+bubble(D.SINTTXT,D.SINT,"big",SINTAV)+'<div class="stars">'+"★".repeat(r.stars)+"☆".repeat(3-r.stars)+'</div><h2>'+esc(r.team||X.teamDef)+'</h2>'+
+    '<div class="tags"><i>'+r.min+' min</i><i>'+esc(fill(X.pieces,{n:r.N}))+'</i><i>🥜 '+r.pep+'</i><i>'+(r.hints?fill(r.hints>1?X.hintsN:X.hint1,{n:r.hints}):X.noHints)+'</i></div>'+(r.stars<3?'<p class="note">'+T.missed1+'</p>':'')+
     '<button type="button" class="btn" id="vDip">'+T.dipBtn+'</button><button type="button" class="btn ghost dk" id="vShare">'+T.shareBtn+'</button><button type="button" class="btn ghost dk" id="vHome">'+T.home+'</button>',true);
   say(D.SINTTXT);$("#vDip").onclick=dipShow;
   var txt=fill(T.shareTxt,{c:r.code,s:"★".repeat(r.stars),m:r.min})+location.origin+location.pathname+"#z="+r.code;
   $("#vShare").onclick=function(){if(navigator.share){navigator.share({text:txt}).catch(function(){})}else{try{navigator.clipboard.writeText(txt);toast(T.copied)}catch(e){prompt("",txt)}}};
   $("#vHome").onclick=function(){closeSheet();endCase()}}
 function endCase(){LS.del(GK);G=null;hush();home()}
-function a4Sheet(title,note,fname,drawFn,back){sheet('<h2>'+esc(title)+'</h2><p class="note">'+esc(note)+'</p><canvas id="a4" width="1240" height="1754" class="a4"></canvas><button type="button" class="btn" id="a4Dl">'+T.dl+'</button><button type="button" class="btn ghost dk" id="a4Pr">Printen</button><button type="button" class="btn ghost dk" id="shX">'+T.back+'</button>',true);
+function a4Sheet(title,note,fname,drawFn,back){sheet('<h2>'+esc(title)+'</h2><p class="note">'+esc(note)+'</p><canvas id="a4" width="1240" height="1754" class="a4"></canvas><button type="button" class="btn" id="a4Dl">'+T.dl+'</button><button type="button" class="btn ghost dk" id="a4Pr">'+esc(X.print)+'</button><button type="button" class="btn ghost dk" id="shX">'+T.back+'</button>',true);
   var cv=$("#a4");drawFn(cv);$("#a4Dl").onclick=function(){var a=document.createElement("a");a.href=cv.toDataURL("image/png");a.download=fname+".png";document.body.appendChild(a);a.click();a.remove()};
   $("#a4Pr").onclick=function(){document.body.classList.add("printA4");window.print();setTimeout(function(){document.body.classList.remove("printA4")},500)};
   $("#shX").onclick=back||closeSheet;if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){if(cv.isConnected)drawFn(cv)})}
-function dipShow(){a4Sheet(T.dipH,T.dipNote,"speurpieten-diploma",function(cv){drawDiploma(cv,RES)},winBack)}
+function dipShow(){a4Sheet(T.dipH,T.dipNote,X.dipFile,function(cv){drawDiploma(cv,RES)},winBack)}
 function fitText(g,t,x,y,maxW,size,font){g.font=font.replace("{s}",size+"px");while(g.measureText(t).width>maxW&&size>16){size-=2;g.font=font.replace("{s}",size+"px")}g.fillText(t,x,y)}
 function drawDiploma(cv,r){var g=cv.getContext("2d"),W2=cv.width,H=cv.height;
   g.fillStyle="#fff6e5";g.fillRect(0,0,W2,H);g.strokeStyle="#c8433e";g.lineWidth=22;g.strokeRect(40,40,W2-80,H-80);g.strokeStyle="#f2b705";g.lineWidth=5;g.strokeRect(74,74,W2-148,H-148);
   /* mijter */g.save();g.translate(W2/2,300);g.fillStyle="#c8433e";g.beginPath();g.moveTo(-110,90);g.lineTo(0,-120);g.lineTo(110,90);g.closePath();g.fill();g.strokeStyle="#f2b705";g.lineWidth=12;g.beginPath();g.moveTo(0,-100);g.lineTo(0,80);g.moveTo(-70,0);g.lineTo(70,0);g.stroke();g.fillStyle="#f2b705";g.fillRect(-116,86,232,22);g.restore();
-  g.textAlign="center";g.fillStyle="#b3202a";g.font="600 30px Fredoka,sans-serif";g.fillText("MINIMYSTERY · OPERATIE PAKJESAVOND",W2/2,170);
-  g.fillStyle="#1b2550";g.font="700 84px Fredoka,sans-serif";g.fillText("Speurpieten-diploma",W2/2,540);
-  g.fillStyle="#39436a";g.font="500 34px Nunito,sans-serif";g.fillText("Hierbij benoemt Sinterklaas tot officiële Speurpieten:",W2/2,630);
-  g.fillStyle="#1b2550";fitText(g,r.team||"de Speurpieten van dit huis",W2/2,730,W2-260,74,"700 {s} Fredoka,sans-serif");
-  g.fillStyle="#39436a";g.font="500 32px Nunito,sans-serif";g.fillText("Zij vonden alle "+r.N+" stukjes van de verstopkaart van Piet Pepernoot",W2/2,840);
-  g.fillText("in "+r.min+" minuten · 🥜 "+r.pep+" pepernoten · "+(r.hints?r.hints+" hint"+(r.hints>1?"s":""):"zonder hints")+" · niveau "+T.lvl[r.lvl],W2/2,890);
-  g.fillText("en brachten de pakjes veilig thuis.",W2/2,940);
+  g.textAlign="center";g.fillStyle="#b3202a";g.font="600 30px Fredoka,sans-serif";g.fillText(X.dTop,W2/2,170);
+  g.fillStyle="#1b2550";g.font="700 84px Fredoka,sans-serif";g.fillText(X.dTitle,W2/2,540);
+  g.fillStyle="#39436a";g.font="500 34px Nunito,sans-serif";g.fillText(X.dIntro,W2/2,630);
+  g.fillStyle="#1b2550";fitText(g,r.team||X.dTeam,W2/2,730,W2-260,74,"700 {s} Fredoka,sans-serif");
+  g.fillStyle="#39436a";g.font="500 32px Nunito,sans-serif";g.fillText(fill(X.dL1,{n:r.N}),W2/2,840);
+  g.fillText(fill(X.dL2,{m:r.min,p:r.pep,h:(r.hints?fill(r.hints>1?X.hintsN:X.hint1,{n:r.hints}):X.noHints2),l:T.lvl[r.lvl]}),W2/2,890);
+  g.fillText(X.dL3,W2/2,940);
   g.fillStyle="#f2b705";g.font="700 70px Fredoka,sans-serif";g.fillText("★".repeat(r.stars)+"☆".repeat(3-r.stars),W2/2,1050);
-  var d=new Date();g.fillStyle="#39436a";g.font="500 30px Nunito,sans-serif";g.fillText(d.toLocaleDateString("nl-NL",{day:"numeric",month:"long",year:"numeric"}),W2/2,1120);
-  g.fillStyle="#b3202a";g.font="400 56px 'Permanent Marker',cursive";g.save();g.translate(W2/2,1290);g.rotate(-.03);g.fillText("Sinterklaas",0,0);g.restore();g.font="400 36px 'Permanent Marker',cursive";g.fillText("en Piet Pepernoot",W2/2,1350);
+  var d=new Date();g.fillStyle="#39436a";g.font="500 30px Nunito,sans-serif";g.fillText(d.toLocaleDateString(L==="nl"?"nl-NL":"en-GB",{day:"numeric",month:"long",year:"numeric"}),W2/2,1120);
+  g.fillStyle="#b3202a";g.font="400 56px 'Permanent Marker',cursive";g.save();g.translate(W2/2,1290);g.rotate(-.03);g.fillText(X.dSign1,0,0);g.restore();g.font="400 36px 'Permanent Marker',cursive";g.fillText(X.dSign2,W2/2,1350);
   g.font="60px sans-serif";["🎁","🥕","👢","🐴","⭐","🎁"].forEach(function(e,i){g.fillText(e,200+i*170,1480)});
   if(ok("diploma-stempel")){g.save();g.translate(W2-235,295);g.rotate(.14);g.globalAlpha=.95;g.drawImage(IM["diploma-stempel"],-110,-110,220,220);g.restore()}
-  g.fillStyle="#9aa3c0";g.font="500 24px Nunito,sans-serif";g.fillText("minimystery.nl · zaak "+r.code,W2/2,H-120)}
+  g.fillStyle="#9aa3c0";g.font="500 24px Nunito,sans-serif";g.fillText(X.dFoot+r.code,W2/2,H-120)}
 
 /* ---------- zaakcode, archief, wissen ---------- */
 function codeSheet(pre){sheet('<h2>'+T.dH+'</h2><p>'+T.dT+'</p><input class="inp" id="dCode" autocomplete="off" autocapitalize="characters" spellcheck="false" value="'+esc(pre||"")+'"><button type="button" class="btn" id="dOk">'+T.dGo+'</button><p class="note err" id="dMsg"></p><button type="button" class="btn ghost dk" id="shX">'+T.cancel+'</button>');
@@ -485,7 +485,7 @@ function codeSheet(pre){sheet('<h2>'+T.dH+'</h2><p>'+T.dT+'</p><input class="inp
     PEND={lvl:c.lvl};LVL=c.lvl;LS.set("ss_pa_lvl",LVL);begin(c.seed,c.mode,false,c.len)};
   $("#dOk").onclick=go;$("#dCode").onkeydown=function(e){if(e.key==="Enter")go()};$("#dCode").focus()}
 function archSheet(){var g=MW.profile.get().games.pa,log=(g&&g.log)||[],st=function(k){return"★".repeat(k||0)+"☆".repeat(3-(k||0))};
-  sheet('<h2>Opgeloste zaken</h2>'+(log.length?'<div class="list">'+log.map(function(r){return '<button type="button" class="sus" data-c="'+esc(r.c)+'"><b>'+esc(r.d)+' · '+st(r.st)+'</b><small>'+r.m+' min · zaak '+esc(r.c)+' · tik om dezelfde zaak nog eens te spelen</small></button>'}).join("")+'</div>':'<p class="note">Nog geen zaak opgelost op deze telefoon.</p>')+'<button type="button" class="btn ghost dk" id="shX">'+T.close+'</button>');
+  sheet('<h2>'+esc(X.archH)+'</h2>'+(log.length?'<div class="list">'+log.map(function(r){return '<button type="button" class="sus" data-c="'+esc(r.c)+'"><b>'+esc(r.d)+' · '+st(r.st)+'</b><small>'+esc(fill(X.archRow,{m:r.m,c:r.c}))+'</small></button>'}).join("")+'</div>':'<p class="note">'+esc(X.archNone)+'</p>')+'<button type="button" class="btn ghost dk" id="shX">'+T.close+'</button>');
   $("#sheetBody").onclick=function(e){if(e.target.id==="shX"){closeSheet();return}var r=e.target.closest("[data-c]");if(r)codeSheet(r.dataset.c)}}
 function confirmSheet(title,text,yes,fn){sheet('<h2>'+title+'</h2><p>'+text+'</p><button type="button" class="btn red" id="cfY">'+yes+'</button><button type="button" class="btn ghost dk" id="shX">'+T.cancel+'</button>');$("#shX").onclick=closeSheet;$("#cfY").onclick=fn}
 function leavePlay(){save();Wk.stopWatch();KM.leave();G=null;hush();home()}

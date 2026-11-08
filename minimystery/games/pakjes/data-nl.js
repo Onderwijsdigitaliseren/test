@@ -44,6 +44,19 @@ var T={
     mNoMap:"Verder zonder kaart (zelfde zaak)",switched:"Verder zonder kaart. Dezelfde zaak, dezelfde proeven.",virtOut:"Geen plattegrond van de buurt gevonden. Jullie lopen op de verhaalkaart: de pijl en warm/koud wijzen de weg.",
     noMapQ:"Geen locatie vandaag?",noMapT:"De telefoon geeft geen locatie door. Jullie kunnen dezelfde zaak zonder kaart spelen: de stukjes komen dan achter elkaar en jullie lopen zelf naar een nieuwe plek.",noMapGo:"Verder zonder kaart"}
 };
+var X={hint:"Hint",of:"{i} van {n}",flipped:"{i} van {n} omgedraaid",phWord:"woord",phRhyme:"rijmwoord",noteLine:"{i} van {n} stukjes · 🥜 {p} pepernoten",aWord:"het woord: ",aPhoto:"foto van ",aKijk1:" → dat getal plus 3",aKijk0:" → even of oneven",aTel:"het aantal pepernoten dat valt (staat in beeld na het tellen)",aVang:"vang minstens {n} pepernoten in {s} seconden",aDak:"{n} keer raak tikken boven de rode schoorsteen",aRitme:"de hoefslag nakloppen, {n} rondes",aSort0:"van klein naar groot aantikken",aSort1:"van het laagste naar het hoogste getal",aVerschil:"het pakje met de andere strik",aMemory:"{n} paren vinden",aGym:"springen tot de tijd om is",aSchaduw:"de juiste naam bij de schaduw, {n} keer",
+  pieces:"{n} stukjes",mIn:"Binnen in huis",mStreet:"Buiten zonder kaart",mMap:"Buiten met kaart",warnPar:"<b>Voor de grote mensen:</b> tik eerst even op Hoofdpiet, zonder dat de kinderen meekijken. Kan ook later, via het menu.",
+  goRoom:"Loop samen naar {r}. ",goOut:"Loop samen naar een nieuwe plek in de buurt, bijvoorbeeld een hoek, een lantaarnpaal of een bankje. ",pieceThere:"Daar ligt stukje {i}. Piet heeft er een proef bij: {t}.",
+  telGo:"Tel mee…",telQ:"Hoeveel pepernoten waren het?",vangGo:"Vang de pepernoten, niet de kolen!",vangOk:"Gelukt! {n} pepernoten.",vangNo:"Nog niet genoeg: {n} van de {m}.",
+  dakGo:"Tik als Piet boven de rode schoorsteen is · 0 van {n}",dakHit:"Raak! {i} van {n}",dakMiss:"Mis! Piet stuitert door. {i} van {n}",
+  listen:"Luister…",round:"Ronde {i} van {n}: luister…",yourTurn:"Nu jullie! Klop het na.",exact:"Precies goed!",good:"Goed zo!",ritmeNo:"Oeps, dat was een andere hoef. Luister nog eens.",
+  sort0:"Tik het kleinste pakje aan",sort1:"Tik het pakje met het laagste getal aan",sortOk:"Alles in de zak!",sortNext:"Goed! En nu de volgende.",sortNo:"Die is nog te groot. Begin opnieuw bij de kleinste.",
+  typeNum:"Typ een getal",kijk0:"Jullie telden {n}. Is dat een even of een oneven getal?",kijk1:"Jullie telden {n}. Piet legt bij elk ervan één pepernoot en stopt er nog 3 in zijn zak. Hoeveel pepernoten heeft hij nodig?",evenOdd:["Even","Oneven"],other:"anders",
+  secs:"seconden",jumps:"sprongen geteld",gymGo:"Springen maar! Tel hardop mee.",gymTop:"Wauw, {n} sprongen! Echte daklopers.",gymOk:"Goed gesprongen: {n} geteld. Pieten zijn lenig!",gymNoSens:"Goed gesprongen! Pieten zijn lenig.",
+  nicePhoto:"Mooie foto!",skipT:"Stukje {i} wordt dan zonder proef gegeven (telt als hint).",skipY:"Overslaan",onMap:"Op de kaart staat: ",
+  hint1:"1 hint",hintsN:"{n} hints",noHints:"geen hints",noHints2:"zonder hints",teamDef:"De Speurpieten",print:"Printen",dipFile:"speurpieten-diploma",
+  dTop:"MINIMYSTERY · OPERATIE PAKJESAVOND",dTitle:"Speurpieten-diploma",dIntro:"Hierbij benoemt Sinterklaas tot officiële Speurpieten:",dTeam:"de Speurpieten van dit huis",dL1:"Zij vonden alle {n} stukjes van de verstopkaart van Piet Pepernoot",dL2:"in {m} minuten · 🥜 {p} pepernoten · {h} · niveau {l}",dL3:"en brachten de pakjes veilig thuis.",dSign1:"Sinterklaas",dSign2:"en Piet Pepernoot",dFoot:"minimystery.nl · zaak ",
+  archH:"Opgeloste zaken",archRow:"{m} min · zaak {c} · tik om dezelfde zaak nog eens te spelen",archNone:"Nog geen zaak opgelost op deze telefoon.",title:"Operatie Pakjesavond"};
 var TYPES={kerk:"de kerk",hotel:"het hotel",bank:"de bank",apotheek:"de apotheek",cafe:"het café",bieb:"de bibliotheek",park:"het park",school:"de school",kunst:"het kunstwerk",tank:"het tankstation",winkel:"de winkel",halte:"de bushalte",post:"de brievenbus",bankje:"het bankje",hoek:"de hoek"};
 var PIET="Piet Pepernoot",SINT="Sinterklaas";
 /* binnen: de kamers waar de stukjes liggen (de kinderen lopen er zelf heen) */
@@ -121,5 +134,5 @@ var Z=[
 ];
 var DEFSPOT={what:"de pakjes",hint:"Waar iedereen vanavond bij elkaar zit, waar de kaarsjes branden en de lekkerste stoel staat. Zoek daar heel goed, ook onder, achter en bovenop!",where:"in de woonkamer"};
 var LEADNOTE="Tip: speel de opdrachten één keer zelf voor, dan weet je hoe ze gaan. Hoofdpiet blijft open: je kunt de verstopplekken ook tijdens het spel nog aanpassen.";
-return{lang:"nl",FREE:false,T:T,TYPES:TYPES,PIET:PIET,SINT:SINT,ROOMS:ROOMS,OPEN:OPEN,CLIFF:CLIFF,CLIFFLAST:CLIFFLAST,LETTER:LETTER,SINTTXT:SINTTXT,ZOEK:ZOEK,KIJK:KIJK,BOEK:BOEK,RIJM:RIJM,SYM:SYM,CODEW:CODEW,CODEW1:CODEW1,SHAD:SHAD,Z:Z,LEADNOTE:LEADNOTE,DEFSPOT:DEFSPOT};
+return{lang:"nl",FREE:false,T:T,X:X,TYPES:TYPES,PIET:PIET,SINT:SINT,ROOMS:ROOMS,OPEN:OPEN,CLIFF:CLIFF,CLIFFLAST:CLIFFLAST,LETTER:LETTER,SINTTXT:SINTTXT,ZOEK:ZOEK,KIJK:KIJK,BOEK:BOEK,RIJM:RIJM,SYM:SYM,CODEW:CODEW,CODEW1:CODEW1,SHAD:SHAD,Z:Z,LEADNOTE:LEADNOTE,DEFSPOT:DEFSPOT};
 })();
