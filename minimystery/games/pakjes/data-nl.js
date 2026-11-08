@@ -28,12 +28,12 @@ var T={
   finH:"Leg de kaart in elkaar",finNot:"Eerst alle stukjes vinden. Nog {n} te gaan.",
   finT:"Alle stukjes liggen op tafel. Tik op elk stukje om het om te draaien.",finGo:"De kaart is compleet ▸",
   letH:"Piet leest de kaart",
-  trH:"De laatste aanwijzing",trFound:"Gevonden! 🎉",trMore:"Er ligt nog meer…",trHelp:"We vinden het niet",trExact:"Piet fluistert: {w}",trNone:"Op de kaart staat een vlek… Piet kan hem niet lezen. Een grote mens in dit huis weet het nog wel: vraag de hoofdpiet van dit huis om de laatste aanwijzing!",trNoneBtn:"De hoofdpiet heeft het verteld ▸",
+  trH:"De laatste aanwijzing",trFound:"Gevonden! 🎉",trMore:"Er ligt nog meer…",trHelp:"We vinden het niet",trExact:"Piet fluistert: {w}",trNone:"",
   prH:"Hoofdpiet",prLead:"Voor de ouders. Vul dit in zonder dat de kinderen meekijken. Pas als de kinderen alle stukjes van de kaart hebben, laat Piet dit zien.",
   prPinNew:"Kies een pietencode van 4 cijfers, zodat de kinderen hier niet bij kunnen.",prPinAsk:"Pietencode",prPinBad:"Die code klopt niet.",prPinSet:"Code opslaan ▸",prPinGo:"Open ▸",prPinForgot:"Code vergeten? Wis alles (knop Wissen op het startscherm), dan kun je opnieuw beginnen.",
   prSpots:"De verstopplekken",prSpotsT:"Eén plek voor alle pakjes, of per kind een eigen plek. Piet laat ze één voor één zien.",
   prWhat:"Wat ligt er?",prWhatP:"bijv. de pakjes voor Noor en Sam",prHint:"Aanwijzing (mag een raadsel zijn)",prHintP:"bijv. Waar het altijd warm is en de sokken drogen…",prWhere:"Precieze plek (alleen als ze het niet vinden)",prWhereP:"bijv. in de wasmand op zolder",prPhoto:"📷 Foto van de plek (mag)",prPhotoOk:"Foto staat erin ✓",prDel:"Weg",prAdd:"+ Nog een verstopplek",
-  prSave:"Opslaan",prSaved:"Opgeslagen.",prEmpty:"Nog geen verstopplek ingevuld. Dat kan altijd nog, ook tijdens het spel.",prOk:"Ingesteld ✓",
+  prSave:"Opslaan",prSaved:"Opgeslagen.",prEmpty:"Nog geen verstopplek ingevuld. Dan wijst Piet aan het eind naar de woonkamer. Aanpassen kan altijd, ook tijdens het spel.",prOk:"Ingesteld ✓",
   prAns:"Antwoorden van deze zaak",prAnsT:"Alleen voor de begeleider: de proeven van deze zaak en wat er uit moet komen.",prChange:"Pietencode veranderen",
   prBtn:"🎄 Hoofdpiet (voor de grote mensen)",prBtnOk:"🎄 Hoofdpiet · ingesteld ✓",
   lvl:["Pepernoot","Hoofdpiet"],lvlAge:["6–7 jaar","8–10 jaar"],
@@ -119,6 +119,7 @@ var Z=[
  {id:"gym",title:"Pietengym",story:"Pieten moeten lenig zijn voor op het dak! Houd de telefoon vast en spring met z'n allen: tel de sprongen hardop mee.",lvl:[{secs:15,target:10,hint:"Spring met de telefoon in je hand, dan telt hij mee. Of tik op Klaar als jullie klaar zijn."},{secs:15,target:15,hint:"Spring met de telefoon in je hand, dan telt hij mee."}]},
  {id:"schaduw",title:"Schaduwen op het dak",story:"De maan schijnt op het dak en ik zie alleen schaduwen. Welke schaduw is het?",lvl:[{opts:3,rounds:2,hint:"Kijk naar de vorm aan de buitenkant."},{opts:4,rounds:3,hint:"Draai de telefoon desnoods even, dat helpt soms."}]}
 ];
+var DEFSPOT={what:"de pakjes",hint:"Waar iedereen vanavond bij elkaar zit, waar de kaarsjes branden en de lekkerste stoel staat. Zoek daar heel goed, ook onder, achter en bovenop!",where:"in de woonkamer"};
 var LEADNOTE="Tip: speel de opdrachten één keer zelf voor, dan weet je hoe ze gaan. Hoofdpiet blijft open: je kunt de verstopplekken ook tijdens het spel nog aanpassen.";
-return{lang:"nl",FREE:false,T:T,TYPES:TYPES,PIET:PIET,SINT:SINT,ROOMS:ROOMS,OPEN:OPEN,CLIFF:CLIFF,CLIFFLAST:CLIFFLAST,LETTER:LETTER,SINTTXT:SINTTXT,ZOEK:ZOEK,KIJK:KIJK,BOEK:BOEK,RIJM:RIJM,SYM:SYM,CODEW:CODEW,CODEW1:CODEW1,SHAD:SHAD,Z:Z,LEADNOTE:LEADNOTE};
+return{lang:"nl",FREE:false,T:T,TYPES:TYPES,PIET:PIET,SINT:SINT,ROOMS:ROOMS,OPEN:OPEN,CLIFF:CLIFF,CLIFFLAST:CLIFFLAST,LETTER:LETTER,SINTTXT:SINTTXT,ZOEK:ZOEK,KIJK:KIJK,BOEK:BOEK,RIJM:RIJM,SYM:SYM,CODEW:CODEW,CODEW1:CODEW1,SHAD:SHAD,Z:Z,LEADNOTE:LEADNOTE,DEFSPOT:DEFSPOT};
 })();

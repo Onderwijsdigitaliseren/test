@@ -432,7 +432,7 @@ function letterSheet(){var N=NN(),all=[];for(var i=0;i<N;i++)all[i]=true;
   sheet('<div class="eyebrow">'+esc(T.letH)+'</div>'+imgOf("finale")+'<canvas id="kaart" class="kaart" width="640" height="400"></canvas>'+bubble(D.LETTER,D.PIET,"big")+'<button type="button" class="btn red" id="bTr">'+esc(T.trH)+' ▸</button>',true);
   drawKaart($("#kaart"),N,all,all);say(D.LETTER);$("#bTr").onclick=function(){G.tEnd=G.tEnd||Date.now();save();treasureSheet()}}
 function treasureSheet(){var spots=spotsReady(),k=G.found.length;
-  if(!spots.length){sheet('<div class="eyebrow">'+esc(T.trH)+'</div>'+bubble(T.trNone,D.PIET,"big")+'<button type="button" class="btn ghost dk sm" id="trPar">🎁 '+esc(T.prH)+'</button><button type="button" class="btn" id="trOk">'+esc(T.trNoneBtn)+'</button>',true);say(T.trNone);$("#trPar").onclick=function(){parentSheet(treasureSheet)};$("#trOk").onclick=win;return}
+  if(!spots.length)spots=[D.DEFSPOT]; /* niets ingevuld: dan wijst de kaart naar de woonkamer */
   if(k>=spots.length)return win();
   var sp=spots[k],txt=(sp.what?"<b>"+esc(sp.what)+"</b>. ":"")+(sp.hint?esc(sp.hint):sp.where?esc(sp.where):"");
   sheet('<div class="eyebrow">'+esc(T.trH)+(spots.length>1?' · '+(k+1)+' van '+spots.length:'')+'</div><div class="reward"><div class="big">🎁</div></div>'+bubble("Op de kaart staat: "+txt,D.PIET,"big")+(sp.photo?'<div class="photo"><img src="'+sp.photo+'" alt=""></div>':'')+
