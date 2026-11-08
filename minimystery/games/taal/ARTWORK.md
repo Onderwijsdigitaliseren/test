@@ -13,6 +13,7 @@ Kleuren: donker groenblauw `#14403a`, zeegroen `#2a9d8f`, mint `#d6f0ea`, goud `
 | `briefje.webp` | 800×500 | Close-up van een briefje op crèmepapier, met plakband op een prikbord in de schoolhal geplakt. Op het papier alleen kriebelige lijntjes (geen leesbare tekst) en een kleine tekening van een letter met een masker. Ernaast een paar losse letters. |
 | `dief.webp` | 800×500 | Onthulling: de Letterdief bij de fietsenstalling van de school, glimlachend, haalt letters uit zijn zakken en geeft ze terug. Achter hem staat op de gevel weer compleet SCHOOL. Blij, warm licht. |
 | `noor.webp`, `tik.webp` | 400×400 | kopie uit `games/tijd/img/` |
+| `kaartje.webp` | 600×400 | Plekkaartje (gebouw-stand): leeg crème kaartje met een rand van kleine losse letters (A, B, C…) en rechtsonder een klein vergrootglas. Midden leeg voor tekst. |
 | `../../assets/cover-tl.webp` | 600×600 | Hubtegel: de Letterdief met zijn jas vol letters, een vergrootglas ervoor, groenblauwe achtergrond. Vierkant, onderwerp in het midden. |
 
 ## Per station (14×, 800×500, `st-<id>.webp`)
