@@ -241,3 +241,6 @@ h1,h2,h3{font-family:var(--f-type);font-weight:700}
 .clockbox{display:flex;justify-content:center}.clockbox canvas{width:min(70vw,260px);height:auto;filter:drop-shadow(0 8px 16px rgba(0,0,0,.18))}
 .reward .tiles{gap:4px}.reward .tiles i{min-width:26px;padding:0 5px;height:28px;font-size:13px}
 .numkey .pe{font-size:56px;line-height:1}.pool .key.num{flex-direction:column;gap:4px}.pool .key.num .pe{font-size:36px;line-height:1}.pool .key.num b{font-size:15px}.line i{font-size:20px;min-width:36px}.tiles i{font-size:12px;min-width:18px}
+
+/* stationplaatje in de polaroid (valt terug op de tekening) */
+.pol .ph{position:relative;overflow:hidden}.pol .ph .phimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:3px}

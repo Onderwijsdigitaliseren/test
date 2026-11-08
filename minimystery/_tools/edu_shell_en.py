@@ -225,8 +225,8 @@ def build(g, cfg):
     # paden en scripts
     out = re.sub(r'((?:src|href)=")(shared/|games/|assets/)', r'\1../\2', out)
     out = out.replace('href="educatie/"', 'href="education/"')
-    out = re.sub(r'games/%s/data-nl\.js\?v=\d+' % g, 'games/%s/data-en.js?v=1' % g, out)
-    out = re.sub(r'games/%s/game\.js\?v=\d+' % g, 'games/%s/game-en.js?v=3' % g, out)
+    out = re.sub(r'games/%s/data-nl\.js\?v=\d+' % g, 'games/%s/data-en.js?v=5' % g, out)
+    out = re.sub(r'games/%s/game\.js\?v=\d+' % g, 'games/%s/game-en.js?v=8' % g, out)
     open(os.path.join("en", cfg["en"]), "w", encoding="utf-8").write(out)
     print(g, "->", "en/" + cfg["en"], "| niet vertaald:", sorted(set(miss)) or "-")
 

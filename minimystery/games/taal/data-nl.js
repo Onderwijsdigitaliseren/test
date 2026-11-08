@@ -174,7 +174,7 @@ var S=[
       ch("Je schrijft een brief aan de burgemeester. Welke aanhef past?",2,"Formeel: de burgemeester ken je niet persoonlijk.",["Hoi burgemeester!","Lieve burgemeester,","Geachte heer/mevrouw,"])]}
 ];
 var ORDER_KORT=["bord","klap","rijm","samen","spel","zin"];
-return{lang:"nl",T:T,TYPES:TYPES,TIK:TIK,NOOR:NOOR,DIEF:DIEF,ROOMS:ROOMS,OPEN:OPEN,OPEN0:OPEN0,CLIFF:CLIFF,CLIFFLAST:CLIFFLAST,REVEAL:REVEAL,REVEAL0:REVEAL0,S:S,KORT:ORDER_KORT,ZIN:ZIN,FREE:true,
+return{lang:"nl",T:T,TYPES:TYPES,TIK:TIK,NOOR:NOOR,DIEF:DIEF,ROOMS:ROOMS,OPEN:OPEN,OPEN0:OPEN0,CLIFF:CLIFF,CLIFFLAST:CLIFFLAST,REVEAL:REVEAL,REVEAL0:REVEAL0,S:S,KORT:ORDER_KORT,ZIN:ZIN,FREE:false,
   LEADNOTE:"Tip: doe de korte introductieles vooraf (zie onder). Spreek het speelgebied af (buiten: alles binnen ongeveer 300 meter) en een eindtijd. Teams die vastzitten mogen de hint gebruiken (één per station). Bij de stations met een echt woord typt het team eerst het woord van het bord over; de vervolgvraag rekent daarmee (letters, klinkers, lettergrepen). Op het blad staat daarom het recept, niet één vast antwoord.",
   LES:[
    {intro:["Plak op het bord een woord met een paar letters weg (S_HO_L) en vraag: welke letters mist de Letterdief? Wat kun je niet zonder letters?","Oefen samen lettergrepen klappen met drie namen uit de klas en rijm op één ding in het lokaal.","Teams van 4–6 met een volwassene, één telefoon per team, zaakcode invullen. Zet voorlezen aan: de kinderen hoeven niet zelf te lezen, maar mogen het wel proberen."],

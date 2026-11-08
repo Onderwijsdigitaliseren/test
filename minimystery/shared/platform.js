@@ -18,6 +18,12 @@ var CFG={
     gk:"https://ko-fi.com/s/98e137183c",   // De Grote Kraak
     pa:"https://ko-fi.com/s/7cdb8f147d"    // Operatie Pakjesavond / Operation Sinterklaas Eve
   },
+  /* MiniMystery Educatie: één Schoolpas voor alle educatieve wandelingen (catalog "line":"educatie"), codes met "spel":"educatie" */
+  edu:{
+    shop:"",                         // Ko-fi-product Schoolpas MiniMystery Educatie (leeg = nog geen koopknop)
+    price:"€ 39,99",
+    dagen:183                        // zes maanden vanaf het invoeren (staat ook als "dagen" bij de code in codes.json)
+  },
   url:"",                            // bundel "Alle zaken" (later; leeg = niet tonen)
   price:"€ 9,99",                    // prijs per zaak, staat op de koopknop
   dagen:61,                          // een Feestpas is zo lang geldig vanaf het invoeren (per code te overschrijven met "dagen" in codes.json)
@@ -129,11 +135,13 @@ var PRO={
 /* ---------- gedeelde teksten (hub, Pro-paneel, nieuwe spellen) ---------- */
 var T={
   nl:{pro:"Feestpas",pH:"Feestpas: {g}",pT:"Met de Feestpas speel je {g} echt, zo vaak je wilt, twee maanden lang vanaf het invoeren van de code. De proefronde blijft gratis. Je betaalt één keer {p} via Ko-fi en krijgt daar je code. Vul die hieronder in.",pHub:"Elke zaak heeft een eigen Feestpas van {p}. Daarmee speel je die zaak echt, zo vaak je wilt, twee maanden lang vanaf het invoeren van de code. De proefrondes blijven gratis.",pAll:"Alle zaken",pFinal:"Digitale inhoud, direct geleverd na betaling. Door te kopen ga je akkoord met directe levering en zie je af van je herroepingsrecht: de aankoop is definitief, geld terug is niet mogelijk. Probeer daarom eerst de gratis proefronde.",
+    eName:"Schoolpas",eH:"Schoolpas MiniMystery Educatie",eT:"Met de Schoolpas spelen al jullie klassen en teams alle educatieve wandelingen ({n}), zo vaak als je wilt, zes maanden lang vanaf het invoeren van de code. De proefronde blijft gratis. Je betaalt één keer {p} via Ko-fi en krijgt daar je code. Vul die code in op elk apparaat waarmee een team speelt.",eBtn:"Koop de Schoolpas",eSoon:"De Schoolpas (€ 39,99, zes maanden) is binnenkort te koop.",eOk:"De Schoolpas voor MiniMystery Educatie staat aan, tot en met {d}. Veel speurplezier!",
     pBtn:"Koop de Feestpas",pHave:"Ik heb een code",pUse:"Code invoeren",pOk:"De Feestpas voor {g} staat aan, tot en met {d}. Veel speurplezier!",pBad:"Die code klopt niet. Controleer hem en probeer het opnieuw.",pExp:"Deze code is verlopen.",pUsedC:"Deze groepscode is op dit toestel al gebruikt.",pNoNet:"De codelijst kon niet worden geladen. Controleer je verbinding en probeer het opnieuw.",pWait:"Even geduld, de codes worden geladen…",
     pOn:"Feestpas actief tot en met {d}.",pFree:"De proefronde is gratis. De echte zaak speel je met de Feestpas.",pUsed:"De proefronde is gratis. De echte zaak speel je met de Feestpas.",
     gp:"Groepspas",gpOn:"Groepspas actief, nog {h} uur.",gpOk:"Groepspas staat aan voor {u} uur.",gpH:"Speel met een groep",gpT:"Met een groepspas maak je {u} uur lang groepszaken aan, voor maximaal {n} telefoons. Alleen jij hebt de pas nodig. De rest doet gratis mee via je uitnodiging. De {u} uur gaan in zodra je de code invoert.",gpBtn:"Koop een groepspas",
     cancel:"Annuleren",close:"Sluiten",rank:"Rang",streak:"Dagen op rij",solved:"Opgelost",pts:"{x} punten. Nog {n} tot {r}.",ptsTop:"{x} punten. Hoogste rang bereikt."},
   en:{pro:"Party Pass",pH:"Party Pass: {g}",pT:"With the Party Pass you play {g} for real, as often as you like, for two months from the moment you enter the code. The practice round stays free. Pay {p} once via Ko-fi and you get your code there. Enter it below.",pHub:"Every case has its own Party Pass of {p}. With it you play that case for real, as often as you like, for two months from the moment you enter the code. The practice rounds stay free.",pAll:"All cases",pFinal:"Digital content, delivered immediately after payment. By buying you agree to immediate delivery and waive your right of withdrawal: the purchase is final and cannot be refunded. So try the free practice round first.",
+    eName:"School Pass",eH:"School Pass MiniMystery Education",eT:"With the School Pass all your classes and teams play every educational walk ({n}) as often as you like, for six months from the moment you enter the code. The practice round stays free. Pay {p} once via Ko-fi and you get your code there. Enter the code on every device a team plays on.",eBtn:"Get the School Pass",eSoon:"The School Pass (€ 39.99, six months) will be on sale soon.",eOk:"The School Pass for MiniMystery Education is on, until {d}. Happy sleuthing!",
     pBtn:"Get the Party Pass",pHave:"I have a code",pUse:"Enter code",pOk:"The Party Pass for {g} is on, until {d}. Happy sleuthing!",pBad:"That code is not right. Check it and try again.",pExp:"This code has expired.",pUsedC:"This group code has already been used on this phone.",pNoNet:"The code list could not be loaded. Check your connection and try again.",pWait:"One moment, loading codes…",
     pOn:"Party Pass active until {d}.",pFree:"The practice round is free. You play the real case with the Party Pass.",pUsed:"The practice round is free. You play the real case with the Party Pass.",
     gp:"Group pass",gpOn:"Group pass active, {h} hours left.",gpOk:"Group pass is on for {u} hours.",gpH:"Play with a group",gpT:"A group pass lets you create group cases for {u} hours, for up to {n} phones. Only you need the pass; the others join free through your invitation. The {u} hours start when you enter the code.",gpBtn:"Buy a group pass",
@@ -143,10 +151,17 @@ var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&
 var fill=function(s,o){return String(s).replace(/\{(\w+)\}/g,function(m,k){return o&&k in o?o[k]:m})};
 
 /* Pro-paneel: HTML + binding. Zelfde ids als in spel 1 (pCode/pOk/pMsg). kind: "pro"|"groep" */
-function gameName(id,lang){var c=window.MW_CATALOG,g=c&&c.games.filter(function(x){return x.id===id})[0];return id==="alle"?(T[lang]||T.en).pAll:g?g[lang==="en"?"en":"nl"].title:id}
+function isEdu(id){var c=window.MW_CATALOG,g=c&&c.games.filter(function(x){return x.id===id})[0];return id==="educatie"||!!(g&&g.line==="educatie")}
+function eduList(lang){var c=window.MW_CATALOG;return c?c.games.filter(function(x){return x.line==="educatie"&&x.status!=="soon"&&(lang!=="en"||x.en.slug.indexOf("en/")===0)}).map(function(x){return x[lang==="en"?"en":"nl"].title}).join(", "):""}
+/* naam en prijs van de pas die bij een spel hoort (Feestpas of Schoolpas) */
+function passInfo(id,lang){var t=T[lang]||T.en;return isEdu(id)?{name:t.eName,price:CFG.edu.price,shop:CFG.edu.shop}:{name:t.pro,price:CFG.price,shop:CFG.shop[id]||""}}
+function gameName(id,lang){var c=window.MW_CATALOG,g=c&&c.games.filter(function(x){return x.id===id})[0];return id==="educatie"?(lang==="en"?"MiniMystery Education":"MiniMystery Educatie"):id==="alle"?(T[lang]||T.en).pAll:g?g[lang==="en"?"en":"nl"].title:id}
 function fmtDay(ms,lang){try{return new Date(ms).toLocaleDateString(lang==="en"?"en-GB":"nl-NL",{day:"numeric",month:"long"})}catch(e){return new Date(ms).toISOString().slice(0,10)}}
 /* game = zaak-id (sj/pp/ag/ts) in een spel; leeg op de hub (dan: koopknop per zaak) */
 function proHTML(lang,kind,game){var t=T[lang]||T.en,U={p:CFG.price,g:esc(gameName(game,lang))},c=window.MW_CATALOG,btns;
+  if(game&&isEdu(game)){var ub=CFG.edu.shop?'<a class="btn" href="'+esc(CFG.edu.shop)+'" target="_blank" rel="noopener">'+t.eBtn+' · '+esc(CFG.edu.price)+'</a><p class="note" style="font-size:12.5px;margin:8px 0 4px;opacity:.85">'+t.pFinal+'</p>':'<p class="note">'+esc(t.eSoon)+'</p>';
+    return '<div class="eyebrow">'+t.eName+'</div><h2>'+esc(t.eH)+'</h2><p>'+esc(fill(t.eT,{p:CFG.edu.price,n:eduList(lang)}))+'</p>'+ub+
+    '<div class="eyebrow">'+t.pHave+'</div><input class="inp" id="pCode" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="'+t.pHave+'"><button type="button" class="btn ghost dk" id="pOk">'+t.pUse+'</button><p class="note" id="pMsg" style="color:#a5392c"></p>'}
   if(game){var url=CFG.shop[game]||"";btns=url?'<a class="btn" href="'+esc(url)+'" target="_blank" rel="noopener">'+t.pBtn+' · '+esc(CFG.price)+'</a>':''}
   else btns=(c?c.games.filter(function(x){return x.status!=="soon"&&CFG.shop[x.id]}).map(function(x){return '<a class="btn ghost dk" href="'+esc(CFG.shop[x.id])+'" target="_blank" rel="noopener">'+esc(x[lang==="en"?"en":"nl"].title)+' · '+esc(CFG.price)+'</a>'}).join(""):"")+
     (CFG.url?'<a class="btn dk" href="'+esc(CFG.url)+'" target="_blank" rel="noopener">'+t.pAll+'</a>':'');
@@ -155,7 +170,7 @@ function proHTML(lang,kind,game){var t=T[lang]||T.en,U={p:CFG.price,g:esc(gameNa
     '<div class="eyebrow">'+t.pHave+'</div><input class="inp" id="pCode" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="'+t.pHave+'"><button type="button" class="btn ghost dk" id="pOk">'+t.pUse+'</button><p class="note" id="pMsg" style="color:#a5392c"></p>'}
 function bindPro(root,lang,done){var L2=lang;var t=T[lang]||T.en,inp=root.querySelector("#pCode"),ok=root.querySelector("#pOk"),msg=root.querySelector("#pMsg"),busy=false;
   var go=function(){if(busy)return;busy=true;var v=inp.value;var run=function(){var r=PRO.redeem(v);busy=false;
-      if(r==="pro"||r==="groep"){msg.textContent="";done&&done(r,r==="pro"?fill(t.pOk,{g:gameName(PRO.last.spel,L2),d:fmtDay(PRO.last.end-864e5/2,L2)}):fill(t.gpOk,{u:CFG.groep.uren}))}
+      if(r==="pro"||r==="groep"){msg.textContent="";done&&done(r,r==="pro"?fill(PRO.last.spel==="educatie"?t.eOk:t.pOk,{g:gameName(PRO.last.spel,L2),d:fmtDay(PRO.last.end-864e5/2,L2)}):fill(t.gpOk,{u:CFG.groep.uren}))}
       else{msg.textContent=r==="exp"?t.pExp:r==="used"?t.pUsedC:!codesOk&&CODES.length===0?t.pNoNet:t.pBad;try{navigator.vibrate&&navigator.vibrate(120)}catch(e){}}};
     if(!codesOk){msg.textContent=t.pWait;ready.then(run)}else run()};
   ok.onclick=go;inp.onkeydown=function(e){if(e.key==="Enter")go()}}
@@ -182,5 +197,5 @@ function bindCodeBox(root,lang){var t=CT[lang]||CT.en;[].forEach.call((root||doc
 
 window.MW={v:1,codeBox:codeBox,bindCodeBox:bindCodeBox,root:ROOT,cfg:CFG,LS:LS,norm:norm,hashStr:hashStr,sha256:sha256,today:today,esc:esc,fill:fill,
   lang:LANG,profile:PROFILE,pro:PRO,T:T,t:function(lang){return T[lang]||T.en},
-  proHTML:proHTML,bindPro:bindPro,statusText:statusText,gameUrl:gameUrl,hubUrl:hubUrl,switchLang:switchLang};
+  proHTML:proHTML,bindPro:bindPro,passInfo:passInfo,isEdu:isEdu,statusText:statusText,gameUrl:gameUrl,hubUrl:hubUrl,switchLang:switchLang};
 })();

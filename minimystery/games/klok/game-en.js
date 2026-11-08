@@ -30,9 +30,12 @@ function bubble(txt,who,cls,av){return '<div class="msg '+(cls||"")+'">'+(av||TI
 var TIKAV='<span class="avatar tik" aria-hidden="true">T</span>',NOORAV='<span class="avatar noor" aria-hidden="true">N</span>';
 /* artwork van Kellie in games/klok/img wint waar het er is (zie games/klok/ARTWORK.md); anders getekende versies */
 var IMGROOT=MW.root+"games/klok/img/",IM={};
-["hero","noor","tik","briefje","onthulling","diploma-stempel"].concat(D.Z.map(function(z){return "st-"+z.id})).forEach(function(k){var im=new Image();im.src=IMGROOT+k+".webp?v=1";IM[k]=im});
+["hero","noor","tik","briefje","onthulling","diploma-stempel"].concat(D.Z.map(function(z){return "st-"+z.id})).forEach(function(k){var im=new Image();im.src=IMGROOT+k+".webp?v=1";IM[k]=im;im.addEventListener("error",function(){im._bad=1})});
 function ok(k){var im=IM[k];return !!(im&&im.complete&&im.naturalWidth)}
-function imgOf(k){return ok(k)?'<img class="erapic" src="'+IMGROOT+k+'.webp?v=1" alt="">':''}
+/* plaatje meteen tonen (ook als het nog laadt); mislukt het, dan verdwijnt het en blijft de tekening */
+function okI(k){var im=IM[k];return !!im&&!im._bad}
+function picTag(k,cls){return okI(k)?'<img class="'+cls+'" src="'+IMGROOT+k+'.webp?v=1" alt="" onerror="this.remove()">':''}
+function imgOf(k){return picTag(k,"erapic")}
 function avatarHTML(cls,letter,key){return '<span class="avatar '+cls+'" aria-hidden="true"'+(ok(key)?' style="background:#fff8ec url('+IMGROOT+key+'.webp?v=1) center 18%/150% auto no-repeat"':'')+'>'+(ok(key)?"":letter)+'</span>'}
 function refreshAv(){TIKAV=avatarHTML("tik","T","tik");NOORAV=avatarHTML("noor","N","noor");if(ok("hero"))$("#home").classList.add("photo")}
 Promise.all(Object.keys(IM).map(function(k){return new Promise(function(res){var im=IM[k];if(im.complete)return res();im.onload=im.onerror=function(){res()}})})).then(refreshAv);
@@ -168,7 +171,7 @@ function hud(){if(!G)return;var n=done();$("#hT").textContent=mmss(Date.now()-G.
 function render(){hud();while(G.i<NN()&&G.ph[G.i])G.i++;var i=G.i,box=$("#card"),N=NN();
   if(i>=N){box.innerHTML='<div class="pol done"><div class="big">🏫</div></div>'+bubble(T.radarAll,D.TIK)+'<button type="button" class="btn red" id="bAcc">'+T.finH+'</button>';$("#bAcc").onclick=toFinale;return}
   var s=G.c.slots[i],z=ZBY[s.z];
-  box.innerHTML='<div class="pol empty"><div class="ph">'+catIcon(z.cat)+'</div><p class="cap">'+esc(fill(T.task,{i:i+1,n:N}))+' · '+esc(T.kinds[z.cat])+'</p></div>'+bubble((modus()==="bso"?"Walk together to a new place nearby. ":"Walk together to a new place nearby, for example a corner, a tree or a bench. ")+"The next case is there: <b>"+esc(z.title)+"</b>.",D.TIK)+'<button type="button" class="btn" id="bOpen">▶ '+T.start+'</button>';
+  box.innerHTML='<div class="pol empty"><div class="ph">'+catIcon(z.cat)+picTag("st-"+z.id,"phimg")+'</div><p class="cap">'+esc(fill(T.task,{i:i+1,n:N}))+' · '+esc(T.kinds[z.cat])+'</p></div>'+bubble((modus()==="bso"?"Walk together to a new place nearby. ":"Walk together to a new place nearby, for example a corner, a tree or a bench. ")+"The next case is there: <b>"+esc(z.title)+"</b>.",D.TIK)+'<button type="button" class="btn" id="bOpen">▶ '+T.start+'</button>';
   $("#bOpen").onclick=function(){taskSheet(i)}}
 function catIcon(c){return {plek:"📍",kijk:"🔢",taal:"🔤",verkeer:"🚦",foto:"📷"}[c]||"🧩"}
 

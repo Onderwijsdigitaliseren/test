@@ -178,7 +178,7 @@ var S=[
       ch("What happens in a food chain if the insects disappear?",0,"Think about who eats insects.",["Birds and other insect eaters don't get enough food, and there are fewer of them too","Nothing changes","There are more birds"])]}
 ];
 var ORDER_KORT=["bloemen","bomen","beestjes","vogels","water","bestuiving"];
-return{lang:"en",T:T,TYPES:TYPES,TIK:TIK,NOOR:NOOR,ROOMS:ROOMS,OPEN:OPEN,OPEN0:OPEN0,CLIFF:CLIFF,CLIFFLAST:CLIFFLAST,REVEAL:REVEAL,REVEAL0:REVEAL0,S:S,KORT:ORDER_KORT,KETEN:KETEN,FREE:true,
+return{lang:"en",T:T,TYPES:TYPES,TIK:TIK,NOOR:NOOR,ROOMS:ROOMS,OPEN:OPEN,OPEN0:OPEN0,CLIFF:CLIFF,CLIFFLAST:CLIFFLAST,REVEAL:REVEAL,REVEAL0:REVEAL0,S:S,KORT:ORDER_KORT,KETEN:KETEN,FREE:false,
   LEADNOTE:"Tip: do the short introduction lesson beforehand (see below). Agree on the play area (outdoors: everything within about 300 metres) and a finishing time. Teams that get stuck may use the hint (one per station). At the counting stations, the team first types in what it counted itself; the follow-up question works from that number. So this sheet gives the method, not one fixed answer. Rules outdoors: put stones back, don't pick anything, don't take minibeasts away, don't pick up litter with bare hands.",
   LES:[
    {intro:["Show a picture of a beehive (or the real one, if the school has one) and ask: what does a bee need to live? (flowers, water, a home). What do you need?","Practise listening in silence together for one minute in the classroom: what can you hear? They'll do the same outside, for birds.","Teams of 4–6 with an adult, one phone per team, enter the case code. Turn reading aloud on. Agree: don't pick anything, put stones back, let minibeasts live."],

@@ -32,13 +32,16 @@ function sayEN(en,nl){if(!VOICE)return;hush();say(en,"en-GB");if(nl)say(nl,"nl-N
 function hush(){if(window.MMVoice)return MMVoice.hush();try{window.speechSynthesis&&window.speechSynthesis.cancel()}catch(e){}}
 /* artwork van Kellie in games/engels/img wint waar het er is (zie games/engels/ARTWORK.md); anders getekende/tekst-versies */
 var IMGROOT=MW.root+"games/engels/img/",IM={};
-["hero","noor","tik","charlie","plein","biscuit","diploma-stempel"].concat(D.S.map(function(m){return "st-"+m.id})).forEach(function(k){var im=new Image();im.src=IMGROOT+k+".webp?v=1";IM[k]=im});
+["hero","noor","tik","charlie","plein","biscuit","diploma-stempel"].concat(D.S.map(function(m){return "st-"+m.id})).forEach(function(k){var im=new Image();im.src=IMGROOT+k+".webp?v=1";IM[k]=im;im.addEventListener("error",function(){im._bad=1})});
 function ok(k){var im=IM[k];return !!(im&&im.complete&&im.naturalWidth)}
+/* plaatje meteen tonen (ook als het nog laadt); mislukt het, dan verdwijnt het en blijft de tekening */
+function okI(k){var im=IM[k];return !!im&&!im._bad}
+function picTag(k,cls){return okI(k)?'<img class="'+cls+'" src="'+IMGROOT+k+'.webp?v=1" alt="" onerror="this.remove()">':''}
 function avatarHTML(cls,letter,key){return '<span class="avatar '+cls+'" aria-hidden="true"'+(ok(key)?' style="background:#fff8ec url('+IMGROOT+key+'.webp?v=1) center 18%/150% auto no-repeat"':'')+'>'+(ok(key)?"":letter)+'</span>'}
 var TIKAV='<span class="avatar tik" aria-hidden="true">T</span>',NOORAV='<span class="avatar noor" aria-hidden="true">N</span>',CHAV='<span class="avatar charlie" aria-hidden="true">C</span>';
 function refreshAv(){TIKAV=avatarHTML("tik","T","tik");NOORAV=avatarHTML("noor","N","noor");CHAV=avatarHTML("charlie","C","charlie");if(ok("hero"))$("#home").classList.add("photo")}
 Promise.all(Object.keys(IM).map(function(k){return new Promise(function(res){var im=IM[k];if(im.complete)return res();im.onload=im.onerror=function(){res()}})})).then(refreshAv);
-function eraPic(m){return ok("st-"+m.id)?'<img class="erapic" src="'+IMGROOT+'st-'+m.id+'.webp?v=1" alt="">':''}
+function eraPic(m){return picTag("st-"+m.id,"erapic")}
 function bubble(txt,who,cls,av,lang){return '<div class="msg '+(cls||"")+(lang?" en":"")+'">'+(av||NOORAV)+'<div class="bub"><button type="button" class="spk" aria-label="'+esc(T.listen)+'" data-say="'+esc(txt.replace(/<[^>]+>/g,""))+'"'+(lang?' data-lang="'+lang+'"':'')+'>🔊</button>'+(who?'<em>'+esc(who)+'</em>':'')+'<p>'+txt+'</p></div></div>'}
 document.addEventListener("click",function(e){var b=e.target.closest(".spk");if(b){hush();VOICE=true;say(b.dataset.say,b.dataset.lang||null)}});
 
@@ -156,7 +159,7 @@ function build(seed,mode,pois,ways,origin,daily,len,virt){len=LENN[len]?len:"nor
   brief()}
 function brief(){
   $("#bfNo").textContent=(G.mode==="demo"?T.demoCase:"");
-  $("#bfOpen").innerHTML=(ok("plein")?'<img class="erapic" src="'+IMGROOT+'plein.webp?v=1" alt="">':'')+bubble(fill(openOf(modus()),{N:T.nw[NN()]||NN()}),D.NOOR,"big")+
+  $("#bfOpen").innerHTML=(picTag("plein","erapic"))+bubble(fill(openOf(modus()),{N:T.nw[NN()]||NN()}),D.NOOR,"big")+
     '<div class="chips"><span class="chip">'+esc(T.lvl[ageI()])+'</span><span class="chip">'+(modus()==="bso"?"BSO-modus":"Schoolmodus")+'</span><span class="chip">'+NN()+' stations</span><span class="chip">'+(inBuilding()?"in het gebouw":G.mode==="street"?"zonder kaart":"met kaart")+'</span></div>';
   $("#bfTip").innerHTML=MW.codeBox(L,G.code,"zaak");MW.bindCodeBox($("#bfTip"),L);
   show("brief")}
@@ -174,11 +177,11 @@ function render(){hud();while(G.i<NN()&&G.ph[G.i])G.i++;var i=G.i,box=$("#card")
   if(i>=N){box.innerHTML='<div class="pol done"><div class="big">🕰️</div></div>'+bubble(T.radarAll,D.NOOR)+'<button type="button" class="btn red" id="bAcc">'+T.finH+'</button>';$("#bAcc").onclick=toFinale;return}
   var s=G.c.slots[i],m=MBY[s.m];
   if(inBuilding()){var room=D.ROOMS[G.roomOrder[i]];
-    box.innerHTML='<div class="pol empty"><div class="ph">🚪</div><p class="cap">'+esc(fill(T.task,{i:i+1,n:N}))+'</p></div><div class="goto"><em>'+esc(T.gbGoto)+'</em><b>'+esc(room)+'</b></div>'+
+    box.innerHTML='<div class="pol empty"><div class="ph">🚪'+picTag("st-"+m.id,"phimg")+'</div><p class="cap">'+esc(fill(T.task,{i:i+1,n:N}))+'</p></div><div class="goto"><em>'+esc(T.gbGoto)+'</em><b>'+esc(room)+'</b></div>'+
       (G.nocards?'<button type="button" class="btn" id="bHere">'+esc(T.gbHere)+'</button>':'<p class="q">'+esc(T.gbCode)+'</p><input class="inp code" id="rc" inputmode="numeric" maxlength="3" autocomplete="off" placeholder="000"><div id="fb"></div><button type="button" class="btn" id="bHere">'+T.ok+'</button>');
     var go=function(){if(!G.nocards){var v=($("#rc").value||"").replace(/\D/g,"");if(v!==String(roomCode(G.seed,G.roomOrder[i]))){G.wrong++;save();beep(180,.2);$("#fb").innerHTML='<div class="fb no">'+esc(T.gbBad)+'</div>';$("#rc").select();return}}buzz([60,40,60]);beep(660,.2);taskSheet(i)};
     $("#bHere").onclick=go;if($("#rc"))$("#rc").onkeydown=function(e){if(e.key==="Enter")go()};return}
-  box.innerHTML='<div class="pol empty"><div class="ph">'+m.ico+'</div><p class="cap">'+esc(fill(T.task,{i:i+1,n:N}))+'</p></div>'+bubble("Loop samen naar een nieuwe plek in de buurt: een hoek, een gebouw, een stoep of een plein. Daar heeft iemand Biscuit gezien. Het volgende station: <b>"+esc(m.title)+"</b>.",D.NOOR)+'<button type="button" class="btn" id="bOpen">▶ '+T.start+'</button>';
+  box.innerHTML='<div class="pol empty"><div class="ph">'+m.ico+picTag("st-"+m.id,"phimg")+'</div><p class="cap">'+esc(fill(T.task,{i:i+1,n:N}))+'</p></div>'+bubble("Loop samen naar een nieuwe plek in de buurt: een hoek, een gebouw, een stoep of een plein. Daar heeft iemand Biscuit gezien. Het volgende station: <b>"+esc(m.title)+"</b>.",D.NOOR)+'<button type="button" class="btn" id="bOpen">▶ '+T.start+'</button>';
   $("#bOpen").onclick=function(){taskSheet(i)}}
 
 /* ---------- spelen met kaart ---------- */
@@ -297,7 +300,7 @@ function sortSheet(){var ks=G.c.slots.map(function(sl){return sl.key}).sort(func
     else{pos=0;G.wrong++;save();b.classList.add("shake");buzz(140);beep(180,.25);$("#fb").innerHTML='<div class="fb no">'+esc(T.finBad)+'</div>';setTimeout(paint,350)}};
   $("#fHint").onclick=function(){G.hints.sort=1;save();this.disabled=true;$("#fb").innerHTML='<div class="fb hint">💡 '+esc(lv===0?T.finHint0:T.finHint)+' Volgende: '+esc(ks[pos].s)+'.</div>';say(lv===0?T.finHint0:T.finHint)}}
 function revealSheet(){G.tEnd=G.tEnd||Date.now();save();var md=modus();
-  sheet('<div class="eyebrow">'+esc(T.won)+'</div><h2>Biscuit!</h2>'+(ok("biscuit")?'<img class="erapic" src="'+IMGROOT+'biscuit.webp?v=1" alt="">':'')+'<div class="msg">'+(md==="bso"?TIKAV:NOORAV)+'<div class="bub"><em>Daar is hij</em>'+revealOf(md)+'</div></div><button type="button" class="btn" id="bWin">'+T.next+'</button>',true);
+  sheet('<div class="eyebrow">'+esc(T.won)+'</div><h2>Biscuit!</h2>'+(picTag("biscuit","erapic"))+'<div class="msg">'+(md==="bso"?TIKAV:NOORAV)+'<div class="bub"><em>Daar is hij</em>'+revealOf(md)+'</div></div><button type="button" class="btn" id="bWin">'+T.next+'</button>',true);
   say(revealOf(md));$("#bWin").onclick=win}
 
 /* ---------- gewonnen ---------- */

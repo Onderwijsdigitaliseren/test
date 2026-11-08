@@ -197,7 +197,7 @@ var M=[
 ];
 var TL0=[{n:"reizen",it:[["🐴","paard"],["🚂","stoomtrein"],["🚗","auto"]]},{n:"licht",it:[["🔥","kampvuur"],["🕯️","kaars"],["💡","lamp"]]},{n:"praten op afstand",it:[["✉️","brief"],["☎️","oude telefoon"],["📱","smartphone"]]},{n:"schrijven",it:[["🪶","ganzenveer"],["✏️","potlood"],["💻","computer"]]}];
 var ORDER_KORT=["jagers","romeinen","ridders","ontdekkers","stoom","tv"];
-return{lang:"nl",TL0:TL0,T:T,TYPES:TYPES,TIK:TIK,NOOR:NOOR,ROOMS:ROOMS,OPEN:OPEN,OPEN0:OPEN0,REVEAL0:REVEAL0,CLIFF:CLIFF,CLIFFLAST:CLIFFLAST,REVEAL:REVEAL,M:M,KORT:ORDER_KORT,FREE:true,
+return{lang:"nl",TL0:TL0,T:T,TYPES:TYPES,TIK:TIK,NOOR:NOOR,ROOMS:ROOMS,OPEN:OPEN,OPEN0:OPEN0,REVEAL0:REVEAL0,CLIFF:CLIFF,CLIFFLAST:CLIFFLAST,REVEAL:REVEAL,M:M,KORT:ORDER_KORT,FREE:false,
   LEADNOTE:"Tip: doe de korte introductieles vooraf (zie onder). Spreek het speelgebied af (buiten: alles binnen ongeveer 300 meter) en een eindtijd. Teams die vastzitten mogen de hint gebruiken (één per missie).",
   LES:{
     intro:["Laat de lege plek van de klok zien (of vertel het verhaal uit het briefje). Vraag: wat is 'de tijd'? Hoe weten we wat er vroeger gebeurde? (bronnen: voorwerpen, gebouwen, teksten, foto's, verhalen)",

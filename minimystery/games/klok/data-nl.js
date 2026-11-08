@@ -196,6 +196,6 @@ var Z=[
       {kind:"photo",q:"Maak de foto van jullie levende klok die 3 uur aanwijst.",hint:"De grote wijzer wijst naar boven (12), de kleine wijzer naar rechts (3)."},
       {kind:"photo",q:"Maak de foto van jullie levende klok die kwart voor 6 aanwijst.",hint:"Kwart voor 6: grote wijzer op de 9, kleine wijzer bijna op de 6."}]}
 ];
-return{lang:"nl",T:T,TYPES:TYPES,TIK:TIK,NOOR:NOOR,OPEN:OPEN,CLIFF:CLIFF,CLIFFLAST:CLIFFLAST,REVEAL:REVEAL,Z:Z,WORD:"ZOLDER",FREE:true,
+return{lang:"nl",T:T,TYPES:TYPES,TIK:TIK,NOOR:NOOR,OPEN:OPEN,CLIFF:CLIFF,CLIFFLAST:CLIFFLAST,REVEAL:REVEAL,Z:Z,WORD:"ZOLDER",FREE:false,
   LEADNOTE:"Tip: lees het verhaal voor aan de hele groep voordat de teams starten. Spreek het speelgebied af (alles binnen ongeveer 300 meter) en een eindtijd. Loop zelf rond of blijf op de startplek; teams die vastzitten mogen de hint gebruiken (één per zaak)."}
 })();

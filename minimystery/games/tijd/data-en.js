@@ -197,7 +197,7 @@ var M=[
 ];
 var TL0=[{n:"travel",it:[["🐴","horse"],["🚂","steam train"],["🚗","car"]]},{n:"light",it:[["🔥","campfire"],["🕯️","candle"],["💡","lamp"]]},{n:"talking from far away",it:[["✉️","letter"],["☎️","old telephone"],["📱","smartphone"]]},{n:"writing",it:[["🪶","quill"],["✏️","pencil"],["💻","computer"]]}];
 var ORDER_KORT=["jagers","romeinen","ridders","ontdekkers","stoom","tv"];
-return{lang:"en",TL0:TL0,T:T,TYPES:TYPES,TIK:TIK,NOOR:NOOR,ROOMS:ROOMS,OPEN:OPEN,OPEN0:OPEN0,REVEAL0:REVEAL0,CLIFF:CLIFF,CLIFFLAST:CLIFFLAST,REVEAL:REVEAL,M:M,KORT:ORDER_KORT,FREE:true,
+return{lang:"en",TL0:TL0,T:T,TYPES:TYPES,TIK:TIK,NOOR:NOOR,ROOMS:ROOMS,OPEN:OPEN,OPEN0:OPEN0,REVEAL0:REVEAL0,CLIFF:CLIFF,CLIFFLAST:CLIFFLAST,REVEAL:REVEAL,M:M,KORT:ORDER_KORT,FREE:false,
   LEADNOTE:"Tip: do the short introductory lesson beforehand (see below). Agree on the play area (outside: everything within about 300 metres) and a finishing time. Teams that get stuck may use the hint (one per mission).",
   LES:{
     intro:["Show the empty space where the clock was (or tell the story from the note). Ask: what is 'time'? How do we know what happened in the past? (sources: objects, buildings, texts, photos, stories)",

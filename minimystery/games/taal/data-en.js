@@ -175,7 +175,7 @@ var S=[
       ch("You are writing a letter to the mayor. Which greeting fits?",2,"Formal: you don't know the mayor personally.",["Hiya Mayor!","Love you, Mayor,","Dear Sir or Madam,"])]}
 ];
 var ORDER_KORT=["bord","klap","rijm","samen","spel","zin"];
-return{lang:"en",T:T,TYPES:TYPES,TIK:TIK,NOOR:NOOR,DIEF:DIEF,ROOMS:ROOMS,OPEN:OPEN,OPEN0:OPEN0,CLIFF:CLIFF,CLIFFLAST:CLIFFLAST,REVEAL:REVEAL,REVEAL0:REVEAL0,S:S,KORT:ORDER_KORT,ZIN:ZIN,FREE:true,
+return{lang:"en",T:T,TYPES:TYPES,TIK:TIK,NOOR:NOOR,DIEF:DIEF,ROOMS:ROOMS,OPEN:OPEN,OPEN0:OPEN0,CLIFF:CLIFF,CLIFFLAST:CLIFFLAST,REVEAL:REVEAL,REVEAL0:REVEAL0,S:S,KORT:ORDER_KORT,ZIN:ZIN,FREE:false,
   LEADNOTE:"Tip: run the short introduction lesson first (see below). Agree on the play area (outside: everything within about 300 metres) and a finishing time. Teams who get stuck may use the hint (one per station). At the stations with a real word, the team first types in the word from the sign; the follow-up question is worked out from it (letters, vowels, syllables). That's why the sheet shows the method, not one fixed answer.",
   LES:[
    {intro:["Write a word on the board with a few letters missing (S_HO_L) and ask: which letters did the Letter Thief take? What can't you do without letters?","Practise clapping syllables together with three names from the class, and find rhymes for one thing in the classroom.","Teams of 4–6 with an adult, one phone per team, enter the case code. Turn reading aloud on: the children don't have to read by themselves, but they're welcome to try."],

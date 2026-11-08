@@ -173,7 +173,7 @@ var S=[
       {kind:"text",q:"Charlie vraagt: 'How are you?' Antwoord in het Engels: 'Goed, dank je. En jij?' (begin met I'm fine)",a:["i'm fine thanks and you","im fine thanks and you","i'm fine, thanks. and you?","i'm fine thank you and you","im fine thank you and you","i am fine thanks and you"],hint:"I'm fine, thanks. And you?"}]}
 ];
 var ORDER_KORT=["colours","numbers","animals","where","greetings","time"];
-return{lang:"nl",T:T,TYPES:TYPES,TIK:TIK,NOOR:NOOR,CHARLIE:CHARLIE,ROOMS:ROOMS,OPEN:OPEN,OPEN0:OPEN0,CLIFF:CLIFF,CLIFFLAST:CLIFFLAST,REVEAL:REVEAL,REVEAL0:REVEAL0,S:S,KORT:ORDER_KORT,ZIN:ZIN,FREE:true,
+return{lang:"nl",T:T,TYPES:TYPES,TIK:TIK,NOOR:NOOR,CHARLIE:CHARLIE,ROOMS:ROOMS,OPEN:OPEN,OPEN0:OPEN0,CLIFF:CLIFF,CLIFFLAST:CLIFFLAST,REVEAL:REVEAL,REVEAL0:REVEAL0,S:S,KORT:ORDER_KORT,ZIN:ZIN,FREE:false,
   LEADNOTE:"Tip: doe de korte introductieles vooraf (zie onder). Spreek het speelgebied af (buiten: alles binnen ongeveer 300 meter) en een eindtijd. Teams die vastzitten mogen de hint gebruiken (één per station). Charlie's zinnen worden met een Engelse stem voorgelezen (knop Voorlezen); de uitleg van juf Noor is Nederlands. Engelse antwoorden: hoofdletters en leestekens maken niet uit.",
   LES:[
    {intro:["Begroet de klas in het Engels: 'Good morning! My name is …' en laat ze antwoorden. Vraag: welke Engelse woorden kennen jullie al? (uit games, tv, liedjes)","Oefen samen de kleuren en tellen tot tien in het Engels, met dingen in de klas: 'a red pen, two blue chairs'.","Teams van 4–6 met een volwassene, één telefoon per team, zaakcode invullen. Zet voorlezen aan: Charlie spreekt Engels, de uitleg is Nederlands."],

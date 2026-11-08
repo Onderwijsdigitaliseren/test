@@ -196,6 +196,6 @@ var Z=[
       {kind:"photo",q:"Take the photo of your living clock showing 3 o'clock.",hint:"The long hand points up (12), the short hand points right (3)."},
       {kind:"photo",q:"Take the photo of your living clock showing quarter to 6.",hint:"Quarter to 6: long hand on the 9, short hand almost on the 6."}]}
 ];
-return{lang:"en",T:T,TYPES:TYPES,TIK:TIK,NOOR:NOOR,OPEN:OPEN,CLIFF:CLIFF,CLIFFLAST:CLIFFLAST,REVEAL:REVEAL,Z:Z,WORD:"CELLAR",FREE:true,
+return{lang:"en",T:T,TYPES:TYPES,TIK:TIK,NOOR:NOOR,OPEN:OPEN,CLIFF:CLIFF,CLIFFLAST:CLIFFLAST,REVEAL:REVEAL,Z:Z,WORD:"CELLAR",FREE:false,
   LEADNOTE:"Tip: read the story aloud to the whole group before the teams set off. Agree on the play area (everything within about 300 metres) and a finishing time. Walk around yourself or stay at the starting point; teams who get stuck may use the hint (one per case)."}
 })();

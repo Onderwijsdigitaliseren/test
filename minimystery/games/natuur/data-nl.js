@@ -178,7 +178,7 @@ var S=[
       ch("Wat gebeurt er in een voedselketen als de insecten verdwijnen?",0,"Denk aan wie insecten eet.",["Vogels en andere insecteneters krijgen te weinig voedsel en nemen ook af","Er verandert niets","Er komen meer vogels"])]}
 ];
 var ORDER_KORT=["bloemen","bomen","beestjes","vogels","water","bestuiving"];
-return{lang:"nl",T:T,TYPES:TYPES,TIK:TIK,NOOR:NOOR,ROOMS:ROOMS,OPEN:OPEN,OPEN0:OPEN0,CLIFF:CLIFF,CLIFFLAST:CLIFFLAST,REVEAL:REVEAL,REVEAL0:REVEAL0,S:S,KORT:ORDER_KORT,KETEN:KETEN,FREE:true,
+return{lang:"nl",T:T,TYPES:TYPES,TIK:TIK,NOOR:NOOR,ROOMS:ROOMS,OPEN:OPEN,OPEN0:OPEN0,CLIFF:CLIFF,CLIFFLAST:CLIFFLAST,REVEAL:REVEAL,REVEAL0:REVEAL0,S:S,KORT:ORDER_KORT,KETEN:KETEN,FREE:false,
   LEADNOTE:"Tip: doe de korte introductieles vooraf (zie onder). Spreek het speelgebied af (buiten: alles binnen ongeveer 300 meter) en een eindtijd. Teams die vastzitten mogen de hint gebruiken (één per station). Bij de telstations typt het team eerst wat het zelf heeft geteld; de vervolgvraag rekent daarmee verder. Op het blad staat daarom het recept, niet één vast antwoord. Regels buiten: stenen terugleggen, niets plukken, beestjes niet meenemen, afval niet met blote handen oprapen.",
   LES:[
    {intro:["Laat een plaatje van een bijenkast zien (of de echte, als de school er een heeft) en vraag: wat heeft een bij nodig om te leven? (bloemen, water, een huis). Wat heb jij nodig?","Oefen samen één minuut stil luisteren in de klas: wat hoor je? Dat gaan ze buiten ook doen, voor vogels.","Teams van 4–6 met een volwassene, één telefoon per team, zaakcode invullen. Zet voorlezen aan. Afspraak: niets plukken, stenen terugleggen, beestjes laten leven."],

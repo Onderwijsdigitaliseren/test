@@ -182,3 +182,6 @@ h1,h2,h3{font-family:var(--f-type);font-weight:700}
 #home.photo .hero{display:none}#home.photo .masthead{padding-top:230px}#home.photo #ttl,#home.photo .lead{color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.5)}#home.photo .eyebrow{color:#dfe8ff!important}
 .avatar{background-size:cover;background-position:center}
 .erapic{display:block;width:100%;height:auto;max-height:220px;object-fit:cover;border-radius:16px;box-shadow:0 8px 20px rgba(0,0,0,.15);margin-bottom:8px}
+
+/* stationplaatje in de polaroid (valt terug op de tekening) */
+.pol .ph{position:relative;overflow:hidden}.pol .ph .phimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:3px}
