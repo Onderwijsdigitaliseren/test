@@ -62,6 +62,7 @@ three.min.js three.js r149, wordt pas geladen als de speurtocht start (niet op h
 - Op de testsite (`*.github.io/test/`) en lokaal staat alles open en is er een knop “Test ⏭” om een onderdeel over te slaan (ook in het menu ☰). Met `?live` achter het adres gedraagt de testsite zich als de live site: slot op de startknop, proefronde van twee vakken, ticketpaneel, geen testknoppen (alleen `SM.skip()` in de console blijft dan werken). Op de live site bestaat geen van deze hulpmiddelen.
 - De proefronde stopt na vak 2 op één plek in de code (`trialOver()` in `vakGo` en `nextVak`), dus ook “Ga verder waar je was” komt zonder ticket niet voorbij vak 2.
 - De oefenwereld van de wandelmotor (Op de bank, proefronde, Binnen zonder locatie) krijgt hier Nederlandse straatnamen (`STREETS` in data-nl.js).
+- Drie Torens, de knikkerzak en Stenenrij hebben elk drie rondes met een eigen draai (jokers en kaarten uit de mouw; glas en dobbelstenen; een volle tafel en een steen te veel). Tussenkaarten tekent `SM_GAMES.kit.banner`. Vier op een rij: eerst twee keer winnen.
 - De hub-cover `assets/cover-sm.webp` is voorlopig (een render van de kist), er is nog geen sfeerfoto.
 
 ## Instellingen

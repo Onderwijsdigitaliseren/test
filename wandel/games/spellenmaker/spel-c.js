@@ -43,7 +43,7 @@ S.uurwerk=function(host,o){
 
 /* ================= 9. Vier op een rij tegen de Automaat ================= */
 S.vier=function(host,o){
-  var C=7,R=6,CS=44,W=360,OX=(W-C*CS)/2,OY=120,H=OY+R*CS+18,k=canvas(host,W,H),g=k.g,over=false,raf=0,games=0,depth=o.depth||4,eps=o.eps==null?.14:o.eps,tmr=[];
+  var C=7,R=6,CS=44,W=360,OX=(W-C*CS)/2,OY=120,H=OY+R*CS+18,k=canvas(host,W,H),g=k.g,over=false,raf=0,games=0,wins=0,lost=0,need=o.need||2,depth=o.depth||4,eps=o.eps==null?.14:o.eps,tmr=[];
   var b=[],turn=1,drop=null,winL=null,hover=-1,say="",hintC=-1,hintT=0,blink=0,think=false,x,y;
   function reset(){b=[];for(y=0;y<R;y++){b[y]=[];for(x=0;x<C;x++)b[y][x]=0}turn=1;winL=null;drop=null;games++;think=false;say=o.T.vierYou;stat()}
   function row(bb,c){for(var yy=R-1;yy>=0;yy--)if(!bb[yy][c])return yy;return -1}
@@ -58,8 +58,9 @@ S.vier=function(host,o){
       if(p===me){if(v>val){val=v;best=c}al=Math.max(al,v)}else{if(v<val){val=v;best=c}be=Math.min(be,v)}if(al>=be)break}return[best,val]}
   function place(c,p,cb){var yy=row(b,c);if(yy<0)return false;drop={c:c,r:yy,p:p,t0:Date.now(),cb:cb};o.sfx("tik");return true}
   function landed(){var d=drop;drop=null;b[d.r][d.c]=d.p;o.sfx("klik");var l=line(b,d.p);
-    if(l){winL=l;if(d.p===1){over=true;say=o.T.vierWin;var st=games===1?3:games===2?2:1;o.sfx("win");tmr.push(setTimeout(function(){o.done({stars:st})},1500))}
-      else{say=o.T.vierLose;o.sfx("fout");depth=Math.max(1,depth-1);eps=Math.min(.6,eps+.14);tmr.push(setTimeout(function(){if(!over)reset()},2300))}stat();return}
+    if(l){winL=l;if(d.p===1){wins++;o.sfx("win");if(wins>=need){over=true;say=o.T.vierWin;var st=lost===0?3:lost<=2?2:1;tmr.push(setTimeout(function(){o.done({stars:st})},1500))}
+        else{say=o.T.vierWin1;depth=Math.min(6,depth+1);eps=Math.max(0,eps-.06);tmr.push(setTimeout(function(){if(!over)reset()},2300))}}
+      else{lost++;say=o.T.vierLose;o.sfx("fout");depth=Math.max(1,depth-1);eps=Math.min(.6,eps+.14);tmr.push(setTimeout(function(){if(!over)reset()},2300))}stat();return}
     if(full(b)){say=o.T.vierDraw;tmr.push(setTimeout(function(){if(!over)reset()},2000));stat();return}
     if(d.cb)d.cb()}
   function ai(){think=true;say=o.T.vierThink;stat();tmr.push(setTimeout(function(){think=false;var c=-1,n,yy;
@@ -68,7 +69,7 @@ S.vier=function(host,o){
       if(c<0&&Math.random()<eps){var ok=[];for(n=0;n<C;n++)if(row(b,n)>=0)ok.push(n);c=ok[Math.floor(Math.random()*ok.length)]}
       if(c<0)c=mm(b,depth,-1e9,1e9,2,2)[0];if(c<0)for(n=0;n<C;n++)if(row(b,n)>=0){c=n;break}
       place(c,2,function(){turn=1;say=o.T.vierYou;stat()})},650+Math.random()*500))}
-  function stat(){o.status(say+(games>1?" · "+o.T.vierGame.replace("{n}",games):""))}
+  function stat(){o.status(say+" · "+(o.T.vierScore||"{w}–{l}").replace("{w}",wins).replace("{l}",lost).replace("{n}",need))}
   function disc(cx,cy,p,rad){var cl=p===1?["#ff8a78","#d6452f","#8f2116"]:["#ffe9a6","#e0a81e","#8a5d06"],gr=g.createRadialGradient(cx-rad*.3,cy-rad*.35,rad*.1,cx,cy,rad);gr.addColorStop(0,cl[0]);gr.addColorStop(.5,cl[1]);gr.addColorStop(1,cl[2]);g.fillStyle=gr;g.beginPath();g.arc(cx,cy,rad,0,7);g.fill();g.strokeStyle="rgba(0,0,0,.25)";g.lineWidth=1;g.beginPath();g.arc(cx,cy,rad*.62,0,7);g.stroke()}
   function frame(ts){g.clearRect(0,0,W,H);var xx,yy,now=Date.now();
     /* Meneer Zet */
@@ -93,7 +94,7 @@ S.vier=function(host,o){
   reset();raf=requestAnimationFrame(frame);
   return{stop:function(){over=true;cancelAnimationFrame(raf);tmr.forEach(clearTimeout);k.kill()},
     hint:function(){if(over||turn!==1)return false;hintC=mm(b,5,-1e9,1e9,1,1)[0];hintT=Date.now()+3000;return hintC>=0},
-    auto:function(){if(over)return;over=true;o.done({stars:games<=1?3:games===2?2:1})},
+    auto:function(){if(over)return;over=true;o.done({stars:lost===0?3:lost<=2?2:1})},
     bot:function(){if(over||turn!==1||drop||winL||think)return false;var c=mm(b,6,-1e9,1e9,1,1)[0];if(c<0)return false;place(c,1,function(){turn=2;ai()});turn=0;return true},
     state:function(){return{games:games,over:over,turn:turn}}}};
 

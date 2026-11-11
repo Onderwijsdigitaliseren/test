@@ -2,7 +2,7 @@
    Vereist spel-a.js (SM_GAMES.kit en SM_GAMES.art). */
 (function(){
 "use strict";
-var S=window.SM_GAMES,K=S.kit,rngOf=K.rngOf,shuffle=K.shuffle,canvas=K.canvas,rr=K.rr,mmss=K.mmss;
+var S=window.SM_GAMES,K=S.kit,rngOf=K.rngOf,shuffle=K.shuffle,canvas=K.canvas,rr=K.rr,mmss=K.mmss,banner=K.banner;
 
 /* ================= 4. Zoek de verschillen ================= */
 /* zeven verschillen; elk verschil heeft één of twee plekken [x,y,straal] in het vlak van 340×210 */
@@ -62,12 +62,33 @@ function tileGen(seed,nSets,minT,maxT){var r=rngOf(seed),best=null,bs=-1;
     if(trap>bs){bs=trap;best={ids:ids.slice(),sol:sol[0]}}
     if(bs>=5)break}
   return best}
-S.stenenGen=tileGen;S.stenenSolve=tileSolve;S.stenenValid=tileValid;
+/* ronde "volle tafel": een deel van de stenen ligt al op tafel, in een andere geldige indeling dan de oplossing. Je moet dus herschikken. */
+function tileTable(pz,seed){var r=rngOf(seed),key=function(a){return a.slice().sort(function(x,y){return x-y}).join(",")},solK={};pz.sol.forEach(function(a){solK[key(a)]=1});
+  for(var t=0;t<600;t++){var n=Math.round(pz.ids.length*(.5+r()*.2)),sub=shuffle(pz.ids,r).slice(0,n),ar=tileSolve(sub,1)[0];if(!ar||ar.length>4)continue;
+    var diff=ar.filter(function(a){return !solK[key(a)]}).length;if(diff>=Math.min(2,ar.length))return{table:ar,rack:pz.ids.filter(function(x){return sub.indexOf(x)<0})}}
+  return null}
+/* ronde "één steen te veel": een extra steen die nergens past, en die ook geen andere steen kan vervangen */
+function tileDecoy(pz,seed){var r=rngOf(seed),has={};pz.ids.forEach(function(x){has[x]=1});
+  var cand=shuffle(Array.apply(null,{length:52}).map(function(_,i){return i}),r).filter(function(x){return !has[x]});
+  for(var c=0;c<cand.length;c++){var d=cand[c],near=0,cc=d/13|0,nn=d%13;if(has[d-1]&&nn>0)near++;if(has[d+1]&&nn<12)near++;for(var q=0;q<4;q++)if(q!==cc&&has[q*13+nn])near++;
+    if(near<2)continue;if(tileSolve(pz.ids.concat([d]),1).length)continue;
+    var ok=pz.ids.every(function(a){return !tileSolve(pz.ids.filter(function(x){return x!==a}).concat([d]),1).length});if(ok)return d}
+  return -1}
+S.stenenGen=tileGen;S.stenenSolve=tileSolve;S.stenenValid=tileValid;S.stenenTable=tileTable;S.stenenDecoy=tileDecoy;
 S.stenen=function(host,o){
   var W=360,TW=30,TH=40,NR=6,RH=47,RY=8,RACK=RY+NR*RH+14,H=RACK+2*(TH+6)+16,k=canvas(host,W,H),g=k.g,over=false,raf=0,t0=Date.now(),hints=0,tm=0;
-  var pz=tileGen(o.seed||5,o.sets||5,o.minT||15,o.maxT||18)||{ids:[4,5,6,17,30,43,20,21,22],sol:[[4,5,6],[17,30,43],[20,21,22]]};
-  var COL=["#d6452f","#2f6f9f","#1d1d24","#d9901a"],r=rngOf((o.seed||5)+99);
-  var rack=shuffle(pz.ids,r),rows=[],locked=[],sel=-1,drag=null,i;for(i=0;i<NR;i++){rows.push([]);locked.push(false)}
+  /* drie rondes: 1 opwarmen, 2 de tafel ligt al vol (herschikken), 3 één steen hoort er niet bij */
+  var RC=o.rounds||[{sets:4,minT:12,maxT:14},{sets:5,minT:15,maxT:18,table:true},{sets:6,minT:17,maxT:19,decoy:true}],ri=-1,intro=null,TR=o.T.steRounds||[];
+  var COL=["#d6452f","#2f6f9f","#1d1d24","#d9901a"],r=rngOf((o.seed||5)+99),pz=null,decoy=-1;
+  var rack=[],rows=[],locked=[],sel=-1,drag=null,i;
+  function fill(t,v){return String(t||"").replace(/\{(\w+)\}/g,function(m,q){return v[q]!=null?v[q]:m})}
+  function setup(){var C=RC[ri],sd=(o.seed||5)*7+ri*131,tb=null;decoy=-1;
+    for(var tr=0;tr<12;tr++){pz=tileGen(sd+tr,C.sets,C.minT,C.maxT);if(!pz)continue;if(C.table){tb=tileTable(pz,sd+tr);if(!tb)continue}if(C.decoy){decoy=tileDecoy(pz,sd+tr);if(decoy<0)continue}break}
+    if(!pz)pz={ids:[4,5,6,17,30,43,20,21,22],sol:[[4,5,6],[17,30,43],[20,21,22]]};
+    rows=[];locked=[];for(var n=0;n<NR;n++){rows.push([]);locked.push(false)}
+    if(tb){tb.table.forEach(function(a,n){rows[n]=a.slice();sortRow(rows[n])});rack=shuffle(tb.rack,r)}else rack=shuffle(pz.ids,r);
+    if(decoy>=0)rack.splice(Math.floor(r()*(rack.length+1)),0,decoy);sel=-1;drag=null;
+    var d=TR[ri]||{};intro={eye:fill(o.T.steRound,{r:ri+1,n:RC.length}),title:d.t||"",text:d.d||"",tap:o.T.tapGo}}
   function sortRow(a){a.sort(function(x,y){return(x%13-y%13)||(x-y)})}
   function rackPos(n){var per=Math.floor((W-16)/(TW+4)),x=8+(n%per)*(TW+4)+((W-16)-per*(TW+4)+4)/2,y=RACK+8+Math.floor(n/per)*(TH+6);return[x,y]}
   function rowPos(ri,n,len){var x0=44;return[x0+n*(TW+2),RY+ri*RH+3]}
@@ -84,18 +105,23 @@ S.stenen=function(host,o){
     g.fillStyle="rgba(0,0,0,.35)";rr(g,4,RACK,W-8,H-RACK-4,8);g.fill();g.strokeStyle="#8a5a34";g.lineWidth=2;rr(g,4,RACK,W-8,H-RACK-4,8);g.stroke();
     for(n=0;n<rack.length;n++){if(drag&&drag.t===rack[n])continue;var q=rackPos(n);tile(q[0],q[1],rack[n],sel===rack[n])}
     if(!rack.length&&!drag){g.fillStyle="rgba(246,239,223,.5)";g.font="600 13px 'Barlow Condensed',sans-serif";g.textAlign="center";g.fillText(o.T.steEmpty,W/2,RACK+38)}
-    if(drag)tile(drag.x-TW/2,drag.y-TH/2-14,drag.t,true,true)}
+    if(drag)tile(drag.x-TW/2,drag.y-TH/2-14,drag.t,true,true);
+    if(intro)banner(g,W,H,intro)}
   function need(){cancelAnimationFrame(raf);raf=requestAnimationFrame(draw)}
-  function stat(){var v=rows.filter(function(a){return tileValid(a)}).length;o.status(o.T.steStat.replace("{n}",rack.length).replace("{v}",v)+" · "+mmss(Date.now()-t0))}
+  function stat(){var v=rows.filter(function(a){return tileValid(a)}).length;o.status(fill(o.T.steStat,{r:ri+1,m:RC.length,n:rack.length,v:v})+" · "+mmss(Date.now()-t0))}
   function take(t){var n=rack.indexOf(t);if(n>=0){rack.splice(n,1);return true}for(var ri=0;ri<NR;ri++){n=rows[ri].indexOf(t);if(n>=0){if(locked[ri])return false;rows[ri].splice(n,1);return true}}return false}
   function where(t){if(rack.indexOf(t)>=0)return -1;for(var ri=0;ri<NR;ri++)if(rows[ri].indexOf(t)>=0)return ri;return -2}
   function put(t,ri){if(ri<0){rack.push(t)}else{rows[ri].push(t);sortRow(rows[ri])}}
-  function check(){stat();need();if(over)return;if(!rack.length&&rows.every(function(a){return !a.length||tileValid(a)})){over=true;clearInterval(tm);var t=Date.now()-t0,st=!hints&&t<=200000?3:hints<=1&&t<=400000?2:1;o.sfx("win");setTimeout(function(){o.done({stars:st,time:t})},800)}}
+  function solved(){return rack.length===(decoy>=0?1:0)&&(decoy<0||rack[0]===decoy)&&rows.every(function(a){return !a.length||tileValid(a)})}
+  function check(){stat();need();if(over||intro)return;if(!solved())return;o.sfx("win");
+    if(ri>=RC.length-1){over=true;clearInterval(tm);var t=Date.now()-t0,st=!hints&&t<=600000?3:hints<=2&&t<=1000000?2:1;setTimeout(function(){o.done({stars:st,time:t})},800);return}
+    var nd=TR[ri+1]||{};setTimeout(function(){intro={eye:fill(o.T.steRound,{r:ri+1,n:RC.length}),title:o.T.steDone,text:(decoy>=0?fill(o.T.steDecoyOk,{t:((o.T.steCols||[])[decoy/13|0]||"")+" "+((decoy%13)+1)})+" ":"")+fill(o.T.torNext,{t:nd.t})+" "+(nd.d||""),tap:o.T.tapNext,nx:true};need()},700)}
+  function next(quiet){ri++;setup();if(quiet)intro=null;stat();need()}
   function hit(q){var n,ri;for(n=rack.length-1;n>=0;n--){var p=rackPos(n);if(q[0]>=p[0]-2&&q[0]<=p[0]+TW+2&&q[1]>=p[1]-2&&q[1]<=p[1]+TH+2)return rack[n]}
     for(ri=0;ri<NR;ri++)for(n=rows[ri].length-1;n>=0;n--){var p2=rowPos(ri,n);if(q[0]>=p2[0]&&q[0]<=p2[0]+TW+2&&q[1]>=p2[1]&&q[1]<=p2[1]+TH)return rows[ri][n]}return -1}
   function rowAt(q){if(q[1]>=RACK-4)return -1;return Math.max(0,Math.min(NR-1,Math.floor((q[1]-RY)/RH)))}
   var c=k.c;
-  c.addEventListener("pointerdown",function(e){if(over)return;var q=k.at(e),t=hit(q);
+  c.addEventListener("pointerdown",function(e){if(over)return;if(intro){var nx=intro.nx;intro=null;o.sfx("klik");if(nx)next(true);else need();return}var q=k.at(e),t=hit(q);
     if(t<0){var ri=rowAt(q);if(sel>=0&&ri>=0&&!locked[ri]&&rows[ri].length<9){take(sel);put(sel,ri);sel=-1;o.sfx("klik");check()}return}
     var w=where(t);if(w>=0&&locked[w])return;drag={t:t,x:q[0],y:q[1],sx:q[0],sy:q[1],moved:false,from:w};try{c.setPointerCapture(e.pointerId)}catch(err){}need()});
   c.addEventListener("pointermove",function(e){if(!drag)return;var q=k.at(e);drag.x=q[0];drag.y=q[1];if(Math.hypot(q[0]-drag.sx,q[1]-drag.sy)>7)drag.moved=true;need()});
@@ -105,15 +131,18 @@ S.stenen=function(host,o){
     var ri=rowAt([d.x,d.y-14]);if(ri>=0&&(locked[ri]||rows[ri].length>=9&&d.from!==ri))ri=d.from;
     take(d.t);put(d.t,ri);sel=-1;o.sfx("klik");check()}
   c.addEventListener("pointerup",up);c.addEventListener("pointercancel",up);
-  k.onfit=draw;tm=setInterval(function(){if(!over)stat()},1000);stat();draw();
+  k.onfit=draw;tm=setInterval(function(){if(!over)stat()},1000);next(false);
   function placeSet(set){var ri=-1,i2;for(i2=0;i2<NR;i2++)if(!rows[i2].length){ri=i2;break}
     if(ri<0){for(i2=NR-1;i2>=0;i2--)if(!locked[i2]){rows[i2].slice().forEach(function(t){take(t);put(t,-1)});ri=i2;break}}
     if(ri<0)return;set.forEach(function(t){take(t);put(t,ri)});locked[ri]=true}
   function isDone(set){for(var ri=0;ri<NR;ri++){if(rows[ri].length===set.length&&set.every(function(t){return rows[ri].indexOf(t)>=0}))return ri}return -1}
   return{stop:function(){over=true;clearInterval(tm);cancelAnimationFrame(raf);k.kill()},
-    hint:function(){if(over)return false;for(var s=0;s<pz.sol.length;s++){var at=isDone(pz.sol[s]);if(at>=0){locked[at]=true;continue}hints++;placeSet(pz.sol[s]);o.sfx("goed");check();return true}return false},
-    auto:function(){rows=rows.map(function(){return[]});locked=locked.map(function(){return false});rack=pz.ids.slice();pz.sol.forEach(function(s){placeSet(s)});check()},
-    state:function(){var p=rack.length?rackPos(0):null;return{rack:rack.length,rows:rows.map(function(a){return a.length}),first:p?[p[0]+TW/2,p[1]+TH/2]:null,row0:[W/2,RY+RH/2],row1:[W/2,RY+RH*1.5],W:W,H:H}}}};
+    hint:function(){if(over||intro)return false;for(var s=0;s<pz.sol.length;s++){var at=isDone(pz.sol[s]);if(at>=0){locked[at]=true;continue}hints++;placeSet(pz.sol[s]);o.sfx("goed");check();return true}return false},
+    auto:function(){if(over)return;ri=RC.length-1;intro=null;rows=rows.map(function(){return[]});locked=locked.map(function(){return false});rack=pz.ids.slice();if(decoy>=0)rack.push(decoy);pz.sol.forEach(function(s){placeSet(s)});check()},
+    /* test: deze ronde oplossen zoals een speler (alle sets met hints) */
+    solveRound:function(){intro=null;for(var g2=0;g2<12;g2++)if(!this.hint())break;check()},
+    tapIntro:function(){if(intro){var nx=intro.nx;intro=null;if(nx)next(true);else need()}},
+    state:function(){var p=rack.length?rackPos(0):null;return{round:ri,intro:!!intro,decoy:decoy,table:rows.reduce(function(a,b){return a+b.length},0),rack:rack.length,rows:rows.map(function(a){return a.length}),first:p?[p[0]+TW/2,p[1]+TH/2]:null,row0:[W/2,RY+RH/2],row1:[W/2,RY+RH*1.5],W:W,H:H}}}};
 
 /* ================= 7. Mahjong ================= */
 S.mahjong=function(host,o){
