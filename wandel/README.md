@@ -17,6 +17,8 @@ Statische site voor GitHub Pages, geen build-stap. Draait sinds 30 okt 2026 op w
 /the-last-bus.html           spel 6 EN        /nl/de-laatste-bus.html   spel 6 NL (shell; logica in /games/lastbus/)
 /games/lastbus/              vermissing op de motor van vanishing: je zoekt een plek en een reden; zes plekken met vaste eigenschappen (CONTACTS), drie zekerheden die vervallen (TWIST), lijnfilm-stijl · data-nl.js · data-en.js · game.css · hero.webp
 /games/vanishing/            game.js (logica, taalonafhankelijk) · data-nl.js · data-en.js · game.css · hero.webp (sfeerfoto, uitsnede zonder titel; eigen sfeer, figuren en rode routelijn)
+/nl/de-erfenis-van-de-spellenmaker.html   speurtocht NL (shell; logica in /games/spellenmaker/). Nog geen Engelse versie: de Engelse hub verwijst naar de Nederlandse pagina
+/games/spellenmaker/         speurtocht van ± 2 uur op de wandelmotor: tien vakken met elk een kist in 3D, een spel en een schim door de camera. Zie “De Erfenis van de Spellenmaker” hieronder
 /shared/platform.js          gedeelde laag: Pro, groepspas, codes.json, profiel (rang/punten/streak), taal, instellingen (SS_PRO)
 /shared/walk.js              wandelmotor voor nieuwe spellen: OpenStreetMap/Overpass, plekken kiezen, nachtkaart, gps, oefenwereld, vellen/geluid
 /shared/steps.js             binnen-stand: stappen tellen met de bewegingssensor (devicemotion) of lopen op tempo, scherm aan houden. Nu in gebruik bij games/bride (keuze Buiten/Binnen op het startscherm, G.mode "in", teksten in D.IN); de keuze staat in `ss_where`
@@ -40,6 +42,27 @@ bestaande Pro-kopers en groepscodes blijven werken, er is geen migratie nodig. N
 2. Twee HTML-shells (EN in de root, NL onder `/nl/`) met SEO-head, die `platform.js`, `catalog.js`, `walk.js`, je data-bestand en je game.js laden. `games/vanishing/` is het voorbeeld.
 3. Twee `<url>`-blokken in `sitemap.xml`, en als het spel zaakcodes deelt: een regel in de hub-doorsturing (`index.html`, `nl/index.html`, `404.html`).
 4. In het spel: `MW.pro.locked("<id>")`, `MW.pro.setFree("<id>")`, `MW.profile.award({game:"<id>",…})`, `MW.proHTML/bindPro` voor het Pro-paneel.
+
+## De Erfenis van de Spellenmaker (`sm`)
+Eigen categorie `quest` (Speurtocht) in de catalogus. Tien vakken; elk vak is kist (3D-raadsel) → spel → schim (camera) → nieuw bewijs in het dossier. Vak 10 is de finale met drie sloten en het eindoordeel (wie, hoe, waarom en een bonusvraag). Tussen de vakken liggen zes losse speelstukken om met de camera te vangen.
+
+```
+game.js      verloop, kaart, dossier, fiches (hints kosten fiches), speelkast, Speelkamer (gewonnen spellen opnieuw spelen)
+data-nl.js   alle tekst: verhaal, tien vakken (CH), kistcodes, verdachten (SUS), eindoordeel (V), uitleg
+kist.js      SM_KIST: de kist in 3D (three.js) met rolletjes, dobbelstenen, knoppen, hendels en verborgen zijden; zonder WebGL een platte variant
+lens.js      SM_LENS: schimmen en speelstukken door de camera (zelfde aanpak als games/ghosts), met getekend straatbeeld als de camera uit staat
+spel-a.js    legpuzzel (jig), Drie Torens (torens), knikkers op een rij (knikkers)
+spel-b.js    zoek de verschillen (verschil), Stenenrij (stenen), mahjong
+spel-c.js    uurwerk (buizen draaien), vier op een rij tegen Meneer Zet (vier), kogelbaan met kantelen (kogel)
+three.min.js three.js r149, wordt pas geladen als de speurtocht start (niet op het startscherm)
+```
+
+- Drie standen op het startscherm: Buiten (gps), Binnen (stappen via `shared/steps.js`) en Op de bank (alles met tikken, geen lopen). De keuze staat in `ss_sm_where`, de voortgang in `ss_game_sm_nl`, de speelkast in `ss_sm_album`.
+- Toegang: op de live site een teamticket (`MW.pro.locked("sm")`); zonder ticket is alleen de proefronde open (de eerste twee vakken, zonder lopen). Er is nog geen eigen Ko-fi-product: zolang `CFG.team.url.sm` ontbreekt, verwijst het Pro-paneel naar het ticket voor alle wandelingen.
+- Op de testsite (`*.github.io/test/`) en lokaal staat alles open en is er een knop “Test ⏭” om een onderdeel over te slaan (ook in het menu ☰). Met `?live` achter het adres gedraagt de testsite zich als de live site: slot op de startknop, proefronde van twee vakken, ticketpaneel, geen testknoppen (alleen `SM.skip()` in de console blijft dan werken). Op de live site bestaat geen van deze hulpmiddelen.
+- De proefronde stopt na vak 2 op één plek in de code (`trialOver()` in `vakGo` en `nextVak`), dus ook “Ga verder waar je was” komt zonder ticket niet voorbij vak 2.
+- De oefenwereld van de wandelmotor (Op de bank, proefronde, Binnen zonder locatie) krijgt hier Nederlandse straatnamen (`STREETS` in data-nl.js).
+- De hub-cover `assets/cover-sm.webp` is voorlopig (een render van de kist), er is nog geen sfeerfoto.
 
 ## Instellingen
 Ko-fi-links, prijzen, groepspas-uren en de hub-Ko-fi-knop: bovenin `shared/platform.js` (`CFG`). Het zout `moordwandeling|` nooit wijzigen.

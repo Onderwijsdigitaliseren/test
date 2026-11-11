@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>De Erfenis van de Spellenmaker – speurtocht met tien kisten, schimmen en spellen</title>
+<meta name="description" content="Een speurtocht van twee uur in je eigen buurt. Open tien kisten in 3D, win het spel dat erin ligt en vang met je camera de schimmen van de laatste avond van de spellenmaker. Wie zaagde aan zijn trap? Buiten, binnen of op de bank. Proefronde gratis.">
+<link rel="canonical" href="https://www.enigmamystery.com/wandel/nl/de-erfenis-van-de-spellenmaker.html">
+<meta property="og:site_name" content="Enigma Mystery">
+<meta property="og:title" content="De Erfenis van de Spellenmaker">
+<meta property="og:description" content="Tien kisten, tien spellen, vijf erfgenamen. De schimmen hebben alles gezien.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.enigmamystery.com/wandel/nl/de-erfenis-van-de-spellenmaker.html">
+<meta property="og:locale" content="nl_NL">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#0c241f">
+<link rel="icon" href="../assets/favicon.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Caveat:wght@500;700&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../shared/platform.css?v=1">
+<link rel="stylesheet" href="../games/spellenmaker/game.css?v=1">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"De Erfenis van de Spellenmaker","url":"https://www.enigmamystery.com/wandel/nl/de-erfenis-van-de-spellenmaker.html","description":"Een speurtocht van twee uur in je eigen buurt: tien kisten, tien spellen, schimmen via de camera en één dader.","inLanguage":"nl","gamePlatform":"Webbrowser","genre":["Mysterie","Locatiespel","Puzzel"]}</script>
+</head>
+<body>
+<div id="app">
+  <section class="screen" id="home">
+    <canvas id="hero" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <div class="row0"><div class="pills"><a class="pill" id="hub" href="./">◂ Alle wandelingen</a></div></div>
+      <div class="masthead"><div class="brand">Enigma Mystery</div><h1 id="ttl"><small>De Erfenis van de</small>Spellen&shy;maker</h1><span class="cat">Speurtocht · tien kisten · ± 2 uur</span></div>
+      <p class="intro">Augustus Tinne maakte zijn leven lang spellen. Zaterdag viel hij van zijn trap. Zijn laatste spel ligt verstopt in jouw buurt.</p>
+      <div class="newBox" id="newBox"><h3>Nieuw hier?</h3><p>Speel eerst gratis de proefronde: de eerste twee kisten, op een getekende kaart en zonder lopen.</p><button type="button" class="btn" id="bTrial">▶ Gratis proefronde</button></div>
+      <button type="button" class="btn" id="bResume" hidden>Ga verder waar je was</button>
+      <div class="sum"><span id="sumT"></span><button type="button" id="sumB" aria-expanded="false">Aanpassen ▾</button></div>
+      <div class="set" id="set" hidden>
+        <div class="lbl">Waar speel je?</div>
+        <div class="seg seg3" id="where"><button type="button" data-w="out" aria-pressed="true">Buiten</button><button type="button" data-w="in" aria-pressed="false">Binnen</button><button type="button" data-w="sofa" aria-pressed="false">Op de bank</button></div>
+        <p class="note" id="whereNote"></p>
+        <div class="lbl" id="lenL">Afstand</div>
+        <div class="seg" id="len"><button type="button" data-r="360" aria-pressed="true">Compact · ± 2 km</button><button type="button" data-r="560" aria-pressed="false">Ruim · ± 3 km</button></div>
+      </div>
+      <button type="button" class="btn go" id="bStart">Start de speurtocht</button>
+      <p class="note" id="status"></p>
+      <button type="button" class="btn ghost" id="bPro" hidden></button>
+      <div class="links"><button type="button" id="bHow">Hoe werkt het?</button><button type="button" id="bRoom">De Speelkamer</button><button type="button" id="bAlbum">De speelkast</button><button type="button" id="bWipe">Wissen</button></div>
+      <p class="note safe" id="safe"></p>
+    </div>
+  </section>
+
+  <section class="screen" id="play" hidden>
+    <canvas id="map"></canvas>
+    <div id="hud">
+      <div><b id="hT">0:00</b><span>Tijd</span></div>
+      <div><b id="hS">1/10</b><span>Vak</span></div>
+      <div><b id="hF">10</b><span>Fiches</span></div>
+      <div><b id="hD">0</b><span>Sterren</span></div>
+    </div>
+    <div id="zoom">
+      <button type="button" id="zM" aria-label="Menu">☰</button>
+      <button type="button" id="zIn" aria-label="Inzoomen">+</button>
+      <button type="button" id="zOut" aria-label="Uitzoomen">−</button>
+      <button type="button" id="zMe" aria-label="Centreer op mij">◎</button>
+      <button type="button" id="zS" aria-label="Geluid aan of uit">♪</button>
+    </div>
+    <div id="low">
+      <div id="radar"></div>
+      <div id="chip" hidden>
+        <div class="row"><b id="cName"></b><span id="cDist"></span></div>
+        <span id="cHint" class="note"></span>
+        <button type="button" class="btn" id="cAct"></button>
+      </div>
+      <div id="bar">
+        <button type="button" id="bDos">Dossier</button>
+        <button type="button" id="bSus">Erfgenamen</button>
+        <button type="button" id="bAlb">Speelkast</button>
+      </div>
+    </div>
+  </section>
+
+  <div id="stage" hidden>
+    <div id="stTop"><button type="button" id="stX">◂ Kaart</button><b id="stT"></b><span id="stF">10</span></div>
+    <div id="stBody"></div>
+    <div id="stBar"><span id="stS"></span><button type="button" id="stSkip" hidden>Test ⏭</button><button type="button" id="stH">Hint</button></div>
+  </div>
+
+  <div id="ar" hidden><video id="arV" playsinline muted autoplay></video><canvas id="arC"></canvas><div id="arTop"><span id="arT"></span><button type="button" id="arX">Sluit de lens</button></div><div id="arB"><p id="arH"></p><button type="button" class="btn" id="arN" hidden></button></div></div>
+  <div class="sheet" id="sheet" hidden><div class="paper" id="sheetBody"></div></div>
+  <div id="load" hidden role="status"><div class="spin"></div><b id="loadT"></b></div>
+  <div id="toast" hidden></div>
+</div>
+<script src="../shared/platform.js?v=3"></script>
+<script src="../shared/catalog.js?v=18"></script>
+<script src="../shared/tiles.js?v=1"></script>
+<script src="../shared/plan.js?v=2"></script>
+<script src="../shared/walk.js?v=5"></script>
+<script src="../shared/steps.js?v=1"></script>
+<script src="../games/spellenmaker/data-nl.js?v=1"></script>
+<script src="../games/spellenmaker/spel-a.js?v=1"></script>
+<script src="../games/spellenmaker/spel-b.js?v=1"></script>
+<script src="../games/spellenmaker/spel-c.js?v=1"></script>
+<script src="../games/spellenmaker/lens.js?v=1"></script>
+<script src="../games/spellenmaker/kist.js?v=1"></script>
+<script src="../games/spellenmaker/game.js?v=1"></script>
+</body>
+</html>

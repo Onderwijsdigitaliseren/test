@@ -10,7 +10,9 @@ window.MW_CATALOG={
     {id:"night",  icon:"🌑", nl:{n:"Nachtzaak",   t:"Jij bent geen speurder maar doelwit. Thriller: blijf lopen en kijk om je heen."},
                             en:{n:"Night case",   t:"You are not the detective but the target. A thriller: keep walking and look around you."}},
     {id:"cold",   icon:"📁", nl:{n:"Cold case",   t:"Een oud dossier, nieuwe ogen. De plekken zijn er nog; de getuigen ook, ouder."},
-                            en:{n:"Cold case",    t:"An old file, fresh eyes. The places are still there; so are the witnesses, older now."}}
+                            en:{n:"Cold case",    t:"An old file, fresh eyes. The places are still there; so are the witnesses, older now."}},
+    {id:"quest",  icon:"🎲", nl:{n:"Speurtocht",  t:"Kisten openen, spellen winnen, schimmen vangen. Een avontuur van twee uur, buiten, binnen of op de bank."},
+                            en:{n:"Treasure trail",t:"Open chests, win games, catch shades. A two-hour adventure, outdoors, indoors or on the sofa."}}
   ],
   games:[
     {id:"mw", cat:"murder", status:"live", access:"trial", minutes:"45–90", km:"2–4", group:true,
@@ -47,6 +49,12 @@ window.MW_CATALOG={
       en:{slug:"eyewitness.html", title:"Eyewitness", tag:"You saw something you were never meant to see.",
           desc:"Not a whodunit: a thriller. At eight points a message from ‘Unknown’ is waiting, and someone is walking behind you. Who is following you, and who can you trust?"},
       nl:{slug:"nl/ooggetuige.html", title:"Ooggetuige", tag:"Jij hebt iets gezien wat je niet had mogen zien.",
-          desc:"Geen detective maar een thriller. Op acht punten wacht een bericht van ‘Onbekend’, en iemand loopt achter je. Wie volgt je, en wie kun je vertrouwen?"}}
+          desc:"Geen detective maar een thriller. Op acht punten wacht een bericht van ‘Onbekend’, en iemand loopt achter je. Wie volgt je, en wie kun je vertrouwen?"}},
+    /* De Erfenis van de Spellenmaker: nog alleen Nederlands; de Engelse hub verwijst voorlopig naar de Nederlandse pagina */
+    {id:"sm", cat:"quest", status:"new", access:"trial", minutes:"100–130", km:"2–3", group:false,
+      en:{slug:"nl/de-erfenis-van-de-spellenmaker.html", title:"The Gamemaker's Legacy", tag:"Ten chests, ten games, five heirs. (Dutch only for now.)",
+          desc:"A two-hour trail around your own streets. Open ten puzzle chests in 3D, win the game inside each one, and catch the shades of the gamemaker's last evening with your camera. Who loosened his stairs?"},
+      nl:{slug:"nl/de-erfenis-van-de-spellenmaker.html", title:"De Erfenis van de Spellenmaker", tag:"Tien kisten, tien spellen, vijf erfgenamen.",
+          desc:"Een speurtocht van twee uur door je eigen buurt. Open tien kisten in 3D, win het spel dat erin ligt (legpuzzel, kaarten, knikkers, mahjong, kogelbaan en meer) en vang met je camera de schimmen van de laatste avond van de spellenmaker. Wie zaagde aan zijn trap?"}}
   ]
 };
