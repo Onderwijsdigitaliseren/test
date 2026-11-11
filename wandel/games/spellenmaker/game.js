@@ -127,9 +127,11 @@ function vakTitle(c){return T.vak+" "+(c+1)+" · "+D.CH[c].name}
 
 /* de kist: raadselkaartje bovenin, de kist eronder */
 function kistStage(spec,riddle,hints,done){stClear();var b=$("#stBody"),used=0;
-  b.innerHTML='<div class="smRiddle" id="rid"><div class="eyebrow"><span>'+T.riddle+'</span><span id="ridL"></span></div><p>'+esc(riddle)+'</p><div id="ridH"></div></div><div class="smHost gl" id="host"></div><div class="smTip">'+T.turnTip+'</div>';
+  b.innerHTML='<div class="smRiddle" id="rid"><div class="eyebrow"><span>'+T.riddle+'</span><span id="ridL"></span></div><p>'+esc(riddle)+'</p><div id="ridH"></div></div><div class="smHost gl" id="host"></div><div class="smTip" id="kTip"></div>';
+  /* uitleg onder de kist past bij het slot dat je ziet; een slot op de achterkant verklapt zich niet */
+  var tip=function(i){var st=spec.stages[i]||{};$("#kTip").textContent=(st.side!==-1&&T.tips&&T.tips[st.type])||T.turnTip};tip(0);
   $("#rid").onclick=function(){this.classList.toggle("min")};
-  stg.cur=KIST.open($("#host"),spec,{sfx:sfx,stage:function(i,n){$("#ridL").textContent=n>1?fill(T.lock,{i:i+1,n:n}):""},done:done});
+  stg.cur=KIST.open($("#host"),spec,{sfx:sfx,stage:function(i,n){$("#ridL").textContent=n>1?fill(T.lock,{i:i+1,n:n}):"";tip(i)},done:done});
   var showH=function(){$("#ridH").innerHTML=hints.slice(0,used).map(function(x){return'<p class="hintT">'+esc(x)+'</p>'}).join("");$("#rid").classList.remove("min")};
   if(hints)setHint(function(){sheet('<h2>'+T.hintH+'</h2>'+(used<1?'<button type="button" class="btn" id="h1">'+costT(T.hint1,6)+'</button>':'')+(used<2?'<button type="button" class="btn ghost dk" id="h2">'+costT(T.hint2,10)+'</button>':'<p>'+T.noHint+'</p>')+'<button type="button" class="btn ghost dk" id="shX">'+T.close+'</button>');
     $("#shX").onclick=closeSheet;if($("#h1"))$("#h1").onclick=function(){pay(6);used=1;closeSheet();showH()};if($("#h2"))$("#h2").onclick=function(){pay(10);used=2;closeSheet();showH()}});

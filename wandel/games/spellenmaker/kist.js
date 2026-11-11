@@ -1,7 +1,7 @@
 /* De Erfenis van de Spellenmaker – de kisten in 3D (THREE r149).
    SM_KIST.open(host, spec, o) → {stop(), solve()}
    spec = {no, stages:[{type:"discs"|"dice"|"buttons"|"levers"|"tap", ...}]}
-     discs:   {glyphs:[..], n, ans:[index per schijf], side}
+     discs:   {glyphs:[..], n, ans:[index per schijf], side}   (tik boven = vorige teken, tik onder = volgende)
      dice:    {n, ans:[ogen per steen]}
      buttons: {labels:[..], order:[index..], side, cols:[kleur per knop]}
      levers:  {labels:[..], ans:[true=omhoog..], side, cols:[..]}
@@ -98,8 +98,9 @@ K.open=function(host,spec,o){
         var fr=new T.Mesh(new T.BoxGeometry(.5,.66,.06),mBrass);fr.position.set(x,.56,.775);fr.castShadow=true;gr.add(fr);
         cvs[j]=document.createElement("canvas");cvs[j].width=128;cvs[j].height=176;txs[j]=new T.CanvasTexture(cvs[j]);txs[j].encoding=T.sRGBEncoding;
         var f=new T.Mesh(new T.PlaneGeometry(.4,.55),new T.MeshBasicMaterial({map:txs[j]}));f.position.set(x,.56,.807);gr.add(f);ms[j]=f;paint(j);
-        addHit(gr,f,function(){idx[j]=(idx[j]+1)%G.length;an[j]=1;o.sfx("klik");check()})})(j);
-      gr.userData.tick=function(dt){for(var j=0;j<n;j++)if(an[j]>0){an[j]=Math.max(0,an[j]-dt*7);paint(j)}};
+        /* tik op de bovenste helft: het teken erboven komt naar het midden (terug); op de onderste helft: het teken eronder (verder) */
+        addHit(gr,f,function(h){var back=!!(h&&h.uv&&h.uv.y>.5),L=G.length;idx[j]=(idx[j]+(back?L-1:1))%L;an[j]=back?-1:1;o.sfx("klik");check()})})(j);
+      gr.userData.tick=function(dt){for(var j=0;j<n;j++)if(an[j]){an[j]=an[j]>0?Math.max(0,an[j]-dt*7):Math.min(0,an[j]+dt*7);paint(j)}};
       gr.userData.ok=function(){return idx.every(function(v,j){return v===st.ans[j]})};
       gr.userData.solve=function(){for(var j=0;j<n;j++){idx[j]=st.ans[j];an[j]=1}};return gr},
     dice:function(st){var gr=mount(st),n=st.n,v=[],ms=[],hop=[],VAL=[3,4,1,6,2,5],mats=VAL.map(function(x){return new T.MeshStandardMaterial({map:pipTex(x),roughness:.5})});
@@ -158,7 +159,7 @@ K.open=function(host,spec,o){
   el.addEventListener("pointermove",function(e){if(!pd)return;var dx=e.clientX-pd.x,dy=e.clientY-pd.y;pd.mv=Math.max(pd.mv,Math.hypot(dx,dy));if(pd.mv<8||opened)return;
     orb.tth=pd.th-dx*.0085;if(!orb.free)orb.tth=Math.max(-1.15,Math.min(1.15,orb.tth));orb.tph=Math.max(.42,Math.min(1.32,pd.ph-dy*.006))});
   function up(e){if(!pd)return;var q=pd;pd=null;if(q.mv>=8||performance.now()-q.t>700||opened||sw)return;
-    var b=el.getBoundingClientRect();v2.set((e.clientX-b.left)/b.width*2-1,-((e.clientY-b.top)/b.height*2-1));ray.setFromCamera(v2,cam);var hit=ray.intersectObjects(act,false);if(hit.length)hit[0].object.userData.hit()}
+    var b=el.getBoundingClientRect();v2.set((e.clientX-b.left)/b.width*2-1,-((e.clientY-b.top)/b.height*2-1));ray.setFromCamera(v2,cam);var hit=ray.intersectObjects(act,false);if(hit.length)hit[0].object.userData.hit(hit[0])}
   el.addEventListener("pointerup",up);el.addEventListener("pointercancel",function(){pd=null});
 
   var last=performance.now();
