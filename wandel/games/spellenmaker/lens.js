@@ -20,7 +20,11 @@ var INK="rgba(24,13,6,.94)";
 /* ---------- speelstukken (ook voor de kaart en de speelkast) ---------- */
 var PIECES=["pion","steen","knikker","tol","domino","paard","jojo","joker","fiche","blok","sleutel","kroon"];
 L.PIECES=PIECES;
-L.piece=function(g,x,y,s,id,t){g.save();g.translate(x,y);g.lineJoin="round";g.lineCap="round";var k=s/40,P=function(){g.beginPath()};g.scale(k,k);
+var PF={pion:"pion",steen:"dobbelsteen",knikker:"knikker",tol:"tol",domino:"dominosteen",paard:"schaakpaard",jojo:"jojo",joker:"joker",fiche:"fiche",blok:"blok",sleutel:"opwindsleutel",kroon:"kroon"};
+L.pieceFile=function(id){return PF[id]?"stuk-"+PF[id]+".webp":null};
+L.piece=function(g,x,y,s,id,t){var pf=L.pieceFile(id),im=pf&&window.SM_GAMES&&SM_GAMES.pic?SM_GAMES.pic(pf):null;
+  if(im){g.drawImage(im,x-s*.62,y-s*.62,s*1.24,s*1.24);return}
+  g.save();g.translate(x,y);g.lineJoin="round";g.lineCap="round";var k=s/40,P=function(){g.beginPath()};g.scale(k,k);
   var c1="#f2b632",c2="#d6452f",c3="#2f6f9f",c4="#f6efdf",dk="#3b2616";
   if(id==="pion"){g.fillStyle=c2;P();g.arc(0,-12,7,0,7);g.fill();P();g.moveTo(-5,-6);g.lineTo(5,-6);g.lineTo(10,14);g.lineTo(-10,14);g.closePath();g.fill();g.fillRect(-12,13,24,5)}
   else if(id==="steen"){g.fillStyle=c4;P();g.rect(-14,-14,28,28);g.fill();g.fillStyle=dk;[[-7,-7],[7,7],[0,0],[-7,7],[7,-7]].forEach(function(p){P();g.arc(p[0],p[1],3,0,7);g.fill()})}

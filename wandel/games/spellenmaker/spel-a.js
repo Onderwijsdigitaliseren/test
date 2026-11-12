@@ -4,6 +4,12 @@
 (function(){
 "use strict";
 var S=window.SM_GAMES=window.SM_GAMES||{};
+/* beelden uit img/: pic(naam,cb) geeft het beeld terug zodra het geladen is, anders null (en roept cb aan als het binnen is) */
+var IMGB=(function(){var s=document.currentScript&&document.currentScript.src||"";return s?s.replace(/spel-a\.js.*$/,"img/"):"../games/spellenmaker/img/"})(),IMC={};
+function pic(n,cb){var im=IMC[n];if(!im){im=IMC[n]=new Image();im._cb=[];im.onload=function(){im._ok=1;var l=im._cb;im._cb=[];l.forEach(function(f){f()})};im.onerror=function(){im._cb=[]};im.src=IMGB+n}
+  if(im._ok)return im;if(cb)im._cb.push(cb);return null}
+function cover(g,im,x,y,w,h,fy){var s=Math.max(w/im.naturalWidth,h/im.naturalHeight),sw=w/s,sh=h/s;g.drawImage(im,(im.naturalWidth-sw)/2,(im.naturalHeight-sh)*(fy==null?.5:fy),sw,sh,x,y,w,h)}
+S.pic=pic;S.cover=cover;S.IMG=IMGB;
 function rngOf(seed){var a=seed>>>0;return function(){a=(a+0x6D2B79F5)>>>0;var t=a;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return((t^(t>>>14))>>>0)/4294967296}}
 function shuffle(a,r){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(r()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
 /* canvas(host,W,H): een logisch vlak van W×H dat meeschaalt met de ruimte in host */
@@ -74,6 +80,7 @@ function kapstok(g,x,y,H,cane){
   if(!cane){g.strokeStyle="#7a4a1e";g.lineWidth=2.4;g.beginPath();g.moveTo(x+26,y);g.lineTo(x+21,y-H*.62);g.stroke();g.beginPath();g.arc(x+17,y-H*.62,4,Math.PI,0);g.stroke()}}
 /* de familiefoto (voor de legpuzzel) */
 function foto(g,w,h){
+  var im=pic("foto.webp");if(im){cover(g,im,0,0,w,h);return}
   var s=w/320;g.save();g.scale(s,s);
   g.fillStyle="#f6efdf";g.fillRect(0,0,320,240);
   g.save();g.beginPath();g.rect(9,9,302,206);g.clip();
@@ -103,6 +110,7 @@ function foto(g,w,h){
   g.restore()}
 /* de trap in de werkplaats; na=0: zaterdag 19:05, na=1: zondagochtend (zeven verschillen) */
 function trap(g,w,h,na){
+  var im=pic(na?"trap-na.webp":"trap-voor.webp");if(im){g.drawImage(im,0,0,w,h);return}
   var s=w/340,i,x;g.save();g.scale(s,s);g.beginPath();g.rect(0,0,340,210);g.clip();
   var wg=g.createLinearGradient(0,0,0,172);wg.addColorStop(0,"#7d332c");wg.addColorStop(1,"#632620");g.fillStyle=wg;g.fillRect(0,0,340,172);
   g.strokeStyle="rgba(246,239,223,.09)";g.lineWidth=5;for(x=10;x<340;x+=20){g.beginPath();g.moveTo(x,0);g.lineTo(x,132);g.stroke()}
@@ -160,7 +168,8 @@ S.jig=function(host,o){
   var W=360,H=536,big=o.lvl>1,cols=big?6:5,rows=big?5:4,BW=320,BH=240,bx=20,by=12,pw=BW/cols,ph=BH/rows;
   var r=rngOf(o.seed||11),k=canvas(host,W,H),g=k.g,t0=Date.now(),over=false,raf=0,tm=0,drag=null,dirty=true,i,j;
   var IS=Math.min(3,2*(window.devicePixelRatio||1)),img=document.createElement("canvas");img.width=BW*IS;img.height=BH*IS;var ig=img.getContext("2d");ig.scale(IS,IS);
-  if(o.art==="trap"){ig.fillStyle="#1c1410";ig.fillRect(0,0,BW,BH);ig.save();ig.translate(0,(BH-BW*210/340)/2);trap(ig,BW,BW*210/340,0);ig.restore()}else foto(ig,BW,BH);
+  function paint(){ig.clearRect(0,0,BW,BH);if(o.art==="trap"){ig.fillStyle="#1c1410";ig.fillRect(0,0,BW,BH);ig.save();ig.translate(0,(BH-BW*210/340)/2);trap(ig,BW,BW*210/340,0);ig.restore()}else foto(ig,BW,BH)}
+  paint();pic(o.art==="trap"?"trap-voor.webp":"foto.webp",function(){if(over)return;paint();need()});
   var Hh=[],Vv=[];
   for(i=0;i<=rows;i++){Hh[i]=[];for(j=0;j<cols;j++)Hh[i][j]=(i===0||i===rows)?0:(r()<.5?1:-1)}
   for(i=0;i<rows;i++){Vv[i]=[];for(j=0;j<=cols;j++)Vv[i][j]=(j===0||j===cols)?0:(r()<.5?1:-1)}

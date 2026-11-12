@@ -55,6 +55,7 @@ spel-a.js    legpuzzel (jig), Drie Torens (torens), knikkers op een rij (knikker
 spel-b.js    zoek de verschillen (verschil), Stenenrij (stenen), mahjong
 spel-c.js    uurwerk (buizen draaien), vier op een rij tegen Meneer Zet (vier), kogelbaan met kantelen (kogel)
 three.min.js three.js r149, wordt pas geladen als de speurtocht start (niet op het startscherm)
+img/         beelden (webp): hero, por-* (portretten), foto (legpuzzel), trap-voor/trap-na (verschillen), ev-* (bewijsstukken), stuk-* (speelstukken), meneer-zet. Geladen via SM_GAMES.pic(naam, cb); zolang een beeld er niet is, tekent de code de oude versie
 ```
 
 - Drie standen op het startscherm: Buiten (gps), Binnen (stappen via `shared/steps.js`) en Op de bank (alles met tikken, geen lopen). De keuze staat in `ss_sm_where`, de voortgang in `ss_game_sm_nl`, de speelkast in `ss_sm_album`.
@@ -63,7 +64,7 @@ three.min.js three.js r149, wordt pas geladen als de speurtocht start (niet op h
 - De proefronde stopt na vak 2 op één plek in de code (`trialOver()` in `vakGo` en `nextVak`), dus ook “Ga verder waar je was” komt zonder ticket niet voorbij vak 2.
 - De oefenwereld van de wandelmotor (Op de bank, proefronde, Binnen zonder locatie) krijgt hier Nederlandse straatnamen (`STREETS` in data-nl.js).
 - Drie Torens, de knikkerzak en Stenenrij hebben elk drie rondes met een eigen draai (jokers en kaarten uit de mouw; glas en dobbelstenen; een volle tafel en een steen te veel). Tussenkaarten tekent `SM_GAMES.kit.banner`. Vier op een rij: eerst twee keer winnen.
-- De hub-cover `assets/cover-sm.webp` is voorlopig (een render van de kist), er is nog geen sfeerfoto.
+- Hub-cover `assets/cover-sm.webp` en deelplaatje `assets/og-sm.jpg` (1200×630) zijn van Kellie. De tikvlakken van Zoek de verschillen staan als rechthoeken in pixels van trap-voor/trap-na (1360×840) in `DIFF` bovenin spel-b.js; een nieuw trapbeeld vraagt nieuwe rechthoeken.
 
 ## Instellingen
 Ko-fi-links, prijzen, groepspas-uren en de hub-Ko-fi-knop: bovenin `shared/platform.js` (`CFG`). Het zout `moordwandeling|` nooit wijzigen.

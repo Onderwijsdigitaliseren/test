@@ -5,26 +5,28 @@
 var S=window.SM_GAMES,K=S.kit,rngOf=K.rngOf,shuffle=K.shuffle,canvas=K.canvas,rr=K.rr,mmss=K.mmss,banner=K.banner;
 
 /* ================= 4. Zoek de verschillen ================= */
-/* zeven verschillen; elk verschil heeft één of twee plekken [x,y,straal] in het vlak van 340×210 */
-var DIFF=[[[40,40,26]],[[306,28,18]],[[116,109,15]],[[272,71,13]],[[176,191,15]],[[232,22,19]],[[42,158,19],[328,56,13]]];
+/* zeven verschillen; elk verschil heeft een of meer rechthoeken [x,y,b,h] in pixels van trap-voor/trap-na (1360×840), het vlak is 340×210 */
+var DIFF=[[[426,56,55,50],[372,208,53,50],[313,372,57,51]],[[969,161,65,176]],[[646,264,42,45]],[[947,734,90,59]],[[116,260,168,107]],[[509,32,318,62]],[[1134,64,179,175]]]
+  .map(function(d){return d.map(function(r){return[(r[0]+r[2]/2)/4,(r[1]+r[3]/2)/4,r[2]/8,r[3]/8]})});
 S.verschil=function(host,o){
   var W=360,PW=340,PH=210,X0=10,Y1=24,Y2=Y1+PH+28,H=Y2+PH+8,k=canvas(host,W,H),g=k.g,over=false,raf=0,miss=0,found=[],marks=[],flash=-1,flashT=0,t0=Date.now();
   var IS=Math.min(3,2*(window.devicePixelRatio||1)),A=document.createElement("canvas"),B=document.createElement("canvas");
-  [A,B].forEach(function(cv,i){cv.width=PW*IS;cv.height=PH*IS;var q=cv.getContext("2d");q.scale(IS,IS);S.art.drawTrap(q,PW,PH,i)});
+  function paint(){[A,B].forEach(function(cv,i){cv.width=PW*IS;cv.height=PH*IS;var q=cv.getContext("2d");q.scale(IS,IS);S.art.drawTrap(q,PW,PH,i)})}
+  paint();["trap-voor.webp","trap-na.webp"].forEach(function(n){S.pic(n,paint)});
   DIFF.forEach(function(){found.push(0)});
   function stat(){o.status(o.T.verStat.replace("{n}",found.filter(Boolean).length).replace("{m}",DIFF.length).replace("{x}",miss))}
-  function ring(x,y,rad,p,col){g.strokeStyle=col;g.lineWidth=3;g.beginPath();g.arc(x,y,rad,-1.57,-1.57+6.283*p);g.stroke()}
+  function ring(x,y,rx,ry,p,col){g.strokeStyle=col;g.lineWidth=3;g.beginPath();g.ellipse(x,y,rx+4,ry+4,0,-1.57,-1.57+6.283*p);g.stroke()}
   function frame(){var now=Date.now(),i;g.clearRect(0,0,W,H);
     g.fillStyle="#f6efdf";g.font="600 13px 'Barlow Condensed',sans-serif";g.textAlign="left";g.fillText(o.T.verA,X0+2,Y1-7);g.fillText(o.T.verB,X0+2,Y2-7);
     [[A,Y1],[B,Y2]].forEach(function(q){g.fillStyle="#f6efdf";g.fillRect(X0-3,q[1]-3,PW+6,PH+6);g.drawImage(q[0],X0,q[1],PW,PH)});
     DIFF.forEach(function(d,di){var f=found[di];if(!f&&flash!==di)return;var p=f?Math.min(1,(now-f)/350):1,col=f?"#f2b632":"rgba(246,239,223,"+(.5+.5*Math.sin(now/90))+")";
-      d.forEach(function(rg){ring(X0+rg[0],Y1+rg[1],rg[2],p,col);ring(X0+rg[0],Y2+rg[1],rg[2],p,col)})});
+      d.forEach(function(rg){ring(X0+rg[0],Y1+rg[1],rg[2],rg[3],p,col);ring(X0+rg[0],Y2+rg[1],rg[2],rg[3],p,col)})});
     for(i=marks.length-1;i>=0;i--){var m=marks[i],a=1-(now-m.t)/700;if(a<=0){marks.splice(i,1);continue}g.strokeStyle="rgba(226,80,61,"+a+")";g.lineWidth=3;g.beginPath();g.moveTo(m.x-8,m.y-8);g.lineTo(m.x+8,m.y+8);g.moveTo(m.x+8,m.y-8);g.lineTo(m.x-8,m.y+8);g.stroke()}
     if(flash>=0&&now>flashT){found[flash]=now;flash=-1;check()}
     raf=requestAnimationFrame(frame)}
   function check(){stat();if(found.every(Boolean)&&!over){over=true;var st=miss<=1?3:miss<=4?2:1;o.sfx("win");setTimeout(function(){o.done({stars:st,time:Date.now()-t0})},1100)}}
   k.c.addEventListener("pointerdown",function(e){if(over)return;var q=k.at(e),py=q[1]>=Y2-4?Y2:Y1,x=q[0]-X0,y=q[1]-py;if(x<-4||x>PW+4||y<-4||y>PH+4)return;
-    for(var i=0;i<DIFF.length;i++){if(found[i])continue;for(var j=0;j<DIFF[i].length;j++){var rg=DIFF[i][j];if(Math.hypot(x-rg[0],y-rg[1])<=rg[2]+9){found[i]=Date.now();if(flash===i)flash=-1;o.sfx("goed");check();return}}}
+    for(var i=0;i<DIFF.length;i++){if(found[i])continue;for(var j=0;j<DIFF[i].length;j++){var rg=DIFF[i][j];if(Math.abs(x-rg[0])<=rg[2]+7&&Math.abs(y-rg[1])<=rg[3]+7){found[i]=Date.now();if(flash===i)flash=-1;o.sfx("goed");check();return}}}
     miss++;marks.push({x:q[0],y:q[1],t:Date.now()});o.sfx("fout");stat()});
   stat();raf=requestAnimationFrame(frame);
   return{stop:function(){over=true;cancelAnimationFrame(raf);k.kill()},
