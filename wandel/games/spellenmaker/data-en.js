@@ -1,6 +1,6 @@
 /* The Gamemaker's Legacy – all English text. Same keys and order as data-nl.js; the game logic contains no text.
    Puzzle answers differ from the Dutch version in two places: the colour letters on the levers of square 4 (R Y B G W) and the word on the back of chest 5 (LUCK).
-   Evidence images with Dutch text are left out here (art omitted) until English versions exist. */
+   Evidence images with text in them have English versions (ev-*-en.webp). */
 window.SM_DATA={lang:"en",
 T:{title:"The Gamemaker's Legacy",vak:"Square",corner:"Corner",back:"Back",cancel:"Cancel",close:"Close",next:"Next",toMap:"To the map",yes:"Yes",no:"No",
   loc:"Finding your location…",pois:"Hiding the chests around your neighbourhood…",nomap:"The map service is slow. You're playing on the street plan.",
@@ -81,7 +81,7 @@ SUS:[
  {k:"X",n:"The culprit",a:0,r:"who tampered with the gamemaker's stairs?",l:"Everything you learn about the culprit goes here."}],
 PRO:{
  letter:["Dear Sir or Madam,","On Saturday evening Mr Augustus Tinne, gamemaker, fell down the stairs of his workshop. He had turned 81 that day. The police are calling it an accident.","Long ago Mr Tinne instructed me to send one parcel after his death, to the best player he knew. That is you.","The parcel contained a compass, a lens of ground mirror glass and a card in his handwriting.","Yours faithfully,","W. Klinkhamer, notary"],
- letterArt:"ev-notaris",cardArt:null,
+ letterArt:"ev-notaris-en",cardArt:"ev-kaartje-en",
  card:["Dear player,","If you're reading this, I'm gone. That's what they say, anyway.","I've made games all my life. This is my last: ten chests, hidden in your neighbourhood. In each chest lies a game. Whoever wins gets a piece of the truth.","In the tenth chest lies my real will.","Look through the lens along the way. My lanterns hung in every room and saw everything. Shades cannot lie.","Your move.","Augustus"],
  kist:"The notary's parcel. Tap the lock.",
  susH:"Five heirs",susT:"All five sat at his table on Saturday. On Monday he was going to sign a new will.",go:"To the map"},
@@ -103,7 +103,7 @@ CH:[
   hints:["On a die, top and bottom always add up to seven.","6 – 5 – 4"],
   kist:{stages:[{type:"dice",n:3,ans:[6,5,4]}]},
   game:"torens",gopt:{seed:7,miss:true},gameT:"Ruben's own card game, three rounds. Clear the three towers: tap an open card one higher or one lower than the card beside the stock. Ace and King connect. Stuck? Tap the stock.",
-  ev:{t:"Ruben's deck of cards",p:["Count them: 51 cards. The ace of spades is missing.","At the bottom of the box is an IOU: ‘I, R. Tinne, owe € 38,000 to the gaming house The Four Aces. To be paid by Monday at the latest.’","And a page from the cash book, in Augustus's handwriting. The same line three times: ‘R. borrows from the till. I let it go. He's my son.’"]},
+  ev:{t:"Ruben's deck of cards",art:"ev-schuld-en",p:["Count them: 51 cards. The ace of spades is missing.","At the bottom of the box is an IOU: ‘I, R. Tinne, owe € 38,000 to the gaming house The Four Aces. To be paid by Monday at the latest.’","And a page from the cash book, in Augustus's handwriting. The same line three times: ‘R. borrows from the till. I let it go. He's my son.’"]},
   facts:[["R","€ 38,000 debt to the gaming house The Four Aces, due Monday. Borrowed from the till three times."],["R","His deck is missing the ace of spades."]],tl:[],
   lensTitle:"22:20 · The hall",
   lens:["Ruben walks into the hall, phone to his ear. ‘You'll have it Monday. Really.’","‘As soon as the old man…’ He sees the lantern hanging there and turns away.","He hangs up and shuffles his cards. Left-handed, as always."],
@@ -114,7 +114,7 @@ CH:[
   hints:["Luck in the grass: a four-leaf clover. Jewels are diamonds, and you dig a grave with a spade.","Clubs, hearts, diamonds, spades."],
   kist:{stages:[{type:"buttons",labels:["♠","♥","♦","♣"],cols:["#1c1410","#c8302a","#c8302a","#1c1410"],order:[3,1,2,0]}]},
   game:"knikkers",gopt:{seed:3},gameT:"Pien's marble bag, three levels. Swap two marbles to make a row of three or more and reach the goal above the board. Four in a row makes an arrow marble, five a rainbow marble.",
-  ev:{t:"Pien's sketchbook",p:["A sketchbook from 2021, full of drawings of a game with shadows. On the first page: ‘Shadowplay, by Pien.’","That game is in every shop now. The box carries Augustus's name.","At the back is a letter from the trademark office, addressed to Augustus: ‘At your request, Shadowplay has been registered in the name of Ms P. Tinne.’ She doesn't know yet. It was his present for Monday."]},
+  ev:{t:"Pien's sketchbook",art:"ev-schets-en",p:["A sketchbook from 2021, full of drawings of a game with shadows. On the first page: ‘Shadowplay, by Pien.’","That game is in every shop now. The box carries Augustus's name.","At the back is a letter from the trademark office, addressed to Augustus: ‘At your request, Shadowplay has been registered in the name of Ms P. Tinne.’ She doesn't know yet. It was his present for Monday."]},
   facts:[["P","Shadowplay was her design and came out under his name. Augustus had it registered in her name; she doesn't know yet."]],tl:[],
   lensTitle:"22:10 · The workshop",
   lens:["Pien faces her grandfather. ‘It's my game. And your name is on the box.’","Augustus raises his hand. ‘On Monday you'll understand.’","She runs up the stairs to the attic. Upstairs, a machine starts to rattle."],
@@ -148,7 +148,7 @@ CH:[
   hints:["You found the clock by the stairs. Look in your case file, at the evidence from square 4.","2 – 3 – 1 – 1. Eleven past eleven: 23:11."],
   kist:{stages:[{type:"dice",n:4,ans:[2,3,1,1]}]},
   game:"stenen",gopt:{seed:9},gameT:"Mathilde's favourite game, three rounds. Lay all the tiles on the table. A row is valid with three or more consecutive numbers in one colour, or three or four of the same number in different colours. Drag a tile to a row, or tap it and then tap the row.",
-  ev:{t:"The letter of intent",p:["A letter from the toy company Ludoco: ‘Our offer for Tinne Games: € 2.4 million. Agreed: M. Tinne, subject to succession.’ Signed three weeks before his birthday.","Stapled to it is a printout of her phone log: ‘Mr Van Loon (Ludoco) · Saturday 22:31 to 23:12 · 41 minutes.’"]},
+  ev:{t:"The letter of intent",art:"ev-ludoco-en",p:["A letter from the toy company Ludoco: ‘Our offer for Tinne Games: € 2.4 million. Agreed: M. Tinne, subject to succession.’ Signed three weeks before his birthday.","Stapled to it is a printout of her phone log: ‘Mr Van Loon (Ludoco) · Saturday 22:31 to 23:12 · 41 minutes.’"]},
   facts:[["M","Wanted to sell Tinne Games to Ludoco after his death, for € 2.4 million."],["M","On the phone with Ludoco on Saturday from 22:31 to 23:12."]],tl:[],
   lensTitle:"22:31 · The kitchen",
   lens:["Mathilde paces the kitchen, phone to her right ear.","‘No. He signs on Monday. After that it's too late.’","She is still on the phone when the crash sounds."],
@@ -159,7 +159,7 @@ CH:[
   hints:["Their ages are in your case file, under the heirs.","Pien, Ruben, Mathilde, Odette, Hugo."],
   kist:{stages:[{type:"buttons",labels:["H","M","O","P","R"],order:[3,4,1,2,0]}]},
   game:"mahjong",gopt:{seed:9},gameT:"Odette's mahjong set. Tap two matching tiles to remove them. A tile is free if nothing lies on top of it and its left or right side is open. Dark tiles are still blocked.",
-  ev:{t:"The prenuptial agreement",p:["Article 4: ‘Should Mr Tinne change his will, the bequest to Mrs Laroux lapses.’ So on Monday she would lose everything.","In the same compartment lies his pill box. Someone has replaced his sleeping pills with vitamin D. That was Odette: she thought he slept too much.","People who want to harm someone don't swap sleeping pills for vitamins."]},
+  ev:{t:"The prenuptial agreement",art:"ev-voorwaarden-en",p:["Article 4: ‘Should Mr Tinne change his will, the bequest to Mrs Laroux lapses.’ So on Monday she would lose everything.","In the same compartment lies his pill box. Someone has replaced his sleeping pills with vitamin D. That was Odette: she thought he slept too much.","People who want to harm someone don't swap sleeping pills for vitamins."]},
   facts:[["O","Loses her inheritance if the will changes. Swapped his sleeping pills for vitamin D."]],tl:[],
   lensTitle:"22:45 · The coat stand in the hall",
   lens:["The hall is empty. A bowler hat, a long coat and a walking stick hang on the coat stand.","An arm comes into view and takes the hat. The left arm.","The coat goes too, and the stick. Five minutes later someone kneels on the stairs."],
@@ -170,7 +170,7 @@ CH:[
   hints:["They're chess pieces. That's how many points each piece is worth.","Pawn, knight, rook, queen."],
   kist:{stages:[{type:"discs",glyphs:["♔","♕","♖","♗","♘","♙"],n:4,ans:[5,4,2,1]}]},
   game:"uurwerk",gopt:{seed:13,lvl:2},gameT:"The grandfather clock's clockwork has stood still since eleven past eleven. Tap a gear to turn it. Connect all the gears to the red spring in the middle.",
-  ev:{t:"Ruben's jacket",p:["Ruben's jacket hangs in the clock case. In the inside pocket is his phone, with the poker app still open.","‘Table 7 · logged in Saturday 22:20 to 23:20.’ A watertight alibi, he told the police.","Read the line below: ‘Away from 22:41 to 23:07. No hands played.’"]},
+  ev:{t:"Ruben's jacket",art:"ev-poker-en",p:["Ruben's jacket hangs in the clock case. In the inside pocket is his phone, with the poker app still open.","‘Table 7 · logged in Saturday 22:20 to 23:20.’ A watertight alibi, he told the police.","Read the line below: ‘Away from 22:41 to 23:07. No hands played.’"]},
   facts:[["R","His poker alibi runs from 22:20 to 23:20, but from 22:41 to 23:07 he didn't play a single hand."]],tl:[],
   lensTitle:"22:41 · The garden bench",
   lens:["Ruben sits on the garden bench. His phone screen lights up.","He stands, puts the phone down on the bench and walks to the house.","The screen stays lit. At seven past eleven he comes back and wipes his hands on his trousers."],

@@ -49,7 +49,7 @@ Eigen categorie `quest` (Speurtocht) in de catalogus. Tien vakken; elk vak is ki
 ```
 game.js      verloop, kaart, dossier, fiches (hints kosten fiches), speelkast, Speelkamer (gewonnen spellen opnieuw spelen)
 data-nl.js   alle tekst: verhaal, tien vakken (CH), kistcodes, verdachten (SUS), eindoordeel (V), uitleg
-data-en.js   dezelfde sleutels in het Engels. Twee kistraadsels wijken af (letters op de hendels van vak 4: R Y B G W; het woord achterop kist 5: LUCK). Bewijsstukken met Nederlandse tekst in het beeld hebben in het Engels nog geen art; het kaartje (PRO.cardArt) ook niet
+data-en.js   dezelfde sleutels in het Engels. Twee kistraadsels wijken af (letters op de hendels van vak 4: R Y B G W; het woord achterop kist 5: LUCK). Bewijsstukken met tekst in het beeld gebruiken Engelse varianten (ev-*-en)
 kist.js      SM_KIST: de kist in 3D (three.js) met rolletjes, dobbelstenen, knoppen, hendels en verborgen zijden; zonder WebGL een platte variant
 lens.js      SM_LENS: schimmen en speelstukken door de camera (zelfde aanpak als games/ghosts), met getekend straatbeeld als de camera uit staat
 spel-a.js    legpuzzel (jig), Drie Torens (torens), knikkers op een rij (knikkers)
@@ -67,7 +67,7 @@ img/         beelden (webp): hero, por-* (portretten), foto (legpuzzel), trap-vo
 - Drie Torens, de knikkerzak en Stenenrij hebben elk drie rondes met een eigen draai (jokers en kaarten uit de mouw; glas en dobbelstenen; een volle tafel en een steen te veel). Tussenkaarten tekent `SM_GAMES.kit.banner`. Vier op een rij: eerst twee keer winnen.
 - Gratis periode: `CFG.gratis` in platform.js (`{sm:"2026-11-16T23:59:59+01:00"}`). Tot dan geeft `MW.pro.has("sm")` true: geen slot, geen proefronde-stop, statusregel "tot en met … gratis" en in de hub het label "Gratis t/m …". Wie in die periode begint, mag de speurtocht afmaken (G.trial blijft false). Daarna gewoon teamticket.
 - In de hub uitgelicht met `feature:{nl,en,icon,acc,tag}` (eigen kleur via --facc/--ftag in hub.css) en `assets/feature-sm.webp`.
-- Hub-cover `assets/cover-sm.webp` en deelplaatje `assets/og-sm.jpg` (1200×630) zijn van Kellie; `assets/og-sm-en.jpg` is voorlopig een uitsnede van de sfeerfoto zonder titel. De tikvlakken van Zoek de verschillen staan als rechthoeken in pixels van trap-voor/trap-na (1360×840) in `DIFF` bovenin spel-b.js; een nieuw trapbeeld vraagt nieuwe rechthoeken.
+- Hub-cover `assets/cover-sm.webp` en deelplaatje `assets/og-sm.jpg` (1200×630) zijn van Kellie; `assets/og-sm-en.jpg` ook. Bewijsstukken met tekst hebben een Engelse versie (`img/ev-*-en.webp`), gekoppeld in data-en.js. De tikvlakken van Zoek de verschillen staan als rechthoeken in pixels van trap-voor/trap-na (1360×840) in `DIFF` bovenin spel-b.js; een nieuw trapbeeld vraagt nieuwe rechthoeken.
 
 ## Instellingen
 Ko-fi-links, prijzen, groepspas-uren en de hub-Ko-fi-knop: bovenin `shared/platform.js` (`CFG`). Het zout `moordwandeling|` nooit wijzigen.
