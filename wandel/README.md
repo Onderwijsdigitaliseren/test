@@ -17,7 +17,7 @@ Statische site voor GitHub Pages, geen build-stap. Draait sinds 30 okt 2026 op w
 /the-last-bus.html           spel 6 EN        /nl/de-laatste-bus.html   spel 6 NL (shell; logica in /games/lastbus/)
 /games/lastbus/              vermissing op de motor van vanishing: je zoekt een plek en een reden; zes plekken met vaste eigenschappen (CONTACTS), drie zekerheden die vervallen (TWIST), lijnfilm-stijl · data-nl.js · data-en.js · game.css · hero.webp
 /games/vanishing/            game.js (logica, taalonafhankelijk) · data-nl.js · data-en.js · game.css · hero.webp (sfeerfoto, uitsnede zonder titel; eigen sfeer, figuren en rode routelijn)
-/nl/de-erfenis-van-de-spellenmaker.html   speurtocht NL (shell; logica in /games/spellenmaker/). Nog geen Engelse versie: de Engelse hub verwijst naar de Nederlandse pagina
+/the-gamemakers-legacy.html  speurtocht EN   /nl/de-erfenis-van-de-spellenmaker.html   speurtocht NL (shell; logica in /games/spellenmaker/)
 /games/spellenmaker/         speurtocht van ± 2 uur op de wandelmotor: tien vakken met elk een kist in 3D, een spel en een schim door de camera. Zie “De Erfenis van de Spellenmaker” hieronder
 /shared/platform.js          gedeelde laag: Pro, groepspas, codes.json, profiel (rang/punten/streak), taal, instellingen (SS_PRO)
 /shared/walk.js              wandelmotor voor nieuwe spellen: OpenStreetMap/Overpass, plekken kiezen, nachtkaart, gps, oefenwereld, vellen/geluid
@@ -49,6 +49,7 @@ Eigen categorie `quest` (Speurtocht) in de catalogus. Tien vakken; elk vak is ki
 ```
 game.js      verloop, kaart, dossier, fiches (hints kosten fiches), speelkast, Speelkamer (gewonnen spellen opnieuw spelen)
 data-nl.js   alle tekst: verhaal, tien vakken (CH), kistcodes, verdachten (SUS), eindoordeel (V), uitleg
+data-en.js   dezelfde sleutels in het Engels. Twee kistraadsels wijken af (letters op de hendels van vak 4: R Y B G W; het woord achterop kist 5: LUCK). Bewijsstukken met Nederlandse tekst in het beeld hebben in het Engels nog geen art; het kaartje (PRO.cardArt) ook niet
 kist.js      SM_KIST: de kist in 3D (three.js) met rolletjes, dobbelstenen, knoppen, hendels en verborgen zijden; zonder WebGL een platte variant
 lens.js      SM_LENS: schimmen en speelstukken door de camera (zelfde aanpak als games/ghosts), met getekend straatbeeld als de camera uit staat
 spel-a.js    legpuzzel (jig), Drie Torens (torens), knikkers op een rij (knikkers)
@@ -64,7 +65,9 @@ img/         beelden (webp): hero, por-* (portretten), foto (legpuzzel), trap-vo
 - De proefronde stopt na vak 2 op één plek in de code (`trialOver()` in `vakGo` en `nextVak`), dus ook “Ga verder waar je was” komt zonder ticket niet voorbij vak 2.
 - De oefenwereld van de wandelmotor (Op de bank, proefronde, Binnen zonder locatie) krijgt hier Nederlandse straatnamen (`STREETS` in data-nl.js).
 - Drie Torens, de knikkerzak en Stenenrij hebben elk drie rondes met een eigen draai (jokers en kaarten uit de mouw; glas en dobbelstenen; een volle tafel en een steen te veel). Tussenkaarten tekent `SM_GAMES.kit.banner`. Vier op een rij: eerst twee keer winnen.
-- Hub-cover `assets/cover-sm.webp` en deelplaatje `assets/og-sm.jpg` (1200×630) zijn van Kellie. De tikvlakken van Zoek de verschillen staan als rechthoeken in pixels van trap-voor/trap-na (1360×840) in `DIFF` bovenin spel-b.js; een nieuw trapbeeld vraagt nieuwe rechthoeken.
+- Gratis periode: `CFG.gratis` in platform.js (`{sm:"2026-11-16T23:59:59+01:00"}`). Tot dan geeft `MW.pro.has("sm")` true: geen slot, geen proefronde-stop, statusregel "tot en met … gratis" en in de hub het label "Gratis t/m …". Wie in die periode begint, mag de speurtocht afmaken (G.trial blijft false). Daarna gewoon teamticket.
+- In de hub uitgelicht met `feature:{nl,en,icon,acc,tag}` (eigen kleur via --facc/--ftag in hub.css) en `assets/feature-sm.webp`.
+- Hub-cover `assets/cover-sm.webp` en deelplaatje `assets/og-sm.jpg` (1200×630) zijn van Kellie; `assets/og-sm-en.jpg` is voorlopig een uitsnede van de sfeerfoto zonder titel. De tikvlakken van Zoek de verschillen staan als rechthoeken in pixels van trap-voor/trap-na (1360×840) in `DIFF` bovenin spel-b.js; een nieuw trapbeeld vraagt nieuwe rechthoeken.
 
 ## Instellingen
 Ko-fi-links, prijzen, groepspas-uren en de hub-Ko-fi-knop: bovenin `shared/platform.js` (`CFG`). Het zout `moordwandeling|` nooit wijzigen.

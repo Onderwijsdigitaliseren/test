@@ -1,5 +1,5 @@
 /* De Erfenis van de Spellenmaker – alle Nederlandse tekst. De spel-logica (game.js, spel-*.js, kist.js, lens.js) bevat geen tekst.
-   Een Engelse versie = dit bestand vertalen naar data-en.js (zelfde sleutels, zelfde volgorde). */
+   De Engelse tekst staat in data-en.js (zelfde sleutels, zelfde volgorde). */
 window.SM_DATA={lang:"nl",
 T:{title:"De Erfenis van de Spellenmaker",vak:"Vak",corner:"Hoek",back:"Terug",cancel:"Annuleren",close:"Sluiten",next:"Verder",toMap:"Naar de kaart",yes:"Ja",no:"Nee",
   loc:"Je locatie wordt bepaald…",pois:"De kisten worden verstopt in jouw buurt…",nomap:"De kaartdienst is traag. Je speelt op de plattegrond.",
@@ -81,6 +81,7 @@ SUS:[
  {k:"X",n:"De dader",a:0,r:"wie zaagde aan de poten van de spellenmaker?",l:"Alles wat je over de dader zelf te weten komt, staat hier."}],
 PRO:{
  letter:["Geachte heer, mevrouw,","Zaterdagavond is de heer Augustus Tinne, spellenmaker, van de trap van zijn werkplaats gevallen. Hij was die dag 81 geworden. De politie spreekt van een ongeluk.","De heer Tinne heeft mij lang geleden opgedragen om na zijn dood één pakket te versturen, aan de beste speler die hij kende. Dat bent u.","In het pakket zaten een kompas, een lens van geslepen spiegelglas en een kaartje in zijn handschrift.","Hoogachtend,","mr. W. Klinkhamer, notaris"],
+ letterArt:"ev-notaris",cardArt:"ev-kaartje",
  card:["Beste speler,","Als je dit leest, ben ik er niet meer. Dat zeggen ze tenminste.","Ik heb mijn hele leven spellen gemaakt. Dit is mijn laatste: tien kisten, verstopt in jouw buurt. In elke kist ligt een spel. Wie wint, krijgt een stuk van de waarheid.","In de tiende kist ligt mijn echte testament.","Kijk onderweg door de lens. Mijn lantaarns hingen in elke kamer en hebben alles gezien. Schimmen kunnen niet liegen.","Jij bent aan zet.","Augustus"],
  kist:"Het pakket van de notaris. Tik op het slot.",
  susH:"Vijf erfgenamen",susT:"Ze zaten zaterdag alle vijf aan zijn tafel. Maandag zou hij een nieuw testament tekenen.",go:"Naar de kaart"},

@@ -31,6 +31,9 @@ var CFG={
       alle:"https://ko-fi.com/s/dc0dfbafe5" // tijdelijk: algemeen teamticket (oude groepspas-product) tot de producten per wandeling er zijn
     }
   },
+  /* GRATIS PERIODE per wandeling: tot dit moment (Nederlandse tijd) speelt iedereen de hele wandeling zonder ticket.
+     Wie in die periode begint, mag zijn speurtocht daarna afmaken. Na de datum geldt weer het teamticket. */
+  gratis:{sm:"2026-11-16T23:59:59+01:00"},
   kofi:"https://ko-fi.com/s/dc0dfbafe5", // Ko-fi-knop op de hub; zet hier je Ko-fi-pagina (bijv. https://ko-fi.com/<jouwnaam>) als je die liever toont
   salt:"moordwandeling|",            // zout voor code-hashes; NIET wijzigen, anders werken bestaande codes niet meer
   codes:"codes.json"                 // één codes.json voor het hele platform (relatief aan de site-root)
@@ -112,7 +115,8 @@ var PRO={
       if(e&&(e.uit||e.t!=="team"))return;if(!e&&codesOk)return;
       var end=x.t0+((e&&e.dagen)||CFG.team.dagen)*864e5;best=Math.max(best,end-Date.now())});return Math.max(0,best)},
   /* mag deze wandeling gespeeld worden (de echte zaak)? oude Pro, actieve groepspas of teamticket */
-  has:function(game){return this.isPro()||this.groupLeft()>0||this.teamLeft(game)>0},
+  freeLeft:function(game){var g=game&&CFG.gratis&&CFG.gratis[game];return g?Math.max(0,Date.parse(g)-Date.now()):0},
+  has:function(game){return this.isPro()||this.groupLeft()>0||this.teamLeft(game)>0||this.freeLeft(game)>0},
   locked:function(game){return !this.has(game)},
   groupLeft:function(){var g=LS.get("ss_grp",null);if(!g)return 0;var e=entry(g.h);if(e&&e.uit)return 0;var end=g.t0+(CFG.groep.uren||48)*36e5;
     if(e&&e.tot){var p=String(e.tot).split("-");end=Math.min(end,new Date(+p[0],p[1]-1,+p[2],23,59,59).getTime())}return Math.max(0,end-Date.now())},
@@ -132,7 +136,7 @@ var PRO={
 var T={
   nl:{pro:"Pro",pH:"Eén keer Pro, alle wandelingen",pT:"Met Pro speel je op het hele platform elke dag een nieuwe zaak en zoveel extra zaken als je wilt. Je betaalt één keer via Ko-fi en krijgt daar een code. Vul die hieronder in.",
     pBtn:"Word Pro",pHave:"Ik heb een code",pUse:"Code invoeren",pOk:"Pro staat aan. Veel succes, rechercheur.",pBad:"Die code klopt niet. Controleer hem en probeer het opnieuw.",pExp:"Deze code is verlopen.",pUsedC:"Deze groepscode is op dit toestel al gebruikt.",pNoNet:"De codelijst kon niet worden geladen. Controleer je verbinding en probeer het opnieuw.",pWait:"Even geduld, de codes worden geladen…",
-    pOn:"Pro is actief op dit toestel.",pFree:"Je eerste zaak van elk spel is gratis.",pUsed:"Je gratis zaak is gespeeld. Met Pro speel je elke dag een nieuwe.",
+    fTag:"Gratis t/m {d}",fNow:"Nieuw: tot en met {d} gratis te spelen, zonder ticket.",pOn:"Pro is actief op dit toestel.",pFree:"Je eerste zaak van elk spel is gratis.",pUsed:"Je gratis zaak is gespeeld. Met Pro speel je elke dag een nieuwe.",
     gp:"Groepspas",gpOn:"Groepspas actief, nog {h} uur.",gpOk:"Groepspas staat aan voor {u} uur.",gpH:"Speel met een groep",gpT:"Met een groepspas maak je {u} uur lang groepszaken aan, voor maximaal {n} telefoons. Alleen jij hebt de pas nodig. De rest doet gratis mee via je uitnodiging. De {u} uur gaan in zodra je de code invoert.",gpBtn:"Koop een groepspas",
     tm:"Teamticket",tLine:"Eén ticket per team, start wanneer jij wilt.",tH:"Eén ticket per team",
     tT:"Speel de echte zaak met je hele team: één ticket van {p}, op zoveel telefoons als jullie willen. Iedereen vult dezelfde code in op zijn eigen telefoon. Start wanneer jij wilt: de code blijft twee maanden geldig vanaf het invoeren. Alleen of met z'n tweeën spelen kan ook gewoon.",
@@ -143,7 +147,7 @@ var T={
     cancel:"Annuleren",close:"Sluiten",rank:"Rang",streak:"Dagen op rij",solved:"Opgelost",pts:"{x} punten. Nog {n} tot {r}.",ptsTop:"{x} punten. Hoogste rang bereikt."},
   en:{pro:"Pro",pH:"Pro once, every walk",pT:"Pro unlocks a new case every day and as many extra cases as you like, across the whole platform. Pay once via Ko-fi and you get a code. Enter it below.",
     pBtn:"Go Pro",pHave:"I have a code",pUse:"Enter code",pOk:"Pro is on. Good luck, detective.",pBad:"That code is not right. Check it and try again.",pExp:"This code has expired.",pUsedC:"This group code has already been used on this phone.",pNoNet:"The code list could not be loaded. Check your connection and try again.",pWait:"One moment, loading codes…",
-    pOn:"Pro is active on this phone.",pFree:"Your first case of every game is free.",pUsed:"Your free case is played. With Pro you play a new one every day.",
+    fTag:"Free until {d}",fNow:"New: free to play until {d}, no ticket needed.",pOn:"Pro is active on this phone.",pFree:"Your first case of every game is free.",pUsed:"Your free case is played. With Pro you play a new one every day.",
     gp:"Group pass",gpOn:"Group pass active, {h} hours left.",gpOk:"Group pass is on for {u} hours.",gpH:"Play with a group",gpT:"A group pass lets you create group cases for {u} hours, for up to {n} phones. Only you need the pass; the others join free through your invitation. The {u} hours start when you enter the code.",gpBtn:"Buy a group pass",
     tm:"Team ticket",tLine:"One ticket per team, start whenever you like.",tH:"One ticket per team",
     tT:"Play the real case with your whole team: one ticket of {p}, on as many phones as you like. Everyone enters the same code on their own phone. Start whenever you like: the code stays valid for two months after you enter it. Playing alone or as a couple works just as well.",
@@ -175,8 +179,12 @@ function bindPro(root,lang,done,game){var t=T[lang]||T.en,inp=root.querySelector
       else{msg.textContent=r==="exp"?t.pExp:r==="used"?t.pUsedC:!codesOk&&CODES.length===0?t.pNoNet:t.pBad;try{navigator.vibrate&&navigator.vibrate(120)}catch(e){}}};
     if(!codesOk){msg.textContent=t.pWait;ready.then(run)}else run()};
   ok.onclick=go;inp.onkeydown=function(e){if(e.key==="Enter")go()}}
+/* einddatum van de gratis periode, als tekst: "maandag 16 november" / "Monday 16 November" (short: "16 nov." / "16 Nov") */
+function freeDay(game,lang,short){var g=CFG.gratis&&CFG.gratis[game];if(!g)return"";var o=short?{day:"numeric",month:"short"}:{weekday:"long",day:"numeric",month:"long"};o.timeZone="Europe/Amsterdam";
+  try{return new Date(Date.parse(g)).toLocaleDateString(lang==="nl"?"nl-NL":"en-GB",o)}catch(e){return g.slice(0,10)}}
 function statusText(lang,game){var t=T[lang]||T.en,gl=PRO.groupLeft();
   if(PRO.isPro())return t.tLeg;
+  if(game&&PRO.freeLeft(game)&&!PRO.teamLeft(game))return fill(t.fNow,{d:freeDay(game,lang)});
   if(game){var tl=PRO.teamLeft(game);if(tl)return fill(t.tOn,{d:Math.ceil(tl/864e5)});if(gl)return fill(t.gpOn,{h:Math.ceil(gl/36e5)});return fill(t.tFree,{p:CFG.team.price})}
   return gl?fill(t.gpOn,{h:Math.ceil(gl/36e5)}):t.tLine}
 
@@ -194,5 +202,5 @@ function switchLang(id,to){LANG.set(to);location.href=gameUrl(id,to)+location.ha
 
 window.MW={v:1,root:ROOT,cfg:CFG,LS:LS,norm:norm,hashStr:hashStr,sha256:sha256,today:today,esc:esc,fill:fill,
   lang:LANG,profile:PROFILE,pro:PRO,T:T,t:function(lang){return T[lang]||T.en},
-  proHTML:proHTML,gameTitle:gameTitle,bindPro:bindPro,statusText:statusText,homeOrder:homeOrder,gameUrl:gameUrl,hubUrl:hubUrl,switchLang:switchLang};
+  proHTML:proHTML,gameTitle:gameTitle,bindPro:bindPro,statusText:statusText,freeDay:freeDay,homeOrder:homeOrder,gameUrl:gameUrl,hubUrl:hubUrl,switchLang:switchLang};
 })();

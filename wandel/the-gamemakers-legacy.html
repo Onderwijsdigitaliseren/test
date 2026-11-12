@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Gamemaker's Legacy – a treasure trail with ten chests, shades and games</title>
+<meta name="description" content="A two-hour treasure trail around your own neighbourhood. Open ten puzzle chests in 3D, win the game inside each one and catch the shades of the gamemaker's last evening with your camera. Who tampered with his stairs? Outdoors, indoors or on the sofa.">
+<link rel="alternate" hreflang="en" href="https://www.enigmamystery.com/wandel/the-gamemakers-legacy.html">
+<link rel="alternate" hreflang="nl" href="https://www.enigmamystery.com/wandel/nl/de-erfenis-van-de-spellenmaker.html">
+<link rel="alternate" hreflang="x-default" href="https://www.enigmamystery.com/wandel/the-gamemakers-legacy.html">
+<link rel="canonical" href="https://www.enigmamystery.com/wandel/the-gamemakers-legacy.html">
+<meta property="og:site_name" content="Enigma Mystery">
+<meta property="og:title" content="The Gamemaker's Legacy">
+<meta property="og:description" content="Ten chests, ten games, five heirs. The shades saw everything.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.enigmamystery.com/wandel/the-gamemakers-legacy.html">
+<meta property="og:locale" content="en_GB">
+<meta property="og:image" content="https://www.enigmamystery.com/wandel/assets/og-sm-en.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.enigmamystery.com/wandel/assets/og-sm-en.jpg">
+<meta name="theme-color" content="#0c241f">
+<link rel="icon" href="assets/favicon.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Caveat:wght@500;700&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="shared/platform.css?v=1">
+<link rel="stylesheet" href="games/spellenmaker/game.css?v=3">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"The Gamemaker's Legacy","url":"https://www.enigmamystery.com/wandel/the-gamemakers-legacy.html","description":"A two-hour trail around your own neighbourhood: ten chests, ten games, shades through the camera and one culprit.","inLanguage":"en","gamePlatform":"Web browser","genre":["Mystery","Location-based game","Puzzle"]}</script>
+</head>
+<body>
+<div id="app">
+  <section class="screen" id="home">
+    <canvas id="hero" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <div class="row0"><div class="pills"><a class="pill" id="hub" href="./">◂ All walks</a><button type="button" class="pill" id="lang">Nederlands</button></div></div>
+      <div class="masthead"><div class="brand">Enigma Mystery</div><h1 id="ttl"><small>The Gamemaker's</small>Legacy</h1><span class="cat">Trail · ten chests · ± 2 hours</span></div>
+      <p class="intro">Augustus Tinne made games all his life. On Saturday he fell down his stairs. His last game lies hidden in your neighbourhood.</p>
+      <div class="newBox" id="newBox"><h3>New here?</h3><p>Play the free practice round first: the first two chests, on a drawn map and without walking.</p><button type="button" class="btn" id="bTrial">▶ Free practice round</button></div>
+      <button type="button" class="btn" id="bResume" hidden>Continue where you left off</button>
+      <div class="sum"><span id="sumT"></span><button type="button" id="sumB" aria-expanded="false">Change ▾</button></div>
+      <div class="set" id="set" hidden>
+        <div class="lbl">Where are you playing?</div>
+        <div class="seg seg3" id="where"><button type="button" data-w="out" aria-pressed="true">Outdoors</button><button type="button" data-w="in" aria-pressed="false">Indoors</button><button type="button" data-w="sofa" aria-pressed="false">On the sofa</button></div>
+        <p class="note" id="whereNote"></p>
+        <div class="lbl" id="lenL">Distance</div>
+        <div class="seg" id="len"><button type="button" data-r="360" aria-pressed="true">Compact · ± 2 km</button><button type="button" data-r="560" aria-pressed="false">Wide · ± 3 km</button></div>
+      </div>
+      <button type="button" class="btn go" id="bStart">Start the trail</button>
+      <p class="note" id="status"></p>
+      <button type="button" class="btn ghost" id="bPro" hidden></button>
+      <div class="links"><button type="button" id="bHow">How does it work?</button><button type="button" id="bRoom">The Playroom</button><button type="button" id="bAlbum">The cabinet</button><button type="button" id="bWipe">Delete</button></div>
+      <p class="note safe" id="safe"></p>
+    </div>
+  </section>
+
+  <section class="screen" id="play" hidden>
+    <canvas id="map"></canvas>
+    <div id="hud">
+      <div><b id="hT">0:00</b><span>Time</span></div>
+      <div><b id="hS">1/10</b><span>Square</span></div>
+      <div><b id="hF">10</b><span>Chips</span></div>
+      <div><b id="hD">0</b><span>Stars</span></div>
+    </div>
+    <div id="zoom">
+      <button type="button" id="zM" aria-label="Menu">☰</button>
+      <button type="button" id="zIn" aria-label="Zoom in">+</button>
+      <button type="button" id="zOut" aria-label="Zoom out">−</button>
+      <button type="button" id="zMe" aria-label="Centre on me">◎</button>
+      <button type="button" id="zS" aria-label="Sound on or off">♪</button>
+    </div>
+    <div id="low">
+      <div id="radar"></div>
+      <div id="chip" hidden>
+        <div class="row"><b id="cName"></b><span id="cDist"></span></div>
+        <span id="cHint" class="note"></span>
+        <button type="button" class="btn" id="cAct"></button>
+      </div>
+      <div id="bar">
+        <button type="button" id="bDos">Case file</button>
+        <button type="button" id="bSus">Heirs</button>
+        <button type="button" id="bAlb">Cabinet</button>
+      </div>
+    </div>
+  </section>
+
+  <div id="stage" hidden>
+    <div id="stTop"><button type="button" id="stX">◂ Map</button><b id="stT"></b><span id="stF">10</span></div>
+    <div id="stBody"></div>
+    <div id="stBar"><span id="stS"></span><button type="button" id="stSkip" hidden>Test ⏭</button><button type="button" id="stH">Hint</button></div>
+  </div>
+
+  <div id="ar" hidden><video id="arV" playsinline muted autoplay></video><canvas id="arC"></canvas><div id="arTop"><span id="arT"></span><button type="button" id="arX">Close the lens</button></div><div id="arB"><p id="arH"></p><button type="button" class="btn" id="arN" hidden></button></div></div>
+  <div class="sheet" id="sheet" hidden><div class="paper" id="sheetBody"></div></div>
+  <div id="load" hidden role="status"><div class="spin"></div><b id="loadT"></b></div>
+  <div id="toast" hidden></div>
+</div>
+<script src="shared/platform.js?v=4"></script>
+<script src="shared/catalog.js?v=19"></script>
+<script src="shared/tiles.js?v=1"></script>
+<script src="shared/plan.js?v=2"></script>
+<script src="shared/walk.js?v=5"></script>
+<script src="shared/steps.js?v=1"></script>
+<script src="games/spellenmaker/data-en.js?v=1"></script>
+<script src="games/spellenmaker/spel-a.js?v=3"></script>
+<script src="games/spellenmaker/spel-b.js?v=3"></script>
+<script src="games/spellenmaker/spel-c.js?v=3"></script>
+<script src="games/spellenmaker/lens.js?v=2"></script>
+<script src="games/spellenmaker/kist.js?v=2"></script>
+<script src="games/spellenmaker/game.js?v=5"></script>
+</body>
+</html>

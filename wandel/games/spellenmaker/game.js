@@ -62,6 +62,7 @@ function begin(mode){if(LS.get(GK,null))return confirmSheet(T.newH,T.newT,T.newY
   sfx("klik");loadThree();if(mode==="gps")startGps();else if(mode==="in")startIn();else{var w=demoW();build(mode,w.pois,w.ways,null)}}
 $("#bStart").onclick=function(){if(locked())return proSheet();begin(WHERE==="in"?"in":WHERE==="sofa"?"sofa":"gps")};
 $("#bTrial").onclick=function(){begin("demo")};
+if($("#lang"))$("#lang").onclick=function(){MW.switchLang(ID,L==="nl"?"en":"nl")};
 $("#bPro").onclick=proSheet;
 $("#bResume").onclick=function(){G=LS.get(GK,null);W=LS.get(WK,[]);if(!G)return home();P={x:G.px||0,y:G.py||0,acc:0};loadThree();
   if(G.mode==="in"&&G.in.kind==="sensor")St.ask().then(function(ok){if(!G)return;if(!ok){G.in.kind="tempo";toast(T.inNoSensor)}enter()});else enter()};
@@ -152,8 +153,8 @@ function playGame(key,opt,done,rules){var go=function(){stClear();$("#stBody").i
 
 /* ---------- proloog ---------- */
 function prologue(){openStage(T.title);need3(function(){kistStage({no:0,stages:[{type:"tap"}]},D.PRO.kist,null,function(){sfx("win");
-    stCard(doc(null,D.PRO.letter,"ev-notaris")+'<button type="button" class="btn" id="go">'+T.next+'</button>');
-    $("#go").onclick=function(){stCard(pimg("ev-kaartje")+hand(D.PRO.card.slice(0,-1),D.PRO.card[D.PRO.card.length-1])+'<button type="button" class="btn" id="go">'+T.next+'</button>');
+    stCard(doc(null,D.PRO.letter,D.PRO.letterArt)+'<button type="button" class="btn" id="go">'+T.next+'</button>');
+    $("#go").onclick=function(){stCard((D.PRO.cardArt?pimg(D.PRO.cardArt):"")+hand(D.PRO.card.slice(0,-1),D.PRO.card[D.PRO.card.length-1])+'<button type="button" class="btn" id="go">'+T.next+'</button>');
       $("#go").onclick=function(){var b=stCard('<h2>'+D.PRO.susH+'</h2><p>'+D.PRO.susT+'</p><div class="susRow">'+D.SUS.slice(0,5).map(function(s){return'<div><canvas data-who="'+s.k+'" width="128" height="160"></canvas>'+esc(s.n.split(" ")[0])+'</div>'}).join("")+'</div><button type="button" class="btn" id="go">'+D.PRO.go+'</button>');paintWho(b);
         $("#go").onclick=function(){G.pro=true;save();closeStage();chip();toast(tapWalk()?T.demoTip:awayT(0))}}}})})}
 

@@ -40,7 +40,7 @@ window.MW_CATALOG={
           desc:"A disappearance that was never solved. Walk the old file: press cuttings, interviews, photographs, letters. Near each place you step back into that year. What happened, and who knew?"},
       nl:{slug:"nl/onopgelost.html", title:"Onopgelost", tag:"Een dossier van twintig jaar oud. De plekken zijn er nog.",
           desc:"Een vermissing die nooit is opgelost. Loop het oude dossier na: krantenknipsels, verhoren, foto's, brieven. Bij elke plek stap je terug naar dat jaar. Wat gebeurde er, en wie wist het?"}},
-    {id:"ng", cat:"night", status:"live", feature:{nl:"Speciaal voor Halloween",en:"Halloween special"}, access:"trial", minutes:"40–75", km:"2–3", group:false,
+    {id:"ng", cat:"night", status:"live", access:"trial", minutes:"40–75", km:"2–3", group:false,
       en:{slug:"night-of-the-ghosts.html", title:"Night of the Ghosts", tag:"Tonight the dead do not stay where they belong.",
           desc:"A Halloween night case. Eight apparitions in your neighbourhood, a ninth nobody had counted, and rare ghosts to catch. No murderer: find out who she is, and why she appears tonight."},
       nl:{slug:"nl/de-nacht-van-de-geesten.html", title:"De Nacht van de Geesten", tag:"Vanavond blijven de doden niet waar ze horen.",
@@ -50,9 +50,9 @@ window.MW_CATALOG={
           desc:"Not a whodunit: a thriller. At eight points a message from ‘Unknown’ is waiting, and someone is walking behind you. Who is following you, and who can you trust?"},
       nl:{slug:"nl/ooggetuige.html", title:"Ooggetuige", tag:"Jij hebt iets gezien wat je niet had mogen zien.",
           desc:"Geen detective maar een thriller. Op acht punten wacht een bericht van ‘Onbekend’, en iemand loopt achter je. Wie volgt je, en wie kun je vertrouwen?"}},
-    /* De Erfenis van de Spellenmaker: nog alleen Nederlands; de Engelse hub verwijst voorlopig naar de Nederlandse pagina */
-    {id:"sm", cat:"quest", status:"new", access:"trial", minutes:"100–130", km:"2–3", group:false,
-      en:{slug:"nl/de-erfenis-van-de-spellenmaker.html", title:"The Gamemaker's Legacy", tag:"Ten chests, ten games, five heirs. (Dutch only for now.)",
+    /* De Erfenis van de Spellenmaker: uitgelicht als nieuwkomer; gratis tot CFG.gratis.sm in platform.js */
+    {id:"sm", cat:"quest", status:"new", feature:{nl:"Nieuw: speurtocht met tien kisten",en:"New: a trail with ten chests",icon:"🎲",acc:"#f2b632",tag:"#f6d58a"}, access:"trial", minutes:"100–130", km:"2–3", group:false,
+      en:{slug:"the-gamemakers-legacy.html", title:"The Gamemaker's Legacy", tag:"Ten chests, ten games, five heirs.",
           desc:"A two-hour trail around your own streets. Open ten puzzle chests in 3D, win the game inside each one, and catch the shades of the gamemaker's last evening with your camera. Who loosened his stairs?"},
       nl:{slug:"nl/de-erfenis-van-de-spellenmaker.html", title:"De Erfenis van de Spellenmaker", tag:"Tien kisten, tien spellen, vijf erfgenamen.",
           desc:"Een speurtocht van twee uur door je eigen buurt. Open tien kisten in 3D, win het spel dat erin ligt (legpuzzel, kaarten, knikkers, mahjong, kogelbaan en meer) en vang met je camera de schimmen van de laatste avond van de spellenmaker. Wie zaagde aan zijn trap?"}}
