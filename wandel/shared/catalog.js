@@ -51,7 +51,7 @@ window.MW_CATALOG={
       nl:{slug:"nl/ooggetuige.html", title:"Ooggetuige", tag:"Jij hebt iets gezien wat je niet had mogen zien.",
           desc:"Geen detective maar een thriller. Op acht punten wacht een bericht van ‘Onbekend’, en iemand loopt achter je. Wie volgt je, en wie kun je vertrouwen?"}},
     /* De Erfenis van de Spellenmaker: uitgelicht als nieuwkomer; gratis tot CFG.gratis.sm in platform.js */
-    {id:"sm", cat:"quest", status:"new", feature:{nl:"Nieuw: speurtocht met tien kisten",en:"New: a trail with ten chests",icon:"🎲",acc:"#f2b632",tag:"#f6d58a"}, access:"trial", minutes:"100–130", km:"2–3", group:false,
+    {id:"sm", cat:"quest", status:"new", feature:{nl:"Nieuw",en:"New",icon:"🎲",acc:"#f2b632",tag:"#f6d58a"}, access:"trial", minutes:"100–130", km:"2–3", group:false,
       en:{slug:"the-gamemakers-legacy.html", title:"The Gamemaker's Legacy", tag:"Ten chests, ten games, five heirs.",
           desc:"A two-hour trail around your own streets. Open ten puzzle chests in 3D, win the game inside each one, and catch the shades of the gamemaker's last evening with your camera. Who loosened his stairs?"},
       nl:{slug:"nl/de-erfenis-van-de-spellenmaker.html", title:"De Erfenis van de Spellenmaker", tag:"Tien kisten, tien spellen, vijf erfgenamen.",
