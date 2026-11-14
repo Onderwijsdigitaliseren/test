@@ -136,6 +136,7 @@ footer{border-top:1px solid var(--line);padding:10px 16px calc(12px + env(safe-a
       <button type="button" data-v="lang">Lang<small id="l3"></small></button>
     </div></div>
   <button class="primary" id="go" type="button">Start aflevering 1</button>
+  <button class="ghost" id="trial" type="button">Proefronde op de bank (stappen lopen vanzelf)</button>
   <button class="ghost" id="fresh" type="button" hidden>Opnieuw beginnen</button>
   <p class="note">Je scherm blijft aan. Met de zakstand kun je je telefoon wegstoppen zonder dat er iets wordt aangetikt.</p>
 </div>
@@ -201,7 +202,7 @@ footer{border-top:1px solid var(--line);padding:10px 16px calc(12px + env(safe-a
 "use strict";
 var $=function(id){return document.getElementById(id)};
 var KEY="dubbelspel.s1e1";
-var TARGET={plaats:{kort:800,normaal:1600,lang:3000},buiten:{kort:800,normaal:1600,lang:3000},fiets:{kort:3000,normaal:6000,lang:10000}};
+var TARGET={plaats:{kort:800,normaal:1600,lang:3000},buiten:{kort:800,normaal:1600,lang:3000},fiets:{kort:3000,normaal:6000,lang:10000},proef:{kort:800,normaal:800,lang:800}};
 var PEOPLE={onbekend:["Onbekend nummer","--dim"],milo:["Milo","--milo"],noor:["Noor","--noor"],raf:["Raf","--raf"],celeste:["Céleste","--celeste"]};
 
 /* ---------- verhaal ---------- */
@@ -539,6 +540,7 @@ function tick(){
 }
 function hint(t){$("hint").textContent=t||"";$("hint").hidden=!t}
 function sensors(){
+  if(S.mode==="proef"){setInterval(function(){if(S&&!S.done&&!busy&&!S.waiting&&!S.queue.length&&$("menu").hidden){S.steps+=10;tick()}},200);return}
   var needMotion=S.mode!=="fiets",needGps=S.mode!=="plaats";
   function listen(){window.addEventListener("devicemotion",onMotion);
     setTimeout(function(){if(!motionSeen&&S.mode==="plaats"&&!S.done)hint("Ik krijg geen signaal van de bewegingssensor. Via Meer kun je handmatig verder.")},4000)}
@@ -570,14 +572,15 @@ var markRoute=seg("segRoute",function(){return draft.route},function(v){draft.ro
 seg("segLen",function(){return draft.len},function(v){draft.len=v});
 lenLabels();$("naam").value=draft.naam||"";
 if(resume){$("go").textContent=draft.done?"Bekijk aflevering 1":"Verder met aflevering 1";$("fresh").hidden=false;
-  $("segMode").parentNode.hidden=true;$("segLen").parentNode.hidden=true}
+  $("segMode").parentNode.hidden=true;$("segLen").parentNode.hidden=true;$("trial").hidden=true}
 S=draft;paint($("startPtg"));
 $("fresh").onclick=function(){wipe();location.reload()};
+$("trial").onclick=function(){draft.mode="proef";draft.route="vrij";$("go").onclick()};
 $("go").onclick=function(){
   S=draft;S.naam=$("naam").value.trim();if(S.mode==="plaats")S.route="vrij";
   try{var AC=window.AudioContext||window.webkitAudioContext;if(AC){audio=new AC();if(audio.resume)audio.resume()}}catch(e){}
   $("start").hidden=true;$("app").hidden=false;
-  $("unit").textContent=S.mode==="fiets"?"km gefietst":"stappen";
+  $("unit").textContent=S.mode==="fiets"?"km gefietst":S.mode==="proef"?"stappen (proefronde)":"stappen";
   S.log.forEach(render);if(S.waiting)showChoices();scroll();repaint(true);
   markSens();labels();
   if(!S.done)sensors();
