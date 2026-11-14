@@ -63,6 +63,10 @@ window.MW_CATALOG={
       en:{slug:"double-play.html", title:"Double Play", tag:"An art heist in eight episodes, for your workouts.",
           desc:"A team, an eighteen-million painting and an invitation that ended up with you. The story arrives as messages while you walk, run or cycle."},
       nl:{slug:"nl/dubbelspel.html", title:"Dubbelspel", tag:"Een kunstroof in acht afleveringen, voor tijdens het sporten.",
-          desc:"Een team, een schilderij van achttien miljoen en een uitnodiging die bij jou terechtkwam. Het verhaal komt binnen als berichten terwijl je loopt, wandelt of fietst."}}
+          desc:"Een team, een schilderij van achttien miljoen en een uitnodiging die bij jou terechtkwam. Het verhaal komt binnen als berichten terwijl je loopt, wandelt of fietst."}},
+    /* De Buit: alleen NL; zelfde poort en testcode als Dubbelspel */
+    {id:"bu", cat:"move", status:"soon", gate:true, access:"free", minutes:"15–30", km:"1–11", group:false,
+      nl:{slug:"nl/de-buit.html", title:"De Buit", tag:"Jouw miljoen. Jouw droom. Hun probleem.",
+          desc:"Je hebt een tas met een miljoen, twee handlangers die hun deel willen en iemand die je meer aanbiedt. Acht wandelingen over geld, vrijheid en de verleiding van meer, met keuzes die doorwerken en vijf aflopen."}}
   ]
 };

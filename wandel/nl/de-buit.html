@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#121512">
+<title>De Buit</title>
+<style>
+/* Eén wereld: bijna zwart met een groene zweem, bankbiljetgroen als accent, elk personage een eigen kleur.
+   Indeling: scènes en berichten boven, één rustige teller onderin. */
+:root{
+  color-scheme:dark;
+  --bg:#121512; --bg2:#1b211c; --line:#2e3a31;
+  --ink:#f0f2ec; --dim:#93a399;
+  --brass:#8fe0b0; --brass-ink:#0c1a12;
+  --tess:#f08a6c; --mo:#6fc3cf; --rosa:#e6c07a; --alex:#c3a4e6; --vermeer:#b4b9c2;
+  --display:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --body:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.45 var(--body);-webkit-text-size-adjust:100%;overscroll-behavior:none}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;-webkit-tap-highlight-color:transparent}
+button:focus-visible,input:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+[hidden]{display:none!important}
+
+/* start */
+#start{min-height:100%;display:flex;flex-direction:column;gap:22px;max-width:460px;margin:0 auto;
+  padding:calc(28px + env(safe-area-inset-top)) 20px calc(24px + env(safe-area-inset-bottom))}
+.kicker{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--brass)}
+h1{font:italic 600 46px/1 var(--display);margin:6px 0 0;letter-spacing:.01em}
+.lead{color:var(--dim);margin:0;max-width:34ch}
+.field{display:flex;flex-direction:column;gap:8px}
+.field>span{font-size:13px;color:var(--dim)}
+#naam{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;width:100%}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.seg button{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:12px 6px;display:flex;flex-direction:column;gap:2px;align-items:center;min-height:60px;justify-content:center}
+.seg button small{color:var(--dim);font-size:12px}
+.seg button[aria-pressed="true"]{border-color:var(--brass);background:#223028;box-shadow:inset 0 0 0 1px var(--brass)}
+.primary{background:var(--brass);color:var(--brass-ink);border:0;border-radius:14px;padding:16px;font-weight:650;font-size:17px}
+.link{background:none;border:0;color:var(--dim);text-decoration:underline;padding:8px;align-self:center}
+#eps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+#eps button{width:100%;display:flex;gap:10px;align-items:baseline;background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:10px 12px;text-align:left;min-height:44px}
+#eps button b{font:600 15px var(--display);color:var(--brass);min-width:1.2em}
+#eps button span{flex:1}
+#eps button small{color:var(--dim);font-size:12px}
+#eps button[aria-current="true"]{border-color:var(--brass)}
+#eps button:disabled{opacity:.45;cursor:default}
+#gate{min-height:100%;display:flex;flex-direction:column;gap:18px;max-width:460px;margin:0 auto;padding:calc(20px + env(safe-area-inset-top)) 20px calc(24px + env(safe-area-inset-bottom))}
+#gate .back{color:var(--dim);font-size:14px;text-decoration:none}
+#gCover{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px;border:1px solid var(--line)}
+.badge{align-self:flex-start;margin:0;border:1px solid var(--brass);color:var(--brass);border-radius:99px;padding:4px 12px;font-size:13px;letter-spacing:.06em}
+.facts{margin:0;padding-left:18px;color:var(--dim);display:flex;flex-direction:column;gap:6px}
+.grow{display:flex;gap:8px}
+.grow input{flex:1;min-width:0;background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.note{font-size:13px;color:var(--dim);margin:0}
+#cover{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px;border:1px solid var(--line);display:block}
+.who img{width:24px;height:24px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:7px}
+.b.img>img{width:100%;height:auto;display:block;border-radius:11px}
+#startPtg{width:100%;height:150px;object-fit:cover;border-radius:14px;border:1px solid var(--line);display:block;image-rendering:pixelated}
+
+/* app */
+#app{height:100%;display:flex;flex-direction:column;max-width:560px;margin:0 auto}
+header{display:flex;align-items:center;gap:12px;padding:calc(10px + env(safe-area-inset-top)) 16px 10px;border-bottom:1px solid var(--line)}
+header .t{flex:1;min-width:0}
+header .t b{font:italic 600 20px/1.1 var(--display);display:block}
+header .t span{font-size:12px;color:var(--dim)}
+#thumb{width:44px;height:55px;border-radius:6px;border:1px solid var(--brass);padding:0;background:#000;overflow:hidden;flex:none}
+#thumb canvas{width:100%;height:100%;display:block;image-rendering:pixelated}
+#chat{flex:1;overflow-y:auto;padding:14px 16px 8px;display:flex;flex-direction:column;gap:6px;-webkit-overflow-scrolling:touch}
+.sys{align-self:center;font-size:12px;color:var(--dim);border:1px solid var(--line);border-radius:99px;padding:4px 12px;margin:10px 0 4px;text-align:center}
+.who{font-size:12px;font-weight:650;margin:8px 0 0 4px}
+.b{max-width:84%;padding:9px 13px;border-radius:16px 16px 16px 5px;background:var(--bg2);border:1px solid var(--line);align-self:flex-start;overflow-wrap:anywhere}
+.b.me{align-self:flex-end;background:var(--brass);color:var(--brass-ink);border-color:transparent;border-radius:16px 16px 5px 16px}
+.b.img{padding:6px;width:min(84%,280px)}
+.b.img .cap{padding:6px 7px 3px;font-size:14px}
+.b.img canvas,.b.img svg{width:100%;height:auto;display:block;border-radius:11px;image-rendering:pixelated}
+.typing{align-self:flex-start;color:var(--dim);font-size:13px;padding:4px 6px}
+.typing i{display:inline-block;width:5px;height:5px;border-radius:50%;background:currentColor;margin-left:3px;animation:bl 1.1s infinite}
+.typing i:nth-child(2){animation-delay:.18s}.typing i:nth-child(3){animation-delay:.36s}
+@keyframes bl{0%,60%,100%{opacity:.25}30%{opacity:1}}
+@media (prefers-reduced-motion:reduce){.typing i{animation:none}}
+.doc{background:#f1ece0;color:#23221f;border-radius:11px;padding:12px;font:12px/1.5 ui-monospace,Menlo,Consolas,monospace}
+.doc h4{margin:0 0 8px;font-size:11px;letter-spacing:.12em}
+.doc .r{display:flex;justify-content:space-between;gap:8px;padding:3px 0;border-top:1px dashed #b9b2a0}
+.doc .bar{display:inline-block;height:10px;background:#23221f;border-radius:2px;vertical-align:middle}
+.doc .hit{background:#f6d77a;margin:0 -6px;padding:3px 6px;font-weight:700}
+.end{border:1px solid var(--brass);border-radius:16px;padding:16px;margin:14px 0 6px;display:flex;flex-direction:column;gap:8px}
+.end h3{font:italic 600 24px/1.1 var(--display);margin:0}
+.end p{margin:0;color:var(--dim);font-size:14px}
+.end p b{color:var(--ink)}
+#choices{display:flex;flex-direction:column;gap:8px;padding:8px 16px 4px}
+#choices button{background:none;border:1px solid var(--brass);color:var(--brass);border-radius:14px;padding:13px 14px;text-align:left;min-height:48px}
+footer{border-top:1px solid var(--line);padding:10px 16px calc(12px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:9px}
+.row{display:flex;align-items:flex-end;gap:10px}
+#count{font:600 34px/1 var(--display);font-variant-numeric:tabular-nums}
+#unit{color:var(--dim);font-size:13px;padding-bottom:3px;flex:1}
+.ghost{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:10px 13px;min-height:44px}
+.track{height:5px;border-radius:9px;background:var(--bg2);position:relative;overflow:hidden}
+.track i{position:absolute;inset:0 auto 0 0;background:var(--brass);border-radius:9px;width:0}
+#hint{font-size:13px;color:var(--tess);margin:0}
+
+/* plattegrond */
+.seg.two{grid-template-columns:repeat(2,1fr)}
+#mapWrap{height:38%;min-height:190px;flex:none;position:relative;border-bottom:1px solid var(--line)}
+#map{width:100%;height:100%;display:block;touch-action:none}
+#mapInfo{position:absolute;left:10px;right:10px;bottom:10px;width:fit-content;max-width:calc(100% - 20px);background:rgba(18,21,18,.88);border:1px solid var(--line);border-radius:10px;padding:5px 10px;font-size:13px}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:130px;z-index:6;background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:13px;max-width:88%}
+
+/* lagen */
+.layer{position:fixed;inset:0;z-index:5;display:flex}
+#pocket{background:#000;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:#55606a;user-select:none;-webkit-user-select:none;touch-action:none}
+#pCount{font:600 40px/1 var(--display);color:#6d7a85;font-variant-numeric:tabular-nums}
+#pNew{color:var(--brass);font-weight:650}
+#pocket small{position:absolute;bottom:calc(30px + env(safe-area-inset-bottom));font-size:13px}
+#menu,#viewer{background:rgba(5,10,14,.78);align-items:flex-end;justify-content:center}
+#viewer{align-items:center;justify-content:flex-start;padding:calc(20px + env(safe-area-inset-top)) 20px 20px;flex-direction:column;gap:12px;overflow-y:auto}
+#viewer canvas{aspect-ratio:4/5;width:min(62%,240px);height:auto;flex:none;border-radius:10px;border:1px solid var(--brass);image-rendering:pixelated}
+#viewer p{margin:0;color:var(--dim);font-size:13px;text-align:center;max-width:36ch}
+.sheet{max-height:92%;overflow-y:auto;background:var(--bg2);border:1px solid var(--line);border-radius:20px 20px 0 0;width:100%;max-width:560px;padding:18px 16px calc(18px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:14px}
+.sheet h2{font:italic 600 22px/1 var(--display);margin:0}
+.sheet .ghost{background:var(--bg);text-align:left}
+
+/* scènes, kaartje en stand */
+.nar{align-self:stretch;margin:10px 2px 4px;padding:2px 0 2px 14px;border-left:2px solid var(--brass);font:17px/1.5 var(--display);overflow-wrap:anywhere}
+.b.img.wide{align-self:center;width:min(100%,320px)}
+.kaartje{background:#f4efe3;color:#22201c;border-radius:9px;padding:26px 18px;font:italic 18px/1.4 var(--display);text-align:center}
+.stand{width:100%;max-width:420px;display:flex;flex-direction:column}
+.stand h3{font:italic 600 22px/1.1 var(--display);margin:0 0 8px}
+.st{display:flex;justify-content:space-between;gap:14px;padding:6px 0;border-top:1px solid var(--line);font-size:14px}
+.st span{color:var(--dim);flex:none;max-width:46%}
+.st b{font-weight:500;text-align:right;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.st.top b{font:600 20px/1.1 var(--display);color:var(--brass)}
+.end .stand h3{display:none}
+#viewer{background:#0a0d0b}
+#startPtg{height:auto;aspect-ratio:4/3;object-position:50% 60%}
+#bStand{background:none;border:1px solid var(--brass);color:var(--brass);border-radius:99px;padding:5px 12px;font-size:13px;min-height:36px;flex:none;font-variant-numeric:tabular-nums}
+</style>
+</head>
+<body>
+
+<div id="gate" hidden>
+  <a class="back" href="./index.html">← Alle wandelingen</a>
+  <img id="gCover" src="../debuit/img/cover.webp" alt="" onerror="this.hidden=true">
+  <div>
+    <div class="kicker">Onderweg · seizoen 1</div>
+    <h1>De Buit</h1>
+  </div>
+  <p class="badge">Volgt snel</p>
+  <p class="lead">Jouw miljoen. Jouw droom. Hun probleem.</p>
+  <ul class="facts">
+    <li>Een verhaal in acht wandelingen over geld, vrijheid en de verleiding van meer</li>
+    <li>Op de plaats, buiten lopen of fietsen</li>
+    <li>Korte scènes, keuzes die doorwerken en vijf mogelijke aflopen</li>
+    <li>Jij bepaalt het tempo. Sta je stil, dan wacht het verhaal</li>
+  </ul>
+  <form id="gForm" class="field" autocomplete="off">
+    <span>Heb je een testcode?</span>
+    <div class="grow"><input id="gCode" type="text" autocapitalize="off" spellcheck="false" aria-label="Testcode"><button class="ghost" type="submit">Ontgrendel</button></div>
+    <p id="gMsg" class="note" role="status"></p>
+  </form>
+</div>
+
+<div id="start">
+  <div>
+    <div class="kicker" id="kick">Seizoen 1 · wandeling 1</div>
+    <h1>De Buit</h1>
+  </div>
+  <canvas id="startPtg" width="300" height="375" aria-label="Beeld van je droom"></canvas>
+  <p class="lead">Je hebt een tas met een miljoen. Twee handlangers willen hun deel, een rechercheur zoekt je en iemand biedt je meer. Jij beweegt, het verhaal komt binnen in korte scènes. Sta je stil, dan wacht het.</p>
+  <label class="field"><span>Hoe noemen ze je?</span>
+    <input id="naam" type="text" maxlength="20" autocomplete="given-name" placeholder="Je voornaam"></label>
+  <div class="field"><span>Hoe beweeg je vandaag?</span>
+    <div class="seg" id="segMode">
+      <button type="button" data-v="plaats">Op de plaats<small>stappenteller</small></button>
+      <button type="button" data-v="buiten">Buiten lopen<small>stappen + gps</small></button>
+      <button type="button" data-v="fiets">Fietsen<small>gps</small></button>
+    </div></div>
+  <div class="field" id="fRoute"><span>Welke route?</span>
+    <div class="seg two" id="segRoute">
+      <button type="button" data-v="vrij">Eigen route<small>ga waar je wilt</small></button>
+      <button type="button" data-v="kaart">Plattegrond<small>buiten, punten op de kaart</small></button>
+    </div></div>
+  <div class="field"><span>Hoe lang ongeveer?</span>
+    <div class="seg" id="segLen">
+      <button type="button" data-v="kort">Kort<small id="l1"></small></button>
+      <button type="button" data-v="normaal">Normaal<small id="l2"></small></button>
+      <button type="button" data-v="lang">Lang<small id="l3"></small></button>
+    </div></div>
+  <button class="primary" id="go" type="button">Start wandeling 1</button>
+  <button class="ghost" id="trial" type="button">Proefronde op de bank (stappen lopen vanzelf)</button>
+  <div class="field"><span>Wandelingen</span><ol id="eps"></ol></div>
+  <button class="link" id="fresh" type="button">Hele seizoen opnieuw beginnen</button>
+  <p class="note">Je scherm blijft aan. Met de zakstand kun je je telefoon wegstoppen zonder dat er iets wordt aangetikt. Lezen en kiezen doe je als je even stilstaat.</p>
+  <p class="note">Westerdam bestaat niet. De politie, de ontmoetingen en de spanning horen bij het verhaal en hebben niets te maken met waar jij loopt. Blijf je eigen tempo lopen en let op het verkeer.</p>
+</div>
+
+<div id="app" hidden>
+  <header>
+    <div class="t"><b>De Buit</b><span id="epTitle"></span></div>
+    <button id="bStand" type="button" aria-label="Bekijk je stand"></button>
+    <button id="thumb" type="button" aria-label="Bekijk je droom en je stand"><canvas width="300" height="375"></canvas></button>
+  </header>
+  <div id="mapWrap" hidden><canvas id="map" aria-label="Plattegrond met het volgende punt"></canvas><div id="mapInfo"></div></div>
+  <main id="chat" aria-live="polite"></main>
+  <div id="choices" hidden></div>
+  <footer>
+    <p id="hint" hidden></p>
+    <div class="row">
+      <div id="count">0</div><div id="unit">stappen</div>
+      <button class="ghost" id="bPocket" type="button">Zakstand</button>
+      <button class="ghost" id="bMenu" type="button" aria-label="Instellingen">Meer</button>
+    </div>
+    <div class="track" aria-hidden="true"><i id="bar"></i></div>
+  </footer>
+</div>
+
+<div id="pocket" class="layer" hidden>
+  <div id="pCount">0</div>
+  <div id="pNew" hidden>Nieuw bericht</div>
+  <small>Houd ingedrukt om te ontgrendelen</small>
+</div>
+
+<div id="viewer" class="layer" hidden>
+  <canvas width="300" height="375"></canvas>
+  <div id="stand" class="stand"></div>
+  <p>Je droom wordt elke wandeling scherper. Bedragen zijn spelwaarden.</p>
+  <button class="ghost" id="vClose" type="button">Sluiten</button>
+</div>
+
+<div id="menu" class="layer" hidden>
+  <div class="sheet">
+    <h2>Instellingen</h2>
+    <div class="field"><span>Gevoeligheid stappenteller</span>
+      <div class="seg" id="segSens">
+        <button type="button" data-v="0.75">Gevoelig</button>
+        <button type="button" data-v="1.15">Normaal</button>
+        <button type="button" data-v="1.7">Streng</button>
+      </div></div>
+    <button class="ghost" id="mSound" type="button"></button>
+    <button class="ghost" id="mAdd" type="button"></button>
+    <button class="ghost" id="mMap" type="button" hidden></button>
+    <button class="ghost" id="mSkip" type="button" hidden>Dit punt overslaan</button>
+    <button class="ghost" id="mFree" type="button" hidden>Verder op eigen route, zonder plattegrond</button>
+    <button class="ghost" id="mStop" type="button">Stoppen voor nu (voortgang blijft bewaard)</button>
+    <button class="ghost" id="mFresh" type="button">Deze wandeling opnieuw beginnen</button>
+    <button class="ghost" id="mClose" type="button">Sluiten</button>
+  </div>
+</div>
+
+<div id="toast" hidden></div>
+<script src="../shared/platform.js?v=4"></script>
+<script src="../shared/tiles.js?v=1"></script>
+<script src="../shared/plan.js?v=2"></script>
+<script src="../shared/walk.js?v=5"></script>
+<script>
+(function(){
+"use strict";
+var $=function(id){return document.getElementById(id)};
+var KEY="debuit";
+var TARGET={plaats:{kort:1600,normaal:2400,lang:3200},buiten:{kort:1600,normaal:2400,lang:3200},fiets:{kort:5000,normaal:8000,lang:11000}};
+var PEOPLE={onbekend:["Onbekend nummer","--dim"],tess:["Tess","--tess"],mo:["Mo","--mo"],rosa:["Rosa","--rosa"],alex:["Alex","--alex"],vermeer:["Daan Vermeer","--vermeer"]};
+
+/* ---------- verhaal: seizoen 1, acht wandelingen van zeven leesmomenten ----------
+   n(tekst,als) scène · m(wie,tekst,als) bericht of gesproken zin · s(tekst,als) systeemregel
+   im(wie,soort,onderschrift,extra) beeld · x(effect,als) stille boeking
+   c(id,[[knop,{vlag:waarde}|null,[antwoorden],effect,als],…]) keuze
+   als = "vlag=waarde|waarde", "vlag!=waarde", meerdere met & · tekst: {naam} {plek} {d.sleutel} {tas} {vrij} {eigen} {over}
+   effect: spend:[bedrag,wat] · pay:{tess:n,mo:n} · res:n · t:{mo:1} · heat:n · info:"naam" · fin:1 · pens:n */
+function n(t,w){var o={n:t};if(w)o.when=w;return o}
+function m(f,t,w){var o={from:f,text:t};if(w)o.when=w;return o}
+function s(t,w){var o={sys:t};if(w)o.when=w;return o}
+function x(fx,w){var o={x:fx};if(w)o.when=w;return o}
+function im(f,k,t,e){var o={from:f,img:k,text:t};if(e)for(var q in e)o[q]=e[q];return o}
+function w(cond,o){o.when=cond;return o}
+function c(id,opts){return {choice:{id:id,options:opts.map(function(o){var r={label:o[0],set:o[1]||null,reply:o[2]||[]};if(o[3])r.fx=o[3];if(o[4])r.when=o[4];return r})}}}
+var AT=[0,.14,.30,.46,.62,.80,1];
+var DEF={droom:"luxe",plek:"die plek",rosa:"tijd",mo1:"afstand",deal:"houd",lamp:"nee",mo3:"zelf",res:"plan",tess4:"uitleg",alex5:"eigen",verm:"stil",kant:"solo",zeker:"veilig",eind:"genoeg",kaartje:"nee",rosaP:"nee",combi:"",map:"nee"};
+var DERDE=333000,AANB=40000,KLEIN=240000,GROOT=620000,PENS=60000;
+
+/* Bedragen zijn fictieve spelwaarden. */
+var DREAM={
+luxe:{naam:"Luxe en aanzien",
+  eerste:"een nacht in de torensuite van het Grand Hotel",eersteKort:"Torensuite, Grand Hotel",eersteP:2400,
+  proef:"een high tea in de lounge van het Grand Hotel",proefKort:"High tea, Grand Hotel",
+  eersteScene:"Het Grand Hotel aan het Stationsplein. De lift heeft een eigen bankje. Boven ligt Westerdam onder je als een maquette: de rivier, de torens, de trams als speelgoed. Iemand vraagt of alles naar wens is, en wacht echt op het antwoord.",
+  waar:"in het Grand Hotel",kringKort:"het dakterras",
+  kring:"Een dakterras boven de Kade. Kom zoals je bent",
+  kringScene:"Het dakterras ligt boven de Kade, achter een deur zonder bordje. Er branden vuurkorven. Mensen staan in kleine groepjes en niemand vraagt wat iets kost. Iemand geeft je een glas voordat je je jas uit hebt.",
+  lamp:"Een staande lamp van geblazen glas, als een bevroren druppel",lampKort:"Glazen lamp",
+  groot:"het penthouse aan de Kade",
+  grootScene:"Kade 1, de bovenste verdieping. Glas van vloer tot plafond en de hele rivier als voortuin. Je voetstappen galmen, want er staat nog niets. Je weet al waar de bank komt. Je weet al wie er niet op mag zitten.",
+  levend:"Je staat nog één keer op de bovenste verdieping van Kade 1. Het avondlicht valt precies zoals je het had bedacht. Beneden gaan de lantaarns één voor één aan, alsof iemand ze voor jou aandoet.",
+  klein:"een appartement op de vierde verdieping aan de Kade, met een balkon en de helft van het uitzicht",
+  eind:"Je staat op je eigen terras. De stad ligt eronder en maakt haar gewone geluiden. Er staat één stoel te veel, voor wie er nog komt.",
+  eindKlein:"Je staat op je eigen balkon. Het is de vierde verdieping, niet de veertiende. De rivier is dezelfde rivier.",
+  eindGeen:"Je zit op het terras van het Grand Hotel, als gast. Het uitzicht is geleend, de koffie is betaald."},
+vrij:{naam:"Vrijheid en avontuur",
+  eerste:"een dag op zeiljacht de Zilvermeeuw, met schipper en lunch aan boord",eersteKort:"Dag op de Zilvermeeuw",eersteP:1900,
+  proef:"een uur meevaren op de Zilvermeeuw",proefKort:"Uur meevaren, Zilvermeeuw",
+  eersteScene:"De Zilvermeeuw ligt aan steiger C. Zodra de trossen los zijn, wordt de stad kleiner en de lucht groter. De schipper geeft je het roer en kijkt de andere kant op. Het schip luistert naar je. Dat is nieuw.",
+  waar:"in de jachthaven",kringKort:"de haven",
+  kring:"De jachthaven, steiger C. Neem een jas mee",
+  kringScene:"Steiger C ligt achter een hek met een code. De boten zijn hier groter dan Rosa's bovenwoning. Op een achterdek brandt licht, er wordt gelachen en iemand schuift op om plaats voor je te maken.",
+  lamp:"Een koperen scheepslamp, gepoetst tot je jezelf erin ziet",lampKort:"Koperen scheepslamp",
+  groot:"de tweemaster",
+  grootScene:"Achttien meter, twee masten, een dek van teak. Ze ligt aan het eind van de steiger en is klaar om morgen te vertrekken. In de kajuit hangt een kaart van de hele kust. Iemand heeft er nog geen route op getekend.",
+  levend:"Je loopt nog één keer de steiger af. Ze ligt er, met het avondlicht in de masten. Het water tikt tegen de romp. Op de kaart in de kajuit zou je met potlood een lijn kunnen zetten, weg van hier.",
+  klein:"een tweedehands zeilboot van negen meter, met een kajuit waarin je net kunt staan",
+  eind:"Je staat aan dek. De trossen zijn los, de stad schuift langzaam naar achteren. Niemand heeft je gevraagd wanneer je terugkomt.",
+  eindKlein:"Je zit in de kuip van je eigen boot. Negen meter is genoeg om weg te varen. Dat heb je vanochtend uitgeprobeerd.",
+  eindGeen:"Je zit op de kade en kijkt naar andermans boten. De Zilvermeeuw vaart uit, zonder jou, voorlopig."},
+imp:{naam:"Een eigen imperium",
+  eerste:"een avond aan de chef's table van restaurant Zout",eersteKort:"Chef's table, Zout",eersteP:1600,
+  proef:"de lunch bij restaurant Zout",proefKort:"Lunch bij Zout",
+  eersteScene:"Restaurant Zout heeft één tafel in de keuken. Daar zit jij. De chef legt bij elke gang uit wat het is, en de eigenaar komt vragen of je ooit zelf iets hebt gerund. Je zegt: nog niet.",
+  waar:"bij restaurant Zout",kringKort:"de presentatie",
+  kring:"Een besloten presentatie in het oude bankgebouw aan de Markt",
+  kringScene:"Het oude bankgebouw staat leeg, maar vanavond niet. Er hangen plannen aan de marmeren muren, er is wijn, en mensen noemen elkaar partner. In de kelder staat de kluisdeur open. Die krijg je er gratis bij, zegt iemand.",
+  lamp:"Een messing hanglamp die uit een oude stationshal komt",lampKort:"Messing hanglamp",
+  groot:"het bankgebouw aan de Markt",
+  grootScene:"De marmeren hal is leeg en hoog. Je stem komt een halve seconde later terug. Hier komt de bar, daar de trap, beneden de kluis met de deur open. Je hoeft alleen nog te bepalen wat er boven de ingang komt te staan.",
+  levend:"Je staat nog één keer in de marmeren hal. Je ziet het voor je: de lichten aan, de deuren open, mensen die jouw naam noemen tegen de portier. Het is stil. Het is het soort stilte vlak voor iets begint.",
+  klein:"de begane grond van het bankgebouw: één zaal, één bar en jouw naam op de deur",
+  eind:"Je staat in je eigen zaak, een kwartier voor de deuren opengaan. De glazen zijn gepoetst. Boven de ingang hangt de naam die jij hebt bedacht.",
+  eindKlein:"Je staat achter je eigen bar. Het is één zaal, niet het hele gebouw. De deur gaat over een kwartier open.",
+  eindGeen:"Je zit bij Zout aan de bar en tekent een plattegrond op een bierviltje. Het pand is nog van iemand anders."},
+thuis:{naam:"Een heerlijk privéleven",
+  eerste:"een weekend in het huis aan de plas, met open haard en sauna",eersteKort:"Weekend aan de plas",eersteP:1400,
+  proef:"een dag in het huis aan de plas",proefKort:"Dag aan de plas",
+  eersteScene:"Het huis aan de plas heeft een open haard die al brandt en een koelkast die iemand anders heeft gevuld. Je ligt een uur op de bank zonder iets te doen. Niemand heeft je nodig. Het water voor het raam beweegt nauwelijks.",
+  waar:"bij het huis aan de plas",kringKort:"de bezichtiging",
+  kring:"Een bezichtiging op uitnodiging aan de Singel",
+  kringScene:"Het huis aan de Singel heeft nooit op internet gestaan. Er zijn acht genodigden en er is soep. Mensen praten over tuinen alsof het familie is. Iemand vraagt welke kamer jij zou nemen, en je weet het meteen.",
+  lamp:"Een leeslamp met een kap van handgeschept papier",lampKort:"Papieren leeslamp",
+  groot:"het huis aan de Singel",
+  grootScene:"Singel 9. Een keuken waar tien mensen kunnen zitten en een tuin die doorloopt tot het water. De trap kraakt op de derde tree. Je loopt hem twee keer op en af, alleen om dat te horen.",
+  levend:"Je staat nog één keer in de keuken aan de Singel. Het avondlicht ligt op het aanrecht. Je ziet de tafel al staan, en wie eraan zit. Het zijn er minder dan tien. Je hebt ze zelf uitgekozen.",
+  klein:"het kleinere huis ernaast aan de Singel: zonder de tuin tot het water, met de keuken",
+  eind:"Je staat in je eigen keuken. De tuindeuren zijn open, het water ligt stil. Op het aanrecht staat koffie voor meer dan één.",
+  eindKlein:"Je staat in je eigen keuken. De tuin is kleiner dan in je hoofd. De deuren kunnen open, en dat doe je.",
+  eindGeen:"Je zit op een bankje aan de Singel, tegenover nummer 9. Er brandt licht. Het is nog niet het jouwe."}
+};
+var COMBI={luxe:"een dakterras waar mensen graag gezien worden",vrij:"een ligplaats voor de dagen dat je weg wilt",imp:"een eigen zaak op de begane grond",thuis:"een keuken waar je zelf kiest wie er zit"};
+
+var EP=[
+/* ============ 1 ============ */
+{t:"De tas",beats:[
+[ s("23:52 · achter warenhuis De Zon"),
+  n("Vijf minuten na de roof. Je staat achter een gesloten warenhuis, tussen rolcontainers en een paspop zonder armen. Naast je ligt een sporttas. Er zit een miljoen in. Je handen trillen nog."),
+  m("tess","Zeg even dat jij de tas hebt."),
+  c("tas",[["Ik heb de tas",null,[m("tess","Geweldig. Dan heeft van ons drieën tenminste iemand een goede avond.")]],
+           ["Ik heb de tas. Waar zijn jullie?",null,[m("tess","Geweldig. Dan heeft van ons drieën tenminste iemand een goede avond."),m("tess","Mo zit in een tram. Ik zit in een struik. Lang verhaal.")]]]),
+  m("tess","Het plan is veranderd. Jij houdt de tas tot we kunnen delen. Ieder een derde, zoals afgesproken."),
+  m("tess","Ga lopen. Gewoon je eigen tempo. Mensen met haast vallen op.")],
+[ im("tess","foto","Beveiligingscamera, 23:41."),
+  n("Het is een scherpe foto. Jij, in de gang van Veldmans kantoor, met je gezicht precies naar de lens."),
+  m("tess","Deze hangt nu bij de portier. Morgen bij de politie. Ik zeg het maar vast."),
+  m("mo","Ik zie hem ook. Je staat er goed op. Dat is het vervelende."),
+  c("foto",[["Hoe komt Tess aan die foto?",null,[m("tess","Ik heb mensen. Nou ja. Ik heb een mens.")]],
+            ["Ik loop door",null,[m("mo","Verstandig. Ik zit in lijn 4 en doe alsof ik slaap.")]]])],
+[ n("De Zonpassage is verlaten. Etalagepoppen kijken je na. Je voetstappen klinken alsof er iemand achter je loopt, maar dat ben je zelf. De tas is zwaarder dan je dacht."),
+  m("mo","Hoe zwaar is dat eigenlijk, een miljoen?"),
+  c("zwaar",[["Een kilo of twintig",null,[m("mo","Twintig kilo. Dat is een kleuter. Je draagt een kleuter van een miljoen.")]],
+             ["Zwaarder dan in mijn hoofd",null,[m("mo","Dat geloof ik. In mijn hoofd woog het niks en kon ik er een huis van kopen.")]]])],
+[ n("Op de Koningsbrug sta je even stil. Onder je schuift het zwarte water naar zee. Aan de overkant gaat het licht aan in de bakkerij. Niemand let op iemand met een sporttas. Dat is het mooie van een sporttas."),
+  m("tess","Waar slaap je? Niet thuis. Thuis is het eerste adres dat ze proberen."),
+  c("slaap",[["Bij Rosa, van het buurthuis",null,[m("tess","Die van de tosti's? Prima. Tosti-mensen praten niet.")]],
+             ["Ik weet iemand",null,[m("tess","Iemand die geen vragen stelt?"),m("tess","Laat maar. Zolang het geen familie is.")]]])],
+[ n("Het Marktplein wordt wakker. Een man zet kratten sla neer, een veegwagen draait rondjes. Vroeger kwam je hier elke middag, in het buurthuis op de hoek. De deur is nog steeds groen. Rosa staat er al, met haar sleutelbos."),
+  m("rosa","Jij. Om zes uur 's ochtends. Met een tas."),
+  m("rosa","Boven staat een bed. Ik vraag niks tot ik koffie op heb.")],
+[ n("De bovenwoning heeft een smal bed, een waterkoker en een raam dat alleen openblijft als je er een boek onder zet. Je schuift de tas onder het bed. Dan open je op je telefoon het leven dat je wilt."),
+  im("rosa","scene","",{name:"kamer",opt:1,bare:1}),
+  s("Kies jouw droom"),
+  c("droom",[["Luxe en aanzien: een appartement met uitzicht",{droom:"luxe"},[]],
+             ["Vrijheid en avontuur: een boot en mijn eigen tijd",{droom:"vrij"},[]],
+             ["Een eigen imperium: een zaak met mijn naam erop",{droom:"imp"},[]],
+             ["Een heerlijk privéleven: een fijn huis en rust",{droom:"thuis"},[]]]),
+  im("mo","droom","Nu nog een vlek. Elke wandeling wordt het scherper.",{bare:1}),
+  s("Groep · Na de klus"),
+  m("mo","We zijn zeven uur voortvluchtig en jij hebt al een moodboard.")],
+[ m("mo","Even serieus. Tess zegt dat jij de tas hebt. Hoeveel ligt er precies bij jou?"),
+  c("mo1",[["Alles. Het hele miljoen ligt hier onder het bed",{mo1:"eerlijk"},[m("mo","Oké. Dank je dat je het gewoon zegt."),m("mo","Niets uitgeven tot we gedeeld hebben. Behalve aan ontbijt.")],{t:{mo:1}}],
+           ["Genoeg. Je hoort het als we elkaar zien",{mo1:"afstand"},[m("mo","Genoeg. Dat is geen getal."),m("mo","Maar goed.")],{t:{mo:-1}}]]),
+  n("Er wordt geklopt. Rosa staat in de deur met twee koppen koffie en de ochtendkrant. Ze legt hem op het bed, met de voorpagina naar boven."),
+  im("rosa","doc","De krant van vanochtend.",{doc:{t:"WESTERDAMS DAGBLAD",rows:[["Voorpagina","Kluis van ondernemer Veldman leeggehaald"],["Foto","politie zoekt deze persoon",1],["Pagina 3","‘Ik voel me bestolen,’ zegt Veldman"]]}}),
+  x({heat:1}),
+  m("rosa","Ik heb nu koffie op.")]
+]},
+
+/* ============ 2 ============ */
+{t:"De eerste smaak",beats:[
+[ n("Rosa zit op de rand van het bed, de krant tussen jullie in. Ze kijkt van de foto naar jou en weer terug."),
+  m("rosa","Dat ben jij."),
+  m("rosa","Ik ken je sinds je twaalf was. Dus ik vraag het één keer."),
+  c("rosa",[["Het is waar. Niet alles wat er staat, maar ik was erbij",{rosa:"waar"},[m("rosa","Goed. Dan weet ik wat ik in huis heb."),m("rosa","De tas blijft onder het bed en ik weet van niks. Dat kan ik goed.")],{t:{rosa:2}}],
+            ["Dat ben ik niet. Die lijkt alleen op mij",{rosa:"leugen"},[m("rosa","Hm. Dan heeft die persoon ook jouw jas aan."),m("rosa","Ik onthoud dit.")],{t:{rosa:-1}}],
+            ["Geef me een paar dagen. Dan vertel ik het",{rosa:"tijd"},[m("rosa","Een paar dagen. Ik schrijf het op de kalender, naast de glasbak.")]]])],
+[ s("Groep · Na de klus"),
+  m("tess","Even vastleggen, voor de rust. Ieder een derde. 333 voor mij, 333 voor Mo. Jij krijgt de duizend euro afronding, omdat je de tas sjouwt."),
+  m("mo","Ik teken ervoor."),
+  c("deal",[["We delen nu. Kom je deel halen",{deal:"delen"},[m("tess","Kijk. Zo doe je zaken."),m("mo","Ik kom met een rugzak. Een gewone. Sporttassen zijn verdacht geworden."),s("Verdeeld: Tess € 333.000 · Mo € 333.000 · jij € 334.000")],{pay:{tess:DERDE,mo:DERDE},t:{tess:1,mo:2}}],
+            ["Ieder nu een voorschot van 50. De rest als het rustig is",{deal:"voorschot"},[m("tess","Een voorschot. Je klinkt als een aannemer. Prima."),m("mo","Vijftig is meer dan ik ooit bij elkaar heb gezien. Ik ga er heel normaal over doen."),s("Betaald: 2 × € 50.000 · nog toegezegd: 2 × € 283.000")],{pay:{tess:50000,mo:50000},t:{mo:1}}],
+            ["De tas blijft voorlopig bij mij. Dicht",{deal:"houd"},[m("tess","Voorlopig. Dat woord ga ik onthouden."),m("mo","Ik vind dit niet leuk. Ik zeg het één keer."),s("Niets verdeeld. Tess en Mo rekenen elk op € 333.000")],{t:{tess:-1,mo:-1}}]])],
+[ n("Je rekent uit wat van jou is. Het is voor het eerst een getal met vijf nullen. Op je telefoon staat nog het beeld van vanochtend. Eén ding kan vandaag al."),
+  c("eerste",[["Helemaal: {d.eerste} ({d.eersteP})",{eerste:"vol"},[],{spend:["d.eersteP","d.eersteKort"]}],
+              ["Klein beginnen: {d.proef} (€ 250)",{eerste:"proef"},[],{spend:[250,"d.proefKort"]}]]),
+  s("Uitgegeven. In de tas: {tas}")],
+[ n("{d.eersteScene}"),
+  im("mo","scene","",{name:"eerste-{droom}",opt:1,bare:1}),
+  n("Niemand vraagt wie je bent. Dat is het eerste wat geld koopt: mensen houden op met vragen en beginnen met aanbieden.")],
+[ m("mo","Ik heb net een broodje kaas gegeten. Blijkbaar zitten we in verschillende fases van het herstel."),
+  c("broodje",[["Volgende keer ga je mee",null,[m("mo","Ik hou je eraan. Ik neem voor de zekerheid mijn eigen broodje mee.")],{t:{mo:1}}],
+               ["Het is onderzoek",null,[m("mo","Onderzoek. Naar kussens.")]]])],
+[ n("Je blijft langer dan nodig. Je kijkt hoe het licht verandert en hoe mensen hier lopen: langzaam, alsof de dag van hen is. Je probeert het ook. Het lukt bijna meteen."),
+  m("rosa","Twee agenten in de straat, deur aan deur. Ik heb gezegd dat boven een stagiair logeert. Je bent nu stagiair.","rosa=waar"),
+  x({heat:-1},"rosa=waar"),
+  m("rosa","Twee agenten in de straat. Ik heb niks gezegd. Vooral omdat ik niks weet, hè.","rosa=leugen"),
+  m("rosa","Twee agenten in de straat, deur aan deur. Jouw paar dagen tikken, zeg ik maar.","rosa=tijd")],
+[ n("Bij het weggaan houdt iemand van de bediening je staande. ‘Dit is voor u afgegeven.’ Een envelop zonder naam. Erin zit één kaartje, dik papier, met de hand geschreven."),
+  im("onbekend","kaart","Geen afzender.",{kaart:"Welkom in het leven dat je altijd al wilde.",bare:1}),
+  c("kaartje",[["Bewaar het kaartje",{kaartje:"ja"},[n("Je stopt het in je binnenzak. Het handschrift is schuin, met een lange haal aan de W.")],{info:"kaartje"}],
+               ["Gooi het weg",{kaartje:"nee"},[n("Je laat het in een prullenbak vallen. Tien stappen verder ken je de zin nog uit je hoofd.")]]]),
+  m("tess","Heb jij iemand verteld waar je bent?")]
+]},
+
+/* ============ 3 ============ */
+{t:"Mensen zoals jij",beats:[
+[ s("Onbekend nummer"),
+  m("alex","Het kaartje was van mij. Er had een afzender op gemoeten, maar dan was het minder leuk geweest."),
+  m("alex","Ik ben Alex. Ik zag je {d.waar}. Je keek naar alles alsof je het wilde onthouden. Mensen die daar thuishoren doen dat nooit. Het viel op."),
+  c("alex1",[["Stuur je vaker kaartjes naar vreemden?",null,[m("alex","Alleen naar interessante. Het is een dure hobby, dus ik ben kieskeurig.")]],
+             ["Wat wil je van me?",null,[m("alex","Vandaag? Je ergens mee naartoe nemen. Morgen zien we wel.")]]]),
+  m("alex","{d.kring}. Ik zet je op de lijst.")],
+[ n("{d.kringScene}"),
+  im("alex","scene","",{name:"kring-{droom}",opt:1,bare:1}),
+  n("Alex stelt je aan niemand voor. Toch weet binnen tien minuten iedereen hoe je heet.")],
+[ m("alex","Vraagje. Wat zou jij doen als geld geen probleem was? Niet het nette antwoord. Het echte."),
+  w("droom=luxe",c("plekL",[["Een penthouse. Ik noem het De Uitkijk",{plek:"De Uitkijk"},[]],["Een penthouse. Het heet Nummer Eén",{plek:"Nummer Eén"},[]],["Een penthouse. Het Bovenhuis",{plek:"Het Bovenhuis"},[]]])),
+  w("droom=vrij",c("plekV",[["Een schip. Ze heet Tweede Kans",{plek:"de Tweede Kans"},[]],["Een schip. Ze heet Zonder Baas",{plek:"de Zonder Baas"},[]],["Een schip. Ze heet De Buit",{plek:"De Buit"},[m("alex","De Buit. Subtiel. Ik zou het zelf niet durven en ik durf veel.")]]])),
+  w("droom=imp",c("plekI",[["Een hotel. Hotel De Kluis",{plek:"Hotel De Kluis"},[]],["Een galerie. Galerie Zonder Naam",{plek:"Galerie Zonder Naam"},[]],["Een club. Club Middernacht",{plek:"Club Middernacht"},[]]])),
+  w("droom=thuis",c("plekT",[["Een huis. Het heet Huize Eindelijk",{plek:"Huize Eindelijk"},[]],["Een huis. Gewoon: Nummer Negen",{plek:"Nummer Negen"},[]],["Een huis. De Achtertuin",{plek:"De Achtertuin"},[]]])),
+  m("alex","{plek}. Het heeft een naam, dus het bestaat al voor de helft."),
+  n("Je vertelt meer dan je van plan was. Waar het licht vandaan moet komen. Wie er mag komen en wie niet. Alex luistert zonder één keer op een telefoon te kijken.")],
+[ n("Bij de uitgang staan ontwerpen van een vriend van Alex te koop. {d.lamp}. Duizend euro. Je hebt nog nooit duizend euro uitgegeven aan iets dat alleen licht geeft."),
+  c("lamp",[["Kopen. Die is voor {plek}",{lamp:"ja"},[m("alex","Goede keuze. Je koopt geen lamp, je koopt de plek waar hij komt te hangen."),s("Gekocht: {d.lampKort} · € 1.000")],{spend:[1000,"d.lampKort"]}],
+            ["Laten staan",{lamp:"nee"},[m("alex","Verstandig. Saai, maar verstandig.")]]])],
+[ n("Buiten leunt Mo tegen een lantaarnpaal. Rugzak om, handen in zijn zakken. Hij kijkt naar de mensen die naar buiten komen en dan naar jou."),
+  m("mo","Ik wilde weten waar ons geld naartoe ging. Het ruikt hier lekker, dat geef ik toe."),
+  m("mo","Is er in dat nieuwe leven van jou nog plek voor iemand die zijn eigen brood smeert?"),
+  c("mo3",[["Kom mee naar binnen. Ik trakteer",{mo3:"samen"},[n("Mo eet drie dingen waarvan hij de naam niet kan uitspreken. Daarna wil hij van alle drie het recept."),m("mo","Oké. Ik snap het. Dit is gevaarlijk lekker."),s("Uitgegeven: avond met Mo · € 600")],{spend:[600,"Avond met Mo"],t:{mo:2}}],
+           ["Laten we samen iets beginnen, jij en ik",{mo3:"plan"},[m("mo","Samen. Mijn derde en jouw derde. Ik doe de boeken, jij doet de lampen."),m("mo","Ik meen het. Ik ga erover nadenken.")],{t:{mo:2}}],
+           ["Dit is even van mij, Mo",{mo3:"zelf"},[m("mo","Even van jou. Helder."),m("mo","Ik ga naar huis. Over mijn deel hoor ik nog wel.")],{t:{mo:-2}}]])],
+[ s("Privé · Tess"),
+  m("tess","Mo zegt dat je nieuwe vrienden hebt. Leuk. Wie?"),
+  c("tess3",[["Iemand die Alex heet",null,[m("tess","…"),m("tess","Nooit van gehoord. Pas op met mensen die je zomaar aardig vinden.")]],
+             ["Niemand die jij kent",null,[m("tess","Dat bedoel ik met rustig blijven. Dank je.")]]])],
+[ s("Alex"),
+  im("alex","droom","Dit komt volgende week vrij. Het past bijna precies bij {plek}. Bijna eng."),
+  m("alex","Ik kan zorgen dat jij hier als eerste mag kijken.")]
+]},
+
+/* ============ 4 ============ */
+{t:"Drie miljoen",beats:[
+[ n("{d.grootScene}"),
+  im("alex","scene","",{name:"groot-{droom}",opt:1,bare:1}),
+  n("Alex heeft de sleutel. Natuurlijk heeft Alex de sleutel.")],
+[ m("alex","Ze willen deze week tekenen met iemand anders. Met een aanbetaling van veertig houden ze het voor jou vast."),
+  m("alex","Kansen wachten niet, {naam}."),
+  c("res",[["Vastleggen: € 40.000 aanbetaling",{res:"vast"},[m("alex","Gedaan. Vanaf nu staat jouw naam op de deur. Figuurlijk. Voorlopig."),s("Vastgelegd: {plek} · aanbetaling € 40.000")],{res:AANB,t:{alex:1}}],
+           ["Eerst een plan op papier. Nog geen geld",{res:"plan"},[m("alex","Een plan. Goed. Ik hou de anderen een paar dagen aan het lijntje. Meer kan ik niet beloven."),s("Toekomstplan: {plek} · nog niets betaald")]]])],
+[ s("Nieuws"),
+  im("mo","doc","",{bare:1,doc:{t:"WESTERDAMS DAGBLAD · 14:02",rows:[["Veldman","‘Er is drie miljoen verdwenen’",1],["Politie","onderzoek uitgebreid, rechercheur Vermeer leidt"],["Foto","nog steeds dezelfde"]]}}),
+  x({heat:1}),
+  s("Groep · Na de klus"),
+  m("mo","Voordat jij weer een lamp van duizend euro koopt: waarom staat hier DRIE?","lamp=ja"),
+  m("mo","Voordat jij weer iets gaat bekijken dat we niet kunnen betalen: waarom staat hier DRIE?","lamp=nee"),
+  c("drie",[["Ik heb één tas. Eén",null,[m("mo","Dat weet ik. Ik heb hem zelf helpen tillen. Dus wie heeft de andere twee?")]],
+            ["Vraag het aan Tess",null,[m("mo","Ja. Dat lijkt mij ook.")]]])],
+[ s("Privé · Tess"),
+  m("tess","Niet in de groep."),
+  m("tess","Oké. We waren niet de enige ploeg."),
+  m("tess","Wij deden de kluis open. Daarvoor kregen we één miljoen. Een tweede groep nam de rest mee. Dat was de afspraak, vanaf het begin."),
+  m("tess","Ik wist het. Jij en Mo niet. Ik vond dat jullie beter sliepen zonder.")],
+[ m("tess","Zij droegen meer risico. Zij hadden de binnenkant geregeld: de codes, het tijdslot. Wij waren de handen."),
+  c("tess4",[["Ik geloof je. Maar dit was de laatste keer",{tess4:"geloof"},[m("tess","De laatste keer. Beloofd. Ik beloof weinig, dus dit telt.")],{t:{tess:2}}],
+             ["Wie is die tweede groep? Namen",{tess4:"uitleg"},[m("tess","Ik ken er één. De contactpersoon. Die tekende alles met een A, met een lange haal eraan."),m("tess","Meer heb ik niet. Echt niet."),n("Een lange haal. Je voelt aan je binnenzak.","kaartje=ja")],{info:"contact"}],
+             ["Vanaf nu beslissen Mo en ik. Zonder jou",{tess4:"buiten"},[m("tess","Dat mag. Je gaat merken dat ik de enige was die wist hoe dit werkt."),m("tess","Mijn derde blijft mijn derde.")],{t:{tess:-2,mo:1}}]])],
+[ s("Privé · Mo"),
+  m("mo","Ze wist het dus. Jij was vanaf minuut één eerlijk tegen me. Dat onthoud ik.","mo1=eerlijk"),
+  m("mo","Ze wist het dus. En jij zei ‘genoeg’ toen ik vroeg hoeveel je had. Ik sta tussen twee mensen met geheimen.","mo1=afstand"),
+  n("Rosa zet een bord soep voor je neer en gaat tegenover je zitten."),
+  m("rosa","Je kijkt als iemand die net heeft uitgerekend dat hij is afgezet. Eet.")],
+[ im("onbekend","tassen","Twee sporttassen. Dezelfde als die van jou."),
+  m("onbekend","Ik weet waar jouw andere twee miljoen zijn.")]
+]},
+
+/* ============ 5 ============ */
+{t:"De prijs van toegang",beats:[
+[ m("onbekend","Niet schrikken. Je kent me al."),
+  m("alex","Dit is mijn andere telefoon. Ik heb er meer dan goed voor me is."),
+  c("alex5a",[["Het kaartje, {d.kringKort}, {plek}… was dat allemaal gepland?",null,[m("alex","Niet allemaal. Het plezier was echt. De timing was gepland.")]],
+              ["Hoe lang ken jij Tess al?",null,[m("alex","Langer dan jij. Zij regelde jullie ploeg, ik de rest.")]]]),
+  m("alex","Loop gerust door. Dit vertel ik liever aan iemand in beweging.")],
+[ m("alex","Victor Veldman en ik zijn samen begonnen. Eén kantoor, twee bureaus. Toen het geld kwam, heeft hij mij eruit gewerkt. Netjes, met advocaten."),
+  m("alex","Die drie miljoen in zijn privékluis stonden in geen enkel boek. Ik heb teruggepakt wat van mij was. Jullie deden de deur open."),
+  n("Het klinkt redelijk. Dat is het lastige aan Alex: alles klinkt redelijk.")],
+[ m("alex","Het mooie leven was ook een manier om te zien wat jij wilt. En hoe ver je ervoor gaat. Dat zeg ik er eerlijk bij."),
+  m("alex","Tess wist wie ik was. Ze wist niet dat ik jou apart zou opzoeken. Dat hoeft ze ook niet te weten.")],
+[ m("alex","Mijn voorstel. Jouw tas en mijn twee: één pot. Drie miljoen, min wat er al uit is. Dan is {plek} geen droom meer, maar een afspraak bij de notaris."),
+  m("alex","Eén voorwaarde. Ik beslis wie er meedeelt. Tess en Mo hebben hun werk gedaan. Laat ze achter."),
+  c("alex5",[["Onderhandelen. Ik wil het op papier zien",{alex5:"onderhandel"},[m("alex","Op papier. Je wordt met de dag duurder. Hier."),
+                im("alex","doc","Dit bericht verdwijnt na tien seconden.",{doc:{t:"VERDELING · CONCEPT",rows:[["Pot","€ 3.000.000 min uitgaven"],["A.","beslist wie meedeelt",1],["Partner","50%, na goedkeuring A.",1],["T. en M.","—"]]}}),
+                n("Je maakt een foto van het scherm voordat het bericht weg is.")],{info:"papier",t:{alex:1}}],
+             ["Tess en Mo horen dit. Nu",{alex5:"inlichten"},[m("alex","Dat is je goed recht. Slim is het niet, maar het is je recht."),s("Groep · Na de klus"),
+                m("mo","Wacht. Die charmante van {d.kringKort} ZIT ERACHTER?"),m("tess","Alex heeft jou apart benaderd. Achter mijn rug. Oké. Oké."),
+                m("mo","Ik heb even gezocht. Veldman Vastgoed is opgericht door twee mensen: V. Veldman en A. Maas. Maas is er vier jaar geleden uit gegaan.")],{info:"register",t:{mo:2,tess:1,alex:-1}}],
+             ["Ik maak eerst mijn eigen plan",{alex5:"eigen"},[m("alex","Neem je tijd. Niet te veel. Mijn geduld is echt, het is alleen niet oneindig.")]]])],
+[ n("Rosa staat achter de bar van het buurthuis glazen te drogen. Ze ziet je binnenkomen: rechter dan vorige week, met een telefoon die niet stil wil zijn."),
+  m("rosa","Eerst wilde je een beter leven. Nu klinkt het alsof je er ook een directie bij krijgt."),
+  c("rosa5",[["Het wordt groter dan ik dacht",null,[m("rosa","Dat worden die dingen altijd. Groot is niet erg. Je moet alleen weten wie er nog aan tafel zit als het groot is.")]],
+             ["En jij? Wat zou jij willen?",{rosaP:"weet"},[m("rosa","Ik? Het pand hiernaast staat leeg. Zes kamers. Ik zou er een pension van maken, met een ontbijt dat klopt."),m("rosa","Dat is geen hint. Ik zeg wat ik wil. Dat is iets anders.")],{t:{rosa:1}}]])],
+[ n("Je loopt een omweg langs {d.groot}. Van buiten is het nog van iemand anders. Toch kijk je of alles er nog precies zo bij ligt.")],
+[ s("Onbekend nummer"),
+  m("vermeer","Goedenavond. Daan Vermeer, recherche Westerdam. Dit is geen verhoor. Ik typ zelf."),
+  m("vermeer","Ik vermoed dat u inmiddels ontdekt hebt dat uw aandeel kleiner was dan dat van sommige anderen."),
+  c("verm",[["Niet reageren",{verm:"stil"},[n("Je legt de telefoon met het scherm naar beneden. Hij trilt niet opnieuw. Dat is bijna erger.")]],
+            ["Wie zijn ‘sommige anderen’?",{verm:"vraag"},[m("vermeer","Een goede vraag. U mag hem ook aan mij stellen, wanneer u wilt."),m("vermeer","Mijn nummer heeft u nu.")]]])]
+]},
+
+/* ============ 6 ============ */
+{t:"Wie krijgt wat?",beats:[
+[ n("Je legt alles wat je weet naast elkaar op het smalle bed."),
+  n("Het kaartje. De lange haal aan de W is dezelfde haal waar Tess het over had.","kaartje=ja&tess4=uitleg"),
+  n("Het kaartje, met dat schuine handschrift.","kaartje=ja&tess4!=uitleg"),
+  n("De foto van het concept: Alex beslist wie meedeelt. Jouw vijftig procent geldt pas ‘na goedkeuring’.","alex5=onderhandel"),
+  n("De naam uit het register: A. Maas, medeoprichter van Veldman Vastgoed.","alex5=inlichten"),
+  n("Tess heeft gezwegen over de tweede ploeg. Alex heeft gezwegen over bijna alles. En Mo?")],
+[ s("Privé · Mo"),
+  m("mo","Ik zeg dit één keer en dan nooit meer: ik wist van niks. Ik dacht dat één miljoen het hele verhaal was. Ik vond één miljoen al een belachelijk verhaal."),
+  n("Eén verhaal kun je vandaag natrekken."),
+  c("check",[["Tess: wat sprak zij precies af?",null,[m("tess","Je wilt het precies weten. Goed. Eén miljoen voor ons, een vast bedrag, wat er ook in de kluis lag. Ik heb ervoor getekend, bij A."),m("tess","En ja. Ik had moeten onderhandelen. Dat weet ik sinds dinsdag.")],{info:"tessdeal"}],
+             ["Alex: wat gebeurde er bij Veldman?",null,[m("mo","Ik heb een oud-collega van die twee gebeld. Alex is eruit gezet, dat klopt. Maar met een afkoopsom. Getekend en al."),m("mo","‘Afgepakt’ is dus één manier om het te zeggen.")],{info:"veldman"}]])],
+[ s("Privé · Tess"),
+  m("tess","Ik hoor via Mo dat er een voorstel ligt. Ik hoor tegenwoordig alles via Mo.","tess4=buiten"),
+  m("tess","Als Alex je iets aanbiedt: het klinkt altijd goed.","tess4!=buiten"),
+  m("tess","Vraag wie de schuld krijgt als het misgaat. Dat staat nooit in het voorstel.")],
+[ n("{d.levend}"),
+  im("alex","droom","",{bare:1}),
+  n("De verleiding is geen bedrag meer. Het is een plek met een naam: {plek}."),
+  s("Wat hoort er nog bij?"),
+  c("combi",[["Ook {c.luxe}",{combi:"luxe"},[],null,"droom!=luxe"],["Ook {c.vrij}",{combi:"vrij"},[],null,"droom!=vrij"],
+             ["Ook {c.imp}",{combi:"imp"},[],null,"droom!=imp"],["Ook {c.thuis}",{combi:"thuis"},[],null,"droom!=thuis"],
+             ["Niets. Dit is het",null,[]]])],
+[ n("Dit is het moment waarop je een kant kiest."),
+  c("kant",[["Mijn derde is genoeg",{kant:"genoeg"},[n("Je zegt het hardop, tegen het raam met het boek eronder. Het klinkt beter dan je dacht.")]],
+            ["Met Tess en Mo: alles op één hoop, in drieën",{kant:"team"},[m("mo","In drieën. Van drie miljoen. Ik moet even gaan zitten. Ik zit al.")],{t:{mo:1,tess:1}}],
+            ["Met Alex verder",{kant:"alex"},[m("alex","Ik hoopte dat je dit zou zeggen. Ik had er rekening mee gehouden dat je het niet zou doen.")],{t:{alex:2}}],
+            ["Ik speel voor mezelf",{kant:"solo"},[n("Je vertelt het aan niemand. Dat is het hele idee.")]],
+            ["Vermeer terugbellen",{kant:"vermeer"},[m("vermeer","U belt terug. Dat doen er weinig."),m("vermeer","Ik beloof u niets. Ik luister wel.")]]])],
+[ n("De tas ligt nog onder het bed. Op dit moment is {vrij} zeker van jou. De rest is een kans."),
+  c("zeker",[["De tas blijft hier. Ik zet niets in",{zeker:"veilig"},[m("rosa","Onder mijn bed dus. Stallingskosten reken ik in afwas.")]],
+             ["De helft gaat mee, de helft blijft",{zeker:"deel"},[n("Je verdeelt de stapels over twee tassen. Het voelt als pakken voor een reis waarvan je de bestemming niet kent.")]],
+             ["Alles gaat mee. Wie meer wil, moet durven",{zeker:"alles"},[n("Je ritst de tas dicht. Hij is niet lichter geworden van het uitgeven.")]]])],
+[ im("alex","kaart","Dezelfde uitnodiging gaat naar Tess. En naar Mo.",{kaart:"Veerpaviljoen, Oostkade. Morgen kennismaken. Overmorgen ronden we af. — A.",bare:1}),
+  s("Groep · Na de klus"),
+  m("mo","Er is vast een gezelligere locatie voor een gesprek over drie miljoen. Maar die staat blijkbaar niet in onze prijsklasse.")]
+]},
+
+/* ============ 7 ============ */
+{t:"Het veerpaviljoen",beats:[
+[ n("Het oude veerpaviljoen is opgeknapt tot een plek waar je alleen op uitnodiging komt. Binnen staan glazen klaar. Buiten ligt Westerdam in het avondlicht. Voor het eerst zie je de stad vanaf het water."),
+  im("alex","scene","",{name:"paviljoen",opt:1,bare:1}),
+  m("alex","Welkom. Vanavond alleen kijken en kennismaken. Morgen breng ik de cijfers mee. In tassen.")],
+[ n("Alex praat met Tess bij het raam. Je hebt een paar minuten voor jezelf."),
+  c("kijk7",[["Bekijk de map die op de bar ligt",{map:"ja"},[n("Drie dunne dossiers, elk met een naam. In het jouwe staat ‘partner’. In dat van Tess staat ‘aansprakelijk’. In dat van Mo staat een bedrag, lager dan een derde.")],{info:"map"}],
+             ["Loop het terras op en geniet van het uitzicht",{map:"nee"},[n("De rivier, de lichten, een glas dat vanzelf vol raakt. Even is het gewoon een mooie avond. Dat mag ook.")]]])],
+[ m("mo","Tess staat bij het raam met Alex. Ze lacht niet. Volgens mij is dat een goed teken.","kant=team"),
+  m("mo","Jij kijkt als iemand die al besloten heeft. Zeg het maar als ik moet meelopen naar de deur.","kant=genoeg"),
+  m("alex","Blijf vanavond bij mij in de buurt. Dan hoef je niemand iets uit te leggen.","kant=alex"),
+  n("Je praat met iedereen en zegt tegen niemand hetzelfde. Het gaat je makkelijker af dan je had verwacht.","kant=solo"),
+  m("vermeer","Ik zit in de grijze auto bij de veerstoep. U hoeft niets te doen. Let alleen goed op wie wat zegt.","kant=vermeer")],
+[ n("Tegen tienen heeft Alex iedereen apart gesproken. Op de steiger leg je de verhalen naast elkaar."),
+  m("tess","Tegen mij zei Alex dat jij en Mo morgen tekenen voor een kleiner deel. En dat ik ‘de organisatie op me neem’. Weet jij wat dat betekent?"),
+  m("mo","Tegen mij zei Alex dat ik tweehonderd krijg. ‘Marktconform voor uitvoerend werk.’ Ik heb nog nooit zo beleefd een klap gekregen."),
+  n("Het klopt met de map op de bar. Partner, aansprakelijk, en een bedrag.","map=ja"),
+  n("Voor ieder van jullie heeft Alex een ander verhaal klaarliggen.")],
+[   m("vermeer","U begrijpt inmiddels wie ik zoek. Ik onderzoek A. Maas al twee jaar."),
+  im("vermeer","doc","Dit krijgt u één keer te zien.",{doc:{t:"DOSSIER MAAS · UITTREKSEL",rows:[["Opdrachtgever","A. Maas"],["Organisatie","T."],["Op camerabeeld","{naam}",1],["Bron","verklaring A. Maas, concept",1]]}}),
+  n("Een conceptverklaring. Alex heeft al opgeschreven hoe jij in het verhaal past, voor het geval het misgaat.")],
+[ n("Je telt wat je hebt."),
+  n("Genoeg om iemand tegen te spreken die goed kan praten.","weet=veel"),
+  n("Het is niet veel. Wie nu hoog inzet, gokt.","weet=weinig"),
+  n("Mo staat naast je. Dat scheelt.","mo=sterk"),
+  n("Mo staat een paar meter verder en kijkt naar het water.","mo=koud"),
+  s("De beslissing"),
+  c("eind",[["Mijn derde. Morgen kom ik niet",{eind:"genoeg"},[n("Je zet je glas neer. Het is nog halfvol. Dat is toepasselijk.")]],
+            ["Alles op tafel, in drieën, waar iedereen bij is",{eind:"team"},[n("Morgen zeg je hardop wat Alex tegen ieder van jullie heeft gezegd.")]],
+            ["Met Alex, op mijn voorwaarden",{eind:"alex"},[n("Morgen ga je aan Alex' kant van de tafel zitten.")]],
+            ["Ik speel het alleen",{eind:"solo"},[n("Morgen sta je het dichtst bij de tassen.")]],
+            ["Ik geef Vermeer wat hij nodig heeft",{eind:"vermeer"},[n("Morgen ga je zitten, kijken en onthouden.")]]])],
+[ n("Buiten klotst het water tegen de steiger. Je telefoon licht op."),
+  m("mo","Dit is het moment. Wat doen we?","eind=genoeg|team"),
+  m("alex","Dit is het moment. Wat doen we?","eind=alex"),
+  m("tess","Dit is het moment. Wat doen we?","eind=solo"),
+  m("vermeer","Dit is het moment. Wat doen we?","eind=vermeer")]
+]},
+
+/* ============ 8 ============ */
+{t:"Van jou",beats:[
+[ x({fin:1}),
+  n("Je belt Alex af. Zonder smoes.","uit=genoeg"),
+  m("alex","Je zegt af. Voor drie miljoen. Je bent de eerste.","uit=genoeg"),
+  m("alex","Je derde is je derde. Ik hou je niet tegen.","uit=genoeg"),
+  n("De tweede avond. Het paviljoen is leger en lichter dan gisteren. Op de lange tafel staan twee sporttassen. Dezelfde als die van jou.","uit!=genoeg"),
+  im("alex","scene","",{name:"tafel",opt:1,bare:1,when:"uit!=genoeg"}),
+  m("alex","Twee miljoen. Zoals beloofd. Dan nu de nieuwe verdeling.","uit!=genoeg")],
+[ n("Je rekent af met Tess en Mo, aan de bar van het buurthuis. Mo telt twee keer. Tess telt niet.","uit=genoeg"),
+  s("Uitbetaald: Tess en Mo hebben elk hun € 333.000","uit=genoeg"),
+  m("tess","Je stapt uit op het moment dat het interessant wordt. Ik weet niet of dat laf is of het slimste wat ik ooit heb gezien.","uit=genoeg"),
+  n("Je legt de afspraken naast elkaar, hardop, waar iedereen bij is. Wat Alex tegen Tess zei. Wat Alex tegen Mo zei. Wat er in jouw voorstel stond.","uit=samen"),
+  m("alex","Dat zijn zinnen die uit hun verband zijn gehaald.","uit=samen"),
+  m("mo","Het zijn drie verbanden, Alex. Dat is het punt.","uit=samen"),
+  n("Je gaat naast Alex zitten. Tess ziet het. Mo ziet het ook, en kijkt daarna naar de tafel.","eind=alex"),
+  n("Je hebt drie mensen drie dingen beloofd. Je staat het dichtst bij de tassen. Dat is geen toeval.","eind=solo"),
+  n("Je zit op je plek en doet wat Vermeer vroeg: goed opletten wie wat zegt. Hij staat buiten. Jij onthoudt.","uit=deal")],
+[ m("mo","Ik ben ook niet gegaan. Tess wel. Ze zegt dat ze op tijd weg was. Ze zegt wel meer.","uit=genoeg"),
+  n("Voor het eerst moet Alex antwoorden waar de anderen bij zijn.","uit=samen|deal"),
+  m("tess","Ik zeg het zelf, voordat iemand anders het doet. Ik wist van de drie miljoen. Ik heb voor ons getekend voor één, en ik heb het verzwegen.","uit=samen"),
+  m("mo","Dank je. Te laat, maar dank je.","uit=samen"),
+  m("mo","En nu de afgesproken verdeling. In drieën. Van alles wat hier op tafel staat.","uit=samen"),
+  n("Je legt de foto van het concept op tafel. ‘Vijftig procent na goedkeuring’ wordt vijftig procent, vooraf, in jouw tas.","uit=alles&eind=alex&alex5=onderhandel"),
+  n("Je noemt wat je weet: de afkoopsom, de map, de drie verhalen. Dan noem je je prijs. Eén tas, vooraf.","uit=alles&eind=alex&alex5!=onderhandel"),
+  m("alex","Je hebt het snel geleerd. Van mij, vrees ik.","uit=alles&eind=alex"),
+  n("Je laat Tess zien wat Alex over haar heeft opgeschreven, en Mo zijn bedrag. De rest doen zij. Drie mensen praten tegelijk. Niemand kijkt naar de tassen.","uit=alles&eind=solo"),
+  m("alex","Teken hier. De rest regel ik.","uit=gok&eind=alex"),
+  n("Je tekent. Het papier heeft meer bladzijden dan het concept.","uit=gok&eind=alex"),
+  n("Je probeert ze tegen elkaar uit te spelen, maar je weet te weinig. Alex maakt elke zin van je af. En beter.","uit=gok&eind=solo"),
+  m("alex","Je bent hier alleen gekomen. Dat was dapper. Het was ook je onderhandelingspositie.","uit=gok&eind=solo"),
+  m("alex","Wie heeft jou verteld dat ik drie verhalen had?","uit=deal"),
+  n("Je geeft geen antwoord. Dat is ook een antwoord.","uit=deal")],
+[ s("Nieuws","uit=genoeg"),
+  im("mo","doc","",{bare:1,when:"uit=genoeg",doc:{t:"WESTERDAMS DAGBLAD · 23:10",rows:[["Oostkade","inval in veerpaviljoen",1],["Aangehouden","A. Maas, oud-partner van Veldman"],["In beslag","twee miljoen in sporttassen"],["Veldman","‘dit was privévermogen’"]]}}),
+  n("Je leest het op een bankje, met een zak friet. Dit is de avond waarvoor jij hebt bedankt.","uit=genoeg"),
+  s("Blauw licht op het water","uit=samen|alles|deal"),
+  n("Dan gebeurt alles tegelijk. Een deur, stemmen, blauw licht dat over het plafond schuift. Stoelen vallen om. Iemand roept je naam, of een naam die erop lijkt.","uit=samen|alles|deal"),
+  m("vermeer","Alex Maas. Blijft u vooral zitten.","uit=samen|alles|deal"),
+  n("Alex kijkt op een telefoon, staat op en pakt beide tassen. ‘Verandering van plan.’ Aan de steiger ligt een sloep die je niet eerder had gezien. Een minuut later schuift er blauw licht over het plafond.","uit=gok"),
+  m("vermeer","Recherche Westerdam. Waar is Maas?","uit=gok")],
+[ n("Mo heeft in elke hand een tas. Tess houdt een deur open die je niet eerder had gezien. Als iemand begint te tellen, staan jullie al buiten.","uit=samen&zakken=2"),
+  n("Mo heeft één tas. De andere blijft op tafel staan, naast Alex en een rechercheur die er zijn hand op legt. Tess houdt een deur open. Jullie staan buiten.","uit=samen&zakken=1"),
+  n("De tassen blijven op tafel, onder de hand van een rechercheur. Jullie staan buiten met z'n drieën en met jouw eigen tas. Het is minder dan drie miljoen en meer dan niets.","uit=samen&zakken=0"),
+  s("De buit: {pot} · gedeeld door drie","uit=samen"),
+  n("Je loopt naar buiten met een tas over je schouder, alsof je van de sportschool komt. Achter je praat iedereen door elkaar. Niemand roept jou.","uit=alles"),
+  s("Jij vertrekt met je eigen tas en één van de twee andere","uit=alles"),
+  n("Je staat op de steiger. De sloep is een lichtje op het water. Wat je had vastgelegd, stond op naam van Alex. Dat blijkt nu.","uit=gok&zeker=veilig&res=vast"),
+  n("Je staat op de steiger. De sloep is een lichtje op het water. Je tas ligt nog onder Rosa's bed. Je bent de kans kwijt, en het vertrouwen van iedereen die erbij was.","uit=gok&zeker=veilig&res=plan"),
+  n("Je staat op de steiger. De sloep is een lichtje op het water. De halve tas die je meenam, vaart mee.","uit=gok&zeker=deel"),
+  n("Je staat op de steiger. De sloep is een lichtje op het water. Jouw tas vaart mee. In je zak zit een envelop met een voorschot, en een telefoonnummer dat je al kent.","uit=gok&zeker=alles"),
+  s("Wat je overhoudt: {eigen}","uit=gok"),
+  n("Vermeer loopt met je mee naar buiten. Op de kade blijft hij staan.","uit=deal"),
+  m("vermeer","Veldman trekt zijn aangifte over het eerste miljoen in. Hij wil niet uitleggen waarom er drie in die kluis lagen. Dat is zijn keuze, niet de mijne.","uit=deal"),
+  m("vermeer","Wat u hebt uitgegeven, staat genoteerd. Dit is geen vrijbrief. U mag gaan. Niet te ver.","uit=deal"),
+  s("Tess en Mo krijgen elk hun € 333.000. Jij houdt de rest","uit=deal"),
+  n("Thuis leg je uit wat je hebt gedaan. Mo luistert tot het eind.","uit=deal"),
+  n("Het bedrag dat overblijft, is van jou. Niet van de ploeg, niet van Alex, niet van morgen.","uit=genoeg")],
+[ x({heat:-1},"uit=genoeg|gok"),x({heat:-2},"uit=deal"),
+  n("Alex blijft achter bij Vermeer. Voor het eerst zonder verhaal.","uit=samen|alles|deal"),
+  m("vermeer","U was er vanavond niet. Dat betekent niet dat u er niet bij hoort. Het dossier blijft open.","uit=genoeg"),
+  m("vermeer","U bent sneller dan mijn collega's. Het dossier is geduldiger dan u.","uit=samen|alles"),
+  m("vermeer","Maas is weg. U niet. Bel me als de voorwaarden gaan knellen.","uit=gok"),
+  m("tess","Ik heb mijn deel. En ik heb iets gezegd waar iedereen bij was. Dat tweede was moeilijker. Tot ooit, {naam}.","uit=samen"),
+  m("tess","Je hebt met de politie gepraat. Ik snap waarom. Ik hoef je voorlopig niet te zien.","uit=deal"),
+  m("tess","Je bent weggelopen met een tas die niet van jou alleen was. Ik had het zelf kunnen bedenken. Dat is geen compliment.","uit=alles"),
+  m("mo","Ik dacht dat wij een ploeg waren. Ik zat ernaast. Het ga je goed. Dat meen ik half.","uit=alles"),
+  m("tess","Mo en ik wachten nog steeds op ons deel. Dat blijven we doen.","uit=gok&claim=open"),
+  m("alex","Je houdt iets van mij tegoed. Of ik van jou. Dat zoeken we nog uit.","uit=gok"),
+  m("rosa","Je bed staat er nog. De tas is weg, zie ik. Kom je nog afscheid nemen of moet ik het uit de krant halen?","rosaT=koel"),
+  m("rosa","Kom langs als je gesetteld bent. Ik wil zien waar al die drukte goed voor was.","rosaT=goed")],
+[ x({koop:1}),
+  s("Later"),
+  n("{d.eind}","huis=groot"),
+  n("{d.eindKlein}","huis=klein"),
+  n("{d.eindGeen}","huis=geen"),
+  n("Je bent op de plek uit je droom, maar je naam staat niet op de deur. Die van Alex wel. Je mag blijven zolang je meedoet.","huis=alex"),
+  im("mo","droom","",{bare:1,final:1}),
+  n("En erbij, zoals je had bedacht: {c.eigen}.","huis=groot&combi!="),
+  w("pens=kan",c("pens",[["Stap in bij Rosa's pension: € 60.000, als partner",{rosaP:"mee"},[m("rosa","Partner. Dan wil ik een contract en dan wil ik dat jij de eerste gast bent. In die volgorde."),s("Ingelegd: pension van Rosa · € 60.000")],{pens:PENS}],
+            ["Niet nu. Dit is eerst van mij",null,[m("rosa","Dat mag. Het pand staat er over een jaar ook nog. Waarschijnlijk.")]]])),
+  m("mo","Ik wil even vastleggen dat ik blij voor je ben. En dat mijn tandenborstel hier blijft.","mobij=ja"),
+  n("Je neemt de tijd. Niemand wacht op je.","huis=groot|klein"),
+  n("Het is niet wat je voor je zag. Het is wel van jou: wat je weet, en wat je de volgende keer anders doet.","huis=geen|alex"),
+  s("De volgende ochtend"),
+  n("Je zit aan je eerste ontbijt op je nieuwe plek. Je telefoon licht op.","huis=groot|klein"),
+  n("Je zit aan het ontbijt. Je telefoon licht op.","huis=geen|alex"),
+  im("onbekend","kunst","Een schilderij in een lijst. Op de achtergrond staat iemand die je dacht achter je te hebben gelaten."),
+  m("onbekend","Gefeliciteerd met je nieuwe leven. Zin in een upgrade?")]
+]}
+];
+
+
+/* ---------- toestand ---------- */
+var S=null, busy=false, typingEl=null, lastFrom=null;
+var steps=0,lastStepT=0,grav=9.8,sm=0,above=false,motionSeen=false,lastGps=null,watchId=null,wake=null,audio=null;
+function newRun(o,ep){o.ep=ep;o.max=Math.max(o.max||1,ep);o.reached=0;o.world=null;o.off=0;o.leg=0;o.steps=0;o.gps=0;o.bonus=0;o.beat=0;o.queue=[];o.waiting=null;o.log=[];o.choices={};o.done=false;o.trial=false;o.t0=o.t0||Date.now();return o}
+function snap(o){return JSON.stringify({flags:o.flags,m:o.m,t:o.t,heat:o.heat,info:o.info,fin:o.fin||null})}
+function restore(o,j){j=JSON.parse(j);o.flags=j.flags;o.m=j.m;o.t=j.t;o.heat=j.heat;o.info=j.info;o.fin=j.fin}
+/* Elke wandeling begint met een momentopname, zodat opnieuw beginnen geen geld dubbel boekt. */
+function advance(o){o.snaps=o.snaps||{};o.snaps[o.ep+1]=snap(o);newRun(o,o.ep+1)}
+function replay(o,n){if(o.snaps&&o.snaps[n])restore(o,o.snaps[n]);newRun(o,n)}
+function fresh(){var o={naam:"",mode:"plaats",len:"normaal",route:"vrij",sens:1.15,sound:true,flags:{},max:1,
+  m:{cash:1000000,pT:0,pM:0,spent:0,res:0,items:[]},t:{tess:0,mo:0,rosa:0,alex:0},heat:2,info:[],fin:null,snaps:{}};
+  o.snaps[1]=snap(o);return newRun(o,1)}
+function load(){try{var r=localStorage.getItem(KEY);return r?JSON.parse(r):null}catch(e){return null}}
+function B(){return EP[S.ep-1].beats}
+function flag(k){return CALC[k]?CALC[k]():S.flags&&S.flags[k]!=null?S.flags[k]:DEF[k]}
+function ok(w){return w.split("&").every(function(p){var not=p.indexOf("!=")>0,q=p.split(not?"!=":"="),hit=q[1].split("|").indexOf(String(flag(q[0])))>=0;return not?!hit:hit})}
+function save(){if(wiped||!S)return;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+var wiped=false;
+function wipe(){wiped=true;try{localStorage.removeItem(KEY)}catch(e){}}
+function target(){return S.trial?700:TARGET[S.mode][S.len]}
+function units(){
+  if(S.trial)return S.steps+S.bonus;
+  if(S.mode==="fiets")return S.gps+S.bonus;
+  if(S.mode==="buiten")return Math.max(S.steps,S.gps/0.75)+S.bonus;
+  return S.steps+S.bonus;
+}
+function frac(){
+  if(S.route==="kaart"&&!S.trial)return AT[Math.min(S.reached||0,AT.length-1)];
+  return Math.max(0,Math.min(1,(units()+(S.off||0))/target()));
+}
+function nl(n){return Math.round(n).toLocaleString("nl-NL")}
+function showUnits(){return S.mode==="fiets"&&!S.trial?(units()/1000).toLocaleString("nl-NL",{minimumFractionDigits:2,maximumFractionDigits:2}):nl(units())}
+
+/* ---------- geld, vertrouwen en afloop ---------- */
+function eur(v){return "€ "+Math.round(v).toLocaleString("nl-NL")}
+function claimOf(k){return Math.max(0,DERDE-(k==="tess"?S.m.pT:S.m.pM))}
+function claims(){return S.fin?0:claimOf("tess")+claimOf("mo")}
+function dr(){return DREAM[flag("droom")]}
+function amt(v){return typeof v==="string"?dr()[v.slice(2)]:v}
+function lab(v){return typeof v==="string"&&v.indexOf("d.")===0?dr()[v.slice(2)]:v}
+var CALC={
+  weet:function(){return S.info.length>=3?"veel":"weinig"},
+  mo:function(){return S.t.mo>=3?"sterk":S.t.mo>=0?"ok":"koud"},
+  tess:function(){return S.t.tess>=2?"goed":S.t.tess>=0?"ok":"koud"},
+  rosaT:function(){return S.t.rosa>=1?"goed":"koel"},
+  uit:function(){var e=flag("eind");
+    if(e==="genoeg")return "genoeg";if(e==="team")return "samen";if(e==="vermeer")return "deal";
+    if(e==="solo")return CALC.weet()==="veel"?"alles":"gok";
+    return CALC.weet()==="veel"&&flag("zeker")!=="alles"?"alles":"gok"},
+  zakken:function(){var v=CALC.weet()==="veel";return CALC.mo()==="sterk"&&v?2:(S.t.mo>=1||v)?1:0},
+  claim:function(){return claims()>0||(S.fin&&S.fin.open)?"open":"nee"},
+  huis:function(){return S.fin&&S.fin.huis||""},
+  pens:function(){return S.fin&&S.fin.left>=PENS&&flag("rosaP")==="weet"&&CALC.rosaT()==="goed"?"kan":"nee"},
+  mobij:function(){var u=CALC.uit();return CALC.mo()!=="koud"&&(u==="genoeg"||u==="samen"||u==="deal")?"ja":"nee"}
+};
+var UIT={genoeg:"Genoeg",samen:"Samen rijk",alles:"Alles voor jezelf",gok:"Een dure gok",deal:"Een andere deal"};
+/* Alles komt uit hetzelfde totaal van drie miljoen: jouw tas (één) en de twee van Alex. */
+function finish(){
+  var m=S.m,u=CALC.uit(),f={uit:u,z:0,open:false,huis:"",left:0,lost:0};
+  if(u==="genoeg"||u==="deal"){m.cash-=claimOf("tess")+claimOf("mo");m.pT=m.pM=DERDE;f.own=m.cash}
+  else if(u==="samen"){f.z=CALC.zakken();f.pot=(1+f.z)*1e6;var sh=Math.floor(f.pot/3000)*1000;
+    f.own=f.pot-2*sh-m.spent-m.res;m.pT=m.pM=sh;m.cash=f.own}
+  else if(u==="alles"){f.open=claimOf("tess")+claimOf("mo")>0;f.own=m.cash+1e6;m.cash=f.own}
+  else{f.open=claimOf("tess")+claimOf("mo")>0;var z=flag("zeker");
+    if(z==="veilig"){f.own=m.cash;f.lost=m.res;m.res=0}
+    else if(z==="deel"){f.lost=Math.round(m.cash/2);f.own=m.cash-f.lost}
+    else{f.lost=m.cash-100000+m.res;m.res=0;f.own=100000}
+    m.cash=f.own}
+  f.left=f.own;S.fin=f;
+}
+function koop(){
+  var f=S.fin,m=S.m,b=f.own+m.res;
+  if(f.uit==="gok"&&flag("zeker")==="alles"){f.huis="alex";return}
+  if((f.uit==="samen"||f.uit==="alles")&&b>=GROOT){f.huis="groot";f.left=b-GROOT;m.res=0;m.items.push(flag("plek")+": "+dr().groot)}
+  else if(b>=KLEIN){f.huis="klein";f.left=b-KLEIN;m.res=0;m.items.push(flag("plek")+": "+dr().klein)}
+  else{f.huis="geen";f.left=f.own}
+  m.cash=f.left;
+}
+function apply(fx){
+  if(!fx)return;var m=S.m,k,a;
+  if(fx.spend){a=amt(fx.spend[0]);m.cash-=a;m.spent+=a;m.items.push(lab(fx.spend[1]))}
+  if(fx.pay){if(fx.pay.tess){m.cash-=fx.pay.tess;m.pT+=fx.pay.tess}if(fx.pay.mo){m.cash-=fx.pay.mo;m.pM+=fx.pay.mo}}
+  if(fx.res){m.cash-=fx.res;m.res+=fx.res}
+  if(fx.t)for(k in fx.t)S.t[k]=(S.t[k]||0)+fx.t[k];
+  if(fx.heat)S.heat=Math.max(1,Math.min(5,S.heat+fx.heat));
+  if(fx.info&&S.info.indexOf(fx.info)<0)S.info.push(fx.info);
+  if(fx.fin)finish();
+  if(fx.koop)koop();
+  if(fx.pens&&S.fin){S.fin.left-=fx.pens;m.cash=S.fin.left;m.items.push("Aandeel in het pension van Rosa")}
+  if($("bStand"))$("bStand").textContent=eur(S.fin?S.fin.left:m.cash);
+}
+function woord(v,a){return v>=a[0]?"sterk":v>=a[1]?"goed":v>=0?"neutraal":"koel"}
+function standRows(){
+  var m=S.m,r=[],seen=S.ep>1||S.beat>0;
+  if(S.fin&&S.fin.huis){r.push(["Van jou, in geld",eur(S.fin.left),1])}
+  else if(S.fin){r.push(["Van jou",eur(S.fin.own),1])}
+  else{r.push(["In de tas",eur(m.cash),1]);
+    if(m.pT||m.pM)r.push(["Al uitbetaald","Tess "+eur(m.pT)+" · Mo "+eur(m.pM)]);
+    if(claims())r.push([S.flags.deal?"Tess en Mo rekenen nog op":"Afgesproken met Tess en Mo","Tess "+eur(claimOf("tess"))+" · Mo "+eur(claimOf("mo"))]);
+    r.push(["Zeker van jou",eur(m.cash-claims())])}
+  if(S.ep>=5||(S.ep===4&&S.beat>=7))if(!S.fin)r.push(["Bij Alex","€ 2.000.000 in twee tassen"]);
+  if(m.spent)r.push(["Uitgegeven",eur(m.spent)]);
+  if(m.res)r.push(["Vastgelegd",flag("plek")+" · "+eur(m.res)]);
+  if(S.fin&&S.fin.lost)r.push(["Kwijtgeraakt",eur(S.fin.lost)]);
+  if(m.items.length)r.push(["Gekocht en beleefd",m.items.join(" · ")]);
+  if(seen){r.push(["Vertrouwen","Tess "+woord(S.t.tess,[3,2])+" · Mo "+woord(S.t.mo,[3,1])+" · Rosa "+woord(S.t.rosa,[3,1])+(S.ep>=3?" · Alex "+woord(S.t.alex,[3,1]):"")]);
+    r.push(["Politiedruk (in het verhaal)","●●●●●".slice(0,S.heat)+"○○○○○".slice(0,5-S.heat)]);
+    r.push(["Aanwijzingen",String(S.info.length)])}
+  return r;
+}
+function stand(box){
+  box.textContent="";
+  var h=el("h3",null,S.flags.droom?(S.flags.plek||dr().naam):"De tas");box.appendChild(h);
+  standRows().forEach(function(r){var d=el("div","st"+(r[2]?" top":""));d.appendChild(el("span",null,r[0]));d.appendChild(el("b",null,r[1]));box.appendChild(d)});
+}
+
+/* ---------- droombeeld: wordt elke wandeling scherper. Artwork optioneel, zie ../debuit/ARTWORK.md ---------- */
+var base={},lastBlock=-1;
+function rng(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function paintBase(k){
+  var c=document.createElement("canvas");c.width=300;c.height=375;var x=c.getContext("2d"),r=rng(k.length*13+3),i,j,g;
+  function sky(a,b,d){g=x.createLinearGradient(0,0,0,260);g.addColorStop(0,a);g.addColorStop(.7,b);g.addColorStop(1,d);x.fillStyle=g;x.fillRect(0,0,300,375)}
+  function city(y,col,win){var px=-4;while(px<300){var w=14+r()*24,h=20+r()*70;x.fillStyle=col;x.fillRect(px,y-h,w,h+40);
+    for(i=px+3;i<px+w-3;i+=6)for(j=y-h+5;j<y+30;j+=8)if(r()<.45){x.fillStyle=win;x.globalAlpha=.5+r()*.5;x.fillRect(i,j,3,4);x.globalAlpha=1}px+=w+1}}
+  if(k==="luxe"){sky("#141a3a","#5b3b6e","#f0a060");city(250,"#1a1838","#ffd98a");
+    x.fillStyle="#2a2440";x.fillRect(0,270,300,105);x.fillStyle="#e9d9b8";x.fillRect(0,266,300,5);
+    x.strokeStyle="rgba(255,255,255,.35)";x.lineWidth=2;for(i=10;i<300;i+=28){x.beginPath();x.moveTo(i,210);x.lineTo(i,268);x.stroke()}x.beginPath();x.moveTo(0,210);x.lineTo(300,210);x.stroke();
+    x.fillStyle="#d8c9a8";x.fillRect(40,300,90,10);x.fillRect(48,310,6,40);x.fillRect(116,310,6,40);x.fillStyle="#8fe0b0";x.fillRect(190,290,60,34);x.fillStyle="#f6e7c0";x.beginPath();x.arc(85,292,5,0,7);x.fill()}
+  else if(k==="vrij"){sky("#1c3a5e","#e88f6a","#ffd9a0");x.fillStyle="#ffe9b8";x.beginPath();x.arc(210,220,26,0,7);x.fill();
+    g=x.createLinearGradient(0,240,0,375);g.addColorStop(0,"#2a6f86");g.addColorStop(1,"#0f3346");x.fillStyle=g;x.fillRect(0,240,300,135);
+    x.strokeStyle="rgba(255,235,190,.5)";for(i=0;i<40;i++){x.beginPath();var wx=r()*300,wy=250+r()*120;x.moveTo(wx,wy);x.lineTo(wx+10+r()*18,wy);x.stroke()}
+    x.fillStyle="#f4efe3";x.beginPath();x.moveTo(70,275);x.lineTo(220,275);x.lineTo(200,300);x.lineTo(88,300);x.closePath();x.fill();
+    x.strokeStyle="#3a2a20";x.lineWidth=3;x.beginPath();x.moveTo(120,275);x.lineTo(120,120);x.moveTo(170,275);x.lineTo(170,150);x.stroke();
+    x.fillStyle="#fff7e6";x.beginPath();x.moveTo(123,128);x.lineTo(123,262);x.lineTo(165,262);x.closePath();x.fill();x.beginPath();x.moveTo(173,158);x.lineTo(173,262);x.lineTo(205,262);x.closePath();x.fill();x.beginPath();x.moveTo(117,140);x.lineTo(117,262);x.lineTo(78,262);x.closePath();x.fill()}
+  else if(k==="imp"){sky("#16132a","#3c2a55","#a8563f");city(240,"#1b1830","#ffcf7a");x.fillStyle="#15121f";x.fillRect(0,300,300,75);
+    x.fillStyle="#d9cdb4";x.fillRect(60,120,180,190);x.fillStyle="#c2b497";x.beginPath();x.moveTo(50,122);x.lineTo(150,80);x.lineTo(250,122);x.closePath();x.fill();
+    x.fillStyle="#efe5cf";for(i=0;i<5;i++)x.fillRect(74+i*36,140,12,150);
+    x.fillStyle="#ffd98a";x.fillRect(128,230,44,80);for(i=0;i<4;i++)x.fillRect(90+i*36+ (i>1?36:0)-18,170,14,30);
+    x.fillStyle="#8fe0b0";x.fillRect(110,100,80,12);x.fillStyle="rgba(255,217,138,.25)";x.beginPath();x.moveTo(128,310);x.lineTo(172,310);x.lineTo(210,375);x.lineTo(90,375);x.closePath();x.fill()}
+  else{sky("#25456b","#f0b27a","#ffe1b0");x.fillStyle="#3d6b4a";x.fillRect(0,250,300,125);
+    g=x.createLinearGradient(0,320,0,375);g.addColorStop(0,"#4c8ea0");g.addColorStop(1,"#245869");x.fillStyle=g;x.fillRect(0,330,300,45);
+    x.fillStyle="#2f5a3c";for(i=0;i<3;i++){x.beginPath();x.arc(30+i*18,230-i*6,34,0,7);x.fill()}x.fillStyle="#3a2a20";x.fillRect(44,240,8,40);
+    x.fillStyle="#efe3cc";x.fillRect(110,170,150,100);x.fillStyle="#8a4a3a";x.beginPath();x.moveTo(98,172);x.lineTo(185,112);x.lineTo(272,172);x.closePath();x.fill();
+    x.fillStyle="#ffd98a";x.fillRect(125,190,30,34);x.fillRect(215,190,30,34);x.fillRect(170,214,30,56);x.fillStyle="#6b4a2a";x.fillRect(232,118,12,30);
+    x.fillStyle="#d9cdb4";x.fillRect(150,270,70,60)}
+  return c;
+}
+var ART="../debuit/img/",HAVE={};
+["cover","droom-luxe","droom-vrij","droom-imp","droom-thuis","tess","mo","rosa","alex","vermeer","foto","tassen","kunst","kamer","paviljoen","tafel",
+ "eerste-luxe","eerste-vrij","eerste-imp","eerste-thuis","kring-luxe","kring-vrij","kring-imp","kring-thuis","groot-luxe","groot-vrij","groot-imp","groot-thuis"].forEach(function(nm){
+  var i=new Image();i.onload=function(){HAVE[nm]=i;onArt(nm)};i.src=ART+nm+".webp"});
+function onArt(nm){
+  if(nm.indexOf("droom-")===0){delete base[nm.slice(6)];if(S)repaint(true)}
+  if(nm==="cover"){var c=$("startPtg");if(!c)return;var im=el("img");im.src=HAVE.cover.src;im.alt="De Buit";im.id="cover";c.parentNode.replaceChild(im,c)}
+}
+function season(){return S?((S.ep-1)+(S.done?1:frac()))/EP.length:0}
+function block(){return Math.max(1,Math.round(34*Math.pow(1-season(),1.4)))}
+function tasImg(x){x.fillStyle="#1b211c";x.fillRect(0,0,300,375);x.fillStyle="#2f3a33";x.beginPath();x.moveTo(40,170);x.quadraticCurveTo(150,120,260,170);x.lineTo(270,290);x.quadraticCurveTo(150,320,30,290);x.closePath();x.fill();
+  x.strokeStyle="#4a5a50";x.lineWidth=10;x.beginPath();x.moveTo(95,160);x.quadraticCurveTo(150,60,205,160);x.stroke();x.strokeStyle="#8fe0b0";x.lineWidth=3;x.beginPath();x.moveTo(60,200);x.lineTo(240,200);x.stroke();
+  x.fillStyle="#8fe0b0";x.font="700 70px Georgia,serif";x.textAlign="center";x.fillText("€",150,275)}
+function paint(cv){
+  if(!cv.getContext)return;
+  var k=S&&S.flags&&S.flags.droom,x=cv.getContext("2d");
+  if(!k){if(cv.width!==300){cv.width=300;cv.height=375}tasImg(x);return}
+  var big=HAVE["droom-"+k],b=block();
+  if(b<=1&&big){cv.width=900;cv.height=1125;x=cv.getContext("2d");x.drawImage(big,0,0,900,1125);return}
+  if(!base[k]){if(big){base[k]=document.createElement("canvas");base[k].width=300;base[k].height=375;base[k].getContext("2d").drawImage(big,0,0,300,375)}else base[k]=paintBase(k)}
+  if(cv.width!==300){cv.width=300;cv.height=375;x=cv.getContext("2d")}
+  var w=Math.max(4,Math.round(300/b)),h=Math.max(5,Math.round(375/b)),t=document.createElement("canvas");t.width=w;t.height=h;t.getContext("2d").drawImage(base[k],0,0,w,h);
+  x.imageSmoothingEnabled=false;x.clearRect(0,0,300,375);x.drawImage(t,0,0,w,h,0,0,300,375);
+}
+function repaint(force){var b=block()+(S&&S.flags&&S.flags.droom?S.flags.droom:"");if(!force&&b===lastBlock)return;lastBlock=b;
+  var a=document.querySelectorAll("canvas[data-ptg], #thumb canvas, #viewer canvas, #startPtg");for(var i=0;i<a.length;i++)paint(a[i])}
+
+/* ---------- chat ---------- */
+var chat=$("chat");
+function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
+function token(k){
+  if(k==="naam")return S.naam||"jij";
+  if(k==="plek")return flag("plek");
+  if(k==="droom")return flag("droom");
+  if(k==="tas")return eur(S.m.cash);
+  if(k==="vrij")return eur(S.m.cash-claims());
+  if(k==="eigen")return eur(S.fin?S.fin.own:S.m.cash-claims());
+  if(k==="over")return eur(S.fin?S.fin.left:0);
+  if(k==="pot")return eur(S.fin&&S.fin.pot||1e6);
+  if(k.indexOf("d.")===0){var v=dr()[k.slice(2)];return typeof v==="number"?eur(v):v}
+  if(k.indexOf("c.")===0)return COMBI[k==="c.eigen"?flag("combi"):k.slice(2)]||"";
+  return "{"+k+"}";
+}
+function fill(t){return String(t).replace(/\{([a-zA-Z.]+)\}/g,function(a,k){return token(k)})}
+function art(nm,alt){var i=el("img");i.src=HAVE[nm].src;i.alt=alt||"";return i}
+function fotoSvg(){return '<svg viewBox="0 0 280 190" role="img" aria-label="Beeld van een beveiligingscamera: iemand in een gang"><rect width="280" height="190" fill="#17201b"/><path d="M0 190 L90 60 H190 L280 190Z" fill="#222d27"/><rect x="118" y="30" width="44" height="34" fill="#0e1411"/><circle cx="140" cy="92" r="14" fill="#c9d6cd"/><path d="M112 190 Q112 112 140 110 Q168 112 168 190Z" fill="#9fb0a5"/><path d="M166 150 h34 v34 h-34z" fill="#3b4a41"/><rect x="8" y="8" width="264" height="174" fill="none" stroke="#8fe0b0" stroke-width="1" stroke-dasharray="6 6"/><text x="16" y="26" fill="#8fe0b0" font-family="monospace" font-size="11">CAM 02 · 23:41:07</text><circle cx="262" cy="22" r="4" fill="#e0564f"/></svg>'}
+function tassenSvg(){function b(x){return '<path d="M'+x+' 96 q50 -22 100 0 l6 62 q-56 14 -112 0z" fill="#2f3a33"/><path d="M'+(x+26)+' 92 q24 -44 48 0" fill="none" stroke="#4a5a50" stroke-width="6"/><path d="M'+(x+10)+' 112 h80" stroke="#8fe0b0" stroke-width="2"/>'}
+  return '<svg viewBox="0 0 280 190" role="img" aria-label="Twee sporttassen op een tafel"><rect width="280" height="190" fill="#121512"/><rect y="150" width="280" height="40" fill="#1f2721"/>'+b(22)+b(158)+'</svg>'}
+function kunstSvg(){return '<svg viewBox="0 0 280 190" role="img" aria-label="Een schilderij in een lijst, met iemand op de achtergrond"><rect width="280" height="190" fill="#1b211c"/><rect x="70" y="24" width="140" height="120" fill="#d8b26a"/><rect x="80" y="34" width="120" height="100" fill="#1c2a4a"/><circle cx="120" cy="70" r="16" fill="#ffd36b"/><path d="M80 134 L125 92 L160 118 L200 84 V134Z" fill="#b85c48"/><circle cx="238" cy="96" r="10" fill="#0c0f0d"/><path d="M222 190 q0 -78 16 -80 q16 2 16 80z" fill="#0c0f0d"/></svg>'}
+function docImg(d){var e=el("div","doc");e.appendChild(el("h4",null,d.t));
+  d.rows.forEach(function(r){var row=el("div","r"+(r[2]?" hit":""));row.appendChild(el("span",null,fill(r[0])));row.appendChild(el("span",null,fill(r[1])));e.appendChild(row)});return e}
+function endCard(){
+  var last=S.ep>=EP.length,e=el("div","end"),b,p;
+  e.appendChild(el("h3",null,last?(S.fin.uit==="samen"&&!S.fin.z?"Samen verder":UIT[S.fin.uit]):"Wandeling "+S.ep+" is klaar"));
+  p=el("p");p.appendChild(el("b",null,showUnits()+(S.mode==="fiets"&&!S.trial?" km":" stappen")));p.appendChild(document.createTextNode(" in jouw tempo."));e.appendChild(p);
+  var box=el("div","stand");stand(box);e.appendChild(box);
+  if(last){
+    var bij=[];if(CALC.mobij()==="ja")bij.push("Mo");if(CALC.uit()==="samen"&&CALC.tess()!=="koud")bij.push("Tess");if(CALC.rosaT()==="goed")bij.push("Rosa");
+    e.appendChild(el("p",null,"Wie er nog is: "+(bij.length?bij.join(", "):"voorlopig alleen jij")+"."));
+    e.appendChild(el("p",null,"Nog niet af: het onderzoek van Vermeer loopt door"+(CALC.claim()==="open"?", en Tess en Mo wachten op hun deel":"")+"."));
+    e.appendChild(el("p",null,"Andere keuzes geven een andere afloop. Er zijn er vijf."));
+    b=el("button","ghost","Seizoen opnieuw spelen");b.type="button";b.onclick=function(){wipe();location.reload()};e.appendChild(b)}
+  else{e.appendChild(el("p",null,"Volgende: wandeling "+(S.ep+1)+", "+EP[S.ep].t+"."));
+    b=el("button","primary","Naar wandeling "+(S.ep+1));b.type="button";b.onclick=function(){advance(S);save();location.reload()};e.appendChild(b)}
+  return e;
+}
+function render(it){
+  if(it.sys){chat.appendChild(el("div","sys",fill(it.sys)));lastFrom=null;return}
+  if(it.n){chat.appendChild(el("div","nar",fill(it.n)));lastFrom=null;return}
+  if(it.end){chat.appendChild(endCard());lastFrom=null;return}
+  if(it.me){chat.appendChild(el("div","b me",it.me));lastFrom="me";return}
+  if(!it.bare&&it.from!==lastFrom){var p2=PEOPLE[it.from],w=el("div","who");if(HAVE[it.from])w.appendChild(art(it.from));w.appendChild(document.createTextNode(p2[0]));w.style.color="var("+p2[1]+")";chat.appendChild(w);lastFrom=it.from}
+  if(it.bare)lastFrom=null;
+  if(it.img){
+    var box=el("div","b img"+(it.bare?" wide":"")),cap=fill(it.text||""),nm=it.name?fill(it.name):"";
+    if(it.img==="scene")box.appendChild(art(nm,cap));
+    else if(it.img==="droom"){var cv=el("canvas");cv.width=300;cv.height=375;cv.setAttribute("data-ptg","");cv.setAttribute("aria-label","Beeld van je droom: "+dr().naam);paint(cv);box.appendChild(cv)}
+    else if(it.img==="doc")box.appendChild(docImg(it.doc));
+    else if(it.img==="kaart")box.appendChild(el("div","kaartje",it.kaart));
+    else if(HAVE[it.img])box.appendChild(art(it.img,cap));
+    else box.innerHTML=it.img==="foto"?fotoSvg():it.img==="tassen"?tassenSvg():kunstSvg();
+    if(cap)box.appendChild(el("div","cap",cap));chat.appendChild(box);return}
+  chat.appendChild(el("div","b",fill(it.text)));
+}
+function scroll(){chat.scrollTop=chat.scrollHeight}
+function add(it){S.log.push(it);render(it);scroll()}
+function typing(on,from){
+  if(typingEl){typingEl.remove();typingEl=null}
+  if(on){typingEl=el("div","typing",PEOPLE[from][0]+" typt");for(var i=0;i<3;i++)typingEl.appendChild(el("i"));chat.appendChild(typingEl);scroll()}
+}
+function opts(){return S.waiting.options.filter(function(o){return !o.when||ok(o.when)})}
+function showChoices(){
+  var box=$("choices");box.textContent="";
+  opts().forEach(function(o,i){var b=el("button",null,fill(o.label));b.type="button";b.onclick=function(){pick(i)};box.appendChild(b)});
+  box.hidden=false;scroll();
+}
+function pick(i){
+  var c=S.waiting,o=opts()[i],label=fill(o.label);S.choices[c.id]=i;S.waiting=null;
+  if(o.set){S.flags=S.flags||{};for(var k in o.set)S.flags[k]=o.set[k]}
+  apply(o.fx);$("choices").hidden=true;
+  add({me:label});S.queue=o.reply.concat(S.queue);save();repaint(true);pump();
+}
+function pump(){
+  if(busy||S.waiting||S.done)return;
+  if(!S.queue.length){
+    if(S.beat<B().length){
+      if(frac()>=AT[S.beat]){S.queue=JSON.parse(JSON.stringify(B()[S.beat]));S.beat++;notify();save();repaint(true);pump()}
+    }else{S.done=true;add({end:1});save();release()}
+    return}
+  var it=S.queue[0];
+  if((it.when&&!ok(it.when))||(it.opt&&!HAVE[fill(it.name)])){S.queue.shift();pump();return}
+  if(it.x){S.queue.shift();apply(it.x);save();pump();return}
+  if(it.choice){S.queue.shift();S.waiting=it.choice;save();showChoices();return}
+  busy=true;
+  var len=(it.text||it.n||"").length,talk=it.from&&!it.bare&&!it.sys&&!it.n;
+  var wait=it.sys?350:it.n?Math.min(1500,500+len*5):Math.min(1900,550+len*20);
+  if(talk)typing(true,it.from);
+  setTimeout(function(){typing(false);S.queue.shift();add(it);busy=false;save();pump()},wait);
+}
+
+/* ---------- seintje ---------- */
+function notify(){
+  if(S.beat<=1)return;
+  if(!$("pocket").hidden)$("pNew").hidden=false;
+  try{if(navigator.vibrate)navigator.vibrate([120,80,120])}catch(e){}
+  if(S.sound&&audio){try{
+    [660,880].forEach(function(f,i){var o=audio.createOscillator(),g=audio.createGain(),t=audio.currentTime+i*.16;
+      o.type="sine";o.frequency.value=f;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.18,t+.02);g.gain.exponentialRampToValueAtTime(.001,t+.5);
+      o.connect(g);g.connect(audio.destination);o.start(t);o.stop(t+.55)})}catch(e){}}
+}
+
+/* ---------- beweging ---------- */
+function onMotion(e){
+  var a=e.accelerationIncludingGravity;if(!a||a.x==null)return;motionSeen=true;
+  var mag=Math.sqrt(a.x*a.x+a.y*a.y+a.z*a.z);grav=grav*.92+mag*.08;sm=sm*.6+(mag-grav)*.4;
+  var t=Date.now();
+  if(!above&&sm>S.sens&&t-lastStepT>280){above=true;lastStepT=t;S.steps++;tick()}
+  else if(above&&sm<S.sens*.3)above=false;
+}
+function hav(a,b){var R=6371000,p=Math.PI/180,dl=(b.la-a.la)*p,dn=(b.lo-a.lo)*p,
+  h=Math.sin(dl/2)*Math.sin(dl/2)+Math.cos(a.la*p)*Math.cos(b.la*p)*Math.sin(dn/2)*Math.sin(dn/2);return 2*R*Math.asin(Math.sqrt(h))}
+/* ---------- plattegrond: zes punten in een rondje vanaf je startpunt ---------- */
+var Wk=null,map=null,W=[],P={x:0,y:0},origin=null,gpsEver=false;
+function toVrij(msg){
+  var f=frac();S.route="vrij";S.off=f*target()-units();
+  $("mapWrap").hidden=true;hint(msg);save();labels();tick();
+}
+function kaartStart(){
+  Wk=window.MW&&MW.Walk;
+  if(!Wk){toVrij("De plattegrond kon niet laden. Je gaat verder op eigen route.");return}
+  $("mapWrap").hidden=false;$("mapInfo").textContent="Plattegrond laden…";
+  if(S.world){loadWorld();return}
+  Wk.locate().then(function(pos){
+    var la=pos.coords.latitude,lo=pos.coords.longitude,D=S.mode==="fiets"?target():target()*.75;
+    var r=Math.max(60,Math.min(950,D/(1.3*6.283))),w={slat:la,slon:lo,r:r,pts:null};
+    if(r<=500){w.lat=la;w.lon=lo;w.R=Math.max(300,2*r+120)}
+    else{var a=Math.random()*6.283;w.dir=a;w.R=r+150;w.lat=la-r*Math.sin(a)/110540;w.lon=lo+r*Math.cos(a)/(111320*Math.cos(la*Math.PI/180))}
+    S.world=w;save();loadWorld();
+  },function(){toVrij("Geen gps gevonden. Je gaat verder op eigen route.")});
+}
+function loadWorld(){
+  var w=S.world;
+  Wk.fetchWorld({lat:w.lat,lon:w.lon,R:w.R}).then(function(res){
+    origin=res.origin;W=res.ways||[];
+    var sx=(w.slon-origin.lon)*origin.kx,sy=-(w.slat-origin.lat)*origin.ky;
+    if(!gpsEver){P.x=sx;P.y=sy}
+    if(!w.pts){w.pts=makePts(sx,sy,w);save()}
+    if(res.later)res.later.then(function(ws){if(ws&&ws.length)W=ws}).catch(function(){});
+    initMap();tick();
+  }).catch(function(){toVrij("De plattegrond kon niet laden. Je gaat verder op eigen route.")});
+}
+function makePts(sx,sy,w){
+  var nodes=[],i,k;
+  W.forEach(function(v){if(typeof v.w!=="number"||v.w===9)return;for(var j=0;j<v.p.length;j+=2)nodes.push([v.p[j],v.p[j+1],v.n||""])});
+  var dirs=[];if(w.dir!=null)dirs=[w.dir];else for(i=0;i<8;i++)dirs.push(i*.785+.3);
+  var best=null;
+  dirs.forEach(function(a){
+    var cx=sx+w.r*Math.cos(a),cy=sy+w.r*Math.sin(a),cost=0,pts=[];
+    for(k=1;k<=5;k++){
+      var th=a+Math.PI+k*6.283/6,q={x:cx+w.r*Math.cos(th),y:cy+w.r*Math.sin(th),name:""},bd=180,b=null;
+      for(var j=0;j<nodes.length;j++){var d=Math.hypot(nodes[j][0]-q.x,nodes[j][1]-q.y);if(d<bd){bd=d;b=nodes[j]}}
+      if(b){q.x=b[0];q.y=b[1];q.name=b[2];cost+=bd}else cost+=nodes.length?400:0;
+      q.x=Math.round(q.x);q.y=Math.round(q.y);pts.push(q)}
+    pts.push({x:Math.round(sx),y:Math.round(sy),name:"je startpunt"});
+    if(!best||cost<best.cost)best={cost:cost,pts:pts}});
+  return best.pts;
+}
+function mapItems(){
+  var out=[];if(!S.world||!S.world.pts)return out;
+  S.world.pts.forEach(function(p,i){
+    if(i>S.reached)return;var next=i===S.reached;
+    out.push({x:p.x,y:p.y,tap:false,draw:function(c,X,Y,t){
+      if(!next){c.fillStyle="rgba(143,224,176,.35)";c.beginPath();c.arc(X,Y,5,0,7);c.fill();return}
+      var pulse=10+4*Math.sin(t/400);c.strokeStyle="rgba(143,224,176,.5)";c.lineWidth=2;c.beginPath();c.arc(X,Y,16+pulse,0,7);c.stroke();
+      c.fillStyle="#8fe0b0";c.beginPath();c.arc(X,Y,14,0,7);c.fill();
+      c.fillStyle="#0c1a12";c.font="700 15px system-ui,sans-serif";c.textAlign="center";c.textBaseline="middle";c.fillText(String(i+1),X,Y+1);c.textBaseline="alphabetic"}})});
+  return out;
+}
+function nextPt(){return S.world&&S.world.pts&&S.reached<S.world.pts.length?S.world.pts[S.reached]:null}
+function initMap(){
+  if(map)return;
+  map=Wk.createMap($("map"),{player:function(){return P},ways:function(){return W},R:function(){return S.world.R},items:mapItems,onTap:function(){map.follow()},
+    theme:{bg:"#121512",water:"#0c2230",waterEdge:"#1f4a5e",park:"#14302a",parkEdge:"#1f4a3c",river:"#16384c",major:"#4b6076",minor:"#1d2c3a",road:"#2a3d4f",label:"#7f93a0",waterLabel:"#4f8aa6",ring:"rgba(0,0,0,0)",me:"#6fc3cf",meHalo:"rgba(111,195,207,.14)",meRing:"rgba(111,195,207,.5)",font:"600 12px system-ui,sans-serif"}});
+  requestAnimationFrame(function loop(t){
+    if(!$("mapWrap").hidden&&S.route==="kaart"){
+      var n=nextPt(),sz=map.size();
+      if(map.V.follow){var d=n?Math.hypot(n.x-P.x,n.y-P.y):150;map.V.s=Math.max(.08,Math.min(2.2,Math.min(sz[0],sz[1])/(2.5*Math.max(d,70))))}
+      map.draw(t)}
+    requestAnimationFrame(loop)});
+}
+function mapTick(){
+  if(S.route!=="kaart")return;
+  var n=nextPt(),info=$("mapInfo");
+  if(!S.world||!S.world.pts){return}
+  if(!n){info.textContent="Alle punten gehad";$("bar").style.width="100%";return}
+  var d=Math.hypot(n.x-P.x,n.y-P.y);if(!S.leg||d>S.leg)S.leg=d;
+  var far=d>=1000?(d/1000).toLocaleString("nl-NL",{maximumFractionDigits:1})+" km":Math.round(d/10)*10+" m";
+  info.textContent="Punt "+(S.reached+1)+" van "+S.world.pts.length+(n.name?" · "+n.name:"")+" · "+far;
+  $("bar").style.width=Math.max(0,Math.min(1,1-d/S.leg))*100+"%";
+}
+function onGps(p){
+  var c=p.coords;
+  if(origin&&c.accuracy<=50){gpsEver=true;P.x=(c.longitude-origin.lon)*origin.kx;P.y=-(c.latitude-origin.lat)*origin.ky;
+    var n=S.route==="kaart"?nextPt():null;
+    if(n&&Math.hypot(n.x-P.x,n.y-P.y)<(S.mode==="fiets"?45:30)){S.reached++;S.leg=0;save();tick()}else mapTick()}
+  if(c.accuracy>35)return;var cur={la:c.latitude,lo:c.longitude,t:p.timestamp};
+  if(!lastGps){lastGps=cur;return}
+  var d=hav(lastGps,cur),bike=S.mode==="fiets";if(d<Math.max(bike?8:5,c.accuracy*.5))return;
+  var dt=(cur.t-lastGps.t)/1000;lastGps=cur;if(dt<=0||d/dt>(bike?17:4.5))return;
+  S.gps+=d;tick();
+}
+var saveN=0;
+function tick(){
+  $("count").textContent=showUnits();$("pCount").textContent=showUnits();$("bStand").textContent=eur(S.fin?S.fin.left:S.m.cash);
+  var prev=S.beat?AT[S.beat-1]:0,next=S.beat<AT.length?AT[S.beat]:1,f=frac();
+  $("bar").style.width=(next>prev?Math.max(0,Math.min(1,(f-prev)/(next-prev))):1)*100+"%";
+  mapTick();repaint();if(++saveN%25===0)save();pump();
+}
+function hint(t){$("hint").textContent=t||"";$("hint").hidden=!t}
+function sensors(){
+  if(S.trial){setInterval(function(){if(S&&!S.done&&!busy&&!S.waiting&&!S.queue.length&&$("menu").hidden){S.steps+=10;tick()}},200);return}
+  var needMotion=S.mode!=="fiets",needGps=S.mode!=="plaats";
+  function listen(){window.addEventListener("devicemotion",onMotion);
+    setTimeout(function(){if(!motionSeen&&S.mode==="plaats"&&!S.done)hint("Ik krijg geen signaal van de bewegingssensor. Via Meer kun je handmatig verder.")},4000)}
+  if(needMotion){
+    if(typeof DeviceMotionEvent==="undefined"){if(S.mode==="plaats")hint("Dit apparaat heeft geen bewegingssensor. Via Meer kun je handmatig verder.")}
+    else if(typeof DeviceMotionEvent.requestPermission==="function"){
+      DeviceMotionEvent.requestPermission().then(function(r){if(r==="granted")listen();else if(S.mode==="plaats")hint("Geen toegang tot de bewegingssensor. Sta dit toe in je browser en start opnieuw.")}).catch(function(){if(S.mode==="plaats")hint("De bewegingssensor kon niet worden gestart. Via Meer kun je handmatig verder.")})}
+    else listen();
+  }
+  if(needGps){
+    if(!navigator.geolocation){if(S.mode==="fiets")hint("Dit apparaat heeft geen gps.")}
+    else watchId=navigator.geolocation.watchPosition(onGps,function(){if(S.route==="kaart"){if(!gpsEver&&!S.world)return}else if(S.mode==="fiets")hint("Geen gps. Zet locatie aan voor deze pagina, of ga via Meer handmatig verder.")},{enableHighAccuracy:true,maximumAge:2000,timeout:20000});
+  }
+  lock();
+}
+function lock(){try{if(navigator.wakeLock)navigator.wakeLock.request("screen").then(function(w){wake=w}).catch(function(){})}catch(e){}}
+function release(){try{if(wake)wake.release()}catch(e){}wake=null}
+document.addEventListener("visibilitychange",function(){if(!document.hidden&&S&&!$("app").hidden&&!S.done)lock();if(document.hidden&&S)save()});
+
+/* ---------- tijdelijke poort: zolang De Buit "binnenkort" is, alleen met testcode (dezelfde als Dubbelspel) ---------- */
+var GK="debuit.key",GH="7c751145";
+function gh(t){var h=5381;for(var i=0;i<t.length;i++)h=(Math.imul(h,33)^t.charCodeAt(i))>>>0;return h.toString(16)}
+function gateOpen(){try{return localStorage.getItem(GK)===GH||localStorage.getItem("dubbelspel.key")===GH}catch(e){return false}}
+if(!gateOpen()){$("start").hidden=true;$("gate").hidden=false}
+$("gForm").addEventListener("submit",function(e){e.preventDefault();
+  if(gh($("gCode").value.trim().toLowerCase())===GH){try{localStorage.setItem(GK,GH)}catch(x){}$("gate").hidden=true;$("start").hidden=false;scrollTo(0,0)}
+  else $("gMsg").textContent="Die code klopt niet."});
+
+/* ---------- start ---------- */
+var draft=load()||fresh();
+if(draft.done&&draft.ep<EP.length)advance(draft);
+if(!draft.flags)draft.flags={};if(!draft.route)draft.route="vrij";if(!draft.m){draft=fresh()}
+var resume=!!(draft.log&&draft.log.length);
+function seg(id,get,set){var box=$(id);function mark(){var bs=box.querySelectorAll("button");for(var i=0;i<bs.length;i++)bs[i].setAttribute("aria-pressed",String(bs[i].dataset.v===String(get())))}
+  box.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;set(b.dataset.v);mark()});mark();return mark}
+function lenLabels(){var bike=draft.mode==="fiets";$("l1").textContent=bike?"5 km":"± 15 min";$("l2").textContent=bike?"8 km":"± 22 min";$("l3").textContent=bike?(draft.route==="kaart"?"± 8 km":"11 km"):"± 30 min"}
+var markMode=seg("segMode",function(){return draft.mode},function(v){draft.mode=v;if(v==="plaats")draft.route="vrij";lenLabels();markRoute()});
+var markRoute=seg("segRoute",function(){return draft.route},function(v){draft.route=v;if(v==="kaart"&&draft.mode==="plaats")draft.mode="buiten";lenLabels();markMode()});
+seg("segLen",function(){return draft.len},function(v){draft.len=v});
+lenLabels();$("naam").value=draft.naam||"";
+function startUI(){
+  resume=!!(draft.log&&draft.log.length);
+  $("kick").textContent="Seizoen 1 · wandeling "+draft.ep;
+  $("go").textContent=resume?(draft.done?"Bekijk het einde":"Verder met wandeling "+draft.ep):"Start wandeling "+draft.ep;
+  ["segMode","segRoute","segLen"].forEach(function(id){$(id).parentNode.hidden=resume});
+  $("trial").hidden=resume;
+  var ol=$("eps");ol.textContent="";
+  EP.forEach(function(e,i){var n=i+1,li=el("li"),b=el("button");b.type="button";
+    b.appendChild(el("b",null,String(n)));b.appendChild(el("span",null,e.t));
+    var st=n===draft.ep?(resume&&!draft.done?"bezig":"nu"):n<draft.max||(n===draft.max&&draft.done)?"gespeeld":n<=draft.max?"open":"op slot";
+    b.appendChild(el("small",null,st));
+    if(n===draft.ep)b.setAttribute("aria-current","true");
+    b.disabled=n>draft.max||n===draft.ep||(resume&&!draft.done);
+    b.onclick=function(){replay(draft,n);S=draft;save();if($("startPtg"))paint($("startPtg"));startUI()};
+    li.appendChild(b);ol.appendChild(li)});
+}
+S=draft;startUI();if($("startPtg"))paint($("startPtg"));
+var sure=false;
+$("fresh").onclick=function(){if(!sure){sure=true;$("fresh").textContent="Zeker weten? Tik nog een keer. Je keuzes en voortgang verdwijnen.";return}wipe();location.reload()};
+$("trial").onclick=function(){draft.trial=true;$("go").onclick()};
+$("go").onclick=function(){
+  S=draft;S.naam=$("naam").value.trim();if(S.mode==="plaats")S.route="vrij";
+  try{var AC=window.AudioContext||window.webkitAudioContext;if(AC){audio=new AC();if(audio.resume)audio.resume()}}catch(e){}
+  $("start").hidden=true;$("app").hidden=false;
+  $("epTitle").textContent="Wandeling "+S.ep+" · "+EP[S.ep-1].t;
+  $("unit").textContent=S.trial?"stappen (proefronde)":S.mode==="fiets"?"km gefietst":"stappen";
+  S.log.forEach(render);if(S.waiting)showChoices();scroll();repaint(true);
+  markSens();labels();
+  if(!S.done)sensors();
+  if(S.route==="kaart"&&!S.trial&&!S.done)kaartStart();
+  tick();save();
+};
+
+/* ---------- zakstand, menu, schilderij ---------- */
+var holdT=null;
+$("bPocket").onclick=function(){$("pNew").hidden=true;$("pocket").hidden=false};
+$("pocket").addEventListener("pointerdown",function(){holdT=setTimeout(function(){$("pocket").hidden=true;scroll()},800)});
+["pointerup","pointercancel","pointerleave"].forEach(function(n){$("pocket").addEventListener(n,function(){clearTimeout(holdT)})});
+$("pocket").addEventListener("contextmenu",function(e){e.preventDefault()});
+var markSens=seg("segSens",function(){return S.sens},function(v){S.sens=parseFloat(v);save()});
+function labels(){$("mSound").textContent="Geluid bij een nieuw bericht: "+(S.sound?"aan":"uit");
+  $("mAdd").textContent=S.mode==="fiets"?"Sensor werkt niet? Tel 500 meter erbij":"Sensor werkt niet? Tel 100 stappen erbij";
+  var k=S.route==="kaart"&&!S.trial;$("mAdd").hidden=k;$("mMap").hidden=!k;$("mFree").hidden=!k;$("mSkip").hidden=!k||!nextPt();
+  $("mMap").textContent=$("mapWrap").hidden?"Plattegrond tonen":"Plattegrond verbergen"}
+$("mMap").onclick=function(){$("mapWrap").hidden=!$("mapWrap").hidden;if(map&&!$("mapWrap").hidden)map.resize();labels();$("menu").hidden=true;scroll()};
+$("mSkip").onclick=function(){if(nextPt()){S.reached++;S.leg=0;save();tick()}$("menu").hidden=true};
+$("mFree").onclick=function(){toVrij("");$("menu").hidden=true};
+$("bMenu").onclick=function(){labels();$("menu").hidden=false};
+$("mClose").onclick=function(){$("menu").hidden=true};
+$("menu").addEventListener("click",function(e){if(e.target===$("menu"))$("menu").hidden=true});
+$("mSound").onclick=function(){S.sound=!S.sound;labels();save()};
+$("mAdd").onclick=function(){S.bonus+=S.mode==="fiets"?500:100;hint("");tick();save()};
+$("mStop").onclick=function(){save();location.reload()};
+$("mFresh").onclick=function(){replay(S,S.ep);save();location.reload()};
+function openStand(){paint($("viewer").querySelector("canvas"));stand($("stand"));$("viewer").hidden=false;$("viewer").scrollTop=0}
+$("thumb").onclick=openStand;$("bStand").onclick=openStand;
+$("vClose").onclick=function(){$("viewer").hidden=true};
+})();
+</script>
+</body>
+</html>

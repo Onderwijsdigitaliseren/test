@@ -42,8 +42,8 @@ function feature(g){var x=g[L],has=!!MW.LS.get(resumeKey(g),null),p=MW.profile.g
   return '<a class="feature" href="'+MW.root+esc(x.slug)+'" style="'+(g.feature.acc?'--facc:'+g.feature.acc+';--ftag:'+g.feature.tag+';':'')+'background-image:linear-gradient(180deg,rgba(7,9,13,.05) 0,rgba(7,9,13,.15) 170px,#07090d 325px),url('+MW.root+'assets/feature-'+g.id+'.webp)"><span class="fbadge">'+(g.feature.icon||"🎃")+' '+esc(g.feature[L])+(MW.pro.freeLeft(g.id)?" · "+esc(MW.fill(t.fTag,{d:MW.freeDay(g.id,L)})):"")+'</span><span class="fbody"><h2>'+esc(x.title)+'</h2><span class="tag">'+esc(x.tag)+'</span><span class="desc">'+esc(x.desc)+'</span><span class="meta">'+meta+'</span><span class="btn">'+(has?H.resume:H.play)+' →</span></span></a>'}
 function catalog(){
   var fe=$("#feat");if(!fe){fe=document.createElement("div");fe.id="feat";$("#cats").parentNode.insertBefore(fe,$("#cats"))}
-  fe.innerHTML=C.games.filter(function(g){return g.feature&&g.status!=="soon"}).map(feature).join("");
-  $("#cats").innerHTML=C.cats.map(function(c){var gs=C.games.filter(function(g){return g.cat===c.id&&!g.feature}),soon=gs.every(function(g){return g.status==="soon"});
+  fe.innerHTML=C.games.filter(function(g){return g.feature&&g.status!=="soon"&&g[L]}).map(feature).join("");
+  $("#cats").innerHTML=C.cats.map(function(c){var gs=C.games.filter(function(g){return g.cat===c.id&&!g.feature&&g[L]}),soon=gs.every(function(g){return g.status==="soon"});
     return '<section class="cat'+(soon?' soon':'')+'"><div class="hd"><span class="ico" aria-hidden="true">'+c.icon+'</span><h2>'+esc(c[L].n)+'</h2></div><p class="ct">'+esc(c[L].t)+'</p>'+gs.map(card).join("")+'</section>'}).join("")}
 
 /* ---------- vellen ---------- */
