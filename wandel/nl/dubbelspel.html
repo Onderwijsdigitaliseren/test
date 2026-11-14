@@ -102,7 +102,7 @@ footer{border-top:1px solid var(--line);padding:10px 16px calc(12px + env(safe-a
 #viewer{align-items:center;padding:20px;flex-direction:column;gap:12px}
 #viewer canvas{width:min(100%,340px);height:auto;border-radius:10px;border:1px solid var(--brass);image-rendering:pixelated}
 #viewer p{margin:0;color:var(--dim);font-size:14px;text-align:center;max-width:32ch}
-.sheet{background:var(--bg2);border:1px solid var(--line);border-radius:20px 20px 0 0;width:100%;max-width:560px;padding:18px 16px calc(18px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:14px}
+.sheet{max-height:92%;overflow-y:auto;background:var(--bg2);border:1px solid var(--line);border-radius:20px 20px 0 0;width:100%;max-width:560px;padding:18px 16px calc(18px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:14px}
 .sheet h2{font:italic 600 22px/1 var(--display);margin:0}
 .sheet .ghost{background:var(--bg);text-align:left}
 </style>
@@ -127,7 +127,7 @@ footer{border-top:1px solid var(--line);padding:10px 16px calc(12px + env(safe-a
   <div class="field" id="fRoute"><span>Welke route?</span>
     <div class="seg two" id="segRoute">
       <button type="button" data-v="vrij">Eigen route<small>ga waar je wilt</small></button>
-      <button type="button" data-v="kaart">Plattegrond<small>punten op de kaart</small></button>
+      <button type="button" data-v="kaart">Plattegrond<small>buiten, punten op de kaart</small></button>
     </div></div>
   <div class="field"><span>Hoe lang ongeveer?</span>
     <div class="seg" id="segLen">
@@ -136,7 +136,7 @@ footer{border-top:1px solid var(--line);padding:10px 16px calc(12px + env(safe-a
       <button type="button" data-v="lang">Lang<small id="l3"></small></button>
     </div></div>
   <button class="primary" id="go" type="button">Start aflevering 1</button>
-  <button class="link" id="fresh" type="button" hidden>Opnieuw beginnen</button>
+  <button class="ghost" id="fresh" type="button" hidden>Opnieuw beginnen</button>
   <p class="note">Je scherm blijft aan. Met de zakstand kun je je telefoon wegstoppen zonder dat er iets wordt aangetikt.</p>
 </div>
 
@@ -186,6 +186,7 @@ footer{border-top:1px solid var(--line);padding:10px 16px calc(12px + env(safe-a
     <button class="ghost" id="mSkip" type="button" hidden>Dit punt overslaan</button>
     <button class="ghost" id="mFree" type="button" hidden>Verder op eigen route, zonder plattegrond</button>
     <button class="ghost" id="mStop" type="button">Stoppen voor nu (voortgang blijft bewaard)</button>
+    <button class="ghost" id="mFresh" type="button">Opnieuw beginnen (wist je voortgang)</button>
     <button class="ghost" id="mClose" type="button">Sluiten</button>
   </div>
 </div>
@@ -292,8 +293,9 @@ var S=null, busy=false, typingEl=null, lastFrom=null;
 var steps=0,lastStepT=0,grav=9.8,sm=0,above=false,motionSeen=false,lastGps=null,watchId=null,wake=null,audio=null;
 function fresh(){return {naam:"",mode:"plaats",len:"normaal",route:"vrij",reached:0,world:null,off:0,leg:0,steps:0,gps:0,bonus:0,beat:0,queue:[],waiting:null,log:[],choices:{},done:false,sens:1.15,sound:true,t0:Date.now()}}
 function load(){try{var r=localStorage.getItem(KEY);return r?JSON.parse(r):null}catch(e){return null}}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
-function wipe(){try{localStorage.removeItem(KEY)}catch(e){}}
+function save(){if(wiped||!S)return;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+var wiped=false;
+function wipe(){wiped=true;try{localStorage.removeItem(KEY)}catch(e){}}
 function target(){return TARGET[S.mode][S.len]}
 function units(){
   if(S.mode==="fiets")return S.gps+S.bonus;
@@ -561,10 +563,10 @@ var draft=load()||fresh(),resume=!!(draft.log&&draft.log.length);
 function seg(id,get,set){var box=$(id);function mark(){var bs=box.querySelectorAll("button");for(var i=0;i<bs.length;i++)bs[i].setAttribute("aria-pressed",String(bs[i].dataset.v===String(get())))}
   box.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;set(b.dataset.v);mark()});mark();return mark}
 function lenLabels(){var bike=draft.mode==="fiets";$("l1").textContent=bike?"3 km":"± 8 min";$("l2").textContent=bike?"6 km":"± 15 min";$("l3").textContent=bike?(draft.route==="kaart"?"± 8 km":"10 km"):"± 30 min";
-  $("fRoute").hidden=draft.mode==="plaats"||resume}
+  $("fRoute").hidden=resume}
 if(!draft.route)draft.route="vrij";
-seg("segMode",function(){return draft.mode},function(v){draft.mode=v;lenLabels()});
-seg("segRoute",function(){return draft.route},function(v){draft.route=v;lenLabels()});
+var markMode=seg("segMode",function(){return draft.mode},function(v){draft.mode=v;if(v==="plaats")draft.route="vrij";lenLabels();markRoute()});
+var markRoute=seg("segRoute",function(){return draft.route},function(v){draft.route=v;if(v==="kaart"&&draft.mode==="plaats")draft.mode="buiten";lenLabels();markMode()});
 seg("segLen",function(){return draft.len},function(v){draft.len=v});
 lenLabels();$("naam").value=draft.naam||"";
 if(resume){$("go").textContent=draft.done?"Bekijk aflevering 1":"Verder met aflevering 1";$("fresh").hidden=false;
@@ -603,6 +605,7 @@ $("menu").addEventListener("click",function(e){if(e.target===$("menu"))$("menu")
 $("mSound").onclick=function(){S.sound=!S.sound;labels();save()};
 $("mAdd").onclick=function(){S.bonus+=S.mode==="fiets"?500:100;hint("");tick();save()};
 $("mStop").onclick=function(){save();location.reload()};
+$("mFresh").onclick=function(){S=null;wipe();location.reload()};
 $("thumb").onclick=function(){paint($("viewer").querySelector("canvas"));$("viewer").hidden=false};
 $("vClose").onclick=function(){$("viewer").hidden=true};
 })();
