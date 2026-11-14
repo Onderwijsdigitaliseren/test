@@ -34,10 +34,10 @@ function card(g){var x=g[L],p=MW.profile.get(),st=p.games&&p.games[g.id],soon=g.
   meta.push(access(g));
   if(g.group)meta.push("<i>"+H.grp+"</i>");
   if(st&&st.best)meta.push('<i class="star">'+H.best+" "+"★".repeat(st.best)+"☆".repeat(3-st.best)+"</i>");
-  var COV={mw:1,td:1,vz:1,og:1,cc:1,lb:1,ng:1,fj:1,sm:1};
+  var COV={mw:1,td:1,vz:1,og:1,cc:1,lb:1,ng:1,fj:1,sm:1,ds:1};
   var cover=COV[g.id]?'<img class="cover" src="'+MW.root+'assets/cover-'+g.id+'.webp?v=2" alt="" width="400" height="400" loading="lazy">':'<div class="cover ico-'+g.cat+'" aria-hidden="true">'+(ICON[g.cat]||"")+'</div>';
   return '<article class="game'+(soon?' soon':'')+(g.status==="new"?' isnew':'')+'" data-id="'+g.id+'">'+(soon?'<span class="stamp">'+H.soon+'</span>':'')+(g.status==="new"?'<span class="ribbon">'+H.neu+'</span>':'')+cover+'<h3>'+esc(x.title)+'</h3><p class="tag">'+esc(x.tag)+'</p><p class="desc">'+esc(x.desc)+'</p><div class="meta">'+meta.join("")+'</div>'+
-    (soon?'<button class="btn ghost dk" disabled>'+H.soon+'</button>':'<a class="btn" href="'+MW.root+esc(x.slug)+'">'+(has?H.resume:H.play)+' →</a>')+'</article>'}
+    (soon&&g.gate&&x.slug?'<a class="btn ghost dk" href="'+MW.root+esc(x.slug)+'">'+H.soon+'</a>':soon?'<button class="btn ghost dk" disabled>'+H.soon+'</button>':'<a class="btn" href="'+MW.root+esc(x.slug)+'">'+(has?H.resume:H.play)+' →</a>')+'</article>'}
 function feature(g){var x=g[L],has=!!MW.LS.get(resumeKey(g),null),p=MW.profile.get(),st=p.games&&p.games[g.id],meta="<i>"+esc(g.minutes)+" "+H.min+"</i><i>"+esc(g.km)+" "+H.km+"</i>"+access(g)+(st&&st.best?'<i class="star">'+H.best+" "+"★".repeat(st.best)+"☆".repeat(3-st.best)+"</i>":"");
   return '<a class="feature" href="'+MW.root+esc(x.slug)+'" style="'+(g.feature.acc?'--facc:'+g.feature.acc+';--ftag:'+g.feature.tag+';':'')+'background-image:linear-gradient(180deg,rgba(7,9,13,.05) 0,rgba(7,9,13,.15) 170px,#07090d 325px),url('+MW.root+'assets/feature-'+g.id+'.webp)"><span class="fbadge">'+(g.feature.icon||"🎃")+' '+esc(g.feature[L])+(MW.pro.freeLeft(g.id)?" · "+esc(MW.fill(t.fTag,{d:MW.freeDay(g.id,L)})):"")+'</span><span class="fbody"><h2>'+esc(x.title)+'</h2><span class="tag">'+esc(x.tag)+'</span><span class="desc">'+esc(x.desc)+'</span><span class="meta">'+meta+'</span><span class="btn">'+(has?H.resume:H.play)+' →</span></span></a>'}
 function catalog(){

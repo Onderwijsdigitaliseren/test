@@ -12,7 +12,9 @@ window.MW_CATALOG={
     {id:"cold",   icon:"📁", nl:{n:"Cold case",   t:"Een oud dossier, nieuwe ogen. De plekken zijn er nog; de getuigen ook, ouder."},
                             en:{n:"Cold case",    t:"An old file, fresh eyes. The places are still there; so are the witnesses, older now."}},
     {id:"quest",  icon:"🎲", nl:{n:"Speurtocht",  t:"Kisten openen, spellen winnen, schimmen vangen. Een avontuur van twee uur, buiten, binnen of op de bank."},
-                            en:{n:"Treasure trail",t:"Open chests, win games, catch shades. A two-hour adventure, outdoors, indoors or on the sofa."}}
+                            en:{n:"Treasure trail",t:"Open chests, win games, catch shades. A two-hour adventure, outdoors, indoors or on the sofa."}},
+    {id:"move",   icon:"👟", nl:{n:"Onderweg",    t:"Verhalen voor tijdens het bewegen. Op de plaats, buiten of op de fiets: jij beweegt, het verhaal komt binnen. Sta je stil, dan wacht het."},
+                            en:{n:"On the move",  t:"Stories for while you move. On the spot, outdoors or on your bike: you move, the story arrives. Stand still and it waits."}}
   ],
   games:[
     {id:"mw", cat:"murder", status:"live", access:"trial", minutes:"45–90", km:"2–4", group:true,
@@ -55,6 +57,12 @@ window.MW_CATALOG={
       en:{slug:"the-gamemakers-legacy.html", title:"The Gamemaker's Legacy", tag:"Ten chests, ten games, five heirs.",
           desc:"A two-hour trail around your own streets. Open ten puzzle chests in 3D, win the game inside each one, and catch the shades of the gamemaker's last evening with your camera. Who loosened his stairs?"},
       nl:{slug:"nl/de-erfenis-van-de-spellenmaker.html", title:"De Erfenis van de Spellenmaker", tag:"Tien kisten, tien spellen, vijf erfgenamen.",
-          desc:"Een speurtocht van twee uur door je eigen buurt. Open tien kisten in 3D, win het spel dat erin ligt (legpuzzel, kaarten, knikkers, mahjong, kogelbaan en meer) en vang met je camera de schimmen van de laatste avond van de spellenmaker. Wie zaagde aan zijn trap?"}}
+          desc:"Een speurtocht van twee uur door je eigen buurt. Open tien kisten in 3D, win het spel dat erin ligt (legpuzzel, kaarten, knikkers, mahjong, kogelbaan en meer) en vang met je camera de schimmen van de laatste avond van de spellenmaker. Wie zaagde aan zijn trap?"}},
+    /* gate: de kaart linkt al naar het spel; dat vraagt zelf om een testcode zolang status "soon" is (NL-only, EN zonder slug) */
+    {id:"ds", cat:"move", status:"soon", gate:true, access:"free", minutes:"8–30", km:"1–10", group:false,
+      en:{slug:"", title:"Double Play", tag:"A heist in eight episodes, for your workouts.",
+          desc:"An art heist told in chat messages while you walk, run or cycle. Dutch version first."},
+      nl:{slug:"nl/dubbelspel.html", title:"Dubbelspel", tag:"Een kunstroof in acht afleveringen, voor tijdens het sporten.",
+          desc:"Een team, een schilderij van achttien miljoen en een uitnodiging die bij jou terechtkwam. Het verhaal komt binnen als berichten terwijl je loopt, wandelt of fietst."}}
   ]
 };

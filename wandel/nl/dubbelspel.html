@@ -48,6 +48,13 @@ h1{font:italic 600 46px/1 var(--display);margin:6px 0 0;letter-spacing:.01em}
 #eps button small{color:var(--dim);font-size:12px}
 #eps button[aria-current="true"]{border-color:var(--brass)}
 #eps button:disabled{opacity:.45;cursor:default}
+#gate{min-height:100%;display:flex;flex-direction:column;gap:18px;max-width:460px;margin:0 auto;padding:calc(20px + env(safe-area-inset-top)) 20px calc(24px + env(safe-area-inset-bottom))}
+#gate .back{color:var(--dim);font-size:14px;text-decoration:none}
+#gCover{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px;border:1px solid var(--line)}
+.badge{align-self:flex-start;margin:0;border:1px solid var(--brass);color:var(--brass);border-radius:99px;padding:4px 12px;font-size:13px;letter-spacing:.06em}
+.facts{margin:0;padding-left:18px;color:var(--dim);display:flex;flex-direction:column;gap:6px}
+.grow{display:flex;gap:8px}
+.grow input{flex:1;min-width:0;background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
 .note{font-size:13px;color:var(--dim);margin:0}
 #cover{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px;border:1px solid var(--line);display:block}
 .who img{width:24px;height:24px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:7px}
@@ -118,6 +125,27 @@ footer{border-top:1px solid var(--line);padding:10px 16px calc(12px + env(safe-a
 </style>
 </head>
 <body>
+
+<div id="gate" hidden>
+  <a class="back" href="./index.html">← Alle wandelingen</a>
+  <img id="gCover" src="../dubbelspel/img/cover.webp" alt="" onerror="this.hidden=true">
+  <div>
+    <div class="kicker">Onderweg · seizoen 1</div>
+    <h1>Dubbelspel</h1>
+  </div>
+  <p class="badge">Volgt snel</p>
+  <p class="lead">Een team, een schilderij van achttien miljoen en een uitnodiging die per ongeluk bij jou terechtkwam. Of niet per ongeluk.</p>
+  <ul class="facts">
+    <li>Een kunstroof in acht afleveringen, verteld in berichten</li>
+    <li>Op de plaats, buiten lopen of fietsen</li>
+    <li>Jij bepaalt het tempo. Sta je stil, dan wacht het verhaal</li>
+  </ul>
+  <form id="gForm" class="field" autocomplete="off">
+    <span>Heb je een testcode?</span>
+    <div class="grow"><input id="gCode" type="text" autocapitalize="off" spellcheck="false" aria-label="Testcode"><button class="ghost" type="submit">Ontgrendel</button></div>
+    <p id="gMsg" class="note" role="status"></p>
+  </form>
+</div>
 
 <div id="start">
   <div>
@@ -906,6 +934,15 @@ function sensors(){
 function lock(){try{if(navigator.wakeLock)navigator.wakeLock.request("screen").then(function(w){wake=w}).catch(function(){})}catch(e){}}
 function release(){try{if(wake)wake.release()}catch(e){}wake=null}
 document.addEventListener("visibilitychange",function(){if(!document.hidden&&S&&!$("app").hidden&&!S.done)lock();if(document.hidden&&S)save()});
+
+/* ---------- tijdelijke poort: zolang Dubbelspel "binnenkort" is, alleen met testcode ---------- */
+var GK="dubbelspel.key",GH="7c751145";
+function gh(t){var h=5381;for(var i=0;i<t.length;i++)h=(Math.imul(h,33)^t.charCodeAt(i))>>>0;return h.toString(16)}
+function gateOpen(){try{return localStorage.getItem(GK)===GH}catch(e){return false}}
+if(!gateOpen()){$("start").hidden=true;$("gate").hidden=false}
+$("gForm").addEventListener("submit",function(e){e.preventDefault();
+  if(gh($("gCode").value.trim().toLowerCase())===GH){try{localStorage.setItem(GK,GH)}catch(x){}$("gate").hidden=true;$("start").hidden=false;scrollTo(0,0)}
+  else $("gMsg").textContent="Die code klopt niet."});
 
 /* ---------- start ---------- */
 var draft=load()||fresh();
