@@ -67,9 +67,51 @@ header{display:flex;align-items:center;gap:12px;padding:calc(10px + env(safe-are
 header .t{flex:1;min-width:0}
 header .t b{font:italic 600 20px/1.1 var(--display);display:block}
 header .t span{font-size:12px;color:var(--dim)}
-#thumb{width:44px;height:55px;border-radius:6px;border:1px solid var(--brass);padding:0;background:#000;overflow:hidden;flex:none}
-#thumb canvas{width:100%;height:100%;display:block;image-rendering:pixelated}
-#chat{flex:1;overflow-y:auto;padding:14px 16px 8px;display:flex;flex-direction:column;gap:6px;-webkit-overflow-scrolling:touch}
+#back{background:none;border:0;font-size:30px;line-height:1;padding:0 6px 4px 0;color:var(--brass);min-width:34px;min-height:40px}
+#clock{color:var(--dim);font-size:13px;font-variant-numeric:tabular-nums}
+#view{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+#chat{padding:14px 16px 8px;display:flex;flex-direction:column;gap:6px}
+#banner{display:flex;gap:10px;align-items:center;text-align:left;width:calc(100% - 20px);margin:8px 10px 0;background:#22303a;border:1px solid var(--brass);border-radius:14px;padding:10px 12px;font-size:14px}
+#banner b{color:var(--brass);white-space:nowrap}
+#banner span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#banner i{font-style:normal;color:var(--brass)}
+/* telefoon: beginscherm en apps */
+#vHome{padding:14px 16px 18px;display:flex;flex-direction:column;gap:16px}
+#wall{padding:0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#000;position:relative;height:min(34vh,260px)}
+#wall canvas{width:100%;height:100%;object-fit:cover;display:block;image-rendering:pixelated}
+#wall span{position:absolute;left:10px;bottom:8px;font-size:12px;background:rgba(16,27,36,.8);border-radius:99px;padding:3px 10px}
+#apps{display:grid;grid-template-columns:repeat(auto-fit,minmax(62px,1fr));gap:10px}
+.app{background:none;border:0;padding:0;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px;position:relative}
+.app .ic{width:54px;height:54px;border-radius:15px;display:grid;place-items:center;background:var(--bg2);border:1px solid var(--line)}
+.app svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.badge2{position:absolute;top:-5px;right:calc(50% - 34px);min-width:20px;height:20px;border-radius:10px;background:var(--raf);color:#1b0d08;font-size:12px;font-weight:700;display:grid;place-items:center;padding:0 5px}
+#recent{display:flex;flex-direction:column;gap:8px}
+#recent h3,.vh{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin:0;font-weight:600}
+.rc,.th{display:flex;gap:12px;align-items:center;width:100%;text-align:left;background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:10px 12px;min-height:54px}
+.rc span,.th .tx{flex:1;min-width:0}
+.rc b,.th b{display:block;font-size:14px}
+.rc small,.th small{display:block;color:var(--dim);font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#vList,#vNotes,#vNews,#vPhotos{padding:14px 16px 18px;display:flex;flex-direction:column;gap:8px}
+.av{width:38px;height:38px;border-radius:50%;flex:none;display:grid;place-items:center;font-weight:700;background:var(--bg);border:1px solid var(--line);object-fit:cover}
+.th .n{min-width:20px;height:20px;border-radius:10px;background:var(--raf);color:#1b0d08;font-size:12px;font-weight:700;display:grid;place-items:center;padding:0 5px}
+.b.gone{font-style:italic;color:var(--dim);background:none;border-style:dashed}
+.b.fade{animation:fd 3.4s linear forwards}
+@keyframes fd{0%,70%{opacity:1}100%{opacity:.25}}
+.note2{background:#f1ece0;color:#23221f;border-radius:4px 14px 14px 4px;border-left:4px solid var(--brass);padding:10px 12px}
+.note2 b{display:block;font:600 16px/1.3 var(--display)}
+.note2 p{margin:6px 0 0;font-size:14px}
+.note2.done b{text-decoration:line-through;color:#7b766a;font-weight:400}
+.art{border-bottom:1px solid var(--line);padding:6px 0 14px}
+.art small{color:var(--brass);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+.art h3{font:600 20px/1.2 var(--display);margin:4px 0 6px}
+.art p{margin:0;color:#c6d0d6;font-size:15px}
+#vPhotos{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start}
+#vPhotos .vh{grid-column:1/-1}
+#vPhotos .b.img{width:100%;max-width:none}
+.lockmsg{border:1px dashed var(--brass);border-radius:14px;padding:10px 12px;font-size:14px}
+.lockmsg b{color:var(--brass)}
+.lockmsg small{display:block;color:var(--dim);margin-top:4px}
+.empty{color:var(--dim);font-size:14px;margin:6px 0}
 .sys{align-self:center;font-size:12px;color:var(--dim);border:1px solid var(--line);border-radius:99px;padding:4px 12px;margin:10px 0 4px;text-align:center}
 .who{font-size:12px;font-weight:650;margin:8px 0 0 4px}
 .b{max-width:84%;padding:9px 13px;border-radius:16px 16px 16px 5px;background:var(--bg2);border:1px solid var(--line);align-self:flex-start;overflow-wrap:anywhere}
@@ -116,6 +158,7 @@ footer{border-top:1px solid var(--line);padding:10px 16px calc(12px + env(safe-a
 #pNew{color:var(--brass);font-weight:650}
 #pocket small{position:absolute;bottom:calc(30px + env(safe-area-inset-bottom));font-size:13px}
 #menu,#viewer{background:rgba(5,10,14,.78);align-items:flex-end;justify-content:center}
+#endL{background:rgba(5,10,14,.78);align-items:flex-end;justify-content:center}
 #viewer{align-items:center;padding:20px;flex-direction:column;gap:12px}
 #viewer canvas{max-height:70vh;width:auto;max-width:100%;aspect-ratio:4/5;width:min(100%,340px);height:auto;border-radius:10px;border:1px solid var(--brass);image-rendering:pixelated}
 #viewer p{margin:0;color:var(--dim);font-size:14px;text-align:center;max-width:32ch}
@@ -153,7 +196,7 @@ footer{border-top:1px solid var(--line);padding:10px 16px calc(12px + env(safe-a
     <h1>Double Play</h1>
   </div>
   <canvas id="startPtg" width="300" height="375" aria-label="The painting The Other Side"></canvas>
-  <p class="lead">A heist, a team and a painting. You move, the story arrives as messages. Stand still and it waits.</p>
+  <p class="lead">A heist, a team and a painting. You move, and the story arrives on your phone: messages, photos, news. Stand still and it waits.</p>
   <label class="field"><span>What should they call you?</span>
     <input id="naam" type="text" maxlength="20" autocomplete="given-name" placeholder="Your first name"></label>
   <div class="field"><span>How are you moving today?</span>
@@ -173,6 +216,7 @@ footer{border-top:1px solid var(--line);padding:10px 16px calc(12px + env(safe-a
       <button type="button" data-v="normaal">Normal<small id="l2"></small></button>
       <button type="button" data-v="lang">Long<small id="l3"></small></button>
     </div></div>
+  <div class="lockmsg" id="tease" hidden></div>
   <button class="primary" id="go" type="button">Start episode 1</button>
   <button class="ghost" id="trial" type="button">Practice round on the sofa (steps count themselves)</button>
   <div class="field"><span>Episodes</span><ol id="eps"></ol></div>
@@ -182,11 +226,24 @@ footer{border-top:1px solid var(--line);padding:10px 16px calc(12px + env(safe-a
 
 <div id="app" hidden>
   <header>
-    <div class="t"><b>Double Play</b><span id="epTitle"></span></div>
-    <button id="thumb" type="button" aria-label="View the painting"><canvas width="300" height="375"></canvas></button>
+    <button id="back" type="button" aria-label="Back" hidden>‹</button>
+    <div class="t"><b id="hTitle">Double Play</b><span id="epTitle"></span></div>
+    <span id="clock"></span>
   </header>
+  <button id="banner" type="button" hidden><b></b><span></span><i>›</i></button>
   <div id="mapWrap" hidden><canvas id="map" aria-label="Map with the next point"></canvas><div id="mapInfo"></div></div>
-  <main id="chat" aria-live="polite"></main>
+  <main id="view">
+    <section id="vHome">
+      <button id="wall" type="button" aria-label="View the painting"><canvas data-ptg width="300" height="375"></canvas><span>The Other Side</span></button>
+      <div id="apps"></div>
+      <div id="recent"></div>
+    </section>
+    <section id="vList" hidden></section>
+    <section id="chat" aria-live="polite" hidden></section>
+    <section id="vPhotos" hidden></section>
+    <section id="vNotes" hidden></section>
+    <section id="vNews" hidden></section>
+  </main>
   <div id="choices" hidden></div>
   <footer>
     <p id="hint" hidden></p>
@@ -210,6 +267,8 @@ footer{border-top:1px solid var(--line);padding:10px 16px calc(12px + env(safe-a
   <p><b>The Other Side</b>. The picture gets sharper with every episode.</p>
   <button class="ghost" id="vClose" type="button">Close</button>
 </div>
+
+<div id="endL" class="layer" hidden><div class="sheet" id="endBox"></div></div>
 
 <div id="menu" class="layer" hidden>
   <div class="sheet">
@@ -242,7 +301,7 @@ footer{border-top:1px solid var(--line);padding:10px 16px calc(12px + env(safe-a
 var $=function(id){return document.getElementById(id)};
 var KEY="doubleplay",OLDKEY="doubleplay.old";
 var TARGET={plaats:{kort:800,normaal:1600,lang:3000},buiten:{kort:800,normaal:1600,lang:3000},fiets:{kort:3000,normaal:6000,lang:10000}};
-var PEOPLE={onbekend:["Unknown number","--dim"],milo:["Milo","--milo"],noor:["Noor","--noor"],raf:["Raf","--raf"],celeste:["Céleste","--celeste"],eva:["Eva","--eva"],voss:["Adrian Voss","--voss"]};
+var PEOPLE={onbekend:["Unknown number","--dim"],milo:["Milo","--milo"],noor:["Noor","--noor"],raf:["Raf","--raf"],celeste:["Céleste","--celeste"],eva:["Eva","--eva"],voss:["Adrian Voss","--voss"],anon:["No caller ID","--dim"]};
 
 /* ---------- verhaal (English): season 1, eight episodes of seven moments ----------
    m(who,text,if) message · s(text,if) system line · im(who,kind,caption,extra) image
@@ -250,12 +309,17 @@ var PEOPLE={onbekend:["Unknown number","--dim"],milo:["Milo","--milo"],noor:["No
 function m(f,t,w){var o={from:f,text:t};if(w)o.when=w;return o}
 function s(t,w){var o={sys:t};if(w)o.when=w;return o}
 function im(f,k,t,x){var o={from:f,img:k,text:t};if(x)for(var q in x)o[q]=x[q];return o}
+function to(c,w){var o={to:c};if(w)o.when=w;return o}
+function x(f,t,w){var o=m(f,t,w);o.gone=1;return o}
+function q(id,t){return {note:{id:id,q:t}}}
+function a(id,t){return {ans:{id:id,a:t}}}
+function n(t,b){return {news:{t:t,b:b}}}
 function c(id,opts){return {choice:{id:id,options:opts.map(function(o){return {label:o[0],set:o[1]||null,reply:o[2]||[]}})}}}
 var AT=[0,.14,.30,.46,.62,.80,1];
 var DEF={lijst:"stil",persona:"the quiet investor from Switzerland",celeste:"stil",eva:"ja",raf:"plan",conf:"team",milo:"weg"};
 var EP=[
-{t:"The wrong invitation",beats:[
-[ s("Unknown number"),
+{next:{from:"milo",text:"Yes, you were on the list. For thr…"},t:"The wrong invitation",beats:[
+[ to("milo"),
   m("onbekend","Okay. So you're already on the move. Good."),
   m("onbekend","Keep going while you read this. The handover went wrong, and now you have something of mine."),
   im("onbekend","envelop","This envelope. You got it yesterday, right? You thought it was a thank-you."),
@@ -268,13 +332,16 @@ var EP=[
   m("milo","Yours was meant for someone else."),
   im("milo","schilderij","The Other Side, by Victor Sorel. This is the sharpest I've got. For now."),
   m("milo","It's being sold in eight days. Expected price: eighteen million."),
+  n("Sorel masterpiece goes under the hammer","Victor Sorel's ‘The Other Side’ will be auctioned in eight days. Expected price: eighteen million euros. Owner Adrian Voss: ‘Victor would have been proud.’ It is the first time in twenty years the canvas has left his house."),
   m("milo","I want to steal it."),
   m("milo","The owner, Adrian Voss, took it from someone years ago. That person wants it back."),
+  q("wie","Who did Voss take the painting from?"),
   c("robin",[["So you're some kind of Robin Hood?",null,[m("milo","No. Robin Hood had a deeply unsustainable business model.")]],
              ["And what does that have to do with me?",null,[m("milo","Everything. Unlucky for you, lucky for me.")]]]),
   m("milo","The organiser has registered you as a guest. You can do something my team no longer can: walk in as a stranger."),
   m("milo","You'll get a share. But first you need to meet the others.")],
-[ s("Milo added you to The Job"),
+[ to("klus"),
+  s("Milo added you to The Job"),
   m("noor","Is this the invitation?"),
   m("milo","This is a person, Noor."),
   m("noor","An invitation with shoes on, then. Welcome."),
@@ -294,7 +361,12 @@ var EP=[
   m("noor","The delivery has moved to 20:15. And the side door is locked, so it's the cellar entrance."),
   m("raf","The doorman is still called Bram. The tie is also unchanged."),
   m("milo","This always happens. What matters is what you do next."),
-  m("noor","You don't have to do anything right now. Just keep going. That's the whole point.")],
+  m("noor","You don't have to do anything right now. Just keep going. That's the whole point."),
+  to("anon"),
+  m("anon","You're doing well."),
+  m("anon","They'll tell you it was a coincidence. It wasn't."),
+  q("anon","Who is messaging me without a number?"),
+  to("klus")],
 [ m("noor","Me again. What time is the delivery?"),
   c("q1",[["19:40",null,[m("noor","That was the old plan. 20:15. But you answered without panicking, and that counts.")]],
           ["20:15",null,[m("noor","Correct.")]],
@@ -307,28 +379,30 @@ var EP=[
   m("celeste","I keep champagne on ice for moments like this. And for every other moment."),
   m("raf","Welcome to the team. I'm giving you a nickname and you get no say in it."),
   m("noor","You're one of us, {naam}.")],
-[ s("Private · Noor"),
+[ to("noor"),
   m("noor","One thing. Outside the group."),
   m("noor","Milo said that invitation reached you by accident, right?"),
   im("noor","lijst","Shortlist. From his own folder."),
   m("noor","Your name is on it. Has been for three weeks."),
+  q("lijst","Why was my name on Milo's list for three weeks?"),
   c("lijst",[["Don't say anything to Milo",{lijst:"stil"},[m("noor","Wasn't planning to.")]],
              ["I'll ask him myself",{lijst:"vraag"},[m("noor","Brave. Wait until next time, then I'll be standing next to you. So to speak.")]]]),
   m("noor","Take your time finishing. You did well today.")]
 ]},
 
-{t:"Everyone plays someone",beats:[
-[ s("Private · Milo"),
+{next:{from:"celeste",text:"The Other Side doesn't have one maker. It ha…"},t:"Everyone plays someone",beats:[
+[ to("milo"),
   m("milo","Noor says you have a question for me. Go ahead. I'm in a good mood.","lijst=vraag"),
   m("milo","Noor went through my folders. She thinks I don't know. Let her think that.","lijst=stil"),
   m("milo","Yes, you were on the list. For three weeks."),
   m("milo","We needed someone with no past in our world. No file, no enemies, no face Voss knows."),
   m("milo","The mistake was a test. I wanted to see what you'd do when something didn't add up."),
+  a("lijst","It was a test. Milo wanted someone with no past in their world."),
   c("test",[["You could have just asked",null,[m("milo","Then you'd have said yes for the wrong reason. Now I know you keep asking questions. That's better.")]],
             ["So? Did I pass?",null,[m("milo","You kept going. You kept asking. Yes.")]]]),
   m("milo","No more tests from now on. Promise."),
   m("milo","Céleste is taking over from me. She's going to make you rich.")],
-[ s("Private · Céleste"),
+[ to("celeste"),
   m("celeste","Darling. At that auction you're not yourself. You're someone with too much money and too strong an opinion."),
   m("celeste","So. What kind of wealthy eccentric would you like to be?"),
   c("persona",[["Heir to a liquorice factory",{persona:"the heir to the liquorice factory"},[m("celeste","Delicious. Old money, salty taste. Nobody will dare ask more.")]],
@@ -336,15 +410,16 @@ var EP=[
                ["A quiet investor from Switzerland",{persona:"the quiet investor from Switzerland"},[m("celeste","Classic. You say little, you nod a lot, and you never look at the price.")]]]),
   m("celeste","Then you need a story. Where your money comes from, why you buy art, and what you don't like."),
   m("celeste","That last one matters most. Rich people are believed the moment they hate something.")],
-[ s("The Job"),
+[ to("klus"),
   m("raf","I hear you're {persona}. I have questions about that."),
   m("raf","Do you wear a ring? People with your background wear a ring. Or very pointedly no ring."),
   c("ring",[["One heavy ring",null,[m("raf","Gold. Not shiny. Shiny is for people who still have to prove they have money.")]],
             ["Very pointedly no ring",null,[m("raf","Yes. Yes! That's the strongest statement. Nobody forgets an empty hand.")]]]),
   m("noor","Raf, it's an auction. Not a fashion show."),
   m("raf","Everything is a fashion show, Noor."),
+  n("Who was Victor Sorel?","Four things about the painter who never gave interviews. One: he always worked alone, he said. Two: nobody was allowed in his studio. Three: he only signed a canvas when it left the studio. Four: after 2004 he never painted a city at night again. Nobody knows why."),
   m("noor","I'll send you the floor plan of the auction house. Not now. You're exercising.")],
-[ s("Private · Céleste"),
+[ to("celeste"),
   m("celeste","Practice. I'm a curious guest at the champagne. You're {persona}."),
   m("celeste","‘What brings you here, if I may ask?’"),
   c("oefen",[["I'm here for The Other Side",null,[m("celeste","Too direct. Everyone is here for The Other Side. Try again, with less hope in your voice.")]],
@@ -352,35 +427,46 @@ var EP=[
              ["I'd rather not say",null,[m("celeste","Mysterious. That works twice. After that it gets annoying.")]]]),
   m("celeste","You're good at this. Better than Milo, and he's been practising for twenty years.")],
 [ m("celeste","One more thing. If anyone asks whether you know the previous owner, you say no."),
-  m("celeste","Everyone talks about the painting. Nobody talks about Eva. And it should stay that way."),
+  x("celeste","Everyone talks about the painting. Nobody talks about Eva. And it should stay that way."),
   c("eva2",[["Who is Eva?",null,[m("celeste","A name I shouldn't have mentioned. My taxi's here, darling."),s("Céleste is offline")]],
-            ["I pretend I didn't hear that",null,[m("celeste","…You really are good at this."),s("Céleste is offline")]]])],
-[ s("Private · Noor"),
+            ["I pretend I didn't hear that",null,[m("celeste","…You really are good at this."),s("Céleste is offline")]]]),
+  q("eva","Who is Eva?"),
+  to("anon"),
+  m("anon","Ask Céleste why she never answers when Voss calls."),
+  m("anon","Or don't ask. Just watch."),
+  q("celeste","Why does Céleste never answer when Voss calls?")],
+[ to("noor"),
   m("noor","How did the practice go?"),
   c("celeste",[["Céleste mentioned a name. Eva.",{celeste:"noor"},[m("noor","Eva."),m("noor","Milo has never mentioned that name. Not to any of us."),m("noor","I'll go looking. You keep going.")]],
                ["Fine. She's good.",{celeste:"stil"},[m("noor","Good. Keep half an eye on her, though. She knows everyone. And everyone knows her.")]]])],
-[ s("Private · Céleste"),
+[ to("celeste"),
   m("celeste","I wasn't honest this afternoon."),
   m("celeste","I know her. Eva. I've known her for a very long time."),
   m("celeste","Tomorrow I'll tell you what Milo left out. Only you."),
   m("celeste","Sleep well, {naam}. Or walk well. Whatever you're doing.")]
 ]},
 
-{t:"The woman on the balcony",beats:[
-[ s("Private · Céleste"),
+{next:{from:"raf",text:"Wait. Something's mis…"},t:"The woman on the balcony",beats:[
+[ to("celeste"),
   m("celeste","A promise is a promise."),
   m("celeste","The Other Side doesn't have one maker. It has two."),
   m("celeste","Eva wasn't Sorel's model. She was an artist. She worked with him for years, in the same studio."),
   m("celeste","Keep going. I'll tell it in pieces. That's easier for me too.")],
 [ m("celeste","According to Eva, she painted a large part of his most famous work. He signed his name to it."),
   m("celeste","When she spoke up, nobody believed her. Not the critics, not Voss, not the papers."),
+  n("From the archive (2004): assistant accuses Sorel","A former assistant of Victor Sorel says she painted ‘a large part’ of his work. Sorel does not respond. Business partner Adrian Voss calls it ‘a painful mistake by a young woman’. The art world shrugs."),
+  a("wie","From Eva. She painted alongside him; Sorel signed his name."),
   c("geloof",[["Do you believe her?",null,[m("celeste","I was there. I didn't see it. And that's exactly the problem: nobody was looking.")]],
               ["Why didn't Milo tell me this?",null,[m("celeste","Because a heist is easier to sell than a court case. Even to yourself.")]]])],
 [ m("celeste","The Other Side was their last painting together. Eva says the proof is inside it."),
+  q("bewijs","What proof is hidden in the painting?"),
   im("celeste","schilderij","Look again. She knows every brushstroke."),
   m("celeste","She wants to talk to you. I gave her your number. I hope that's all right."),
-  m("celeste","It isn't really. I did it anyway.")],
-[ s("Unknown number"),
+  m("celeste","It isn't really. I did it anyway."),
+  to("anon"),
+  m("anon","I was there, that last summer in the studio."),
+  m("anon","She isn't lying.")],
+[ to("eva"),
   m("eva","Hello {naam}. Céleste says you're on the move. Take your time, I type slowly."),
   m("eva","I'm Eva."),
   c("evahoi",[["I thought you'd be angry",null,[m("eva","I was. For twenty years. Being angry is exhausting. It doesn't make you any faster.")]],
@@ -390,19 +476,20 @@ var EP=[
   c("rafslaap",[["How do you know Raf?",null,[m("eva","I taught him to walk.")]],
                 ["I don't think Raf ever sleeps",null,[m("eva","I thought so. He didn't as a child either.")]]]),
   m("eva","Raf is my little brother."),
+  a("eva","An artist. Worked with Sorel for years. Raf's sister."),
   m("eva","He was sixteen when things went wrong with Sorel. He saw all of it.")],
 [ m("eva","I don't want revenge. I want someone to look. Once, properly, at the whole painting."),
   m("eva","For Milo it's about money. For me it isn't."),
   c("eva",[["I'll help you",{eva:"ja"},[m("eva","Thank you. Don't say it too loudly to Raf. He'll cry, and then he'll be angry that he's crying.")]],
            ["I don't know what I believe yet",{eva:"twijfel"},[m("eva","Good. Then you're the first to be honest about it.")]]])],
-[ s("Private · Raf"),
+[ to("raf"),
   m("raf","Why are you talking to my sister."),
   m("raf","Not angry. Just. Why."),
   m("raf","Never mind. Come to my studio tomorrow. I want someone to see the copy who understands why it matters.")]
 ]},
 
-{t:"The original",beats:[
-[ s("Private · Raf"),
+{next:{from:"noor",text:"The original never le…"},t:"The original",beats:[
+[ to("raf"),
   m("raf","Welcome to the studio. It smells of turpentine and bad decisions."),
   im("raf","scene","Ignore the mess. The mess is art.",{name:"atelier",opt:1}),
   im("raf","schilderij","My copy. Say something nice. Or something honest, if you dare."),
@@ -415,10 +502,14 @@ var EP=[
   m("raf","Everyone listens to her story. Nobody does anything with it."),
   c("raf",[["We will",{raf:"troost"},[m("raf","Don't say that lightly."),m("raf","…Okay. We will.")]],
            ["That's why we're doing this",{raf:"plan"},[m("raf","Yes. That's why we're doing this. Right. Back to work.")]]])],
-[ s("The Job"),
+[ to("klus"),
   m("noor","Tomorrow's press photos are in. Voss is already showing the painting to the press this morning."),
   m("raf","Show me."),
-  im("noor","schilderij","Press photo, taken this morning at the auction house.")],
+  im("noor","schilderij","Press photo, taken this morning at the auction house."),
+  n("Voss shows masterpiece to the press","‘Never so beautifully lit,’ says Adrian Voss at the unveiling of ‘The Other Side’. Photographs were allowed; a close look was not. ‘The canvas is fragile.’"),
+  to("anon"),
+  m("anon","Look at the bottom left."),
+  to("klus")],
 [ m("raf","Wait."),
   m("raf","…"),
   m("raf","Something's missing."),
@@ -429,15 +520,19 @@ var EP=[
   m("raf","No.")],
 [ m("raf","The painting the press is being shown is already a fake."),
   m("raf","Someone got there before us."),
+  q("vals","Who made the fake the press is looking at?"),
   m("noor","Nobody tells Milo. Not until we know who."),
   c("zwijg",[["Agreed",null,[m("noor","Agreed.")]],
              ["For now",null,[m("noor","For now. That's all I'm asking.")]]])]
 ]},
 
-{t:"A second buyer",beats:[
-[ s("The Job"),
+{next:{from:"eva",text:"It's remarkable how often someone el…"},t:"A second buyer",beats:[
+[ to("klus"),
   m("milo","Why is everyone so quiet today?"),
+  n("Auction house doubles security","After ‘signals’, the auction house has brought in extra guards for the Sorel sale. Management will not say what the signals are. Adrian Voss: ‘I sleep perfectly well.’"),
+  q("lek","How does Voss know something is being prepared?"),
   m("celeste","Voss called me. I answered. For the first time in years."),
+  x("celeste","He asked about her."),
   m("raf","Of course you answered."),
   m("celeste","To get information, Raf."),
   m("raf","Or to give it.")],
@@ -446,16 +541,21 @@ var EP=[
   m("milo","An investor."),
   m("raf","Which one?"),
   m("milo","One who doesn't want to be found."),
+  q("betaalt","Who is paying for this operation?"),
   m("raf","Then I'm out."),
   s("Raf left the group")],
-[ s("Private · Noor"),
+[ to("noor"),
   m("noor","He'll be back. He always leaves first."),
   m("noor","But he's right about one thing. Where is the original?"),
   m("noor","I have the auction house's insurance papers. Will you look with me? I do the work, you tell me what you see."),
-  c("zoek",[["Show me",null,[]],["I'll walk and look",null,[m("noor","Exactly like that.")]]])],
+  c("zoek",[["Show me",null,[]],["I'll walk and look",null,[m("noor","Exactly like that.")]]]),
+  to("anon"),
+  m("anon","Two crates. Count them."),
+  to("noor")],
 [ im("noor","doc","Voss's transport list.",{doc:{t:"TRANSPORT · THE OTHER SIDE",rows:[["Crate 1","auction house, for viewing"],["Crate 2","Voss's private address, not insured",1],["Frame","auction house"]]}}),
   m("noor","Two crates. One goes to the auction house. The other stays at Voss's house."),
   m("noor","The original never left."),
+  a("vals","Voss himself. The original never left his house."),
   m("noor","The auction is a performance. The real sale happens somewhere else.")],
 [ m("noor","There's a buyer who has already paid. I'm finding out who."),
   m("noor","It'll take a while. Keep going. I'll be in touch.")],
@@ -464,14 +564,20 @@ var EP=[
   m("noor","Look at the broker.")],
 [ m("noor","Milo."),
   m("noor","He's already sold the painting. While he promised Eva she'd get it back."),
+  a("betaalt","Milo's buyer. The painting had already been sold."),
   c("conf",[["I'll call him myself",{conf:"zelf"},[m("noor","Go ahead. I won't listen in."),m("noor","Well, a little.")]],
-            ["We tell the team together",{conf:"team"},[m("noor","Tomorrow. Together. I'll make coffee. Even if it's over the phone.")]]])]
+            ["We tell the team together",{conf:"team"},[m("noor","Tomorrow. Together. I'll make coffee. Even if it's over the phone.")]]]),
+  to("milo"),
+  s("Milo is online"),
+  s("Milo is typing…"),
+  s("Milo is offline"),
+  q("milo","Can you still trust Milo?")]
 ]},
 
-{t:"Without a leader",beats:[
-[ s("Private · Milo","conf=zelf"),
+{next:{from:"milo",text:"Read this before you swipe it aw…"},t:"Without a leader",beats:[
+[ to("milo","conf=zelf"),
   m("milo","Noor showed you.","conf=zelf"),
-  s("The Job","conf=team"),
+  to("klus","conf=team"),
   m("noor","Milo. We found your agreement.","conf=team"),
   m("raf","I'm back. Just for this.","conf=team"),
   m("milo","Yes."),
@@ -480,7 +586,7 @@ var EP=[
   m("milo","She won't win a court case. She won't get an exhibition. This is the only outcome that can actually happen."),
   c("milo6",[["That was her decision to make",null,[m("milo","Maybe.")]],
              ["Why did you lie to us?",null,[m("milo","Because you'd have said no. And I was right, look.")]]])],
-[ s("The Job"),
+[ to("klus"),
   s("Céleste added Eva"),
   m("eva","It's remarkable how often someone else decides what should be enough for me."),
   m("milo","Eva…"),
@@ -492,8 +598,12 @@ var EP=[
   s("Milo left the group")],
 [ c("stilte",[["Is everyone still here?",null,[m("celeste","I'm here. I've ordered champagne. It seemed the only sensible thing.")]],
               ["What now?",null,[m("raf","I have three plans. All three are bad.")]]]),
-  m("eva","I'm going to lie down for a bit. Thank you all. Truly.")],
-[ s("Private · Noor"),
+  m("eva","I'm going to lie down for a bit. Thank you all. Truly."),
+  n("Sorel auction live tomorrow","Eleven hundred collectors from nineteen countries have signed up for the livestream. The auction house calls it ‘the evening of the decade’."),
+  to("anon"),
+  m("anon","Now it finally gets honest."),
+  m("anon","Stay.")],
+[ to("noor"),
   m("noor","I don't have a plan. Raf has three bad plans. Céleste has ordered champagne."),
   m("noor","So I think we're in charge now."),
   c("wij",[["We are?",null,[m("noor","You and me. You're the only one they all trust. I'm the only one who knows where everything is.")]],
@@ -504,8 +614,8 @@ var EP=[
   m("noor","Go home, {naam}. Tomorrow we make a plan.")]
 ]},
 
-{t:"The dress rehearsal",beats:[
-[ s("The Job"),
+{next:{from:"anon",text:"I'll open the door. Twenty years ago I ke…"},t:"The dress rehearsal",beats:[
+[ to("klus"),
   m("noor","New goal. Two things at once."),
   m("noor","One: Eva gets her painting back. The real one, from Voss's house."),
   m("noor","Two: her story goes public at a moment when Voss can't bury it.")],
@@ -517,31 +627,38 @@ var EP=[
   m("noor","And you, {persona}, bid. High. So high that Voss brings the original in himself to convince you."),
   c("bod",[["How high is high?",null,[m("celeste","Eighteen million and one euro. That one euro is for style.")]],
            ["I can do that",null,[m("raf","Of course you can. You don't have a ring. Or you do. I don't remember, I'm nervous.")]]])],
-[ s("Private · Milo"),
+[ to("milo"),
   m("milo","Read this before you swipe it away."),
   m("milo","Voss knows something's being prepared. I can tell you what he knows. And what he doesn't."),
   c("milo",[["You can come back",{milo:"in"},[m("milo","Thank you. I don't deserve it. I'll do it anyway.")]],
             ["Just send me what you know",{milo:"info"},[m("milo","Fair. I'll send it.")]],
-            ["Stay away, Milo",{milo:"weg"},[m("milo","Understood."),m("milo","One more thing, free of charge: Voss thinks you work for me.")]]])],
+            ["Stay away, Milo",{milo:"weg"},[m("milo","Understood."),m("milo","One more thing, free of charge: Voss thinks you work for me.")]]]),
+  a("milo","That was up to you. You chose.")],
 [ m("milo","Voss thinks we're still running my old plan. Copy in, original to my buyer.","milo=in|info"),
   m("milo","Let him think that. That's your chance.","milo=in|info"),
+  to("noor"),
   m("noor","What did Milo say? I can tell from your silence that he said something.","milo=weg"),
   m("noor","If Voss thinks you work for Milo, he thinks we're running Milo's plan. That's our chance.","milo=weg"),
-  m("noor","Milo will be at the back entrance tomorrow. I've put him in the plan.","milo=in")],
-[ s("The Job"),
+  m("noor","Milo will be at the back entrance tomorrow. I've put him in the plan.","milo=in"),
+  a("lek","Through Milo's buyer. Voss only knows the old plan.")],
+[ to("klus"),
   m("raf","Crate 1 has been swapped. My copy is now at the auction house."),
   m("raf","I gave her a tiny red stroke. Bottom left. For Eva."),
   m("celeste","I'm at the entrance. You're on the list as {persona}."),
-  m("noor","I'm in your ear. From now on.")],
-[ s("The auction"),
+  n("New name on the guest list","Among the guests for the Sorel auction is one unknown: {persona}. ‘Nobody knows this person,’ says a dealer. ‘That usually means a great deal of money.’"),
+  m("noor","I'm in your ear. From now on."),
+  to("anon"),
+  m("anon","Tomorrow I'll be behind the stage."),
+  m("anon","You'll recognise me.")],
+[ to("live"), s("The auction"),
   im("noor","scene","Auction house, main entrance. I can see you on camera 3.",{name:"veilinghuis",opt:1}),
   m("noor","You're in."),
   m("celeste","Here he comes. Stay calm."),
   m("voss","At last. I was beginning to think Milo wouldn't send you.")]
 ]},
 
-{t:"The Other Side",beats:[
-[ s("The auction"),
+{next:{from:"anon",text:"Vienna wasn't the first. There are…"},t:"The Other Side",beats:[
+[ to("live"), s("The auction"),
   m("voss","You're {persona}, aren't you? Milo told me about you."),
   m("noor","He thinks you work for Milo. Play along."),
   c("voss1",[["Milo sends his regards",null,[m("voss","Milo always sends something. Usually people.")]],
@@ -549,7 +666,9 @@ var EP=[
 [ m("voss","You'd like to see the original before you bid. Milo mentioned that."),
   m("voss","It's in a room behind the stage. After the auction we swap, as agreed."),
   m("noor","He has it here. In the building. That's all we need."),
-  m("celeste","I'll distract him. I haven't spoken to him in twenty-five years, so I have plenty to say.")],
+  m("celeste","I'll distract him. I haven't spoken to him in twenty-five years, so I have plenty to say."),
+  m("celeste","He's been calling me for twenty years, darling. Always the same question: where is Eva. That's why I never answer."),
+  a("celeste","Voss has been looking for Eva for twenty years. Céleste kept silent.")],
 [ m("celeste","Darling, if I act strangely later: that's acting. Almost entirely."),
   m("noor","She never told Voss anything about Eva. Not in all those years. I checked.","celeste=noor"),
   m("raf","My copy is on the screen. Everyone is looking at my little red stroke and nobody knows."),
@@ -562,6 +681,14 @@ var EP=[
   m("noor","There's one guard behind the stage. Bram. You know him.","milo=weg"),
   m("raf","With the tie?","milo=info|weg"),
   m("noor","With the tie.","milo=info|weg"),
+  to("anon"),
+  m("anon","I'll open the door."),
+  m("anon","Twenty years ago I kept my mouth shut. Not today."),
+  m("anon","B."),
+  a("anon","Bram, the doorman. Twenty years ago he worked in the studio."),
+  to("live"),
+  m("raf","BRAM?"),
+  m("raf","I take back everything I said about the tie. Nearly everything."),
   m("noor","The original is on stage. Next to the copy. Live, on the screen."),
   m("noor","Two Other Sides. And nobody in the room knows which one is real."),
   im("raf","scene","I'm at the back. I can't look. I'm looking.",{name:"podium",opt:1})],
@@ -570,35 +697,46 @@ var EP=[
   im("eva","reveal","The original, sharp, for the first time."),
   m("noor","There's someone in the window. Painting."),
   m("eva","That's me. I painted myself into it, reflected in the glass, while I was working on it."),
-  m("eva","Every reproduction polished me out. This is the original.")],
+  m("eva","Every reproduction polished me out. This is the original."),
+  a("bewijs","Eva painted herself into the window, at work.")],
 [ m("voss","Get that off the screen."),
   m("celeste","Too late, Adrian. Eleven hundred collectors are watching."),
   m("noor","And three newspapers. I called them this morning. Just in case."),
+  n("LIVE: uproar at Sorel auction","Two versions of ‘The Other Side’ are on stage. A woman is pointing at a window in the canvas. The livestream has not been cut. Adrian Voss has left the room."),
   m("raf","I'm not crying."),
   m("noor","He's crying."),
   c("einde",[["Me too, a little",null,[m("noor","Me too. Don't tell Raf.")]],
              ["Well done, team",null,[m("celeste","Well done, {naam}.")]]])],
-[ s("Later · De Hoek snack bar"),
+[ to("klus"),
+  s("Later · De Hoek snack bar"),
   im("celeste","scene","Exhibit A: us, in a snack bar.",{name:"snackbar",opt:1}),
   m("eva","The painting is going to a museum. With two names on the label. I chose it myself."),
+  n("‘The Other Side’ had two makers","The museum is hanging the canvas with two names on the label: Victor Sorel and Eva. ‘I looked at it for twenty years and never saw her,’ says a curator. ‘She was simply there.’"),
   m("raf","I'd like a frikandel speciaal and an apology from the whole of art history."),
   m("celeste","I brought champagne. They don't serve champagne here. That's their problem."),
   m("milo","I paid for everyone. It doesn't make anything right. It's a start.","milo=in"),
   m("milo","I saw it. I'm proud of you all. Of you most of all.","milo=info"),
   m("noor","There's an empty chair.","milo=weg"),
   m("noor","Leave it.","milo=weg"),
-  s("Private · Noor"),
+  to("noor"),
   m("noor","Look what I just got."),
   im("noor","winter","A winter landscape. A museum in Vienna."),
   m("noor","The same woman is standing in the window."),
-  m("noor","Eva says she has never seen this painting before.")]
+  m("noor","Eva says she has never seen this painting before."),
+  q("wenen","Who painted the winter landscape in Vienna?"),
+  to("anon"),
+  m("anon","Vienna wasn't the first."),
+  m("anon","There are seven.")]
 ]}
 ];
 /* ---------- toestand ---------- */
-var S=null, busy=false, typingEl=null, lastFrom=null;
+var S=null, busy=false, typingEl=null, lastFrom=null, chat=null;
 var steps=0,lastStepT=0,grav=9.8,sm=0,above=false,motionSeen=false,lastGps=null,watchId=null,wake=null,audio=null;
-function newRun(o,ep){o.ep=ep;o.max=Math.max(o.max||1,ep);o.reached=0;o.world=null;o.off=0;o.leg=0;o.steps=0;o.gps=0;o.bonus=0;o.beat=0;o.queue=[];o.waiting=null;o.log=[];o.choices={};o.done=false;o.trial=false;o.t0=o.t0||Date.now();return o}
-function fresh(){return newRun({naam:"",mode:"plaats",len:"normaal",route:"vrij",sens:1.15,sound:true,flags:{},max:1},1)}
+function newRun(o,ep){o.ep=ep;o.max=Math.max(o.max||1,ep);o.reached=0;o.world=null;o.off=0;o.leg=0;o.steps=0;o.gps=0;o.bonus=0;o.beat=0;o.queue=[];o.waiting=null;o.choices={};o.done=false;o.trial=false;o.t0=o.t0||Date.now();
+  o.log=(o.log||[]).filter(function(i){return i.ep<ep});o.news=(o.news||[]).filter(function(i){return i.ep<ep});
+  o.notes=(o.notes||[]).filter(function(i){return i.ep<ep});o.notes.forEach(function(i){if(i.aep>=ep){delete i.a;delete i.aep}});
+  o.un={};o.recent=[];o.ch=null;return o}
+function fresh(){return newRun({naam:"",mode:"plaats",len:"normaal",route:"vrij",sens:1.15,sound:true,flags:{},max:1,v:2},1)}
 function load(){try{var r=localStorage.getItem(KEY);if(r)return JSON.parse(r);
   var o=localStorage.getItem(OLDKEY);if(!o)return null;o=JSON.parse(o);o.ep=1;o.max=1;o.flags={};
   if(o.mode==="proef"){o.mode="plaats";o.trial=true}
@@ -698,10 +836,10 @@ function paint(cv){
 }
 var lastBlock=-1;
 function repaint(force){var b=block()+(revealed()?100:0);if(!force&&b===lastBlock)return;lastBlock=b;
-  var a=document.querySelectorAll("canvas[data-ptg], #thumb canvas, #viewer canvas");for(var i=0;i<a.length;i++)paint(a[i])}
+  var a=document.querySelectorAll("canvas[data-ptg], #viewer canvas");for(var i=0;i<a.length;i++)paint(a[i])}
 
 /* ---------- chat ---------- */
-var chat=$("chat");
+chat=$("chat");
 function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
 function fill(t){return String(t).split("{naam}").join(S.naam||"newcomer").split("{persona}").join(flag("persona"))}
 function art(n,alt){var i=el("img");i.src=HAVE[n].src;i.alt=alt||"";return i}
@@ -733,39 +871,127 @@ function lijst(){
     row.appendChild(el("span",null,r[1]));d.appendChild(row)});
   return d;
 }
+function lockNode(z){var f=document.createDocumentFragment();f.appendChild(el("b",null,PEOPLE[z.from][0]+": "));f.appendChild(document.createTextNode(z.text));
+  f.appendChild(el("small",null,"Locked. Arrives during your next workout."));return f}
+function imgNode(it){
+  var box=el("div","b img");
+  if(it.img==="envelop"&&HAVE.envelop)box.appendChild(art("envelop","Envelope with a card"));
+  else if(it.img==="envelop")box.innerHTML=envelop();
+  else if(it.img==="winter"&&HAVE.winter)box.appendChild(art("winter","A winter landscape with a lit window"));
+  else if(it.img==="scene")box.appendChild(art(it.name,it.text));
+  else if(it.img==="schilderij"){var c=el("canvas");c.width=300;c.height=375;c.setAttribute("data-ptg","");c.setAttribute("aria-label","Blurry photo of the painting The Other Side");paint(c);box.appendChild(c)}
+  else if(it.img==="reveal")box.appendChild(revealImg());
+  else if(it.img==="winter")box.appendChild(winterImg());
+  else if(it.img==="doc")box.appendChild(docImg(it.doc));
+  else box.appendChild(lijst());
+  box.appendChild(el("div","cap",fill(it.text)));return box}
 function render(it){
   if(it.sys){chat.appendChild(el("div","sys",it.sys));lastFrom=null;return}
-  if(it.end){
-    var last=S.ep>=EP.length,e=el("div","end"),b;e.appendChild(el("h3",null,last?"Season 1 is complete":"Episode "+S.ep+" is complete"));
-    var p=el("p");p.appendChild(el("b",null,showUnits()+(S.mode==="fiets"&&!S.trial?" km":" steps")));p.appendChild(document.createTextNode(" at your own pace."));e.appendChild(p);
-    if(last){e.appendChild(el("p",null,"The Other Side is fully sharp. Tap the painting at the top right and find the window."));
-      e.appendChild(el("p",null,"Season 2 begins in Vienna."));
-      b=el("button","ghost","Play the season again");b.type="button";b.onclick=function(){wipe();location.reload()};e.appendChild(b)}
-    else{e.appendChild(el("p",null,"The Other Side is now "+S.ep+" of 8 sharp."));
-      e.appendChild(el("p",null,"Next: episode "+(S.ep+1)+", "+EP[S.ep].t+"."));
-      b=el("button","primary","Go to episode "+(S.ep+1));b.type="button";b.onclick=function(){newRun(S,S.ep+1);save();location.reload()};e.appendChild(b)}
-    chat.appendChild(e);lastFrom=null;return}
   if(it.me){chat.appendChild(el("div","b me",it.me));lastFrom="me";return}
-  if(it.from!==lastFrom){var p2=PEOPLE[it.from],w=el("div","who");if(HAVE[it.from])w.appendChild(art(it.from));w.appendChild(document.createTextNode(p2[0]));w.style.color="var("+p2[1]+")";chat.appendChild(w);lastFrom=it.from}
-  if(it.img){
-    var box=el("div","b img");
-    if(it.img==="envelop"&&HAVE.envelop)box.appendChild(art("envelop","Envelope with a card"));
-    else if(it.img==="envelop")box.innerHTML=envelop();
-    else if(it.img==="winter"&&HAVE.winter)box.appendChild(art("winter","A winter landscape with a lit window"));
-    else if(it.img==="scene")box.appendChild(art(it.name,it.text));
-    else if(it.img==="schilderij"){var c=el("canvas");c.width=300;c.height=375;c.setAttribute("data-ptg","");c.setAttribute("aria-label","Blurry photo of the painting The Other Side");paint(c);box.appendChild(c)}
-    else if(it.img==="reveal")box.appendChild(revealImg());
-    else if(it.img==="winter")box.appendChild(winterImg());
-    else if(it.img==="doc")box.appendChild(docImg(it.doc));
-    else box.appendChild(lijst());
-    box.appendChild(el("div","cap",fill(it.text)));chat.appendChild(box);return}
-  chat.appendChild(el("div","b",fill(it.text)));
+  var group=it.ch==="klus"||it.ch==="live";
+  if(group&&it.from!==lastFrom){var p2=PEOPLE[it.from],w=el("div","who");if(HAVE[it.from])w.appendChild(art(it.from));w.appendChild(document.createTextNode(p2[0]));w.style.color="var("+p2[1]+")";chat.appendChild(w)}
+  lastFrom=it.from;
+  if(it.gone===2){chat.appendChild(el("div","b gone",PEOPLE[it.from][0]+" deleted this message"));return}
+  if(it.img){chat.appendChild(imgNode(it));return}
+  chat.appendChild(el("div","b"+(it.gone===1?" fade":""),fill(it.text)));
 }
-function scroll(){chat.scrollTop=chat.scrollHeight}
-function add(it){S.log.push(it);render(it);scroll()}
+
+/* ---------- telefoon: schermen ---------- */
+var V={name:"home",ch:null},view=$("view");
+var ICON={msg:'<path d="M5 6h18v12H12l-5 4v-4H5z"/>',photo:'<rect x="4" y="6" width="20" height="16" rx="2"/><circle cx="10" cy="12" r="2"/><path d="M5 20l6-5 4 3 4-4 5 5"/>',note:'<path d="M7 4h14v20H7z"/><path d="M11 10h6M11 14h6M11 18h3"/>',news:'<path d="M4 6h16v16H6a2 2 0 0 1-2-2z"/><path d="M20 10h4v10a2 2 0 0 1-2 2M8 10h8M8 14h8M8 18h5"/>',ear:'<path d="M9 22a4 4 0 0 0 7-1c1-3 4-4 4-9a7 7 0 0 0-14 0"/><path d="M11 13a3 3 0 0 1 6-1"/>'};
+function thName(c){
+  if(c==="klus")return "The Job";if(c==="live")return "Earpiece";
+  if((c==="milo"||c==="eva")&&!S.log.some(function(i){return i.ch===c&&i.from===c}))return PEOPLE.onbekend[0];
+  return PEOPLE[c][0];
+}
+function avatar(c){
+  if(HAVE[c]&&thName(c)===PEOPLE[c][0]){var i=art(c);i.className="av";return i}
+  var a=el("span","av",c==="klus"?"4":c==="anon"?"?":thName(c).charAt(0));if(PEOPLE[c])a.style.color="var("+PEOPLE[c][1]+")";return a}
+function preview(it){return it.sys?it.sys:it.me?"You: "+it.me:it.gone===2?"Message deleted":(it.img?"Photo · ":"")+fill(it.text||"")}
+function unMsg(){var n=0;for(var k in S.un)if(k!=="notes"&&k!=="news"&&k!=="live")n+=S.un[k];return n}
+function scroll(){view.scrollTop=view.scrollHeight}
+function show(name,ch){
+  V.name=name;V.ch=ch||null;
+  var map={home:"vHome",list:"vList",chat:"chat",photos:"vPhotos",notes:"vNotes",news:"vNews"};
+  for(var k in map)$(map[k]).hidden=k!==name;
+  $("back").hidden=name==="home";typingEl=null;
+  $("hTitle").textContent={home:"Double Play",list:"Messages",chat:ch?thName(ch):"",photos:"Photos",notes:"Notes",news:"The City Paper"}[name];
+  $("epTitle").hidden=name!=="home";
+  if(name==="chat"){S.un[ch]=0;chat.textContent="";lastFrom=null;S.log.forEach(function(i){if(i.ch===ch)render(i)});
+    if(S.waiting&&S.waiting.ch===ch)showChoices();else $("choices").hidden=true;
+    if(typingNow&&typingNow.ch===ch)typing(true,typingNow.from);
+    hideBanner(ch);scroll()}
+  else{$("choices").hidden=true;
+    if(name==="home")drawHome();if(name==="list")drawList();
+    if(name==="notes"){S.un.notes=0;drawNotes();hideBanner("notes")}
+    if(name==="news"){S.un.news=0;drawNews();hideBanner("news")}
+    if(name==="photos")drawPhotos();
+    view.scrollTop=0}
+  if(name==="home")repaint(true);
+}
+function open2(t){if(t==="notes"||t==="news"||t==="photos"||t==="list")show(t);else show("chat",t)}
+$("back").onclick=function(){show(V.name==="chat"&&V.ch!=="live"?"list":"home")};
+function appBtn(key,label,n,fn){var b=el("button","app");b.type="button";var ic=el("span","ic");ic.innerHTML='<svg viewBox="0 0 28 28" aria-hidden="true">'+ICON[key]+'</svg>';b.appendChild(ic);b.appendChild(el("span",null,label));if(n)b.appendChild(el("span","badge2",String(n)));b.onclick=fn;return b}
+function drawHome(){
+  var a=$("apps");a.textContent="";
+  a.appendChild(appBtn("msg","Messages",unMsg(),function(){show("list")}));
+  a.appendChild(appBtn("photo","Photos",0,function(){show("photos")}));
+  a.appendChild(appBtn("note","Notes",S.un.notes||0,function(){show("notes")}));
+  a.appendChild(appBtn("news","City Paper",S.un.news||0,function(){show("news")}));
+  if(S.log.some(function(i){return i.ch==="live"}))a.appendChild(appBtn("ear","Earpiece",S.un.live||0,function(){show("chat","live")}));
+  var r=$("recent");r.textContent="";
+  if(S.recent.length){r.appendChild(el("h3",null,"Notifications"));
+    S.recent.slice().reverse().forEach(function(x){var b=el("button","rc");b.type="button";var sp=el("span");sp.appendChild(el("b",null,x.who));sp.appendChild(el("small",null,x.txt));b.appendChild(sp);b.onclick=function(){open2(x.to)};r.appendChild(b)})}
+}
+function drawList(){
+  var box=$("vList");box.textContent="";var seen={},order=[];
+  for(var i=S.log.length-1;i>=0;i--){var c=S.log[i].ch;if(c&&c!=="live"&&!seen[c]){seen[c]=S.log[i];order.push(c)}}
+  if(!order.length)box.appendChild(el("p","empty","No messages yet."));
+  order.forEach(function(c){var b=el("button","th");b.type="button";b.appendChild(avatar(c));var tx=el("span","tx");tx.appendChild(el("b",null,thName(c)));
+    tx.appendChild(el("small",null,S.waiting&&S.waiting.ch===c?"Waiting for your answer":preview(seen[c])));b.appendChild(tx);
+    if(S.un[c])b.appendChild(el("span","n",String(S.un[c])));b.onclick=function(){show("chat",c)};box.appendChild(b)});
+}
+function drawNotes(){
+  var box=$("vNotes");box.textContent="";box.appendChild(el("h3","vh","What I don't know yet"));
+  var open=S.notes.filter(function(n){return !n.a}),done=S.notes.filter(function(n){return n.a});
+  if(!open.length)box.appendChild(el("p","empty",S.notes.length?"Everything is answered. For now.":"Nothing noted yet."));
+  open.slice().reverse().forEach(function(n){var d=el("div","note2");d.appendChild(el("b",null,n.q));box.appendChild(d)});
+  if(done.length)box.appendChild(el("h3","vh","What I know now"));
+  done.slice().reverse().forEach(function(n){var d=el("div","note2 done");d.appendChild(el("b",null,n.q));d.appendChild(el("p",null,n.a));box.appendChild(d)});
+}
+function drawNews(){
+  var box=$("vNews");box.textContent="";
+  if(!S.news.length)box.appendChild(el("p","empty","No news yet."));
+  S.news.slice().reverse().forEach(function(n){var d=el("article","art");d.appendChild(el("small",null,"Arts and culture"));d.appendChild(el("h3",null,fill(n.t)));d.appendChild(el("p",null,fill(n.b)));box.appendChild(d)});
+}
+function drawPhotos(){
+  var box=$("vPhotos");box.textContent="";var im=S.log.filter(function(i){return i.img&&i.gone!==2});
+  if(!im.length)box.appendChild(el("p","empty","No photos yet."));
+  im.slice().reverse().forEach(function(i){box.appendChild(imgNode(i))});
+}
+/* melding bovenin: blijft staan zolang iemand op antwoord wacht */
+var banT=null,banTo=null;
+function banner(who,txt,to,sticky){
+  S.recent.push({who:who,txt:txt,to:to});if(S.recent.length>4)S.recent.shift();
+  if(V.name==="home")drawHome();if(V.name==="list")drawList();
+  if(V.name==="chat"&&V.ch===to)return;
+  var b=$("banner");b.firstChild.textContent=who;b.children[1].textContent=txt;b.hidden=false;banTo=to;
+  clearTimeout(banT);if(!sticky)banT=setTimeout(function(){if(!(S.waiting&&S.waiting.ch===banTo))b.hidden=true},7000);
+}
+function hideBanner(to){if(banTo===to){$("banner").hidden=true;clearTimeout(banT)}}
+$("banner").onclick=function(){var t=banTo;$("banner").hidden=true;open2(t)};
+function add(it){
+  it.ch=S.ch||"klus";it.ep=S.ep;S.log.push(it);
+  if(it.gone===1)setTimeout(function(){it.gone=2;save();if(V.name==="chat"&&V.ch===it.ch)show("chat",it.ch);else if(V.name==="list")drawList()},3600);
+  if(V.name==="chat"&&V.ch===it.ch){render(it);scroll();return}
+  if(it.me)return;
+  S.un[it.ch]=(S.un[it.ch]||0)+1;banner(thName(it.ch),(it.from&&(it.ch==="klus"||it.ch==="live")?PEOPLE[it.from][0]+": ":"")+preview(it),it.ch);
+}
+var typingNow=null;
 function typing(on,from){
   if(typingEl){typingEl.remove();typingEl=null}
-  if(on){typingEl=el("div","typing",PEOPLE[from][0]+" is typing");for(var i=0;i<3;i++)typingEl.appendChild(el("i"));chat.appendChild(typingEl);scroll()}
+  typingNow=on?{from:from,ch:S.ch}:null;
+  if(on&&V.name==="chat"&&V.ch===S.ch){typingEl=el("div","typing",PEOPLE[from][0]+" is typing");for(var i=0;i<3;i++)typingEl.appendChild(el("i"));chat.appendChild(typingEl);scroll()}
 }
 function showChoices(){
   var box=$("choices");box.textContent="";
@@ -773,22 +999,39 @@ function showChoices(){
   box.hidden=false;scroll();
 }
 function pick(i){
-  var c=S.waiting,o=c.options[i];S.choices[c.id]=i;S.waiting=null;
+  var c=S.waiting,o=c.options[i];S.choices[c.id]=i;S.waiting=null;S.ch=c.ch;
   if(o.set){S.flags=S.flags||{};for(var k in o.set)S.flags[k]=o.set[k]}$("choices").hidden=true;
   add({me:o.label});S.queue=o.reply.concat(S.queue);save();pump();
+}
+function showEnd(){
+  var last=S.ep>=EP.length,e=$("endBox"),b,z=EP[S.ep-1].next,open=S.notes.filter(function(n){return !n.a}).length;e.textContent="";
+  e.appendChild(el("h2",null,last?"Season 1 is complete":"Episode "+S.ep+" is complete"));
+  var p=el("p","note");p.appendChild(el("b",null,showUnits()+(S.mode==="fiets"&&!S.trial?" km":" steps")));p.appendChild(document.createTextNode(" at your own pace. "+(last?"The Other Side is fully sharp. Find the window.":"The Other Side is now "+S.ep+" of 8 sharp.")));e.appendChild(p);
+  if(open)e.appendChild(el("p","note",open===1?"There is 1 open question left in your notes.":"There are "+open+" open questions left in your notes."));
+  if(z){var l=el("div","lockmsg");l.appendChild(lockNode(z));e.appendChild(l)}
+  if(last){e.appendChild(el("p","note","Season 2 begins in Vienna."));
+    b=el("button","ghost","Play the season again");b.type="button";b.onclick=function(){wipe();location.reload()};e.appendChild(b)}
+  else{b=el("button","primary","Go to episode "+(S.ep+1)+": "+EP[S.ep].t);b.type="button";b.onclick=function(){newRun(S,S.ep+1);save();wiped=true;location.reload()};e.appendChild(b)}
+  b=el("button","ghost","Look around your phone a little longer");b.type="button";b.onclick=function(){$("endL").hidden=true};e.appendChild(b);
+  $("endL").hidden=false;
 }
 function pump(){
   if(busy||S.waiting||S.done)return;
   if(!S.queue.length){
     if(S.beat<B().length){
       if(frac()>=AT[S.beat]){S.queue=JSON.parse(JSON.stringify(B()[S.beat]));S.beat++;notify();save();repaint(true);pump()}
-    }else{S.done=true;add({end:1});save();release()}
+    }else{S.done=true;save();release();setTimeout(showEnd,1800)}
     return}
   var it=S.queue[0];
   if((it.when&&!ok(it.when))||(it.opt&&!HAVE[it.name])){S.queue.shift();pump();return}
-  if(it.choice){S.queue.shift();S.waiting=it.choice;save();showChoices();return}
+  if(it.to){S.queue.shift();S.ch=it.to;pump();return}
+  if(it.note){S.queue.shift();S.notes.push({id:it.note.id,q:it.note.q,ep:S.ep});if(V.name==="notes")drawNotes();else{S.un.notes=(S.un.notes||0)+1;banner("Notes",it.note.q,"notes")}save();pump();return}
+  if(it.ans){S.queue.shift();S.notes.forEach(function(n){if(n.id===it.ans.id&&!n.a){n.a=it.ans.a;n.aep=S.ep;if(V.name==="notes")drawNotes();else{S.un.notes=(S.un.notes||0)+1;banner("Notes","Answered: "+n.q,"notes")}}});save();pump();return}
+  if(it.news){S.queue.shift();S.news.push({t:it.news.t,b:it.news.b,ep:S.ep});if(V.name==="news")drawNews();else{S.un.news=(S.un.news||0)+1;banner("The City Paper",fill(it.news.t),"news")}save();pump();return}
+  if(it.choice){S.queue.shift();S.waiting=it.choice;S.waiting.ch=S.ch;save();
+    if(V.name==="chat"&&V.ch===S.ch)showChoices();else banner(thName(S.ch),"Waiting for your answer",S.ch,true);return}
   busy=true;
-  var wait=it.sys?350:Math.min(1900,550+(it.text||"").length*20);
+  var wait=it.sys?450:Math.min(1900,550+(it.text||"").length*20);
   if(!it.sys)typing(true,it.from);
   setTimeout(function(){typing(false);S.queue.shift();add(it);busy=false;save();pump()},wait);
 }
@@ -944,9 +1187,12 @@ $("gForm").addEventListener("submit",function(e){e.preventDefault();
 
 /* ---------- start ---------- */
 var draft=load()||fresh();
+if(!draft.v){draft.v=2;draft.log=[];if(!draft.done)newRun(draft,draft.ep)} /* oude opslag zonder kanalen: lopende aflevering opnieuw */
+["log","news","notes","recent"].forEach(function(k){if(!draft[k])draft[k]=[]});if(!draft.un)draft.un={};
+draft.log.forEach(function(i){if(i.gone===1)i.gone=2});
 if(draft.done&&draft.ep<EP.length)newRun(draft,draft.ep+1);
 if(!draft.flags)draft.flags={};if(!draft.route)draft.route="vrij";
-var resume=!!(draft.log&&draft.log.length);
+var resume=draft.beat>0||draft.done;
 function seg(id,get,set){var box=$(id);function mark(){var bs=box.querySelectorAll("button");for(var i=0;i<bs.length;i++)bs[i].setAttribute("aria-pressed",String(bs[i].dataset.v===String(get())))}
   box.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;set(b.dataset.v);mark()});mark();return mark}
 function lenLabels(){var bike=draft.mode==="fiets";$("l1").textContent=bike?"3 km":"± 8 min";$("l2").textContent=bike?"6 km":"± 15 min";$("l3").textContent=bike?(draft.route==="kaart"?"± 8 km":"10 km"):"± 30 min"}
@@ -955,7 +1201,8 @@ var markRoute=seg("segRoute",function(){return draft.route},function(v){draft.ro
 seg("segLen",function(){return draft.len},function(v){draft.len=v});
 lenLabels();$("naam").value=draft.naam||"";
 function startUI(){
-  resume=!!(draft.log&&draft.log.length);
+  resume=draft.beat>0||draft.done;
+  var tz=!resume&&draft.ep>1?EP[draft.ep-2].next:null;$("tease").hidden=!tz;if(tz){$("tease").textContent="";$("tease").appendChild(lockNode(tz))}
   $("kick").textContent="Season 1 · episode "+draft.ep;
   $("go").textContent=resume?(draft.done?"See the ending":"Continue episode "+draft.ep):"Start episode "+draft.ep;
   ["segMode","segRoute","segLen"].forEach(function(id){$(id).parentNode.hidden=resume});
@@ -980,7 +1227,10 @@ $("go").onclick=function(){
   $("start").hidden=true;$("app").hidden=false;
   $("epTitle").textContent="Episode "+S.ep+" · "+EP[S.ep-1].t;
   $("unit").textContent=S.trial?"steps (practice)":S.mode==="fiets"?"km cycled":"steps";
-  S.log.forEach(render);if(S.waiting)showChoices();scroll();repaint(true);
+  show("home");repaint(true);
+  if(S.waiting)banner(thName(S.waiting.ch),"Waiting for your answer",S.waiting.ch,true);
+  if(S.done)showEnd();
+  (function ck(){var d=new Date();$("clock").textContent=("0"+d.getHours()).slice(-2)+":"+("0"+d.getMinutes()).slice(-2);setTimeout(ck,20000)})();
   markSens();labels();
   if(!S.done)sensors();
   if(S.route==="kaart"&&!S.trial&&!S.done)kaartStart();
@@ -990,7 +1240,7 @@ $("go").onclick=function(){
 /* ---------- zakstand, menu, schilderij ---------- */
 var holdT=null;
 $("bPocket").onclick=function(){$("pNew").hidden=true;$("pocket").hidden=false};
-$("pocket").addEventListener("pointerdown",function(){holdT=setTimeout(function(){$("pocket").hidden=true;scroll()},800)});
+$("pocket").addEventListener("pointerdown",function(){holdT=setTimeout(function(){$("pocket").hidden=true},800)});
 ["pointerup","pointercancel","pointerleave"].forEach(function(n){$("pocket").addEventListener(n,function(){clearTimeout(holdT)})});
 $("pocket").addEventListener("contextmenu",function(e){e.preventDefault()});
 var markSens=seg("segSens",function(){return S.sens},function(v){S.sens=parseFloat(v);save()});
@@ -998,7 +1248,7 @@ function labels(){$("mSound").textContent="Sound for a new message: "+(S.sound?"
   $("mAdd").textContent=S.mode==="fiets"?"Sensor not working? Add 500 metres":"Sensor not working? Add 100 steps";
   var k=S.route==="kaart"&&!S.trial;$("mAdd").hidden=k;$("mMap").hidden=!k;$("mFree").hidden=!k;$("mSkip").hidden=!k||!nextPt();
   $("mMap").textContent=$("mapWrap").hidden?"Show map":"Hide map"}
-$("mMap").onclick=function(){$("mapWrap").hidden=!$("mapWrap").hidden;if(map&&!$("mapWrap").hidden)map.resize();labels();$("menu").hidden=true;scroll()};
+$("mMap").onclick=function(){$("mapWrap").hidden=!$("mapWrap").hidden;if(map&&!$("mapWrap").hidden)map.resize();labels();$("menu").hidden=true};
 $("mSkip").onclick=function(){if(nextPt()){S.reached++;S.leg=0;save();tick()}$("menu").hidden=true};
 $("mFree").onclick=function(){toVrij("");$("menu").hidden=true};
 $("bMenu").onclick=function(){labels();$("menu").hidden=false};
@@ -1006,9 +1256,9 @@ $("mClose").onclick=function(){$("menu").hidden=true};
 $("menu").addEventListener("click",function(e){if(e.target===$("menu"))$("menu").hidden=true});
 $("mSound").onclick=function(){S.sound=!S.sound;labels();save()};
 $("mAdd").onclick=function(){S.bonus+=S.mode==="fiets"?500:100;hint("");tick();save()};
-$("mStop").onclick=function(){save();location.reload()};
-$("mFresh").onclick=function(){newRun(S,S.ep);save();location.reload()};
-$("thumb").onclick=function(){paint($("viewer").querySelector("canvas"));$("viewer").hidden=false};
+$("mStop").onclick=function(){save();wiped=true;location.reload()};
+$("mFresh").onclick=function(){newRun(S,S.ep);save();wiped=true;location.reload()};
+$("wall").onclick=function(){paint($("viewer").querySelector("canvas"));$("viewer").hidden=false};
 $("vClose").onclick=function(){$("viewer").hidden=true};
 })();
 </script>
