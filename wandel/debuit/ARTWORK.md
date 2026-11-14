@@ -6,7 +6,8 @@ Alles is optioneel. Zonder plaatjes werkt het spel: de pagina tekent het droombe
 - Formaat: WebP, met precies deze bestandsnamen.
 - Geen tekst, logo's of leesbare letters in beeld.
 - Stijl: filmische, geschilderde illustratie, dezelfde hand als Dubbelspel. De fictieve stad Westerdam: een havenstad aan een rivier, vroege ochtend en avondlicht.
-- Kleuren: bijna zwart met een groene zweem `#121512`, donkergroen `#1b211c`, bankbiljetgroen `#8fe0b0`, crème `#f0f2ec`. Eén accentkleur per persoon: Tess koraal `#f08a6c`, Mo turquoise `#6fc3cf`, Rosa okergeel `#e6c07a`, Alex lila `#c3a4e6`, Vermeer grijs `#b4b9c2`.
+- Kleuren: het spel is licht, als een stadsgids op papier: crème `#f3ecdd`, inktgroen `#1d2a24`, smaragd `#1f6b4a`, goud `#a8791f`, rivierblauw `#a9cfc9`. De beelden zelf mogen donker en filmisch zijn; ze staan als foto met een witte rand op de bladzijde. Eén accentkleur per persoon: Tess steenrood `#b3412c`, Mo petrol `#17727f`, Rosa oker `#8a6412`, Alex paars `#6a3f9c`, Vermeer grijs `#4d5661`.
+- De kaart van Westerdam, de pictogrammen op het droombord en de balk van de tas tekent de pagina zelf. Daar is geen artwork voor nodig.
 - De speler komt nooit herkenbaar in beeld: altijd van achteren, als silhouet of buiten beeld. Zo past het bij iedereen.
 
 ## Personages
@@ -23,12 +24,12 @@ Gebruik deze beschrijvingen in elke prompt, zodat iedereen steeds hetzelfde uite
 
 | Bestand | Maat | Prompt |
 |---|---|---|
-| `cover.webp` | 1200×900 | Een sporttas op een smal bed in een eenvoudige zolderkamer, half opengeritst, met een groene gloed van bankbiljetten. Door het raam (dat openstaat met een boek eronder) zie je de stad Westerdam bij zonsopgang. Het bovenste kwart blijft rustig donker. |
+| `cover.webp` | 1200×900 | Een sporttas op een smal bed in een eenvoudige zolderkamer, half opengeritst, met een groene gloed van bankbiljetten. Door het raam (dat openstaat met een boek eronder) zie je de stad Westerdam bij zonsopgang. Dit beeld staat bovenaan het startscherm (liggend, 16:10 uitsnede uit het midden). |
 | `droom-luxe.webp` | 1200×1500 (staand, 4:5) | Het droombeeld Luxe en aanzien: een groot dakterras bij een penthouse, hoog boven een havenstad bij avondlicht. Glazen balustrade, een lange tafel, één stoel, de rivier en de lichten van de stad eronder. |
 | `droom-vrij.webp` | 1200×1500 | Het droombeeld Vrijheid en avontuur: een tweemaster met crèmekleurige zeilen die bij laagstaande zon een haven uit vaart, open water voor de boeg. |
 | `droom-imp.webp` | 1200×1500 | Het droombeeld Een eigen imperium: de gevel van een oud bankgebouw met zuilen bij avond, alle ramen warm verlicht, de deuren open, een lichtbaan over de stoep. Boven de ingang een leeg naambord (geen letters). |
 | `droom-thuis.webp` | 1200×1500 | Het droombeeld Een heerlijk privéleven: een vrijstaand huis aan het water bij avondlicht, tuindeuren open, warm licht in de keuken, een tuin die doorloopt tot een steiger. |
-| `tess.webp`, `mo.webp`, `rosa.webp`, `alex.webp`, `vermeer.webp` | 400×400 | Portret per personage, zoals hierboven beschreven. Schouders en hoofd, gezicht in het midden, een donkere achtergrond in de eigen accentkleur. Deze worden als ronde profielfoto gebruikt. |
+| `tess.webp`, `mo.webp`, `rosa.webp`, `alex.webp`, `vermeer.webp` | 400×400 | Portret per personage, zoals hierboven beschreven. Schouders en hoofd, gezicht in het midden, een rustige achtergrond in de eigen accentkleur. Deze staan klein en rond naast de naam. |
 
 Het droombeeld begint als grove blokken en wordt elke wandeling scherper. In wandeling 8 is het volledig te zien.
 
