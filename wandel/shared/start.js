@@ -11,10 +11,10 @@ var MW=window.MW,$=function(s){return document.querySelector(s)},$$=function(s){
 var me=document.currentScript,GID=(me&&me.dataset.game)||"",L=(document.documentElement.lang||"en").slice(0,2)==="nl"?"nl":"en";
 var X={nl:{where:"Waar speel je?",len:"Lengte",ser:"Serie",edit:"Aanpassen",editX:"Klaar",start:"Start de zaak",
     newH:"Nieuw hier?",newT:"Speel eerst gratis de proefronde: een korte zaak op een getekende kaart, zodat je ziet hoe het werkt.",trial:"▶ Gratis proefronde",trialS:"Proefronde",
-    how:"Hoe werkt het?",need:"Eén ticket per team. Iedereen vult dezelfde code in op zijn eigen telefoon, of jullie spelen samen op één telefoon. Laadt de kaart niet, dan speel je verder op de plattegrond.",close:"Sluiten",moreB:"Meer"},
+    how:"Hoe werkt het?",need:"Eén ticket per zaak, niet per persoon. Speel je met meer? Dan vult iedereen dezelfde code in op zijn eigen telefoon, of jullie spelen samen op één telefoon. Laadt de kaart niet, dan speel je verder op de plattegrond.",close:"Sluiten",moreB:"Meer"},
   en:{where:"Where are you playing?",len:"Length",ser:"Series",edit:"Change",editX:"Done",start:"Start the case",
     newH:"New here?",newT:"Play the free practice round first: a short case on a drawn map, so you can see how it works.",trial:"▶ Free practice round",trialS:"Practice round",
-    how:"How does it work?",need:"One ticket per team. Everyone enters the same code on their own phone, or you play together on one phone. If the map won't load, you carry on with the street plan.",close:"Close",moreB:"More"}}[L];
+    how:"How does it work?",need:"One ticket per case, not per person. Playing with more? Everyone enters the same code on their own phone, or you play together on one phone. If the map won't load, you carry on with the street plan.",close:"Close",moreB:"More"}}[L];
 
 function css(){if(document.getElementById("mwStartCss"))return;var s=document.createElement("style");s.id="mwStartCss";s.textContent=
   ".mwSum{display:flex;align-items:center;gap:10px;font-size:14px;line-height:1.35;text-align:left;opacity:.9}"+
