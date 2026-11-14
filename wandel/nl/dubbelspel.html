@@ -645,7 +645,7 @@ function revealed(){return S&&(S.ep===8&&(S.done||S.beat>=5))}
 function season(){return S?((S.ep-1)+(S.done?1:frac()))/8:0}
 function block(){return Math.max(1,Math.round(36*Math.pow(1-season(),1.5)))}
 /* ---------- artwork: optioneel, zie ../dubbelspel/ARTWORK.md. Zonder plaatjes tekent de pagina alles zelf. ---------- */
-var ART="../dubbelspel/img/",HAVE={},WIN=[.793,.32,.12,.133];
+var ART="../dubbelspel/img/",HAVE={},WIN=[.738,.243,.107,.132];
 ["cover","overkant","overkant-eva","winter","envelop","milo","noor","raf","celeste","eva","voss","atelier","veilinghuis","podium","snackbar"].forEach(function(n){
   var i=new Image();i.onload=function(){HAVE[n]=i;onArt(n)};i.src=ART+n+".webp"});
 function onArt(n){
