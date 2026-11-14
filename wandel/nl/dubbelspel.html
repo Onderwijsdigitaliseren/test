@@ -102,6 +102,7 @@ header .t span{font-size:12px;color:var(--dim)}
 .note2 p{margin:6px 0 0;font-size:14px}
 .note2.done b{text-decoration:line-through;color:#7b766a;font-weight:400}
 .art{border-bottom:1px solid var(--line);padding:6px 0 14px}
+.art img{width:100%;height:auto;border-radius:12px;display:block;margin-bottom:8px}
 .art small{color:var(--brass);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
 .art h3{font:600 20px/1.2 var(--display);margin:4px 0 6px}
 .art p{margin:0;color:#c6d0d6;font-size:15px}
@@ -313,7 +314,7 @@ function to(c,w){var o={to:c};if(w)o.when=w;return o}
 function x(f,t,w){var o=m(f,t,w);o.gone=1;return o}
 function q(id,t){return {note:{id:id,q:t}}}
 function a(id,t){return {ans:{id:id,a:t}}}
-function n(t,b){return {news:{t:t,b:b}}}
+function n(t,b,i){return {news:{t:t,b:b,i:i}}}
 function c(id,opts){return {choice:{id:id,options:opts.map(function(o){return {label:o[0],set:o[1]||null,reply:o[2]||[]}})}}}
 var AT=[0,.14,.30,.46,.62,.80,1];
 var DEF={lijst:"stil",persona:"de stille belegger uit Zwitserland",celeste:"stil",eva:"ja",raf:"plan",conf:"team",milo:"weg"};
@@ -417,7 +418,7 @@ var EP=[
             ["Heel nadrukkelijk geen ring",null,[m("raf","Ja. Ja! Dat is het sterkste statement. Niemand vergeet een lege hand.")]]]),
   m("noor","Raf, het is een veiling. Geen modeshow."),
   m("raf","Alles is een modeshow, Noor."),
-  n("Wie was Victor Sorel?","Vier dingen over de schilder die nooit interviews gaf. Eén: hij werkte altijd alleen, zei hij. Twee: niemand mocht zijn atelier in. Drie: hij signeerde pas als een doek het atelier verliet. Vier: na 2004 schilderde hij nooit meer een stad bij nacht. Niemand weet waarom."),
+  n("Wie was Victor Sorel?","Vier dingen over de schilder die nooit interviews gaf. Eén: hij werkte altijd alleen, zei hij. Twee: niemand mocht zijn atelier in. Drie: hij signeerde pas als een doek het atelier verliet. Vier: na 2004 schilderde hij nooit meer een stad bij nacht. Niemand weet waarom.","nieuws-sorel"),
   m("noor","Ik stuur je de plattegrond van het veilinghuis. Niet nu. Je bent aan het sporten.")],
 [ to("celeste"),
   m("celeste","Oefenen. Ik ben een nieuwsgierige gast bij de champagne. Jij bent {persona}."),
@@ -506,7 +507,7 @@ var EP=[
   m("noor","De persfoto's van morgen zijn binnen. Voss laat het schilderij vanochtend al aan de pers zien."),
   m("raf","Laat zien."),
   im("noor","schilderij","Persfoto, vanochtend genomen in het veilinghuis."),
-  n("Voss toont topstuk aan de pers","‘Nog nooit zo mooi belicht,’ zegt Adrian Voss bij de onthulling van ‘De overkant’. Fotograferen mocht, van dichtbij kijken niet. ‘Het doek is kwetsbaar.’"),
+  n("Voss toont topstuk aan de pers","‘Nog nooit zo mooi belicht,’ zegt Adrian Voss bij de onthulling van ‘De overkant’. Fotograferen mocht, van dichtbij kijken niet. ‘Het doek is kwetsbaar.’","nieuws-pers"),
   to("anon"),
   m("anon","Kijk linksonder."),
   to("klus")],
@@ -702,7 +703,7 @@ var EP=[
 [ m("voss","Haal dat van het scherm."),
   m("celeste","Te laat, Adrian. Er kijken elfhonderd verzamelaars mee."),
   m("noor","En drie kranten. Ik heb ze vanochtend gebeld. Voor de zekerheid."),
-  n("LIVE: tumult bij Sorel-veiling","Op het podium staan twee versies van ‘De overkant’. Een vrouw wijst naar een raam in het doek. De livestream is niet onderbroken. Adrian Voss heeft de zaal verlaten."),
+  n("LIVE: tumult bij Sorel-veiling","Op het podium staan twee versies van ‘De overkant’. Een vrouw wijst naar een raam in het doek. De livestream is niet onderbroken. Adrian Voss heeft de zaal verlaten.","nieuws-tumult"),
   m("raf","Ik huil niet."),
   m("noor","Hij huilt."),
   c("einde",[["Ik ook een beetje",null,[m("noor","Ik ook. Niet tegen Raf zeggen.")]],
@@ -711,7 +712,7 @@ var EP=[
   s("Later · snackbar De Hoek"),
   im("celeste","scene","Bewijsstuk A: wij, in een snackbar.",{name:"snackbar",opt:1}),
   m("eva","Het schilderij gaat naar een museum. Met twee namen op het bordje. Ik heb het zelf gekozen."),
-  n("‘De overkant’ had twee makers","Het museum hangt het doek op met twee namen op het bordje: Victor Sorel en Eva. ‘Ik heb er twintig jaar naar gekeken en haar nooit gezien,’ zegt een conservator. ‘Ze stond er gewoon.’"),
+  n("‘De overkant’ had twee makers","Het museum hangt het doek op met twee namen op het bordje: Victor Sorel en Eva. ‘Ik heb er twintig jaar naar gekeken en haar nooit gezien,’ zegt een conservator. ‘Ze stond er gewoon.’","nieuws-museum"),
   m("raf","Ik wil een frikandel speciaal en een excuus van de hele kunstgeschiedenis."),
   m("celeste","Ik heb champagne meegenomen. Ze schenken hier geen champagne. Dat is hun probleem."),
   m("milo","Ik heb voor iedereen betaald. Het maakt niets goed. Het is een begin.","milo=in"),
@@ -812,7 +813,7 @@ function season(){return S?((S.ep-1)+(S.done?1:frac()))/8:0}
 function block(){return Math.max(1,Math.round(36*Math.pow(1-season(),1.5)))}
 /* ---------- artwork: optioneel, zie ../dubbelspel/ARTWORK.md. Zonder plaatjes tekent de pagina alles zelf. ---------- */
 var ART="../dubbelspel/img/",HAVE={},WIN=[.738,.243,.107,.132];
-["cover","overkant","overkant-eva","winter","envelop","milo","noor","raf","celeste","eva","voss","atelier","veilinghuis","podium","snackbar"].forEach(function(n){
+["cover","overkant","overkant-eva","winter","envelop","milo","noor","raf","celeste","eva","voss","atelier","veilinghuis","podium","snackbar","bram","klus","nieuws-sorel","nieuws-pers","nieuws-tumult","nieuws-museum"].forEach(function(n){
   var i=new Image();i.onload=function(){HAVE[n]=i;onArt(n)};i.src=ART+n+".webp"});
 function onArt(n){
   if(n==="overkant"||n==="overkant-eva"){base=null;if(S&&!$("app").hidden)repaint(true)}
@@ -904,10 +905,13 @@ var ICON={msg:'<path d="M5 6h18v12H12l-5 4v-4H5z"/>',photo:'<rect x="4" y="6" wi
 function thName(c){
   if(c==="klus")return "De klus";if(c==="live")return "Oortje";
   if((c==="milo"||c==="eva")&&!S.log.some(function(i){return i.ch===c&&i.from===c}))return PEOPLE.onbekend[0];
+  if(c==="anon"&&bramKnown())return "Bram";
   return PEOPLE[c][0];
 }
+function bramKnown(){return S.notes.some(function(n){return n.id==="anon"&&n.a})}
 function avatar(c){
-  if(HAVE[c]&&thName(c)===PEOPLE[c][0]){var i=art(c);i.className="av";return i}
+  var k=c==="anon"?(bramKnown()?"bram":""):c;
+  if(k&&HAVE[k]&&(c==="klus"||c==="anon"||thName(c)===PEOPLE[c][0])){var i=art(k);i.className="av";return i}
   var a=el("span","av",c==="klus"?"4":c==="anon"?"?":thName(c).charAt(0));if(PEOPLE[c])a.style.color="var("+PEOPLE[c][1]+")";return a}
 function preview(it){return it.sys?it.sys:it.me?"Jij: "+it.me:it.gone===2?"Bericht verwijderd":(it.img?"Foto · ":"")+fill(it.text||"")}
 function unMsg(){var n=0;for(var k in S.un)if(k!=="notes"&&k!=="news"&&k!=="live")n+=S.un[k];return n}
@@ -964,7 +968,7 @@ function drawNotes(){
 function drawNews(){
   var box=$("vNews");box.textContent="";
   if(!S.news.length)box.appendChild(el("p","empty","Nog geen nieuws."));
-  S.news.slice().reverse().forEach(function(n){var d=el("article","art");d.appendChild(el("small",null,"Kunst en cultuur"));d.appendChild(el("h3",null,fill(n.t)));d.appendChild(el("p",null,fill(n.b)));box.appendChild(d)});
+  S.news.slice().reverse().forEach(function(n){var d=el("article","art");if(n.i&&HAVE[n.i])d.appendChild(art(n.i,""));d.appendChild(el("small",null,"Kunst en cultuur"));d.appendChild(el("h3",null,fill(n.t)));d.appendChild(el("p",null,fill(n.b)));box.appendChild(d)});
 }
 function drawPhotos(){
   var box=$("vPhotos");box.textContent="";var im=S.log.filter(function(i){return i.img&&i.gone!==2});
@@ -1029,7 +1033,7 @@ function pump(){
   if(it.to){S.queue.shift();S.ch=it.to;pump();return}
   if(it.note){S.queue.shift();S.notes.push({id:it.note.id,q:it.note.q,ep:S.ep});if(V.name==="notes")drawNotes();else{S.un.notes=(S.un.notes||0)+1;banner("Notities",it.note.q,"notes")}save();pump();return}
   if(it.ans){S.queue.shift();S.notes.forEach(function(n){if(n.id===it.ans.id&&!n.a){n.a=it.ans.a;n.aep=S.ep;if(V.name==="notes")drawNotes();else{S.un.notes=(S.un.notes||0)+1;banner("Notities","Beantwoord: "+n.q,"notes")}}});save();pump();return}
-  if(it.news){S.queue.shift();S.news.push({t:it.news.t,b:it.news.b,ep:S.ep});if(V.name==="news")drawNews();else{S.un.news=(S.un.news||0)+1;banner("De Stadskrant",fill(it.news.t),"news")}save();pump();return}
+  if(it.news){S.queue.shift();S.news.push({t:it.news.t,b:it.news.b,i:it.news.i,ep:S.ep});if(V.name==="news")drawNews();else{S.un.news=(S.un.news||0)+1;banner("De Stadskrant",fill(it.news.t),"news")}save();pump();return}
   if(it.choice){S.queue.shift();S.waiting=it.choice;S.waiting.ch=S.ch;save();
     if(V.name==="chat"&&V.ch===S.ch)showChoices();else banner(thName(S.ch),"Wacht op je antwoord",S.ch,true);return}
   busy=true;
