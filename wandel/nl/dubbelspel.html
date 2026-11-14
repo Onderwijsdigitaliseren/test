@@ -914,7 +914,7 @@ function avatar(c){
   if(k&&HAVE[k]&&(c==="klus"||c==="anon"||thName(c)===PEOPLE[c][0])){var i=art(k);i.className="av";return i}
   var a=el("span","av",c==="klus"?"4":c==="anon"?"?":thName(c).charAt(0));if(PEOPLE[c])a.style.color="var("+PEOPLE[c][1]+")";return a}
 function preview(it){return it.sys?it.sys:it.me?"Jij: "+it.me:it.gone===2?"Bericht verwijderd":(it.img?"Foto · ":"")+fill(it.text||"")}
-function unMsg(){var n=0;for(var k in S.un)if(k!=="notes"&&k!=="news"&&k!=="live")n+=S.un[k];return n}
+function unMsg(){var n=0;for(var k in S.un)if(k!=="notes"&&k!=="news"&&k!=="live")n+=S.un[k];if(S.waiting&&S.waiting.ch!=="live"&&!S.un[S.waiting.ch])n++;return n}
 function scroll(){view.scrollTop=view.scrollHeight}
 function show(name,ch){
   V.name=name;V.ch=ch||null;
@@ -934,6 +934,7 @@ function show(name,ch){
     if(name==="photos")drawPhotos();
     view.scrollTop=0}
   if(name==="home")repaint(true);
+  if(S.waiting&&!(name==="chat"&&ch===S.waiting.ch))waitBanner();
 }
 function open2(t){if(t==="notes"||t==="news"||t==="photos"||t==="list")show(t);else show("chat",t)}
 $("back").onclick=function(){show(V.name==="chat"&&V.ch!=="live"?"list":"home")};
@@ -984,6 +985,8 @@ function banner(who,txt,to,sticky){
   var b=$("banner");b.firstChild.textContent=who;b.children[1].textContent=txt;b.hidden=false;banTo=to;
   clearTimeout(banT);if(!sticky)banT=setTimeout(function(){if(!(S.waiting&&S.waiting.ch===banTo))b.hidden=true},7000);
 }
+/* zolang iemand op antwoord wacht blijft dat zichtbaar, op welk scherm je ook bent */
+function waitBanner(){var b=$("banner"),c=S.waiting.ch;b.firstChild.textContent=thName(c);b.children[1].textContent="Wacht op je antwoord";banTo=c;clearTimeout(banT);b.hidden=false}
 function hideBanner(to){if(banTo===to){$("banner").hidden=true;clearTimeout(banT)}}
 $("banner").onclick=function(){var t=banTo;$("banner").hidden=true;open2(t)};
 function add(it){
