@@ -14,7 +14,7 @@
   --bg:#101b24; --bg2:#172633; --line:#27394a;
   --ink:#eef1ee; --dim:#8fa1ad;
   --brass:#d8b26a; --brass-ink:#1b1608;
-  --milo:#d8b26a; --noor:#6fc3cf; --raf:#f08a6c; --celeste:#c3a4e6;
+  --milo:#d8b26a; --noor:#6fc3cf; --raf:#f08a6c; --celeste:#c3a4e6; --eva:#9fd49a; --voss:#b4b9c2;
   --display:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
   --body:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
 }
@@ -41,6 +41,13 @@ h1{font:italic 600 46px/1 var(--display);margin:6px 0 0;letter-spacing:.01em}
 .seg button[aria-pressed="true"]{border-color:var(--brass);background:#22303a;box-shadow:inset 0 0 0 1px var(--brass)}
 .primary{background:var(--brass);color:var(--brass-ink);border:0;border-radius:14px;padding:16px;font-weight:650;font-size:17px}
 .link{background:none;border:0;color:var(--dim);text-decoration:underline;padding:8px;align-self:center}
+#eps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+#eps button{width:100%;display:flex;gap:10px;align-items:baseline;background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:10px 12px;text-align:left;min-height:44px}
+#eps button b{font:600 15px var(--display);color:var(--brass);min-width:1.2em}
+#eps button span{flex:1}
+#eps button small{color:var(--dim);font-size:12px}
+#eps button[aria-current="true"]{border-color:var(--brass)}
+#eps button:disabled{opacity:.45;cursor:default}
 .note{font-size:13px;color:var(--dim);margin:0}
 #startPtg{width:100%;height:150px;object-fit:cover;border-radius:14px;border:1px solid var(--line);display:block;image-rendering:pixelated}
 
@@ -111,10 +118,10 @@ footer{border-top:1px solid var(--line);padding:10px 16px calc(12px + env(safe-a
 
 <div id="start">
   <div>
-    <div class="kicker">Seizoen 1 · aflevering 1</div>
+    <div class="kicker" id="kick">Seizoen 1 · aflevering 1</div>
     <h1>Dubbelspel</h1>
   </div>
-  <canvas id="startPtg" width="300" height="375" aria-label="Het schilderij De overkant, nog onscherp"></canvas>
+  <canvas id="startPtg" width="300" height="375" aria-label="Het schilderij De overkant"></canvas>
   <p class="lead">Een roof, een team en een schilderij. Jij beweegt, het verhaal komt binnen als berichten. Sta je stil, dan wacht het.</p>
   <label class="field"><span>Hoe mogen ze je noemen?</span>
     <input id="naam" type="text" maxlength="20" autocomplete="given-name" placeholder="Je voornaam"></label>
@@ -137,13 +144,14 @@ footer{border-top:1px solid var(--line);padding:10px 16px calc(12px + env(safe-a
     </div></div>
   <button class="primary" id="go" type="button">Start aflevering 1</button>
   <button class="ghost" id="trial" type="button">Proefronde op de bank (stappen lopen vanzelf)</button>
-  <button class="ghost" id="fresh" type="button" hidden>Opnieuw beginnen</button>
+  <div class="field"><span>Afleveringen</span><ol id="eps"></ol></div>
+  <button class="link" id="fresh" type="button">Hele seizoen opnieuw beginnen</button>
   <p class="note">Je scherm blijft aan. Met de zakstand kun je je telefoon wegstoppen zonder dat er iets wordt aangetikt.</p>
 </div>
 
 <div id="app" hidden>
   <header>
-    <div class="t"><b>Dubbelspel</b><span>Aflevering 1 · De verkeerde uitnodiging</span></div>
+    <div class="t"><b>Dubbelspel</b><span id="epTitle"></span></div>
     <button id="thumb" type="button" aria-label="Bekijk het schilderij"><canvas width="300" height="375"></canvas></button>
   </header>
   <div id="mapWrap" hidden><canvas id="map" aria-label="Plattegrond met het volgende punt"></canvas><div id="mapInfo"></div></div>
@@ -168,7 +176,7 @@ footer{border-top:1px solid var(--line);padding:10px 16px calc(12px + env(safe-a
 
 <div id="viewer" class="layer" hidden>
   <canvas width="300" height="375"></canvas>
-  <p><b>De overkant</b>, Victor Sorel. Elke aflevering die je beweegt wordt het beeld scherper.</p>
+  <p><b>De overkant</b>. Met elke aflevering wordt het beeld scherper.</p>
   <button class="ghost" id="vClose" type="button">Sluiten</button>
 </div>
 
@@ -187,7 +195,7 @@ footer{border-top:1px solid var(--line);padding:10px 16px calc(12px + env(safe-a
     <button class="ghost" id="mSkip" type="button" hidden>Dit punt overslaan</button>
     <button class="ghost" id="mFree" type="button" hidden>Verder op eigen route, zonder plattegrond</button>
     <button class="ghost" id="mStop" type="button">Stoppen voor nu (voortgang blijft bewaard)</button>
-    <button class="ghost" id="mFresh" type="button">Opnieuw beginnen (wist je voortgang)</button>
+    <button class="ghost" id="mFresh" type="button">Deze aflevering opnieuw beginnen</button>
     <button class="ghost" id="mClose" type="button">Sluiten</button>
   </div>
 </div>
@@ -201,119 +209,392 @@ footer{border-top:1px solid var(--line);padding:10px 16px calc(12px + env(safe-a
 (function(){
 "use strict";
 var $=function(id){return document.getElementById(id)};
-var KEY="dubbelspel.s1e1";
-var TARGET={plaats:{kort:800,normaal:1600,lang:3000},buiten:{kort:800,normaal:1600,lang:3000},fiets:{kort:3000,normaal:6000,lang:10000},proef:{kort:800,normaal:800,lang:800}};
-var PEOPLE={onbekend:["Onbekend nummer","--dim"],milo:["Milo","--milo"],noor:["Noor","--noor"],raf:["Raf","--raf"],celeste:["Céleste","--celeste"]};
+var KEY="dubbelspel",OLDKEY="dubbelspel.s1e1";
+var TARGET={plaats:{kort:800,normaal:1600,lang:3000},buiten:{kort:800,normaal:1600,lang:3000},fiets:{kort:3000,normaal:6000,lang:10000}};
+var PEOPLE={onbekend:["Onbekend nummer","--dim"],milo:["Milo","--milo"],noor:["Noor","--noor"],raf:["Raf","--raf"],celeste:["Céleste","--celeste"],eva:["Eva","--eva"],voss:["Adrian Voss","--voss"]};
 
-/* ---------- verhaal ---------- */
-function m(from,text){return {from:from,text:text}}
-var BEATS=[
-{at:0,items:[
-  {sys:"Onbekend nummer"},
+/* ---------- verhaal: seizoen 1, acht afleveringen van zeven momenten ----------
+   m(wie,tekst,als)  bericht · s(tekst,als) systeemregel · im(wie,soort,onderschrift,extra) beeld
+   c(id,[[knop,{vlag:waarde}|null,[antwoorden]],…]) keuze · als = "vlag=waarde|waarde" */
+function m(f,t,w){var o={from:f,text:t};if(w)o.when=w;return o}
+function s(t,w){var o={sys:t};if(w)o.when=w;return o}
+function im(f,k,t,x){var o={from:f,img:k,text:t};if(x)for(var q in x)o[q]=x[q];return o}
+function c(id,opts){return {choice:{id:id,options:opts.map(function(o){return {label:o[0],set:o[1]||null,reply:o[2]||[]}})}}}
+var AT=[0,.14,.30,.46,.62,.80,1];
+var DEF={lijst:"stil",persona:"de stille belegger uit Zwitserland",celeste:"stil",eva:"ja",raf:"plan",conf:"team",milo:"weg"};
+var EP=[
+{t:"De verkeerde uitnodiging",beats:[
+[ s("Onbekend nummer"),
   m("onbekend","Oké. Je bent dus al in beweging. Goed."),
   m("onbekend","Ga rustig door terwijl je dit leest. De overdracht is mislukt en jij hebt nu iets wat van mij is."),
-  {from:"onbekend",img:"envelop",text:"Deze envelop. Gisteren gekregen, toch? Je dacht dat het een bedankje was."},
+  im("onbekend","envelop","Deze envelop. Gisteren gekregen, toch? Je dacht dat het een bedankje was."),
   m("onbekend","Er zit een kaartje in met een abstracte afbeelding. Heb je dat nog?"),
-  {choice:{id:"kaartje",options:[
-    {label:"Ja, dat ligt thuis",reply:[m("milo","Mooi. Niet weggooien, niet vouwen, niet op de koelkast hangen. Ik ben Milo, trouwens.")]},
-    {label:"Wie ben jij?",reply:[m("milo","Milo. En jij hebt mijn kaartje. Dat schept een band.")]}]}},
+  c("kaartje",[["Ja, dat ligt thuis",null,[m("milo","Mooi. Niet weggooien, niet vouwen, niet op de koelkast hangen. Ik ben Milo, trouwens.")]],
+               ["Wie ben jij?",null,[m("milo","Milo. En jij hebt mijn kaartje. Dat schept een band.")]]]),
   m("milo","We gaan zo kennismaken. Daarna beslis jij of je hier iets mee te maken wilt hebben."),
-  m("milo","Ik meld me. Geen haast.")
-]},
-{at:.14,items:[
-  m("milo","Dat kaartje is een uitnodiging voor een besloten kunstveiling. Er bestaan er zes."),
+  m("milo","Ik meld me. Geen haast.")],
+[ m("milo","Dat kaartje is een uitnodiging voor een besloten kunstveiling. Er bestaan er zes."),
   m("milo","Die van jou had bij iemand anders terecht moeten komen."),
-  {from:"milo",img:"schilderij",text:"De overkant, Victor Sorel. Scherper dan dit heb ik het niet. Nog niet."},
+  im("milo","schilderij","De overkant, Victor Sorel. Scherper dan dit heb ik het niet. Nog niet."),
   m("milo","Over acht dagen wordt het verkocht. Verwachte opbrengst: achttien miljoen."),
   m("milo","Ik wil het stelen."),
   m("milo","De eigenaar, Adrian Voss, heeft het jaren geleden van iemand afgenomen. Die persoon wil het terug."),
-  {choice:{id:"robin",options:[
-    {label:"Dus jij bent een soort Robin Hood?",reply:[m("milo","Nee. Robin Hood had een bijzonder onhoudbaar verdienmodel.")]},
-    {label:"En wat heb ik daarmee te maken?",reply:[m("milo","Alles. Helaas voor jou, gelukkig voor mij.")]}]}},
+  c("robin",[["Dus jij bent een soort Robin Hood?",null,[m("milo","Nee. Robin Hood had een bijzonder onhoudbaar verdienmodel.")]],
+             ["En wat heb ik daarmee te maken?",null,[m("milo","Alles. Helaas voor jou, gelukkig voor mij.")]]]),
   m("milo","De organisator heeft jou inmiddels als genodigde geregistreerd. Jij kunt iets wat mijn team niet meer kan: als onbekende gast naar binnen lopen."),
-  m("milo","Je krijgt een aandeel. Maar eerst moet je de anderen ontmoeten.")
-]},
-{at:.30,items:[
-  {sys:"Milo heeft je toegevoegd aan De klus"},
+  m("milo","Je krijgt een aandeel. Maar eerst moet je de anderen ontmoeten.")],
+[ s("Milo heeft je toegevoegd aan De klus"),
   m("noor","Is dit de uitnodiging?"),
   m("milo","Dit is een mens, Noor."),
   m("noor","Een uitnodiging met schoenen aan dus. Welkom."),
   m("raf","Welke kleur heeft het kaartje? Het echte. Zeg niet beige. Er bestaan elf soorten beige en tien daarvan zijn een belediging."),
   m("celeste","Negeer Raf, lieverd. Dat doen wij ook. Ik ben Céleste. Ik ken iedereen op die veiling."),
-  {choice:{id:"kleur",options:[
-    {label:"Een soort zandkleur",reply:[m("raf","Zandkleur. ZANDKLEUR. Milo, ik stop ermee."),m("noor","Hij stopt er niet mee.")]},
-    {label:"Hallo allemaal",reply:[m("raf","Geen antwoord op de kleurvraag. Verdacht professioneel.")]}]}},
-  m("noor","Ik ben trouwens degene die je straks vertelt wat je moet doen. Wen er maar aan.")
-]},
-{at:.46,items:[
-  m("milo","Kleine proef. Ik wil weten of je kalm blijft als een plan verandert."),
+  c("kleur",[["Een soort zandkleur",null,[m("raf","Zandkleur. ZANDKLEUR. Milo, ik stop ermee."),m("noor","Hij stopt er niet mee.")]],
+             ["Hallo allemaal",null,[m("raf","Geen antwoord op de kleurvraag. Verdacht professioneel.")]]]),
+  m("noor","Ik ben trouwens degene die je straks vertelt wat je moet doen. Wen er maar aan.")],
+[ m("milo","Kleine proef. Ik wil weten of je kalm blijft als een plan verandert."),
   m("noor","Onthoud drie dingen. Ik vraag er later naar. Niet opschrijven, je bent aan het sporten."),
   m("noor","Eén: de levering is om 19:40."),
   m("noor","Twee: je gaat naar binnen via de zijdeur."),
   m("noor","Drie: de portier heet Bram."),
   m("raf","Bram heeft een lelijke stropdas. Dat is geen vierde ding, dat is een feit."),
-  {choice:{id:"onthoud",options:[{label:"Onthouden",reply:[m("noor","Mooi. Ga maar door.")]}]}}
-]},
-{at:.62,items:[
-  m("noor","Plan gewijzigd."),
+  c("onthoud",[["Onthouden",null,[m("noor","Mooi. Ga maar door.")]]])],
+[ m("noor","Plan gewijzigd."),
   m("noor","De levering is verschoven naar 20:15. En de zijdeur is dicht, het wordt de kelderingang."),
   m("raf","De portier heet nog steeds Bram. De stropdas is ook onveranderd."),
   m("milo","Dit gebeurt altijd. Het gaat erom wat je daarna doet."),
-  m("noor","Je hoeft nu niets te doen. Gewoon doorgaan. Dat is het hele punt.")
-]},
-{at:.80,items:[
-  m("noor","Daar ben ik weer. Hoe laat is de levering?"),
-  {choice:{id:"q1",options:[
-    {label:"19:40",reply:[m("noor","Dat was het oude plan. 20:15. Maar je antwoordde zonder paniek, dat telt.")]},
-    {label:"20:15",reply:[m("noor","Klopt.")]},
-    {label:"20:45",reply:[m("raf","Dat tijdstip heeft niemand ooit genoemd. Ik vind het dapper."),m("noor","20:15.")]}]}},
+  m("noor","Je hoeft nu niets te doen. Gewoon doorgaan. Dat is het hele punt.")],
+[ m("noor","Daar ben ik weer. Hoe laat is de levering?"),
+  c("q1",[["19:40",null,[m("noor","Dat was het oude plan. 20:15. Maar je antwoordde zonder paniek, dat telt.")]],
+          ["20:15",null,[m("noor","Klopt.")]],
+          ["20:45",null,[m("raf","Dat tijdstip heeft niemand ooit genoemd. Ik vind het dapper."),m("noor","20:15.")]]]),
   m("noor","En waar ga je naar binnen?"),
-  {choice:{id:"q2",options:[
-    {label:"De zijdeur",reply:[m("noor","Die is dicht. De kelderingang. Geeft niet, daarvoor zit ik in je oor.")]},
-    {label:"De kelderingang",reply:[m("noor","Precies.")]},
-    {label:"De hoofdingang",reply:[m("celeste","Stijlvol, maar nee. De kelder, lieverd.")]}]}},
+  c("q2",[["De zijdeur",null,[m("noor","Die is dicht. De kelderingang. Geeft niet, daarvoor zit ik in je oor.")]],
+          ["De kelderingang",null,[m("noor","Precies.")]],
+          ["De hoofdingang",null,[m("celeste","Stijlvol, maar nee. De kelder, lieverd.")]]]),
   m("milo","Goed genoeg voor mij. Je bleef bewegen terwijl alles veranderde."),
   m("celeste","Ik heb champagne koud staan voor dit soort momenten. En voor alle andere momenten."),
   m("raf","Welkom bij het team. Je krijgt een bijnaam van mij en je hebt er geen inspraak in."),
-  m("noor","Je hoort erbij, {naam}.")
-]},
-{at:1,items:[
-  {sys:"Privé · Noor"},
+  m("noor","Je hoort erbij, {naam}.")],
+[ s("Privé · Noor"),
   m("noor","Eén ding. Buiten de groep."),
   m("noor","Milo zei dat die uitnodiging per ongeluk bij jou kwam, toch?"),
-  {from:"noor",img:"lijst",text:"Kandidatenlijst. Uit zijn eigen map."},
+  im("noor","lijst","Kandidatenlijst. Uit zijn eigen map."),
   m("noor","Jouw naam staat erop. Al drie weken."),
-  {choice:{id:"lijst",options:[
-    {label:"Zeg niets tegen Milo",reply:[m("noor","Was ik niet van plan.")]},
-    {label:"Ik vraag het hem zelf",reply:[m("noor","Dapper. Wacht tot de volgende keer, dan sta ik naast je. Bij wijze van spreken.")]}]}},
-  m("noor","Rond maar rustig af. Je hebt het goed gedaan vandaag.")
-]}];
+  c("lijst",[["Zeg niets tegen Milo",{lijst:"stil"},[m("noor","Was ik niet van plan.")]],
+             ["Ik vraag het hem zelf",{lijst:"vraag"},[m("noor","Dapper. Wacht tot de volgende keer, dan sta ik naast je. Bij wijze van spreken.")]]]),
+  m("noor","Rond maar rustig af. Je hebt het goed gedaan vandaag.")]
+]},
+
+{t:"Iedereen speelt iemand",beats:[
+[ s("Privé · Milo"),
+  m("milo","Noor zegt dat je een vraag voor me hebt. Stel hem maar. Ik ben in een goede bui.","lijst=vraag"),
+  m("milo","Noor heeft in mijn mappen gekeken. Ze denkt dat ik dat niet weet. Laat haar dat maar denken.","lijst=stil"),
+  m("milo","Ja, je stond op de lijst. Al drie weken."),
+  m("milo","We hadden iemand nodig zonder verleden in onze wereld. Geen dossier, geen vijanden, geen gezicht dat Voss kent."),
+  m("milo","De vergissing was een test. Ik wilde zien wat je doet als iets niet klopt."),
+  c("test",[["Je had het ook gewoon kunnen vragen",null,[m("milo","Dan had je ja gezegd om de verkeerde reden. Nu weet ik dat je doorvraagt. Dat is beter.")]],
+            ["En? Ben ik geslaagd?",null,[m("milo","Je bleef doorgaan. Je bleef doorvragen. Ja.")]]]),
+  m("milo","Vanaf nu geen tests meer. Beloofd."),
+  m("milo","Céleste neemt het van me over. Ze gaat een rijk mens van je maken.")],
+[ s("Privé · Céleste"),
+  m("celeste","Lieverd. Op die veiling ben je niet jezelf. Je bent iemand met te veel geld en een te sterke mening."),
+  m("celeste","Dus. Wat voor soort rijke zonderling wil jij zijn?"),
+  c("persona",[["Erfgenaam van een dropfabriek",{persona:"de erfgenaam van de dropfabriek"},[m("celeste","Heerlijk. Oud geld, zoute smaak. Niemand durft daar door te vragen.")]],
+               ["Iemand die alleen blauwe kunst koopt",{persona:"de verzamelaar van alleen blauw"},[m("celeste","Excentriek, onvergetelijk en volkomen onverdacht. Raf gaat huilen van geluk.")]],
+               ["Een stille belegger uit Zwitserland",{persona:"de stille belegger uit Zwitserland"},[m("celeste","Klassiek. Je zegt weinig, je knikt veel en je kijkt nooit naar de prijs.")]]]),
+  m("celeste","Dan heb je een verhaal nodig. Waar je geld vandaan komt, waarom je kunst koopt, en wat je niet mooi vindt."),
+  m("celeste","Dat laatste is het belangrijkst. Rijke mensen worden geloofd zodra ze ergens een hekel aan hebben.")],
+[ s("De klus"),
+  m("raf","Ik hoor dat je {persona} bent. Daar heb ik vragen over."),
+  m("raf","Draag je een ring? Mensen met jouw achtergrond dragen een ring. Of juist heel nadrukkelijk geen ring."),
+  c("ring",[["Eén zware ring",null,[m("raf","Goud. Niet glimmend. Glimmend is voor mensen die nog moeten bewijzen dat ze geld hebben.")]],
+            ["Heel nadrukkelijk geen ring",null,[m("raf","Ja. Ja! Dat is het sterkste statement. Niemand vergeet een lege hand.")]]]),
+  m("noor","Raf, het is een veiling. Geen modeshow."),
+  m("raf","Alles is een modeshow, Noor."),
+  m("noor","Ik stuur je de plattegrond van het veilinghuis. Niet nu. Je bent aan het sporten.")],
+[ s("Privé · Céleste"),
+  m("celeste","Oefenen. Ik ben een nieuwsgierige gast bij de champagne. Jij bent {persona}."),
+  m("celeste","‘Wat brengt u hier, als ik vragen mag?’"),
+  c("oefen",[["Ik kom voor De overkant",null,[m("celeste","Te direct. Iedereen komt voor De overkant. Probeer het nog eens, met minder hoop in je stem.")]],
+             ["Ik kom nooit ergens voor. Ik ben er gewoon.",null,[m("celeste","Perfect. Ondraaglijk. Precies goed.")]],
+             ["Dat zeg ik liever niet",null,[m("celeste","Mysterieus. Dat werkt twee keer. Daarna wordt het irritant.")]]]),
+  m("celeste","Je bent hier goed in. Beter dan Milo, en die oefent al twintig jaar.")],
+[ m("celeste","Nog één ding. Als iemand vraagt of je de vorige eigenaar kent, zeg je nee."),
+  m("celeste","Over het schilderij praat iedereen. Over Eva praat niemand. Zo hoort het ook te blijven."),
+  c("eva2",[["Wie is Eva?",null,[m("celeste","Een naam die ik niet had moeten noemen. Mijn taxi staat er, lieverd."),s("Céleste is offline")]],
+            ["Ik doe alsof ik niets hoorde",null,[m("celeste","…Je bent echt goed hierin."),s("Céleste is offline")]]])],
+[ s("Privé · Noor"),
+  m("noor","Hoe ging het oefenen?"),
+  c("celeste",[["Céleste noemde een naam. Eva.",{celeste:"noor"},[m("noor","Eva."),m("noor","Milo heeft die naam nooit genoemd. Tegen niemand van ons."),m("noor","Ik ga zoeken. Jij gaat door.")]],
+               ["Prima. Ze is goed.",{celeste:"stil"},[m("noor","Mooi. Let wel een beetje op haar. Ze kent iedereen. En iedereen kent haar.")]]])],
+[ s("Privé · Céleste"),
+  m("celeste","Ik was niet eerlijk vanmiddag."),
+  m("celeste","Ik ken haar. Eva. Ik ken haar al heel lang."),
+  m("celeste","Morgen vertel ik je wat Milo heeft weggelaten. Alleen jou."),
+  m("celeste","Slaap lekker, {naam}. Of loop lekker. Wat je ook doet.")]
+]},
+
+{t:"De vrouw op het balkon",beats:[
+[ s("Privé · Céleste"),
+  m("celeste","Beloofd is beloofd."),
+  m("celeste","De overkant heeft niet één maker. Het heeft er twee."),
+  m("celeste","Eva was geen model van Sorel. Ze was kunstenaar. Ze werkte jarenlang met hem samen, in hetzelfde atelier."),
+  m("celeste","Ga maar door. Ik vertel het in stukjes. Zo is het voor mij ook makkelijker.")],
+[ m("celeste","Volgens Eva schilderde zij een groot deel van zijn beroemdste werk. Hij zette zijn naam eronder."),
+  m("celeste","Toen ze ermee naar buiten kwam, geloofde niemand haar. De critici niet, Voss niet, de kranten niet."),
+  c("geloof",[["Geloof jij haar?",null,[m("celeste","Ik was erbij. Ik heb het niet gezien. En dat is precies het probleem: niemand keek.")]],
+              ["Waarom vertelde Milo dit niet?",null,[m("celeste","Omdat een roof makkelijker te verkopen is dan een rechtszaak. Ook aan jezelf.")]]])],
+[ m("celeste","De overkant was hun laatste schilderij samen. Eva zegt dat het bewijs erin zit."),
+  im("celeste","schilderij","Kijk nog eens. Zij kent elke streek."),
+  m("celeste","Ze wil je spreken. Ik heb haar je nummer gegeven. Ik hoop dat dat mag."),
+  m("celeste","Het mag eigenlijk niet. Ik heb het toch gedaan.")],
+[ s("Onbekend nummer"),
+  m("eva","Dag {naam}. Céleste zegt dat je aan het bewegen bent. Neem je tijd, ik typ langzaam."),
+  m("eva","Ik ben Eva."),
+  c("evahoi",[["Ik dacht dat je boos zou zijn",null,[m("eva","Dat was ik. Twintig jaar. Het is vermoeiend, boos zijn. Je wordt er niet sneller van.")]],
+              ["Wat wil je van me?",null,[m("eva","Eerlijke vraag. Ik vertel het zo. Eerst iets anders.")]]])],
+[ m("eva","Mag ik iets vragen?"),
+  m("eva","Slaapt Raf genoeg?"),
+  c("rafslaap",[["Hoe ken jij Raf?",null,[m("eva","Ik heb hem leren lopen.")]],
+                ["Volgens mij slaapt Raf nooit",null,[m("eva","Dat dacht ik al. Dat deed hij als kind ook niet.")]]]),
+  m("eva","Raf is mijn broertje."),
+  m("eva","Hij was zestien toen het misging met Sorel. Hij heeft alles gezien.")],
+[ m("eva","Ik hoef geen wraak. Ik wil dat iemand kijkt. Eén keer, goed, naar het hele schilderij."),
+  m("eva","Voor Milo gaat het om geld. Voor mij niet."),
+  c("eva",[["Ik help je",{eva:"ja"},[m("eva","Dank je. Zeg het niet te hard tegen Raf. Dan gaat hij huilen en daarna wordt hij boos dat hij huilt.")]],
+           ["Ik weet nog niet wat ik geloof",{eva:"twijfel"},[m("eva","Goed. Dan ben je de eerste die daar eerlijk over is.")]]])],
+[ s("Privé · Raf"),
+  m("raf","Waarom praat je met mijn zus."),
+  m("raf","Niet boos. Gewoon. Waarom."),
+  m("raf","Laat maar. Morgen kom je naar mijn atelier. Ik wil dat iemand de kopie ziet die snapt waarom hij ertoe doet.")]
+]},
+
+{t:"Het origineel",beats:[
+[ s("Privé · Raf"),
+  m("raf","Welkom in het atelier. Het ruikt hier naar terpentijn en slechte keuzes."),
+  im("raf","schilderij","Mijn kopie. Zeg iets aardigs. Of iets eerlijks, als je durft."),
+  c("kopie",[["Hij is prachtig",null,[m("raf","Prachtig zeggen mensen over zonsondergangen. Maar goed. Dank je.")]],
+             ["Het licht in de ramen is anders",null,[m("raf","…Ja. Dat klopt. Je hebt een oog. Dat is irritant.")]]])],
+[ m("raf","Eva leerde me tekenen op de achterkant van haar mislukte schetsen."),
+  m("raf","Sorel kwam soms kijken. Hij zei altijd: ‘Mooi, meisje.’ En dan nam hij het mee."),
+  m("raf","Ik dacht lang dat dat normaal was. Dat leraren dat deden.")],
+[ m("raf","Toen ze het vertelde, kwamen de journalisten. Ze luisterden twee uur en schreven één zin."),
+  m("raf","Iedereen hoort haar verhaal aan. Niemand doet er iets mee."),
+  c("raf",[["Wij wel",{raf:"troost"},[m("raf","Zeg dat niet zomaar."),m("raf","…Oké. Wij wel.")]],
+           ["Daarom doen we dit",{raf:"plan"},[m("raf","Ja. Daarom doen we dit. Goed. Terug naar het werk.")]]])],
+[ s("De klus"),
+  m("noor","De persfoto's van morgen zijn binnen. Voss laat het schilderij vanochtend al aan de pers zien."),
+  m("raf","Laat zien."),
+  im("noor","schilderij","Persfoto, vanochtend genomen in het veilinghuis.")],
+[ m("raf","Wacht."),
+  m("raf","…"),
+  m("raf","Er ontbreekt iets."),
+  m("noor","Raf?")],
+[ m("raf","Linksonder, bij de balustrade. Eva zette daar altijd een klein rood streepje. Een soort handtekening die alleen wij kennen."),
+  m("raf","Het staat niet op de foto."),
+  m("noor","Kan het aan de foto liggen?"),
+  m("raf","Nee.")],
+[ m("raf","Het schilderij dat de pers te zien krijgt, is al een vervalsing."),
+  m("raf","Iemand is ons voor geweest."),
+  m("noor","Niemand zegt dit tegen Milo. Niet voordat we weten wie."),
+  c("zwijg",[["Afgesproken",null,[m("noor","Afgesproken.")]],
+             ["Voorlopig dan",null,[m("noor","Voorlopig. Meer vraag ik niet.")]]])]
+]},
+
+{t:"Een tweede koper",beats:[
+[ s("De klus"),
+  m("milo","Waarom is iedereen zo stil vandaag?"),
+  m("celeste","Voss belde me. Ik heb opgenomen. Voor het eerst in jaren."),
+  m("raf","Natuurlijk heb je opgenomen."),
+  m("celeste","Om informatie te halen, Raf."),
+  m("raf","Of om informatie te brengen.")],
+[ m("milo","Genoeg. We gaan door."),
+  m("raf","Wie betaalt dit eigenlijk, Milo? De kopie, het veilinghuis, het busje?"),
+  m("milo","Een investeerder."),
+  m("raf","Welke?"),
+  m("milo","Een die niet gevonden wil worden."),
+  m("raf","Dan blaas ik het af."),
+  s("Raf heeft de groep verlaten")],
+[ s("Privé · Noor"),
+  m("noor","Hij komt terug. Hij gaat altijd eerst weg."),
+  m("noor","Maar hij heeft gelijk over één ding. Waar is het origineel?"),
+  m("noor","Ik heb de verzekeringspapieren van het veilinghuis. Zoek je mee? Ik doe het werk, jij zegt wat je ziet."),
+  c("zoek",[["Laat maar zien",null,[]],["Ik loop en ik kijk",null,[m("noor","Precies zo.")]]])],
+[ im("noor","doc","Transportlijst van Voss.",{doc:{t:"TRANSPORT · DE OVERKANT",rows:[["Kist 1","veilinghuis, ter bezichtiging"],["Kist 2","privéadres Voss, niet verzekerd",1],["Lijst","veilinghuis"]]}}),
+  m("noor","Twee kisten. Eén gaat naar het veilinghuis. De andere blijft bij Voss thuis."),
+  m("noor","Het origineel is nooit weggegaan."),
+  m("noor","De veiling is een voorstelling. De echte verkoop gebeurt ergens anders.")],
+[ m("noor","Er is een koper die al betaald heeft. Ik zoek wie."),
+  m("noor","Dat duurt even. Ga maar door. Ik meld me.")],
+[ m("noor","Gevonden."),
+  im("noor","doc","Uit een map die niet gevonden wilde worden.",{doc:{t:"OVEREENKOMST · VERTROUWELIJK",rows:[["Werk","De overkant, V. Sorel"],["Koper","anoniem"],["Bedrag","€ 11.500.000"],["Bemiddelaar","M. —",1],["Levering","na de veiling"]]}}),
+  m("noor","Kijk naar de bemiddelaar.")],
+[ m("noor","Milo."),
+  m("noor","Hij heeft het schilderij al verkocht. Terwijl hij Eva beloofde dat ze het terugkreeg."),
+  c("conf",[["Ik bel hem zelf",{conf:"zelf"},[m("noor","Doe maar. Ik luister niet mee."),m("noor","Wel een beetje.")]],
+            ["We vertellen het samen aan het team",{conf:"team"},[m("noor","Morgen. Samen. Ik zet koffie. Al is het via de telefoon.")]]])]
+]},
+
+{t:"Zonder leider",beats:[
+[ s("Privé · Milo","conf=zelf"),
+  m("milo","Noor heeft het je laten zien.","conf=zelf"),
+  s("De klus","conf=team"),
+  m("noor","Milo. We hebben je overeenkomst gevonden.","conf=team"),
+  m("raf","Ik ben er weer. Speciaal hiervoor.","conf=team"),
+  m("milo","Ja."),
+  m("milo","Het klopt.")],
+[ m("milo","Ik wilde het schilderij eerst verkopen. Daarna Eva compenseren met een deel van het geld. Een groot deel."),
+  m("milo","Een rechtszaak wint ze niet. Een tentoonstelling krijgt ze niet. Dit is de enige uitkomst die echt kan."),
+  c("milo6",[["Dat had zij moeten beslissen",null,[m("milo","Misschien.")]],
+             ["Waarom loog je tegen ons?",null,[m("milo","Omdat jullie nee hadden gezegd. En ik had gelijk, kijk maar.")]]])],
+[ s("De klus"),
+  s("Céleste heeft Eva toegevoegd"),
+  m("eva","Het is bijzonder hoe vaak iemand anders beslist wat voor mij genoeg moet zijn."),
+  m("milo","Eva…"),
+  m("eva","Ik wil het schilderij niet verkocht hebben, Milo. Ik wil dat het gezien wordt.")],
+[ m("raf","Ik wil iets zeggen. Je bent een lafaard, Milo."),
+  m("celeste","Raf."),
+  m("raf","Een charmante lafaard. Dat bedoelde ik."),
+  m("milo","Ik stap eruit. Doe wat jullie willen. De veiling is morgen."),
+  s("Milo heeft de groep verlaten")],
+[ c("stilte",[["Is iedereen er nog?",null,[m("celeste","Ik ben er. Ik heb champagne besteld. Dat leek me het enige verstandige.")]],
+              ["En nu?",null,[m("raf","Ik heb drie plannen. Ze zijn alle drie slecht.")]]]),
+  m("eva","Ik ga even liggen. Dank jullie. Echt.")],
+[ s("Privé · Noor"),
+  m("noor","Ik heb geen plan. Raf heeft drie slechte plannen. Céleste heeft champagne besteld."),
+  m("noor","Dus volgens mij zijn wij nu de leiding."),
+  c("wij",[["Wij?",null,[m("noor","Jij en ik. Jij bent de enige die ze allemaal vertrouwen. Ik ben de enige die weet waar alles ligt.")]],
+           ["Oké. Wij.",null,[m("noor","Oké. Wij.")]]])],
+[ m("noor","Mag ik iets zeggen dat niet over de roof gaat?"),
+  m("noor","Eerst vond ik je een praktisch probleem met schoenen aan."),
+  m("noor","Nu ben jij de reden dat ik niet ophang."),
+  m("noor","Ga maar naar huis, {naam}. Morgen maken we een plan.")]
+]},
+
+{t:"De generale repetitie",beats:[
+[ s("De klus"),
+  m("noor","Nieuw doel. Twee dingen tegelijk."),
+  m("noor","Eén: Eva krijgt haar schilderij terug. Het echte, uit het huis van Voss."),
+  m("noor","Twee: haar verhaal wordt openbaar op een moment dat Voss het niet kan wegdrukken.")],
+[ m("celeste","De veiling wordt live gestreamd voor buitenlandse kopers. Met Voss op het podium."),
+  m("raf","Dus als het échte schilderij daar op het scherm verschijnt…"),
+  m("celeste","…kijkt de hele kunstwereld mee."),
+  m("raf","Dat is mijn eerste goede plan ooit en het is niet eens van mij.")],
+[ m("noor","Raf ruilt zijn kopie met kist 1 in het veilinghuis. Céleste houdt Voss bezig."),
+  m("noor","En jij, {persona}, biedt mee. Hoog. Zo hoog dat Voss het origineel zelf laat komen om je te overtuigen."),
+  c("bod",[["Hoe hoog is hoog?",null,[m("celeste","Achttien miljoen en één euro. Die ene euro is voor de stijl.")]],
+           ["Ik kan dat",null,[m("raf","Natuurlijk kun je dat. Je hebt geen ring. Of juist wel. Ik weet het niet meer, ik ben nerveus.")]]])],
+[ s("Privé · Milo"),
+  m("milo","Lees dit voordat je het wegklikt."),
+  m("milo","Voss weet dat er iets wordt voorbereid. Ik kan je vertellen wat hij weet. En wat hij niet weet."),
+  c("milo",[["Je mag terugkomen",{milo:"in"},[m("milo","Dank je. Ik verdien het niet. Ik doe het toch.")]],
+            ["Stuur me alleen wat je weet",{milo:"info"},[m("milo","Eerlijk. Ik stuur het je.")]],
+            ["Blijf weg, Milo",{milo:"weg"},[m("milo","Begrepen."),m("milo","Eén ding dan nog, gratis: Voss denkt dat jij van mij bent.")]]])],
+[ m("milo","Voss denkt dat we nog steeds mijn oude plan uitvoeren. Kopie erin, origineel naar mijn koper.","milo=in|info"),
+  m("milo","Laat hem dat denken. Dat is jullie kans.","milo=in|info"),
+  m("noor","Wat zei Milo? Ik zie aan je stilte dat hij iets zei.","milo=weg"),
+  m("noor","Als Voss denkt dat je van Milo bent, denkt hij dat we Milo's plan uitvoeren. Dat is onze kans.","milo=weg"),
+  m("noor","Milo staat bij de achteringang. Morgen. Ik heb hem in het plan gezet.","milo=in")],
+[ s("De klus"),
+  m("raf","Kist 1 is geruild. Mijn kopie staat nu in het veilinghuis."),
+  m("raf","Ik heb haar een klein rood streepje gegeven. Linksonder. Voor Eva."),
+  m("celeste","Ik sta bij de ingang. Je staat op de lijst als {persona}."),
+  m("noor","Ik zit in je oor. Vanaf nu.")],
+[ s("De veiling"),
+  m("noor","Je bent binnen."),
+  m("celeste","Daar komt hij. Rustig blijven."),
+  m("voss","Eindelijk. Ik begon al te denken dat Milo je niet meer zou sturen.")]
+]},
+
+{t:"De overkant",beats:[
+[ s("De veiling"),
+  m("voss","U bent {persona}, toch? Milo heeft me over u verteld."),
+  m("noor","Hij denkt dat je van Milo bent. Speel mee."),
+  c("voss1",[["Milo doet u de groeten",null,[m("voss","Milo stuurt altijd iets. Meestal mensen.")]],
+             ["Ik ben van niemand",null,[m("voss","Dat zegt iedereen. Tot de rekening komt.")]]])],
+[ m("voss","U wilt het origineel zien voordat u biedt. Dat zei Milo al."),
+  m("voss","Het staat in een kamer achter het podium. Na de veiling ruilen we, zoals afgesproken."),
+  m("noor","Hij heeft het hier. In het gebouw. Meer hebben we niet nodig."),
+  m("celeste","Ik leid hem af. Ik heb hem vijfentwintig jaar niet gesproken, dus ik heb genoeg te zeggen.")],
+[ m("celeste","Lieverd, als ik straks vreemd doe: dat is gespeeld. Bijna helemaal."),
+  m("noor","Ze heeft Voss nooit iets over Eva verteld. Al die jaren niet. Ik heb het nagekeken.","celeste=noor"),
+  m("raf","Mijn kopie staat op het scherm. Iedereen kijkt naar mijn rode streepje en niemand weet het."),
+  m("raf","Ik ben zo blij en zo misselijk tegelijk.","raf=troost"),
+  m("noor","Bieden. Nu."),
+  c("bieden",[["Achttien miljoen en één euro",null,[m("celeste","Die euro. Perfect."),m("voss","…Natuurlijk. Een ogenblik.")]],
+              ["Eerst het origineel. Hier, op het podium.",null,[m("voss","Wat een verzoek. …Natuurlijk. Een ogenblik.")]]])],
+[ m("milo","Ik sta bij de achteringang. Het licht in die kamer gaat zo uit. Twintig seconden.","milo=in"),
+  m("milo","Laatste info: er is één bewaker achter het podium. Hij heet Bram.","milo=info"),
+  m("noor","Er staat één bewaker achter het podium. Bram. Je kent hem.","milo=weg"),
+  m("raf","Met de stropdas?","milo=info|weg"),
+  m("noor","Met de stropdas.","milo=info|weg"),
+  m("noor","Het origineel staat op het podium. Naast de kopie. Live, op het scherm."),
+  m("noor","Twee keer De overkant. En niemand in de zaal weet welke de echte is.")],
+[ s("Eva loopt het podium op"),
+  m("eva","Mag ik? Kijk naar het raam rechts. Het tweede van boven."),
+  im("eva","reveal","Het origineel, scherp, voor het eerst."),
+  m("noor","Er staat iemand in het raam. Aan het schilderen."),
+  m("eva","Dat ben ik. Ik heb mezelf erin geschilderd, weerspiegeld in het glas, terwijl ik eraan werkte."),
+  m("eva","In elke reproductie hebben ze me weggepoetst. Dit is het origineel.")],
+[ m("voss","Haal dat van het scherm."),
+  m("celeste","Te laat, Adrian. Er kijken elfhonderd verzamelaars mee."),
+  m("noor","En drie kranten. Ik heb ze vanochtend gebeld. Voor de zekerheid."),
+  m("raf","Ik huil niet."),
+  m("noor","Hij huilt."),
+  c("einde",[["Ik ook een beetje",null,[m("noor","Ik ook. Niet tegen Raf zeggen.")]],
+             ["Goed gedaan, team",null,[m("celeste","Goed gedaan, {naam}.")]]])],
+[ s("Later · snackbar De Hoek"),
+  m("eva","Het schilderij gaat naar een museum. Met twee namen op het bordje. Ik heb het zelf gekozen."),
+  m("raf","Ik wil een frikandel speciaal en een excuus van de hele kunstgeschiedenis."),
+  m("celeste","Ik heb champagne meegenomen. Ze schenken hier geen champagne. Dat is hun probleem."),
+  m("milo","Ik heb voor iedereen betaald. Het maakt niets goed. Het is een begin.","milo=in"),
+  m("milo","Ik heb het gezien. Ik ben trots op jullie. Op jou vooral.","milo=info"),
+  m("noor","Er staat een stoel leeg.","milo=weg"),
+  m("noor","Laat maar staan.","milo=weg"),
+  s("Privé · Noor"),
+  m("noor","Kijk eens wat ik net kreeg."),
+  im("noor","winter","Een winterlandschap. Museum in Wenen."),
+  m("noor","In het raam staat precies dezelfde vrouw."),
+  m("noor","Eva zegt dat ze dit schilderij nog nooit heeft gezien.")]
+]}
+];
+
 
 /* ---------- toestand ---------- */
 var S=null, busy=false, typingEl=null, lastFrom=null;
 var steps=0,lastStepT=0,grav=9.8,sm=0,above=false,motionSeen=false,lastGps=null,watchId=null,wake=null,audio=null;
-function fresh(){return {naam:"",mode:"plaats",len:"normaal",route:"vrij",reached:0,world:null,off:0,leg:0,steps:0,gps:0,bonus:0,beat:0,queue:[],waiting:null,log:[],choices:{},done:false,sens:1.15,sound:true,t0:Date.now()}}
-function load(){try{var r=localStorage.getItem(KEY);return r?JSON.parse(r):null}catch(e){return null}}
+function newRun(o,ep){o.ep=ep;o.max=Math.max(o.max||1,ep);o.reached=0;o.world=null;o.off=0;o.leg=0;o.steps=0;o.gps=0;o.bonus=0;o.beat=0;o.queue=[];o.waiting=null;o.log=[];o.choices={};o.done=false;o.trial=false;o.t0=o.t0||Date.now();return o}
+function fresh(){return newRun({naam:"",mode:"plaats",len:"normaal",route:"vrij",sens:1.15,sound:true,flags:{},max:1},1)}
+function load(){try{var r=localStorage.getItem(KEY);if(r)return JSON.parse(r);
+  var o=localStorage.getItem(OLDKEY);if(!o)return null;o=JSON.parse(o);o.ep=1;o.max=1;o.flags={};
+  if(o.mode==="proef"){o.mode="plaats";o.trial=true}
+  if(o.choices&&o.choices.lijst!=null)o.flags.lijst=o.choices.lijst?"vraag":"stil";
+  localStorage.removeItem(OLDKEY);return o}catch(e){return null}}
+function B(){return EP[S.ep-1].beats}
+function flag(k){return S.flags&&S.flags[k]!=null?S.flags[k]:DEF[k]}
+function ok(w){var q=w.split("=");return q[1].split("|").indexOf(String(flag(q[0])))>=0}
 function save(){if(wiped||!S)return;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 var wiped=false;
 function wipe(){wiped=true;try{localStorage.removeItem(KEY)}catch(e){}}
-function target(){return TARGET[S.mode][S.len]}
+function target(){return S.trial?800:TARGET[S.mode][S.len]}
 function units(){
+  if(S.trial)return S.steps+S.bonus;
   if(S.mode==="fiets")return S.gps+S.bonus;
   if(S.mode==="buiten")return Math.max(S.steps,S.gps/0.75)+S.bonus;
   return S.steps+S.bonus;
 }
 function frac(){
-  if(S.route==="kaart")return BEATS[Math.min(S.reached||0,BEATS.length-1)].at;
+  if(S.route==="kaart"&&!S.trial)return AT[Math.min(S.reached||0,AT.length-1)];
   return Math.max(0,Math.min(1,(units()+(S.off||0))/target()));
 }
 function nl(n){return Math.round(n).toLocaleString("nl-NL")}
-function showUnits(){return S.mode==="fiets"?(units()/1000).toLocaleString("nl-NL",{minimumFractionDigits:2,maximumFractionDigits:2}):nl(units())}
+function showUnits(){return S.mode==="fiets"&&!S.trial?(units()/1000).toLocaleString("nl-NL",{minimumFractionDigits:2,maximumFractionDigits:2}):nl(units())}
 
 /* ---------- schilderij ---------- */
-var base=null;
+var base=null,baseR=null;
 function rng(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
-function paintBase(){
+function paintBase(rev){
   var c=document.createElement("canvas");c.width=300;c.height=375;var x=c.getContext("2d"),r=rng(7),i,j;
   var g=x.createLinearGradient(0,0,0,250);g.addColorStop(0,"#0a0f2c");g.addColorStop(.55,"#2b2458");g.addColorStop(.85,"#b85c48");g.addColorStop(1,"#f0b35c");
   x.fillStyle=g;x.fillRect(0,0,300,375);
@@ -343,24 +624,49 @@ function paintBase(){
   x.fillStyle="#e2b48d";x.fillRect(117,204,14,22);x.beginPath();x.arc(124,192,17,0,6.3);x.fill();
   x.fillStyle="#2a1712";x.beginPath();x.arc(124,188,18,3.3,6.1);x.fill();x.beginPath();x.arc(124,174,10,0,6.3);x.fill();
   x.strokeStyle="#e2b48d";x.lineWidth=9;x.lineCap="round";x.beginPath();x.moveTo(150,240);x.lineTo(186,288);x.stroke();x.beginPath();x.moveTo(98,240);x.lineTo(76,288);x.stroke();
+  x.fillStyle="#b3263a";x.fillRect(14,300,9,3);
+  if(rev)evaIn(x,244,128);
   return c;
 }
-function block(){return Math.round(36-20*(S?frac():0))}
+/* Eva in het raam: klein figuurtje achter een ezel, weerspiegeld in het glas */
+function evaIn(x,wx,wy){x.save();x.fillStyle="#3c5a86";x.fillRect(wx,wy,21,48);x.fillStyle="rgba(255,214,150,.45)";x.fillRect(wx,wy,21,48);
+  x.fillStyle="#e7c39b";x.beginPath();x.arc(wx+7,wy+17,3.2,0,7);x.fill();x.fillStyle="#3a2418";x.beginPath();x.arc(wx+7,wy+15.5,3.4,3.1,6.3);x.fill();
+  x.fillStyle="#2f6f5e";x.fillRect(wx+4,wy+20,6,13);x.strokeStyle="#e7c39b";x.lineWidth=1.4;x.beginPath();x.moveTo(wx+9,wy+23);x.lineTo(wx+14,wy+20);x.stroke();
+  x.strokeStyle="#6b4a2a";x.lineWidth=1;x.beginPath();x.moveTo(wx+13,wy+44);x.lineTo(wx+16,wy+18);x.lineTo(wx+19,wy+44);x.stroke();
+  x.fillStyle="#f3ead8";x.fillRect(wx+13,wy+18,7,9);x.fillStyle="#b85c48";x.fillRect(wx+14,wy+21,3,3);x.restore()}
+function revealed(){return S&&(S.ep===8&&(S.done||S.beat>=5))}
+function season(){return S?((S.ep-1)+(S.done?1:frac()))/8:0}
+function block(){return Math.max(1,Math.round(36*Math.pow(1-season(),1.5)))}
 function paint(cv){
-  if(!base)base=paintBase();
-  var b=block(),w=Math.max(4,Math.round(300/b)),h=Math.max(5,Math.round(375/b));
-  var t=document.createElement("canvas");t.width=w;t.height=h;t.getContext("2d").drawImage(base,0,0,w,h);
+  if(!base){base=paintBase(false);baseR=paintBase(true)}
+  var src=revealed()?baseR:base,b=block(),w=Math.max(4,Math.round(300/b)),h=Math.max(5,Math.round(375/b));
+  var t=document.createElement("canvas");t.width=w;t.height=h;t.getContext("2d").drawImage(src,0,0,w,h);
   var x=cv.getContext("2d");x.imageSmoothingEnabled=false;x.clearRect(0,0,300,375);x.drawImage(t,0,0,w,h,0,0,300,375);
 }
 var lastBlock=-1;
-function repaint(force){var b=block();if(!force&&b===lastBlock)return;lastBlock=b;
+function repaint(force){var b=block()+(revealed()?100:0);if(!force&&b===lastBlock)return;lastBlock=b;
   var a=document.querySelectorAll("canvas[data-ptg], #thumb canvas, #viewer canvas");for(var i=0;i<a.length;i++)paint(a[i])}
 
 /* ---------- chat ---------- */
 var chat=$("chat");
 function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
-function fill(t){return String(t).replace("{naam}",S.naam||"nieuweling")}
+function fill(t){return String(t).split("{naam}").join(S.naam||"nieuweling").split("{persona}").join(flag("persona"))}
 function envelop(){return '<svg viewBox="0 0 280 190" role="img" aria-label="Envelop met een kaartje"><rect width="280" height="190" fill="#1d2a36"/><rect x="72" y="26" width="136" height="104" rx="4" fill="#efe6d2"/><circle cx="118" cy="70" r="22" fill="#b85c48"/><rect x="132" y="48" width="52" height="52" fill="none" stroke="#2b2458" stroke-width="5"/><path d="M90 112 L190 60" stroke="#d8b26a" stroke-width="4"/><path d="M40 84 H240 V170 H40 Z" fill="#d9cdb2"/><path d="M40 84 L140 142 L240 84" fill="none" stroke="#a89a7c" stroke-width="2"/></svg>'}
+function revealImg(){var c=el("canvas");c.width=300;c.height=375;c.setAttribute("aria-label","Het origineel van De overkant, met Eva in het raam");
+  if(!base){base=paintBase(false);baseR=paintBase(true)}
+  var x=c.getContext("2d");x.drawImage(baseR,0,0);x.imageSmoothingEnabled=false;
+  x.fillStyle="rgba(0,0,0,.55)";x.fillRect(150,112,142,190);x.drawImage(baseR,238,120,36,50,158,120,126,175);
+  x.strokeStyle="#d8b26a";x.lineWidth=2;x.strokeRect(158,120,126,175);x.strokeRect(238,120,36,50);return c}
+function winterImg(){var c=el("canvas");c.width=300;c.height=375;c.setAttribute("aria-label","Een winterlandschap met een verlicht raam");
+  var x=c.getContext("2d"),r=rng(11),i,g=x.createLinearGradient(0,0,0,240);g.addColorStop(0,"#5d6f86");g.addColorStop(1,"#c9d3dc");x.fillStyle=g;x.fillRect(0,0,300,375);
+  x.fillStyle="#eef2f5";x.beginPath();x.moveTo(0,250);x.quadraticCurveTo(150,215,300,245);x.lineTo(300,375);x.lineTo(0,375);x.fill();
+  for(i=0;i<16;i++){var tx=r()*300,ty=230+r()*30,h=40+r()*50;x.fillStyle="#2b3a3a";x.beginPath();x.moveTo(tx,ty-h);x.lineTo(tx-h*.3,ty);x.lineTo(tx+h*.3,ty);x.fill()}
+  x.fillStyle="#4a3428";x.fillRect(150,170,110,95);x.fillStyle="#2a1d18";x.beginPath();x.moveTo(140,172);x.lineTo(205,125);x.lineTo(270,172);x.fill();
+  x.fillStyle="#f3f6f8";x.beginPath();x.moveTo(140,172);x.lineTo(205,125);x.lineTo(270,172);x.lineTo(262,166);x.lineTo(205,133);x.lineTo(148,166);x.fill();
+  evaIn(x,190,195);x.fillStyle="#3a2a20";x.fillRect(226,220,18,45);
+  x.fillStyle="#fff";for(i=0;i<120;i++){x.globalAlpha=.4+r()*.6;x.beginPath();x.arc(r()*300,r()*375,.8+r()*1.4,0,7);x.fill()}x.globalAlpha=1;return c}
+function docImg(d){var e=el("div","doc");e.appendChild(el("h4",null,d.t));
+  d.rows.forEach(function(r){var row=el("div","r"+(r[2]?" hit":""));row.appendChild(el("span",null,r[0]));row.appendChild(el("span",null,r[1]));e.appendChild(row)});return e}
 function lijst(){
   var d=el("div","doc"),dt=new Date(S.t0-21*864e5).toLocaleDateString("nl-NL",{day:"numeric",month:"long"});
   d.appendChild(el("h4",null,"KANDIDATEN · VEILING SOREL"));
@@ -374,11 +680,14 @@ function lijst(){
 function render(it){
   if(it.sys){chat.appendChild(el("div","sys",it.sys));lastFrom=null;return}
   if(it.end){
-    var e=el("div","end");e.appendChild(el("h3",null,"Aflevering 1 is klaar"));
-    var p=el("p");p.appendChild(el("b",null,showUnits()+(S.mode==="fiets"?" km":" stappen")));p.appendChild(document.createTextNode(" in jouw tempo."));e.appendChild(p);
-    e.appendChild(el("p",null,"De overkant is voor een achtste scherp. Tik rechtsboven op het schilderij om te kijken."));
-    e.appendChild(el("p",null,"Volgende keer: aflevering 2, Iedereen speelt iemand."));
-    var b=el("button","ghost","Nog een keer spelen");b.type="button";b.onclick=function(){wipe();location.reload()};e.appendChild(b);
+    var last=S.ep>=EP.length,e=el("div","end"),b;e.appendChild(el("h3",null,last?"Seizoen 1 is klaar":"Aflevering "+S.ep+" is klaar"));
+    var p=el("p");p.appendChild(el("b",null,showUnits()+(S.mode==="fiets"&&!S.trial?" km":" stappen")));p.appendChild(document.createTextNode(" in jouw tempo."));e.appendChild(p);
+    if(last){e.appendChild(el("p",null,"De overkant is helemaal scherp. Tik rechtsboven op het schilderij en zoek het raam."));
+      e.appendChild(el("p",null,"Seizoen 2 begint in Wenen."));
+      b=el("button","ghost","Seizoen opnieuw spelen");b.type="button";b.onclick=function(){wipe();location.reload()};e.appendChild(b)}
+    else{e.appendChild(el("p",null,"De overkant is nu voor "+S.ep+" van de 8 scherp."));
+      e.appendChild(el("p",null,"Volgende: aflevering "+(S.ep+1)+", "+EP[S.ep].t+"."));
+      b=el("button","primary","Naar aflevering "+(S.ep+1));b.type="button";b.onclick=function(){newRun(S,S.ep+1);save();location.reload()};e.appendChild(b)}
     chat.appendChild(e);lastFrom=null;return}
   if(it.me){chat.appendChild(el("div","b me",it.me));lastFrom="me";return}
   if(it.from!==lastFrom){var p2=PEOPLE[it.from],w=el("div","who",p2[0]);w.style.color="var("+p2[1]+")";chat.appendChild(w);lastFrom=it.from}
@@ -386,6 +695,9 @@ function render(it){
     var box=el("div","b img");
     if(it.img==="envelop")box.innerHTML=envelop();
     else if(it.img==="schilderij"){var c=el("canvas");c.width=300;c.height=375;c.setAttribute("data-ptg","");c.setAttribute("aria-label","Onscherpe foto van het schilderij De overkant");paint(c);box.appendChild(c)}
+    else if(it.img==="reveal")box.appendChild(revealImg());
+    else if(it.img==="winter")box.appendChild(winterImg());
+    else if(it.img==="doc")box.appendChild(docImg(it.doc));
     else box.appendChild(lijst());
     box.appendChild(el("div","cap",fill(it.text)));chat.appendChild(box);return}
   chat.appendChild(el("div","b",fill(it.text)));
@@ -402,17 +714,19 @@ function showChoices(){
   box.hidden=false;scroll();
 }
 function pick(i){
-  var c=S.waiting,o=c.options[i];S.choices[c.id]=i;S.waiting=null;$("choices").hidden=true;
+  var c=S.waiting,o=c.options[i];S.choices[c.id]=i;S.waiting=null;
+  if(o.set){S.flags=S.flags||{};for(var k in o.set)S.flags[k]=o.set[k]}$("choices").hidden=true;
   add({me:o.label});S.queue=o.reply.concat(S.queue);save();pump();
 }
 function pump(){
   if(busy||S.waiting||S.done)return;
   if(!S.queue.length){
-    if(S.beat<BEATS.length){
-      if(frac()>=BEATS[S.beat].at){S.queue=JSON.parse(JSON.stringify(BEATS[S.beat].items));S.beat++;notify();save();pump()}
+    if(S.beat<B().length){
+      if(frac()>=AT[S.beat]){S.queue=JSON.parse(JSON.stringify(B()[S.beat]));S.beat++;notify();save();repaint(true);pump()}
     }else{S.done=true;add({end:1});save();release()}
     return}
   var it=S.queue[0];
+  if(it.when&&!ok(it.when)){S.queue.shift();pump();return}
   if(it.choice){S.queue.shift();S.waiting=it.choice;save();showChoices();return}
   busy=true;
   var wait=it.sys?350:Math.min(1900,550+(it.text||"").length*20);
@@ -534,13 +848,13 @@ function onGps(p){
 var saveN=0;
 function tick(){
   $("count").textContent=showUnits();$("pCount").textContent=showUnits();
-  var prev=S.beat?BEATS[S.beat-1].at:0,next=S.beat<BEATS.length?BEATS[S.beat].at:1,f=frac();
+  var prev=S.beat?AT[S.beat-1]:0,next=S.beat<AT.length?AT[S.beat]:1,f=frac();
   $("bar").style.width=(next>prev?Math.max(0,Math.min(1,(f-prev)/(next-prev))):1)*100+"%";
   mapTick();repaint();if(++saveN%25===0)save();pump();
 }
 function hint(t){$("hint").textContent=t||"";$("hint").hidden=!t}
 function sensors(){
-  if(S.mode==="proef"){setInterval(function(){if(S&&!S.done&&!busy&&!S.waiting&&!S.queue.length&&$("menu").hidden){S.steps+=10;tick()}},200);return}
+  if(S.trial){setInterval(function(){if(S&&!S.done&&!busy&&!S.waiting&&!S.queue.length&&$("menu").hidden){S.steps+=10;tick()}},200);return}
   var needMotion=S.mode!=="fiets",needGps=S.mode!=="plaats";
   function listen(){window.addEventListener("devicemotion",onMotion);
     setTimeout(function(){if(!motionSeen&&S.mode==="plaats"&&!S.done)hint("Ik krijg geen signaal van de bewegingssensor. Via Meer kun je handmatig verder.")},4000)}
@@ -561,30 +875,47 @@ function release(){try{if(wake)wake.release()}catch(e){}wake=null}
 document.addEventListener("visibilitychange",function(){if(!document.hidden&&S&&!$("app").hidden&&!S.done)lock();if(document.hidden&&S)save()});
 
 /* ---------- start ---------- */
-var draft=load()||fresh(),resume=!!(draft.log&&draft.log.length);
+var draft=load()||fresh();
+if(draft.done&&draft.ep<EP.length)newRun(draft,draft.ep+1);
+if(!draft.flags)draft.flags={};if(!draft.route)draft.route="vrij";
+var resume=!!(draft.log&&draft.log.length);
 function seg(id,get,set){var box=$(id);function mark(){var bs=box.querySelectorAll("button");for(var i=0;i<bs.length;i++)bs[i].setAttribute("aria-pressed",String(bs[i].dataset.v===String(get())))}
   box.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;set(b.dataset.v);mark()});mark();return mark}
-function lenLabels(){var bike=draft.mode==="fiets";$("l1").textContent=bike?"3 km":"± 8 min";$("l2").textContent=bike?"6 km":"± 15 min";$("l3").textContent=bike?(draft.route==="kaart"?"± 8 km":"10 km"):"± 30 min";
-  $("fRoute").hidden=resume}
-if(!draft.route)draft.route="vrij";
+function lenLabels(){var bike=draft.mode==="fiets";$("l1").textContent=bike?"3 km":"± 8 min";$("l2").textContent=bike?"6 km":"± 15 min";$("l3").textContent=bike?(draft.route==="kaart"?"± 8 km":"10 km"):"± 30 min"}
 var markMode=seg("segMode",function(){return draft.mode},function(v){draft.mode=v;if(v==="plaats")draft.route="vrij";lenLabels();markRoute()});
 var markRoute=seg("segRoute",function(){return draft.route},function(v){draft.route=v;if(v==="kaart"&&draft.mode==="plaats")draft.mode="buiten";lenLabels();markMode()});
 seg("segLen",function(){return draft.len},function(v){draft.len=v});
 lenLabels();$("naam").value=draft.naam||"";
-if(resume){$("go").textContent=draft.done?"Bekijk aflevering 1":"Verder met aflevering 1";$("fresh").hidden=false;
-  $("segMode").parentNode.hidden=true;$("segLen").parentNode.hidden=true;$("trial").hidden=true}
-S=draft;paint($("startPtg"));
-$("fresh").onclick=function(){wipe();location.reload()};
-$("trial").onclick=function(){draft.mode="proef";draft.route="vrij";$("go").onclick()};
+function startUI(){
+  resume=!!(draft.log&&draft.log.length);
+  $("kick").textContent="Seizoen 1 · aflevering "+draft.ep;
+  $("go").textContent=resume?(draft.done?"Bekijk het einde":"Verder met aflevering "+draft.ep):"Start aflevering "+draft.ep;
+  ["segMode","segRoute","segLen"].forEach(function(id){$(id).parentNode.hidden=resume});
+  $("trial").hidden=resume;
+  var ol=$("eps");ol.textContent="";
+  EP.forEach(function(e,i){var n=i+1,li=el("li"),b=el("button");b.type="button";
+    b.appendChild(el("b",null,String(n)));b.appendChild(el("span",null,e.t));
+    var st=n===draft.ep?(resume&&!draft.done?"bezig":"nu"):n<draft.max||(n===draft.max&&draft.done)?"gespeeld":n<=draft.max?"open":"op slot";
+    b.appendChild(el("small",null,st));
+    if(n===draft.ep)b.setAttribute("aria-current","true");
+    b.disabled=n>draft.max||n===draft.ep||(resume&&!draft.done);
+    b.onclick=function(){newRun(draft,n);S=draft;save();paint($("startPtg"));startUI()};
+    li.appendChild(b);ol.appendChild(li)});
+}
+S=draft;startUI();paint($("startPtg"));
+var sure=false;
+$("fresh").onclick=function(){if(!sure){sure=true;$("fresh").textContent="Zeker weten? Tik nog een keer. Je keuzes en voortgang verdwijnen.";return}wipe();location.reload()};
+$("trial").onclick=function(){draft.trial=true;$("go").onclick()};
 $("go").onclick=function(){
   S=draft;S.naam=$("naam").value.trim();if(S.mode==="plaats")S.route="vrij";
   try{var AC=window.AudioContext||window.webkitAudioContext;if(AC){audio=new AC();if(audio.resume)audio.resume()}}catch(e){}
   $("start").hidden=true;$("app").hidden=false;
-  $("unit").textContent=S.mode==="fiets"?"km gefietst":S.mode==="proef"?"stappen (proefronde)":"stappen";
+  $("epTitle").textContent="Aflevering "+S.ep+" · "+EP[S.ep-1].t;
+  $("unit").textContent=S.trial?"stappen (proefronde)":S.mode==="fiets"?"km gefietst":"stappen";
   S.log.forEach(render);if(S.waiting)showChoices();scroll();repaint(true);
   markSens();labels();
   if(!S.done)sensors();
-  if(S.route==="kaart"&&!S.done)kaartStart();
+  if(S.route==="kaart"&&!S.trial&&!S.done)kaartStart();
   tick();save();
 };
 
@@ -597,7 +928,7 @@ $("pocket").addEventListener("contextmenu",function(e){e.preventDefault()});
 var markSens=seg("segSens",function(){return S.sens},function(v){S.sens=parseFloat(v);save()});
 function labels(){$("mSound").textContent="Geluid bij een nieuw bericht: "+(S.sound?"aan":"uit");
   $("mAdd").textContent=S.mode==="fiets"?"Sensor werkt niet? Tel 500 meter erbij":"Sensor werkt niet? Tel 100 stappen erbij";
-  var k=S.route==="kaart";$("mAdd").hidden=k;$("mMap").hidden=!k;$("mFree").hidden=!k;$("mSkip").hidden=!k||!nextPt();
+  var k=S.route==="kaart"&&!S.trial;$("mAdd").hidden=k;$("mMap").hidden=!k;$("mFree").hidden=!k;$("mSkip").hidden=!k||!nextPt();
   $("mMap").textContent=$("mapWrap").hidden?"Plattegrond tonen":"Plattegrond verbergen"}
 $("mMap").onclick=function(){$("mapWrap").hidden=!$("mapWrap").hidden;if(map&&!$("mapWrap").hidden)map.resize();labels();$("menu").hidden=true;scroll()};
 $("mSkip").onclick=function(){if(nextPt()){S.reached++;S.leg=0;save();tick()}$("menu").hidden=true};
@@ -608,7 +939,7 @@ $("menu").addEventListener("click",function(e){if(e.target===$("menu"))$("menu")
 $("mSound").onclick=function(){S.sound=!S.sound;labels();save()};
 $("mAdd").onclick=function(){S.bonus+=S.mode==="fiets"?500:100;hint("");tick();save()};
 $("mStop").onclick=function(){save();location.reload()};
-$("mFresh").onclick=function(){S=null;wipe();location.reload()};
+$("mFresh").onclick=function(){newRun(S,S.ep);save();location.reload()};
 $("thumb").onclick=function(){paint($("viewer").querySelector("canvas"));$("viewer").hidden=false};
 $("vClose").onclick=function(){$("viewer").hidden=true};
 })();
