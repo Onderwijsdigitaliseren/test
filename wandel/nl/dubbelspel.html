@@ -49,6 +49,9 @@ h1{font:italic 600 46px/1 var(--display);margin:6px 0 0;letter-spacing:.01em}
 #eps button[aria-current="true"]{border-color:var(--brass)}
 #eps button:disabled{opacity:.45;cursor:default}
 .note{font-size:13px;color:var(--dim);margin:0}
+#cover{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px;border:1px solid var(--line);display:block}
+.who img{width:24px;height:24px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:7px}
+.b.img>img{width:100%;height:auto;display:block;border-radius:11px}
 #startPtg{width:100%;height:150px;object-fit:cover;border-radius:14px;border:1px solid var(--line);display:block;image-rendering:pixelated}
 
 /* app */
@@ -107,7 +110,7 @@ footer{border-top:1px solid var(--line);padding:10px 16px calc(12px + env(safe-a
 #pocket small{position:absolute;bottom:calc(30px + env(safe-area-inset-bottom));font-size:13px}
 #menu,#viewer{background:rgba(5,10,14,.78);align-items:flex-end;justify-content:center}
 #viewer{align-items:center;padding:20px;flex-direction:column;gap:12px}
-#viewer canvas{width:min(100%,340px);height:auto;border-radius:10px;border:1px solid var(--brass);image-rendering:pixelated}
+#viewer canvas{max-height:70vh;width:auto;max-width:100%;aspect-ratio:4/5;width:min(100%,340px);height:auto;border-radius:10px;border:1px solid var(--brass);image-rendering:pixelated}
 #viewer p{margin:0;color:var(--dim);font-size:14px;text-align:center;max-width:32ch}
 .sheet{max-height:92%;overflow-y:auto;background:var(--bg2);border:1px solid var(--line);border-radius:20px 20px 0 0;width:100%;max-width:560px;padding:18px 16px calc(18px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:14px}
 .sheet h2{font:italic 600 22px/1 var(--display);margin:0}
@@ -373,6 +376,7 @@ var EP=[
 {t:"Het origineel",beats:[
 [ s("Privé · Raf"),
   m("raf","Welkom in het atelier. Het ruikt hier naar terpentijn en slechte keuzes."),
+  im("raf","scene","Niet op de rommel letten. De rommel is kunst.",{name:"atelier",opt:1}),
   im("raf","schilderij","Mijn kopie. Zeg iets aardigs. Of iets eerlijks, als je durft."),
   c("kopie",[["Hij is prachtig",null,[m("raf","Prachtig zeggen mensen over zonsondergangen. Maar goed. Dank je.")]],
              ["Het licht in de ramen is anders",null,[m("raf","…Ja. Dat klopt. Je hebt een oog. Dat is irritant.")]]])],
@@ -502,6 +506,7 @@ var EP=[
   m("celeste","Ik sta bij de ingang. Je staat op de lijst als {persona}."),
   m("noor","Ik zit in je oor. Vanaf nu.")],
 [ s("De veiling"),
+  im("noor","scene","Veilinghuis, hoofdingang. Ik zie je op camera 3.",{name:"veilinghuis",opt:1}),
   m("noor","Je bent binnen."),
   m("celeste","Daar komt hij. Rustig blijven."),
   m("voss","Eindelijk. Ik begon al te denken dat Milo je niet meer zou sturen.")]
@@ -530,7 +535,8 @@ var EP=[
   m("raf","Met de stropdas?","milo=info|weg"),
   m("noor","Met de stropdas.","milo=info|weg"),
   m("noor","Het origineel staat op het podium. Naast de kopie. Live, op het scherm."),
-  m("noor","Twee keer De overkant. En niemand in de zaal weet welke de echte is.")],
+  m("noor","Twee keer De overkant. En niemand in de zaal weet welke de echte is."),
+  im("raf","scene","Ik sta achteraan. Ik kan niet kijken. Ik kijk.",{name:"podium",opt:1})],
 [ s("Eva loopt het podium op"),
   m("eva","Mag ik? Kijk naar het raam rechts. Het tweede van boven."),
   im("eva","reveal","Het origineel, scherp, voor het eerst."),
@@ -545,6 +551,7 @@ var EP=[
   c("einde",[["Ik ook een beetje",null,[m("noor","Ik ook. Niet tegen Raf zeggen.")]],
              ["Goed gedaan, team",null,[m("celeste","Goed gedaan, {naam}.")]]])],
 [ s("Later · snackbar De Hoek"),
+  im("celeste","scene","Bewijsstuk A: wij, in een snackbar.",{name:"snackbar",opt:1}),
   m("eva","Het schilderij gaat naar een museum. Met twee namen op het bordje. Ik heb het zelf gekozen."),
   m("raf","Ik wil een frikandel speciaal en een excuus van de hele kunstgeschiedenis."),
   m("celeste","Ik heb champagne meegenomen. Ze schenken hier geen champagne. Dat is hun probleem."),
@@ -637,9 +644,29 @@ function evaIn(x,wx,wy){x.save();x.fillStyle="#3c5a86";x.fillRect(wx,wy,21,48);x
 function revealed(){return S&&(S.ep===8&&(S.done||S.beat>=5))}
 function season(){return S?((S.ep-1)+(S.done?1:frac()))/8:0}
 function block(){return Math.max(1,Math.round(36*Math.pow(1-season(),1.5)))}
+/* ---------- artwork: optioneel, zie ../dubbelspel/ARTWORK.md. Zonder plaatjes tekent de pagina alles zelf. ---------- */
+var ART="../dubbelspel/img/",HAVE={},WIN=[.793,.32,.12,.133];
+["cover","overkant","overkant-eva","winter","envelop","milo","noor","raf","celeste","eva","voss","atelier","veilinghuis","podium","snackbar"].forEach(function(n){
+  var i=new Image();i.onload=function(){HAVE[n]=i;onArt(n)};i.src=ART+n+".webp"});
+function onArt(n){
+  if(n==="overkant"||n==="overkant-eva"){base=null;if(S&&!$("app").hidden)repaint(true)}
+  if(n==="cover"){var c=$("startPtg");if(!c)return;var im=el("img");im.src=HAVE.cover.src;im.alt="Dubbelspel";im.id="cover";c.parentNode.replaceChild(im,c)}
+}
+function fromImg(img){var c=document.createElement("canvas");c.width=300;c.height=375;c.getContext("2d").drawImage(img,0,0,300,375);return c}
+function bases(){
+  if(base)return;
+  if(HAVE.overkant){base=fromImg(HAVE.overkant);
+    if(HAVE["overkant-eva"])baseR=fromImg(HAVE["overkant-eva"]);
+    else{baseR=fromImg(HAVE.overkant);evaIn(baseR.getContext("2d"),Math.round(WIN[0]*300+7),Math.round(WIN[1]*375+1))}}
+  else{base=paintBase(false);baseR=paintBase(true)}
+}
 function paint(cv){
-  if(!base){base=paintBase(false);baseR=paintBase(true)}
-  var src=revealed()?baseR:base,b=block(),w=Math.max(4,Math.round(300/b)),h=Math.max(5,Math.round(375/b));
+  if(!cv.getContext)return;
+  bases();
+  var rv=revealed(),big=rv?HAVE["overkant-eva"]:HAVE.overkant;
+  if(block()<=1&&big){cv.width=900;cv.height=1125;cv.getContext("2d").drawImage(big,0,0,900,1125);return}
+  if(cv.width!==300){cv.width=300;cv.height=375}
+  var src=rv?baseR:base,b=block(),w=Math.max(4,Math.round(300/b)),h=Math.max(5,Math.round(375/b));
   var t=document.createElement("canvas");t.width=w;t.height=h;t.getContext("2d").drawImage(src,0,0,w,h);
   var x=cv.getContext("2d");x.imageSmoothingEnabled=false;x.clearRect(0,0,300,375);x.drawImage(t,0,0,w,h,0,0,300,375);
 }
@@ -651,12 +678,15 @@ function repaint(force){var b=block()+(revealed()?100:0);if(!force&&b===lastBloc
 var chat=$("chat");
 function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
 function fill(t){return String(t).split("{naam}").join(S.naam||"nieuweling").split("{persona}").join(flag("persona"))}
+function art(n,alt){var i=el("img");i.src=HAVE[n].src;i.alt=alt||"";return i}
 function envelop(){return '<svg viewBox="0 0 280 190" role="img" aria-label="Envelop met een kaartje"><rect width="280" height="190" fill="#1d2a36"/><rect x="72" y="26" width="136" height="104" rx="4" fill="#efe6d2"/><circle cx="118" cy="70" r="22" fill="#b85c48"/><rect x="132" y="48" width="52" height="52" fill="none" stroke="#2b2458" stroke-width="5"/><path d="M90 112 L190 60" stroke="#d8b26a" stroke-width="4"/><path d="M40 84 H240 V170 H40 Z" fill="#d9cdb2"/><path d="M40 84 L140 142 L240 84" fill="none" stroke="#a89a7c" stroke-width="2"/></svg>'}
-function revealImg(){var c=el("canvas");c.width=300;c.height=375;c.setAttribute("aria-label","Het origineel van De overkant, met Eva in het raam");
-  if(!base){base=paintBase(false);baseR=paintBase(true)}
-  var x=c.getContext("2d");x.drawImage(baseR,0,0);x.imageSmoothingEnabled=false;
-  x.fillStyle="rgba(0,0,0,.55)";x.fillRect(150,112,142,190);x.drawImage(baseR,238,120,36,50,158,120,126,175);
-  x.strokeStyle="#d8b26a";x.lineWidth=2;x.strokeRect(158,120,126,175);x.strokeRect(238,120,36,50);return c}
+function revealImg(){var W=900,H=1125,c=el("canvas");c.width=W;c.height=H;c.setAttribute("aria-label","Het origineel van De overkant, met Eva in het raam");
+  bases();var src=HAVE["overkant-eva"]||baseR,sw=src.naturalWidth||src.width,sh=src.naturalHeight||src.height;
+  var x=c.getContext("2d");x.imageSmoothingEnabled=!!HAVE["overkant-eva"];x.drawImage(src,0,0,W,H);
+  var ix=.5*W,iy=.3*H,iw=.44*W,ih=.49*H;
+  x.fillStyle="rgba(0,0,0,.55)";x.fillRect(ix-.03*W,iy-.02*H,iw+.06*W,ih+.04*H);
+  x.drawImage(src,WIN[0]*sw,WIN[1]*sh,WIN[2]*sw,WIN[3]*sh,ix,iy,iw,ih);
+  x.strokeStyle="#d8b26a";x.lineWidth=6;x.strokeRect(ix,iy,iw,ih);x.strokeRect(WIN[0]*W,WIN[1]*H,WIN[2]*W,WIN[3]*H);return c}
 function winterImg(){var c=el("canvas");c.width=300;c.height=375;c.setAttribute("aria-label","Een winterlandschap met een verlicht raam");
   var x=c.getContext("2d"),r=rng(11),i,g=x.createLinearGradient(0,0,0,240);g.addColorStop(0,"#5d6f86");g.addColorStop(1,"#c9d3dc");x.fillStyle=g;x.fillRect(0,0,300,375);
   x.fillStyle="#eef2f5";x.beginPath();x.moveTo(0,250);x.quadraticCurveTo(150,215,300,245);x.lineTo(300,375);x.lineTo(0,375);x.fill();
@@ -690,10 +720,13 @@ function render(it){
       b=el("button","primary","Naar aflevering "+(S.ep+1));b.type="button";b.onclick=function(){newRun(S,S.ep+1);save();location.reload()};e.appendChild(b)}
     chat.appendChild(e);lastFrom=null;return}
   if(it.me){chat.appendChild(el("div","b me",it.me));lastFrom="me";return}
-  if(it.from!==lastFrom){var p2=PEOPLE[it.from],w=el("div","who",p2[0]);w.style.color="var("+p2[1]+")";chat.appendChild(w);lastFrom=it.from}
+  if(it.from!==lastFrom){var p2=PEOPLE[it.from],w=el("div","who");if(HAVE[it.from])w.appendChild(art(it.from));w.appendChild(document.createTextNode(p2[0]));w.style.color="var("+p2[1]+")";chat.appendChild(w);lastFrom=it.from}
   if(it.img){
     var box=el("div","b img");
-    if(it.img==="envelop")box.innerHTML=envelop();
+    if(it.img==="envelop"&&HAVE.envelop)box.appendChild(art("envelop","Envelop met een kaartje"));
+    else if(it.img==="envelop")box.innerHTML=envelop();
+    else if(it.img==="winter"&&HAVE.winter)box.appendChild(art("winter","Een winterlandschap met een verlicht raam"));
+    else if(it.img==="scene")box.appendChild(art(it.name,it.text));
     else if(it.img==="schilderij"){var c=el("canvas");c.width=300;c.height=375;c.setAttribute("data-ptg","");c.setAttribute("aria-label","Onscherpe foto van het schilderij De overkant");paint(c);box.appendChild(c)}
     else if(it.img==="reveal")box.appendChild(revealImg());
     else if(it.img==="winter")box.appendChild(winterImg());
@@ -726,7 +759,7 @@ function pump(){
     }else{S.done=true;add({end:1});save();release()}
     return}
   var it=S.queue[0];
-  if(it.when&&!ok(it.when)){S.queue.shift();pump();return}
+  if((it.when&&!ok(it.when))||(it.opt&&!HAVE[it.name])){S.queue.shift();pump();return}
   if(it.choice){S.queue.shift();S.waiting=it.choice;save();showChoices();return}
   busy=true;
   var wait=it.sys?350:Math.min(1900,550+(it.text||"").length*20);
@@ -899,10 +932,10 @@ function startUI(){
     b.appendChild(el("small",null,st));
     if(n===draft.ep)b.setAttribute("aria-current","true");
     b.disabled=n>draft.max||n===draft.ep||(resume&&!draft.done);
-    b.onclick=function(){newRun(draft,n);S=draft;save();paint($("startPtg"));startUI()};
+    b.onclick=function(){newRun(draft,n);S=draft;save();if($("startPtg"))paint($("startPtg"));startUI()};
     li.appendChild(b);ol.appendChild(li)});
 }
-S=draft;startUI();paint($("startPtg"));
+S=draft;startUI();if($("startPtg"))paint($("startPtg"));
 var sure=false;
 $("fresh").onclick=function(){if(!sure){sure=true;$("fresh").textContent="Zeker weten? Tik nog een keer. Je keuzes en voortgang verdwijnen.";return}wipe();location.reload()};
 $("trial").onclick=function(){draft.trial=true;$("go").onclick()};
