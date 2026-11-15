@@ -283,6 +283,7 @@ footer{border-top:1px solid var(--line);padding:10px 16px calc(12px + env(safe-a
     <button class="ghost" id="mSound" type="button"></button>
     <button class="ghost" id="mAdd" type="button"></button>
     <button class="ghost" id="mMap" type="button" hidden></button>
+    <button class="ghost" id="mMove" type="button" hidden>Move this point</button>
     <button class="ghost" id="mSkip" type="button" hidden>Skip this point</button>
     <button class="ghost" id="mFree" type="button" hidden>Continue on your own route, without the map</button>
     <button class="ghost" id="mStop" type="button">Stop for now (progress is saved)</button>
@@ -295,7 +296,8 @@ footer{border-top:1px solid var(--line);padding:10px 16px calc(12px + env(safe-a
 <script src="shared/platform.js?v=5"></script>
 <script src="shared/tiles.js?v=1"></script>
 <script src="shared/plan.js?v=2"></script>
-<script src="shared/walk.js?v=5"></script>
+<script src="shared/move.js?v=1"></script>
+<script src="shared/walk.js?v=6"></script>
 <script>
 (function(){
 "use strict";
@@ -1125,6 +1127,7 @@ function nextPt(){return S.world&&S.world.pts&&S.reached<S.world.pts.length?S.wo
 function initMap(){
   if(map)return;
   map=Wk.createMap($("map"),{player:function(){return P},ways:function(){return W},R:function(){return S.world.R},items:mapItems,onTap:function(){map.follow()},
+    move:{points:function(){var n=nextPt();return n?[n]:[]},done:function(p,info){if(info.name)p.name=info.name;S.leg=0;save();map.follow();mapTick()}},
     theme:{bg:"#101b24",water:"#0c2230",waterEdge:"#1f4a5e",park:"#14302a",parkEdge:"#1f4a3c",river:"#16384c",major:"#4b6076",minor:"#1d2c3a",road:"#2a3d4f",label:"#7f93a0",waterLabel:"#4f8aa6",ring:"rgba(0,0,0,0)",me:"#6fc3cf",meHalo:"rgba(111,195,207,.14)",meRing:"rgba(111,195,207,.5)",font:"600 12px system-ui,sans-serif"}});
   requestAnimationFrame(function loop(t){
     if(!$("mapWrap").hidden&&S.route==="kaart"){
@@ -1253,10 +1256,11 @@ $("pocket").addEventListener("contextmenu",function(e){e.preventDefault()});
 var markSens=seg("segSens",function(){return S.sens},function(v){S.sens=parseFloat(v);save()});
 function labels(){$("mSound").textContent="Sound for a new message: "+(S.sound?"on":"off");
   $("mAdd").textContent=S.mode==="fiets"?"Sensor not working? Add 500 metres":"Sensor not working? Add 100 steps";
-  var k=S.route==="kaart"&&!S.trial;$("mAdd").hidden=k;$("mMap").hidden=!k;$("mFree").hidden=!k;$("mSkip").hidden=!k||!nextPt();
+  var k=S.route==="kaart"&&!S.trial;$("mAdd").hidden=k;$("mMap").hidden=!k;$("mFree").hidden=!k;$("mSkip").hidden=!k||!nextPt();$("mMove").hidden=!k||!nextPt()||!map||!map.move;
   $("mMap").textContent=$("mapWrap").hidden?"Show map":"Hide map"}
 $("mMap").onclick=function(){$("mapWrap").hidden=!$("mapWrap").hidden;if(map&&!$("mapWrap").hidden)map.resize();labels();$("menu").hidden=true};
 $("mSkip").onclick=function(){if(nextPt()){S.reached++;S.leg=0;save();tick()}$("menu").hidden=true};
+$("mMove").onclick=function(){$("menu").hidden=true;if(!map||!map.move)return;if($("mapWrap").hidden){$("mapWrap").hidden=false;map.resize()}map.V.follow=false;var n=nextPt();if(n){map.V.ox=(n.x+P.x)/2;map.V.oy=(n.y+P.y)/2}map.move.set(true)};
 $("mFree").onclick=function(){toVrij("");$("menu").hidden=true};
 $("bMenu").onclick=function(){labels();$("menu").hidden=false};
 $("mClose").onclick=function(){$("menu").hidden=true};

@@ -21,6 +21,7 @@ Statische site voor GitHub Pages, geen build-stap. Draait sinds 30 okt 2026 op w
 /games/spellenmaker/         speurtocht van ± 2 uur op de wandelmotor: tien vakken met elk een kist in 3D, een spel en een schim door de camera. Zie “De Erfenis van de Spellenmaker” hieronder
 /shared/platform.js          gedeelde laag: Pro, groepspas, codes.json, profiel (rang/punten/streak), taal, instellingen (SS_PRO)
 /shared/walk.js              wandelmotor voor nieuwe spellen: OpenStreetMap/Overpass, plekken kiezen, nachtkaart, gps, oefenwereld, vellen/geluid
+/shared/move.js              punten verleggen: de speler wijst op de kaart een andere plek aan voor een punt dat lastig of niet te bereiken is. Losstaand; walk.js gebruikt het als het ervoor geladen is en createMap de optie `move` krijgt (knop "✥ Verleg punt" in #zoom). Zie "Punten verleggen" hieronder
 /shared/steps.js             binnen-stand: stappen tellen met de bewegingssensor (devicemotion) of lopen op tempo, scherm aan houden. Nu in gebruik bij games/bride (keuze Buiten/Binnen op het startscherm, G.mode "in", teksten in D.IN); de keuze staat in `ss_where`
 /shared/catalog.js           catalogus (categorieën + spellen) voor beide hubs
 /shared/platform.css         gedeelde stijl   · /shared/hub.css + hub.js  hub
@@ -68,6 +69,20 @@ img/         beelden (webp): hero, por-* (portretten), foto (legpuzzel), trap-vo
 - Gratis periode: `CFG.gratis` in platform.js (`{sm:"2026-11-16T23:59:59+01:00"}`). Tot dan geeft `MW.pro.has("sm")` true: geen slot, geen proefronde-stop, statusregel "tot en met … gratis" en in de hub het label "Gratis t/m …". Wie in die periode begint, mag de speurtocht afmaken (G.trial blijft false). Daarna gewoon teamticket.
 - In de hub uitgelicht met `feature:{nl,en,icon,acc,tag}` (eigen kleur via --facc/--ftag in hub.css) en `assets/feature-sm.webp`.
 - Hub-cover `assets/cover-sm.webp` en deelplaatje `assets/og-sm.jpg` (1200×630) zijn van Kellie; `assets/og-sm-en.jpg` ook. Bewijsstukken met tekst hebben een Engelse versie (`img/ev-*-en.webp`), gekoppeld in data-en.js. De tikvlakken van Zoek de verschillen staan als rechthoeken in pixels van trap-voor/trap-na (1360×840) in `DIFF` bovenin spel-b.js; een nieuw trapbeeld vraagt nieuwe rechthoeken.
+
+## Punten verleggen (`shared/move.js`)
+Sinds 15 nov 2026. Ligt een punt in een tuin, aan de overkant van het water of op een plek waar je niet wilt komen, dan tikt de speler op "✥ Verleg punt", en daarna op de kaart waar het punt moet komen. Het punt springt naar de dichtstbijzijnde straat bij de vinger (binnen 60 m), blijft binnen het speelveld en komt niet boven op een ander punt. Wil de speler een ander punt dan het voorgestelde verleggen, dan tikt hij dat eerst aan. Na één keer verleggen staat de stand weer uit. Werkt op de echte kaart en op de plattegrond.
+
+Een wandeling aansluiten:
+1. In beide shells `<script src="…shared/move.js?v=1"></script>` vóór walk.js zetten, en walk.js op `?v=6` (of hoger).
+2. In `createMap` de optie `move` meegeven. `move:true` neemt alle open plekken uit `items()`; meestal wil je meer zeggen:
+   `move:{can:function(p){return G.st.indexOf(p)>=0&&!p.done},target:function(){return sel},done:function(){sel=null;chip();save()}}`
+   `can` bepaalt welke punten mogen (geen echo's, schimmen of bezochte plekken), `target` welk punt als eerste gekozen is, `done` slaat op.
+3. Heeft de pagina geen `#zoom`, hang dan `map.move.set(true)` aan een eigen knop of menuregel (zo doet Dubbelspel het).
+
+De naam van een plek verandert niet door het verleggen: in de verhaalspellen blijft "Café De Zwaan" zo heten, alleen de speld staat ergens anders. Spellen met eigen puntnamen (Dubbelspel, De Wensjacht) nemen in `done` de straatnaam over uit `info.name`.
+
+Aangesloten: De Verdwijning / The Vanishing (`games/vanishing`), Dubbelspel / Double Play (menuregel "Dit punt verleggen"), en De Wensjacht op manifestationtool.nl (kopie van de kaartlaag in `js/kaart/`). Nog niet: Tot de Dood Ons Scheidt, Ooggetuige, Onopgelost, De Laatste Bus, De Nacht van de Geesten, De Erfenis van de Spellenmaker, de oude Moordwandeling-motor (los gebruiken, zie de kop van move.js) en MiniMystery.
 
 ## Instellingen
 Ko-fi-links, prijzen, groepspas-uren en de hub-Ko-fi-knop: bovenin `shared/platform.js` (`CFG`). Het zout `moordwandeling|` nooit wijzigen.
