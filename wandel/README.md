@@ -5,7 +5,7 @@ Statische site voor GitHub Pages, geen build-stap. Draait sinds 30 okt 2026 op w
 ```
 /index.html                  hub EN (op moordwandeling.nl stuurt hij door naar /nl/)
 /nl/index.html               hub NL
-/murder-walk.html            spel 1 EN        /nl/moordwandeling.html   spel 1 NL   (eigen, oudere motor; staat compleet in het bestand; startscherm tekent de sfeerfoto assets/mw-hero.webp in het canvas)
+/murder-walk.html            spel 1 EN        /nl/moordwandeling.html   spel 1 NL   (spel en verhaal staan in het bestand zelf; kaart, wereld ophalen en gps komen sinds 16 nov 2026 uit shared/walk.js, net als bij de andere wandelingen; startscherm tekent de sfeerfoto assets/mw-hero.webp in het canvas)
 /the-vanishing.html          spel 2 EN        /nl/de-verdwijning.html   spel 2 NL   (shell; logica in /games/vanishing/)
 /till-death-do-us-part.html  spel 3 EN        /nl/tot-de-dood-ons-scheidt.html  spel 3 NL (shell; logica in /games/bride/)
 /games/bride/                game.js (zelfde motor als vanishing: zes gasten, motief, de bruid als schim) · data-nl.js · data-en.js · game.css · hero.webp (sfeerfoto, uitsnede zonder titel) · portrait.webp; gebruikt games/vanishing/puzzles.js. Eigen sfeer naar de sfeerfoto (natte nacht, lantaarnlicht, ivoor, dieprode rozenblaadjes; Cinzel + Cormorant Garamond), eigen pictogrammen (IC in game.js), getekende figuren (bride/witness) en eigen kaartkleuren via createMap({theme})
@@ -20,7 +20,7 @@ Statische site voor GitHub Pages, geen build-stap. Draait sinds 30 okt 2026 op w
 /the-gamemakers-legacy.html  speurtocht EN   /nl/de-erfenis-van-de-spellenmaker.html   speurtocht NL (shell; logica in /games/spellenmaker/)
 /games/spellenmaker/         speurtocht van ± 2 uur op de wandelmotor: tien vakken met elk een kist in 3D, een spel en een schim door de camera. Zie “De Erfenis van de Spellenmaker” hieronder
 /shared/platform.js          gedeelde laag: Pro, groepspas, codes.json, profiel (rang/punten/streak), taal, instellingen (SS_PRO)
-/shared/walk.js              wandelmotor voor nieuwe spellen: OpenStreetMap/Overpass, plekken kiezen, nachtkaart, gps, oefenwereld, vellen/geluid
+/shared/walk.js              wandelmotor voor alle wandelingen: OpenStreetMap/Overpass, plekken kiezen, nachtkaart, gps, oefenwereld, vellen/geluid. createMap neemt optioneel `credit:()=>bool` (OpenStreetMap-vermelding; de Moordwandeling zet die uit in de getekende proefronde)
 /shared/move.js              punten verleggen: de speler wijst op de kaart een andere plek aan voor een punt dat lastig of niet te bereiken is. Losstaand; walk.js gebruikt het als het ervoor geladen is en createMap de optie `move` krijgt (knop "✥ Verleg punt" in #zoom). Zie "Punten verleggen" hieronder
 /shared/steps.js             binnen-stand: stappen tellen met de bewegingssensor (devicemotion) of lopen op tempo, scherm aan houden. Nu in gebruik bij games/bride (keuze Buiten/Binnen op het startscherm, G.mode "in", teksten in D.IN); de keuze staat in `ss_where`
 /shared/catalog.js           catalogus (categorieën + spellen) voor beide hubs
@@ -82,8 +82,11 @@ Een wandeling aansluiten:
 
 De naam van een plek verandert niet door het verleggen: in de verhaalspellen blijft "Café De Zwaan" zo heten, alleen de speld staat ergens anders. Spellen met eigen puntnamen (Dubbelspel, De Wensjacht) nemen in `done` de straatnaam over uit `info.name`.
 
-Aangesloten (allemaal NL en EN): De Verdwijning, Tot de Dood Ons Scheidt, Ooggetuige, Onopgelost, De Laatste Bus, De Nacht van de Geesten (geen verborgen plekken: `!hid(p)`), De Erfenis van de Spellenmaker (alleen het huidige en latere vakken: `G.st.indexOf(p)>=G.ch`), Dubbelspel (menuregel "Dit punt verleggen"), en De Wensjacht op manifestationtool.nl (kopie van de kaartlaag in `js/kaart/`).
-Nog niet: de oude Moordwandeling-motor (eigen kaartcode; move.js los gebruiken, zie de kop van move.js), De Buit (eigen getekende kaart van Westerdam, geen echte straten) en MiniMystery (eigen repo).
+Aangesloten (allemaal NL en EN): de Moordwandeling (alleen sporen die nog open zijn en die je in een groepszaak zelf mag openen; schimmen en onderweg-gebeurtenissen niet), De Verdwijning, Tot de Dood Ons Scheidt, Ooggetuige, Onopgelost, De Laatste Bus, De Nacht van de Geesten (geen verborgen plekken: `!hid(p)`), De Erfenis van de Spellenmaker (alleen het huidige en latere vakken: `G.st.indexOf(p)>=G.ch`), Dubbelspel (menuregel "Dit punt verleggen"), en De Wensjacht op manifestationtool.nl (kopie van de kaartlaag in `js/kaart/`).
+Nog niet: De Buit (eigen getekende kaart van Westerdam, geen echte straten) en MiniMystery (eigen repo).
+
+## Moordwandeling op de wandelmotor
+Sinds 16 nov 2026 gebruikt de Moordwandeling (`murder-walk.html`, `nl/moordwandeling.html`) `MW.Walk.createMap`, `fetchWorld` en `watch` in plaats van een eigen kopie. Het spel tekent zelf alleen zijn sporen, schimmen en onderweg-gebeurtenissen (`drawSpots`, als één item met `tap:false`) en doet zelf de tik-afhandeling in `onTap`; de kleuren staan in `theme`. Het kiezen van de acht plekken (in `build`) is bewust de eigen code gebleven, zodat zaakcodes, duels en groepslinks dezelfde plekken blijven geven.
 
 ## Instellingen
 Ko-fi-links, prijzen, groepspas-uren en de hub-Ko-fi-knop: bovenin `shared/platform.js` (`CFG`). Het zout `moordwandeling|` nooit wijzigen.

@@ -293,6 +293,8 @@ a#hub{text-decoration:none;color:var(--paper)}
 <script src="../shared/catalog.js?v=20"></script>
 <script src="../shared/tiles.js?v=1"></script>
 <script src="../shared/plan.js?v=2"></script>
+<script src="../shared/move.js?v=1"></script>
+<script src="../shared/walk.js?v=7"></script>
 <script>
 /* ---------- zaakgenerator (puur, controleerbaar) ---------- */
 function rngOf(seed){let a=seed>>>0;return function(){a=(a+0x6D2B79F5)>>>0;let t=a;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return((t^(t>>>14))>>>0)/4294967296}}
@@ -362,7 +364,8 @@ const TYPES={kerk:["de kerk","de koster"],bank:["de bank","de nachtwaker van de 
 const PRI=["kerk","hotel","bank","apotheek","cafe","bieb","park","school","kunst","tank","winkel","halte","post","bankje","hoek"];
 const SPARE=["de straatveger","de nachtverpleger op weg naar huis","de visser met slapeloosheid","de bakkersknecht","de dakloze dichter"];
 let prof=LS.get("ss_prof",{xp:0,streak:0,last:"",solved:0,book:{}});
-let G=null,W=[],P={x:0,y:0,acc:0},V={s:.5,ox:0,oy:0,follow:true},sel=null,walkTo=null,watchId=null,R0=650,PAR=90,lastT=0,arrived=null;
+let G=null,W=[],P={x:0,y:0,acc:0},V={s:.5,ox:0,oy:0,follow:true},sel=null,walkTo=null,R0=650,PAR=90,lastT=0,arrived=null;
+const Wk=MW.Walk; // gedeelde wandelmotor (shared/walk.js)
 const today=()=>{const d=new Date();return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()};
 const rank=xp=>{let i=0;RANKS.forEach((r,j)=>{if(xp>=r[0])i=j});return i};
 function toast(t){const e=$("#toast");e.textContent=t;e.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>e.hidden=true,2600)}
@@ -421,58 +424,18 @@ function proSheet(kind){
 }
 
 /* ---------- wereld ophalen ---------- */
-function poiType(t){
-  if(!t)return null;const a=t.amenity,s=t.tourism;
-  if(a==="place_of_worship")return"kerk";if(a==="bank"||a==="atm")return"bank";if(/^(cafe|pub|bar|restaurant)$/.test(a||""))return"cafe";
-  if(a==="pharmacy")return"apotheek";if(a==="post_box")return"post";if(a==="library")return"bieb";if(a==="school")return"school";if(a==="fuel")return"tank";if(a==="bench")return"bankje";
-  if(s==="hotel")return"hotel";if(s==="artwork"||s==="museum")return"kunst";if(t.shop)return"winkel";if(t.highway==="bus_stop")return"halte";
-  if(t.leisure==="park"||t.leisure==="playground")return"park";return null;
-}
 function startGps(seed){
   const st={set textContent(v){$("#loadT").textContent=v;$("#load").hidden=!v}};const fail=m=>{st.textContent="";sheet('<h2>Dat lukt hier niet</h2><p>'+m+'</p><button type="button" class="btn" id="shX">Terug</button>');$("#sheetBody").onclick=e=>{if(e.target.id==="shX")closeSheet()}};
   if(!navigator.geolocation){fail("Dit toestel geeft geen locatie door. Je kunt wel de oefenronde spelen.");return}
   st.textContent="Je locatie zoeken…";
-  navigator.geolocation.getCurrentPosition(async pos=>{
+  navigator.geolocation.getCurrentPosition(pos=>{
     const gl=GRP&&GRP.o,lat=gl?gl[0]:pos.coords.latitude,lon=gl?gl[1]:pos.coords.longitude,R=R0;if(gl&&Math.hypot((pos.coords.longitude-lon)*111320*Math.cos(lat*Math.PI/180),(pos.coords.latitude-lat)*110540)>2500)toast(T.gFar);
-    const kx=111320*Math.cos(lat*Math.PI/180),ky=110540,xy=(la,lo)=>[(lo-lon)*kx,-(la-lat)*ky],A="(around:"+R+","+lat+","+lon+")";
-    const hosts=window.SS_MAP||["https://overpass.private.coffee/api/interpreter","https://maps.mail.ru/osm/tools/overpass/api/interpreter","https://overpass-api.de/api/interpreter"];
-    // eerst één server; pas na 4 en 8 seconden zonder antwoord (of meteen bij een fout) de volgende erbij
-    const ask=(q,ms)=>new Promise((res,rej)=>{const ac=new AbortController(),ts=[];let nx=0,left=hosts.length,done=false;
-      const fin=(ok,v)=>{if(done)return;done=true;ts.forEach(clearTimeout);ac.abort();ok?res(v):rej(v)};
-      const start=()=>{if(done||nx>=hosts.length)return;const h=hosts[nx++];
-        fetch(h,{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:"data="+encodeURIComponent(q),signal:ac.signal}).then(r=>{if(!r.ok)throw new Error("server "+r.status);return r.json()}).then(d=>fin(true,d),e=>{if(--left<=0)fin(false,e);else start()})};
-      start();ts.push(setTimeout(start,4000),setTimeout(start,8000),setTimeout(()=>fin(false,new Error("timeout")),ms))});
-    let pois=[],ways=[];const c=LS.get("ss_map",null);
-    // deze buurt al eens geladen: meteen starten
-    if(c&&c.R>=R&&c.pois&&c.pois.length&&Math.hypot((c.lon-lon)*kx,(c.lat-lat)*ky)<150){const ox=(c.lon-lon)*kx,oy=-(c.lat-lat)*ky;
-      pois=c.pois.map(p=>({x:p.x+ox,y:p.y+oy,type:p.type,name:p.name}));ways=(c.ways||[]).map(w=>Object.assign({w:w.w,n:w.n,p:w.p.map((v,i)=>Math.round(v+(i%2?oy:ox)))},w.ns?{ns:1}:{}));
-      st.textContent="";build(seed,"gps",pois,ways,{lat,lon,kx,ky});
-      // buurt stond zonder straten in de cache: die nu alsnog ophalen (op de achtergrond)
-      if(!ways.length){const mine=G;(window.MW&&MW.Tiles?MW.Tiles.world({lat,lon,R:R+150,ms:9000}).then(t=>{if(!t.ways.length)throw 0;return{tiles:t.ways}}):Promise.reject(0)).catch(()=>ask('[out:json][timeout:25];way(around:'+(R+150)+','+lat+','+lon+')[highway~"^(residential|tertiary|secondary|primary|unclassified|living_street|pedestrian|footway|path|cycleway|service)$"];out geom qt;',45000)).then(d=>{const ws=d.tiles?d.tiles.slice():[];
-        for(const e of d.elements||[]){if(!e.geometry)continue;const p=[];e.geometry.forEach(g=>{const q=xy(g.lat,g.lon);p.push(Math.round(q[0]),Math.round(q[1]))});const h=(e.tags&&e.tags.highway)||"";ws.push({p,w:/primary|secondary|tertiary/.test(h)?3:/footway|path|cycleway/.test(h)?1:2,n:(e.tags&&e.tags.name)||""})}
-        if(!ws.length)return;if(G&&G===mine){W=ws;LS.set(WK,W)}LS.set("ss_map",{lat:c.lat,lon:c.lon,R:c.R,pois:c.pois,ways:ws.map(w=>Object.assign({w:w.w,n:w.n,p:w.p.map((v,i)=>Math.round(v-(i%2?oy:ox)))},w.ns?{ns:1}:{}))})}).catch(()=>{})}
-      return}
-    st.textContent="Plekken in je buurt zoeken…";
-    // 1) vectortegels (shared/tiles.js): plekken én straten in één keer, snel via een CDN; Overpass is daarna de reserve
-    let tw=null;if(window.MW&&MW.Tiles){try{tw=await MW.Tiles.world({lat,lon,R:R+150,ms:8000})}catch(e){tw=null}}
-    const useT=pp=>{st.textContent="";build(seed,"gps",pp,tw.ways,{lat,lon,kx,ky});if(pp.length)LS.set("ss_map",{lat,lon,R,pois:pp,ways:tw.ways})};
-    if(tw&&tw.ways.length&&(GRP&&GRP.st||tw.pois.filter(p=>Math.hypot(p.x,p.y)<=R).length>=4)){useT(GRP&&GRP.st?[]:tw.pois);return}
-    try{
-      const d=GRP&&GRP.st?{elements:[]}:await ask('[out:json][timeout:15];(nwr'+A+'[amenity~"^(place_of_worship|bank|atm|cafe|pub|bar|restaurant|pharmacy|post_box|library|school|fuel)$"];nwr'+A+'[tourism~"^(hotel|artwork|museum)$"];nwr'+A+'[shop~"^(supermarket|bakery|convenience)$"];node'+A+'[highway=bus_stop];nwr'+A+'[leisure~"^(park|playground)$"];);out center qt 400;',tw?9000:12000);
-      for(const e of d.elements||[]){const ty=poiType(e.tags),q=e.type==="node"?[e.lat,e.lon]:e.center?[e.center.lat,e.center.lon]:null;if(!ty||!q)continue;const p=xy(q[0],q[1]);pois.push({x:p[0],y:p[1],type:ty,name:e.tags.name||""})}
-    }catch(e){if(tw&&tw.ways.length){useT(tw.pois);return}
-      toast("De kaartdienst reageert niet. Je sporen liggen op loopafstand om je heen.");
-      // kaartdienst onbereikbaar: de zaak komt op een getekende plattegrond rond je (shared/plan.js); gps en afstanden blijven echt
-      if(window.MW&&MW.Plan){const v=MW.Plan.city(MW.Plan.seedOf(lat,lon),R);st.textContent="";build(seed,"gps",v.pois,v.ways,{lat,lon,kx,ky});return}}
-    if(tw&&tw.ways.length){useT(!(GRP&&GRP.st)&&tw.pois.length>pois.length?tw.pois:pois);return}
-    st.textContent="";build(seed,"gps",pois,[],{lat,lon,kx,ky});
-    // straten komen op de achtergrond; het spel wacht er niet op
-    const mine=G;
-    ask('[out:json][timeout:25];way(around:'+(R+150)+','+lat+','+lon+')[highway~"^(residential|tertiary|secondary|primary|unclassified|living_street|pedestrian|footway|path|cycleway|service)$"];out geom qt;',45000).then(d=>{
-      for(const e of d.elements||[]){if(!e.geometry)continue;const p=[];e.geometry.forEach(g=>{const q=xy(g.lat,g.lon);p.push(Math.round(q[0]),Math.round(q[1]))});const h=(e.tags&&e.tags.highway)||"";ways.push({p,w:/primary|secondary|tertiary/.test(h)?3:/footway|path|cycleway/.test(h)?1:2,n:(e.tags&&e.tags.name)||""})}
-      if(G&&G===mine){W=ways;LS.set(WK,W)}
-      if(pois.length)LS.set("ss_map",{lat,lon,R,pois,ways});
-    }).catch(()=>{if(pois.length)LS.set("ss_map",{lat,lon,R,pois,ways:[]})});
+    /* wereld ophalen met de gedeelde wandelmotor: cache, vectortegels, Overpass, anders de getekende plattegrond */
+    Wk.fetchWorld({lat,lon,R,status:k=>{if(k==="pois")st.textContent="Plekken in je buurt zoeken…";else if(k==="nomap")toast("De kaartdienst reageert niet. Je sporen liggen op loopafstand om je heen.")}}).then(w=>{
+      st.textContent="";build(seed,"gps",w.pois,w.ways,w.origin);
+      // straten die later komen (op de achtergrond); het spel wacht er niet op
+      const mine=G;w.later.then(ws=>{if(ws&&ws.length&&G&&G===mine){W=ws;LS.set(WK,W)}}).catch(()=>{})
+    },()=>{st.textContent="";toast("De kaartdienst reageert niet. Je sporen liggen op loopafstand om je heen.")});
   },err=>{fail("Geen toegang tot je locatie. Open dit spel in de browser van je telefoon via een https-adres en sta locatie toe. Hier kun je de oefenronde spelen.")},{enableHighAccuracy:true,timeout:20000});
 }
 /* ---------- proefronde: de binnenstad van Eindhoven, getekend (geen kaartdienst nodig). Markt = middelpunt, x naar het oosten, y naar het zuiden, in meters.
@@ -551,18 +514,18 @@ $("#bGo").onclick=()=>{G.t0=Date.now();if(G.mode==="gps"&&!G.grp)LS.set("ss_free
 function save(){if(G){G.px=P.x;G.py=P.y;LS.set("ss_game",G)}}
 function enter(){
   show("play");V.follow=true;V.s=Math.min(innerWidth,innerHeight)/(G.R*1.5);sel=null;walkTo=null;arrived=null;$("#chip").hidden=true;
-  if(watchId!=null){navigator.geolocation.clearWatch(watchId);watchId=null}
-  if(G.mode==="gps"&&navigator.geolocation){const o=G.origin;watchId=navigator.geolocation.watchPosition(p=>{const x=(p.coords.longitude-o.lon)*o.kx,y=-(p.coords.latitude-o.lat)*o.ky,d=Math.hypot(x-P.x,y-P.y);if(d>3&&d<80)G.dist+=d;if(d>3){P.x=x;P.y=y}P.acc=p.coords.accuracy||0},()=>{},{enableHighAccuracy:true,maximumAge:2000})}
+  Wk.stopWatch();if(G.mode==="gps")Wk.watch(G.origin,P,d=>{if(d>3&&d<80)G.dist+=d});
   try{navigator.wakeLock&&navigator.wakeLock.request("screen").catch(()=>{})}catch(e){}
   if(G.mode==="demo")toast("Oefenronde: tik op de kaart om te lopen.");
   heartLoop();requestAnimationFrame(loop);
 }
 
 /* ---------- kaart ---------- */
-const cv=$("#map"),cx=cv.getContext("2d");let dpr=1,cw=0,chh=0;
-function resize(){dpr=window.devicePixelRatio||1;cw=cv.clientWidth;chh=cv.clientHeight;cv.width=cw*dpr;cv.height=chh*dpr}
-addEventListener("resize",resize);
-const sx=x=>(x-(V.follow?P.x:V.ox))*V.s+cw/2,sy=y=>(y-(V.follow?P.y:V.oy))*V.s+chh/2;
+/* De kaart komt uit de gedeelde wandelmotor (shared/walk.js, createMap): zelfde kaartlaag, plattegrond en "✥ Verleg punt" (shared/move.js) als de andere wandelingen.
+   Dit spel tekent zelf alleen zijn sporen, schimmen en onderweg-gebeurtenissen (drawSpots); kleuren via theme. */
+const cv=$("#map"),cx=cv.getContext("2d");let map=null;
+function resize(){if(map)map.resize()}
+const sx=x=>map.sx(x),sy=y=>map.sy(y);
 const dTo=t=>Math.hypot(t.x-P.x,t.y-P.y);
 const inRange=t=>dTo(t)<=Math.max(35,Math.min(P.acc||0,60))||G.force===t;
 /* schim: man met hoed en lange jas in het lantaarnlicht, zoals op de sfeerfoto; twee ogen in de kleur van de schim */
@@ -584,17 +547,7 @@ function ghost(c,x,y,s,col,al){c.save();c.globalAlpha=al;
   c.strokeStyle=col;c.lineWidth=1.7;c.stroke(fp("M70 15 L71.5 24 M84 24.5 C80 27 74 28.5 68 29 M77 46 C82 66 84 96 87 122 M71 152 L74 124 M60 44 L56 58 M60 44 L64 58"));
   c.fillStyle=col;c.beginPath();c.arc(57,33.5,1.3,0,7);c.arc(63,33.5,1.3,0,7);c.fill();c.restore()}
 const still=matchMedia("(prefers-reduced-motion: reduce)").matches;
-/* plattegrond (shared/plan.js): vanzelf aan zonder straten of bij een getekende stad; knop ▦ wisselt */
-const PV=window.MW&&MW.Plan?MW.Plan.ctl({W:()=>W,th:{bg:"#0c0a0b",label:"#b8aca0",waterEdge:"#2e4652",parkEdge:"#2f3a26",me:"#f0963c"},toast}):null;if(PV)PV.mount();
-function draw(t){
-  cx.setTransform(dpr,0,0,dpr,0,0);cx.fillStyle="#0c0a0b";cx.fillRect(0,0,cw,chh);
-  cx.lineCap="round";cx.lineJoin="round";
-  const pl=PV&&PV.on(),PA=pl?{sx,sy,s:V.s,cw,ch:chh,t,P,R:G.R,spots:G.st.filter(s=>!s.done),top:($("#hud")?$("#hud").getBoundingClientRect().height:56)}:null;if(pl)PV.bg(cx,PA);
-  if(!pl)for(const w of W){if(w.w!=="water"&&w.w!=="park")continue;cx.beginPath();for(let i=0;i<w.p.length;i+=2){const X=sx(w.p[i]),Y=sy(w.p[i+1]);i?cx.lineTo(X,Y):cx.moveTo(X,Y)}cx.closePath();cx.fillStyle=w.w==="water"?"#111c22":"#141912";cx.fill()}
-  if(!pl)for(const w of W){if(typeof w.w!=="number")continue;cx.strokeStyle=w.w===9?"#152026":w.w===1?"#1d1716":"#3d2f2b";cx.lineWidth=Math.max(1.2,(w.w===9?30:w.w===3?9:w.w===2?6:2.5)*V.s);cx.beginPath();for(let i=0;i<w.p.length;i+=2){const X=sx(w.p[i]),Y=sy(w.p[i+1]);i?cx.lineTo(X,Y):cx.moveTo(X,Y)}cx.stroke()}
-  cx.font="italic 12px Georgia,serif";cx.textAlign="center";cx.fillStyle="#a8744a";if(!pl)for(const w of W){if(w.w===9&&w.n){const m=Math.floor(w.p.length/4)*2;cx.fillText(w.n,sx(w.p[m]),sy(w.p[m+1])+4)}}
-  // speelveld
-  cx.strokeStyle="rgba(200,188,175,.25)";cx.setLineDash([4,8]);cx.lineWidth=1;cx.beginPath();cx.arc(sx(0),sy(0),G.R*V.s,0,7);cx.stroke();cx.setLineDash([]);
+function drawSpots(t){
   const bob=still?0:Math.sin(t/500)*3;
   cx.font="600 12px 'Barlow Condensed','Arial Narrow',sans-serif";cx.textAlign="center";
   G.st.forEach((s,i)=>{const X=sx(s.x),Y=sy(s.y);
@@ -608,12 +561,21 @@ function draw(t){
     const lk=!s.done&&!canOpen(s);cx.fillStyle=s.done||lk?"#8d7f73":"#ece4d2";if(V.s>=.4||sel===s)cx.fillText((s.done||gotI(i)?"✓ ":"")+(lk?ownTag(i).toUpperCase()+" · ":"")+s.name.toUpperCase().slice(0,26),X,Y+40)});
   G.rare.forEach(q=>{if(q.done||dTo(q)>200)return;const X=sx(q.x),Y=sy(q.y),tier=SHADES[q.id][1];ghost(cx,X,Y-bob*.4,54,tier===3?"#f0963c":tier===2?"#e0545f":"#ffffff",still?.8:.5+.4*Math.abs(Math.sin(t/300)));cx.fillStyle="#ece4d2";cx.fillText("???",X,Y+42);if(sel===q){cx.strokeStyle="#ece4d2";cx.lineWidth=2;cx.beginPath();cx.arc(X,Y,26,0,7);cx.stroke()}});
   xDraw(t);
-  // speler
-  const X=sx(P.x),Y=sy(P.y);cx.fillStyle="rgba(240,150,60,.12)";cx.beginPath();cx.arc(X,Y,35*V.s,0,7);cx.fill();cx.strokeStyle="rgba(240,150,60,.5)";cx.lineWidth=1;cx.stroke();
-  cx.fillStyle="#f0963c";cx.beginPath();cx.arc(X,Y,7,0,7);cx.fill();cx.strokeStyle="#0c0a0b";cx.lineWidth=2;cx.stroke();
-  if(pl){cx.lineCap="butt";PV.fg(cx,PA)}
-  if(window.MW&&MW.Tiles&&G.mode!=="demo")MW.Tiles.credit(cx,cw,chh,"#8d7f73",W);
 }
+map=Wk.createMap(cv,{player:()=>P,ways:()=>W,R:()=>G?G.R:R0,
+  theme:{bg:"#0c0a0b",water:"#111c22",waterEdge:"#2e4652",ripple:"rgba(0,0,0,0)",park:"#141912",parkEdge:"#2f3a26",river:"#152026",major:"#3d2f2b",road:"#3d2f2b",minor:"#1d1716",label:"#b8aca0",waterLabel:"#a8744a",ring:"rgba(200,188,175,.25)",me:"#f0963c",meHalo:"rgba(240,150,60,.12)",meRing:"rgba(240,150,60,.5)"},
+  items:()=>G?[{x:0,y:0,tap:false,draw:(c,X,Y,t)=>drawSpots(t)}]:[],
+  spots:()=>G?G.st.filter(s=>!s.done):[],
+  credit:()=>!!G&&G.mode!=="demo", // de proefronde is een getekende stad, niet van OpenStreetMap
+  onTap:(h,w)=>{if(!G)return;const mx=sx(w.x),my=sy(w.y);let hit=null;targets().concat(G.st.filter(s=>s.done)).forEach(s=>{if(Math.hypot(sx(s.x)-mx,sy(s.y)-my)<30)hit=s});
+    if(hit&&!hit.done){sel=hit;chip()}else if(G.mode==="demo"){walkTo={x:w.x,y:w.y};sel=null;V.follow=true;chip()}else{sel=null;chip()}},
+  /* punten verleggen: alleen sporen die nog open zijn en die je mag openen (groepsspel); schimmen en onderweg-gebeurtenissen niet.
+     De plek houdt zijn naam, alleen de speld verhuist. */
+  move:{points:()=>G?G.st.filter(s=>!s.done):[],can:s=>canOpen(s),
+    target:()=>{if(sel&&G.st.indexOf(sel)>=0&&!sel.done)return sel;let b=null,bd=1e9;G.st.forEach(s=>{if(!s.done&&canOpen(s)&&dTo(s)<bd){bd=dTo(s);b=s}});return b},
+    done:()=>{arrived=null;chip();save()}}});
+V=map.V;
+function draw(t){map.draw(t)}
 function loop(t){
   if($("#play").hidden||!G)return;
   const dt=Math.min(.1,(t-lastT)/1000)||0;lastT=t;
@@ -648,11 +610,6 @@ function chip(){
   xAfter();
 }
 $("#cAct").onclick=()=>{if(!sel||(sel.id==null&&!canOpen(sel)))return;if(inRange(sel))encounter(sel);else if(G.mode==="demo"){walkTo={x:sel.x,y:sel.y};V.follow=true}else if(dTo(sel)<150){G.force=sel;encounter(sel)}};
-let pd=null;
-cv.addEventListener("pointerdown",e=>{pd={x:e.clientX,y:e.clientY,ox:V.follow?P.x:V.ox,oy:V.follow?P.y:V.oy,drag:false};cv.setPointerCapture(e.pointerId)});
-cv.addEventListener("pointermove",e=>{if(!pd)return;const dx=e.clientX-pd.x,dy=e.clientY-pd.y;if(!pd.drag&&Math.hypot(dx,dy)>8)pd.drag=true;if(pd.drag){V.follow=false;V.ox=pd.ox-dx/V.s;V.oy=pd.oy-dy/V.s}});
-cv.addEventListener("pointerup",e=>{if(!pd)return;if(!pd.drag){const b=cv.getBoundingClientRect(),mx=e.clientX-b.left,my=e.clientY-b.top;let hit=null;targets().concat(G.st.filter(s=>s.done)).forEach(s=>{if(Math.hypot(sx(s.x)-mx,sy(s.y)-my)<30)hit=s});
-  if(hit&&!hit.done){sel=hit;chip()}else if(G.mode==="demo"){const wx=(mx-cw/2)/V.s+(V.follow?P.x:V.ox),wy=(my-chh/2)/V.s+(V.follow?P.y:V.oy);walkTo={x:wx,y:wy};sel=null;V.follow=true;chip()}else{sel=null;chip()}}pd=null});
 $("#zIn").onclick=()=>V.s=Math.min(4,V.s*1.4);$("#zOut").onclick=()=>V.s=Math.max(.1,V.s/1.4);$("#zMe").onclick=()=>V.follow=true;
 const sndUi=()=>{$("#zS").style.opacity=sndOn?1:.4;$("#zS").setAttribute("aria-pressed",sndOn?"true":"false")};sndUi();
 $("#zS").onclick=()=>{sndOn=!sndOn;LS.set("ss_snd",sndOn);sndUi();if(!sndOn){try{window.speechSynthesis&&speechSynthesis.cancel()}catch(e){}}toast(sndOn?"Geluid aan":"Geluid uit")};
@@ -944,8 +901,8 @@ $("#snd").onclick=()=>{try{AC=AC||new (window.AudioContext||window.webkitAudioCo
   $("#snd").textContent=rainNode?"Regen aan":"Regen uit";$("#snd").setAttribute("aria-pressed",rainNode?"true":"false")};
 const GK="ss_game",WK="ss_ways",T={"pExtra": "Extra zaak op deze plek", "pBtn": "Word Pro", "pOn": "Pro is actief op dit toestel.", "pUsed": "Je gratis zaak is gespeeld. Met Pro speel je elke dag een nieuwe.", "pFree": "Je eerste zaak in je eigen buurt is gratis.", "pH": "Elke dag een nieuwe zaak", "pT": "Met Pro speel je elke dag de zaak van vandaag en zoveel extra zaken als je wilt, overal waar je bent. Je betaalt één keer via Ko-fi en krijgt daar een code. Vul die hieronder in.", "pHave": "Ik heb een code", "pUse": "Code invoeren", "pOk": "Pro staat aan. Veel succes, rechercheur.", "pBad": "Die code klopt niet. Controleer hem en probeer het opnieuw.", "menu": "Pauze", "map": "Terug naar de kaart", "home": "Naar het startscherm", "wipeG": "Deze zaak wissen", "cancel": "Annuleren", "saved": "Je zaak is bewaard. Kies Ga verder om door te gaan.", "wipeQ": "Deze zaak wissen?", "wipeT": "Je gevonden sporen en notities van deze zaak verdwijnen. Je rang en Schimmenboek blijven.", "wipeY": "Lopende zaak wissen", "wipeH": "Wissen", "wipeAll": "Alles wissen", "allQ": "Alles wissen?", "allT": "Je lopende zaak, rang, punten, dagen op rij en Schimmenboek verdwijnen van dit toestel. Dit kun je niet terugdraaien.", "allY": "Ja, wis alles", "wiped": "Gewist."};
 /* ---------- terug en wissen ---------- */
-function stopWatch(){if(watchId!=null){navigator.geolocation.clearWatch(watchId);watchId=null}}
-function leavePlay(){save();stopWatch();G=null;home()}
+function stopWatch(){Wk.stopWatch()}
+function leavePlay(){if(map.move)map.move.set(false);save();stopWatch();G=null;home()}
 function wipeGame(){LS.del(GK);LS.del(WK);stopWatch();G=null;closeSheet();home();toast(T.wiped)}
 function confirmSheet(title,text,yes,fn){sheet('<h2>'+title+'</h2><p>'+text+'</p><button type="button" class="btn red" id="cfY">'+yes+'</button><button type="button" class="btn ghost dk" id="shX">'+T.cancel+'</button>');
   $("#sheetBody").onclick=e=>{if(e.target.id==="shX")closeSheet();else if(e.target.id==="cfY")fn()}}
@@ -959,6 +916,7 @@ function goBack(){
   if(!$("#sheet").hidden){const k=$("#mgSkip");if(k&&!k.hidden)k.click();else if($("#sheet").dataset.lock){const x=$("#shX");if(x)x.click()}else closeSheet();return true}
   if(!$("#load").hidden)return true;
   if(!$("#brief").hidden){G=null;home();return true}
+  if(!$("#play").hidden&&map.move&&map.move.on()){map.move.set(false);return true}
   if(!$("#play").hidden){leavePlay();toast(T.saved);return true}
   return false}
 try{history.pushState({ss:1},"");addEventListener("popstate",()=>{if(goBack()){try{history.pushState({ss:1},"")}catch(e){}}})}catch(e){}
