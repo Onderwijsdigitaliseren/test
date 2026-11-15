@@ -179,7 +179,7 @@ function catIcon(c){return {plek:"📍",kijk:"🔢",taal:"🔤",verkeer:"🚦",f
 function enterMap(){show("play");
   if(!map)map=Wk.createMap($("#map"),{player:function(){return P},ways:function(){return W},R:function(){return RR()},
     theme:{bg:"#1b2550",water:"#2a62b8",waterEdge:"#6ec3ff",ripple:"rgba(110,195,255,.3)",park:"#2f8a4c",parkEdge:"#6fd38a",river:"#2a62b8",major:"#f5b800",minor:"#4f6ab8",road:"#9fb3e8",label:"#ffe08a",waterLabel:"#bfeaff",ring:"rgba(245,184,0,.35)",me:"#f5b800",meHalo:"rgba(245,184,0,.16)",meRing:"rgba(245,184,0,.7)",font:"700 12px 'Fredoka',sans-serif"},
-    items:items,onTap:function(hit,w){if(hit&&!hit.ref.done){sel=hit.ref;chip()}else if(G.mode==="demo"){walkTo=w;sel=null;map.follow();chip()}else{sel=null;chip()}}});
+    items:items,move:{can:function(p){return !!G&&G.st.indexOf(p)>=0&&!p.done},target:function(){return sel},done:function(){sel=null;chip();save()}},onTap:function(hit,w){if(hit&&!hit.ref.done){sel=hit.ref;chip()}else if(G.mode==="demo"){walkTo=w;sel=null;map.follow();chip()}else{sel=null;chip()}}});
   map.resize();map.fit(RR());sel=null;arrived=null;walkTo=null;$("#chip").hidden=true;
   Wk.stopWatch();if(G.mode==="map")Wk.watch(G.origin,P,function(d){if(d>3&&d<80)G.dist+=d;KM.moved(d)});
   KM.enter({kids:true,virt:!!G.virt,map:map});stopSteps();if(G.mode==="in")startSteps();

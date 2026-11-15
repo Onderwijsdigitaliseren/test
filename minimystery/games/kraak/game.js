@@ -356,7 +356,7 @@ function render(){hud();while(G.i<NN()&&G.ph[G.i])G.i++;var i=G.i,box=$("#card")
 function enterMap(){show("play");music(G.fin===1?"esc":"map");
   if(!map)map=Wk.createMap($("#map"),{player:function(){return P},ways:function(){return W},R:function(){return R0},
     theme:{bg:"#0b1430",water:"#0a1d3d",waterEdge:"#1e3a8a",ripple:"rgba(58,160,255,.2)",park:"#0f2a2a",parkEdge:"#1f4a3c",river:"#0a1d3d",major:"#3b4f8a",minor:"#1e2a55",road:"#2c3f7a",label:"#bfd3ff",waterLabel:"#60a5fa",ring:"rgba(242,183,5,.25)",me:"#f2b705",meHalo:"rgba(242,183,5,.14)",meRing:"rgba(242,183,5,.7)",font:"700 11px 'Nunito',sans-serif"},
-    items:items,onTap:function(hit,w){if(hit&&hit.ref.glimpse){if(GL.on)glimpseHit();return}if(hit&&!hit.ref.done){sel=hit.ref;chip()}else if(G.mode==="demo"){walkTo=w;sel=null;map.follow();chip()}else{sel=null;chip()}}});
+    items:items,move:{can:function(p){return !!G&&G.st.indexOf(p)>=0&&!p.done},target:function(){return sel},done:function(){sel=null;chip();save()}},onTap:function(hit,w){if(hit&&hit.ref.glimpse){if(GL.on)glimpseHit();return}if(hit&&!hit.ref.done){sel=hit.ref;chip()}else if(G.mode==="demo"){walkTo=w;sel=null;map.follow();chip()}else{sel=null;chip()}}});
   map.resize();map.fit(R0);sel=null;arrived=null;walkTo=null;$("#chip").hidden=true;
   Wk.stopWatch();if(G.mode==="map")Wk.watch(G.origin,P,function(d){if(d>3&&d<80)G.dist+=d;lastFix=Date.now();KM.moved(d)});
   lastFix=Date.now();KM.enter({kids:true,virt:!!G.virt,map:map});stopSteps();if(G.mode==="in")startSteps();GL.next=Date.now()+45000+Math.random()*45000;if(G.mode==="demo")toast(T.demoTip);if(G.fin===1)escResume();requestAnimationFrame(loop)}

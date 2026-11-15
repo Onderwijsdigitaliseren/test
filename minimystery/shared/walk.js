@@ -1,6 +1,7 @@
 /* Moordwandeling / Murder Walk – gedeelde wandelmotor voor nieuwe wandelspellen.
    Wereld ophalen (OpenStreetMap via vectortegels of Overpass, met cache), plekken kiezen, nachtkaart tekenen, gps volgen, oefenwereld,
-   vellen/toasts/geluid. Vereist platform.js. Spel 1 (Moordwandeling) heeft nog zijn eigen, oudere kopie hiervan. */
+   vellen/toasts/geluid. Vereist platform.js. Spel 1 (Moordwandeling) heeft nog zijn eigen, oudere kopie hiervan.
+   Punten verleggen: laad shared/move.js vóór dit bestand en geef createMap de optie `move` (zie move.js); de kaart krijgt de knop ✥. */
 (function(){
 "use strict";
 var MW=window.MW,LS=MW.LS,$=function(s){return document.querySelector(s)};
@@ -135,6 +136,10 @@ function createMap(cv,o){var TH={bg:"#101a2b",water:"#0c2036",waterEdge:"#1f4a6e
   var P=function(){return o.player()},sx=function(x){return(x-(V.follow?P().x:V.ox))*V.s+cw/2},sy=function(y){return(y-(V.follow?P().y:V.oy))*V.s+ch/2};
   var api={V:V,sx:sx,sy:sy,ghost:ghost,still:still,cx:cx,resize:resize,fit:function(R){V.follow=true;V.s=Math.min(innerWidth,innerHeight)/(R*1.5)},zoom:function(f){V.s=Math.min(4,Math.max(.1,V.s*f))},follow:function(){V.follow=true},
     size:function(){return[cw,ch]}};
+  /* punten verleggen (shared/move.js): alleen als het spel de optie `move` meegeeft */
+  var MV=null;if(MW.Move&&o.move){var mo=o.move===true?{}:o.move;MV=MW.Move.ctl({points:mo.points||function(){return o.items().filter(function(it){return it.ref&&it.tap!==false&&!it.ref.done&&typeof it.ref.x==="number"}).map(function(it){return it.ref})},
+    can:mo.can,target:mo.target,done:mo.done,snap:mo.snap,gap:mo.gap,onState:mo.onState,ways:function(){return o.ways()},R:function(){return o.R()},toast:function(m){toast(m)}});if(mo.button!==false)MV.mount()}
+  api.move=MV;
   api.draw=function(t){var W=o.ways(),p=P();cx.setTransform(dpr,0,0,dpr,0,0);cx.fillStyle=TH.bg;cx.fillRect(0,0,cw,ch);cx.lineCap="round";cx.lineJoin="round";
     var i,w,k,X,Y;
     for(i=0;i<W.length;i++){w=W[i];if(w.w!=="water"&&w.w!=="park")continue;cx.beginPath();for(k=0;k<w.p.length;k+=2){X=sx(w.p[k]);Y=sy(w.p[k+1]);k?cx.lineTo(X,Y):cx.moveTo(X,Y)}cx.closePath();
@@ -149,11 +154,13 @@ function createMap(cv,o){var TH={bg:"#101a2b",water:"#0c2036",waterEdge:"#1f4a6e
     if(MW.Bonus)MW.Bonus.items().forEach(function(it){it.draw(cx,sx(it.x),sy(it.y),t,api)});
     var X=sx(p.x),Y=sy(p.y);cx.fillStyle=TH.meHalo;cx.beginPath();cx.arc(X,Y,35*V.s,0,7);cx.fill();cx.strokeStyle=TH.meRing;cx.lineWidth=1;cx.stroke();
     cx.fillStyle=TH.me;cx.beginPath();cx.arc(X,Y,7,0,7);cx.fill();cx.strokeStyle=TH.bg;cx.lineWidth=2;cx.stroke();
+    if(MV)MV.fg(cx,{sx:sx,sy:sy,cw:cw,ch:ch,t:t,top:(function(){var h=document.getElementById("hud");return h&&cv.getBoundingClientRect().top<h.getBoundingClientRect().bottom?h.getBoundingClientRect().height:0})()});
     if(MW.Tiles)MW.Tiles.credit(cx,cw,ch,TH.label,W)};
   cv.addEventListener("pointerdown",function(e){pd={x:e.clientX,y:e.clientY,ox:V.follow?P().x:V.ox,oy:V.follow?P().y:V.oy,drag:false};try{cv.setPointerCapture(e.pointerId)}catch(err){}});
   cv.addEventListener("pointermove",function(e){if(!pd)return;var dx=e.clientX-pd.x,dy=e.clientY-pd.y;if(!pd.drag&&Math.hypot(dx,dy)>8)pd.drag=true;if(pd.drag){V.follow=false;V.ox=pd.ox-dx/V.s;V.oy=pd.oy-dy/V.s}});
   cv.addEventListener("pointerup",function(e){if(!pd)return;if(!pd.drag){var b=cv.getBoundingClientRect(),mx=e.clientX-b.left,my=e.clientY-b.top,hit=null;
     o.items().forEach(function(it){if(it.tap!==false&&Math.hypot(sx(it.x)-mx,sy(it.y)-my)<30)hit=it});
+    if(MV&&MV.on()){MV.tap({mx:mx,my:my,wx:wx,wy:wy,sx:sx,sy:sy});pd=null;return}
     if(!hit&&MW.Bonus){var bh=null;MW.Bonus.items().forEach(function(it){if(Math.hypot(sx(it.x)-mx,sy(it.y)-my)<30)bh=it});if(bh){MW.Bonus.tap(bh.ref);pd=null;return}}
     var wx=(mx-cw/2)/V.s+(V.follow?P().x:V.ox),wy=(my-ch/2)/V.s+(V.follow?P().y:V.oy);o.onTap&&o.onTap(hit,{x:wx,y:wy})}pd=null});
   resize();return api}
