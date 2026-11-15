@@ -238,7 +238,7 @@ function enter(quiet){show("play");hero(false);["meneer-zet.webp","foto.webp","t
   if(!map)map=Wk.createMap($("#map"),{player:function(){return P},ways:function(){return W},R:function(){return G?G.R:650},
     theme:{bg:"#0f2a24",water:"#0b2330",waterEdge:"#1d4a5a",ripple:"rgba(150,200,210,.14)",park:"#143a2a",parkEdge:"#24573f",river:"#123846",major:"#3f6f60",minor:"#1b3d34",road:"#2a5145",label:"#8fbfae",waterLabel:"#5f9db0",ring:"rgba(242,182,50,.25)",me:"#d6452f",meHalo:"rgba(214,69,47,.14)",meRing:"rgba(214,69,47,.5)",font:MAPFONT},
     items:items,spots:function(){return G?G.st.map(function(s,i){return{x:s.x,y:s.y,ref:s,idx:i}}).filter(function(o){return o.idx===G.ch}):[]},
-    onTap:function(hit,w){if(!G)return;if(hit&&hit.ref&&!hit.ref.done){sel=hit.ref;chip()}else if(tapWalk()){walkTo=w;sel=null;map.follow();chip()}else{sel=null;chip()}}});
+    move:{points:function(){return G?G.st:[]},can:function(p){return !!G&&G.st.indexOf(p)>=G.ch},target:function(){return G?G.st[G.ch]:null},done:function(){sel=null;chip();save()}},onTap:function(hit,w){if(!G)return;if(hit&&hit.ref&&!hit.ref.done){sel=hit.ref;chip()}else if(tapWalk()){walkTo=w;sel=null;map.follow();chip()}else{sel=null;chip()}}});
   map.resize();map.fit(G.R);sel=null;walkTo=null;arrived=null;$("#chip").hidden=true;
   Wk.stopWatch();stopSteps();if(G.mode==="gps")Wk.watch(G.origin,P,function(d){if(d>3&&d<80)G.dist+=d});
   if(G.mode==="in")startSteps();

@@ -233,7 +233,7 @@ function items(){var it=[],nx=nextN();
 function enter(){
   show("play");if(!map)map=Wk.createMap($("#map"),{player:function(){return P},ways:function(){return W},R:function(){return G?G.R:650},
     theme:{bg:"#0c0906",water:"#0a1016",waterEdge:"#3a4a58",ripple:"rgba(200,215,235,.16)",park:"#10130b",parkEdge:"#2c3018",river:"#101c26",major:"#6b573a",minor:"#241c12",road:"#3e3222",label:"#a8946c",waterLabel:"#6f8aa3",ring:"rgba(255,138,40,.22)",me:"#ffb347",meHalo:"rgba(255,160,60,.2)",meRing:"rgba(255,160,60,.6)",font:MAPFONT},
-    items:items,onTap:function(hit,w){
+    items:items,move:{can:function(p){return !!G&&G.st.indexOf(p)>=0&&!p.done&&!hid(p)},target:function(){return sel},done:function(){sel=null;chip();save()}},onTap:function(hit,w){
       if(hit&&hit.ref.rare)return catchRare(hit.ref);
       if(hit&&!hit.ref.done){sel=hit.ref;chip()}else if(G.mode==="demo"){walkTo=w;sel=null;map.follow();chip()}else{sel=null;chip()}}});
   map.resize();map.fit(G.R);sel=null;walkTo=null;arrived=null;$("#chip").hidden=true;

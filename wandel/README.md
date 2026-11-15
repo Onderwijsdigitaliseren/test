@@ -82,7 +82,8 @@ Een wandeling aansluiten:
 
 De naam van een plek verandert niet door het verleggen: in de verhaalspellen blijft "Café De Zwaan" zo heten, alleen de speld staat ergens anders. Spellen met eigen puntnamen (Dubbelspel, De Wensjacht) nemen in `done` de straatnaam over uit `info.name`.
 
-Aangesloten: De Verdwijning / The Vanishing (`games/vanishing`), Dubbelspel / Double Play (menuregel "Dit punt verleggen"), en De Wensjacht op manifestationtool.nl (kopie van de kaartlaag in `js/kaart/`). Nog niet: Tot de Dood Ons Scheidt, Ooggetuige, Onopgelost, De Laatste Bus, De Nacht van de Geesten, De Erfenis van de Spellenmaker, de oude Moordwandeling-motor (los gebruiken, zie de kop van move.js) en MiniMystery.
+Aangesloten (allemaal NL en EN): De Verdwijning, Tot de Dood Ons Scheidt, Ooggetuige, Onopgelost, De Laatste Bus, De Nacht van de Geesten (geen verborgen plekken: `!hid(p)`), De Erfenis van de Spellenmaker (alleen het huidige en latere vakken: `G.st.indexOf(p)>=G.ch`), Dubbelspel (menuregel "Dit punt verleggen"), en De Wensjacht op manifestationtool.nl (kopie van de kaartlaag in `js/kaart/`).
+Nog niet: de oude Moordwandeling-motor (eigen kaartcode; move.js los gebruiken, zie de kop van move.js), De Buit (eigen getekende kaart van Westerdam, geen echte straten) en MiniMystery (eigen repo).
 
 ## Instellingen
 Ko-fi-links, prijzen, groepspas-uren en de hub-Ko-fi-knop: bovenin `shared/platform.js` (`CFG`). Het zout `moordwandeling|` nooit wijzigen.
