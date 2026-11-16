@@ -67,6 +67,10 @@ window.MW_CATALOG={
     /* De Buit: alleen NL; zelfde poort en testcode als Dubbelspel */
     {id:"bu", cat:"move", status:"soon", gate:true, access:"free", minutes:"15–30", km:"1–11", group:false,
       nl:{slug:"nl/de-buit.html", title:"De Buit", tag:"Jouw miljoen. Jouw droom. Hun probleem.",
-          desc:"Je hebt een tas met een miljoen, twee handlangers die hun deel willen en iemand die je meer aanbiedt. Acht wandelingen over geld, vrijheid en de verleiding van meer, met keuzes die doorwerken en vijf aflopen."}}
+          desc:"Je hebt een tas met een miljoen, twee handlangers die hun deel willen en iemand die je meer aanbiedt. Acht wandelingen over geld, vrijheid en de verleiding van meer, met keuzes die doorwerken en vijf aflopen."}},
+    /* Negentien treden: Huisje Texel door de telefoon van Dan. Alleen NL, wandeling 1; zelfde poort en testcode als Dubbelspel */
+    {id:"nt", cat:"move", status:"soon", gate:true, access:"free", minutes:"8–30", km:"1–10", group:false,
+      nl:{slug:"nl/negentien-treden.html", title:"Negentien treden", tag:"Je had ruzie met haar. En je was die nacht buiten.",
+          desc:"Zes vrienden, één huurhuis op Texel en een trap naar het strand. Jij bent Dan, en je stappenteller weet meer van die nacht dan jij. Een moordverhaal in acht wandelingen."}}
   ]
 };
