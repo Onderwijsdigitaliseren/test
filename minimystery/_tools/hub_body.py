@@ -76,5 +76,5 @@ for l,t in T.items():
   <a class="adult" href="{t['adultU']}">{t['adult']}</a>
   <div class="links"><a href="#custom">{t['fl'][0]}</a><a href="mailto:kellievandekerkhof@gmail.com">{t['fl'][1]}</a><button type="button" id="bPriv">{t['fl'][2]}</button></div>
 </footer>''',s,flags=re.S)
-    s=re.sub(r'hub\.css\?v=\d+','hub.css?v=15',s);s=re.sub(r'catalog\.js\?v=mm\d+','catalog.js?v=mm18',s);s=re.sub(r'hub\.js\?v=mm\d+','hub.js?v=mm19',s)
+    s=re.sub(r'hub\.css\?v=\d+','hub.css?v=15',s);s=re.sub(r'catalog\.js\?v=mm\d+','catalog.js?v=mm19',s);s=re.sub(r'hub\.js\?v=mm\d+','hub.js?v=mm19',s)
     open(p,'w',encoding='utf8').write(s);print('ok',t['f'])

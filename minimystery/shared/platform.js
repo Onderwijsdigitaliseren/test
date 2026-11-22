@@ -16,7 +16,8 @@ var CFG={
     gl:"https://ko-fi.com/s/f013a0c1b7",   // Glitch in de Buurt
     bs:"https://ko-fi.com/s/3a29b71aba",   // Backstage: De Verdwenen Setlist
     gk:"https://ko-fi.com/s/98e137183c",   // De Grote Kraak
-    pa:"https://ko-fi.com/s/7cdb8f147d"    // Operatie Pakjesavond / Operation Sinterklaas Eve
+    pa:"https://ko-fi.com/s/7cdb8f147d",   // Operatie Pakjesavond / Operation Sinterklaas Eve
+    rn:""                                  // De Schat van Rosse Neel / The Treasure of Red Nell: Ko-fi-link hier invullen (leeg = geen koopknop)
   },
   /* MiniMystery Educatie: één Schoolpas voor alle educatieve wandelingen (catalog "line":"educatie"), codes met "spel":"educatie" */
   edu:{
