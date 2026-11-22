@@ -1,4 +1,4 @@
-/* Alle vaste zinnen die dit spel kan uitspreken (615). Gemaakt door _tools/stemscript.js uit data-en.js; k = sleutel uit shared/voice.js. Niet met de hand bewerken: draai het gereedschap opnieuw. */
+/* Alle vaste zinnen die dit spel kan uitspreken (623). Gemaakt door _tools/stemscript.js uit data-en.js; k = sleutel uit shared/voice.js. Niet met de hand bewerken: draai het gereedschap opnieuw. */
 window.MMV_SCRIPT=window.MMV_SCRIPT||{};window.MMV_SCRIPT["taal_en"]=[
 {"k":"46fd7dd9","wie":"verteller","waar":"T","t":"Start today's case"},
 {"k":"e8599cc7","wie":"verteller","waar":"T","t":"Extra case"},
@@ -614,5 +614,13 @@ window.MMV_SCRIPT=window.MMV_SCRIPT||{};window.MMV_SCRIPT["taal_en"]=[
 {"k":"d1e8ac16","wie":"verteller","waar":"LES 3","t":"Figurative language: each team makes three similes about the neighbourhood and explains what is literal and what is figurative."},
 {"k":"7f3c17d4","wie":"verteller","waar":"LES 3","t":"Extension: write a formal letter to the council about something you saw outside (a broken sign, an unsafe crossing), with a greeting, paragraphs and a formal sign-off."},
 {"k":"9d81224b","wie":"verteller","waar":"LES 3","t":"Ages 10–12 (English literacy): verb tenses incl."},
-{"k":"ad0ef956","wie":"verteller","waar":"LES 3","t":"irregular past, subject and verb, figurative language, idioms and proverbs, plurals and suffixes, loanwords and word origins, punctuation of direct speech, register, letter writing."}
+{"k":"ad0ef956","wie":"verteller","waar":"LES 3","t":"irregular past, subject and verb, figurative language, idioms and proverbs, plurals and suffixes, loanwords and word origins, punctuation of direct speech, register, letter writing."},
+{"k":"583a075e","wie":"verteller","waar":"T","t":"Indoors: walking on the spot"},
+{"k":"6043f2f7","wie":"verteller","waar":"T","t":"You're walking on the story map."},
+{"k":"95b7d54d","wie":"verteller","waar":"T","t":"Walk on the spot (or around the room) with the phone in your hand; every step counts."},
+{"k":"fc5355c9","wie":"verteller","waar":"T","t":"If that doesn't work, the steps will walk by themselves."},
+{"k":"d51b608b","wie":"verteller","waar":"T","t":"Count real steps"},
+{"k":"cf0aab4a","wie":"verteller","waar":"T","t":"Steps walk by themselves"},
+{"k":"a949921a","wie":"verteller","waar":"T","t":"No motion sensor found."},
+{"k":"92a9c205","wie":"verteller","waar":"T","t":"The steps will now walk by themselves."}
 ];

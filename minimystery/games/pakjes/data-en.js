@@ -39,7 +39,7 @@ var T={
   nw:{6:"six",8:"eight",10:"ten"},
   kv:{fp:["Bakery","Bus stop","Playground","Square","Bridge","Park","Church","Fountain","Shop","Postbox","Kiosk","Bench"],
     all:"All pieces found! Put the map together.",near:"Piece in {d} m",cold:"Cold… try another way",cool:"Lukewarm. Getting closer",warm:"Warm! Well done!",hot:"HOT! Look around you!",here:"The piece is here!",first:"Off you go, the compass shows the way",noDir:"Walk a little, then the compass knows the direction",
-    map:"Street map",kids:"Story map",mapTip:"The real street map. Tap Story map for the children's drawing.",goDemo:"We're walking (pretend) to {p}…",inSteps:"{n} steps to go",
+    map:"Street map",kids:"Story map",mapTip:"The real street map. Tap Story map for the children's drawing.",goDemo:"We're walking (pretend) to {p}…",inSteps:"{n} steps to go",inH:"Indoors: walking on the spot",inT:"You're walking on the story map. Walk on the spot (or around the room) with the phone in your hand; every step counts. If that doesn't work, the steps will walk by themselves.",inSensor:"Count real steps",inTempo:"Steps walk by themselves",inNoSensor:"No motion sensor found. The steps will now walk by themselves.",
     mNoMap:"Continue without map (same case)",switched:"Continuing without a map. Same case, same trials.",virtOut:"No street map of the area found. You walk on the story map: the arrow and warm/cold show the way.",
     noMapQ:"No location today?",noMapT:"The phone isn't sharing a location. You can play the same case without a map: the pieces come one after another and you walk to a new place yourselves.",noMapGo:"Continue without map"}
 };

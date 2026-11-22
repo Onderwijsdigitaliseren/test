@@ -54,9 +54,9 @@ function genCase(seed,N,mode){var r=rngOf(seed),ids=shuffle(D.Z.map(function(z){
   var slots=ids.map(function(id,i){var s={z:id,room:rooms[i],seed:Math.floor(r()*1e9)};
     if(id==="zoek")s.zi=rnd(r,0,D.ZOEK.length-1);if(id==="kijk")s.ki=rnd(r,0,3);if(id==="boek")s.qi=bq[i%bq.length];if(id==="rijm")s.ri=rq[i%rq.length];if(id==="code")s.ci=rnd(r,0,5);return s});
   return{slots:slots}}
-function makeCode(seed,mode,len,lvl){return"PA"+(len==="kort"?"V":len==="lang"?"L":"N")+(mode==="in"?"B":mode==="map"||mode==="demo"?"K":"S")+(+lvl+1)+seed.toString(36).toUpperCase()}
-function parseCode(v){var c=MW.norm(v);var m=/^PA([VNL])([KSB])([12])([0-9A-Z]{1,8})$/.exec(c);if(!m)return null;var seed=parseInt(m[4],36);if(!(seed>=0)||seed>4294967295)return null;
-  return{len:m[1]==="V"?"kort":m[1]==="L"?"lang":"normaal",mode:m[2]==="B"?"in":m[2]==="K"?"map":"street",lvl:String(+m[3]-1),seed:seed}}
+function makeCode(seed,mode,len,lvl){return"PA"+(len==="kort"?"V":len==="lang"?"L":"N")+(mode==="in"?(NAVP?(INK.kind==="tap"?"Z":"T"):"B"):mode==="map"||mode==="demo"?"K":"S")+(+lvl+1)+seed.toString(36).toUpperCase()}
+function parseCode(v){var c=MW.norm(v);var m=/^PA([VNL])([KSBTZ])([12])([0-9A-Z]{1,8})$/.exec(c);if(!m)return null;var seed=parseInt(m[4],36);if(!(seed>=0)||seed>4294967295)return null;
+  return{len:m[1]==="V"?"kort":m[1]==="L"?"lang":"normaal",mode:m[2]==="Z"?"bank":m[2]==="T"?"stap":m[2]==="B"?"in":m[2]==="K"?"map":"street",lvl:String(+m[3]-1),seed:seed}}
 function fixG(g){if(!g||!g.c||!g.c.slots)return null;if(!g.R)g.R=LENR[g.len]||R0;if(!Array.isArray(g.ph))g.ph=[];if(!g.hints)g.hints={};if(!g.obs)g.obs={};g.pep=g.pep||0;g.flip=g.flip||[];g.found=g.found||[];return g}
 function done(){return G.ph.filter(Boolean).length}
 function puzzleOf(s){return ZBY[s.z].lvl[lvI()]}
@@ -158,7 +158,7 @@ var KI=MW.KidsMap.icons,START={x:500,y:1290};
 var FP=[{x:230,y:1040,k:"bakker"},{x:150,y:760,k:"halte"},{x:300,y:520,k:"speel"},{x:520,y:330,k:"plein2"},{x:760,y:420,k:"brug"},{x:860,y:700,k:"park"},{x:720,y:960,k:"kerk"},{x:500,y:760,k:"plein"},{x:150,y:300,k:"winkel"},{x:880,y:1060,k:"post"},{x:620,y:1130,k:"kiosk"},{x:380,y:900,k:"bank"}];
 var ROADS=[[-1,0],[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,-1],[7,2],[7,5],[7,0],[7,6],[8,2],[8,1],[9,6],[9,5],[10,-1],[10,6],[11,7],[11,0]];
 var TREES=[[80,1180],[120,320],[420,160],[640,180],[900,260],[950,900],[940,1180],[300,1300],[700,1300],[640,600],[90,520],[820,1050],[560,1120]];
-var KM=MW.KidsMap.create({T:T.kv,go:function(s){walkTo={x:s.x,y:s.y};sel=null},G:function(){return G},P:function(){return P},dTo:function(s){return dTo(s)},virt:function(){return !!(G&&G.virt)},mode:function(){return G&&G.mode},
+var KM=MW.KidsMap.create({T:T.kv,go:function(s){walkTo={x:s.x,y:s.y};sel=null},G:function(){return G},P:function(){return P},dTo:function(s){return dTo(s)},virt:function(){return !!(G&&G.virt)},mode:function(){return G&&(BANK()?"demo":G.mode)},
   map:{W:1000,H:1400,top:170,start:START,spots:FP,roads:ROADS,vsc:.42,sky:"#1b2550",land:"#e9f1fb",road:"#cfd8e8",roadLine:"#fff",label:"#17203a",labelHalo:"rgba(255,255,255,.9)",heroHalo:"rgba(242,183,5,.35)"},
   draw:{mark:function(g,x,y,r,col){g.save();g.fillStyle=col;g.beginPath();g.ellipse(x,y,r*.9,r,0,0,7);g.fill();g.restore()},
     ground:function(g){g.fillStyle="#f6f9ff";[[200,250,160],[760,900,200],[300,1150,140],[650,250,120]].forEach(function(e){g.beginPath();g.ellipse(e[0],e[1],e[2],e[2]*.5,0,0,7);g.fill()});
@@ -169,14 +169,25 @@ var KM=MW.KidsMap.create({T:T.kv,go:function(s){walkTo={x:s.x,y:s.y};sel=null},G
     landmark:function(g,k,x,y,s){({bakker:function(){KI.shop(g,x,y,s)},halte:function(){KI.sign(g,x,y,s,"#2563eb","B")},speel:function(){KI.swing(g,x,y,s)},plein2:function(){KI.lamp(g,x,y,s)},brug:function(){KI.bridge(g,x,y,s)},park:function(){KI.park(g,x,y,s)},kerk:function(){KI.church(g,x,y,s)},plein:function(){KI.fountain(g,x,y,s)},winkel:function(){KI.shop(g,x,y,s)},post:function(){KI.postbox(g,x,y,s)},kiosk:function(){KI.kiosk(g,x,y,s)},bank:function(){KI.bench(g,x,y,s)}}[k]||function(){})()},
     hero:function(g,x,y){g.save();g.strokeStyle="#1b2550";g.lineWidth=3;for(var i=-1;i<=1;i++){g.fillStyle=["#e63946","#f2b705","#2a9d8f"][i+1];g.fillRect(x+i*22-9,y-6,18,16);g.fillStyle="#f6d7b0";g.beginPath();g.arc(x+i*22,y-18,11,0,7);g.fill();g.stroke();/* pietenmuts met veer */g.fillStyle=["#e63946","#f2b705","#2a9d8f"][i+1];g.beginPath();g.moveTo(x+i*22-11,y-22);g.lineTo(x+i*22+11,y-22);g.lineTo(x+i*22,y-36);g.closePath();g.fill();g.stroke();g.fillStyle="#fff";g.fillRect(x+i*22+2,y-44,3,10)}g.restore()}}});
 KM.mount();
+/* binnen op de verhaalkaart: stand "in" met G.in erbij. kind sensor/tempo = lopen op de plaats (keuze "stap"), kind tap = bankversie (keuze "bank") */
+var NAVP=false;function NAV(){return !!(G&&G.mode==="in"&&G.in)}
+var St=MW.Steps,INK=LS.get("ss_pa_in",{kind:"sensor",spm:100});
+/* bankversie: zelfde verhaalkaart als binnen, maar je tikt op een plek en het groepje loopt er vanzelf heen (geen stappen) */
+function BANK(){return !!(G&&G.mode==="in"&&G.in&&G.in.kind==="tap")}
+function inSheet(cb){var sens=St&&St.supported(),IN=T.kv;
+  sheet('<h2>'+esc(IN.inH)+'</h2><p>'+esc(IN.inT)+'</p>'+(sens?'<button type="button" class="btn" id="inS">'+esc(IN.inSensor)+'</button>':'')+'<button type="button" class="btn'+(sens?' ghost dk':'')+'" id="inT">'+esc(IN.inTempo)+'</button><button type="button" class="btn ghost dk" id="shX">'+T.cancel+'</button>');
+  $("#shX").onclick=closeSheet;if(sens)$("#inS").onclick=function(){St.ask().then(function(ok){closeSheet();if(!ok)toast(IN.inNoSensor);cb(ok?"sensor":"tempo",100)})};$("#inT").onclick=function(){closeSheet();cb("tempo",100)}}
+function stepIn(k){if(!G||!NAV())return;G.in.steps+=k;var t=KM.near();if(!t)return;var d=dTo(t),m=k*G.in.sl;if(d<=m){P.x=t.x;P.y=t.y;G.dist+=d}else{P.x+=(t.x-P.x)/d*m;P.y+=(t.y-P.y)/d*m;G.dist+=m}}
+function startSteps(){if(!St||!G||!NAV()||G.in.kind==="tap")return;St.start({mode:G.in.kind,spm:G.in.spm,onStep:stepIn,active:function(){return NAV()&&!$("#play").hidden&&$("#sheet").hidden},onDead:function(){if(!G||!NAV())return;G.in.kind="tempo";save();toast(T.kv.inNoSensor);startSteps()}});St.awake(true)}
+function stopSteps(){if(St){St.stop();St.awake(false)}}
 function buildVirt(seed,mode,origin,daily,len){build(seed,mode,null,null,origin,daily,len,true);if(G&&mode==="map")toast(T.kv.virtOut)}
 function noMapSheet(seed,daily,why,len){sheet('<h2>'+T.kv.noMapQ+'</h2>'+(why?'<p class="note">'+esc(why)+'</p>':'')+'<p>'+esc(T.kv.noMapT)+'</p><button type="button" class="btn" id="nmGo">'+T.kv.noMapGo+'</button><button type="button" class="btn ghost dk" id="shX">'+T.back+'</button>');
   $("#shX").onclick=closeSheet;$("#nmGo").onclick=function(){closeSheet();MODE="street";LS.set("ss_pa_mode",MODE);build(seed,"street",null,null,null,daily,len)}}
-function dropMap(){if(!G||G.mode==="street")return;Wk.stopWatch();KM.leave();G.virt=false;G.mode="street";G.i=0;while(G.ph[G.i])G.i++;G.st=null;save();show("cards");render();toast(T.kv.switched)}
+function dropMap(){if(!G||G.mode==="street")return;Wk.stopWatch();KM.leave();stopSteps();G.virt=false;G.in=null;G.mode="street";G.i=0;while(G.ph[G.i])G.i++;G.st=null;save();show("cards");render();toast(T.kv.switched)}
 
 /* ---------- een zaak beginnen ---------- */
 var PEND=null;
-function begin(seed,mode,daily,len){len=len||"normaal";if(mode!=="map")return build(seed,mode,null,null,null,daily,len);
+function begin(seed,mode,daily,len){len=len||"normaal";if(mode==="bank"){INK={kind:"tap",spm:100};NAVP=true;return build(seed,"in",null,null,null,daily,len,true)}if(mode==="stap")return inSheet(function(kind,spm){INK={kind:kind,spm:spm};LS.set("ss_pa_in",INK);NAVP=true;build(seed,"in",null,null,null,daily,len,true)});if(mode!=="map")return build(seed,mode,null,null,null,daily,len);
   Wk.loading(T.loc);
   Wk.locate().then(function(pos){var lat=pos.coords.latitude,lon=pos.coords.longitude;
     return Wk.fetchWorld({lat:lat,lon:lon,R:LENR[len]||R0,status:function(s){if(s==="pois")Wk.loading(T.pois);if(s==="nomap")toast(T.nomap)}}).then(function(w){Wk.loading("");
@@ -186,7 +197,7 @@ function begin(seed,mode,daily,len){len=len||"normaal";if(mode!=="map")return bu
 function build(seed,mode,pois,ways,origin,daily,len,virt){len=LENN[len]?len:"normaal";var N=LENN[len],lvl=PEND?PEND.lvl:LVL;PEND=null;
   var c=genCase(seed,N,mode);
   G={seed:seed,code:makeCode(seed,mode,len,lvl),mode:mode,lvl:lvl,len:len,R:LENR[len],c:c,i:0,ph:[],hints:{},obs:{},t0:0,daily:!!daily,dist:0,origin:origin,px:0,py:0,st:null,photo:null,wrong:0,pep:0,flip:[],found:[]};
-  if(virt){G.virt=true;G.st=KM.virtSpots(N).map(function(p,i){p.fi=i;p.done=false;return p});W=[];P={x:0,y:0,acc:0};LS.set(WK,W)}
+  if(virt){G.virt=true;G.st=KM.virtSpots(N).map(function(p,i){p.fi=i;p.done=false;return p});W=[];P={x:0,y:0,acc:0};LS.set(WK,W);if(NAVP)G.in={kind:INK.kind,spm:INK.spm,steps:0,sl:KM.stepLen(G.st,900)};NAVP=false}
   else if(mode==="map"||mode==="demo"){var r=rngOf(seed^0x9e3779b9),spots=Wk.pickSpots(pois,ways,G.R,N,r,T.corner);
     G.st=spots.map(function(p,i){return{x:p.x,y:p.y,type:p.type,name:p.name||cap((D.TYPES[p.type]||D.TYPES.hoek).replace(/^(de|het) /,"")),fi:i,done:false}});
     for(var k=0;G.st.length<N&&k<N;k++){var a=r()*6.283,d=G.R*(.35+.5*r());G.st.push({x:Math.round(Math.cos(a)*d),y:Math.round(Math.sin(a)*d),type:"hoek",name:T.corner+" "+(G.st.length+1),fi:G.st.length,done:false})}
@@ -203,7 +214,7 @@ $("#bGo").onclick=function(){if(!G.t0){G.t0=Date.now();if(G.mode!=="demo")MW.pro
 $("#bBack").onclick=function(){G=null;hush();home()};
 $("#bParent2").onclick=function(){parentSheet()};
 function save(){if(G){G.px=P.x;G.py=P.y;LS.set(GK,G)}}
-function enter(){fixG(G);if(G.mode==="map"||G.mode==="demo")enterMap();else{show("cards");render()}}
+function enter(){fixG(G);if(G.mode==="map"||G.mode==="demo"||NAV())enterMap();else{show("cards");render()}}
 
 /* ---------- hud en kaartjes ---------- */
 function tilesHTML(){var out="";G.c.slots.forEach(function(s,i){out+='<i class="tl'+(G.ph[i]?" on":"")+'">'+(G.ph[i]?"🧩":"")+'</i>'});return out}
@@ -219,10 +230,10 @@ function render(){hud();while(G.i<NN()&&G.ph[G.i])G.i++;var i=G.i,box=$("#card")
 function enterMap(){show("play");
   if(!map)map=Wk.createMap($("#map"),{player:function(){return P},ways:function(){return W},R:function(){return RR()},
     theme:{bg:"#1b2550",water:"#2a62b8",waterEdge:"#6ec3ff",ripple:"rgba(110,195,255,.3)",park:"#2f8a4c",parkEdge:"#6fd38a",river:"#2a62b8",major:"#f2b705",minor:"#4f6ab8",road:"#9fb3e8",label:"#ffe08a",waterLabel:"#bfeaff",ring:"rgba(242,183,5,.35)",me:"#f2b705",meHalo:"rgba(242,183,5,.16)",meRing:"rgba(242,183,5,.7)",font:"700 12px 'Fredoka',sans-serif"},
-    items:items,move:{can:function(p){return !!G&&G.st.indexOf(p)>=0&&!p.done},target:function(){return sel},done:function(){sel=null;chip();save()}},onTap:function(hit,w){if(hit&&!hit.ref.done){sel=hit.ref;chip()}else if(G.mode==="demo"){walkTo=w;sel=null;map.follow();chip()}else{sel=null;chip()}}});
+    items:items,move:{can:function(p){return !!G&&G.st.indexOf(p)>=0&&!p.done},target:function(){return sel},done:function(){sel=null;chip();save()}},onTap:function(hit,w){if(hit&&!hit.ref.done){sel=hit.ref;chip()}else if(G.mode==="demo"||BANK()){walkTo=w;sel=null;map.follow();chip()}else{sel=null;chip()}}});
   map.resize();map.fit(RR());sel=null;arrived=null;walkTo=null;$("#chip").hidden=true;
   Wk.stopWatch();if(G.mode==="map")Wk.watch(G.origin,P,function(d){if(d>3&&d<80)G.dist+=d;KM.moved(d)});
-  KM.enter({kids:true,virt:!!G.virt,map:map});
+  KM.enter({kids:true,virt:!!G.virt,map:map});stopSteps();if(NAV())startSteps();
   if(G.mode==="demo")toast(T.demoTip);
   requestAnimationFrame(loop)}
 var dTo=function(t){return Math.hypot(t.x-P.x,t.y-P.y)},inRange=function(t){return dTo(t)<=Math.max(35,Math.min(P.acc||0,60))||G.force===t};
@@ -235,7 +246,7 @@ function items(){var it=[];
     cx.fillStyle=s.done?"#9fb0d8":"#fff";cx.shadowColor="#000";cx.shadowBlur=6;if(api.V.s>=.4||sel===s)cx.fillText(s.name.toUpperCase().slice(0,24),X,Y+36);cx.shadowBlur=0}})});
   return it}
 function loop(t){if($("#play").hidden||!G)return;var dt=Math.min(.1,(t-lastT)/1000)||0;lastT=t;
-  if(G.mode==="demo"&&walkTo){var d=Math.hypot(walkTo.x-P.x,walkTo.y-P.y),step=110*dt;if(d<=step){P.x=walkTo.x;P.y=walkTo.y;G.dist+=d;walkTo=null}else{P.x+=(walkTo.x-P.x)/d*step;P.y+=(walkTo.y-P.y)/d*step;G.dist+=step}}
+  if((G.mode==="demo"||BANK())&&walkTo){var d=Math.hypot(walkTo.x-P.x,walkTo.y-P.y),step=110*dt;if(d<=step){P.x=walkTo.x;P.y=walkTo.y;G.dist+=d;walkTo=null}else{P.x+=(walkTo.x-P.x)/d*step;P.y+=(walkTo.y-P.y)/d*step;G.dist+=step}}
   if(!KM.draw(t))map.draw(t);if(!loop.n||t-loop.n>500){loop.n=t;tickMap()}requestAnimationFrame(loop)}
 function tickMap(){var el=Math.floor((Date.now()-G.t0)/1000),n=done();
   $("#mT").textContent=Math.floor(el/60)+":"+String(el%60).padStart(2,"0");$("#mS").textContent=n+"/"+NN();$("#mP").textContent=G.pep;$("#mM").innerHTML=tilesHTML();
@@ -245,8 +256,8 @@ function tickMap(){var el=Math.floor((Date.now()-G.t0)/1000),n=done();
   chip();if(el%10===0)save()}
 function chip(){var c=$("#chip");if(!sel||sel.done){c.hidden=true;return}c.hidden=false;var d=dTo(sel),ok=inRange(sel),z=ZBY[G.c.slots[sel.fi].z];
   $("#cName").textContent=sel.name;$("#cDist").textContent=Math.round(d)+" m";$("#cHint").textContent=T.here+" · "+z.title;
-  var b=$("#cAct");b.hidden=false;if(ok)b.textContent=T.look;else if(G.mode==="demo")b.textContent=T.walk;else if(d<150)b.textContent=T.gps;else b.hidden=true}
-$("#cAct").onclick=function(){if(!sel)return;if(inRange(sel))taskSheet(sel.fi,sel);else if(G.mode==="demo"){walkTo={x:sel.x,y:sel.y};map.follow()}else if(dTo(sel)<150){G.force=sel;taskSheet(sel.fi,sel)}};
+  var b=$("#cAct");b.hidden=false;if(ok)b.textContent=T.look;else if(G.mode==="demo"||BANK())b.textContent=T.walk;else if(d<150)b.textContent=T.gps;else b.hidden=true}
+$("#cAct").onclick=function(){if(!sel)return;if(inRange(sel))taskSheet(sel.fi,sel);else if(G.mode==="demo"||BANK()){walkTo={x:sel.x,y:sel.y};map.follow()}else if(dTo(sel)<150){G.force=sel;taskSheet(sel.fi,sel)}};
 $("#zIn").onclick=function(){map.zoom(1.4)};$("#zOut").onclick=function(){map.zoom(1/1.4)};$("#zMe").onclick=function(){map.follow()};
 $("#zM").onclick=menuSheet;$("#zM2").onclick=menuSheet;
 $("#mNote").onclick=noteSheet;$("#mAcc").onclick=toFinale;$("#bNote").onclick=noteSheet;$("#bAcc2").onclick=toFinale;
@@ -392,7 +403,7 @@ function accept(){if(!cur)return;var i=cur.i,s=G.c.slots[i];if(G.ph[i])return;G.
   sheet('<div class="eyebrow">'+esc(fill(T.clue,{n:n,t:N}))+'</div><div class="reward"><div class="big">🧩</div><p>'+esc(T.pieceGet)+'</p><canvas id="pc" class="piece" width="240" height="180"></canvas><p class="pep">🥜 '+esc(fill(T.pepGet,{n:pep}))+'</p><div class="tiles">'+tilesHTML()+'</div></div>'+
     bubble(cliff,D.PIET)+'<button type="button" class="btn" id="bNext">'+(last?T.finH:T.next)+'</button>',true);
   pieceThumb($("#pc"),i);say(T.pieceGet+" "+cliff);
-  $("#bNext").onclick=function(){closeSheet();sel=null;cur=null;if(G.mode==="map"||G.mode==="demo")chip();else render();if(last)toFinale()}}
+  $("#bNext").onclick=function(){closeSheet();sel=null;cur=null;if(G.mode==="map"||G.mode==="demo"||NAV())chip();else render();if(last)toFinale()}}
 
 /* ---------- de verstopkaart (canvas) ---------- */
 function grid(N){return{c:N===6?3:N===8?4:5,r:2}}
@@ -413,10 +424,10 @@ function noteSheet(){var N=NN(),open=G.ph.slice(),all=[];for(var i=0;i<N;i++)all
   var solved=[];G.c.slots.forEach(function(s,i){if(G.ph[i])solved.push('<li>'+esc(ZBY[s.z].title)+(G.mode==="in"?' <small>'+esc(roomOf(s)[0])+'</small>':'')+'</li>')});
   sheet('<h2>'+T.notebook+'</h2>'+MW.codeBox(L,G.code,"zaak",true)+'<canvas id="kaart" class="kaart" width="640" height="400"></canvas><p class="note small" style="text-align:center">'+esc(fill(X.noteLine,{i:done(),n:N,p:G.pep}))+'</p><div class="eyebrow">'+esc(T.nbZ)+'</div>'+(solved.length?'<ol class="ol">'+solved.join("")+'</ol>':'<p class="note">'+T.nbNone+'</p>')+
     '<button type="button" class="btn ghost dk" id="shX">'+T.close+'</button>');MW.bindCodeBox($("#sheetBody"),L);drawKaart($("#kaart"),N,open,all);$("#shX").onclick=closeSheet}
-function menuSheet(){var onMap=G&&G.mode==="map";sheet('<h2>'+T.menu+'</h2><button type="button" class="btn" id="mBack">'+T.mBack+'</button>'+(onMap?'<button type="button" class="btn ghost dk" id="mNoMap">'+T.kv.mNoMap+'</button>':'')+'<button type="button" class="btn ghost dk" id="mPar">'+T.mParent+'</button>'+(cur&&!$("#sheet").hidden?'':'')+'<button type="button" class="btn ghost dk" id="mSkip">'+T.mSkip+'</button><button type="button" class="btn ghost dk" id="mHome">'+T.mHome+'</button><button type="button" class="btn ghost dk" id="mWipe">'+T.mWipe+'</button>');
+function menuSheet(){var onMap=G&&(G.mode==="map"||NAV());sheet('<h2>'+T.menu+'</h2><button type="button" class="btn" id="mBack">'+T.mBack+'</button>'+(onMap?'<button type="button" class="btn ghost dk" id="mNoMap">'+T.kv.mNoMap+'</button>':'')+'<button type="button" class="btn ghost dk" id="mPar">'+T.mParent+'</button>'+(cur&&!$("#sheet").hidden?'':'')+'<button type="button" class="btn ghost dk" id="mSkip">'+T.mSkip+'</button><button type="button" class="btn ghost dk" id="mHome">'+T.mHome+'</button><button type="button" class="btn ghost dk" id="mWipe">'+T.mWipe+'</button>');
   $("#sheetBody").onclick=function(e){var i=e.target.id;if(i==="mBack")closeSheet();else if(i==="mNoMap"){closeSheet();dropMap()}else if(i==="mPar")parentSheet(closeSheet);else if(i==="mSkip")skipSheet();else if(i==="mHome"){closeSheet();leavePlay();toast(T.saved)}else if(i==="mWipe")confirmSheet(T.wipeQ,T.wipeT,T.wipeY,wipeGame)}}
 /* begeleider: de volgende open proef overslaan (achter de pincode) */
-function skipSheet(){var i=G.i;while(i<NN()&&G.ph[i])i++;if(G.mode==="map"||G.mode==="demo"){var o=G.st.filter(function(s){return !s.done})[0];if(!o){toast(T.radarAll);return}i=o.fi}if(i>=NN()){toast(T.radarAll);return}
+function skipSheet(){var i=G.i;while(i<NN()&&G.ph[i])i++;if(G.mode==="map"||G.mode==="demo"||NAV()){var o=G.st.filter(function(s){return !s.done})[0];if(!o){toast(T.radarAll);return}i=o.fi}if(i>=NN()){toast(T.radarAll);return}
   var go=function(){closeSheet();cur={i:i,spot:G.st?G.st.filter(function(s){return s.fi===i})[0]:null,fails:0};G.hints[G.c.slots[i].z]=1;accept()};
   if(!PAR.pin)return confirmSheet(T.mSkip,fill(X.skipT,{i:i+1}),X.skipY,go);pinSheet(false,go)}
 
@@ -488,8 +499,8 @@ function archSheet(){var g=MW.profile.get().games.pa,log=(g&&g.log)||[],st=funct
   sheet('<h2>'+esc(X.archH)+'</h2>'+(log.length?'<div class="list">'+log.map(function(r){return '<button type="button" class="sus" data-c="'+esc(r.c)+'"><b>'+esc(r.d)+' · '+st(r.st)+'</b><small>'+esc(fill(X.archRow,{m:r.m,c:r.c}))+'</small></button>'}).join("")+'</div>':'<p class="note">'+esc(X.archNone)+'</p>')+'<button type="button" class="btn ghost dk" id="shX">'+T.close+'</button>');
   $("#sheetBody").onclick=function(e){if(e.target.id==="shX"){closeSheet();return}var r=e.target.closest("[data-c]");if(r)codeSheet(r.dataset.c)}}
 function confirmSheet(title,text,yes,fn){sheet('<h2>'+title+'</h2><p>'+text+'</p><button type="button" class="btn red" id="cfY">'+yes+'</button><button type="button" class="btn ghost dk" id="shX">'+T.cancel+'</button>');$("#shX").onclick=closeSheet;$("#cfY").onclick=fn}
-function leavePlay(){save();Wk.stopWatch();KM.leave();G=null;hush();home()}
-function wipeGame(){Wk.stopWatch();KM.leave();LS.del(GK);G=null;closeSheet();home();toast(T.wiped)}
+function leavePlay(){save();Wk.stopWatch();KM.leave();stopSteps();G=null;hush();home()}
+function wipeGame(){Wk.stopWatch();KM.leave();stopSteps();LS.del(GK);G=null;closeSheet();home();toast(T.wiped)}
 function wipeSheet(){var has=!!LS.get(GK,null);sheet('<h2>'+T.wipe+'</h2>'+(has?'<button type="button" class="btn ghost dk" id="wG">'+T.wipeY+'</button>':'')+'<button type="button" class="btn ghost dk" id="wA">'+T.wipeAll+'</button><button type="button" class="btn" id="shX">'+T.cancel+'</button>');
   $("#sheetBody").onclick=function(e){var i=e.target.id;if(i==="shX")closeSheet();else if(i==="wG")confirmSheet(T.wipeQ,T.wipeT,T.wipeY,wipeGame);else if(i==="wA")confirmSheet(T.allQ,T.allT,T.allY,function(){LS.del(GK);LS.del("ss_pa_last");LS.del(PK);PAR={pin:"",spots:[]};MW.profile.wipe();closeSheet();home();toast(T.wiped)})}}
 window.addEventListener("popstate",function(){if(!$("#sheet").hidden){closeSheet();history.pushState(null,"");return}if(!$("#brief").hidden){G=null;home();history.pushState(null,"");return}if(!$("#play").hidden||!$("#cards").hidden){leavePlay();toast(T.saved);history.pushState(null,"")}});

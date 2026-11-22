@@ -1,4 +1,4 @@
-/* Alle vaste zinnen die dit spel kan uitspreken (665). Gemaakt door _tools/stemscript.js uit data-nl.js; k = sleutel uit shared/voice.js. Niet met de hand bewerken: draai het gereedschap opnieuw. */
+/* Alle vaste zinnen die dit spel kan uitspreken (673). Gemaakt door _tools/stemscript.js uit data-nl.js; k = sleutel uit shared/voice.js. Niet met de hand bewerken: draai het gereedschap opnieuw. */
 window.MMV_SCRIPT=window.MMV_SCRIPT||{};window.MMV_SCRIPT["natuur_nl"]=[
 {"k":"52654da8","wie":"verteller","waar":"T","t":"Start de zaak van vandaag"},
 {"k":"06cdc8ca","wie":"verteller","waar":"T","t":"Extra zaak"},
@@ -664,5 +664,13 @@ window.MMV_SCRIPT=window.MMV_SCRIPT||{};window.MMV_SCRIPT["natuur_nl"]=[
 {"k":"9954c19b","wie":"verteller","waar":"LES 3","t":"Wat gebeurt er als je één soort weghaalt?"},
 {"k":"6970a1b7","wie":"verteller","waar":"LES 3","t":"Verdieping: herhaal dezelfde telling over een maand (of in een ander seizoen) en vergelijk."},
 {"k":"5241c6ba","wie":"verteller","waar":"LES 3","t":"Of: schrijf een onderbouwd advies aan de gemeente over één plek, met jullie data als bewijs."},
-{"k":"09cc351d","wie":"verteller","waar":"LES 3","t":"Groep 7–8 (SLO natuur, kerndoel 39/40/41): ecosystemen en voedselwebben, biodiversiteit, kringlopen (water, bodem, koolstof), oorzaak en gevolg in de natuur, invloed van de mens en klimaat, onderzoek doen: waarnemen, meten, vergelijken, concluderen."}
+{"k":"09cc351d","wie":"verteller","waar":"LES 3","t":"Groep 7–8 (SLO natuur, kerndoel 39/40/41): ecosystemen en voedselwebben, biodiversiteit, kringlopen (water, bodem, koolstof), oorzaak en gevolg in de natuur, invloed van de mens en klimaat, onderzoek doen: waarnemen, meten, vergelijken, concluderen."},
+{"k":"57a6f880","wie":"verteller","waar":"T","t":"Binnen: lopen op de plaats"},
+{"k":"16a46540","wie":"verteller","waar":"T","t":"Jullie lopen op de verhaalkaart."},
+{"k":"d15ce3bc","wie":"verteller","waar":"T","t":"Loop op de plaats (of door de ruimte) met de telefoon in je hand; elke stap telt."},
+{"k":"c4c72af9","wie":"verteller","waar":"T","t":"Lukt dat niet, dan lopen de stappen vanzelf."},
+{"k":"dc11698b","wie":"verteller","waar":"T","t":"Echte stappen tellen"},
+{"k":"5ca03018","wie":"verteller","waar":"T","t":"Stappen lopen vanzelf"},
+{"k":"81cccf37","wie":"verteller","waar":"T","t":"Geen bewegingssensor gevonden."},
+{"k":"de79202e","wie":"verteller","waar":"T","t":"De stappen lopen nu vanzelf."}
 ];

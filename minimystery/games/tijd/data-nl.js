@@ -37,7 +37,7 @@ var T={
     map:"Plattegrond",kids:"Verhaalkaart",mapTip:"De echte plattegrond. Tik op Verhaalkaart voor de kindertekening.",goDemo:"We lopen (nep) naar {p}…",inSteps:"Nog {n} stappen",
     mNoMap:"Verder zonder kaart (zelfde tijdreis)",switched:"Verder zonder kaart. Dezelfde tijdreis, dezelfde missies.",virtOut:"Geen plattegrond van de buurt gevonden. Jullie lopen op de verhaalkaart: de pijl en warm/koud wijzen de weg.",
     noMapQ:"Geen locatie vandaag?",noMapT:"De telefoon geeft geen locatie door. Jullie kunnen dezelfde tijdreis zonder kaart spelen: de missies komen dan achter elkaar en jullie lopen zelf naar een nieuwe plek.",noMapGo:"Verder zonder kaart",
-    inH:"",inT:"",inSensor:"",inTempo:"",inNoSensor:""}
+    inH:"Binnen: lopen op de plaats",inT:"Jullie lopen op de verhaalkaart. Loop op de plaats (of door de ruimte) met de telefoon in je hand; elke stap telt. Lukt dat niet, dan lopen de stappen vanzelf.",inSensor:"Echte stappen tellen",inTempo:"Stappen lopen vanzelf",inNoSensor:"Geen bewegingssensor gevonden. De stappen lopen nu vanzelf."}
 };
 var TYPES={kerk:"de kerk",hotel:"het hotel",bank:"de bank",apotheek:"de apotheek",cafe:"het café",bieb:"de bibliotheek",park:"het park",school:"de school",kunst:"het kunstwerk",tank:"het tankstation",winkel:"de winkel",halte:"de bushalte",post:"de brievenbus",bankje:"het bankje",hoek:"de hoek"};
 var TIK="Meneer Tik",NOOR="Juf Noor";

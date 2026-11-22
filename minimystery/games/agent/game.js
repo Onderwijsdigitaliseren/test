@@ -143,10 +143,10 @@ function genCase(seed,mode,len){len=len||"normaal";
     return{sus:sus,K:K,claims:claims,Li:Li,slots:slots,ev:ev,digits:genDigits(seed,slots.length)}
   }
   return null}
-function makeCode(seed,mode,len){return"AG"+(len==="kort"?"V":len==="lang"?"L":"")+(mode==="in"?"B":mode==="map"||mode==="demo"?"K":"S")+seed.toString(36).toUpperCase()}
+function makeCode(seed,mode,len){return"AG"+(len==="kort"?"V":len==="lang"?"L":"")+(mode==="in"?(INK.kind==="tap"?"Z":"B"):mode==="map"||mode==="demo"?"K":"S")+seed.toString(36).toUpperCase()}
 /* oude codes (AGK…, AGS…, AGB…) = Normaal; AGV… = Kort, AGL… = Lang */
-function parseCode(v){var c=MW.norm(v),len="normaal";if(/^AG[VL][KSB]/.test(c)){len=c[2]==="V"?"kort":"lang";c="AG"+c.slice(3)}
-  if(!/^AG[KSB]/.test(c)||c.length<4||c.length>11)return null;var seed=parseInt(c.slice(3),36);if(!(seed>=0)||seed>4294967295)return null;return{mode:c[2]==="B"?"in":c[2]==="K"?"map":"street",seed:seed,len:len}}
+function parseCode(v){var c=MW.norm(v),len="normaal";if(/^AG[VL][KSBZ]/.test(c)){len=c[2]==="V"?"kort":"lang";c="AG"+c.slice(3)}
+  if(!/^AG[KSBZ]/.test(c)||c.length<4||c.length>11)return null;var seed=parseInt(c.slice(3),36);if(!(seed>=0)||seed>4294967295)return null;return{mode:c[2]==="Z"?"bank":c[2]==="B"?"in":c[2]==="K"?"map":"street",seed:seed,len:len}}
 /* opgeslagen zaak van een oudere versie: ontbrekende velden aanvullen */
 function fixG(g){if(!g||!g.c||!g.c.slots)return null;if(!g.len)g.len=g.c.slots.length===5?"kort":g.c.slots.length===11?"lang":"normaal";if(!g.R)g.R=LENR[g.len]||R0;
   if(!g.c.digits||g.c.digits.length!==g.c.slots.length)g.c.digits=genDigits(g.seed||0,g.c.slots.length);if(!Array.isArray(g.album))g.album=[];if(!Array.isArray(g.ph))g.ph=[];
@@ -226,7 +226,7 @@ var KI=MW.KidsMap.icons,START={x:500,y:1290};
 var FP=[{x:230,y:1040,k:"bakker"},{x:150,y:760,k:"halte"},{x:300,y:520,k:"speel"},{x:520,y:330,k:"school"},{x:760,y:420,k:"brug"},{x:860,y:700,k:"park"},{x:720,y:960,k:"kerk"},{x:500,y:760,k:"plein"},{x:150,y:300,k:"winkel"},{x:880,y:1060,k:"post"},{x:620,y:1130,k:"kiosk"}];
 var ROADS=[[-1,0],[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,-1],[7,2],[7,5],[7,0],[7,6],[8,2],[8,1],[9,6],[9,5],[10,-1],[10,6]];
 var TREES=[[80,1180],[120,320],[420,160],[640,180],[900,260],[950,900],[940,1180],[300,1300],[700,1300],[380,900],[640,600],[90,520],[820,1050],[560,1120]];
-var KM=MW.KidsMap.create({T:T.kv,go:function(s){walkTo={x:s.x,y:s.y};sel=null},G:function(){return G},P:function(){return P},dTo:function(s){return dTo(s)},virt:function(){return !!(G&&G.virt)},mode:function(){return G&&G.mode},
+var KM=MW.KidsMap.create({T:T.kv,go:function(s){walkTo={x:s.x,y:s.y};sel=null},G:function(){return G},P:function(){return P},dTo:function(s){return dTo(s)},virt:function(){return !!(G&&G.virt)},mode:function(){return G&&(BANK()?"demo":G.mode)},
   map:{W:1000,H:1400,top:170,start:START,spots:FP,roads:ROADS,vsc:.42,sky:"#bfe0ff",land:"#b9e39b",road:"#e7e2d5",roadLine:"#fff",label:"#17203a",labelHalo:"rgba(255,255,255,.9)",heroHalo:"rgba(255,194,26,.3)"},
   draw:{mark:function(g,x,y,r,col){g.save();g.fillStyle=col;g.beginPath();g.ellipse(x,y,r*.9,r,0,0,7);g.fill();g.restore()},
     ground:function(g){g.fillStyle="#a8d98a";[[200,250,160],[760,900,200],[300,1150,140],[650,250,120]].forEach(function(e){g.beginPath();g.ellipse(e[0],e[1],e[2],e[2]*.5,0,0,7);g.fill()});
@@ -239,17 +239,19 @@ var KM=MW.KidsMap.create({T:T.kv,go:function(s){walkTo={x:s.x,y:s.y};sel=null},G
 KM.mount();
 /* binnen: op de plaats lopen (bewegingssensor) of op tempo, over de verhaalkaart */
 var St=MW.Steps,INK=LS.get("ss_ag_in",{kind:"sensor",spm:100});
+/* bankversie: zelfde verhaalkaart als binnen, maar je tikt op een plek en het groepje loopt er vanzelf heen (geen stappen) */
+function BANK(){return !!(G&&G.mode==="in"&&G.in&&G.in.kind==="tap")}
 function inSheet(cb){var sens=St&&St.supported(),IN=T.kv;
   sheet('<h2>'+esc(IN.inH)+'</h2><p>'+esc(IN.inT)+'</p>'+(sens?'<button type="button" class="btn" id="inS">'+esc(IN.inSensor)+'</button>':'')+'<button type="button" class="btn'+(sens?' ghost dk':'')+'" id="inT">'+esc(IN.inTempo)+'</button><button type="button" class="btn ghost dk" id="shX">'+T.cancel+'</button>');
   $("#shX").onclick=closeSheet;if(sens)$("#inS").onclick=function(){St.ask().then(function(ok){closeSheet();if(!ok)toast(IN.inNoSensor);cb(ok?"sensor":"tempo",100)})};$("#inT").onclick=function(){closeSheet();cb("tempo",100)}}
 function stepIn(k){if(!G||G.mode!=="in")return;G.in.steps+=k;var t=KM.near();if(!t)return;var d=dTo(t),m=k*G.in.sl;if(d<=m){P.x=t.x;P.y=t.y;G.dist+=d}else{P.x+=(t.x-P.x)/d*m;P.y+=(t.y-P.y)/d*m;G.dist+=m}}
-function startSteps(){if(!St||!G||G.mode!=="in")return;St.start({mode:G.in.kind,spm:G.in.spm,onStep:stepIn,active:function(){return !!G&&G.mode==="in"&&!$("#play").hidden&&$("#sheet").hidden&&$("#hide").hidden},onDead:function(){if(!G||G.mode!=="in")return;G.in.kind="tempo";save();toast(T.kv.inNoSensor);startSteps()}});St.awake(true)}
+function startSteps(){if(!St||!G||G.mode!=="in"||G.in.kind==="tap")return;St.start({mode:G.in.kind,spm:G.in.spm,onStep:stepIn,active:function(){return !!G&&G.mode==="in"&&!$("#play").hidden&&$("#sheet").hidden&&$("#hide").hidden},onDead:function(){if(!G||G.mode!=="in")return;G.in.kind="tempo";save();toast(T.kv.inNoSensor);startSteps()}});St.awake(true)}
 function stopSteps(){if(St){St.stop();St.awake(false)}}
 function buildVirt(seed,mode,origin,daily,len){build(seed,mode,null,null,origin,daily,len,true);if(G&&mode==="map")toast(T.kv.virtOut)}
 function noMapSheet(seed,daily,why,len){sheet('<h2>'+T.kv.noMapQ+'</h2>'+(why?'<p class="note">'+esc(why)+'</p>':'')+'<p>'+esc(T.kv.noMapT)+'</p><button type="button" class="btn" id="nmGo">'+T.kv.noMapGo+'</button><button type="button" class="btn ghost dk" id="shX">'+T.back+'</button>');
   $("#shX").onclick=closeSheet;$("#nmGo").onclick=function(){closeSheet();MODE="street";LS.set("ss_ag_mode",MODE);build(seed,"street",null,null,null,daily,len)}}
 function dropMap(){if(!G||G.mode==="street")return;Wk.stopWatch();KM.leave();stopSteps();G.virt=false;G.mode="street";G.i=0;while(G.ph[G.i])G.i++;G.st=null;save();show("cards");render();toast(T.kv.switched)}
-function begin(seed,mode,daily,len){len=len||"normaal";if(mode==="in")return inSheet(function(kind,spm){INK={kind:kind,spm:spm};LS.set("ss_ag_in",INK);build(seed,"in",null,null,null,daily,len,true)});if(mode!=="map")return build(seed,mode,null,null,null,daily,len);
+function begin(seed,mode,daily,len){if(mode==="bank"){INK={kind:"tap",spm:100};return build(seed,"in",null,null,null,daily,len,true)}len=len||"normaal";if(mode==="in")return inSheet(function(kind,spm){INK={kind:kind,spm:spm};LS.set("ss_ag_in",INK);build(seed,"in",null,null,null,daily,len,true)});if(mode!=="map")return build(seed,mode,null,null,null,daily,len);
   Wk.loading(T.loc);
   Wk.locate().then(function(pos){var lat=pos.coords.latitude,lon=pos.coords.longitude;
     return Wk.fetchWorld({lat:lat,lon:lon,R:LENR[len]||R0,status:function(s){if(s==="pois")Wk.loading(T.pois);if(s==="nomap")toast(T.nomap)}}).then(function(w){Wk.loading("");
@@ -345,7 +347,7 @@ function render(){hud();while(G.i<NN()&&G.ph[G.i])G.i++;var i=G.i,box=$("#card")
 function enterMap(){show("play");if(!G.thiefTip&&T.thiefTip&&G.mode!=="in"){G.thiefTip=1;save();setTimeout(function(){toast(T.thiefTip);say(T.thiefTip)},4000)}
   if(!map)map=Wk.createMap($("#map"),{player:function(){return P},ways:function(){return W},R:function(){return RR()},
     theme:{bg:"#15337a",water:"#1d6fd1",waterEdge:"#4fd3ff",ripple:"rgba(79,211,255,.3)",park:"#1f8a4c",parkEdge:"#5fd38a",river:"#1d6fd1",major:"#ffc21a",minor:"#4a6fc0",road:"#8fb0ff",label:"#ffe08a",waterLabel:"#bfeaff",ring:"rgba(255,194,26,.35)",me:"#ffc21a",meHalo:"rgba(255,194,26,.16)",meRing:"rgba(255,194,26,.7)",font:"700 12px 'Barlow Condensed',sans-serif"},
-    items:items,move:{can:function(p){return !!G&&G.st.indexOf(p)>=0&&!p.done},target:function(){return sel},done:function(){sel=null;chip();save()}},onTap:function(hit,w){if(hit&&!hit.ref.done){sel=hit.ref;chip()}else if(G.mode==="demo"){walkTo=w;sel=null;map.follow();chip()}else{sel=null;chip()}}});
+    items:items,move:{can:function(p){return !!G&&G.st.indexOf(p)>=0&&!p.done},target:function(){return sel},done:function(){sel=null;chip();save()}},onTap:function(hit,w){if(hit&&!hit.ref.done){sel=hit.ref;chip()}else if(G.mode==="demo"||BANK()){walkTo=w;sel=null;map.follow();chip()}else{sel=null;chip()}}});
   map.resize();map.fit(RR());sel=null;arrived=null;walkTo=null;$("#chip").hidden=true;TH.init=false;TH.tgt=null;TH.wait=0;TH.flee=0;
   Wk.stopWatch();if(G.mode==="map")Wk.watch(G.origin,P,function(d){if(d>3&&d<80)G.dist+=d;KM.moved(d)});
   KM.enter({kids:true,virt:!!G.virt,map:map});stopSteps();if(G.mode==="in")startSteps();
@@ -381,7 +383,7 @@ function thiefNear(){if(!TH.init||TH.flee>0||!$("#sheet").hidden||Date.now()-TH.
   var open=G.st.filter(function(s){return !s.done});if(!open.length)return;TH.lastFlee=Date.now();TH.flee=6;TH.wait=0;
   TH.tgt=open.slice().sort(function(a,b){return Math.hypot(b.x-P.x,b.y-P.y)-Math.hypot(a.x-P.x,a.y-P.y)})[0];TH.off={x:0,y:0};popTaunt(D.TAUNT[2],true)}
 function loop(t){if($("#play").hidden||!G)return;var dt=Math.min(.1,(t-lastT)/1000)||0;lastT=t;
-  if(G.mode==="demo"&&walkTo){var d=Math.hypot(walkTo.x-P.x,walkTo.y-P.y),step=110*dt;if(d<=step){P.x=walkTo.x;P.y=walkTo.y;G.dist+=d;walkTo=null}else{P.x+=(walkTo.x-P.x)/d*step;P.y+=(walkTo.y-P.y)/d*step;G.dist+=step}}
+  if((G.mode==="demo"||BANK())&&walkTo){var d=Math.hypot(walkTo.x-P.x,walkTo.y-P.y),step=110*dt;if(d<=step){P.x=walkTo.x;P.y=walkTo.y;G.dist+=d;walkTo=null}else{P.x+=(walkTo.x-P.x)/d*step;P.y+=(walkTo.y-P.y)/d*step;G.dist+=step}}
   thiefTick(dt);if(!KM.draw(t))map.draw(t);if(!loop.n||t-loop.n>500){loop.n=t;tickMap()}requestAnimationFrame(loop)}
 function tickMap(){var el=Math.floor((Date.now()-G.t0)/1000),n=done();
   $("#mT").textContent=Math.floor(el/60)+":"+String(el%60).padStart(2,"0");$("#mS").textContent=n+"/"+NN();ballUI($("#mM"),n);goldUI($("#mG"));
@@ -391,8 +393,8 @@ function tickMap(){var el=Math.floor((Date.now()-G.t0)/1000),n=done();
   thiefNear();chip();if(el%10===0)save()}
 function chip(){var c=$("#chip");if(!sel||sel.done){c.hidden=true;return}c.hidden=false;var d=dTo(sel),ok=inRange(sel),act=G.c.slots[sel.fi].act;
   $("#cName").textContent=sel.name;$("#cDist").textContent=Math.round(d)+" m";$("#cHint").textContent=T.here+" · "+T.kinds[act];
-  var b=$("#cAct");b.hidden=false;if(ok)b.textContent=T.look;else if(G.mode==="demo")b.textContent=T.walk;else if(d<150)b.textContent=T.gps;else b.hidden=true}
-$("#cAct").onclick=function(){if(!sel)return;if(inRange(sel))taskSheet(sel.fi,sel);else if(G.mode==="demo"){walkTo={x:sel.x,y:sel.y};map.follow()}else if(dTo(sel)<150){G.force=sel;taskSheet(sel.fi,sel)}};
+  var b=$("#cAct");b.hidden=false;if(ok)b.textContent=T.look;else if(G.mode==="demo"||BANK())b.textContent=T.walk;else if(d<150)b.textContent=T.gps;else b.hidden=true}
+$("#cAct").onclick=function(){if(!sel)return;if(inRange(sel))taskSheet(sel.fi,sel);else if(G.mode==="demo"||BANK()){walkTo={x:sel.x,y:sel.y};map.follow()}else if(dTo(sel)<150){G.force=sel;taskSheet(sel.fi,sel)}};
 $("#zIn").onclick=function(){map.zoom(1.4)};$("#zOut").onclick=function(){map.zoom(1/1.4)};$("#zMe").onclick=function(){map.follow()};
 $("#zM").onclick=menuSheet;$("#zM2").onclick=menuSheet;
 $("#mNote").onclick=noteSheet;$("#mPeople").onclick=susSheet;$("#mAcc").onclick=toFinale;

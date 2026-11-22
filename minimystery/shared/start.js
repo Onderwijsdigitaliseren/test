@@ -11,12 +11,12 @@
 "use strict";
 var MW=window.MW,$=function(s){return document.querySelector(s)},$$=function(s){return [].slice.call(document.querySelectorAll(s))};
 var me=document.currentScript,GID=(me&&me.dataset.game)||"",L=(document.documentElement.lang||"nl").slice(0,2)==="en"?"en":"nl";
-var X={nl:{where:"Waar spelen jullie?",edit:"Aanpassen",editX:"Klaar",set:"Instellingen",lvl:"Niveau",dur:"Lengte",vOn:"voorlezen aan",vOff:"voorlezen uit",forN:"voor {n}",kids:"{n} namen",kids0:"namen nog leeg",
+var X={nl:{where:"Hoe spelen jullie?",edit:"Aanpassen",editX:"Klaar",set:"Instellingen",lvl:"Niveau",dur:"Lengte",vOn:"voorlezen aan",vOff:"voorlezen uit",forN:"voor {n}",kids:"{n} namen",kids0:"namen nog leeg",
     newH:"Nieuw hier?",newT:"Speel eerst gratis de proefronde: een paar minuten op een getekende stad, zodat je ziet hoe het werkt.",trial:"▶ Gratis proefronde",real:"De echte zaak",
     how:"Hoe werkt het?",need:"Nodig: één telefoon per groepje en een volwassene erbij. Lezen hoeft niet: de telefoon leest voor.",more:"Alles voor de begeleider",close:"Sluiten",trialS:"Proefronde",moreB:"Meer",
     viewQ:"Welke kaart zien de kinderen?",vKids:"🖍️ Speelkaart",vKidsS:"getekend · jonge kinderen",vReal:"🗺️ Echte kaart",vRealS:"met straten · oudere kinderen",
     vNote:"De echte kaart helpt ook de begeleider: daarop zie je welke straat je in moet. Wisselen kan altijd, met het knopje aan de zijkant van de kaart."},
-  en:{where:"Where are you playing?",edit:"Change",editX:"Done",set:"Settings",lvl:"Level",dur:"Length",vOn:"read aloud on",vOff:"read aloud off",forN:"for {n}",kids:"{n} names",kids0:"no names yet",
+  en:{where:"How are you playing?",edit:"Change",editX:"Done",set:"Settings",lvl:"Level",dur:"Length",vOn:"read aloud on",vOff:"read aloud off",forN:"for {n}",kids:"{n} names",kids0:"no names yet",
     newH:"New here?",newT:"Play the free practice round first: a few minutes on a drawn town, so you can see how it works.",trial:"▶ Free practice round",real:"The real case",
     how:"How does it work?",need:"You need: one phone per group and a grown-up. No reading needed: the phone reads aloud.",more:"Everything for the grown-up",close:"Close",trialS:"Practice round",moreB:"More",
     viewQ:"Which map do the children see?",vKids:"🖍️ Play map",vKidsS:"drawn · young children",vReal:"🗺️ Real map",vRealS:"with streets · older children",
@@ -61,6 +61,7 @@ function css(){if(document.getElementById("mmStartCss"))return;var s=document.cr
   ".mmNew{margin:16px 0 6px;padding:14px;border-radius:18px;background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.35);text-align:left}"+
   ".mmNew h3{margin:0 0 4px;font-size:17px}.mmNew p{margin:0 0 10px;font-size:14px;line-height:1.4;opacity:.92}.mmNew .btn{margin:0!important;width:100%}"+
   ".mmReal{margin:20px 0 0;font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;opacity:.8;text-align:left}"+
+  ".seg.ways{grid-template-columns:1fr 1fr!important;margin:0 0 6px!important}.seg.ways button:last-child:nth-child(odd){grid-column:1/-1}.seg.ways button small{display:block;font-weight:400;font-size:12px;opacity:.85;margin-top:2px}"+
   ".mmView{margin:4px 0 2px}.mmView[hidden]{display:none}.mmView .seg{margin:0!important}.mmView .mmVN{font-size:13px;line-height:1.4;margin:8px 0 0;text-align:left;opacity:.88}"+
   ".mmGo{font-size:19px!important;padding-top:18px!important;padding-bottom:18px!important}"+
   ".mmLinks{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:22px 0 8px}.mmLinks.mmMore{margin-top:0}.mmLinks[hidden]{display:none}"+
@@ -99,6 +100,8 @@ function build(){var home=$("#home"),wrap=home&&home.querySelector(".wrap"),go=$
   /* Toverspiegel: de namen zijn nodig om te beginnen, dus die blijven in beeld */
   var kids=$("#kids");if(kids){var kb=kids.closest(".namebox")||kids;add(kb)}
   /* kaartkeuze (alleen als het spel "buiten met kaart" kent): speelkaart of echte kaart eerst; per spel onthouden, kidsmap.js leest MW.mapView */
+  /* de speelwijze (buiten, binnen op de plaats, op de bank…) staat open op het startscherm, niet achter "Aanpassen" */
+  if(modeSeg){var pl=modeSeg.previousElementSibling;if(pl&&pl.classList.contains("seglbl"))pl.remove();var mq=document.createElement("div");mq.className="mmQ";mq.textContent=X.where;add(mq);modeSeg.classList.add("ways");add(modeSeg);modeSeg.addEventListener("click",function(){setTimeout(function(){refresh()},0)})}
   var view=null,VK="ss_kmview",vp=(MW.LS.get(VK,{})||{})[GID]==="real"?"real":"kids";MW.mapView=vp;
   if(modeSeg&&modeSeg.querySelector('[data-m="map"]')){view=document.createElement("div");view.className="mmView";
     view.innerHTML='<div class="mmQ">'+X.viewQ+'</div><div class="seg two"><button type="button" data-v="kids">'+X.vKids+'<small>'+X.vKidsS+'</small></button><button type="button" data-v="real">'+X.vReal+'<small>'+X.vRealS+'</small></button></div><p class="mmVN">'+X.vNote+'</p>';
@@ -114,7 +117,6 @@ function build(){var home=$("#home"),wrap=home&&home.querySelector(".wrap"),go=$
   anchor.parentNode.replaceChild(frag,anchor);
   /* (c) instellingen */
   var putIn=function(arr){(arr||[]).forEach(function(n){if(n)set.appendChild(n)})};
-  if(modeSeg){var pl=modeSeg.previousElementSibling;if(pl&&pl.classList.contains("seglbl"))pl.remove();set.appendChild(label(X.where));putIn([modeSeg])}
   var nm=$("#name");if(nm)putIn([nm.closest(".namebox")||nm]);
   if(lvlSeg){var u=unit(lvlSeg);if(u.length===1)set.appendChild(label(X.lvl));putIn(u)}
   if(durSeg){var u2=unit(durSeg);if(u2.length===1)set.appendChild(label(X.dur));putIn(u2)}
@@ -136,7 +138,7 @@ function build(){var home=$("#home"),wrap=home&&home.querySelector(".wrap"),go=$
       (full?'<details class="mmMoreD"><summary>'+X.more+'</summary>'+full.innerHTML+'</details>':'')+'<button type="button" class="btn ghost dk" id="mmHowX">'+X.close+'</button>');
     $("#mmHowX").onclick=MW.Walk.closeSheet};
   function refresh(){var bits=[],md=on(modeSeg),lv=on(lvlSeg),du=on(durSeg),vb=$("#bVoice"),name=nm&&nm.value.trim();
-    if(md)bits.push(txt(md));if(lv)bits.push(txt(lv));if(du){var mm=(small(du)+" "+txt(du)).match(/±\s?\d+\s?min/);bits.push(mm?mm[0].replace(/±\s?/,"± "):txt(du))}
+    if(lv)bits.push(txt(lv));if(du){var mm=(small(du)+" "+txt(du)).match(/±\s?\d+\s?min/);bits.push(mm?mm[0].replace(/±\s?/,"± "):txt(du))}
     if(vb)bits.push(/🔇/.test(vb.textContent)||vb.getAttribute("aria-pressed")==="false"?X.vOff:X.vOn);
     if(name)bits.push(MW.fill(X.forN,{n:name}));
     if(view)view.hidden=!(md&&md.dataset.m==="map");

@@ -51,9 +51,9 @@ function genCase(seed,N){var r=rngOf(seed),cats=["kijk","taal","verkeer","plek"]
   var idx=ids.map(function(_,i){return i}),lp=shuffle(idx,r).slice(0,6),letters=shuffle(WORD.split(""),r),li=0,digits=[],prev=0;
   var slots=ids.map(function(id,i){var s={z:id};if(lp.indexOf(i)>=0){s.letter=letters[li++]}else{var d=1+Math.floor(r()*9);if(d===prev)d=d%9+1;prev=d;s.digit=d;digits.push(d)}return s});
   return{slots:slots,digits:digits}}
-function makeCode(seed,mode,len,age,modus){return"KL"+(len==="kort"?"V":len==="lang"?"L":"N")+(mode==="in"?"B":mode==="map"||mode==="demo"?"K":"S")+(+age+1)+(modus==="bso"?"B":"S")+seed.toString(36).toUpperCase()}
-function parseCode(v){var c=MW.norm(v);var m=/^KL([VNL])([KSB])([123])([SB])([0-9A-Z]{1,8})$/.exec(c);if(!m)return null;var seed=parseInt(m[5],36);if(!(seed>=0)||seed>4294967295)return null;
-  return{len:m[1]==="V"?"kort":m[1]==="L"?"lang":"normaal",mode:m[2]==="B"?"in":m[2]==="K"?"map":"street",age:String(+m[3]-1),modus:m[4]==="B"?"bso":"school",seed:seed}}
+function makeCode(seed,mode,len,age,modus){return"KL"+(len==="kort"?"V":len==="lang"?"L":"N")+(mode==="in"?(INK.kind==="tap"?"Z":"B"):mode==="map"||mode==="demo"?"K":"S")+(+age+1)+(modus==="bso"?"B":"S")+seed.toString(36).toUpperCase()}
+function parseCode(v){var c=MW.norm(v);var m=/^KL([VNL])([KSBZ])([123])([SB])([0-9A-Z]{1,8})$/.exec(c);if(!m)return null;var seed=parseInt(m[5],36);if(!(seed>=0)||seed>4294967295)return null;
+  return{len:m[1]==="V"?"kort":m[1]==="L"?"lang":"normaal",mode:m[2]==="Z"?"bank":m[2]==="B"?"in":m[2]==="K"?"map":"street",age:String(+m[3]-1),modus:m[4]==="B"?"bso":"school",seed:seed}}
 function fixG(g){if(!g||!g.c||!g.c.slots)return null;if(!g.R)g.R=LENR[g.len]||R0;if(!Array.isArray(g.ph))g.ph=[];if(!Array.isArray(g.order))g.order=[];if(!g.hints)g.hints={};if(!g.obs)g.obs={};return g}
 function done(){return G.ph.filter(Boolean).length}
 function letters(){var a=[];G.c.slots.forEach(function(s,i){if(G.ph[i]&&s.letter)a.push(s.letter)});return a}
@@ -112,7 +112,7 @@ var KI=MW.KidsMap.icons,START={x:500,y:1290};
 var FP=[{x:230,y:1040,k:"fiets"},{x:150,y:760,k:"halte"},{x:300,y:520,k:"speel"},{x:520,y:330,k:"plein2"},{x:760,y:420,k:"brug"},{x:860,y:700,k:"park"},{x:720,y:960,k:"kerk"},{x:500,y:760,k:"plein"},{x:150,y:300,k:"winkel"},{x:880,y:1060,k:"post"},{x:620,y:1130,k:"kiosk"},{x:380,y:900,k:"bank"}];
 var ROADS=[[-1,0],[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,-1],[7,2],[7,5],[7,0],[7,6],[8,2],[8,1],[9,6],[9,5],[10,-1],[10,6],[11,7],[11,0]];
 var TREES=[[80,1180],[120,320],[420,160],[640,180],[900,260],[950,900],[940,1180],[300,1300],[700,1300],[640,600],[90,520],[820,1050],[560,1120]];
-var KM=MW.KidsMap.create({T:T.kv,go:function(s){walkTo={x:s.x,y:s.y};sel=null},G:function(){return G},P:function(){return P},dTo:function(s){return dTo(s)},virt:function(){return !!(G&&G.virt)},mode:function(){return G&&G.mode},
+var KM=MW.KidsMap.create({T:T.kv,go:function(s){walkTo={x:s.x,y:s.y};sel=null},G:function(){return G},P:function(){return P},dTo:function(s){return dTo(s)},virt:function(){return !!(G&&G.virt)},mode:function(){return G&&(BANK()?"demo":G.mode)},
   map:{W:1000,H:1400,top:170,start:START,spots:FP,roads:ROADS,vsc:.42,sky:"#bfe0ff",land:"#b9e39b",road:"#e7e2d5",roadLine:"#fff",label:"#17203a",labelHalo:"rgba(255,255,255,.9)",heroHalo:"rgba(245,184,0,.3)"},
   draw:{mark:function(g,x,y,r,col){g.save();g.fillStyle=col;g.beginPath();g.ellipse(x,y,r*.9,r,0,0,7);g.fill();g.restore()},
     ground:function(g){g.fillStyle="#a8d98a";[[200,250,160],[760,900,200],[300,1150,140],[650,250,120]].forEach(function(e){g.beginPath();g.ellipse(e[0],e[1],e[2],e[2]*.5,0,0,7);g.fill()});
@@ -124,11 +124,13 @@ var KM=MW.KidsMap.create({T:T.kv,go:function(s){walkTo={x:s.x,y:s.y};sel=null},G
 KM.mount();
 /* binnen: lopen op de plaats */
 var St=MW.Steps,INK=LS.get("ss_kl_in",{kind:"sensor",spm:100});
+/* bankversie: zelfde verhaalkaart als binnen, maar je tikt op een plek en het groepje loopt er vanzelf heen (geen stappen) */
+function BANK(){return !!(G&&G.mode==="in"&&G.in&&G.in.kind==="tap")}
 function inSheet(cb){var sens=St&&St.supported(),IN=T.kv;
   sheet('<h2>'+esc(IN.inH)+'</h2><p>'+esc(IN.inT)+'</p>'+(sens?'<button type="button" class="btn" id="inS">'+esc(IN.inSensor)+'</button>':'')+'<button type="button" class="btn'+(sens?' ghost dk':'')+'" id="inT">'+esc(IN.inTempo)+'</button><button type="button" class="btn ghost dk" id="shX">'+T.cancel+'</button>');
   $("#shX").onclick=closeSheet;if(sens)$("#inS").onclick=function(){St.ask().then(function(ok){closeSheet();if(!ok)toast(IN.inNoSensor);cb(ok?"sensor":"tempo",100)})};$("#inT").onclick=function(){closeSheet();cb("tempo",100)}}
 function stepIn(k){if(!G||G.mode!=="in")return;G.in.steps+=k;var t=KM.near();if(!t)return;var d=dTo(t),m=k*G.in.sl;if(d<=m){P.x=t.x;P.y=t.y;G.dist+=d}else{P.x+=(t.x-P.x)/d*m;P.y+=(t.y-P.y)/d*m;G.dist+=m}}
-function startSteps(){if(!St||!G||G.mode!=="in")return;St.start({mode:G.in.kind,spm:G.in.spm,onStep:stepIn,active:function(){return !!G&&G.mode==="in"&&!$("#play").hidden&&$("#sheet").hidden},onDead:function(){if(!G||G.mode!=="in")return;G.in.kind="tempo";save();toast(T.kv.inNoSensor);startSteps()}});St.awake(true)}
+function startSteps(){if(!St||!G||G.mode!=="in"||G.in.kind==="tap")return;St.start({mode:G.in.kind,spm:G.in.spm,onStep:stepIn,active:function(){return !!G&&G.mode==="in"&&!$("#play").hidden&&$("#sheet").hidden},onDead:function(){if(!G||G.mode!=="in")return;G.in.kind="tempo";save();toast(T.kv.inNoSensor);startSteps()}});St.awake(true)}
 function stopSteps(){if(St){St.stop();St.awake(false)}}
 function buildVirt(seed,mode,origin,daily,len){build(seed,mode,null,null,origin,daily,len,true);if(G&&mode==="map")toast(T.kv.virtOut)}
 function noMapSheet(seed,daily,why,len){sheet('<h2>'+T.kv.noMapQ+'</h2>'+(why?'<p class="note">'+esc(why)+'</p>':'')+'<p>'+esc(T.kv.noMapT)+'</p><button type="button" class="btn" id="nmGo">'+T.kv.noMapGo+'</button><button type="button" class="btn ghost dk" id="shX">'+T.back+'</button>');
@@ -137,7 +139,7 @@ function dropMap(){if(!G||G.mode==="street")return;Wk.stopWatch();KM.leave();sto
 
 /* ---------- een zaak beginnen ---------- */
 var PEND=null; /* instellingen uit een zaakcode (leeftijd/modus) voor de volgende build */
-function begin(seed,mode,daily,len){len=len||"normaal";if(mode==="in")return inSheet(function(kind,spm){INK={kind:kind,spm:spm};LS.set("ss_kl_in",INK);build(seed,"in",null,null,null,daily,len,true)});if(mode!=="map")return build(seed,mode,null,null,null,daily,len);
+function begin(seed,mode,daily,len){if(mode==="bank"){INK={kind:"tap",spm:100};return build(seed,"in",null,null,null,daily,len,true)}len=len||"normaal";if(mode==="in")return inSheet(function(kind,spm){INK={kind:kind,spm:spm};LS.set("ss_kl_in",INK);build(seed,"in",null,null,null,daily,len,true)});if(mode!=="map")return build(seed,mode,null,null,null,daily,len);
   Wk.loading(T.loc);
   Wk.locate().then(function(pos){var lat=pos.coords.latitude,lon=pos.coords.longitude;
     return Wk.fetchWorld({lat:lat,lon:lon,R:LENR[len]||R0,status:function(s){if(s==="pois")Wk.loading(T.pois);if(s==="nomap")toast(T.nomap)}}).then(function(w){Wk.loading("");
@@ -179,7 +181,7 @@ function catIcon(c){return {plek:"📍",kijk:"🔢",taal:"🔤",verkeer:"🚦",f
 function enterMap(){show("play");
   if(!map)map=Wk.createMap($("#map"),{player:function(){return P},ways:function(){return W},R:function(){return RR()},
     theme:{bg:"#1b2550",water:"#2a62b8",waterEdge:"#6ec3ff",ripple:"rgba(110,195,255,.3)",park:"#2f8a4c",parkEdge:"#6fd38a",river:"#2a62b8",major:"#f5b800",minor:"#4f6ab8",road:"#9fb3e8",label:"#ffe08a",waterLabel:"#bfeaff",ring:"rgba(245,184,0,.35)",me:"#f5b800",meHalo:"rgba(245,184,0,.16)",meRing:"rgba(245,184,0,.7)",font:"700 12px 'Fredoka',sans-serif"},
-    items:items,move:{can:function(p){return !!G&&G.st.indexOf(p)>=0&&!p.done},target:function(){return sel},done:function(){sel=null;chip();save()}},onTap:function(hit,w){if(hit&&!hit.ref.done){sel=hit.ref;chip()}else if(G.mode==="demo"){walkTo=w;sel=null;map.follow();chip()}else{sel=null;chip()}}});
+    items:items,move:{can:function(p){return !!G&&G.st.indexOf(p)>=0&&!p.done},target:function(){return sel},done:function(){sel=null;chip();save()}},onTap:function(hit,w){if(hit&&!hit.ref.done){sel=hit.ref;chip()}else if(G.mode==="demo"||BANK()){walkTo=w;sel=null;map.follow();chip()}else{sel=null;chip()}}});
   map.resize();map.fit(RR());sel=null;arrived=null;walkTo=null;$("#chip").hidden=true;
   Wk.stopWatch();if(G.mode==="map")Wk.watch(G.origin,P,function(d){if(d>3&&d<80)G.dist+=d;KM.moved(d)});
   KM.enter({kids:true,virt:!!G.virt,map:map});stopSteps();if(G.mode==="in")startSteps();
@@ -195,7 +197,7 @@ function items(){var it=[];
     cx.fillStyle=s.done?"#9fb0d8":"#fff";cx.shadowColor="#000";cx.shadowBlur=6;if(api.V.s>=.4||sel===s)cx.fillText(s.name.toUpperCase().slice(0,24),X,Y+36);cx.shadowBlur=0}})});
   return it}
 function loop(t){if($("#play").hidden||!G)return;var dt=Math.min(.1,(t-lastT)/1000)||0;lastT=t;
-  if(G.mode==="demo"&&walkTo){var d=Math.hypot(walkTo.x-P.x,walkTo.y-P.y),step=110*dt;if(d<=step){P.x=walkTo.x;P.y=walkTo.y;G.dist+=d;walkTo=null}else{P.x+=(walkTo.x-P.x)/d*step;P.y+=(walkTo.y-P.y)/d*step;G.dist+=step}}
+  if((G.mode==="demo"||BANK())&&walkTo){var d=Math.hypot(walkTo.x-P.x,walkTo.y-P.y),step=110*dt;if(d<=step){P.x=walkTo.x;P.y=walkTo.y;G.dist+=d;walkTo=null}else{P.x+=(walkTo.x-P.x)/d*step;P.y+=(walkTo.y-P.y)/d*step;G.dist+=step}}
   if(!KM.draw(t))map.draw(t);if(!loop.n||t-loop.n>500){loop.n=t;tickMap()}requestAnimationFrame(loop)}
 function tickMap(){var el=Math.floor((Date.now()-G.t0)/1000),n=done();
   $("#mT").textContent=Math.floor(el/60)+":"+String(el%60).padStart(2,"0");$("#mS").textContent=n+"/"+NN();$("#mM").innerHTML=tilesHTML();
@@ -205,8 +207,8 @@ function tickMap(){var el=Math.floor((Date.now()-G.t0)/1000),n=done();
   chip();if(el%10===0)save()}
 function chip(){var c=$("#chip");if(!sel||sel.done){c.hidden=true;return}c.hidden=false;var d=dTo(sel),ok=inRange(sel),z=ZBY[G.c.slots[sel.fi].z];
   $("#cName").textContent=sel.name;$("#cDist").textContent=Math.round(d)+" m";$("#cHint").textContent=T.here+" · "+T.kinds[z.cat];
-  var b=$("#cAct");b.hidden=false;if(ok)b.textContent=T.look;else if(G.mode==="demo")b.textContent=T.walk;else if(d<150)b.textContent=T.gps;else b.hidden=true}
-$("#cAct").onclick=function(){if(!sel)return;if(inRange(sel))taskSheet(sel.fi,sel);else if(G.mode==="demo"){walkTo={x:sel.x,y:sel.y};map.follow()}else if(dTo(sel)<150){G.force=sel;taskSheet(sel.fi,sel)}};
+  var b=$("#cAct");b.hidden=false;if(ok)b.textContent=T.look;else if(G.mode==="demo"||BANK())b.textContent=T.walk;else if(d<150)b.textContent=T.gps;else b.hidden=true}
+$("#cAct").onclick=function(){if(!sel)return;if(inRange(sel))taskSheet(sel.fi,sel);else if(G.mode==="demo"||BANK()){walkTo={x:sel.x,y:sel.y};map.follow()}else if(dTo(sel)<150){G.force=sel;taskSheet(sel.fi,sel)}};
 $("#zIn").onclick=function(){map.zoom(1.4)};$("#zOut").onclick=function(){map.zoom(1/1.4)};$("#zMe").onclick=function(){map.follow()};
 $("#zM").onclick=menuSheet;$("#zM2").onclick=menuSheet;
 $("#mNote").onclick=noteSheet;$("#mAcc").onclick=toFinale;$("#bNote").onclick=noteSheet;$("#bAcc2").onclick=toFinale;
@@ -251,7 +253,7 @@ function accept(){var i=cur.i,s=G.c.slots[i],z=ZBY[s.z];if(G.ph[i])return;G.ph[i
   sheet('<div class="eyebrow">'+esc(fill(T.clue,{n:n,t:N}))+'</div><div class="reward"><div class="big">🎉</div><p>'+esc(s.letter?T.letterGet:T.digitGet)+'</p><div class="ltr'+(s.digit?" dg":"")+'">'+(s.letter||s.digit)+'</div><div class="tiles">'+tilesHTML()+'</div></div>'+
     bubble(cliff,D.TIK)+'<button type="button" class="btn" id="bNext">'+(last?T.finH:T.next)+'</button>',true);
   say((s.letter?T.letterGet+" "+s.letter:T.digitGet+" "+s.digit)+". "+cliff);
-  $("#bNext").onclick=function(){closeSheet();sel=null;cur=null;if(G.mode==="map"||G.mode==="demo")chip();else render();if(last)toFinale()}}
+  $("#bNext").onclick=function(){closeSheet();sel=null;cur=null;if(G.mode==="map"||G.mode==="demo"||G.mode==="in")chip();else render();if(last)toFinale()}}
 
 /* ---------- speurboekje, menu ---------- */
 function noteSheet(){var ls=letters(),dg=digitsGot(),solved=[];G.c.slots.forEach(function(s,i){if(G.ph[i])solved.push('<li>'+esc(ZBY[s.z].title)+' <small>'+esc(T.kinds[ZBY[s.z].cat])+'</small> → <b>'+(s.letter||s.digit)+'</b></li>')});

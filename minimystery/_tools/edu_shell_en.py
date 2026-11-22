@@ -15,6 +15,7 @@ COMMON = {
  "groep 3–4": "ages 6–8", "groep 5–6": "ages 8–10", "groep 7–8": "ages 10–12",
  "Groep 3–4": "Ages 6–8", "Groep 5–6": "Ages 8–10", "Groep 7–8": "Ages 10–12",
  "Lengte": "Length", "Kort": "Short", "Normaal": "Normal", "Lang": "Long",
+ "🚶 Buiten": "🚶 Outdoors", "met kaart (gps)": "with map (GPS)", "👣 Binnen": "👣 Indoors", "lopen op de plaats": "walk on the spot", "🛋️ Op de bank": "🛋️ On the sofa", "zonder lopen": "no walking", "🏫 In het gebouw": "🏫 In the building", "met plekkaartjes": "with spot cards",
  "Buiten": "Outdoors", "met kaart": "with map", "zonder kaart": "without map", "In het": "In the", "gebouw": "building",
  "🔊 Voorlezen": "🔊 Read aloud", "Zaakcode invullen": "Enter a case code",
  "Proefronde in de binnenstad van Eindhoven": "Practice round in Eindhoven city centre",

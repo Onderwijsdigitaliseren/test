@@ -54,3 +54,17 @@ De educatieve wandelingen (tijd, reken, taal, natuur, klok) hebben een Engelse v
 - De terug-knop in de educatieve spellen gaat naar de afdeling Educatie.
 - Betaald (sinds 8 nov 2026): `FREE:false` in alle educatieve data-bestanden. Eén **Schoolpas** (€ 39,99, 183 dagen) opent alle educatieve wandelingen: code in codes.json met `"t":"feest","spel":"educatie","dagen":183` (maak hem in codes.html, optie "MiniMystery Educatie – Schoolpas"). Prijs en Ko-fi-link staan in `shared/platform.js` onder `CFG.edu`; de koopknop op `educatie/` en `en/education/` heeft `id="eduBuy"` (link invullen, `hidden` weghalen, `#eduSoon` weg). De proefronde blijft gratis. `"spel":"alle"` opent ze ook.
 - Plaatjes in de wandelingen worden meteen getoond (ook als ze nog laden) via `picTag()`; mislukt een plaatje, dan blijft de tekening/emoji staan.
+
+## Speelwijzen (sinds 22 nov 2026): buiten, binnen op de plaats, op de bank
+Alle speurtochten op de wandelmotor (feestjes én educatie) hebben op het startscherm de keuze "Hoe spelen jullie?" (`#len`, zichtbaar gemaakt door `shared/start.js`):
+- **Buiten met kaart / zonder kaart** (`map`, `street`): zoals altijd.
+- **Binnen, lopen op de plaats** (`in`; bij De Lichtjesdief en Operatie Pakjesavond heet de knop `stap`, omdat `in` daar "door het huis" is): de verhaalkaart met de stappenteller uit `shared/steps.js` (echte stappen of vanzelf op tempo). In het spel is dit `G.mode==="in"` met `G.in={kind:"sensor"|"tempo",…}`.
+- **Op de bank, zonder lopen** (`bank`): dezelfde verhaalkaart, maar je tikt op de plek (of op de kaart onderaan) en het groepje loopt er vanzelf heen. In het spel `G.mode==="in"` met `G.in.kind==="tap"`; de functie `BANK()` in elk game.js. De kinderkaart behandelt dit als de proefronde (tikken = lopen).
+- **In het gebouw** (`gebouw`, alleen de vak-wandelingen van Educatie) en **door het huis** (`in` bij Lichtjesdief/Pakjesavond): ongewijzigd.
+- Zaakcode: de letter voor de stand is K (kaart), S (zonder kaart), B (binnen op de plaats; bij Pakjesavond = door het huis), T (Pakjesavond: op de plaats), G (gebouw), **Z (bank)**. De Lichtjesdief gebruikt de tabel `CL` (nu 30 tekens: 5 standen × 3 lengtes × 2 niveaus).
+- De feestspellen aan tafel (Taart, Toverspiegel) hebben geen wandelmotor en dus geen standen.
+- Nieuw spel op de wandelmotor: neem het blok "binnen: lopen op de plaats" + `BANK()` over uit `games/klok/game.js` en zet de vier of vijf knoppen in `#len`.
+
+## Hoofdpagina en Educatie-pagina (nieuwe indeling, 22 nov 2026)
+- `index.html` en `en/index.html`: de vaste tekst komt uit `python3 _tools/hub_body.py` (NL en EN in één script). De spelkaarten tekent `shared/hub.js` uit de catalogus: plaatje, titel, één zin (`short`), leeftijd (`age`), duur, speelwijzen (`ways`) en twee knoppen; de lange `desc` zit achter "Meer over dit spel". Filter "Hoe wil je spelen?" werkt op `ways`.
+- `educatie/` en `en/education/`: lege schil + `shared/edu.js` en `shared/edu.css`. Elke wandeling met `"line":"educatie"` wordt vanzelf een kaart (plaatje, vak `subj`, groep `grp`, één zin `short`), met filter per vak. `"status":"soon"` = grijze kaart "Binnenkort"; `"isNew":true` = lintje "Nieuw". **Nieuwe educatieve wandeling = één regel in `shared/catalog.js` + cover**, de pagina hoeft niet aangepast.

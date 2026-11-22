@@ -1,4 +1,4 @@
-/* Alle vaste zinnen die dit spel kan uitspreken (596). Gemaakt door _tools/stemscript.js uit data-nl.js; k = sleutel uit shared/voice.js. Niet met de hand bewerken: draai het gereedschap opnieuw. */
+/* Alle vaste zinnen die dit spel kan uitspreken (604). Gemaakt door _tools/stemscript.js uit data-nl.js; k = sleutel uit shared/voice.js. Niet met de hand bewerken: draai het gereedschap opnieuw. */
 window.MMV_SCRIPT=window.MMV_SCRIPT||{};window.MMV_SCRIPT["taal_nl"]=[
 {"k":"52654da8","wie":"verteller","waar":"T","t":"Start de zaak van vandaag"},
 {"k":"06cdc8ca","wie":"verteller","waar":"T","t":"Extra zaak"},
@@ -595,5 +595,13 @@ window.MMV_SCRIPT=window.MMV_SCRIPT||{};window.MMV_SCRIPT["taal_nl"]=[
 {"k":"28e31d65","wie":"verteller","waar":"LES 3","t":"Zet hem in de verleden tijd en in de vragende vorm."},
 {"k":"60ae1212","wie":"verteller","waar":"LES 3","t":"Figuurlijk taalgebruik: elk team maakt drie vergelijkingen over de buurt en legt uit wat letterlijk en figuurlijk is."},
 {"k":"91b839fa","wie":"verteller","waar":"LES 3","t":"Verdieping: schrijf een formele brief aan de gemeente over iets dat jullie buiten zagen (een kapot bord, een onveilige oversteek), met aanhef, alinea's en afsluiting."},
-{"k":"27b0dafd","wie":"verteller","waar":"LES 3","t":"Groep 7–8 (SLO taal): werkwoordspelling, zinsontleding (onderwerp, persoonsvorm, gezegde), figuurlijk taalgebruik en spreekwoorden, leenwoorden, leestekens bij directe rede, register, schrijven van een brief."}
+{"k":"27b0dafd","wie":"verteller","waar":"LES 3","t":"Groep 7–8 (SLO taal): werkwoordspelling, zinsontleding (onderwerp, persoonsvorm, gezegde), figuurlijk taalgebruik en spreekwoorden, leenwoorden, leestekens bij directe rede, register, schrijven van een brief."},
+{"k":"57a6f880","wie":"verteller","waar":"T","t":"Binnen: lopen op de plaats"},
+{"k":"16a46540","wie":"verteller","waar":"T","t":"Jullie lopen op de verhaalkaart."},
+{"k":"d15ce3bc","wie":"verteller","waar":"T","t":"Loop op de plaats (of door de ruimte) met de telefoon in je hand; elke stap telt."},
+{"k":"c4c72af9","wie":"verteller","waar":"T","t":"Lukt dat niet, dan lopen de stappen vanzelf."},
+{"k":"dc11698b","wie":"verteller","waar":"T","t":"Echte stappen tellen"},
+{"k":"5ca03018","wie":"verteller","waar":"T","t":"Stappen lopen vanzelf"},
+{"k":"81cccf37","wie":"verteller","waar":"T","t":"Geen bewegingssensor gevonden."},
+{"k":"de79202e","wie":"verteller","waar":"T","t":"De stappen lopen nu vanzelf."}
 ];

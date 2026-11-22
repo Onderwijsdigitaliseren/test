@@ -55,3 +55,6 @@
 @media (max-height:640px){#kmZoom{top:calc(50% - 180px)}#kmZoom button{width:46px;height:46px}}
 /* zijknop mag een pil worden als het woord niet in het rondje past ("🖍️ speelkaart" op de echte kaart) */
 #play #bView.kmSide,#walk #bView.kmSide{width:auto!important;min-width:54px;padding:0 10px!important;border-radius:999px!important}
+
+/* tik-standen (proefronde, bankversie): de kaart onderaan is een knop */
+#kmCard.kmTap{pointer-events:auto;cursor:pointer}#kmCard.kmTap:active{transform:scale(.98)}

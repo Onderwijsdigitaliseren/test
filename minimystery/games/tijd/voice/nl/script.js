@@ -1,4 +1,4 @@
-/* Alle vaste zinnen die dit spel kan uitspreken (732). Gemaakt door _tools/stemscript.js uit data-nl.js; k = sleutel uit shared/voice.js. Niet met de hand bewerken: draai het gereedschap opnieuw. */
+/* Alle vaste zinnen die dit spel kan uitspreken (740). Gemaakt door _tools/stemscript.js uit data-nl.js; k = sleutel uit shared/voice.js. Niet met de hand bewerken: draai het gereedschap opnieuw. */
 window.MMV_SCRIPT=window.MMV_SCRIPT||{};window.MMV_SCRIPT["tijd_nl"]=[
 {"k":"c1673365","wie":"verteller","waar":"TL0 3","t":"praten op afstand"},
 {"k":"9a69e394","wie":"verteller","waar":"TL0 3","t":"oude telefoon"},
@@ -731,5 +731,13 @@ window.MMV_SCRIPT=window.MMV_SCRIPT||{};window.MMV_SCRIPT["tijd_nl"]=[
 {"k":"d6c4c890","wie":"verteller","waar":"LES","t":"Thuisopdracht: vraag aan opa, oma of een ouder wat er anders was toen zij zo oud waren als jij."},
 {"k":"90c29b05","wie":"verteller","waar":"LES","t":"Groep 3–4 (SLO, tijd): besef van 'lang geleden', vroeger en nu vergelijken aan concrete dingen (vervoer, licht, kleding, huizen), eenvoudige tijdsbegrippen."},
 {"k":"0e420e02","wie":"verteller","waar":"LES","t":"Jaartallen en de namen van de tijdvakken zijn voor deze leeftijd nog geen doel; die komen vanaf groep 5."},
-{"k":"8a37bb97","wie":"verteller","waar":"LES","t":"Kerndoel 52 (tijdvakken en kenmerken), 53 (belangrijke personen en gebeurtenissen), 51 (historische bronnen gebruiken); daarnaast samenwerken, waarnemen en redeneren."}
+{"k":"8a37bb97","wie":"verteller","waar":"LES","t":"Kerndoel 52 (tijdvakken en kenmerken), 53 (belangrijke personen en gebeurtenissen), 51 (historische bronnen gebruiken); daarnaast samenwerken, waarnemen en redeneren."},
+{"k":"57a6f880","wie":"verteller","waar":"T","t":"Binnen: lopen op de plaats"},
+{"k":"16a46540","wie":"verteller","waar":"T","t":"Jullie lopen op de verhaalkaart."},
+{"k":"d15ce3bc","wie":"verteller","waar":"T","t":"Loop op de plaats (of door de ruimte) met de telefoon in je hand; elke stap telt."},
+{"k":"c4c72af9","wie":"verteller","waar":"T","t":"Lukt dat niet, dan lopen de stappen vanzelf."},
+{"k":"dc11698b","wie":"verteller","waar":"T","t":"Echte stappen tellen"},
+{"k":"5ca03018","wie":"verteller","waar":"T","t":"Stappen lopen vanzelf"},
+{"k":"81cccf37","wie":"verteller","waar":"T","t":"Geen bewegingssensor gevonden."},
+{"k":"de79202e","wie":"verteller","waar":"T","t":"De stappen lopen nu vanzelf."}
 ];

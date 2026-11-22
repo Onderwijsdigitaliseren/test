@@ -1,4 +1,4 @@
-/* Alle vaste zinnen die dit spel kan uitspreken (565). Gemaakt door _tools/stemscript.js uit data-en.js; k = sleutel uit shared/voice.js. Niet met de hand bewerken: draai het gereedschap opnieuw. */
+/* Alle vaste zinnen die dit spel kan uitspreken (573). Gemaakt door _tools/stemscript.js uit data-en.js; k = sleutel uit shared/voice.js. Niet met de hand bewerken: draai het gereedschap opnieuw. */
 window.MMV_SCRIPT=window.MMV_SCRIPT||{};window.MMV_SCRIPT["reken_en"]=[
 {"k":"46fd7dd9","wie":"verteller","waar":"T","t":"Start today's case"},
 {"k":"e8599cc7","wie":"verteller","waar":"T","t":"Extra case"},
@@ -564,5 +564,13 @@ window.MMV_SCRIPT=window.MMV_SCRIPT||{};window.MMV_SCRIPT["reken_en"]=[
 {"k":"e05a1bd5","wie":"verteller","waar":"LES 3","t":"The shadow method: go outside on a sunny day and measure the height of a tree using your own shadow."},
 {"k":"1d54ac68","wie":"verteller","waar":"LES 3","t":"Compare it with the estimate in floors."},
 {"k":"cce72750","wie":"verteller","waar":"LES 3","t":"Going further: make a map of the playground at a scale of 1:100 using the step measurements."},
-{"k":"d84aa06e","wie":"verteller","waar":"LES 3","t":"Ages 10–12 (Dutch groep 7–8, SLO maths): large numbers, decimals, percentages and fractions, ratio and scale, area, mean, rounding, measuring and estimating with reference measures, maths in context."}
+{"k":"d84aa06e","wie":"verteller","waar":"LES 3","t":"Ages 10–12 (Dutch groep 7–8, SLO maths): large numbers, decimals, percentages and fractions, ratio and scale, area, mean, rounding, measuring and estimating with reference measures, maths in context."},
+{"k":"583a075e","wie":"verteller","waar":"T","t":"Indoors: walking on the spot"},
+{"k":"6043f2f7","wie":"verteller","waar":"T","t":"You're walking on the story map."},
+{"k":"95b7d54d","wie":"verteller","waar":"T","t":"Walk on the spot (or around the room) with the phone in your hand; every step counts."},
+{"k":"fc5355c9","wie":"verteller","waar":"T","t":"If that doesn't work, the steps will walk by themselves."},
+{"k":"d51b608b","wie":"verteller","waar":"T","t":"Count real steps"},
+{"k":"cf0aab4a","wie":"verteller","waar":"T","t":"Steps walk by themselves"},
+{"k":"a949921a","wie":"verteller","waar":"T","t":"No motion sensor found."},
+{"k":"92a9c205","wie":"verteller","waar":"T","t":"The steps will now walk by themselves."}
 ];

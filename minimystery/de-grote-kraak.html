@@ -22,7 +22,7 @@
 <meta name="theme-color" content="#0b1430">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;700;800&family=Permanent+Marker&display=swap">
 <link rel="stylesheet" href="shared/platform.css?v=2">
-<link rel="stylesheet" href="shared/kidsmap.css?v=7">
+<link rel="stylesheet" href="shared/kidsmap.css?v=8">
 <link rel="stylesheet" href="games/kraak/game.css?v=3">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Game","name":"De Grote Kraak","url":"https://www.minimystery.nl/de-grote-kraak.html","description":"Speurtocht voor kinderfeestjes van 9 tot 12 jaar: steel de Gouden Kroon terug van Baron Von Glans. Kraak-puzzels op plekken in de eigen buurt, dan het alarm en een ontsnapping over de kaart langs politiewagens met zoeklichten, de schuilkluis kiezen en de code kraken. Met kaart, zonder kaart of binnen. Proefronde gratis.","inLanguage":"nl","genre":["Kinderspel","Speurtocht","Kinderfeestje"],"isAccessibleForFree":false,"offers":{"@type":"Offer","price":"9.99","priceCurrency":"EUR","description":"Feestpas"}}</script>
 </head>
@@ -48,10 +48,11 @@
         <button type="button" data-n="normaal" aria-pressed="true">Normaal<small>8 stops · ±60 min</small></button>
         <button type="button" data-n="lang" aria-pressed="false">Lang<small>11 stops · ±85 min</small></button>
       </div>
-      <div class="seg" id="len">
-        <button type="button" data-m="map" aria-pressed="true">Buiten<br>met kaart</button>
-        <button type="button" data-m="street" aria-pressed="false">Buiten<br>zonder kaart</button>
-        <button type="button" data-m="in" aria-pressed="false">Binnen</button>
+      <div class="seg ways" id="len">
+        <button type="button" data-m="map" aria-pressed="true">🚶 Buiten<small>met kaart (gps)</small></button>
+        <button type="button" data-m="street" aria-pressed="false">🚶 Buiten<small>zonder kaart</small></button>
+        <button type="button" data-m="in" aria-pressed="false">👣 Binnen<small>lopen op de plaats</small></button>
+        <button type="button" data-m="bank" aria-pressed="false">🛋️ Op de bank<small>zonder lopen</small></button>
       </div>
       <button class="btn ghost sm" id="bVoice" aria-pressed="true">🔊 Voorlezen</button>
       <button class="btn" id="bResume" hidden>▶ Verder waar jullie waren</button>
@@ -141,14 +142,14 @@
 <script src="shared/move.js?v=1"></script>
 <script src="shared/walk.js?v=6"></script>
 <script src="shared/steps.js?v=1"></script>
-<script src="shared/kidsmap.js?v=14"></script>
+<script src="shared/kidsmap.js?v=15"></script>
 <script src="shared/bonus.js?v=1"></script>
 <script src="shared/party.js?v=2"></script>
 <script src="shared/crew.js?v=2"></script>
 <script src="shared/voice.js?v=1"></script>
-<script src="games/kraak/data-nl.js?v=4"></script>
-<script src="games/kraak/game.js?v=7"></script>
-<script src="shared/start.js?v=8" data-game="gk"></script>
+<script src="games/kraak/data-nl.js?v=4b"></script>
+<script src="games/kraak/game.js?v=7b"></script>
+<script src="shared/start.js?v=9" data-game="gk"></script>
 <script id="mm-demo">/* MiniMystery: ?oefen start direct de gratis proefronde (link vanaf de hub) */
 if(/[?&]oefen\b/.test(location.search)){var b=document.getElementById("bDemo");if(b)setTimeout(function(){b.click()},50)}</script>
 </body>

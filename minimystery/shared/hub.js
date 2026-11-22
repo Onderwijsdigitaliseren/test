@@ -8,10 +8,14 @@ var MW=window.MW,C=window.MW_CATALOG,L=MW.lang.page(),t=MW.t(L),esc=MW.esc,$=fun
   if(id){location.replace(MW.gameUrl(id,L)+h)}})();
 
 var H={
-  nl:{play:"Speel de echte zaak",resume:"Ga verder",trial:"Feestpas € 9,99",pro:"Feestpas actief",try:"Probeer gratis",tryT:"Proefronde",tryD:"Gratis in de binnenstad van Eindhoven, gewoon vanaf de bank. Zo ziet het groepje hoe het werkt.",free:"Gratis",min:"min",km:"km",best:"Beste",more:"Meer over deze zaak",less:"Minder",
+  nl:{play:"Spelen",resume:"Ga verder",trial:"Feestpas € 9,99",pro:"Feestpas actief",try:"Gratis proberen",more2:"Meer over dit spel",ageA:"{a} jaar",ageF:"vanaf {a} jaar",fAll:"Alles",fLbl:"Hoe wil je spelen?",none:"Geen spel met deze keuze.",
+      w:{out:["🚶","Buiten"],in:["👣","Binnen lopen"],sofa:["🛋️","Op de bank"],house:["🏠","Door het huis"],school:["🏫","In het gebouw"],table:["🍰","Aan tafel"]},
+      gWalk:"Speurtochten",gWalkS:"Loop van plek naar plek en los het mysterie op. Buiten, binnen of op de bank.",gTable:"Feestspellen aan tafel",gTableS:"Zonder lopen: de telefoon gaat de kring rond.",tryT:"Proefronde",tryD:"Gratis in de binnenstad van Eindhoven, gewoon vanaf de bank. Zo ziet het groepje hoe het werkt.",free:"Gratis",min:"min",km:"km",best:"Beste",more:"Meer over deze zaak",less:"Minder",
       privH:"Hoe met je gegevens wordt omgegaan",
       privT:"<p><b>De spellen.</b> Alles draait in je browser. Voortgang, Pro-status en taalkeuze staan in de lokale opslag van je browser, op je eigen toestel. Ze verlaten het niet; browsergegevens wissen verwijdert ze. Geen cookies, geen analytics, geen tracking.</p><p><b>Locatie en camera.</b> Je locatie wordt alleen op je toestel gebruikt om plekken om je heen te kiezen; voor de kaart worden alleen plekken in de buurt opgevraagd bij kaartdiensten met OpenStreetMap-gegevens (OpenFreeMap, en Overpass als reserve), nooit jij als persoon. Foto's van de groep blijven op de telefoon en worden niet opgeslagen of verstuurd; ook het diploma wordt op de telefoon zelf gemaakt.</p><p><b>Betalen.</b> Pro en de groepspas koop je via Ko-fi; daar gelden de voorwaarden van Ko-fi. Je krijgt een code die alleen op je toestel wordt gecontroleerd.</p><p><b>Hosting.</b> De site staat op GitHub Pages; GitHub kan standaard serverlogboeken bijhouden.</p>"},
-  en:{play:"Play the real case",resume:"Continue",trial:"Party Pass € 9.99",pro:"Party Pass active",try:"Try it free",tryT:"Practice round",tryD:"Free in the centre of Eindhoven, straight from the sofa. The group sees how it works.",free:"Free",min:"min",km:"km",best:"Best",more:"More about this case",less:"Less",
+  en:{play:"Play",resume:"Continue",trial:"Party Pass € 9.99",pro:"Party Pass active",try:"Try free",more2:"More about this game",ageA:"ages {a}",ageF:"ages {a}",fAll:"All",fLbl:"How do you want to play?",none:"No game for this choice.",
+      w:{out:["🚶","Outdoors"],in:["👣","Indoor walking"],sofa:["🛋️","On the sofa"],house:["🏠","Around the house"],school:["🏫","In the building"],table:["🍰","Round the table"]},
+      gWalk:"Treasure hunts",gWalkS:"Walk from place to place and solve the mystery. Outdoors, indoors or on the sofa.",gTable:"Party games round the table",gTableS:"No walking: the phone goes round the circle.",tryT:"Practice round",tryD:"Free in the centre of Eindhoven, straight from the sofa. The group sees how it works.",free:"Free",min:"min",km:"km",best:"Best",more:"More about this case",less:"Less",
       privH:"How your data is handled",
       privT:"<p><b>The games.</b> Everything runs in your browser. Progress, Pro status and language live in your browser's local storage, on your own device. They never leave it; clearing browser data removes them. No cookies, no analytics, no tracking.</p><p><b>Location and camera.</b> Your location is used on your device only, to pick places around you; the map asks map services with OpenStreetMap data (OpenFreeMap, with Overpass as a backup) for places nearby, never for you as a person. The group's photos stay on the phone and are not stored or sent; the diploma is made on the phone itself too.</p><p><b>Payments.</b> Pro and the group pass are bought through Ko-fi, under Ko-fi's terms. You receive a code that is checked on your device only.</p><p><b>Hosting.</b> The site is served by GitHub Pages, which may keep standard server logs.</p>"}
 }[L];
@@ -26,23 +30,29 @@ function inspo(){var el=$("#inspo");if(!el)return;
 
 /* ---------- zaken ---------- */
 function resumeKey(g){return "ss_game_"+g.id+"_"+L}
-function card(g){var x=g[L],p=MW.profile.get(),st=p.games&&p.games[g.id],has=!!MW.LS.get(resumeKey(g),null),meta=[];
-  meta.push("<li>⏱ "+esc(g.minutes)+" "+H.min+"</li><li>👟 "+esc(g.km)+" "+H.km+"</li>");
-  meta.push(g.access==="free"?"<li>"+H.free+"</li>":MW.pro.isPro(g.id)?"<li>✓ "+H.pro+"</li>":"<li>🎟 "+H.trial+"</li>");
-  return '<article class="case" style="--c:'+esc(g.theme||"#ffc21a")+'"><img class="cov" src="'+MW.root+'assets/cover-'+g.id+'.webp" alt="" width="300" height="300" loading="lazy">'+
-    '<h3>'+esc(x.title)+'</h3><p class="tag">'+esc(x.tag)+'</p><ul class="meta">'+meta.join("")+'</ul>'+
-    '<button type="button" class="more" aria-expanded="false">'+H.more+'</button><p class="desc" hidden>'+esc(x.desc)+'</p>'+
-    /* één lijst: per zaak de gratis proefronde én de echte zaak */
-    '<div class="acts"><a class="btn ghost try1" href="'+MW.root+esc(x.slug)+'?oefen">▶ '+H.try+'</a><a class="btn" href="'+MW.root+esc(x.slug)+'">'+(has?H.resume:H.play)+' →</a></div></article>'}
-/* MiniMystery Educatie is een eigen afdeling (educatie/ en en/education/): op de feest-hub alleen één verwijskaart */
-var EDU={nl:{k:"Voor scholen en BSO",h:"MiniMystery Educatie",t:"Speurtochten met echte lesstof: geschiedenis, rekenen, taal, natuur en Engels. Zaakcode voor de hele klas, begeleidersblad met lesbrief, diploma.",b:"Naar Educatie",u:"educatie/",p:"Schoolpas € 39,99 · 6 mnd"},
-  en:{k:"For schools and after-school clubs",h:"MiniMystery Education",t:"Walks with real school subjects: history, maths, literacy and nature. One case code for the whole class, leader's sheet with lesson plan, certificate.",b:"Go to Education",u:"en/education/",p:"School Pass € 39.99 · 6 months"}}[L];
-function eduCard(){return '<article class="case educase" style="--c:#d9c7f0"><img class="cov" src="'+MW.root+'assets/cover-tr.webp" alt="" width="300" height="300" loading="lazy"><h3>'+esc(EDU.h)+'</h3><p class="tag">'+esc(EDU.t)+'</p><ul class="meta"><li>🏫 '+esc(EDU.k)+'</li><li>🎟 '+esc(EDU.p)+'</li></ul><div class="acts"><a class="btn" href="'+MW.root+EDU.u+'">'+esc(EDU.b)+' →</a></div></article>'}
-function cases(){var el=$("#cases");el.innerHTML=C.games.filter(function(g){return g.status!=="soon"&&g.line!=="educatie"}).map(card).join("")+eduCard()+
-    /* laatste kaart: maatwerk */
-    '<article class="case maatcase"><div class="mc-ico" aria-hidden="true">✨</div><h3>'+esc(CF.card)+'</h3><p class="tag">'+esc(CF.cardT)+'</p><div class="acts"><a class="btn ghost" href="#custom">'+esc(CF.cardM)+'</a><button type="button" class="btn" data-mc>'+esc(CF.cardB)+' →</button></div></article>';
-  var mc=el.querySelector("[data-mc]");if(mc)mc.onclick=function(){customForm()};
-  [].forEach.call(el.querySelectorAll(".more"),function(b){b.onclick=function(){var d=b.nextElementSibling,open=d.hidden;d.hidden=!open;b.textContent=open?H.less:H.more;b.setAttribute("aria-expanded",open)}})}
+/* compacte kaart: plaatje, titel, één zin, leeftijd/duur, hoe je het speelt, twee knoppen. De lange tekst zit achter "Meer". */
+function ageTxt(a){a=String(a||"");return a?MW.fill(/\+$/.test(a)?H.ageF:H.ageA,{a:L==="nl"?a.replace("+",""):a}):""}
+function waysHTML(g){return '<ul class="gw">'+(g.ways||[]).map(function(w){var x=H.w[w];return x?'<li><i aria-hidden="true">'+x[0]+'</i>'+esc(x[1])+'</li>':''}).join("")+'</ul>'}
+function card(g){var x=g[L],has=!!MW.LS.get(resumeKey(g),null),url=MW.root+esc(x.slug),pro=g.access!=="free"&&MW.pro.isPro(g.id);
+  return '<article class="g" data-ways="'+esc((g.ways||[]).join(" "))+'" style="--c:'+esc(g.theme||"#ffc21a")+'">'+
+    '<a class="gimg" href="'+url+'" tabindex="-1" aria-hidden="true"><img src="'+MW.root+'assets/cover-'+g.id+'.webp" alt="" width="300" height="300" loading="lazy">'+(g.badge?'<b class="rib">'+esc(g.badge[L])+'</b>':'')+'</a>'+
+    '<div class="gb"><h3><a href="'+url+'">'+esc(x.title)+'</a></h3><p class="gs">'+esc(x.short||x.tag)+'</p>'+
+    '<ul class="gm">'+(g.age?'<li>🎂 '+esc(ageTxt(g.age))+'</li>':'')+'<li>⏱ '+esc(g.minutes)+' '+H.min+'</li>'+(pro?'<li class="ok">✓ '+H.pro+'</li>':'')+'</ul>'+waysHTML(g)+'</div>'+
+    '<div class="ga"><a class="btn sm ghost" href="'+url+'?oefen">▶ '+H.try+'</a><a class="btn sm" href="'+url+'">'+(has?H.resume:H.play)+' →</a></div>'+
+    '<details class="gd"><summary>'+H.more2+'</summary><p>'+esc(x.desc)+'</p></details></article>'}
+function group(h,sub,list){return list.length?'<div class="grp"><h3 class="grph">'+esc(h)+'</h3><p class="grps">'+esc(sub)+'</p><div class="gl">'+list.map(card).join("")+'</div></div>':''}
+var FILTER="";
+function cases(){var el=$("#cases"),live=C.games.filter(function(g){return g.status!=="soon"&&g.line!=="educatie"});
+  var walks=live.filter(function(g){return g.kind!=="table"}),tables=live.filter(function(g){return g.kind==="table"});
+  var fs=["out","in","sofa","table"];
+  el.innerHTML='<div class="flt" role="group" aria-label="'+esc(H.fLbl)+'"><span>'+esc(H.fLbl)+'</span><button type="button" data-f="" aria-pressed="true">'+H.fAll+'</button>'+fs.map(function(f){return '<button type="button" data-f="'+f+'" aria-pressed="false">'+H.w[f][0]+' '+esc(H.w[f][1])+'</button>'}).join("")+'</div>'+
+    group(H.gWalk,H.gWalkS,walks)+group(H.gTable,H.gTableS,tables)+'<p class="note" id="noGame" hidden>'+H.none+'</p>';
+  var apply=function(){var any=false;[].forEach.call(el.querySelectorAll(".flt button"),function(b){b.setAttribute("aria-pressed",b.dataset.f===FILTER?"true":"false")});
+    [].forEach.call(el.querySelectorAll(".grp"),function(gr){var n=0;[].forEach.call(gr.querySelectorAll(".g"),function(c){var ok=!FILTER||(" "+c.dataset.ways+" ").indexOf(" "+FILTER+" ")>=0;c.hidden=!ok;if(ok)n++});gr.hidden=!n;if(n)any=true});$("#noGame").hidden=any};
+  el.querySelector(".flt").onclick=function(e){var b=e.target.closest("button");if(!b)return;FILTER=b.dataset.f;apply()};apply();eduStrip()}
+/* MiniMystery Educatie is een eigen afdeling (educatie/ en en/education/): op de feest-hub één blok met de plaatjes van de wandelingen */
+function eduStrip(){var el=$("#eduStrip");if(!el)return;var base=MW.root+(L==="nl"?"educatie/":"en/education/");
+  el.innerHTML=C.games.filter(function(g){return g.line==="educatie"&&g.status!=="soon"}).map(function(g){return '<a href="'+base+'#'+g.id+'"><img src="'+MW.root+'assets/cover-'+g.id+'.webp" alt="" width="300" height="300" loading="lazy"><span>'+esc((g.subj||{})[L]||g[L].title)+'</span></a>'}).join("")}
 
 /* ---------- vellen ---------- */
 function sheet(html){$("#sheetBody").innerHTML=html;$("#sheet").hidden=false;$("#sheetBody").scrollTop=0}

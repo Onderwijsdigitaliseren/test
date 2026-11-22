@@ -22,7 +22,7 @@
 <meta name="theme-color" content="#0d2a66">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&display=swap">
 <link rel="stylesheet" href="shared/platform.css?v=2">
-<link rel="stylesheet" href="shared/kidsmap.css?v=7">
+<link rel="stylesheet" href="shared/kidsmap.css?v=8">
 <link rel="stylesheet" href="games/agent/game.css?v=14">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Agent voor Eén Dag","url":"https://www.minimystery.nl/agent-voor-een-dag.html","description":"Politie-speurtocht voor kinderfeestjes: de Bordendief heeft alle straatnaamborden gestolen. Vijf, acht of elf politiepuzzels zonder lezen, vijf boeven, één confrontatie. Met kaart, zonder kaart of binnen. Fotoalbum, politiediploma en GEZOCHT-poster. Proefronde gratis.","inLanguage":"nl","gamePlatform":"Webbrowser","genre":["Kinderspel","Speurtocht","Politie"],"isAccessibleForFree":false,"offers":{"@type":"Offer","price":"3.99","priceCurrency":"EUR","description":"Feestpas"}}</script>
 </head>
@@ -41,10 +41,11 @@
       <button class="btn ghost sm" id="bHow">Hoe werkt het?</button>
       <div class="pline" hidden style="display:none"><b id="pRank">–</b><span><b id="pStreak">0</b> Dagen op rij</span><span><b id="pSolved">0</b> Gepakt</span></div>
       <div class="namebox"><label for="name">Wie is er jarig? (mag leeg)</label><input id="name" maxlength="24" autocomplete="off" placeholder="Naam van de jarige"></div>
-      <div class="seg" id="len">
-        <button type="button" data-m="map" aria-pressed="true">Buiten<br>met kaart</button>
-        <button type="button" data-m="street" aria-pressed="false">Buiten<br>zonder kaart</button>
-        <button type="button" data-m="in" aria-pressed="false">Binnen</button>
+      <div class="seg ways" id="len">
+        <button type="button" data-m="map" aria-pressed="true">🚶 Buiten<small>met kaart (gps)</small></button>
+        <button type="button" data-m="street" aria-pressed="false">🚶 Buiten<small>zonder kaart</small></button>
+        <button type="button" data-m="in" aria-pressed="false">👣 Binnen<small>lopen op de plaats</small></button>
+        <button type="button" data-m="bank" aria-pressed="false">🛋️ Op de bank<small>zonder lopen</small></button>
       </div>
       <div class="seg two" id="age">
         <button type="button" data-a="6" aria-pressed="true">Junior agent<small>makkelijk</small></button>
@@ -143,14 +144,14 @@
 <script src="shared/move.js?v=1"></script>
 <script src="shared/walk.js?v=6"></script>
 <script src="shared/steps.js?v=1"></script>
-<script src="shared/kidsmap.js?v=14"></script>
+<script src="shared/kidsmap.js?v=15"></script>
 <script src="shared/bonus.js?v=1"></script>
 <script src="shared/party.js?v=1"></script>
 <script src="shared/crew.js?v=3"></script>
 <script src="shared/voice.js?v=1"></script>
-<script src="games/agent/data-nl.js?v=13"></script>
-<script src="games/agent/game.js?v=23"></script>
-<script src="shared/start.js?v=8" data-game="ag"></script>
+<script src="games/agent/data-nl.js?v=13b"></script>
+<script src="games/agent/game.js?v=23b"></script>
+<script src="shared/start.js?v=9" data-game="ag"></script>
 <script id="mm-demo">/* MiniMystery: ?oefen start direct de gratis proefronde (link vanaf Inspiratie op de hub) */
 if(/[?&]oefen\b/.test(location.search)){var b=document.getElementById("bDemo");if(b)setTimeout(function(){b.click()},50)}</script>
 </body>

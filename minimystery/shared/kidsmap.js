@@ -60,10 +60,10 @@ function create(o){
   /* ---------- dom ---------- */
   /* uitleg: de verhaalkaart is een tekening, de echte plattegrond zit achter de knop. Teksten per taal; de kaartnamen komen uit het spel (T.kids/T.map). */
   var LG=(document.documentElement.lang||"nl").slice(0,2)==="en"?"en":"nl",introEl=null,cardEl=null,goEl=null,subEl=null,compEl=null,heatEl=null;
-  var X=LG==="en"?{toMap:"Real map",toMapS:"map",you:"You",toKids:"play map",toKidsL:"Play map",realTip:"The real map, with the streets: handy for the grown-up. Tap 🖍️ for the play map.",go:"Walk to",here:"You're there!",all:"All done!",help:"What is this map?",
+  var X=LG==="en"?{toMap:"Real map",toMapS:"map",you:"You",toKids:"play map",toKidsL:"Play map",realTip:"The real map, with the streets: handy for the grown-up. Tap 🖍️ for the play map.",go:"Walk to",tap:"Tap here to go to",here:"You're there!",all:"All done!",help:"What is this map?",
       title:"The play map",p1:"The places on this map are real: they're in your own neighbourhood, where they really are. Walk and your group walks along. The arrow and cold → hot show the way.",
       p2:"Want to see the streets? Tap the 🗺️ button at the side for the real map. Tap 🖍️ to come back.",ok:"OK",goMap:"Show the real map"}
-    :{toMap:"Echte kaart",toMapS:"kaart",you:"Jullie",toKids:"speelkaart",toKidsL:"Speelkaart",realTip:"De echte kaart, met de straten: handig voor de begeleider. Met 🖍️ ga je naar de speelkaart.",go:"Ga lopen naar",here:"Je bent er!",all:"Alles gevonden!",help:"Wat is deze kaart?",
+    :{toMap:"Echte kaart",toMapS:"kaart",you:"Jullie",toKids:"speelkaart",toKidsL:"Speelkaart",realTip:"De echte kaart, met de straten: handig voor de begeleider. Met 🖍️ ga je naar de speelkaart.",go:"Ga lopen naar",tap:"Tik hier en ga naar",here:"Je bent er!",all:"Alles gevonden!",help:"Wat is deze kaart?",
       title:"De speelkaart",p1:"De plekken op deze kaart zijn echt: ze liggen bij jou in de buurt, zoals ze in het echt liggen. Loop, en jullie groepje loopt mee. Het pijltje en koud → heet wijzen de weg.",
       p2:"Wil je de straten zien? Tik op het 🗺️-knopje aan de zijkant voor de echte kaart. Met 🖍️ ben je terug.",ok:"OK",goMap:"Toon de echte kaart"};
   function fillX(s){return s}
@@ -84,7 +84,7 @@ function create(o){
     play.insertBefore(k,play.firstChild.nextSibling);
     bView=document.createElement("button");bView.type="button";bView.id="bView";bView.className="kmSide";bView.setAttribute("aria-label",X.toMap);play.appendChild(bView);bView.onclick=function(){KV=!KV;setView()};
     introEl=document.createElement("div");introEl.id="kmIntro";introEl.hidden=true;play.appendChild(introEl);
-    cv=$("#kmC");msgEl=$("#kmMsg");hotEl=$("#kmHot");cardEl=$("#kmCard");goEl=$("#kmGoT");subEl=$("#kmSub");compEl=$("#kmComp");heatEl=$("#kmHeat");
+    cv=$("#kmC");msgEl=$("#kmMsg");hotEl=$("#kmHot");cardEl=$("#kmCard");cardEl.addEventListener("click",function(){if(o.mode()!=="demo"||!o.go)return;var n=near();if(n&&!n.done)o.go(n)});goEl=$("#kmGoT");subEl=$("#kmSub");compEl=$("#kmComp");heatEl=$("#kmHeat");
     function tap(x,y){if(o.onTap)o.onTap(x,y);
       if(VT&&MW.Bonus){var bt=bto();if(bt&&MW.Bonus.hitKids(x,y,bt,VT))return}
       /* tik op een plek: in de proefronde loop je er (nep) heen, anders wordt hij even aangewezen */
@@ -184,7 +184,7 @@ function create(o){
     hotEl.textContent=!nr?"":T[ht];
     var p=P(),m=o.mode(),inr=Math.max(35,Math.min(p.acc||0,60)),here=nr&&nd<=inr;
     var sub=!nr?T.all:here?T.here:m==="in"&&GG.in?MW.fill(T.inSteps,{n:Math.ceil(nd/GG.in.sl)}):ang==null&&m!=="demo"?(lastP?T.noDir:T.first):MW.fill(T.near,{d:Math.round(nd)});
-    if(!ov){goEl.textContent=!nr?X.all:here?X.here:"👣 "+X.go+": "+(T.fp[fk(nr)]||nr.name||"");subEl.textContent=sub;msgEl.textContent=sub}
+    cardEl.classList.toggle("kmTap",m==="demo"&&!!nr&&!here);if(!ov){goEl.textContent=!nr?X.all:here?X.here:(m==="demo"?"👆 "+X.tap:"👣 "+X.go)+": "+(T.fp[fk(nr)]||nr.name||"");subEl.textContent=sub;msgEl.textContent=sub}
     heatEl.textContent=nr&&!here?(T[ht]||"").split(/[.!]/)[0]:"";heatEl.style.background=col;heatEl.hidden=!nr||here;
     return true}
   return{mount:mount,enter:enter,leave:leave,intro:intro,draw:draw,moved:moved,fk:fk,fspot:fspot,near:near,heat:heat,virtSpots:virtSpots,stepLen:stepLen,on:function(){return KV},setMsg:function(s){msgEl.textContent=s;if(subEl)subEl.textContent=s},size:size,hot:function(){var n=near();return n?HC[heat(dTo(n))]:"#6ec3ff"}}}

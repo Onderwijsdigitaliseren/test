@@ -1,4 +1,4 @@
-/* Alle vaste zinnen die dit spel kan uitspreken (681). Gemaakt door _tools/stemscript.js uit data-en.js; k = sleutel uit shared/voice.js. Niet met de hand bewerken: draai het gereedschap opnieuw. */
+/* Alle vaste zinnen die dit spel kan uitspreken (689). Gemaakt door _tools/stemscript.js uit data-en.js; k = sleutel uit shared/voice.js. Niet met de hand bewerken: draai het gereedschap opnieuw. */
 window.MMV_SCRIPT=window.MMV_SCRIPT||{};window.MMV_SCRIPT["natuur_en"]=[
 {"k":"46fd7dd9","wie":"verteller","waar":"T","t":"Start today's case"},
 {"k":"e8599cc7","wie":"verteller","waar":"T","t":"Extra case"},
@@ -680,5 +680,13 @@ window.MMV_SCRIPT=window.MMV_SCRIPT||{};window.MMV_SCRIPT["natuur_en"]=[
 {"k":"1aff1483","wie":"verteller","waar":"LES 3","t":"What happens if you take one species away?"},
 {"k":"2095d4ce","wie":"verteller","waar":"LES 3","t":"Extension: repeat the same count a month later (or in another season) and compare."},
 {"k":"446111a6","wie":"verteller","waar":"LES 3","t":"Or: write well-argued advice to the council about one place, with your data as evidence."},
-{"k":"1b48eb3a","wie":"verteller","waar":"LES 3","t":"Ages 10–12 (Dutch groep 7–8; SLO nature, core objectives 'kerndoelen' 39/40/41): ecosystems and food webs, biodiversity, cycles (water, soil, carbon), cause and effect in nature, the influence of people and climate, doing research: observing, measuring, comparing, drawing conclusions."}
+{"k":"1b48eb3a","wie":"verteller","waar":"LES 3","t":"Ages 10–12 (Dutch groep 7–8; SLO nature, core objectives 'kerndoelen' 39/40/41): ecosystems and food webs, biodiversity, cycles (water, soil, carbon), cause and effect in nature, the influence of people and climate, doing research: observing, measuring, comparing, drawing conclusions."},
+{"k":"583a075e","wie":"verteller","waar":"T","t":"Indoors: walking on the spot"},
+{"k":"6043f2f7","wie":"verteller","waar":"T","t":"You're walking on the story map."},
+{"k":"95b7d54d","wie":"verteller","waar":"T","t":"Walk on the spot (or around the room) with the phone in your hand; every step counts."},
+{"k":"fc5355c9","wie":"verteller","waar":"T","t":"If that doesn't work, the steps will walk by themselves."},
+{"k":"d51b608b","wie":"verteller","waar":"T","t":"Count real steps"},
+{"k":"cf0aab4a","wie":"verteller","waar":"T","t":"Steps walk by themselves"},
+{"k":"a949921a","wie":"verteller","waar":"T","t":"No motion sensor found."},
+{"k":"92a9c205","wie":"verteller","waar":"T","t":"The steps will now walk by themselves."}
 ];

@@ -22,7 +22,7 @@
 <meta name="theme-color" content="#141a3a">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800&family=Permanent+Marker&display=swap">
 <link rel="stylesheet" href="shared/platform.css?v=2">
-<link rel="stylesheet" href="shared/kidsmap.css?v=7">
+<link rel="stylesheet" href="shared/kidsmap.css?v=8">
 <link rel="stylesheet" href="games/pakjes/game.css?v=1">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Game","name":"Operatie Pakjesavond","url":"https://www.minimystery.nl/operatie-pakjesavond.html","description":"Pakjesavond-speurtocht voor kinderen van 6 tot 10 jaar: Piet Pepernoot is zijn verstopkaart kwijt. Verzamel de stukjes met Pietenproeven op plekken in de buurt of in kamers in huis; alle stukjes samen leiden naar de echt verstopte surprises, die de ouders vooraf invullen. Binnen of buiten, met of zonder kaart. Proefronde gratis.","inLanguage":"nl","genre":["Kinderspel","Speurtocht","Sinterklaas"],"isAccessibleForFree":false,"offers":{"@type":"Offer","price":"9.99","priceCurrency":"EUR","description":"Feestpas"}}</script>
 </head>
@@ -57,10 +57,12 @@
         <button type="button" data-n="normaal" aria-pressed="true">Normaal<small>8 stukjes · ±50 min</small></button>
         <button type="button" data-n="lang" aria-pressed="false">Lang<small>10 stukjes · ±65 min</small></button>
       </div>
-      <div class="seg" id="len">
-        <button type="button" data-m="in" aria-pressed="true">Binnen<br>in huis</button>
-        <button type="button" data-m="map" aria-pressed="false">Buiten<br>met kaart</button>
-        <button type="button" data-m="street" aria-pressed="false">Buiten<br>zonder kaart</button>
+      <div class="seg ways" id="len">
+        <button type="button" data-m="in" aria-pressed="true">🏠 Binnen<small>door het huis</small></button>
+        <button type="button" data-m="stap" aria-pressed="false">👣 Binnen<small>lopen op de plaats</small></button>
+        <button type="button" data-m="bank" aria-pressed="false">🛋️ Op de bank<small>zonder lopen</small></button>
+        <button type="button" data-m="map" aria-pressed="false">🚶 Buiten<small>met kaart (gps)</small></button>
+        <button type="button" data-m="street" aria-pressed="false">🚶 Buiten<small>zonder kaart</small></button>
       </div>
       <button class="btn ghost sm" id="bVoice" aria-pressed="true">🔊 Voorlezen</button>
       <button class="btn" id="bResume" hidden>Verder met de zaak</button>
@@ -143,11 +145,12 @@
 <script src="shared/tiles.js?v=1"></script>
 <script src="shared/move.js?v=1"></script>
 <script src="shared/walk.js?v=6"></script>
-<script src="shared/kidsmap.js?v=14"></script>
+<script src="shared/kidsmap.js?v=15"></script>
+<script src="shared/steps.js?v=1"></script>
 <script src="shared/voice.js?v=1"></script>
-<script src="games/pakjes/data-nl.js?v=2"></script>
-<script src="games/pakjes/game.js?v=3"></script>
-<script src="shared/start.js?v=8" data-game="pa"></script>
+<script src="games/pakjes/data-nl.js?v=2b"></script>
+<script src="games/pakjes/game.js?v=3b"></script>
+<script src="shared/start.js?v=9" data-game="pa"></script>
 <script id="mm-demo">if(/[?&]oefen\b/.test(location.search)){var b=document.getElementById("bDemo");if(b)setTimeout(function(){b.click()},50)}</script>
 </body>
 </html>

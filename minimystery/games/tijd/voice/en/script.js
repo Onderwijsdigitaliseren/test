@@ -1,4 +1,4 @@
-/* Alle vaste zinnen die dit spel kan uitspreken (743). Gemaakt door _tools/stemscript.js uit data-en.js; k = sleutel uit shared/voice.js. Niet met de hand bewerken: draai het gereedschap opnieuw. */
+/* Alle vaste zinnen die dit spel kan uitspreken (751). Gemaakt door _tools/stemscript.js uit data-en.js; k = sleutel uit shared/voice.js. Niet met de hand bewerken: draai het gereedschap opnieuw. */
 window.MMV_SCRIPT=window.MMV_SCRIPT||{};window.MMV_SCRIPT["tijd_en"]=[
 {"k":"5b394535","wie":"verteller","waar":"TL0 1","t":"steam train"},
 {"k":"2b526050","wie":"verteller","waar":"TL0 3","t":"talking from far away"},
@@ -742,5 +742,13 @@ window.MMV_SCRIPT=window.MMV_SCRIPT||{};window.MMV_SCRIPT["tijd_en"]=[
 {"k":"f7c13708","wie":"verteller","waar":"LES","t":"Homework: ask a grandparent or a parent what was different when they were as old as you."},
 {"k":"74cbbdce","wie":"verteller","waar":"LES","t":"Groep 3–4 (ages 6–7; SLO, time): a sense of 'long ago', comparing the past and now using concrete things (transport, light, clothes, houses), simple time concepts."},
 {"k":"bc8e8dbf","wie":"verteller","waar":"LES","t":"Years and the names of the eras are not yet a goal at this age; they come from groep 5 onwards."},
-{"k":"fa7f78af","wie":"verteller","waar":"LES","t":"Dutch core objectives (kerndoelen) for history: 52 (eras and their features), 53 (important people and events), 51 (using historical sources); also working together, observing and reasoning."}
+{"k":"fa7f78af","wie":"verteller","waar":"LES","t":"Dutch core objectives (kerndoelen) for history: 52 (eras and their features), 53 (important people and events), 51 (using historical sources); also working together, observing and reasoning."},
+{"k":"583a075e","wie":"verteller","waar":"T","t":"Indoors: walking on the spot"},
+{"k":"6043f2f7","wie":"verteller","waar":"T","t":"You're walking on the story map."},
+{"k":"95b7d54d","wie":"verteller","waar":"T","t":"Walk on the spot (or around the room) with the phone in your hand; every step counts."},
+{"k":"fc5355c9","wie":"verteller","waar":"T","t":"If that doesn't work, the steps will walk by themselves."},
+{"k":"d51b608b","wie":"verteller","waar":"T","t":"Count real steps"},
+{"k":"cf0aab4a","wie":"verteller","waar":"T","t":"Steps walk by themselves"},
+{"k":"a949921a","wie":"verteller","waar":"T","t":"No motion sensor found."},
+{"k":"92a9c205","wie":"verteller","waar":"T","t":"The steps will now walk by themselves."}
 ];

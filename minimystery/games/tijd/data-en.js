@@ -37,7 +37,7 @@ var T={
     map:"Map",kids:"Story map",mapTip:"The real map. Tap Story map for the children's drawing.",goDemo:"We're (pretend) walking to {p}…",inSteps:"{n} steps to go",
     mNoMap:"Carry on without a map (same time journey)",switched:"Carrying on without a map. The same time journey, the same missions.",virtOut:"We couldn't find a map of the neighbourhood. You'll walk on the story map: the arrow and warm/cold will show the way.",
     noMapQ:"No location today?",noMapT:"The phone isn't sharing a location. You can play the same time journey without a map: the missions come one after another and you walk to a new place yourselves.",noMapGo:"Carry on without a map",
-    inH:"",inT:"",inSensor:"",inTempo:"",inNoSensor:""}
+    inH:"Indoors: walking on the spot",inT:"You're walking on the story map. Walk on the spot (or around the room) with the phone in your hand; every step counts. If that doesn't work, the steps will walk by themselves.",inSensor:"Count real steps",inTempo:"Steps walk by themselves",inNoSensor:"No motion sensor found. The steps will now walk by themselves."}
 };
 var TYPES={kerk:"the church",hotel:"the hotel",bank:"the bank",apotheek:"the chemist",cafe:"the café",bieb:"the library",park:"the park",school:"the school",kunst:"the artwork",tank:"the petrol station",winkel:"the shop",halte:"the bus stop",post:"the postbox",bankje:"the bench",hoek:"the corner"};
 var TIK="Mr Tik",NOOR="Miss Noor";

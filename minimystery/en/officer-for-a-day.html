@@ -22,7 +22,7 @@
 <meta name="theme-color" content="#0d2a66">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&display=swap">
 <link rel="stylesheet" href="../shared/platform.css?v=2">
-<link rel="stylesheet" href="../shared/kidsmap.css?v=7">
+<link rel="stylesheet" href="../shared/kidsmap.css?v=8">
 <link rel="stylesheet" href="../games/agent/game.css?v=14">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Officer for a Day","url":"https://www.minimystery.nl/en/officer-for-a-day.html","description":"Police treasure hunt for kids' parties: the Sign Thief has stolen every street sign. Five, eight or eleven police puzzles with no reading, five crooks, one line-up. With a map, without one, or indoors. Photo album, police diploma and WANTED poster. Practice round free.","inLanguage":"en","gamePlatform":"Web browser","genre":["Kids' game","Treasure hunt","Police"],"isAccessibleForFree":false,"offers":{"@type":"Offer","price":"3.99","priceCurrency":"EUR","description":"Party Pass"}}</script>
 </head>
@@ -41,10 +41,11 @@
       <button class="btn ghost sm" id="bHow">How does it work?</button>
       <div class="pline" hidden style="display:none"><b id="pRank">–</b><span><b id="pStreak">0</b> Day streak</span><span><b id="pSolved">0</b> Caught</span></div>
       <div class="namebox"><label for="name">Whose birthday is it? (optional)</label><input id="name" maxlength="24" autocomplete="off" placeholder="Name of the birthday child"></div>
-      <div class="seg" id="len">
-        <button type="button" data-m="map" aria-pressed="true">Outside<br>with map</button>
-        <button type="button" data-m="street" aria-pressed="false">Outside<br>without map</button>
-        <button type="button" data-m="in" aria-pressed="false">Indoors</button>
+      <div class="seg ways" id="len">
+        <button type="button" data-m="map" aria-pressed="true">🚶 Outdoors<small>with map (GPS)</small></button>
+        <button type="button" data-m="street" aria-pressed="false">🚶 Outdoors<small>without map</small></button>
+        <button type="button" data-m="in" aria-pressed="false">👣 Indoors<small>walk on the spot</small></button>
+        <button type="button" data-m="bank" aria-pressed="false">🛋️ On the sofa<small>no walking</small></button>
       </div>
       <div class="seg two" id="age">
         <button type="button" data-a="6" aria-pressed="true">Junior officer<small>easy</small></button>
@@ -143,14 +144,14 @@
 <script src="../shared/move.js?v=1"></script>
 <script src="../shared/walk.js?v=6"></script>
 <script src="../shared/steps.js?v=1"></script>
-<script src="../shared/kidsmap.js?v=14"></script>
+<script src="../shared/kidsmap.js?v=15"></script>
 <script src="../shared/bonus.js?v=1"></script>
 <script src="../shared/party.js?v=1"></script>
 <script src="../shared/crew.js?v=3"></script>
 <script src="../shared/voice.js?v=1"></script>
-<script src="../games/agent/data-en.js?v=12"></script>
-<script src="../games/agent/game.js?v=23"></script>
-<script src="../shared/start.js?v=8" data-game="ag"></script>
+<script src="../games/agent/data-en.js?v=12b"></script>
+<script src="../games/agent/game.js?v=23b"></script>
+<script src="../shared/start.js?v=9" data-game="ag"></script>
 <script id="mm-demo">/* MiniMystery: ?oefen start direct de gratis oefenronde (link vanaf Inspiratie op de hub) */
 if(/[?&]oefen\b/.test(location.search)){var b=document.getElementById("bDemo");if(b)setTimeout(function(){b.click()},50)}</script>
 </body>

@@ -1,4 +1,4 @@
-/* Alle vaste zinnen die dit spel kan uitspreken (551). Gemaakt door _tools/stemscript.js uit data-nl.js; k = sleutel uit shared/voice.js. Niet met de hand bewerken: draai het gereedschap opnieuw. */
+/* Alle vaste zinnen die dit spel kan uitspreken (559). Gemaakt door _tools/stemscript.js uit data-nl.js; k = sleutel uit shared/voice.js. Niet met de hand bewerken: draai het gereedschap opnieuw. */
 window.MMV_SCRIPT=window.MMV_SCRIPT||{};window.MMV_SCRIPT["reken_nl"]=[
 {"k":"52654da8","wie":"verteller","waar":"T","t":"Start de zaak van vandaag"},
 {"k":"06cdc8ca","wie":"verteller","waar":"T","t":"Extra zaak"},
@@ -550,5 +550,13 @@ window.MMV_SCRIPT=window.MMV_SCRIPT||{};window.MMV_SCRIPT["reken_nl"]=[
 {"k":"4fe81aba","wie":"verteller","waar":"LES 3","t":"De schaduwmethode: ga naar buiten op een zonnige dag en meet de hoogte van een boom met je eigen schaduw."},
 {"k":"30d6454b","wie":"verteller","waar":"LES 3","t":"Vergelijk met de schatting in verdiepingen."},
 {"k":"e1d36ec0","wie":"verteller","waar":"LES 3","t":"Verdieping: maak een plattegrond van het schoolplein op schaal 1:100 met de stappen-metingen."},
-{"k":"53b027ef","wie":"verteller","waar":"LES 3","t":"Groep 7–8 (SLO rekenen): grote getallen, kommagetallen, procenten en breuken, verhoudingen en schaal, oppervlakte, gemiddelde, afronden, meten en schatten met referentiematen, rekenen in context."}
+{"k":"53b027ef","wie":"verteller","waar":"LES 3","t":"Groep 7–8 (SLO rekenen): grote getallen, kommagetallen, procenten en breuken, verhoudingen en schaal, oppervlakte, gemiddelde, afronden, meten en schatten met referentiematen, rekenen in context."},
+{"k":"57a6f880","wie":"verteller","waar":"T","t":"Binnen: lopen op de plaats"},
+{"k":"16a46540","wie":"verteller","waar":"T","t":"Jullie lopen op de verhaalkaart."},
+{"k":"d15ce3bc","wie":"verteller","waar":"T","t":"Loop op de plaats (of door de ruimte) met de telefoon in je hand; elke stap telt."},
+{"k":"c4c72af9","wie":"verteller","waar":"T","t":"Lukt dat niet, dan lopen de stappen vanzelf."},
+{"k":"dc11698b","wie":"verteller","waar":"T","t":"Echte stappen tellen"},
+{"k":"5ca03018","wie":"verteller","waar":"T","t":"Stappen lopen vanzelf"},
+{"k":"81cccf37","wie":"verteller","waar":"T","t":"Geen bewegingssensor gevonden."},
+{"k":"de79202e","wie":"verteller","waar":"T","t":"De stappen lopen nu vanzelf."}
 ];
