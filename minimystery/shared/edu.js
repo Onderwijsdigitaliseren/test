@@ -10,13 +10,13 @@ function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){retur
 var T={
  nl:{back:"◂ MiniMystery",other:"English",otherU:ROOT+"en/education/",kick:"MiniMystery Educatie · school en BSO",h1:"Speurtochten met lesstof",
   lead:"Teams lossen een mysterie op en oefenen onderweg rekenen, taal, natuur, geschiedenis of Engels.",
-  facts:["🏫 Groep 3–8 en BSO","⏱ 35–60 minuten","🎟 Proefronde gratis"],cta:"Bekijk de wandelingen ↓",buy:"Schoolpas € 39,99",
+  facts:["🏫 Groep 3–8 en BSO","⏱ 35–60 minuten","🎟 Proefronde gratis"],cta:"Bekijk de wandelingen ↓",buy:"Schoolpas € 39,99",free:"proefronde gratis",
   howK:"In drie stappen",howH:"Zo werkt het",
   how:[["1","Start op jouw telefoon","Kies groep en lengte. Je krijgt een zaakcode en een begeleidersblad met lesbrief."],["2","Teams spelen","4 tot 6 kinderen, één telefoon. Zaakcode invullen en op pad."],["3","Diploma en nabespreking","Elk team krijgt een diploma. De lesbrief helpt bij het nabespreken."]],
   wayK:"Bij elk weer",wayH:"Vier manieren om te spelen",waySub:"Je kiest bij de start. Elke wandeling kan op al deze manieren.",
   ways:{out:["🚶","Buiten","Rond de school, alles binnen ongeveer 300 meter."],school:["🏫","In het gebouw","Met plekkaartjes in de gangen en lokalen."],"in":["👣","Binnen, op de plaats","In de klas of gymzaal: de telefoon telt de stappen."],sofa:["🛋️","Zonder lopen","Tik op de kaart. Handig bij regen of op het digibord."]},
   listK:"Per vak",listH:"De wandelingen",listSub:"Tik op een wandeling voor meer informatie.",all:"Alles",
-  min:"min",more:"Meer info →",soon:"Binnenkort",isNew:"Nieuw",start:"Start →",trial:"▶ Gratis proef",close:"Sluiten",full:"Alles over deze wandeling",
+  min:"min",more:"Meer info →",soon:"Binnenkort",isNew:"Nieuw",start:"Start →",trial:"▶ Proefronde",close:"Sluiten",full:"Alles over deze wandeling",
   askH:"Mis je een vak?",askT:"Er komen meer wandelingen aan. Laat weten wat je zoekt.",askS:"Wens voor MiniMystery Educatie",
   passK:"Eén prijs voor de hele school",passH:"De Schoolpas",price:"€ 39,99",per:"· zes maanden",
   pass:["Alle wandelingen, ook de nieuwe die erbij komen","Zo vaak je wilt, met al je klassen","Proefronde in elke wandeling blijft gratis"],buyB:"Koop de Schoolpas · € 39,99",
@@ -26,13 +26,13 @@ var T={
   foot:"MiniMystery Educatie is onderdeel van <a href=\""+ROOT+"\">MiniMystery</a>."},
  en:{back:"◂ MiniMystery",other:"Nederlands",otherU:ROOT+"educatie/",kick:"MiniMystery Education · schools and clubs",h1:"Treasure hunts with real lessons",
   lead:"Teams solve a mystery and practise maths, literacy, nature or history along the way.",
-  facts:["🏫 Ages 6–12","⏱ 35–60 minutes","🎟 Practice round free"],cta:"See the walks ↓",buy:"School Pass € 39.99",
+  facts:["🏫 Ages 6–12","⏱ 35–60 minutes","🎟 Practice round free"],cta:"See the walks ↓",buy:"School Pass € 39.99",free:"practice round free",
   howK:"In three steps",howH:"How it works",
   how:[["1","Start on your phone","Pick the age and length. You get a case code and a leader's sheet with a lesson plan."],["2","Teams play","4 to 6 children, one phone. Enter the case code and off you go."],["3","Certificate and review","Every team gets a certificate. The lesson plan helps with the review."]],
   wayK:"Whatever the weather",wayH:"Four ways to play",waySub:"You choose at the start. Every walk works in all of these ways.",
   ways:{out:["🚶","Outdoors","Around the school, all within about 300 metres."],school:["🏫","In the building","With spot cards in corridors and classrooms."],"in":["👣","Indoors, on the spot","In the classroom or gym: the phone counts the steps."],sofa:["🛋️","No walking","Tap the map. Handy in the rain or on the whiteboard."]},
   listK:"By subject",listH:"The walks",listSub:"Tap a walk for more information.",all:"All",
-  min:"min",more:"More info →",soon:"Coming soon",isNew:"New",start:"Start →",trial:"▶ Try free",close:"Close",full:"Everything about this walk",
+  min:"min",more:"More info →",soon:"Coming soon",isNew:"New",start:"Start →",trial:"▶ Practice round",close:"Close",full:"Everything about this walk",
   askH:"Missing a subject?",askT:"More walks are on the way. Tell us what you're looking for.",askS:"Request for MiniMystery Education",
   passK:"One price for the whole school",passH:"The School Pass",price:"€ 39.99",per:"· six months",
   pass:["Every walk, including new ones as they arrive","As often as you like, with all your classes","The practice round in every walk stays free"],buyB:"Buy the School Pass · € 39.99",
@@ -52,10 +52,9 @@ var subs=[];G.forEach(function(g){var s=subj(g);if(s&&subs.indexOf(s)<0)subs.pus
 var live=G.filter(function(g){return g.status!=="soon"}),fan=live.slice(0,6);
 document.querySelector("main").innerHTML=
   '<div class="top"><a class="pill" href="'+(L==="nl"?ROOT:ROOT+"en/")+'">'+T.back+'</a><a class="pill" href="'+T.otherU+'">'+T.other+'</a></div>'+
-  '<section class="hero"><div><span class="kick">'+T.kick+'</span><h1>'+T.h1+'</h1><p>'+T.lead+'</p><ul class="facts">'+T.facts.map(function(f){return '<li>'+f+'</li>'}).join("")+'</ul>'+
-    '<div class="btns"><a class="btn" href="#wandelingen">'+T.cta+'</a><a class="btn ghost" href="#prijs">'+T.buy+'</a></div></div>'+
+  '<section class="hero"><div><span class="kick">'+T.kick+'</span><h1>'+T.h1+'</h1><p>'+T.lead+'</p><a class="plink" href="#prijs">🎟 '+T.buy+' · '+T.free+' →</a></div>'+
     '<div class="fan" aria-hidden="true">'+fan.map(function(g){return '<img src="'+cover(g)+'" alt="" width="300" height="300">'}).join("")+'</div></section>'+
-  '<section class="sec" id="wandelingen"><span class="kick">'+T.listK+'</span><h2>'+T.listH+'</h2><p class="sub">'+T.listSub+'</p>'+
+  '<section class="sec first" id="wandelingen"><h2>'+T.listH+'</h2>'+
     '<div class="flt" role="group"><button type="button" data-f="" aria-pressed="true">'+T.all+'</button>'+subs.map(function(s){return '<button type="button" data-f="'+esc(s)+'" aria-pressed="false">'+esc(s)+'</button>'}).join("")+'</div>'+
     '<div class="walks">'+G.map(walk).join("")+'<a class="w ask" href="mailto:'+MAIL+'?subject='+encodeURIComponent(T.askS)+'"><i aria-hidden="true">💡</i><b>'+T.askH+'</b><span>'+T.askT+'</span></a></div></section>'+
   '<section class="sec" id="hoe"><span class="kick">'+T.howK+'</span><h2>'+T.howH+'</h2>'+rows(T.how,"c3")+'</section>'+

@@ -49,15 +49,12 @@ def body(t):
     <img class="logo" src="{a}assets/logo-wide.webp" alt="MiniMystery" width="1222" height="378">
     <h1>{t['h1']}</h1>
     <p class="lead">{t['lead']}</p>
-    <ul class="facts row">{''.join('<li>'+x+'</li>' for x in t['facts'])}</ul>
-    <div class="cta"><a class="btn" href="#cases">{t['cta']}</a></div>
   </div></div>
 </header>
 <main>
-  <nav class="lanes" aria-label="{t['gk']}">{''.join(f'<a href="{u}"><i aria-hidden="true">{i}</i><b>{h}</b><span>{s}</span></a>' for u,i,h,s in t['lanes'])}</nav>
+  <section class="sec first"><h2>{t['gh']}</h2><div class="games" id="cases"></div><p class="note status" id="status"></p></section>
   <section class="sec"><span class="kick">{t['wk']}</span><h2>{t['wh']}</h2><p class="sub">{t['ws']}</p>
     <ul class="ways3">{''.join(f'<li><i aria-hidden="true">{i}</i><b>{h}</b><span>{s}</span></li>' for i,h,s in t['ways'])}</ul></section>
-  <section class="sec"><span class="kick">{t['gk']}</span><h2>{t['gh']}</h2><div class="games" id="cases"></div><p class="note status" id="status"></p></section>
   <section class="sec" id="edu"><div class="edub"><div class="edut"><span class="kick">{t['ek']}</span><h2>{t['eh']}</h2><p>{t['et']}</p><a class="btn" href="{t['edu']}">{t['eb']}</a></div><div class="edus" id="eduStrip"></div></div></section>
   <section class="sec"><span class="kick">{t['hk']}</span><h2>{t['hh']}</h2><ol class="how how3">{''.join(f'<li><img src="{a}assets/{im}" alt="" width="160" height="160" loading="lazy"><b>{h}</b><span>{s}</span></li>' for im,h,s in t['how'])}</ol>
     <details class="tips"><summary>{t['tipsH']}</summary><ul>{''.join('<li>'+x+'</li>' for x in t['tips'])}</ul></details></section>
@@ -79,5 +76,5 @@ for l,t in T.items():
   <a class="adult" href="{t['adultU']}">{t['adult']}</a>
   <div class="links"><a href="#custom">{t['fl'][0]}</a><a href="mailto:kellievandekerkhof@gmail.com">{t['fl'][1]}</a><button type="button" id="bPriv">{t['fl'][2]}</button></div>
 </footer>''',s,flags=re.S)
-    s=re.sub(r'hub\.css\?v=\d+','hub.css?v=14',s);s=re.sub(r'catalog\.js\?v=mm\d+','catalog.js?v=mm18',s);s=re.sub(r'hub\.js\?v=mm\d+','hub.js?v=mm18',s)
+    s=re.sub(r'hub\.css\?v=\d+','hub.css?v=15',s);s=re.sub(r'catalog\.js\?v=mm\d+','catalog.js?v=mm18',s);s=re.sub(r'hub\.js\?v=mm\d+','hub.js?v=mm19',s)
     open(p,'w',encoding='utf8').write(s);print('ok',t['f'])

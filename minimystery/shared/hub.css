@@ -243,3 +243,21 @@ details.tips summary{cursor:pointer;padding:12px 16px;font:600 15.5px Fredoka,sa
 details.tips ul{padding:0 16px 12px 36px;font-size:15px}
 .custom .cgrid{margin-bottom:12px}
 @media (prefers-reduced-motion:reduce){.lanes a,.btn{transition:none}}
+
+/* poging 2: korte kop, de spellen meteen in beeld */
+.hero.slim{padding-top:clamp(86px,22vw,150px)}
+.hero.slim .in{padding-bottom:6px}
+.hero.slim .card{padding:10px 14px 12px}
+.hero.slim .logo{width:min(46vw,230px)}
+.hero.slim h1{font-size:clamp(20px,5vw,34px);margin:2px auto 4px}
+.hero.slim p.lead{margin:0 auto;font-size:15px;line-height:1.4}
+@media (min-width:860px){.hero.slim{padding-top:70px}.hero.slim .in{padding-bottom:30px}.hero.slim h1,.hero.slim p.lead{margin-left:0}}
+.sec.first{padding-top:14px}
+.sec.first>h2{font-size:22px;margin-bottom:4px}
+.sec.first .flt{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;margin:0 0 2px;padding-bottom:6px;-webkit-overflow-scrolling:touch}
+.sec.first .flt span{display:none}
+.sec.first .flt button{flex:0 0 auto}
+@media (min-width:720px){.sec.first .flt{justify-content:center}}
+.sec.first .grp{margin-top:8px}
+.sec.first .grp~.grp{margin-top:22px}
+.sec.first .grps{display:none}
