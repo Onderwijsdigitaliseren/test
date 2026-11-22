@@ -7,7 +7,7 @@ R=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 T={
  'nl':dict(f='index.html',a='',edu='educatie/',lang='<a class="pill" id="lang" href="en/" hreflang="en">English</a>',eduP='🏫 Educatie',skip='Kies je spel',
   h1='Mysterie-speurtochten voor kinderen',lead='Eén telefoon, een groepje kinderen en een mysterie. Buiten, binnen of op de bank.',
-  facts=['🎂 4 tot 12 jaar','⏱ 35 tot 80 minuten','🎟 Proefronde gratis'],cta='Kies een spel ↓',
+  facts=['⏱ 35 tot 80 minuten','🎟 Proefronde gratis'],cta='Kies een spel ↓',
   lanes=[('#cases','🎂','Kinderfeestje','Speurtochten met een verhaal'),('#cases','🏠','Thuis &amp; binnen','Ook op de bank of aan tafel'),('educatie/','🏫','School &amp; BSO','Met lesstof en lesbrief')],
   wk='Zo speel je',wh='Drie manieren om te spelen',ws='Elke speurtocht kan op alle drie. Je kiest bij de start.',
   ways=[('🚶','Buiten','Met gps langs plekken in je eigen buurt.'),('👣','Binnen','Lopen op de plaats: de telefoon telt je stappen.'),('🛋️','Op de bank','Zonder lopen: tik op de kaart en speel de puzzels.')],
@@ -23,7 +23,7 @@ T={
   foot='Gemaakt in Nederland, met liefde voor speurneuzen.',adult='Voor volwassenen: Enigma Mystery →',adultU='https://www.enigmamystery.com/nl/wandelingen/',fl=('Op maat','Contact','Privacy')),
  'en':dict(f='en/index.html',a='../',edu='education/',lang='<a class="pill" id="lang" href="../" hreflang="nl">Nederlands</a>',eduP='🏫 Education',skip='Pick your game',
   h1='Mystery treasure hunts for children',lead='One phone, a group of children and a mystery. Outdoors, indoors or on the sofa.',
-  facts=['🎂 Ages 4 to 12','⏱ 35 to 80 minutes','🎟 Practice round free'],cta='Pick a game ↓',
+  facts=['⏱ 35 to 80 minutes','🎟 Practice round free'],cta='Pick a game ↓',
   lanes=[('#cases','🎂','Kids\' party','Treasure hunts with a story'),('#cases','🏠','At home &amp; indoors','On the sofa or round the table'),('education/','🏫','School &amp; clubs','With real school subjects')],
   wk='How to play',wh='Three ways to play',ws='Every hunt works all three ways. You choose at the start.',
   ways=[('🚶','Outdoors','With GPS, past places in your own neighbourhood.'),('👣','Indoors','Walk on the spot: the phone counts your steps.'),('🛋️','On the sofa','No walking: tap the map and play the puzzles.')],
@@ -79,5 +79,5 @@ for l,t in T.items():
   <a class="adult" href="{t['adultU']}">{t['adult']}</a>
   <div class="links"><a href="#custom">{t['fl'][0]}</a><a href="mailto:kellievandekerkhof@gmail.com">{t['fl'][1]}</a><button type="button" id="bPriv">{t['fl'][2]}</button></div>
 </footer>''',s,flags=re.S)
-    s=re.sub(r'hub\.css\?v=\d+','hub.css?v=14',s);s=re.sub(r'catalog\.js\?v=mm\d+','catalog.js?v=mm18',s);s=re.sub(r'hub\.js\?v=mm\d+','hub.js?v=mm17',s)
+    s=re.sub(r'hub\.css\?v=\d+','hub.css?v=14',s);s=re.sub(r'catalog\.js\?v=mm\d+','catalog.js?v=mm18',s);s=re.sub(r'hub\.js\?v=mm\d+','hub.js?v=mm18',s)
     open(p,'w',encoding='utf8').write(s);print('ok',t['f'])

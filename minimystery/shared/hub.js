@@ -37,7 +37,7 @@ function card(g){var x=g[L],has=!!MW.LS.get(resumeKey(g),null),url=MW.root+esc(x
   return '<article class="g" data-ways="'+esc((g.ways||[]).join(" "))+'" style="--c:'+esc(g.theme||"#ffc21a")+'">'+
     '<a class="gimg" href="'+url+'" tabindex="-1" aria-hidden="true"><img src="'+MW.root+'assets/cover-'+g.id+'.webp" alt="" width="300" height="300" loading="lazy">'+(g.badge?'<b class="rib">'+esc(g.badge[L])+'</b>':'')+'</a>'+
     '<div class="gb"><h3><a href="'+url+'">'+esc(x.title)+'</a></h3><p class="gs">'+esc(x.short||x.tag)+'</p>'+
-    '<ul class="gm">'+(g.age?'<li>🎂 '+esc(ageTxt(g.age))+'</li>':'')+'<li>⏱ '+esc(g.minutes)+' '+H.min+'</li>'+(pro?'<li class="ok">✓ '+H.pro+'</li>':'')+'</ul>'+waysHTML(g)+'</div>'+
+    '<ul class="gm">'+'<li>⏱ '+esc(g.minutes)+' '+H.min+'</li>'+(pro?'<li class="ok">✓ '+H.pro+'</li>':'')+'</ul>'+waysHTML(g)+'</div>'+
     '<div class="ga"><a class="btn sm ghost" href="'+url+'?oefen">▶ '+H.try+'</a><a class="btn sm" href="'+url+'">'+(has?H.resume:H.play)+' →</a></div>'+
     '<details class="gd"><summary>'+H.more2+'</summary><p>'+esc(x.desc)+'</p></details></article>'}
 function group(h,sub,list){return list.length?'<div class="grp"><h3 class="grph">'+esc(h)+'</h3><p class="grps">'+esc(sub)+'</p><div class="gl">'+list.map(card).join("")+'</div></div>':''}
