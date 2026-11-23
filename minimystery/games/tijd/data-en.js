@@ -212,3 +212,91 @@ return{lang:"en",TL0:TL0,T:T,TYPES:TYPES,TIK:TIK,NOOR:NOOR,ROOMS:ROOMS,OPEN:OPEN
     doelen0:"Groep 3–4 (ages 6–7; SLO, time): a sense of 'long ago', comparing the past and now using concrete things (transport, light, clothes, houses), simple time concepts. Years and the names of the eras are not yet a goal at this age; they come from groep 5 onwards.",
     doelen:"Dutch core objectives (kerndoelen) for history: 52 (eras and their features), 53 (important people and events), 51 (using historical sources); also working together, observing and reasoning."}}
 })();
+
+/* ===== Going deeper per era (shared/meer.js): two extra steps with explanation per level. Correct answer always first. ===== */
+(function(D){var M={
+jagers:[
+ [["Where did the hunters live?",["in tents made of animal skin","in a block of flats"],"They moved around following the animals. You can take a tent with you."],
+  ["What did they make their tools from?",["stone","plastic"],"That is why this time is also called the Stone Age. A sharp flint was their knife."]],
+ [["Why is this time called the Stone Age?",["Tools were made of stone","People lived in stone houses","It was very cold"],"Knives, axes and arrowheads were knapped from flint. Nobody knew about metal yet."],
+  ["What did farmers need that hunters did not?",["A fixed place with fields and a store barn","Fast horses","Ships"],"If you sow, you have to stay until the harvest. That is how the first villages began."]],
+ [["How do we know anything about hunters and farmers, when they could not write?",["From excavations: bones, pottery and tools","From their diaries","From old photos"],"The time without written sources is called prehistory. Archaeologists read the ground like a book."],
+  ["The first farmers came here around 5300 BC. How many years ago is that, counting from 2026?","7326","5300 + 2026 = 7326 years. For BC and AD you add the numbers together."]]],
+romeinen:[
+ [["What did a Roman soldier wear?",["a helmet and a shield","a cap and a rucksack"],"With helmet, shield and sword he guarded the border."],
+  ["What did the Romans build their houses from?",["stone","ice"],"The Romans built with stone and roof tiles. That was completely new here."]],
+ [["What was the language of the Romans called?",["Latin","English","French"],"Lots of English words come from Latin: street (strata), wall (vallum), mile (mille)."],
+  ["What was the border of the Roman Empire along the Rhine called?",["The limes","The dyke","The wall"],"Limes means border. There were forts and watchtowers along the Rhine. It is now a World Heritage Site."]],
+ [["The Romans came here around 50 BC and left around AD 400. About how long were they here?","450","50 + 400 = 450 years. That is longer than the Netherlands has existed as a country."],
+  ["Which Roman numeral is 2026?",["MMXXVI","MMXVI","MCMXXVI"],"M = 1000, X = 10, V = 5, I = 1. MM + XX + VI = 2000 + 20 + 6."]]],
+ridders:[
+ [["Where did a knight live?",["in a castle","in a tent"],"A castle had thick walls and a moat to keep enemies out."],
+  ["What did a knight ride on?",["a horse","a bike"],"The armour was heavy. Without a horse a knight would not get far."]],
+ [["Who brought Christianity to these parts?",["Monks such as Willibrord","Roman soldiers","Vikings"],"Willibrord came from England around 690. He founded churches and monasteries, including in Utrecht."],
+  ["Who could read and write in this time?",["Almost only monks and priests","Everyone","Only knights"],"There were no schools for ordinary people. Monasteries were the libraries of the time."]],
+ [["Charlemagne was crowned emperor in the year 800. Why was his empire so special?",["It covered a large part of Western Europe","It was in America","It had no army"],"From northern Spain to Germany. He had schools founded and travelled around, because there was no fixed capital."],
+  ["Why did the Vikings raid monasteries and trading towns like Dorestad?",["There was a lot of wealth and little defence","They hated books","They were looking for somewhere to live"],"Dorestad, near today's Wijk bij Duurstede, was a rich trading town on the river: easy to reach by ship."]]],
+steden:[
+ [["What did you buy at the market?",["bread, fish and cloth","a phone"],"Farmers and traders came to the market square to sell their goods."],
+  ["How did you get into a town?",["through the town gate","through the air"],"The gate shut at night. If you were late, you slept outside."]],
+ [["What was the Hanseatic League?",["A partnership of trading towns","A kind of coin","An order of knights"],"Towns like Deventer, Zwolle and Kampen traded together with towns around the Baltic Sea. Together they were stronger."],
+  ["How did you become a master in a craft?",["First apprentice, then journeyman, then a masterpiece","You bought a shop","The king appointed you"],"The masterpiece was a piece of work showing you had mastered the craft. That is where the word comes from."]],
+ [["Why did people say 'town air makes you free'?",["Whoever lived in a town for a year and a day was free of their lord","The air in town was cleaner","You paid no tax in town"],"In the countryside you were often bound to a lord. The town offered freedom and work."],
+  ["Around 1350 about a third of Europeans died of the plague. In a town of 6000 people, how many is that?","2000|2,000","6000 ÷ 3 = 2000. Towns were dirty and crowded, so disease spread quickly."]]],
+ontdekkers:[
+ [["What did sailors use to find their way?",["a compass","a phone"],"The needle of a compass always points north."],
+  ["What were the explorers looking for?",["new lands and spices","toys"],"Pepper and cinnamon were as expensive as gold back then."]],
+ [["Who sailed to America in 1492?",["Columbus","Rembrandt","Charlemagne"],"Columbus thought he had reached India. That is why the people there were wrongly called Indians for centuries."],
+  ["What changed because of the printing press?",["Books got cheaper, so more people started reading","Books were decorated more beautifully","There were fewer books"],"A monk spent months on one book. A printer made hundreds in the same time."]],
+ [["What did Luther want with his theses in 1517?",["To change the church, for example stop the selling of indulgences","To found a new country","To overthrow the king"],"Protestantism grew out of his protest. That is called the Reformation."],
+  ["The Dutch Revolt began in 1568 and ended with peace in 1648. What is this war called because of that?",["The Eighty Years' War","The Hundred Years' War","The Thirty Years' War"],"1648 − 1568 = 80 years. After that the Republic was officially an independent country."]]],
+regenten:[
+ [["How were goods carried through the town?",["by boat along the canals","by lorry"],"The canals were the roads of the town."],
+  ["What turned to grind grain?",["a windmill","a car"],"Windmills ground grain, sawed wood and pumped water away."]],
+ [["What does VOC stand for?",["Dutch East India Company","Very Old Company","Voyage Ocean Club"],"The VOC, founded in 1602, traded with Asia. It was the first company with shares."],
+  ["Why do we not just call this century 'golden'?",["The wealth also came from slavery and violence","It rained a lot","There was no gold"],"For some it was a time of wealth, art and science. For others, of exploitation. Both belong to the story."]],
+ [["Who ran the Republic?",["Rich citizens: the regents","A king","The Pope"],"No king but a republic: that was very unusual in Europe at the time."],
+  ["A VOC ship took about 8 months to sail to Asia. About how many days is that?",["240","80","800"],"8 × 30 = 240 days at sea, with rotten food and disease. Many sailors never came back."]]],
+pruiken:[
+ [["What did people write with in this time?",["a goose quill","a ballpoint pen"],"You dipped the quill in a pot of ink."],
+  ["How did you travel to another town?",["by coach or towboat","by train"],"A towboat (trekschuit) was a boat pulled along by a horse."]],
+ [["What is the Enlightenment?",["A time when people started trusting reason and science","The invention of the light bulb","A big party"],"Thinkers believed you should think for yourself instead of just believing everything."],
+  ["Which Frenchman was in charge here around 1810?",["Napoleon","Columbus","Luther"],"Napoleon brought in fixed surnames, the metre and the civil register. We still have them."]],
+ [["What does 'liberty, equality and fraternity' mean?",["The motto of the French Revolution","The name of a ship","A VOC law"],"The idea that all people have equal rights comes from this time."],
+  ["The Netherlands abolished slavery in Suriname and the Antilles in 1863. How many years after the French Revolution of 1789 was that?","74","1863 − 1789 = 74 years. For a long time equality did not apply to everyone. On 1 July the abolition is remembered: Keti Koti."]]],
+stoom:[
+ [["What does a train run on?",["rails","water"],"Iron rails made it possible for heavy wagons to travel fast."],
+  ["What came out of a factory chimney?",["smoke","water"],"In the factory, coal burned to make the steam engine work."]],
+ [["What did a steam engine do?",["Make machines turn using the power of steam","Clean water","Bake bread"],"Boiling water makes steam, steam pushes a piston, the piston turns a wheel. One machine did the work of dozens of people."],
+  ["Why did so many people move to the towns in this time?",["There was work in the factories","The air was healthier","There was more space"],"That is called industrialisation. The workers often lived in small, damp houses."]],
+ [["What changed because of Thorbecke's constitution of 1848?",["The king got less power, parliament more","The Netherlands became a republic","Women got the vote"],"Since 1848 the ministers are responsible, not the king. Women's suffrage only came in 1919."],
+  ["A hand weaver made 2 metres of cloth a day. A steam loom made 40 metres. How many times as fast is that?","20","40 ÷ 2 = 20 times as fast. Cloth got cheaper, but many home weavers lost their work."]]],
+oorlogen:[
+ [["What do we do on 4 May at eight in the evening?",["keep two minutes' silence","set off fireworks"],"We remember the people who died in the war."],
+  ["What is peace?",["when there is no war","when it is the holidays"],"In peacetime people can live, work and go to school safely."]],
+ [["What does 'going into hiding' mean?",["Hiding from the occupier","Learning to swim","Fleeing to England"],"Jewish people, resistance fighters and men who did not want to work in Germany hid in attics and on farms."],
+  ["What was the Hunger Winter?",["The winter of 1944–1945 with almost no food in the west of the Netherlands","A harsh winter in the Middle Ages","A winter without snow"],"People ate tulip bulbs and walked for days to farmers for a few potatoes."]],
+ [["Of the roughly 140,000 Jewish people in the Netherlands, how many were murdered in the war?",["Over 100,000","About 10,000","About 1,000"],"About three in four. That is the highest share in Western Europe. This murder of the Jews is called the Holocaust or Shoah."],
+  ["Which organisation was founded in 1945 to prevent new world wars?",["The United Nations","The VOC","The Hanseatic League"],"Almost all countries talk to each other at the UN. Soon afterwards came the Universal Declaration of Human Rights."]]],
+tv:[
+ [["What do you use to call someone?",["a telephone","a fridge"],"In the past the phone was fixed to the wall with a cord."],
+  ["What can you do with a computer?",["write, calculate and search","wash up"],"The first computers were as big as a classroom."]],
+ [["What happened in the flood of 1953?",["The dykes in Zeeland broke in a heavy storm","The Rhine dried up","Amsterdam flooded"],"More than 1800 people drowned. After that the Delta Works were built."],
+  ["How did many new Dutch people come here in the 1960s?",["As guest workers, to work in factories","As tourists","As explorers"],"There was more work than people. Workers came from countries such as Turkey and Morocco, and many stayed."]],
+ [["What is the European Union at heart?",["A partnership of countries for trade and peace","One country with one government","An army"],"It started in 1952 with six countries organising coal and steel together, so that war between them became impossible."],
+  ["In 1960, 1 in 4 families had a television. In a street of 60 families, how many families is that?","15","60 ÷ 4 = 15. The rest went to watch at the neighbours'."]]],
+nu:[
+ [["What is there now that grandma and grandpa did not have in the past?",["a tablet","a bike"],"Bikes have been around for a long time. Tablets have only existed for a short time."],
+  ["What do we call the story of the past?",["history","PE"],"What you do today will be history later too."]],
+ [["What is a source for a historian?",["Something from the time itself: a letter, photo or object","A made-up story","A tap"],"In fifty years your photo will be a source: it shows what it was like here then."],
+  ["What would best tell a historian about your life in 100 years?",["Your photos and messages","Your favourite colour","Your shoe size"],"But be careful: digital files get lost faster than paper. Keeping things does not happen by itself."]],
+ [["Why should you always ask who made a source and why?",["Every maker has their own point of view","Old sources are always wrong","New sources are always true"],"A diary, a newspaper and an advert each tell a different story about the same day. That is called source criticism."],
+  ["In 50 years your photo will be a source. Which year is that, counting from 2026?","2076","2026 + 50 = 2076. What would a child then find strange about your photo?"]]],
+toekomst:[
+ [["What is the future?",["what is still to come","what has already happened"],"Yesterday is the past. Tomorrow is the future."],
+  ["Who makes the future?",["all of us","nobody"],"What people choose now decides what things will be like later."]],
+ [["Why do we learn history if it is about the past?",["To understand how things came to be the way they are","To know dates","Because everything used to be better"],"If you know how something started, you can choose better what should stay and what should change."],
+  ["Which invention changed life the fastest?",["The internet: in thirty years almost everyone uses it","The printing press: within a year everyone was reading","The wheel: everywhere within a month"],"Changes are getting faster and faster. The printing press took centuries, the smartphone ten years."]],
+ [["What is the difference between a prediction and a scenario?",["A scenario is one possible future, alongside others","A scenario is always true","There is no difference"],"Scientists work out several scenarios: what happens if we do nothing, and what if we do something?"],
+  ["On the timeline, the era of hunters and farmers lasted thousands of years and the era of TV and computers 75 years. What does that tell you?",["Life is changing faster and faster","Nothing happened in the past","Time goes slower now"],"The eras get shorter because more changes in a short time. What will your era be called?"]]]
+};D.M.forEach(function(m){if(M[m.id])m.more=M[m.id]})})(window.TR_DATA);

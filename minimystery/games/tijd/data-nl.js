@@ -212,3 +212,91 @@ return{lang:"nl",TL0:TL0,T:T,TYPES:TYPES,TIK:TIK,NOOR:NOOR,ROOMS:ROOMS,OPEN:OPEN
     doelen0:"Groep 3–4 (SLO, tijd): besef van 'lang geleden', vroeger en nu vergelijken aan concrete dingen (vervoer, licht, kleding, huizen), eenvoudige tijdsbegrippen. Jaartallen en de namen van de tijdvakken zijn voor deze leeftijd nog geen doel; die komen vanaf groep 5.",
     doelen:"Kerndoel 52 (tijdvakken en kenmerken), 53 (belangrijke personen en gebeurtenissen), 51 (historische bronnen gebruiken); daarnaast samenwerken, waarnemen en redeneren."}}
 })();
+
+/* ===== Verdieping per tijdlek (shared/meer.js): per niveau twee extra stappen met uitleg. Goede antwoord staat eerst. ===== */
+(function(D){var M={
+jagers:[
+ [["Waar woonden de jagers?",["in tenten van dierenhuid","in een flat"],"Ze trokken rond achter de dieren aan. Een tent kun je meenemen."],
+  ["Waarvan maakten ze hun gereedschap?",["van steen","van plastic"],"Daarom heet deze tijd ook de steentijd. Een scherpe vuursteen was hun mes."]],
+ [["Waarom heet deze tijd de steentijd?",["Gereedschap werd van steen gemaakt","Mensen woonden in stenen huizen","Het was erg koud"],"Van vuursteen sloeg je messen, bijlen en pijlpunten. Metaal kende nog niemand."],
+  ["Wat hadden boeren nodig dat jagers niet nodig hadden?",["Een vaste plek met akkers en een voorraadschuur","Snelle paarden","Schepen"],"Wie zaait, moet blijven tot de oogst. Zo ontstonden de eerste dorpen."]],
+ [["Hoe weten we iets over de jagers en boeren, terwijl ze niet konden schrijven?",["Door opgravingen: botten, scherven en gereedschap","Uit hun dagboeken","Van oude foto's"],"De tijd zonder geschreven bronnen heet de prehistorie. Archeologen lezen de bodem als een boek."],
+  ["De eerste boeren kwamen hier rond 5300 voor Christus. Hoeveel jaar geleden is dat, gerekend vanaf 2026?","7326","5300 + 2026 = 7326 jaar. Voor en na Christus tel je bij elkaar op."]]],
+romeinen:[
+ [["Wat droeg een Romeinse soldaat?",["een helm en een schild","een pet en een rugzak"],"Met helm, schild en zwaard beschermde hij de grens."],
+  ["Waarvan bouwden de Romeinen hun huizen?",["van steen","van ijs"],"De Romeinen bouwden met steen en dakpannen. Dat was hier helemaal nieuw."]],
+ [["Hoe heet de taal van de Romeinen?",["Latijn","Engels","Frans"],"Veel Nederlandse woorden komen uit het Latijn: muur (murus), straat (strata), kelder (cellarium)."],
+  ["Hoe heette de grens van het Romeinse rijk, langs de Rijn?",["De limes","De dijk","De muur"],"Limes betekent grens. Langs de Rijn stonden forten en wachttorens. Het is nu werelderfgoed."]],
+ [["De Romeinen kwamen hier rond 50 voor Christus en vertrokken rond 400 na Christus. Hoe lang waren ze er ongeveer?","450","50 + 400 = 450 jaar. Dat is langer dan Nederland als land bestaat."],
+  ["Welk Romeins getal is 2026?",["MMXXVI","MMXVI","MCMXXVI"],"M = 1000, X = 10, V = 5, I = 1. MM + XX + VI = 2000 + 20 + 6."]]],
+ridders:[
+ [["Waar woonde een ridder?",["in een kasteel","in een tent"],"Een kasteel had dikke muren en een gracht om vijanden buiten te houden."],
+  ["Waarop reed een ridder?",["op een paard","op een fiets"],"Het harnas was zwaar. Zonder paard kwam een ridder niet ver."]],
+ [["Wie bracht het christendom naar deze streken?",["Monniken zoals Willibrord","Romeinse soldaten","Vikingen"],"Willibrord kwam rond 690 uit Engeland. Hij stichtte kerken en kloosters, onder andere in Utrecht."],
+  ["Wie konden er in deze tijd lezen en schrijven?",["Bijna alleen monniken en priesters","Iedereen","Alleen ridders"],"Er waren geen scholen voor gewone mensen. Kloosters waren de bibliotheken van die tijd."]],
+ [["Karel de Grote werd in het jaar 800 tot keizer gekroond. Waarom was zijn rijk zo bijzonder?",["Het besloeg een groot deel van West-Europa","Het lag in Amerika","Het had geen leger"],"Van Noord-Spanje tot Duitsland. Hij liet scholen stichten en reisde rond, want een vaste hoofdstad was er niet."],
+  ["Waarom plunderden de Vikingen juist kloosters en handelsplaatsen zoals Dorestad?",["Daar lag veel rijkdom en weinig verdediging","Ze haatten boeken","Ze zochten een plek om te wonen"],"Dorestad, bij het huidige Wijk bij Duurstede, was een rijke handelsstad aan de rivier: makkelijk bereikbaar per schip."]]],
+steden:[
+ [["Wat kocht je op de markt?",["brood, vis en stof","een telefoon"],"Op het marktplein kwamen boeren en handelaren hun spullen verkopen."],
+  ["Hoe kwam je een stad binnen?",["door de stadspoort","door de lucht"],"De poort ging 's nachts dicht. Wie te laat was, moest buiten slapen."]],
+ [["Wat was de Hanze?",["Een samenwerking van handelssteden","Een soort munt","Een ridderorde"],"Steden als Deventer, Zwolle en Kampen handelden samen met steden rond de Oostzee. Samen stonden ze sterker."],
+  ["Hoe werd je meester in een ambacht?",["Eerst leerling, dan gezel, dan een meesterproef","Je kocht een winkel","De koning wees je aan"],"De meesterproef was een werkstuk waarmee je liet zien dat je het vak beheerste. Vandaar het woord meesterwerk."]],
+ [["Waarom zeiden mensen: 'stadslucht maakt vrij'?",["Wie een jaar en een dag in de stad woonde, was vrij van zijn heer","In de stad was de lucht schoner","In de stad betaalde je geen belasting"],"Op het platteland was je vaak horige van een heer. De stad bood vrijheid en werk."],
+  ["Rond 1350 stierf ongeveer een derde van de Europeanen aan de pest. In een stad van 6000 inwoners: hoeveel mensen zijn dat?","2000|2.000","6000 : 3 = 2000. Steden waren vies en dichtbevolkt, waardoor ziektes zich snel verspreidden."]]],
+ontdekkers:[
+ [["Wat gebruikten zeelieden om de weg te vinden?",["een kompas","een telefoon"],"De naald van een kompas wijst altijd naar het noorden."],
+  ["Wat zochten de ontdekkers?",["nieuwe landen en specerijen","speelgoed"],"Peper en kaneel waren toen zo duur als goud."]],
+ [["Wie voer in 1492 naar Amerika?",["Columbus","Rembrandt","Karel de Grote"],"Columbus dacht dat hij in India was. Daarom noemde men de bewoners eeuwenlang ten onrechte indianen."],
+  ["Wat veranderde er door de drukpers?",["Boeken werden goedkoper, dus meer mensen gingen lezen","Boeken werden mooier versierd","Er kwamen minder boeken"],"Een monnik deed maanden over één boek. Een drukker maakte er honderden in dezelfde tijd."]],
+ [["Wat wilde Luther in 1517 met zijn stellingen?",["De kerk veranderen, onder andere de handel in aflaten stoppen","Een nieuw land stichten","De koning afzetten"],"Uit zijn protest ontstond het protestantisme. Dat heet de Reformatie of Hervorming."],
+  ["De Opstand begon in 1568 en eindigde met de vrede in 1648. Hoe wordt deze oorlog daarom genoemd?",["De Tachtigjarige Oorlog","De Honderdjarige Oorlog","De Dertigjarige Oorlog"],"1648 − 1568 = 80 jaar. Daarna was de Republiek officieel een onafhankelijk land."]]],
+regenten:[
+ [["Waarmee werden spullen door de stad vervoerd?",["met boten door de gracht","met vrachtwagens"],"De grachten waren de wegen van de stad."],
+  ["Wat draaide er om graan te malen?",["een molen","een auto"],"Molens maalden graan, zaagden hout en pompten water weg."]],
+ [["Waar staat VOC voor?",["Verenigde Oost-Indische Compagnie","Vereniging Oude Compagnons","Vrije Oceaan Club"],"De VOC, opgericht in 1602, handelde met Azië. Het was het eerste bedrijf met aandelen."],
+  ["Waarom noemen we deze eeuw niet alleen maar 'gouden'?",["De rijkdom kwam ook door slavernij en geweld","Het regende veel","Er was geen goud"],"Voor sommigen was het een tijd van rijkdom, kunst en wetenschap. Voor anderen van uitbuiting. Allebei hoort bij het verhaal."]],
+ [["Wie bestuurden de Republiek?",["Rijke burgers: de regenten","Een koning","De paus"],"Geen koning maar een republiek: dat was in het Europa van toen heel ongewoon."],
+  ["Een VOC-schip deed ongeveer 8 maanden over de reis naar Azië. Hoeveel dagen is dat ongeveer?",["240","80","800"],"8 × 30 = 240 dagen op zee, met bedorven eten en ziekte. Veel zeelieden kwamen niet terug."]]],
+pruiken:[
+ [["Waarmee schreven mensen in deze tijd?",["met een ganzenveer","met een balpen"],"Je doopte de veer in een potje inkt."],
+  ["Hoe reisde je naar een andere stad?",["met een koets of een trekschuit","met de trein"],"Een trekschuit is een boot die door een paard werd getrokken."]],
+ [["Wat is de Verlichting?",["Een tijd waarin mensen gingen vertrouwen op verstand en wetenschap","De uitvinding van de gloeilamp","Een groot feest"],"Denkers vonden dat je zelf moest nadenken in plaats van alles zomaar te geloven."],
+  ["Welke Fransman was hier rond 1810 de baas?",["Napoleon","Columbus","Luther"],"Napoleon voerde vaste achternamen, de meter en de burgerlijke stand in. Die hebben we nog steeds."]],
+ [["Wat betekent 'vrijheid, gelijkheid en broederschap'?",["De leus van de Franse Revolutie","De naam van een schip","Een wet van de VOC"],"Het idee dat alle mensen gelijke rechten hebben, komt uit deze tijd."],
+  ["Nederland schafte de slavernij in Suriname en de Antillen af in 1863. Hoeveel jaar na de Franse Revolutie van 1789 was dat?","74","1863 − 1789 = 74 jaar. Gelijkheid gold lange tijd niet voor iedereen. Op 1 juli herdenken we de afschaffing: Keti Koti."]]],
+stoom:[
+ [["Waar rijdt een trein op?",["op rails","op water"],"IJzeren rails maakten het mogelijk om zware wagons snel te laten rijden."],
+  ["Wat kwam er uit de schoorsteen van een fabriek?",["rook","water"],"In de fabriek brandde kolen om de stoommachine te laten draaien."]],
+ [["Wat deed een stoommachine?",["Machines laten draaien met de kracht van stoom","Water schoonmaken","Brood bakken"],"Water koken geeft stoom, stoom duwt een zuiger, de zuiger draait een wiel. Eén machine deed het werk van tientallen mensen."],
+  ["Waarom verhuisden zoveel mensen in deze tijd naar de stad?",["Daar was werk in de fabrieken","Daar was de lucht gezonder","Daar was meer ruimte"],"Dat heet de industrialisatie. De arbeiders woonden vaak in kleine, vochtige huisjes."]],
+ [["Wat veranderde er door de grondwet van Thorbecke in 1848?",["De koning kreeg minder macht, het parlement meer","Nederland werd een republiek","Vrouwen kregen kiesrecht"],"Sinds 1848 zijn de ministers verantwoordelijk, niet de koning. Vrouwenkiesrecht kwam pas in 1919."],
+  ["Een wever deed met de hand 2 meter stof per dag. Een stoomweefgetouw deed 40 meter. Hoeveel keer zo snel is dat?","20","40 : 2 = 20 keer zo snel. Stof werd goedkoper, maar veel thuiswevers verloren hun werk."]]],
+oorlogen:[
+ [["Wat doen we op 4 mei om acht uur 's avonds?",["twee minuten stil zijn","vuurwerk afsteken"],"We denken aan de mensen die in de oorlog zijn omgekomen."],
+  ["Wat is vrede?",["als er geen oorlog is","als het vakantie is"],"In vrede kunnen mensen veilig wonen, werken en naar school."]],
+ [["Wat betekent 'onderduiken'?",["Je verstoppen voor de bezetter","Leren zwemmen","Vluchten naar Engeland"],"Joden, verzetsmensen en mannen die niet in Duitsland wilden werken, verstopten zich op zolders en boerderijen."],
+  ["Wat was de Hongerwinter?",["De winter van 1944–1945 met bijna geen eten in het westen van Nederland","Een strenge winter in de middeleeuwen","Een winter zonder sneeuw"],"Mensen aten tulpenbollen en liepen dagen naar boeren voor wat aardappels."]],
+ [["Hoeveel van de ongeveer 140.000 Joden in Nederland werden in de oorlog vermoord?",["Ruim 100.000","Ongeveer 10.000","Ongeveer 1.000"],"Ongeveer drie op de vier. Dat is het hoogste aandeel van West-Europa. Deze moord op de Joden heet de Holocaust of Sjoa."],
+  ["Welke organisatie werd in 1945 opgericht om nieuwe wereldoorlogen te voorkomen?",["De Verenigde Naties","De VOC","De Hanze"],"In de VN praten bijna alle landen met elkaar. Kort daarna volgde de Universele Verklaring van de Rechten van de Mens."]]],
+tv:[
+ [["Waarmee bel je iemand op?",["met een telefoon","met een koelkast"],"Vroeger zat de telefoon met een snoer aan de muur vast."],
+  ["Wat kun je met een computer?",["schrijven, rekenen en zoeken","afwassen"],"De eerste computers waren zo groot als een klaslokaal."]],
+ [["Wat gebeurde er bij de watersnood van 1953?",["De dijken in Zeeland braken door bij een zware storm","De Rijn droogde op","Amsterdam liep onder"],"Meer dan 1800 mensen verdronken. Daarna werden de Deltawerken gebouwd."],
+  ["Hoe kwamen in de jaren zestig veel nieuwe Nederlanders hierheen?",["Als gastarbeider, om in fabrieken te werken","Als toerist","Als ontdekkingsreiziger"],"Er was meer werk dan mensen. Arbeiders uit onder meer Turkije en Marokko kwamen en velen bleven."]],
+ [["Wat is de Europese Unie in de kern?",["Een samenwerking van landen voor handel en vrede","Eén land met één regering","Een leger"],"Het begon in 1952 met zes landen die samen kolen en staal regelden, zodat oorlog onderling onmogelijk werd."],
+  ["In 1960 had 1 op de 4 gezinnen een televisie. In een straat van 60 gezinnen: hoeveel gezinnen zijn dat?","15","60 : 4 = 15. De rest ging bij de buren kijken."]]],
+nu:[
+ [["Wat is er nu dat opa en oma vroeger niet hadden?",["een tablet","een fiets"],"Fietsen waren er al lang. Tablets bestaan nog maar kort."],
+  ["Hoe heet het verhaal van vroeger?",["geschiedenis","gymles"],"Wat jij vandaag doet, is later ook geschiedenis."]],
+ [["Wat is een bron voor een historicus?",["Iets uit een tijd zelf: een brief, foto of voorwerp","Een verzonnen verhaal","Een kraan"],"Jullie foto is over vijftig jaar een bron: hij laat zien hoe het hier toen was."],
+  ["Wat zou een historicus over 100 jaar het best over jouw leven vertellen?",["Je foto's en berichten","Je lievelingskleur","Je schoenmaat"],"Maar let op: digitale bestanden gaan sneller verloren dan papier. Bewaren gaat niet vanzelf."]],
+ [["Waarom moet je bij een bron altijd vragen wie hem maakte en waarom?",["Elke maker heeft een eigen standpunt","Oude bronnen zijn altijd fout","Nieuwe bronnen zijn altijd waar"],"Een dagboek, een krant en een reclame vertellen elk een ander verhaal over dezelfde dag. Dat heet bronnenkritiek."],
+  ["Jullie foto is over 50 jaar een bron. In welk jaar is dat, gerekend vanaf 2026?","2076","2026 + 50 = 2076. Wat zou een kind dan raar vinden aan jullie foto?"]]],
+toekomst:[
+ [["Wat is de toekomst?",["wat nog moet komen","wat al geweest is"],"Gisteren is het verleden. Morgen is de toekomst."],
+  ["Wie maakt de toekomst?",["wij allemaal","niemand"],"Wat mensen nu kiezen, bepaalt hoe het later wordt."]],
+ [["Waarom leren we geschiedenis als het over vroeger gaat?",["Om te begrijpen hoe het nu zo gekomen is","Om jaartallen te kennen","Omdat vroeger alles beter was"],"Wie weet hoe iets ontstaan is, kan beter kiezen wat er moet blijven en wat er anders moet."],
+  ["Welke uitvinding veranderde het leven het snelst?",["Internet: in dertig jaar gebruikt bijna iedereen het","De boekdrukkunst: binnen een jaar las iedereen","Het wiel: binnen een maand overal"],"Veranderingen gaan steeds sneller. De drukpers deed er eeuwen over, de smartphone tien jaar."]],
+ [["Wat is het verschil tussen een voorspelling en een scenario?",["Een scenario is één mogelijke toekomst, naast andere","Een scenario is altijd waar","Er is geen verschil"],"Wetenschappers rekenen meer scenario's door: wat gebeurt er als we niets doen, en wat als we wel iets doen?"],
+  ["Op de tijdlijn duurde het tijdvak van jagers en boeren duizenden jaren en dat van televisie en computer 75 jaar. Wat zegt dat?",["Het leven verandert steeds sneller","Vroeger gebeurde er niets","De tijd gaat nu langzamer"],"De tijdvakken worden korter omdat er in korte tijd meer verandert. Wat wordt het tijdvak van jullie?"]]]
+};D.M.forEach(function(m){if(M[m.id])m.more=M[m.id]})})(window.TR_DATA);

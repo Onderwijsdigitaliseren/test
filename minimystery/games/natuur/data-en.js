@@ -192,3 +192,112 @@ return{lang:"en",T:T,TYPES:TYPES,TIK:TIK,NOOR:NOOR,ROOMS:ROOMS,OPEN:OPEN,OPEN0:O
     doelen:"Ages 10–12 (Dutch groep 7–8; SLO nature, core objectives 'kerndoelen' 39/40/41): ecosystems and food webs, biodiversity, cycles (water, soil, carbon), cause and effect in nature, the influence of people and climate, doing research: observing, measuring, comparing, drawing conclusions."}
   ]}
 })();
+
+/* ===== Going deeper per station (shared/meer.js): two extra steps with explanation per level. Correct answer always first. ===== */
+(function(D){var M={
+bloemen:[
+ [["What does a bee get from a flower?",["nectar and pollen","water and sand"],"Nectar is sweet juice: bees make honey from it. Pollen is food for the baby bees."],
+  ["Which flower colour can a bee see best?",["purple","red"],"Bees see purple and blue really well. To a bee, red looks almost black."]],
+ [["Why is it good if something is flowering all the way from March to October?",["Then bees have food all season","Then fewer bees are needed","Then the grass grows faster"],"A bee cannot wait for months. If everything only flowers in May, there is nothing to eat in August."],
+  ["A bee visits about 1000 flowers a day. How many flowers is that in 5 days?","5000|5,000","5 × 1000 = 5000. That is why one bee colony needs a whole neighbourhood full of flowers."]],
+ [["What is the difference between nectar and pollen for a bee?",["Nectar gives energy (sugar), pollen gives protein for the larvae","Nectar is for the queen, pollen for the workers","There is no difference"],"Nectar is fuel for flying. Pollen is building material: without protein the larvae cannot grow."],
+  ["A verge of 50 m² has 10 flowers per m². After mowing, 20% is left. How many flowers are still standing?","100","50 × 10 = 500 flowers. 20% of 500 is 100. That is why councils now often mow in strips: something is always left standing."]]],
+bomen:[
+ [["What grows on an oak tree?",["acorns","apples"],"Acorns are the seeds of the oak. Squirrels and jays hide them, and that is how new oaks grow."],
+  ["Where are the roots of a tree?",["under the ground","in the branches"],"The roots drink water from the soil and hold the tree firmly in place."]],
+ [["In winter, how can you tell fastest that a tree is a conifer?",["It is still green","It has no branches","It is smaller"],"Most conifers keep their needles all year. Broadleaf trees are bare in winter."],
+  ["What does a tree do with its leaves in summer?",["It makes food from sunlight","It catches rain to drink","It keeps animals away"],"Leaves contain chlorophyll. With it the tree turns sunlight, water and air into its own sugar. That is called photosynthesis."]],
+ [["What does a tree need for photosynthesis?",["Sunlight, water and carbon dioxide","Sunlight, oxygen and soil","Only water and fertiliser"],"Light + water + CO₂ becomes sugar and oxygen. The oxygen you breathe comes from plants."],
+  ["A big tree takes in about 25 kg of CO₂ a year. How many kilos is that for an avenue of 40 trees?","1000|1,000","40 × 25 = 1000 kg, a whole tonne. A car gives that off in about 6000 kilometres."]]],
+beestjes:[
+ [["How many legs does an insect have?",["6","8"],"All insects have six legs. A spider has eight, so it is not an insect."],
+  ["What do you do with the stone when you have finished looking?",["put it back","take it home"],"Under the stone it is dark and damp. It is the minibeasts' home."]],
+ [["You count the legs of a minibeast: there are 8. What is it?",["A spider","An ant","A beetle"],"Eight legs means an arachnid. Ants and beetles are insects: they have six."],
+  ["Why are woodlice and worms useful?",["They clear up dead leaves and turn them into soil","They eat weeds","They keep mosquitoes away"],"Without these recyclers, the woods would be knee-deep in old leaves."]],
+ [["Which three parts make up an insect's body?",["Head, thorax and abdomen","Head, body and tail","Head, shell and legs"],"The six legs and the wings are always attached to the thorax. That is how you recognise any insect."],
+  ["On 1 m² you count 12 minibeasts. A park is 250 m². About how many minibeasts live there?","3000|3,000","12 × 250 = 3000. Biologists work like this: count a small patch carefully and then scale up. That is called a sample."]]],
+vogels:[
+ [["Which bird says coo-coo?",["the pigeon","the sparrow"],"The pigeon coos. The sparrow chirps: cheep, cheep."],
+  ["Why does a bird sing?",["to say: this is my place","because it is hungry"],"With its song a bird tells other birds that someone already lives here."]],
+ [["In which season do you hear the most birds singing?",["In spring","In autumn","In winter"],"In spring birds look for a partner and a place for their nest. That is what they sing for."],
+  ["A blackbird feeds its chicks 100 times a day. How many times is that in a week?","700","7 × 100 = 700 trips, each time with a worm or a caterpillar. Without insects that cannot work."]],
+ [["Why do some city birds sing higher and louder than in the countryside?",["To be heard above the low traffic noise","Because they eat more in the city","Because the city is warmer"],"Traffic rumbles low. A high song is drowned out less. Animals adapt to their surroundings."],
+  ["Why do birdwatchers always count for the same length of time and at the same time of day?",["Otherwise you cannot compare counts fairly","Because birds sing loudest then","Because it is the law"],"If you count for longer, you hear more. Only when the method is the same does a difference tell you something about the place."]]],
+water:[
+ [["What does a plant do with water?",["drink it through its roots","swim in it"],"A plant sucks up water through its roots. Without water it droops."],
+  ["What do you put in a dish of water for bees?",["little stones","soap"],"A bee can stand safely on a stone and drink without getting wet."]],
+ [["What happens to a puddle when the sun shines?",["The water evaporates","The water always soaks into the paving","The water turns to ice"],"Evaporating means water turns into invisible water vapour and rises. High in the sky it becomes a cloud again."],
+  ["Put in order: rain, cloud, evaporating. What comes after evaporating?",["Cloud","Rain","Nothing"],"Evaporating, cloud, rain, and then round again. The water on Earth is always the same water."]],
+ [["A roof of 60 m² catches 10 litres of water per m² in a shower. How many litres is that?","600","60 × 10 = 600 litres in one shower. With a water butt it goes to the garden instead of the sewer."],
+  ["What is the advantage of a green roof or a rain garden in the neighbourhood?",["It holds on to rain, so streets flood less quickly","It makes the rain cleaner","It attracts more rain"],"Green works like a sponge: it soaks up the shower and lets the water go slowly."]]],
+bodem:[
+ [["What does an earthworm eat?",["dead leaves","birds"],"The worm pulls leaves into the ground and eats them. What it poos out is new soil."],
+  ["Is soil wet or dry just after it has rained?",["wet","dry"],"Soil holds water like a sponge. Plants drink from it."]],
+ [["Why is loose soil better for plants than hard-packed soil?",["Water and air can reach the roots","Loose soil is warmer","Hard soil has more worms"],"Roots need water and air. Worms dig tunnels and keep the soil loose."],
+  ["What is it called when leaves and peel rot down into new soil?",["Composting","Evaporating","Pollinating"],"In a compost heap, worms, fungi and bacteria do the work. After a year you have rich soil."]],
+ [["Which group does most of the recycling in the soil?",["Fungi and bacteria","Moles","Slugs"],"You cannot see them, but they break dead material down into nutrients that plants take up again."],
+  ["In a garden of 80 m², 60 m² is paved. What percentage of the garden is open soil?","25","Open is 80 − 60 = 20 m². 20 out of 80 is a quarter: 25%."]]],
+weer:[
+ [["What do you wear when it is cold?",["a thick coat","swimming trunks"],"You put on a coat. A bee cannot: she stays inside when it is cold."],
+  ["Where does rain come from?",["from a cloud","from the sun"],"A cloud is made of lots of tiny droplets. When they get too heavy, they fall."]],
+ [["What do you measure the temperature with?",["A thermometer","A weather vane","A rain gauge"],"A thermometer measures degrees Celsius. A weather vane shows the wind direction, a rain gauge catches rain."],
+  ["Branches are moving and leaves are blowing across the street. What kind of wind is that?",["A strong breeze","No wind at all","A hurricane"],"That is how you estimate wind strength without a meter: smoke going straight up means no wind, moving branches mean a strong breeze."]],
+ [["What is the difference between weather and climate?",["Weather is today, climate is the average over 30 years","Weather is on land, climate is at sea","There is no difference"],"One cold day says nothing about the climate. Only over decades can you see whether it is getting warmer."],
+  ["In the morning it is 9 degrees and in the afternoon 17 degrees. Bees fly from 12 degrees. The temperature rises evenly over 8 hours. After how many hours can the bees fly?","3","1 degree is added each hour (8 degrees in 8 hours). From 9 to 12 is 3 degrees, so after 3 hours."]]],
+afval:[
+ [["Where does an empty juice carton go?",["in the bin","on the pavement"],"In the bin, no animal can eat it or get stuck in it."],
+  ["Which one stays around the longest?",["a plastic bottle","an apple core"],"An apple core is gone in a few weeks. A plastic bottle stays for hundreds of years."]],
+ [["Why is a cigarette butt on the street bad for nature?",["It contains poison that gets into the water","It is too small to see","Birds build nests with it"],"A filter contains plastic and poisons. When it rains, they wash into the soil and the ditch."],
+  ["A can lasts 50 years, a banana skin 1 year. How many times longer does the can last?","50","50 divided by 1 is 50 times longer. Fruit waste rots, metal and plastic hardly at all."]],
+ [["What are microplastics?",["Bits of plastic smaller than 5 millimetres","Plastic that disappears by itself","Plastic made from plants"],"Plastic breaks into smaller and smaller pieces but never disappears. That is how it ends up in water, soil and animals."],
+  ["In the Netherlands there is a 15 cent deposit on small bottles. A class picks up 80 bottles. How many euros is that? Type it like 12.00","12.00|12|12,00","80 × 0.15 = 12 euros. Since small bottles got a deposit, far fewer lie in the street."]]],
+sporen:[
+ [["Who leaves a feather behind?",["a bird","a dog"],"Birds lose a feather now and then and grow a new one. That is called moulting."],
+  ["Who makes a web?",["a spider","a snail"],"A spider catches flies and mosquitoes in her web."]],
+ [["You see a paw print with four toes and claws. Whose is it most often?",["A dog's","A pigeon's","A snail's"],"A dog cannot pull in its claws: you see them in the print. A cat walks with its claws pulled in."],
+  ["Under a tree lie empty, cracked-open nutshells. Who was here?",["A squirrel or a mouse","A hedgehog","A blackbird"],"Rodents gnaw the shell open. From the shape of the hole you can even tell which animal it was."]],
+ [["Why do biologists look for tracks instead of the animals themselves?",["Many animals are shy or come out at night","Tracks are prettier","Animals may not be watched"],"You rarely see a hedgehog or a fox. Droppings, hairs, feeding signs and prints show they are there."],
+  ["What does an owl pellet tell you?",["What the owl has eaten: it has bones and fur in it","How old the owl is","Where the owl sleeps"],"An owl swallows a mouse whole and coughs up the bones and fur later. Researchers take pellets apart."]]],
+seizoen:[
+ [["In which season do trees get blossom?",["in spring","in winter"],"In spring it gets warmer and lighter. Then come buds, blossom and leaves."],
+  ["How many seasons are there?",["4","2"],"Spring, summer, autumn and winter. And then it starts all over again."]],
+ [["What does a hedgehog do in winter?",["Hibernate","Fly south","Grow a thicker coat of spines"],"In winter there are hardly any insects to eat. The hedgehog sleeps until spring and lives off its fat."],
+  ["Why do swallows fly to Africa in autumn?",["There are no flying insects here in winter","They are cold","They want to lay eggs there"],"It is all about food. Swallows catch insects in the air, and there are none here in winter."]],
+ [["What causes the seasons?",["The Earth's axis is tilted","The Earth is closer to the sun in summer","The sun burns hotter in summer"],"Because of the tilt, the northern half of the Earth gets more sunlight for half a year and less for the other half."],
+  ["A great tit lays eggs so the chicks hatch at the caterpillar peak. The peak now comes 14 days earlier, the great tit only 6 days earlier. How many days late is the great tit?","8","14 − 6 = 8 days late. The chicks hatch when most caterpillars are already gone. That is called a mismatch."]]],
+schuil:[
+ [["Where does a bird live?",["in a nest","in a hole under water"],"A bird builds a nest from twigs, moss and little feathers."],
+  ["What is good for minibeasts in the garden?",["leaving a pile of twigs","sweeping everything away"],"Hedgehogs, toads and beetles can shelter in a messy corner."]],
+ [["What is a bug hotel?",["A box with hollow stems and holes where wild bees lay eggs","A hive where bees make honey","A trap for mosquitoes"],"Most wild bees live alone. They lay an egg in a little tunnel and seal it up."],
+  ["Why is a hole at the bottom of the fence good for hedgehogs?",["They can walk from garden to garden looking for food","The wind blows through better","The cat can get out"],"A hedgehog walks up to two kilometres a night. One garden is far too small."]],
+ [["What is a wildlife corridor?",["A strip of nature that links habitats together","A road where cars may not drive","A fence around a nature reserve"],"Animals in a small, closed-off area die out sooner. Through a corridor they can reach others of their kind."],
+  ["A hedgehog needs a home range of 20 hectares. A garden is about 100 m² on average. One hectare is 10,000 m². How many gardens is that?","2000|2,000","20 × 10,000 = 200,000 m². Divided by 100 is 2000 gardens. That is why gaps between gardens matter so much."]]],
+bestuiving:[
+ [["What sticks to a bee's legs?",["yellow pollen","mud"],"The pollen sticks and travels along to the next flower."],
+  ["Which fruit do we have thanks to bees?",["strawberries","bread"],"Strawberries, apples, pears and cherries only grow well when bees visit the flowers."]],
+ [["What happens in the flower after pollination?",["A fruit with seeds grows","The flower changes colour","The flower makes more nectar"],"The petals fall off and the base of the flower swells into a fruit. The seeds are inside the fruit."],
+  ["Which plant is pollinated by the wind and not by insects?",["Grass","Apple tree","Lavender"],"Grass does not need pretty flowers or scent: the wind blows the pollen around. That is what causes hay fever."]],
+ [["Why do flowers have colour, scent and nectar?",["To attract pollinators","To scare off plant-eaters","To keep warm"],"The flower pays the bee with nectar, and in return the bee carries the pollen around. Teamwork like this is called mutualism."],
+  ["About three-quarters of our food crops need pollinators. Out of 120 crops, how many is that?","90","Three-quarters of 120 is 120 ÷ 4 × 3 = 90. Without insects the supermarket would look a lot emptier."]]],
+groen:[
+ [["Where can rain soak into the ground?",["in the grass","on the paving"],"Grass and soil let water through. On paving it lies there or runs away."],
+  ["Where is it cooler in summer?",["under a tree","on a stone square"],"Stones get hot in the sun. A tree gives shade and cools things down."]],
+ [["Why is a city warmer than the countryside on a hot day?",["Stone and tarmac hold on to the heat","The sun shines longer in the city","More people breathe out heat"],"That is called the urban heat island effect. Trees and grass cool the neighbourhood, sometimes by several degrees."],
+  ["3 of the 10 steps were green. How many steps were stone?","7","10 − 3 = 7. Together it is always 10: that is how percentages work too, together always 100."]],
+ [["A square of 400 m² is fully paved. The school takes up 30% of the paving for greenery. How many m² of green does that make?","120","10% of 400 is 40, so 30% is 3 × 40 = 120 m²."],
+  ["Which three things does more green in the neighbourhood give you?",["Cooling, rainwater storage and more kinds of animals","More parking, less rain and more heat","Faster cycle paths, cleaner air and fewer birds"],"One measure with three benefits. That is why Dutch towns hold competitions to pull up paving slabs."]]],
+helpen:[
+ [["What do you put outside when it is very hot?",["a dish of water","a candle"],"Birds, hedgehogs and bees are thirsty on a hot day, just like you."],
+  ["What do you do with a flower in the park?",["leave it","pick it"],"A flower that stays is food for bees and makes seeds for next year."]],
+ [["Which flowers help bees the most?",["Native, single flowers such as clover and cornflower","Double garden flowers with lots of petals","Plastic flowers"],"A bee cannot reach the nectar in double garden flowers. Wild native flowers fit our bees perfectly."],
+  ["A packet of flower seeds is enough for 2 m². The playground gets a strip of 12 m². How many packets are needed?","6","12 ÷ 2 = 6 packets."]],
+ [["Why is weed and insect killer bad for the whole food chain?",["The poison also gets into birds and other animals through insects and plants","It makes the flowers ugly","It only works when it rains"],"Poison does not stop at one species. A bird that eats poisoned insects takes it in too."],
+  ["You want to convince the council to mow a verge less often. What is the strongest argument?",["Our count: this many flowers and insects now, and this many after mowing","We think flowers are pretty","Mowing is noisy"],"An opinion can be brushed aside, a measurement cannot. That is how backing up with data works."]]],
+ketting:[
+ [["What does a caterpillar eat?",["leaves","birds"],"A caterpillar eats leaves all day. That is how it grows, until it becomes a butterfly."],
+  ["Where does a plant get its energy from?",["from the sun","from the moon"],"A plant grows from sunlight. All animals eat plants, or animals that eat plants."]],
+ [["What do you call an animal that only eats plants?",["A herbivore","A predator","An omnivore"],"A caterpillar and a rabbit are herbivores. A sparrowhawk is a carnivore. A blackbird eats both: an omnivore."],
+  ["Put in order: sparrowhawk, leaf, sparrow, caterpillar. Who comes last in the chain?",["Sparrowhawk","Leaf","Caterpillar"],"Leaf → caterpillar → sparrow → sparrowhawk. The arrow always means: is eaten by."]],
+ [["What do you call plants in a food chain?",["Producers","Consumers","Decomposers"],"Plants produce their own food from sunlight. Animals are consumers; fungi and bacteria are the decomposers, the clean-up crew."],
+  ["At each step in the chain about 10% of the energy is left. Plants store 1000 units. How much reaches the bird that eats the caterpillar?","10","Caterpillar: 10% of 1000 = 100. Bird: 10% of 100 = 10. That is why there are far more plants than predators."]]]
+};D.S.forEach(function(m){if(M[m.id])m.more=M[m.id]})})(window.NT_DATA);

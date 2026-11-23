@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>De Vergeetmist – automatiseren: sommen, tafels en spelling vlot leren | MiniMystery Educatie</title>
+<link rel="icon" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="description" content="Speurtocht voor groep 3–8 en BSO over automatiseren: splitsen, sommen tot 20 en 100, tafels, deeltafels en spelling tot het vanzelf gaat. Op elk flitsstation eerst de truc, dan bewegend oefenen, dan een flitsronde op tempo. Drie niveaus, zaakcode, begeleidersblad met lesbrief en alle sommen, diploma.">
+<link rel="canonical" href="https://www.minimystery.nl/de-vergeetmist.html">
+<meta property="og:site_name" content="MiniMystery">
+<meta property="og:title" content="MiniMystery Educatie – De Vergeetmist">
+<meta property="og:description" content="De Vergeetmist pakt alles af wat je moet uitrekenen. Train sommen, tafels en spelling tot het vanzelf gaat. Voor groep 3–8 en BSO.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.minimystery.nl/de-vergeetmist.html">
+<meta property="og:locale" content="nl_NL">
+<meta property="og:image" content="https://www.minimystery.nl/assets/og-image.jpg">
+<meta name="theme-color" content="#dde6f3">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Permanent+Marker&family=Nunito:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="shared/platform.css?v=2">
+<link rel="stylesheet" href="shared/kidsmap.css?v=8">
+<link rel="stylesheet" href="games/vlot/game.css?v=1">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"De Vergeetmist","url":"https://www.minimystery.nl/de-vergeetmist.html","description":"Speurtocht over automatiseren voor basisschool (groep 3–8) en BSO: flitsstations in de eigen buurt of in het schoolgebouw. Splitsen, sommen, tafels en spelling tot het vanzelf gaat. Zaakcode, begeleidersblad met lesbrief, diploma.","inLanguage":"nl","gamePlatform":"Webbrowser","genre":["Kinderspel","Speurtocht","Educatie","Rekenen","Spelling"],"audience":{"@type":"EducationalAudience","educationalRole":"student"}}</script>
+</head>
+<body>
+<div id="app">
+  <section class="screen" id="home">
+    <div class="wrap">
+      <div class="row0"><div class="pills"><a class="pill" id="hub" href="educatie/">◂ Educatie</a></div></div>
+      <div class="hero" aria-hidden="true">
+        <svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="92" fill="#fff" stroke="#13304f" stroke-width="6"/><circle cx="100" cy="100" r="80" fill="#eef3fb" stroke="#f5b800" stroke-width="4" stroke-dasharray="6 10"/>
+        <g fill="#c9d4e6"><ellipse cx="72" cy="78" rx="34" ry="17"/><ellipse cx="112" cy="68" rx="36" ry="20"/><ellipse cx="136" cy="86" rx="28" ry="15"/><ellipse cx="88" cy="132" rx="40" ry="16"/><ellipse cx="128" cy="140" rx="26" ry="12"/></g>
+        <g font-family="Fredoka,sans-serif" font-weight="700" font-size="18" fill="#8ea0bd" text-anchor="middle"><text x="62" y="84">6×7</text><text x="136" y="92">3+7</text><text x="92" y="138">sgool</text></g>
+        <path d="M108 44 L84 104 L104 104 L92 156 L126 90 L104 90 Z" fill="#ffd23f" stroke="#13304f" stroke-width="5" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="masthead">
+        <span class="eyebrow" style="color:#5a86c4">MiniMystery Educatie · automatiseren · groep 3–8</span>
+        <h1 id="ttl">De Vergeetmist</h1><span class="tape">Wat je vlot weet, pakt de mist niet af</span>
+      </div>
+      <p class="lead">Om de school hangt een grijze mist. Wie erdoor loopt, vergeet wat hij allang wist: 3 + 7, de tafel van 5, hoe je 'school' schrijft. Alleen wat je zó goed kent dat het vanzelf gaat, pakt de mist niet af. Op flitsstations rond (of in) de school trainen jullie dat: eerst de truc, dan oefenen met je hele lijf, dan een flitsronde. Elk station geeft een flitslamp; alle lampen op een rij en de mist trekt op.</p>
+      <button class="btn ghost sm" id="bHow">Hoe werkt het?</button>
+      <div class="pline" hidden style="display:none"><b id="pRank">–</b><span><b id="pStreak">0</b> Dagen op rij</span><span><b id="pSolved">0</b> Opgelost</span></div>
+      <div class="namebox"><label for="name">Teamnaam (mag leeg, komt op het diploma)</label><input id="name" maxlength="24" autocomplete="off" placeholder="bijv. De Mistverdrijvers"></div>
+      <div class="seglbl">Voor wie</div>
+      <div class="seg two" id="route">
+        <button type="button" data-r="school" aria-pressed="true">School<small>licht educatief</small></button>
+        <button type="button" data-r="bso" aria-pressed="false">BSO<small>speels, meer bewegen</small></button>
+      </div>
+      <div class="seg" id="lvl">
+        <button type="button" data-l="0" aria-pressed="false">Groep 3–4<small>splitsen, tot 20</small></button>
+        <button type="button" data-l="1" aria-pressed="true">Groep 5–6<small>tafels, tot 100</small></button>
+        <button type="button" data-l="2" aria-pressed="false">Groep 7–8<small>komma, %, d/t</small></button>
+      </div>
+      <div class="seg" id="dur" aria-label="Lengte">
+        <button type="button" data-n="kort" aria-pressed="false">Kort<small>6 stations · ±45 min</small></button>
+        <button type="button" data-n="normaal" aria-pressed="true">Normaal<small>8 stations · ±60 min</small></button>
+        <button type="button" data-n="lang" aria-pressed="false">Lang<small>10 stations · ±75 min</small></button>
+      </div>
+      <div class="seg ways" id="len">
+        <button type="button" data-m="map" aria-pressed="true">🚶 Buiten<small>met kaart (gps)</small></button>
+        <button type="button" data-m="street" aria-pressed="false">🚶 Buiten<small>zonder kaart</small></button>
+        <button type="button" data-m="gebouw" aria-pressed="false">🏫 In het gebouw<small>met plekkaartjes</small></button>
+        <button type="button" data-m="in" aria-pressed="false">👣 Binnen<small>lopen op de plaats</small></button>
+        <button type="button" data-m="bank" aria-pressed="false">🛋️ Op de bank<small>zonder lopen</small></button>
+      </div>
+      <button class="btn ghost sm" id="bVoice" aria-pressed="true">🔊 Voorlezen</button>
+      <button class="btn" id="bResume" hidden>Verder met de zaak</button>
+      <button class="btn" id="bGps">Start de zaak van vandaag</button>
+      <button class="btn ghost" id="bRandom">Extra zaak</button>
+      <button class="btn ghost" id="bCode">Zaakcode invullen</button>
+      <button class="btn ghost" id="bPro" hidden></button>
+      <p class="note" id="status"></p>
+      <div id="howT" hidden><ol class="how"><li><b>Voor de begeleider:</b> kies School of BSO, de groep en de lengte (6, 8 of 10 stations). Start de zaak op je eigen telefoon: in de briefing staat de <b>zaakcode</b>. Elk team vult die code in en krijgt precies dezelfde zaak, met dezelfde sommen. Onder de briefing staat het <b>begeleidersblad</b>: het verhaal, een lesbrief vooraf en achteraf per groep, en per station de truc, de beweegopdracht, alle flitssommen met antwoord en de verdiepingsvragen.</li><li><b>Buiten met kaart:</b> de stations staan dicht bij elkaar (alles binnen ongeveer 300 meter). De kinderen zien een <b>verhaalkaart</b> met een pijl en koud/warm/heet. <b>Buiten zonder kaart:</b> de stations komen achter elkaar. <b>In het gebouw:</b> de begeleider kiest plekken in de school; per plek een kaartje met een code. <b>Binnen op de plaats</b> of <b>op de bank</b> kan ook.</li><li><b>Elk station heeft vier stappen</b>, zoals automatiseren werkt: <b>de truc</b> (eerst begrijpen: verliefde harten, dubbelen, via het tiental, steunsommen), <b>bewegen</b> (springen, stampen en klappen met de sommen), <b>de flitsronde</b> (8 tot 12 flitsen op tempo; een foute som komt terug tot hij goed is, en de eerste drie zijn opfrissers van het vorige station) en <b>de verdieping</b> (twee vragen over waarom de truc werkt).</li><li><b>Dertien flitsstations:</b> splitsen, dubbelen en halveren, over het tiental, aftrekken, sprongen, makkelijke tafels, lastige tafels, deeltafels, keer 10 en 100, vaste weetjes (helft, kwart, procenten), spelling, buurgetallen en afronden, en alles door elkaar. Klokkijken zit er niet in: dat krijgt een eigen wandeling.</li><li><b>Drie niveaus:</b> groep 3–4 (splitsen en sommen tot 10 en 20, dubbelen, sprongen van 2, 5 en 10, eerste tafels, klankzuivere woorden), groep 5–6 (tot 100, alle tafels en deeltafels, keer 10 en 100, helft en kwart, klankgroepen) en groep 7–8 (tot 1000 en kommagetallen, grote tafels, breuk-procent-komma, werkwoordspelling).</li><li><b>Finale:</b> de flitslampen vormen samen één tafelrij. Zet ze op volgorde en zeg de rij hardop mee: de mist trekt op en het team krijgt een <b>diploma Mistverdrijver</b> (A4). In het flitsboekje staat per station hoeveel er in één keer goed ging en in welke tijd.</li></ol><p class="note">Tip: laat de telefoon na elke flits doorgeven, zodat ieder kind aan de beurt komt. Een team dat een flitsronde twee keer niet haalt, mag toch verder: in het flitsboekje staat dan 'nog oefenen'. Geen account, geen app: werkt in de browser.</p></div>
+      <button class="btn ghost sm" id="bDemo">Proefronde in de binnenstad van Eindhoven</button>
+      <button class="btn ghost" id="bArch">Opgeloste zaken</button>
+      <button class="btn ghost sm" id="bWipe">Wissen</button>
+    </div>
+  </section>
+
+  <section class="screen" id="brief" hidden>
+    <div class="wrap">
+      <div class="paper">
+        <div class="eyebrow" id="bfNo"></div>
+        <div id="bfTip"></div>
+        <h2>De Vergeetmist</h2>
+        <div id="bfOpen"></div>
+      </div>
+      <button class="btn" id="bGo">We gaan trainen! ▸</button>
+      <button class="btn ghost" id="bLead">🖨 Begeleidersblad (antwoorden)</button>
+      <button class="btn ghost" id="bBack">Terug</button>
+    </div>
+  </section>
+
+  <section class="screen" id="cards" hidden>
+    <div id="hud">
+      <div><b id="hT">0:00</b><span>Tijd</span></div>
+      <div><b id="hS">0</b><span>Stations</span></div>
+      <div><div class="tiles" id="hM"></div><span>Flitslampen</span></div>
+      <button type="button" id="zM2" aria-label="Menu">☰</button>
+    </div>
+    <div id="card"></div>
+    <div id="bar">
+      <button type="button" id="bNote">Flitsboekje</button>
+      <button type="button" id="bAcc2" class="red">De rij van licht</button>
+    </div>
+  </section>
+
+  <section class="screen" id="play" hidden>
+    <canvas id="map"></canvas>
+    <div id="mhud">
+      <div><b id="mT">0:00</b><span>Tijd</span></div>
+      <div><b id="mS">0</b><span>Stations</span></div>
+      <div><div class="tiles" id="mM"></div><span>Flitslampen</span></div>
+      <button type="button" id="zM" aria-label="Menu">☰</button>
+    </div>
+    <div id="zoom">
+      <button type="button" id="zIn" aria-label="Inzoomen">+</button>
+      <button type="button" id="zOut" aria-label="Uitzoomen">−</button>
+      <button type="button" id="zMe" aria-label="Centreer op mij">◎</button>
+    </div>
+    <div id="low">
+      <div id="radar">Op weg naar het eerste station</div>
+      <div id="chip" hidden>
+        <div class="row"><b id="cName"></b><span id="cDist"></span></div>
+        <span id="cHint" class="note"></span>
+        <button class="btn" id="cAct"></button>
+      </div>
+      <div id="mbar">
+        <button type="button" id="mNote">Flitsboekje</button>
+        <button type="button" id="mAcc" class="red">De rij van licht</button>
+      </div>
+    </div>
+  </section>
+
+  <input type="file" id="file" accept="image/*" capture="environment" aria-label="Maak de foto">
+  <div class="sheet" id="sheet" hidden><div class="paper" id="sheetBody"></div></div>
+  <div id="load" hidden role="status"><div class="spin"></div><b id="loadT"></b><span>Dit duurt meestal 5 tot 30 seconden. Blijf op deze pagina.</span></div>
+  <div id="toast" hidden></div>
+</div>
+<script src="shared/platform.js?v=mm20"></script>
+<script src="shared/catalog.js?v=mm17"></script>
+<script src="shared/tiles.js?v=1"></script>
+<script src="shared/move.js?v=1"></script>
+<script src="shared/walk.js?v=6"></script>
+<script src="shared/kidsmap.js?v=15"></script>
+<script src="shared/steps.js?v=1"></script>
+<script src="shared/bonus.js?v=1"></script>
+<script src="shared/voice.js?v=1"></script>
+<script src="shared/meer.js?v=1"></script>
+<script src="games/vlot/data-nl.js?v=1"></script>
+<script src="games/vlot/game.js?v=1"></script>
+<script src="shared/start.js?v=9" data-game="vm"></script>
+<script id="mm-demo">if(/[?&]oefen\b/.test(location.search)){var b=document.getElementById("bDemo");if(b)setTimeout(function(){b.click()},50)}</script>
+</body>
+</html>

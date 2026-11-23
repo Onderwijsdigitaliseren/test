@@ -192,3 +192,112 @@ return{lang:"nl",T:T,TYPES:TYPES,TIK:TIK,NOOR:NOOR,ROOMS:ROOMS,OPEN:OPEN,OPEN0:O
     doelen:"Groep 7–8 (SLO natuur, kerndoel 39/40/41): ecosystemen en voedselwebben, biodiversiteit, kringlopen (water, bodem, koolstof), oorzaak en gevolg in de natuur, invloed van de mens en klimaat, onderzoek doen: waarnemen, meten, vergelijken, concluderen."}
   ]}
 })();
+
+/* ===== Verdieping per station (shared/meer.js): per niveau twee extra stappen met uitleg. Goede antwoord staat eerst. ===== */
+(function(D){var M={
+bloemen:[
+ [["Wat haalt een bij uit een bloem?",["nectar en stuifmeel","water en zand"],"Nectar is zoet sap. Daar maakt de bij honing van. Stuifmeel is eten voor de babybijen."],
+  ["Welke kleur bloem ziet een bij het best?",["paars","rood"],"Bijen zien paars en blauw heel goed. Rood ziet er voor een bij bijna zwart uit."]],
+ [["Waarom is het goed als er van maart tot oktober steeds iets bloeit?",["Dan hebben bijen het hele seizoen eten","Dan zijn er minder bijen nodig","Dan groeit het gras sneller"],"Een bij kan geen maanden wachten. Bloeit er alleen in mei iets, dan is er in augustus honger."],
+  ["Een bij bezoekt ongeveer 1000 bloemen per dag. Hoeveel bloemen zijn dat in 5 dagen?","5000|5.000","5 × 1000 = 5000. Daarom heeft één bijenvolk een hele buurt vol bloemen nodig."]],
+ [["Wat is het verschil tussen nectar en stuifmeel voor een bij?",["Nectar geeft energie (suiker), stuifmeel geeft eiwit voor de larven","Nectar is voor de koningin, stuifmeel voor de werksters","Er is geen verschil"],"Nectar is brandstof om te vliegen. Stuifmeel is de bouwstof: zonder eiwit groeien de larven niet."],
+  ["Een berm van 50 m² heeft 10 bloemen per m². Na het maaien blijft 20% over. Hoeveel bloemen staan er dan nog?","100","50 × 10 = 500 bloemen. 20% van 500 is 100. Daarom maaien gemeenten steeds vaker in stukjes: er blijft altijd iets staan."]]],
+bomen:[
+ [["Wat groeit er aan een eik?",["eikels","appels"],"Eikels zijn de zaden van de eik. Eekhoorns en gaaien verstoppen ze, en zo groeien er nieuwe eiken."],
+  ["Waar zitten de wortels van een boom?",["onder de grond","in de takken"],"De wortels drinken water uit de grond en houden de boom stevig vast."]],
+ [["Waaraan zie je in de winter het snelst of een boom een naaldboom is?",["Hij is nog groen","Hij heeft geen takken","Hij is kleiner"],"De meeste naaldbomen houden hun naalden het hele jaar. Loofbomen staan in de winter kaal."],
+  ["Wat doet een boom met zijn bladeren in de zomer?",["Hij maakt er voedsel mee uit zonlicht","Hij vangt er regen mee op om te drinken","Hij houdt er dieren mee weg"],"In het blad zit bladgroen. Daarmee maakt de boom van zonlicht, water en lucht zijn eigen suiker. Dat heet fotosynthese."]],
+ [["Wat heeft een boom nodig voor fotosynthese?",["Zonlicht, water en koolstofdioxide","Zonlicht, zuurstof en aarde","Alleen water en mest"],"Licht + water + CO₂ wordt suiker en zuurstof. De zuurstof die jij inademt komt van planten."],
+  ["Een grote boom neemt ongeveer 25 kg CO₂ per jaar op. Hoeveel kilo is dat voor een laan van 40 bomen?","1000|1.000","40 × 25 = 1000 kg, een hele ton. Eén auto stoot dat in ongeveer 6000 kilometer uit."]]],
+beestjes:[
+ [["Hoeveel poten heeft een insect?",["6","8"],"Alle insecten hebben zes poten. Een spin heeft er acht en is dus geen insect."],
+  ["Wat doe je met de steen als je klaar bent met kijken?",["terugleggen","meenemen"],"Onder de steen is het donker en vochtig. Dat is het huis van de beestjes."]],
+ [["Je telt de poten van een beestje: het zijn er 8. Wat is het?",["Een spin","Een mier","Een kever"],"Acht poten is een spinachtige. Mieren en kevers zijn insecten: die hebben er zes."],
+  ["Waarom zijn pissebedden en wormen nuttig?",["Ze ruimen dode bladeren op en maken er aarde van","Ze eten onkruid op","Ze houden muggen weg"],"Zonder deze opruimers zou het bos tot aan je knieën vol oud blad liggen."]],
+ [["Uit welke drie delen bestaat het lijf van een insect?",["Kop, borststuk en achterlijf","Kop, romp en staart","Kop, schild en poten"],"De zes poten en de vleugels zitten altijd aan het borststuk. Zo herken je elk insect."],
+  ["Op 1 m² tellen jullie 12 beestjes. Een plantsoen is 250 m². Hoeveel beestjes leven daar dan ongeveer?","3000|3.000","12 × 250 = 3000. Zo rekenen biologen: een klein stukje goed tellen en dan omrekenen. Dat heet een steekproef."]]],
+vogels:[
+ [["Welke vogel zegt roe-koe?",["de duif","de mus"],"De duif koert. De mus tjilpt: tjielp, tjielp."],
+  ["Waarom zingt een vogel?",["om te zeggen: dit is mijn plek","omdat hij honger heeft"],"Met zijn lied vertelt een vogel aan andere vogels dat hier al iemand woont."]],
+ [["In welk seizoen hoor je de meeste vogels zingen?",["In de lente","In de herfst","In de winter"],"In de lente zoeken vogels een partner en een plek voor hun nest. Daar zingen ze voor."],
+  ["Een merel voert zijn jongen 100 keer per dag. Hoe vaak is dat in een week?","700","7 × 100 = 700 keer heen en weer, met elke keer een wormpje of rups. Zonder insecten lukt dat niet."]],
+ [["Waarom zingen sommige stadsvogels hoger en harder dan op het platteland?",["Om boven het lage verkeersgeluid uit te komen","Omdat ze in de stad meer eten","Omdat het in de stad warmer is"],"Verkeer bromt laag. Een hoog lied wordt minder overstemd. Dieren passen zich aan hun omgeving aan."],
+  ["Jullie hoorden in 1 minuut een aantal soorten. Waarom tellen vogelaars altijd even lang en op hetzelfde tijdstip?",["Anders kun je tellingen niet eerlijk vergelijken","Omdat vogels dan het hardst zingen","Omdat het zo in de wet staat"],"Wie langer telt, hoort meer. Alleen als de methode gelijk is, zegt een verschil iets over de plek."]]],
+water:[
+ [["Wat doet een plant met water?",["drinken met de wortels","erin zwemmen"],"Een plant zuigt water op met zijn wortels. Zonder water gaat hij slap hangen."],
+  ["Wat leg je in een schaaltje water voor bijen?",["steentjes","zeep"],"Op een steentje kan een bij veilig staan en drinken zonder nat te worden."]],
+ [["Wat gebeurt er met een plas als de zon schijnt?",["Het water verdampt","Het water zakt altijd weg in de tegels","Het water wordt ijs"],"Verdampen betekent: water wordt onzichtbare waterdamp en stijgt op. Hoog in de lucht wordt het weer een wolk."],
+  ["Zet in de goede volgorde: regen, wolk, verdampen. Wat komt er na verdampen?",["Wolk","Regen","Niets"],"Verdampen, wolk, regen, en dan weer opnieuw. Het water op aarde is altijd hetzelfde water."]],
+ [["Een dak van 60 m² vangt bij een bui 10 liter water per m². Hoeveel liter is dat?","600","60 × 10 = 600 liter in één bui. Met een regenton gaat dat naar de tuin in plaats van naar het riool."],
+  ["Wat is het voordeel van een groen dak of een wadi in de wijk?",["Het houdt regen vast, zodat straten minder snel onderlopen","Het maakt de regen schoner","Het trekt meer regen aan"],"Groen werkt als een spons: het vangt de bui op en geeft het water langzaam af."]]],
+bodem:[
+ [["Wat eet een regenworm?",["dode blaadjes","vogels"],"De worm trekt blaadjes de grond in en eet ze op. Wat hij uitpoept is nieuwe aarde."],
+  ["Is aarde nat of droog als het net geregend heeft?",["nat","droog"],"Aarde houdt water vast, als een spons. Daar drinken planten van."]],
+ [["Waarom is losse grond beter voor planten dan keiharde grond?",["Water en lucht kunnen bij de wortels komen","Losse grond is warmer","In harde grond zitten meer wormen"],"Wortels hebben water én lucht nodig. Wormen graven gangetjes en maken zo de grond los."],
+  ["Hoe heet het als bladeren en schillen vergaan tot nieuwe aarde?",["Composteren","Verdampen","Bestuiven"],"Op een composthoop doen wormen, schimmels en bacteriën het werk. Na een jaar heb je voedzame aarde."]],
+ [["Welke groep doet het meeste opruimwerk in de bodem?",["Schimmels en bacteriën","Mollen","Slakken"],"Je ziet ze niet, maar zij breken dood materiaal af tot voedingsstoffen die planten weer opnemen."],
+  ["In een tuin van 80 m² is 60 m² betegeld. Hoeveel procent van de tuin is open bodem?","25","Open is 80 − 60 = 20 m². 20 van de 80 is een kwart: 25%."]]],
+weer:[
+ [["Wat heb je aan als het koud is?",["een dikke jas","een zwembroek"],"Jij trekt een jas aan. Een bij kan dat niet: zij blijft binnen als het koud is."],
+  ["Waar komt regen vandaan?",["uit een wolk","uit de zon"],"Een wolk bestaat uit heel veel kleine druppeltjes. Worden ze te zwaar, dan vallen ze."]],
+ [["Waarmee meet je de temperatuur?",["Met een thermometer","Met een windvaan","Met een regenmeter"],"Een thermometer meet graden Celsius. Een windvaan wijst de windrichting aan, een regenmeter vangt regen op."],
+  ["De takken bewegen en bladeren waaien over straat. Hoe noem je die wind?",["Een stevige wind","Windstil","Orkaan"],"Zo schat je windkracht zonder meter: rook recht omhoog is windstil, bewegende takken is een stevige wind."]],
+ [["Wat is het verschil tussen weer en klimaat?",["Weer is van vandaag, klimaat is het gemiddelde over 30 jaar","Weer is op het land, klimaat is op zee","Er is geen verschil"],"Eén koude dag zegt niets over het klimaat. Pas over tientallen jaren zie je of het warmer wordt."],
+  ["Het is 's ochtends 9 graden en 's middags 17 graden. Bijen vliegen vanaf 12 graden. De temperatuur stijgt gelijkmatig in 8 uur. Na hoeveel uur kunnen de bijen vliegen?","3","Per uur komt er 1 graad bij (8 graden in 8 uur). Van 9 naar 12 is 3 graden, dus na 3 uur."]]],
+afval:[
+ [["Waar hoort een leeg pakje drinken?",["in de prullenbak","op de stoep"],"In de prullenbak kan een dier er niet van eten of erin vast komen te zitten."],
+  ["Wat blijft het langst liggen?",["een plastic flesje","een appelklokhuis"],"Een klokhuis is na een paar weken weg. Een plastic flesje blijft honderden jaren liggen."]],
+ [["Waarom is een peuk op straat slecht voor de natuur?",["Er zit gif in dat in het water komt","Hij is te klein om te zien","Vogels bouwen er nesten van"],"In een filter zitten plastic en gifstoffen. Als het regent, spoelen die de bodem en de sloot in."],
+  ["Een blikje blijft 50 jaar liggen, een bananenschil 1 jaar. Hoeveel keer zo lang is het blikje er?","50","50 gedeeld door 1 is 50 keer zo lang. Fruitafval vergaat, metaal en plastic bijna niet."]],
+ [["Wat zijn microplastics?",["Stukjes plastic kleiner dan 5 millimeter","Plastic dat vanzelf verdwijnt","Plastic dat van planten is gemaakt"],"Plastic breekt in steeds kleinere stukjes maar verdwijnt niet. Zo komt het in water, bodem en dieren terecht."],
+  ["Op statiegeldflesjes zit 15 cent. Een klas raapt 80 flesjes. Hoeveel euro is dat? Typ als 12,00.","12,00|12|12.00","80 × 0,15 = 12 euro. Sinds er statiegeld op kleine flesjes zit, liggen er veel minder op straat."]]],
+sporen:[
+ [["Wie laat een veer achter?",["een vogel","een hond"],"Vogels verliezen af en toe een veer en krijgen er een nieuwe voor terug. Dat heet ruien."],
+  ["Wie maakt een web?",["een spin","een slak"],"Een spin vangt met haar web vliegjes en muggen."]],
+ [["Je ziet een pootafdruk met vier tenen en nagels. Van wie is die het vaakst?",["Van een hond","Van een duif","Van een slak"],"Een hond kan zijn nagels niet intrekken: je ziet ze in de afdruk. Een kat loopt met ingetrokken nagels."],
+  ["Onder een boom liggen lege, opengebroken notendoppen. Wie was hier?",["Een eekhoorn of een muis","Een egel","Een merel"],"Knaagdieren knagen de dop open. Aan de vorm van het gat kun je zelfs zien welk dier het was."]],
+ [["Waarom zoeken biologen naar sporen in plaats van naar de dieren zelf?",["Veel dieren zijn schuw of 's nachts actief","Sporen zijn mooier","Dieren mogen niet bekeken worden"],"Een egel of vos zie je zelden. Poep, haren, vraatsporen en afdrukken verraden dat ze er wel zijn."],
+  ["Wat vertelt een braakbal van een uil?",["Wat de uil gegeten heeft: er zitten botjes en haren in","Hoe oud de uil is","Waar de uil slaapt"],"Een uil slikt een muis heel door en spuugt de botjes en haren later uit. Onderzoekers pluizen braakballen uit."]]],
+seizoen:[
+ [["In welk seizoen komen er bloemen aan de bomen?",["in de lente","in de winter"],"In de lente wordt het warmer en lichter. Dan komen knoppen, bloesem en blaadjes."],
+  ["Hoeveel seizoenen zijn er?",["4","2"],"Lente, zomer, herfst en winter. En dan begint het weer opnieuw."]],
+ [["Wat doet een egel in de winter?",["Een winterslaap houden","Naar het zuiden vliegen","Een dikkere stekeljas kopen"],"Er zijn in de winter bijna geen insecten te eten. De egel slaapt tot het voorjaar en leeft van zijn vet."],
+  ["Waarom vliegen zwaluwen in de herfst naar Afrika?",["Hier zijn in de winter geen vliegende insecten","Ze hebben het koud","Ze willen daar eieren leggen"],"Het gaat om eten. Zwaluwen vangen insecten in de lucht, en die zijn er hier 's winters niet."]],
+ [["Waardoor ontstaan de seizoenen?",["De aardas staat schuin","De aarde staat in de zomer dichter bij de zon","De zon brandt in de zomer harder"],"Door de schuine stand krijgt het noordelijk halfrond een half jaar meer zonlicht en daarna een half jaar minder."],
+  ["Een koolmees legt eieren zodat de jongen uitkomen op de rupsenpiek. Die piek is 14 dagen vervroegd, de koolmees zelf maar 6 dagen. Hoeveel dagen loopt de mees achter?","8","14 − 6 = 8 dagen te laat. De jongen komen uit als de meeste rupsen al weg zijn. Dat heet een mismatch."]]],
+schuil:[
+ [["Waar woont een vogel?",["in een nest","in een hol onder water"],"Een vogel bouwt een nest van takjes, mos en veertjes."],
+  ["Wat is goed voor beestjes in de tuin?",["een hoopje takken laten liggen","alles netjes wegvegen"],"In een rommelhoekje kunnen egels, padden en kevers schuilen."]],
+ [["Wat is een insectenhotel?",["Een kastje met holle stengels en gaatjes waar wilde bijen eitjes leggen","Een hok waar bijen honing maken","Een val voor muggen"],"De meeste wilde bijen wonen alleen. Ze leggen een eitje in een gangetje en metselen het dicht."],
+  ["Waarom is een gat onder in de schutting goed voor egels?",["Dan kunnen ze van tuin naar tuin lopen om eten te zoeken","Dan waait de wind beter door","Dan kan de kat naar buiten"],"Een egel loopt per nacht wel twee kilometer. Eén tuin is veel te klein."]],
+ [["Wat is een ecologische verbindingszone?",["Een strook natuur die leefgebieden met elkaar verbindt","Een weg waar geen auto's mogen rijden","Een hek om een natuurgebied"],"Dieren in een klein, afgesloten gebied sterven sneller uit. Via een verbinding kunnen ze naar soortgenoten."],
+  ["Een egel heeft een leefgebied van 20 hectare nodig. Een tuin is gemiddeld 100 m². Eén hectare is 10.000 m². Hoeveel tuinen is dat?","2000|2.000","20 × 10.000 = 200.000 m². Gedeeld door 100 is 2000 tuinen. Daarom zijn doorgangen tussen tuinen zo belangrijk."]]],
+bestuiving:[
+ [["Wat blijft er aan de pootjes van een bij hangen?",["geel stuifmeel","modder"],"Het stuifmeel blijft plakken en gaat mee naar de volgende bloem."],
+  ["Welk fruit is er dankzij bijen?",["aardbeien","brood"],"Aardbeien, appels, peren en kersen groeien alleen goed als bijen de bloemen bezoeken."]],
+ [["Wat gebeurt er in de bloem na de bestuiving?",["Er groeit een vrucht met zaden","De bloem krijgt een andere kleur","De bloem maakt meer nectar"],"De bloemblaadjes vallen af en het vruchtbeginsel zwelt op tot een vrucht. In de vrucht zitten de zaden."],
+  ["Welke plant wordt door de wind bestoven en niet door insecten?",["Gras","Appelboom","Lavendel"],"Gras heeft geen mooie bloemen of geur nodig: de wind blaast het stuifmeel rond. Daar komt hooikoorts van."]],
+ [["Waarom hebben bloemen kleur, geur en nectar?",["Om bestuivers te lokken","Om planteneters af te schrikken","Om warm te blijven"],"De bloem betaalt de bij met nectar, en de bij brengt in ruil het stuifmeel rond. Zo'n samenwerking heet mutualisme."],
+  ["Ongeveer driekwart van onze voedselgewassen heeft bestuivers nodig. Van 120 gewassen: hoeveel zijn dat er?","90","Driekwart van 120 is 120 : 4 × 3 = 90. Zonder insecten wordt het in de supermarkt een stuk leger."]]],
+groen:[
+ [["Waar kan regen de grond in?",["in het gras","op de tegels"],"Gras en aarde laten water door. Op tegels blijft het liggen of stroomt het weg."],
+  ["Waar is het in de zomer koeler?",["onder een boom","op een stenen plein"],"Stenen worden heet in de zon. Een boom geeft schaduw en verkoeling."]],
+ [["Waarom is het in een stad op een hete dag warmer dan op het platteland?",["Steen en asfalt houden de warmte vast","In de stad schijnt de zon langer","Er wonen meer mensen die warmte uitademen"],"Dat heet het hitte-eilandeffect. Bomen en gras koelen de buurt, soms wel een paar graden."],
+  ["3 van de 10 stappen waren groen. Hoeveel stappen waren steen?","7","10 − 3 = 7. Samen is het altijd 10: zo reken je ook met procenten, samen altijd 100."]],
+ [["Een plein van 400 m² is helemaal betegeld. De school haalt 30% van de tegels weg voor groen. Hoeveel m² groen komt er?","120","10% van 400 is 40, dus 30% is 3 × 40 = 120 m²."],
+  ["Welke drie dingen levert meer groen in de wijk op?",["Verkoeling, wateropvang en meer soorten dieren","Meer parkeerplekken, minder regen en warmte","Snellere fietspaden, schonere lucht en minder vogels"],"Eén maatregel met drie voordelen. Daarom doen gemeenten mee aan acties als tegelwippen."]]],
+helpen:[
+ [["Wat zet je buiten neer als het heel warm is?",["een schaaltje water","een kaars"],"Vogels, egels en bijen hebben op een warme dag dorst, net als jij."],
+  ["Wat doe je met een bloem in het park?",["laten staan","plukken"],"Een bloem die blijft staan is eten voor de bijen en maakt zaadjes voor volgend jaar."]],
+ [["Welke bloemen helpen bijen het meest?",["Inheemse, enkele bloemen zoals klaver en korenbloem","Dubbele sierbloemen met heel veel blaadjes","Plastic bloemen"],"In gevulde sierbloemen kan een bij niet bij de nectar. Wilde bloemen uit eigen land passen precies bij onze bijen."],
+  ["Een zakje bloemenzaad is genoeg voor 2 m². Het schoolplein krijgt een strook van 12 m². Hoeveel zakjes zijn er nodig?","6","12 : 2 = 6 zakjes."]],
+ [["Waarom is gif tegen onkruid en insecten slecht voor de hele voedselketen?",["Het gif komt via insecten en planten ook in vogels en andere dieren","Het maakt de bloemen lelijk","Het werkt alleen bij regen"],"Gif stopt niet bij één soort. Een vogel die vergiftigde insecten eet, krijgt het ook binnen."],
+  ["Jullie willen de gemeente overtuigen om een berm minder te maaien. Wat is het sterkste argument?",["Onze telling: zoveel bloemen en insecten staan er nu, en zoveel na het maaien","Wij vinden bloemen mooi","Maaien maakt lawaai"],"Een mening kun je wegwuiven, een meting niet. Zo werkt onderbouwen met data."]]],
+ketting:[
+ [["Wat eet een rups?",["blaadjes","vogels"],"Een rups eet de hele dag blad. Daar groeit hij van, tot hij een vlinder wordt."],
+  ["Waar krijgt een plant zijn kracht van?",["van de zon","van de maan"],"Een plant groeit van zonlicht. Alle dieren eten planten, of dieren die planten eten."]],
+ [["Hoe noem je een dier dat alleen planten eet?",["Een planteneter","Een roofdier","Een alleseter"],"Een rups en een konijn zijn planteneters. Een sperwer is een vleeseter. Een merel eet allebei: een alleseter."],
+  ["Zet in de goede volgorde: sperwer, blad, mus, rups. Wie staat als laatste in de keten?",["Sperwer","Blad","Rups"],"Blad → rups → mus → sperwer. De pijl betekent steeds: wordt gegeten door."]],
+ [["Hoe noem je planten in een voedselketen?",["Producenten","Consumenten","Reducenten"],"Planten produceren zelf voedsel uit zonlicht. Dieren zijn consumenten, schimmels en bacteriën zijn de reducenten: de opruimers."],
+  ["Bij elke stap in de keten blijft ongeveer 10% van de energie over. Planten leggen 1000 eenheden vast. Hoeveel komt er bij de vogel die de rups eet?","10","Rups: 10% van 1000 = 100. Vogel: 10% van 100 = 10. Daarom zijn er veel meer planten dan roofdieren."]]]
+};D.S.forEach(function(m){if(M[m.id])m.more=M[m.id]})})(window.NT_DATA);

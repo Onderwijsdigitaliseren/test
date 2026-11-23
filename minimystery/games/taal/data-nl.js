@@ -188,3 +188,105 @@ return{lang:"nl",T:T,TYPES:TYPES,TIK:TIK,NOOR:NOOR,DIEF:DIEF,ROOMS:ROOMS,OPEN:OP
     doelen:"Groep 7–8 (SLO taal): werkwoordspelling, zinsontleding (onderwerp, persoonsvorm, gezegde), figuurlijk taalgebruik en spreekwoorden, leenwoorden, leestekens bij directe rede, register, schrijven van een brief."}
   ]}
 })();
+
+/* ===== Verdieping per station (shared/meer.js): per niveau twee extra stappen met uitleg. Goede antwoord staat eerst. ===== */
+(function(D){var M={
+bord:[
+ [["Met welke letter begint 'straat'?",["s","t"],"Zeg het woord langzaam: sss-t-r-aa-t. De eerste klank is de s."],
+  ["Wat is een klinker?",["de a","de k"],"De klinkers zijn a, e, i, o en u. Die kun je zingen: aaaa. Een k kun je niet zingen."]],
+ [["Waarom begint een straatnaam met een hoofdletter?",["Het is een naam","Het staat op een bord","Het is een lang woord"],"Namen van mensen, straten, steden en landen krijgen een hoofdletter: Kerkstraat, Utrecht, Noor."],
+  ["Welke klank hoor je in 'plein'?",["ei","ie","ee"],"De ei van plein en de ij van ijs klinken hetzelfde. Welke je schrijft, moet je per woord onthouden."]],
+ [["Uit welke twee delen bestaat 'Molenweg'?",["molen + weg","mo + lenweg","mole + nweg"],"Veel straatnamen zijn samenstellingen. Het laatste deel zegt wat het is: een weg, straat, laan of plein."],
+  ["Wat vertelt de naam 'Korenmarkt' over vroeger?",["Hier werd graan verkocht","Hier woonde meneer Koren","Hier stond een molen"],"Koren is graan. Straatnamen zijn kleine geschiedenislessen: Vismarkt, Walstraat, Kloosterlaan."]]],
+klap:[
+ [["Hoe vaak klap je bij 'fiets'?",["1 keer","2 keer"],"Fiets is één stukje. Je mond gaat één keer open."],
+  ["Hoe vaak klap je bij 'ap-pel'?",["2 keer","1 keer"],"Ap-pel: twee stukjes, twee klappen."]],
+ [["Hoe verdeel je 'bomen' in lettergrepen?",["bo-men","bom-en","b-omen"],"Je hoort een lange oo aan het eind van het eerste stuk. Dan schrijf je er maar één: bo-men."],
+  ["Hoeveel lettergrepen heeft 'bibliotheek'?","4","Bi-bli-o-theek. Leg je hand onder je kin: elke keer dat je kin zakt, is een lettergreep."]],
+ [["Waar ligt de klemtoon in 'vóórkomen' (het komt vaak voor)?",["Op voor","Op ko","Op men"],"VOORkomen is gebeuren. VoorKOmen is ervoor zorgen dat iets niet gebeurt. De klemtoon verandert de betekenis."],
+  ["Hoe breek je 'lantaarnpaal' af aan het eind van een regel?",["lan-taarn-paal","lant-aarn-paal","lanta-arnpaal"],"Je breekt af tussen lettergrepen, en bij een samenstelling eerst tussen de delen: lantaarn-paal."]]],
+rijm:[
+ [["Wat rijmt op 'huis'?",["muis","hond"],"Huis en muis eindigen op dezelfde klank: uis."],
+  ["Wat rijmt op 'kat'?",["mat","kip"],"Kat, mat, lat, nat: allemaal met at aan het eind."]],
+ [["Welk woord rijmt op 'plein'?",["trein","plan","pleister"],"Bij rijm is het eind van het woord gelijk: -ein. Het begin is juist anders."],
+  ["Maak het rijm af: 'Ik loop over de brug, en daarna weer …'",["terug","verder","naar huis"],"Brug en terug rijmen. In een versje staan de rijmwoorden meestal aan het eind van de regel."]],
+ [["Wat is alliteratie?",["Woorden die met dezelfde klank beginnen","Woorden die op elkaar rijmen","Woorden die hetzelfde betekenen"],"Lekker lang liggen luieren. Reclames en krantenkoppen gebruiken het vaak, omdat het blijft hangen."],
+  ["Welk rijmschema heeft een versje waarin regel 1 op 2 rijmt en regel 3 op 4?",["aabb","abab","abba"],"Gepaard rijm is aabb. Gekruist rijm is abab, omarmend rijm is abba."]]],
+samen:[
+ [["Plak aan elkaar: voet + bal = ?",["voetbal","balvoet"],"Je plakt de woorden aan elkaar en schrijft ze als één woord."],
+  ["Wat is een 'schooltas'?",["een tas voor school","een school voor tassen"],"Het laatste stukje zegt wat het is: een tas."]],
+ [["Wat is het verschil tussen een 'tuinstoel' en een 'stoeltuin'?",["Het laatste woord zegt wat het is","Er is geen verschil","Het eerste woord zegt wat het is"],"Een tuinstoel is een stoel. Het eerste deel vertelt welke soort."],
+  ["Hoe schrijf je het goed?",["fietsenstalling","fietsen stalling","fietsen-stalling"],"In het Nederlands schrijf je een samenstelling aan elkaar. In het Engels vaak los, vandaar de vergissing."]],
+ [["Waarom schrijf je 'pannenkoek' met een n in het midden?",["Het eerste deel, pan, heeft een meervoud op -en: pannen","Omdat je de n duidelijk hoort","Dat mag je zelf kiezen"],"Hoofdregel: je schrijft de tussen-n als het eerste deel een meervoud op -en heeft. Uitzondering: dingen waar er maar één van is, zoals in zonneschijn."],
+  ["Welk woord is een samenstelling van drie delen?",["schoolpleinmuur","verkeerslicht","stoeptegel"],"School + plein + muur. Het Nederlands kan eindeloos plakken; het laatste deel blijft de baas."]]],
+tegen:[
+ [["Wat is het tegenovergestelde van 'warm'?",["koud","lekker"],"Warm en koud zijn elkaars tegenstelling."],
+  ["Wat is het tegenovergestelde van 'open'?",["dicht","deur"],"De deur is open of dicht."]],
+ [["Welk stukje maakt van 'gelukkig' het tegenovergestelde?",["on-","be-","ver-"],"On- betekent niet: ongelukkig, onaardig, onveilig."],
+  ["Wat is een synoniem?",["Een woord dat bijna hetzelfde betekent","Een woord dat het tegenovergestelde betekent","Een woord dat hetzelfde klinkt"],"Fiets en rijwiel, blij en vrolijk. Met synoniemen voorkom je dat je steeds hetzelfde woord gebruikt."]],
+ [["Wat is het verschil in gevoel tussen 'zuinig' en 'gierig'?",["Zuinig klinkt positief, gierig negatief","Er is geen verschil","Gierig is netter"],"De betekenis lijkt op elkaar, maar de gevoelswaarde verschilt. Schrijvers kiezen daar hun woorden op uit."],
+  ["Welk woord is een homoniem (één woord, twee betekenissen)?",["bank","stoel","tafel"],"Op een bank zit je, en bij een bank haal je geld. Uit de zin blijkt welke bedoeld is."]]],
+soort:[
+ [["Welk woord is een ding?",["fiets","lopen"],"Een ding kun je aanwijzen. Je kunt er 'de' of 'het' voor zetten: de fiets."],
+  ["Welk woord zegt hoe iets is?",["groot","boom"],"Groot, rood, nat, mooi: zulke woorden vertellen hoe iets eruitziet."]],
+ [["Hoe herken je een zelfstandig naamwoord?",["Je kunt er 'de', 'het' of 'een' voor zetten","Het eindigt altijd op -en","Het staat vooraan in de zin"],"De boom, het huis, een hond. Het zijn mensen, dieren, dingen en plaatsen."],
+  ["Welk woord is het bijvoeglijk naamwoord in 'de natte stoep'?",["natte","stoep","de"],"Natte zegt iets over de stoep. Een bijvoeglijk naamwoord hoort bij een zelfstandig naamwoord."]],
+ [["Welk woord is een voorzetsel in 'De kat zit onder de auto'?",["onder","zit","auto"],"Voorzetsels zeggen waar of wanneer: in, op, onder, naast, voor, na. Truc: het past voor 'de kast'."],
+  ["Wat is 'snel' in de zin 'Zij fietst snel naar school'?",["Een bijwoord","Een bijvoeglijk naamwoord","Een lidwoord"],"Snel zegt hier iets over het fietsen, niet over een ding. Dan is het een bijwoord."]]],
+spel:[
+ [["Hoe schrijf je het goed?",["boom","bom"],"Je hoort een lange oo. Dan schrijf je in zo'n kort woord twee o's."],
+  ["Hoe schrijf je het goed?",["vis","fis"],"Vis begint met de v van vogel."]],
+ [["Hoe schrijf je het meervoud van 'kat'?",["katten","katen","katn"],"De a van kat is kort. Om hem kort te houden verdubbel je de medeklinker: kat-ten."],
+  ["Hond of hont? Hoe weet je het zeker?",["Maak het langer: honden, dus een d","Luister goed naar het eind","Het is altijd een t"],"Aan het eind klinken d en t hetzelfde. De verlengingsregel helpt: paard-paarden, kast-kasten."]],
+ [["Wat is goed: 'hij wordt' of 'hij word'?",["hij wordt","hij word"],"Stam + t. De stam is word, dus: hij wordt. Vergelijk met 'hij loopt'."],
+  ["Voltooid deelwoord van 'verhuizen': ik ben …",["verhuisd","verhuist","verhuizd"],"De stam is verhuiz: de z zit niet in 't kofschip, dus een d. Je schrijft de s van de ik-vorm: verhuisd."]]],
+abc:[
+ [["Welke letter is de eerste van het alfabet?",["a","z"],"Het alfabet begint met a, b, c."],
+  ["Welke letter komt vóór de d?",["c","e"],"a, b, c, d. De c staat voor de d."]],
+ [["Twee woorden beginnen met dezelfde letter: 'boom' en 'bal'. Welke staat eerst in het woordenboek?",["bal","boom"],"Is de eerste letter gelijk, dan kijk je naar de tweede: a komt voor o."],
+  ["Hoeveel letters heeft het alfabet?","26","Zesentwintig letters, waarvan vijf klinkers (en soms de y)."]],
+ [["Waar zoek je 'gefietst' in het woordenboek?",["Bij fietsen","Bij gefietst","Bij fiets"],"Een woordenboek geeft werkwoorden als hele werkwoord: fietsen. Vervoegingen moet je zelf terugbrengen."],
+  ["Zet op alfabet: de Vries, van Dijk, Jansen. Wie staat in Nederland vooraan?",["van Dijk","de Vries","Jansen"],"In Nederland alfabetiseer je op het hoofdwoord: Dijk, Jansen, Vries. In België telt het voorvoegsel wel mee."]]],
+teken:[
+ [["Waarmee begint een zin?",["met een hoofdletter","met een punt"],"Een zin begint met een hoofdletter en eindigt met een punt."],
+  ["Wat zet je achter 'Kijk uit'?",["!","?"],"Een uitroepteken gebruik je als je iets roept."]],
+ [["Waar zet je komma's in: 'Ik zie een boom een bank en een bus'?",["Na boom","Na zie","Na en"],"In een opsomming zet je een komma tussen de delen: een boom, een bank en een bus."],
+  ["Wat doe je met je stem bij een vraagteken?",["Je stem gaat aan het eind omhoog","Je stem gaat harder","Je stopt met praten"],"Leestekens zijn aanwijzingen voor het voorlezen: een punt is stoppen, een komma is een korte adem."]],
+ [["Wanneer gebruik je een dubbele punt?",["Voor een opsomming, uitleg of citaat","Aan het eind van elke zin","Tussen twee hoofdzinnen in plaats van 'en'"],"Juf Noor zei: 'Kom binnen.' En: ik zie drie dingen: een boom, een bank en een bus."],
+  ["Welke zin is goed?",["Omdat het regent, blijven we binnen.","Omdat het regent blijven, we binnen.","Omdat, het regent blijven we binnen."],"Tussen twee persoonsvormen (regent, blijven) zet je een komma. Dat leest veel makkelijker."]]],
+zin:[
+ [["Welk woord past? 'De hond … hard.'",["blaft","boom"],"In een zin doet iemand iets. De hond blaft."],
+  ["Wie doet er iets in 'Juf Noor zwaait'?",["juf Noor","zwaait"],"Juf Noor is degene die iets doet. Zwaaien is wat ze doet."]],
+ [["Hoe vind je de persoonsvorm?",["Zet de zin in een andere tijd: het woord dat verandert","Het is altijd het eerste woord","Het is altijd het langste woord"],"De bus rijdt → de bus reed. Rijdt verandert, dus dat is de persoonsvorm."],
+  ["Maak een vraag van 'De winkel is open.' Welk woord komt vooraan?",["Is","De","Open"],"Is de winkel open? Bij een vraag springt de persoonsvorm naar voren. Dat is nog een manier om hem te vinden."]],
+ [["Wat is het lijdend voorwerp in 'De bakker verkoopt brood'?",["brood","de bakker","verkoopt"],"Vraag: wat + persoonsvorm + onderwerp? Wat verkoopt de bakker? Brood."],
+  ["'De hond bijt de man' en 'De man bijt de hond'. Wat maakt het verschil?",["De woordvolgorde","De leestekens","De werkwoordstijd"],"In het Nederlands bepaalt de volgorde meestal wie wat doet. Dezelfde woorden, een heel ander verhaal."]]],
+verklein:[
+ [["Hoe maak je 'huis' klein?",["huisje","huisen"],"Met -je erachter maak je iets klein."],
+  ["Hoe maak je 'bloem' klein?",["bloemetje","bloemje"],"Zeg het hardop: bloemje klinkt raar. Na de m komt hier -etje."]],
+ [["Hoe schrijf je 'raam' klein?",["raampje","raamje","raametje"],"Na een lange klank met een m komt -pje: raampje, boompje, bezempje."],
+  ["Welk lidwoord krijgt een verkleinwoord altijd?",["het","de","een"],"De stoel, maar het stoeltje. De boom, maar het boompje. Altijd het."]],
+ [["Hoe schrijf je 'café' klein?",["cafeetje","cafétje","cafeeje"],"De é wordt ee, anders zou je cafetje lezen. Net als bij auto, autootje: de klank moet lang blijven."],
+  ["Wat kan een verkleinwoord nog meer uitdrukken dan 'klein'?",["Gevoel: iets liefs of juist iets onbelangrijks","Dat er veel van is","Dat het oud is"],"Een lekker wijntje, een leuk huisje, 'wat een mannetje'. Het zegt iets over hoe de spreker ernaar kijkt."]]],
+spreek:[
+ [["'Zo sterk als een beer.' Wat betekent dat?",["heel sterk","een beetje moe"],"Een beer is heel sterk. Zo vergelijk je iemand met een dier."],
+  ["'Zo stil als een muis.' Hoe ben je dan?",["heel stil","heel hard"],"Een muis hoor je bijna niet."]],
+ [["'Ik heb het in de vingers.' Wat betekent dat?",["Ik kan het goed","Ik heb pijn aan mijn hand","Ik heb iets vast"],"Het is figuurlijk bedoeld: je moet het niet letterlijk nemen."],
+  ["Wat is het verschil tussen letterlijk en figuurlijk?",["Letterlijk is echt zo, figuurlijk is bij wijze van spreken","Letterlijk is geschreven, figuurlijk is gesproken","Er is geen verschil"],"'Hij viel van zijn stoel' kan echt gebeurd zijn, of betekenen dat hij erg verbaasd was."]],
+ [["'De wind fluisterde door de bomen.' Hoe heet deze beeldspraak?",["Personificatie","Vergelijking","Overdrijving"],"Iets dat niet leeft, doet iets menselijks. Bij een vergelijking staat er 'als' of 'zoals'."],
+  ["'Ik heb het je al honderd keer gezegd!' Welke stijlfiguur is dat?",["Overdrijving","Ironie","Rijm"],"Niemand heeft het geteld. Overdrijven maakt een boodschap sterker; het heet ook wel een hyperbool."]]],
+leen:[
+ [["Uit welk land komt het woord 'pizza'?",["Italië","Nederland"],"Pizza komt uit Italië, samen met spaghetti en macaroni."],
+  ["Welk woord gebruiken we uit het Engels?",["oké","fiets"],"Oké komt van het Engelse okay. Fiets is een echt Nederlands woord."]],
+ [["Uit welke taal komen 'cadeau', 'bureau' en 'paraplu'?",["Frans","Engels","Duits"],"Aan -eau herken je vaak Frans. Tweehonderd jaar geleden was Frans de deftige taal in Nederland."],
+  ["Hoe noem je een woord dat uit een andere taal is overgenomen?",["Een leenwoord","Een samenstelling","Een verkleinwoord"],"Lenen klinkt gek, want we geven ze niet terug. Elke taal doet het: zo groeit een taal."]],
+ [["Uit welke taal komen 'thee' en 'ketchup' oorspronkelijk?",["Uit het Chinees, via de handel","Uit het Latijn","Uit het Duits"],"Woorden reizen met spullen mee. Handelaren en zeelieden brachten ze over de wereld."],
+  ["Welke Engelse woorden komen uit het Nederlands?",["boss, yacht en skipper","pizza, pasta en piano","computer, laptop en wifi"],"Baas, jacht en schipper. Nederlandse zeelieden en kolonisten lieten ze achter, vooral in de scheepvaart."]]],
+brief:[
+ [["Wat schrijf je onderaan een briefje?",["je naam","het weer"],"Dan weet de lezer van wie het briefje komt."],
+  ["Hoe eindig je een briefje netjes?",["Groetjes","Hallo"],"Hallo zeg je aan het begin. Groetjes of dag aan het eind."]],
+ [["Je schrijft aan je oma. Welke slotgroet past?",["Liefs,","Hoogachtend,","Met vriendelijke groet, de directie"],"Aan familie schrijf je anders dan aan iemand die je niet kent. Dat heet je toon aanpassen."],
+  ["Wat staat er in het midden van een goede brief?",["Wat je wilt vertellen of vragen","Je adres","De datum"],"Een brief heeft een begin (aanhef), een midden (de boodschap) en een slot (groet en naam)."]],
+ [["Je schrijft de gemeente over een kapotte lamp. Welke zin past het best?",["Graag vraag ik uw aandacht voor de kapotte lantaarn in de Kerkstraat.","Hé, die lamp doet het niet!","Jullie moeten nu die lamp maken."],"Formeel schrijven is beleefd, duidelijk en met u. Wie precies zegt wat en waar, wordt sneller geholpen."],
+  ["Wat maakt een verzoek overtuigend?",["Een duidelijke vraag met een reden erbij","Veel uitroeptekens","Een zo lang mogelijke brief"],"Zeg wat je wilt, waarom, en wat de ander kan doen. Kort en concreet werkt beter dan lang en boos."]]]
+};D.S.forEach(function(m){if(M[m.id])m.more=M[m.id]})})(window.TL_DATA);

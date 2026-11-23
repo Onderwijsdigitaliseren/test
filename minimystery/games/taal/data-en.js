@@ -189,3 +189,106 @@ return{lang:"en",T:T,TYPES:TYPES,TIK:TIK,NOOR:NOOR,DIEF:DIEF,ROOMS:ROOMS,OPEN:OP
     doelen:"Ages 10–12 (English literacy): verb tenses incl. irregular past, subject and verb, figurative language, idioms and proverbs, plurals and suffixes, loanwords and word origins, punctuation of direct speech, register, letter writing."}
   ]}
 })();
+
+/* ===== Going deeper per station (shared/meer.js): two extra steps with explanation per level. Correct answer always first.
+   The English Letter Thief is about the English language, so these are English-language steps, not a translation of the Dutch ones. ===== */
+(function(D){var M={
+bord:[
+ [["Which letter does 'street' start with?",["s","t"],"Say it slowly: sss-t-r-ee-t. The first sound is s."],
+  ["Which of these is a vowel?",["e","k"],"The vowels are a, e, i, o and u. You can sing them: eeee. You cannot sing a k."]],
+ [["Why does a street name start with a capital letter?",["It is a name","It is on a sign","It is a long word"],"Names of people, streets, towns and countries get a capital letter: Church Street, London, Noor."],
+  ["Which sound do you hear in the middle of 'street'?",["ee","e","ai"],"Street has a long ee sound, written with two e's. The same sound is written ea in 'beach' and 'seat'."]],
+ [["What two parts make up 'Millbrook Road'?",["mill + brook, and then road","mil + lbrook","millb + rook"],"Many place names are compounds. Mill and brook tell you there was once a watermill by a stream."],
+  ["What does a street name like 'Market Street' tell you about the past?",["There used to be a market there","Mr Market lived there","It is a new street"],"Street names are little history lessons: Mill Lane, Church Street, Bridge Road."]]],
+klap:[
+ [["How many times do you clap for 'cat'?",["1","2"],"Cat is one piece. Your mouth opens once."],
+  ["How many times do you clap for 'ap-ple'?",["2","1"],"Ap-ple: two pieces, two claps."]],
+ [["How do you split 'rabbit' into syllables?",["rab-bit","ra-bbit","rabb-it"],"You usually split between two consonants that are the same: rab-bit, let-ter, hap-py."],
+  ["How many syllables does 'butterfly' have?","3","But-ter-fly. Put your hand under your chin: every time your chin drops, that is a syllable."]],
+ [["Where is the stress in 'reCORD' (to record a song)?",["On the second part: re-CORD","On the first part: RE-cord","Nowhere"],"A REcord is a thing, to reCORD is something you do. The stress changes the meaning."],
+  ["Why is it 'hopping' but 'hoping'?",["A short vowel gets a double consonant, a long vowel does not","It is just a rule you have to learn","Because hop is shorter than hope"],"Hop has a short o: hop-ping keeps it short. Hope has a long o: ho-ping. Syllables show you why."]]],
+rijm:[
+ [["Which word rhymes with 'cat'?",["hat","cup"],"Cat and hat end with the same sound: -at."],
+  ["Which word rhymes with 'dog'?",["frog","dig"],"Dog, frog, log: all end in -og."]],
+ [["Which word rhymes with 'night'?",["kite","nice","note"],"Night and kite rhyme, even though they are spelled differently: -ight and -ite make the same sound."],
+  ["Finish the rhyme: 'I walk across the bridge so high, and wave at birds up in the …'",["sky","tree","house"],"High and sky rhyme. In a poem the rhyming words usually come at the end of the line."]],
+ [["What is alliteration?",["Words that start with the same sound","Words that rhyme","Words that mean the same"],"Seven silly snakes sang songs. Adverts and headlines use it because it sticks in your head."],
+  ["A poem where line 1 rhymes with line 2, and line 3 with line 4. What is its rhyme scheme?",["aabb","abab","abba"],"Rhyming couplets are aabb. Alternate rhyme is abab, enclosed rhyme is abba."]]],
+samen:[
+ [["Stick them together: sun + flower = ?",["sunflower","flowersun"],"Two words together make a new word."],
+  ["What is a 'schoolbag'?",["a bag for school","a school for bags"],"The last part tells you what it is: a bag."]],
+ [["What is the difference between a 'houseboat' and a 'boathouse'?",["The last word tells you what it is","There is no difference","The first word tells you what it is"],"A houseboat is a boat you live in. A boathouse is a house for boats."],
+  ["English compounds can be written in three ways. Which is written as two separate words?",["ice cream","football","bedroom"],"Football and bedroom are closed compounds, ice cream is open, and some take a hyphen, like mother-in-law. You have to learn which is which."]],
+ [["Which word is a compound of three parts?",["grandmother-in-law","sunflower","playground"],"Grand + mother + in-law. The last part is still the boss."],
+  ["Why is 'blackbird' not the same as 'black bird'?",["A blackbird is one kind of bird; a black bird is any bird that is black","They mean exactly the same","Black bird is spelled wrong"],"Say them: BLACKbird has the stress at the front, a black BIRD at the end. A crow is a black bird, but not a blackbird."]]],
+tegen:[
+ [["What is the opposite of 'hot'?",["cold","nice"],"Hot and cold are opposites."],
+  ["What is the opposite of 'open'?",["closed","door"],"The door is open or closed."]],
+ [["Which bit turns 'happy' into its opposite?",["un-","re-","pre-"],"Un- means not: unhappy, unkind, unsafe."],
+  ["What is a synonym?",["A word that means almost the same","A word that means the opposite","A word that sounds the same"],"Big and large, happy and cheerful. Synonyms stop you using the same word over and over."]],
+ [["What is the difference in feeling between 'thrifty' and 'stingy'?",["Thrifty sounds positive, stingy negative","There is no difference","Stingy is more polite"],"The meaning is similar, but the feeling is different. Writers choose their words carefully because of this."],
+  ["Which word is a homonym (one word, two meanings)?",["bat","chair","table"],"A bat is an animal and something you hit a ball with. The sentence tells you which one is meant."]]],
+soort:[
+ [["Which word is a thing?",["ball","run"],"You can point to a thing. You can put 'a' or 'the' in front of it: the ball."],
+  ["Which word tells you what something is like?",["big","tree"],"Big, red, wet, pretty: words like that tell you what something is like."]],
+ [["How do you recognise a noun?",["You can put 'a' or 'the' in front of it","It always ends in -ing","It always comes first in a sentence"],"The tree, a house, the dog. Nouns are people, animals, things and places."],
+  ["Which word is the adjective in 'the muddy path'?",["muddy","path","the"],"Muddy tells you something about the path. An adjective goes with a noun."]],
+ [["Which word is a preposition in 'The cat sits under the car'?",["under","sits","car"],"Prepositions tell you where or when: in, on, under, next to, before, after."],
+  ["What is 'quickly' in 'She cycles quickly to school'?",["An adverb","An adjective","A noun"],"Quickly says something about the cycling, not about a thing. Many adverbs end in -ly."]]],
+spel:[
+ [["Which is spelled correctly?",["frog","frogg"],"Frog has one g at the end."],
+  ["Which is spelled correctly?",["fish","fesh"],"Fish has a short i sound, written with an i."]],
+ [["How do you spell the plural of 'box'?",["boxes","boxs","boxies"],"After x, s, sh and ch you add -es: boxes, buses, dishes, churches. You can hear the extra syllable."],
+  ["'Hop' becomes 'hopping'. What does 'run' become?",["running","runing","runeing"],"Short vowel + one consonant: double it before -ing. Run-ning, sit-ting, swim-ming."]],
+ [["Which is correct?",["They're going to their house over there.","Their going to there house over they're.","There going to they're house over their."],"They're = they are. Their = belongs to them. There = a place. Swap in 'they are' to check."],
+  ["'I before e, except after c.' Which word follows that rule?",["receive","weird","science"],"Receive follows it. Weird and science break it: English has lots of exceptions, so the rule is only a helper."]]],
+abc:[
+ [["Which letter is the first letter of the alphabet?",["a","z"],"The alphabet starts with a, b, c."],
+  ["Which letter comes before d?",["c","e"],"a, b, c, d. The c comes before the d."]],
+ [["Two words start with the same letter: 'bear' and 'ball'. Which comes first in the dictionary?",["ball","bear"],"If the first letter is the same, look at the second: a comes before e."],
+  ["How many letters are there in the alphabet?","26","Twenty-six letters, five of them vowels (and sometimes y)."]],
+ [["Where do you look up 'running' in a dictionary?",["Under run","Under running","Under runn"],"A dictionary gives the base word: run. You have to work back from the form you see."],
+  ["Put in alphabetical order: McDonald, Mabel, Mead. Which comes first?",["Mabel","McDonald","Mead"],"Ma comes before Mc, and Mc comes before Me. You go letter by letter."]]],
+teken:[
+ [["What does a sentence start with?",["a capital letter","a full stop"],"A sentence starts with a capital letter and ends with a full stop."],
+  ["What goes after 'Watch out'?",["!","?"],"You use an exclamation mark when you shout something."]],
+ [["Where do the commas go: 'I can see a tree a bench and a bus'?",["After tree","After see","After and"],"In a list you put a comma between the items: a tree, a bench and a bus."],
+  ["What does your voice do at a question mark?",["It goes up at the end","It gets louder","You stop talking"],"Punctuation tells you how to read aloud: a full stop is a stop, a comma is a short breath."]],
+ [["What does the apostrophe show in 'the dog's bone'?",["The bone belongs to the dog","There are lots of dogs","A letter is missing"],"Apostrophe + s shows belonging. In 'don't' the apostrophe shows a missing letter: do not."],
+  ["Which is correct?",["The dogs' bowls are empty.","The dog's bowls's are empty.","The dogs bowl's are empty."],"With a plural that ends in s, the apostrophe goes after the s: the dogs' bowls (several dogs)."]]],
+zin:[
+ [["Which word fits? 'The dog … loudly.'",["barks","tree"],"In a sentence someone does something. The dog barks."],
+  ["Who is doing something in 'Miss Noor waves'?",["Miss Noor","waves"],"Miss Noor is the one doing something. Waving is what she does."]],
+ [["How do you find the verb in a sentence?",["Change the time: the word that changes is the verb","It is always the first word","It is always the longest word"],"The bus drives → the bus drove. Drives changes, so that is the verb."],
+  ["Make a question from 'The shop is open.' Which word goes to the front?",["Is","The","Open"],"Is the shop open? In a question the verb jumps to the front."]],
+ [["What is the object in 'The baker sells bread'?",["bread","the baker","sells"],"Ask: what does the baker sell? Bread. The object is what the action is done to."],
+  ["'The dog bites the man' and 'The man bites the dog'. What makes the difference?",["The word order","The punctuation","The tense"],"In English, word order decides who does what. The same words, a completely different story."]]],
+verklein:[
+ [["One cat, two …",["cats","cat"],"For most words you just add s."],
+  ["One bus, two …",["buses","buss"],"After s you add -es. You can hear it: bus-es."]],
+ [["One baby, two …",["babies","babys","babyes"],"Consonant + y: change y to i and add -es. But a vowel + y just adds s: boys, days."],
+  ["One leaf, two …",["leaves","leafs","leafes"],"Many words ending in -f or -fe change to -ves: wolf, wolves; knife, knives."]],
+ [["Which plural is irregular?",["mice","dogs","boxes"],"Mouse becomes mice: no s at all. Same with tooth/teeth, foot/feet, child/children."],
+  ["One sheep, two …",["sheep","sheeps","shoop"],"Some words do not change at all: sheep, deer, fish. Context tells you there are several."]]],
+spreek:[
+ [["'As strong as an ox.' What does that mean?",["very strong","a bit tired"],"An ox is very strong. You compare someone with an animal."],
+  ["'As quiet as a mouse.' How are you?",["very quiet","very loud"],"You can hardly hear a mouse."]],
+ [["'It's a piece of cake.' What does that mean?",["It is very easy","There is cake","It is a small piece"],"It is figurative: you should not take it literally."],
+  ["What is the difference between literal and figurative?",["Literal is really so, figurative is a way of speaking","Literal is written, figurative is spoken","There is no difference"],"'He fell off his chair' can really have happened, or mean he was very surprised."]],
+ [["'The wind whispered through the trees.' What is this kind of imagery called?",["Personification","Simile","Exaggeration"],"Something that is not alive does something human. A simile uses 'like' or 'as'."],
+  ["'I've told you a million times!' What is that?",["Hyperbole","Irony","Rhyme"],"Nobody counted. Exaggerating makes a message stronger; it is called hyperbole."]]],
+leen:[
+ [["Which country does the word 'pizza' come from?",["Italy","England"],"Pizza comes from Italy, together with spaghetti and pasta."],
+  ["Which word did English get from Dutch?",["cookie","pizza"],"Cookie comes from the Dutch koekje, a little cake. Pizza is Italian."]],
+ [["Which language do 'ballet', 'café' and 'menu' come from?",["French","German","Spanish"],"English took thousands of words from French after 1066, when French-speaking Normans ruled England."],
+  ["What do you call a word taken from another language?",["A loanword","A compound","A plural"],"A strange name, because we never give them back. Every language does it: that is how a language grows."]],
+ [["Where do 'tea' and 'ketchup' originally come from?",["From Chinese, via trade","From Latin","From German"],"Words travel with goods. Traders and sailors carried them around the world."],
+  ["Which English words come from Dutch?",["boss, yacht and skipper","pizza, piano and pasta","computer, laptop and wifi"],"Baas, jacht and schipper. Dutch sailors left them behind, especially at sea."]]],
+brief:[
+ [["What do you write at the bottom of a note?",["your name","the weather"],"Then the reader knows who the note is from."],
+  ["How do you end a note nicely?",["Bye for now","Hello"],"Hello is how you start. Bye or love from is how you end."]],
+ [["You are writing to your grandma. Which ending fits?",["Lots of love,","Yours faithfully,","Kind regards, the management"],"You write to family differently from someone you do not know. That is called adapting your tone."],
+  ["What goes in the middle of a good letter?",["What you want to tell or ask","Your address","The date"],"A letter has a beginning (greeting), a middle (the message) and an end (sign-off and name)."]],
+ [["You write to the council about a broken street lamp. Which sentence fits best?",["I would like to draw your attention to the broken street lamp on Church Street.","Oi, that lamp's broken!","You must fix that lamp now."],"Formal writing is polite and clear. If you say exactly what and where, you get help sooner."],
+  ["What makes a request convincing?",["A clear question with a reason","Lots of exclamation marks","A letter that is as long as possible"],"Say what you want, why, and what the other person can do. Short and concrete works better than long and angry."]]]
+};D.S.forEach(function(m){if(M[m.id])m.more=M[m.id]})})(window.TL_DATA);

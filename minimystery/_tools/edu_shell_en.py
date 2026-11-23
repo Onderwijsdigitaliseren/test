@@ -33,6 +33,7 @@ COMMON = {
  "kies School of BSO, de groep en de lengte (6, 8 of 10 stations). Start de zaak op je eigen telefoon: in de briefing staat de": "choose School or After-school, the age group and the length (6, 8 or 10 stations). Start the case on your own phone: the briefing shows the",
  ". Elk team vult die code in en krijgt precies dezelfde zaak. Onder de briefing staat het": ". Every team enters that code and gets exactly the same case. Below the briefing is the",
  "Tip: spreek het speelgebied en een eindtijd af. Teams blijven bij elkaar en op de stoep. Geen account, geen app: werkt in de browser.": "Tip: agree on the play area and a finish time. Teams stay together and on the pavement. No account, no app: it works in the browser.",
+ "6 stations · ±45 min": "6 stations · ±45 min", "8 stations · ±60 min": "8 stations · ±60 min", "10 stations · ±75 min": "10 stations · ±75 min",
  "6 stations · ±35 min": "6 stations · ±35 min", "8 stations · ±45 min": "8 stations · ±45 min", "10 stations · ±60 min": "10 stations · ±60 min",
  "(A4).": "(A4).",
 }
@@ -50,7 +51,7 @@ GAMES = {
  "De klok in de hal is weg, en in een oud schrift uit 1923 staat waarom: wie hem verkeerd opwindt, maakt een lek in de tijd. Rond (of in) jullie school zitten nu tijdlekken. Bij elk lek kijk je een tijdvak in, doe je een onderzoek in je eigen buurt en verdien je een tijdsleutel. Leg de tijdvakken op volgorde en de klok komt terug. De tien tijdvakken van de canon, voor groep 5–8 en BSO.":
    "The clock in the hall is gone, and an old notebook from 1923 explains why: whoever winds it the wrong way makes a leak in time. There are now time leaks around (or inside) your school. At each leak you look into an era, do an investigation in your own neighbourhood and earn a time key. Put the eras in order and the clock comes back. The ten eras of Dutch history, for ages 8–12 and after-school clubs.",
  "bijv. De Tijdreizigers": "e.g. The Time Travellers",
- "6 tijdvakken · ±35 min": "6 eras · ±35 min", "10 tijdvakken · ±50 min": "10 eras · ±50 min", "12 · met nu en toekomst": "12 · with now and the future",
+ "6 tijdvakken · ±45 min": "6 eras · ±45 min", "10 tijdvakken · ±65 min": "10 eras · ±65 min", "6 tijdvakken · ±35 min": "6 eras · ±35 min", "10 tijdvakken · ±50 min": "10 eras · ±50 min", "12 · met nu en toekomst": "12 · with now and the future",
  "Verder met de tijdreis": "Continue the time journey", "Start de tijdreis van vandaag": "Start today's time journey", "Extra tijdreis": "Extra time journey",
  "Eerdere tijdreizen": "Earlier time journeys", "Het oude schrift": "The old notebook",
  "Tijdlekken": "Time leaks", "Tijdsleutels": "Time keys", "Logboek": "Logbook", "De tijdlijn": "The timeline",
@@ -226,7 +227,7 @@ def build(g, cfg):
     # paden en scripts
     out = re.sub(r'((?:src|href)=")(shared/|games/|assets/)', r'\1../\2', out)
     out = out.replace('href="educatie/"', 'href="education/"')
-    out = re.sub(r'games/%s/data-nl\.js\?v=\d+' % g, 'games/%s/data-en.js?v=5' % g, out)
+    out = re.sub(r'games/%s/data-nl\.js\?v=\d+' % g, 'games/%s/data-en.js?v=6' % g, out)
     out = re.sub(r'games/%s/game\.js\?v=\d+' % g, 'games/%s/game-en.js?v=8' % g, out)
     open(os.path.join("en", cfg["en"]), "w", encoding="utf-8").write(out)
     print(g, "->", "en/" + cfg["en"], "| niet vertaald:", sorted(set(miss)) or "-")

@@ -187,3 +187,105 @@ return{lang:"nl",T:T,TYPES:TYPES,TIK:TIK,NOOR:NOOR,CHARLIE:CHARLIE,ROOMS:ROOMS,O
     doelen:"Groep 7–8 Engels (kerndoel 13–16, ERK A1): informatie vragen en geven (de weg, tijd, weer), beschrijven (kleding, uiterlijk), vragen stellen met vraagwoorden, eenvoudige teksten lezen en schrijven, Brits en Amerikaans Engels herkennen."}
   ]}
 })();
+
+/* ===== Verdieping per station (shared/meer.js): per niveau twee extra stappen met uitleg. Goede antwoord staat eerst. ===== */
+(function(D){var M={
+colours:[
+ [["Welke kleur is 'blue'?",["blauw","geel"],"Blue is blauw. The sky is blue: de lucht is blauw."],
+  ["Hoe zeg je 'groen'?",["green","grey"],"Green is groen, grey is grijs. The grass is green."]],
+ [["Typ in het Engels: geel.","yellow","Yellow. Let op de dubbele l en de w aan het eind."],
+  ["Wat betekent 'a black and white cat'?",["een zwart-witte kat","een zwarte en een witte kat","een bruine kat"],"In het Engels staat de kleur vóór het ding, net als in het Nederlands: a red car."]],
+ [["Hoe zeg je 'lichtblauw' en 'donkergroen'?",["light blue en dark green","little blue en night green","lamp blue en black green"],"Light is licht, dark is donker. Je schrijft ze als losse woorden."],
+  ["Typ in het Engels: 'Welke kleur is het?' (begin met What)","what colour is it|what color is it","What colour is it? Brits Engels schrijft colour, Amerikaans Engels color. Allebei goed."]]],
+numbers:[
+ [["Hoeveel is 'three'?",["3","2"],"One, two, three: een, twee, drie."],
+  ["Wat komt na 'four'?",["five","six"],"Four, five, six. Tel maar mee op je vingers."]],
+ [["Typ in het Engels: 12.","twelve","Eleven en twelve zijn buitenbeentjes. Daarna komt thirteen, fourteen, fifteen."],
+  ["Wat is het verschil tussen 'thirteen' en 'thirty'?",["13 en 30","30 en 13","3 en 13"],"-teen is tien erbij (13 tot 19), -ty is een tiental (30, 40, 50). Luister goed naar het eind."]],
+ [["Typ in het Engels: 100.","one hundred|a hundred|hundred","A hundred of one hundred. 250 is two hundred and fifty: de Britten zeggen er 'and' tussen."],
+  ["Hoe zeg je 'de derde straat'?",["the third street","the three street","the thirth street"],"Rangtelwoorden: first, second, third, en daarna fourth, fifth met -th."]]],
+animals:[
+ [["Wat is een 'bird'?",["een vogel","een vis"],"A bird can fly: een vogel kan vliegen."],
+  ["Hoe zeg je 'paard'?",["horse","mouse"],"Horse is paard. Mouse is muis."]],
+ [["Typ het meervoud: one cat, two …","cats","Meestal zet je er een s achter: cats, dogs, birds."],
+  ["Wat is het meervoud van 'mouse'?",["mice","mouses","mouse"],"Een paar woorden doen het anders: mouse-mice, foot-feet, child-children."]],
+ [["Typ in het Engels: 'De hond rent.' (begin met The dog is)","the dog is running","Iets dat nu bezig is: is + werkwoord met -ing. Let op de dubbele n: running."],
+  ["Wat betekent 'It's raining cats and dogs'?",["Het regent heel hard","Er vallen dieren uit de lucht","Het is rommelig"],"Een uitdrukking vertaal je niet woord voor woord. Wij zeggen: het regent pijpenstelen."]]],
+where:[
+ [["Wat betekent 'in the box'?",["in de doos","op de doos"],"In is in. On is op."],
+  ["De kat zit OP de stoel. Hoe zeg je 'op'?",["on","under"],"The cat is on the chair."]],
+ [["Typ in het Engels: 'naast de deur' (begin met next)","next to the door","Next to is naast. Het zijn in het Engels twee woorden."],
+  ["Wat betekent 'in front of the school'?",["voor de school","achter de school","in de school"],"In front of is ervoor. Behind is erachter."]],
+ [["Typ in het Engels: 'tegenover de kerk' (begin met opposite)","opposite the church","Opposite the church. Zonder 'of' ertussen."],
+  ["Kies het goede woord: 'The bike is … the wall.' (tegen de muur)",["against","between","above"],"Against is ertegenaan. Between is tussen twee dingen, above is erboven."]]],
+directions:[
+ [["Wat betekent 'right'?",["rechts","links"],"Right is rechts. Left is links."],
+  ["Wat doe je bij 'Stop!'?",["stilstaan","rennen"],"Stop is in het Engels en in het Nederlands hetzelfde."]],
+ [["Typ in het Engels: 'Sla linksaf.' (twee woorden)","turn left","Turn left, turn right. Turn betekent draaien."],
+  ["Wat betekent 'Go past the shop'?",["Loop voorbij de winkel","Ga de winkel in","Stop bij de winkel"],"Past is voorbij. Go past the shop and turn right."]],
+ [["Typ in het Engels: 'Neem de tweede straat rechts.' (begin met Take)","take the second street on the right|take the second road on the right","Take the second street on the right. Let op: on the right."],
+  ["Hoe vraag je beleefd de weg naar het station?",["Excuse me, how do I get to the station?","Where station?","Give me the station."],"Begin met Excuse me. How do I get to … is de standaardvraag naar de weg."]]],
+time:[
+ [["Wat betekent 'morning'?",["ochtend","nacht"],"Good morning zeg je 's ochtends. Good night voor het slapengaan."],
+  ["Hoe zeg je 'drie uur'?",["three o'clock","three clock"],"O'clock gebruik je bij hele uren."]],
+ [["Hoe laat is 'quarter past three'?",["3:15","2:45","3:45"],"Past is over. Kwart over drie."],
+  ["Pas op: hoe laat is 'half past three'?",["3:30, half vier","2:30, half drie","3:00"],"Engelsen tellen een half uur NA het uur. Half past three is half vier."]],
+ [["Typ in het Engels: 'tien voor zes' (begin met ten)","ten to six","To is voor, past is over. Ten to six, ten past six."],
+  ["Wat betekent '7 p.m.'?",["7 uur 's avonds","7 uur 's ochtends","17:00"],"a.m. is voor de middag, p.m. erna. 7 p.m. is 19:00."]]],
+food:[
+ [["Wat is 'milk'?",["melk","brood"],"Milk is melk. Milk and cookies: melk met koekjes."],
+  ["Hoe zeg je 'banaan'?",["banana","apple"],"Banana lijkt op banaan."]],
+ [["Typ in het Engels: kaas.","cheese","Cheese. Dat zeggen Engelsen ook als er een foto wordt gemaakt."],
+  ["Wat betekent 'I'm hungry'?",["Ik heb honger","Ik ben boos","Ik heb haast"],"Hungry is hongerig. Angry is boos: ze lijken op elkaar."]],
+ [["Kies het goede woord: 'How … apples do you want?'",["many","much","more"],"Many bij dingen die je kunt tellen (apples), much bij wat je niet telt (water, bread)."],
+  ["Typ in het Engels: 'Mag ik de rekening?' (begin met Can I have)","can i have the bill|can i have the bill please","The bill is de rekening. In Amerika zeggen ze the check."]]],
+weather:[
+ [["Wat is 'rain'?",["regen","zon"],"Rain is regen. Sun is zon."],
+  ["Het is koud. Wat zeg je?",["It's cold","It's hot"],"Cold is koud, hot is heet."]],
+ [["Typ in het Engels: 'Het is bewolkt.' (begin met It's)","it's cloudy|its cloudy","A cloud is een wolk. Cloudy is bewolkt. Zo ook: sun-sunny, rain-rainy, wind-windy."],
+  ["Wat betekent 'What's the weather like?'",["Wat voor weer is het?","Vind je het weer leuk?","Waar is het weer?"],"Like betekent hier niet 'leuk vinden' maar 'hoe is het'."]],
+ [["Typ in het Engels: 'Het gaat regenen.' (begin met It's going)","it's going to rain|its going to rain","Going to gebruik je voor iets dat je ziet aankomen."],
+  ["Wat is het verschil tussen 'warm' en 'hot'?",["Hot is heter dan warm","Warm is heter dan hot","Het is hetzelfde"],"Cold, cool, warm, hot: van koud naar heet. Voor Engelsen is 25 graden al hot."]]],
+body:[
+ [["Wat zijn je 'eyes'?",["je ogen","je oren"],"Eyes zijn ogen, ears zijn oren."],
+  ["Simon says: clap your HANDS. Wat doe je?",["in je handen klappen","op je hoofd tikken"],"Hands zijn handen. Head is hoofd."]],
+ [["Typ in het Engels: schouder.","shoulder","Head, shoulders, knees and toes: het liedje helpt je onthouden."],
+  ["Wat is het meervoud van 'foot'?",["feet","foots","footes"],"One foot, two feet. Net zo: one tooth, two teeth."]],
+ [["Typ in het Engels: 'Mijn been doet pijn.' (begin met My leg)","my leg hurts","Hurts is doet pijn. Bij de dokter zeg je: my leg hurts."],
+  ["Wat betekent 'Break a leg!'?",["Succes!","Pas op!","Ga zitten!"],"Dat zeggen toneelspelers tegen elkaar voor een optreden. Letterlijk nemen is geen goed idee."]]],
+clothes:[
+ [["Wat is een 'hat'?",["een hoed","een hond"],"A hat draag je op je hoofd."],
+  ["Hoe zeg je 'jas'?",["coat","boat"],"Coat is jas. Boat is boot."]],
+ [["Typ in het Engels: broek.","trousers|pants","In Engeland trousers, in Amerika pants. Let op: in Engeland betekent pants onderbroek."],
+  ["Wat is goed?",["a pair of shoes","a shoes","one shoes"],"Dingen met twee delen krijgen 'a pair of': a pair of shoes, a pair of trousers, a pair of glasses."]],
+ [["Typ in het Engels: 'Hij draagt een blauwe jas.' (begin met He's)","he's wearing a blue coat|hes wearing a blue coat|he's wearing a blue jacket","He's wearing: wat iemand nu aanheeft, zeg je met -ing."],
+  ["Je past iets in de winkel. Het is te groot. Wat zeg je?",["It's too big","It's very big","It's to big"],"Too met dubbel o is 'te': too big, too small, too expensive."]]],
+questions:[
+ [["Wat vraagt 'What is your name?'",["hoe je heet","hoe oud je bent"],"What is your name? My name is …"],
+  ["'How old are you?' Wat zeg jij?",["I am seven","I am fine"],"How old is hoe oud. I am fine zeg je bij How are you?"]],
+ [["Welk vraagwoord betekent 'wie'?",["who","how","why"],"Who is wie, how is hoe, why is waarom."],
+  ["Typ het vraagwoord: '… is Biscuit?' (Waar is Biscuit?)","where","Where is waar. Let op: where (waar) en were (waren) klinken bijna hetzelfde."]],
+ [["Maak de vraag af: '… you like dogs?'",["Do","Are","Is"],"Bij gewone werkwoorden maak je een vraag met do of does: Do you like dogs? Does he like dogs?"],
+  ["Typ in het Engels: 'Waarom ben je te laat?' (begin met Why)","why are you late","Why are you late? Bij 'to be' heb je geen do nodig: het werkwoord gaat zelf naar voren."]]],
+family:[
+ [["Wie is je 'mother'?",["je moeder","je broer"],"Mother of mum is moeder. Father of dad is vader."],
+  ["Hoe zeg je 'baby'?",["baby","bobby"],"Baby is in het Engels hetzelfde woord."]],
+ [["Typ in het Engels: opa.","grandpa|grandfather|granddad","Grandpa of grandfather. Grand- zet je ook voor ma: grandma."],
+  ["Wie is je 'aunt'?",["je tante","je oom","je nicht"],"Aunt is tante, uncle is oom. Cousin is neef of nicht."]],
+ [["Typ in het Engels: 'Dit is de hond van Charlie.' (begin met This is)","this is charlie's dog|this is charlies dog","Bezit maak je met 's: Charlie's dog, my sister's bike."],
+  ["Wat betekent 'only child'?",["enig kind","eenzaam kind","oudste kind"],"I'm an only child: ik heb geen broers of zussen."]]],
+school:[
+ [["Wat is een 'book'?",["een boek","een tas"],"Book lijkt op boek. A bag is een tas."],
+  ["Waar zit je op in de klas?",["a chair","a door"],"Chair is stoel. Door is deur."]],
+ [["Typ in het Engels: schrift.","notebook|exercise book","Notebook of exercise book. Een notebook is in het Engels dus van papier."],
+  ["Wat betekent 'Open your books, please'?",["Doe je boeken open","Ruim je boeken op","Lees je boek uit"],"Please maakt het beleefd. Engelse leraren zeggen het bijna elke zin."]],
+ [["Typ in het Engels: 'Ik begrijp het niet.' (begin met I don't)","i don't understand|i dont understand|i do not understand","I don't understand. De handigste zin in een vreemde taal."],
+  ["Wat is het lievelingsvak van iemand die zegt: 'I love PE'?",["Gym","Rekenen","Tekenen"],"PE staat voor physical education. Maths is rekenen, art is tekenen."]]],
+greetings:[
+ [["Wat zeg je als je weggaat?",["Goodbye","Hello"],"Goodbye of bye. Hello zeg je als je aankomt."],
+  ["Wat zeg je als je iets krijgt?",["Thank you","Sorry"],"Thank you is dank je wel."]],
+ [["Typ in het Engels: 'alsjeblieft' (als je iets vraagt).","please","Please zeg je als je iets vraagt. Als je iets geeft, zeg je: here you are."],
+  ["Iemand zegt 'Thank you'. Wat zeg jij?",["You're welcome","Yes please","Good night"],"You're welcome betekent graag gedaan."]],
+ [["Typ in het Engels: 'Leuk je te ontmoeten.' (begin met Nice)","nice to meet you","Nice to meet you. Het antwoord is: nice to meet you too."],
+  ["Wat zeg je in een nette e-mail aan iemand die je niet kent?",["Dear Mr Smith,","Hey Smith!","Yo,"],"Dear is hier niet 'lieve' maar 'geachte'. Je sluit af met Kind regards."]]]
+};D.S.forEach(function(m){if(M[m.id])m.more=M[m.id]})})(window.EN_DATA);

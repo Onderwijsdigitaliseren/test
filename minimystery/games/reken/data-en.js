@@ -186,3 +186,105 @@ return{lang:"en",T:T,TYPES:TYPES,TIK:TIK,NOOR:NOOR,NUL:NUL,ROOMS:ROOMS,OPEN:OPEN
     doelen:"Ages 10–12 (Dutch groep 7–8, SLO maths): large numbers, decimals, percentages and fractions, ratio and scale, area, mean, rounding, measuring and estimating with reference measures, maths in context."}
   ]}
 })();
+
+/* ===== Going deeper per station (shared/meer.js): two extra steps with explanation per level. Correct answer always first. ===== */
+(function(D){var M={
+stappen:[
+ [["You take 6 steps and then 3 more. How many steps altogether?",["9","8"],"6 and 3 make 9. Count on from 6: seven, eight, nine."],
+  ["Which is longer?",["10 big steps","10 small steps"],"Big steps take you further. That is why we measure with a tape measure: it is the same length for everyone."]],
+ [["How many centimetres are there in 1 metre?",["100","10","1000"],"Centi means hundredth. 100 centimetres fit into 1 metre."],
+  ["A step is 50 cm. The playground is 40 steps long. How many metres is that?","20","Two steps make 1 metre, so 40 steps is 20 metres. Or: 40 × 50 = 2000 cm = 20 m."]],
+ [["Your step is 0.6 m. It is 150 metres to the bus stop. How many steps is that?","250","150 ÷ 0.6 = 1500 ÷ 6 = 250. Turn a decimal into a whole number by multiplying both by 10."],
+  ["Why is a metre the same length all over the world?",["It has been agreed and fixed internationally","Because everyone takes the same size steps","Because every country measures it again"],"In the past every town measured with its own foot or ell. Since 1799 the metre has been the fixed unit, so everyone means the same thing."]]],
+ramen:[
+ [["There are 5 windows. 2 are open. How many are closed?",["3","4"],"5 − 2 = 3. You can split 5 into 2 and 3."],
+  ["What is double 4?",["8","6"],"Double is two lots of the same: 4 + 4 = 8."]],
+ [["A wall has 4 rows of 6 windows. How many windows is that?","24","4 × 6 = 24. You do not count rows and columns one by one: you multiply."],
+  ["You know 5 × 6 = 30. How do you work out 6 × 6 quickly?",["30 + 6","30 + 5","30 × 6"],"6 × 6 is one more group of 6 than 5 × 6. That is how you build a times table from a fact you already know."]],
+ [["A block of flats has 12 floors with 15 windows each. How many windows?","180","12 × 15 = 10 × 15 + 2 × 15 = 150 + 30 = 180. Split the number into tens and ones."],
+  ["Of the 180 windows, 45 have a light on. What fraction is that?",["A quarter","A third","A half"],"45 is half of 90 and 90 is half of 180. Half of a half is a quarter: 25%."]]],
+nummer:[
+ [["Which number comes after 19?",["20","18"],"After 19 comes 20: a new ten."],
+  ["Which number is even?",["8","7"],"Even numbers can be shared fairly in two: 2, 4, 6, 8, 10."]],
+ [["On one side of the street are 2, 4, 6, 8. Which number comes next?","10","The even numbers are on one side and go up in jumps of 2."],
+  ["How can you tell whether a big number is even?",["From the last digit","From the first digit","From how many digits it has"],"If it ends in 0, 2, 4, 6 or 8, it is even. So 1357 is odd and 1358 is even."]],
+ [["Which of these house numbers is a prime number?",["37","39","33"],"39 = 3 × 13 and 33 = 3 × 11. Only 37 cannot be divided by anything except 1 and itself."],
+  ["A street has house numbers 1 to 100. How many times is the digit 7 painted?","20","Ten times as the ones digit (7, 17, 27 … 97) and ten times as the tens digit (70 to 79). So 77 counts twice."]]],
+palen:[
+ [["Count on in jumps of 2: 2, 4, 6, …",["8","7"],"In jumps of 2 you skip one number each time."],
+  ["There are 10 posts. 4 lamps are on. How many are off?",["6","5"],"4 and 6 together make 10. They are number bonds to 10."]],
+ [["The pattern is: on, off, off, on, off, off … Is the 9th lamp on or off?",["Off","On"],"The pattern is 3 long. Lamps 1, 4, 7 and 10 are on; number 9 is the last of a group and is off."],
+  ["There are 6 posts in a row. How many gaps are there?","5","There is always one gap fewer than there are posts. Draw it: between 2 posts there is 1 gap."]],
+ [["A street of 240 metres gets a post at the start and at the end, and one every 30 metres in between. How many posts?","9","240 ÷ 30 = 8 gaps, plus 1 extra post: 9. This is called the fence post problem."],
+  ["A 20-watt lamp burns 10 hours a night. How many watt-hours is that in 30 nights?","6000|6,000","20 × 10 × 30 = 6000 watt-hours, which is 6 kilowatt-hours. An old 100-watt bulb used five times as much."]]],
+klok:[
+ [["How many hands does this clock have?",["2","1"],"The short hand shows the hour, the long hand the minutes."],
+  ["Which hand shows the hour?",["the short one","the long one"],"The short hand moves slowly: it takes 12 hours to go round once."]],
+ [["How many minutes are there in an hour?","60","An hour is 60 minutes. A quarter of an hour is a quarter of that: 15 minutes."],
+  ["It is quarter to four. How many minutes until four o'clock?","15","Quarter to means a quarter of an hour still to go. A quarter of an hour is 15 minutes."]],
+ [["The lesson starts at 10:45 and lasts 50 minutes. What time does it end? Type it as hh:mm.","11:35|1135","First 15 minutes to 11:00, then 35 more minutes: 11:35."],
+  ["How many degrees does the minute hand turn in a quarter of an hour?","90","A full circle is 360 degrees. A quarter of it is 90 degrees: a right angle."]]],
+kassa:[
+ [["You have 5 euros. An ice cream costs 2 euros. How much do you have left?",["3 euros","2 euros"],"5 − 2 = 3."],
+  ["Which is worth more?",["one 2-euro coin","one 1-euro coin"],"Look at the number on the coin, not at how big it is."]],
+ [["How many cents is € 2.50?","250","A euro is 100 cents. 2 euros is 200 cents, plus 50 cents is 250."],
+  ["Something costs € 3.99. About how much is that?",["4 euros","3 euros","39 euros"],"It is only 1 cent less than 4 euros. Shops do that on purpose: 3.99 looks cheaper than 4."]],
+ [["A coat costing € 80 is 25% off. What do you pay?","60","25% is a quarter: 80 ÷ 4 = 20 euros off. 80 − 20 = 60."],
+  ["Which is cheaper per bottle?",["6 bottles for € 4.20","4 bottles for € 3.20","They cost the same"],"4.20 ÷ 6 = 0.70 per bottle. 3.20 ÷ 4 = 0.80 per bottle. Always work back to the price of one."]]],
+tegels:[
+ [["What shape is a paving slab?",["a square","a circle"],"A square has four sides of the same length and four corners."],
+  ["You lay 2 rows of 3 slabs. How many slabs?",["6","5"],"3 and 3 make 6. Two rows of three."]],
+ [["A slab is 30 cm wide. How wide are 5 slabs side by side, in centimetres?","150","5 × 30 = 150 cm, which is one and a half metres."],
+  ["What do you work out with length times width?",["The area","The perimeter","The height"],"Area is how much fits on it. The perimeter is the edge all the way round: you add that up."]],
+ [["About how many 30 by 30 cm slabs fit into 1 m²?",["11","9","3"],"One slab is 0.3 × 0.3 = 0.09 m². 1 ÷ 0.09 is just over 11. Three fit side by side in 90 cm, so 9 is just too few."],
+  ["A patio is 4.5 m by 6 m. How many m² is that?","27","4 × 6 = 24 and a half × 6 = 3. Together 27 m²."]]],
+verkeer:[
+ [["You count 4 cars and 3 bikes. How many altogether?",["7","6"],"4 + 3 = 7."],
+  ["6 bikes and 2 cars go past. Which are there more of?",["bikes","cars"],"6 is more than 2."]],
+ [["What is a handy way to keep count while counting?",["Tally marks: lines in groups of 5","Remembering everything","Drawing every vehicle"],"With tally marks you draw four lines and put the fifth across them. Groups of 5 are quick to add up afterwards."],
+  ["In 5 minutes you count 12, 8, 10, 9 and 11 vehicles. What is the average per minute?","10","Together 50, divided by 5 minutes is 10. The average is everything shared out fairly."]],
+ [["A car drives at 30 km an hour. How many metres does it travel in 1 minute?","500","30 km is 30,000 metres in 60 minutes. 30,000 ÷ 60 = 500 metres a minute."],
+  ["You count for one minute on Monday morning at 8:15. Why does that say little about the whole week?",["The sample is too small and at one moment","You counted wrongly","Cars drive faster on Mondays"],"It is busier in the rush hour than at night. For a fair picture you count at several times and take the average."]]],
+koekjes:[
+ [["4 biscuits for 2 children. How many does each get?",["2","3"],"Fair shares: everyone gets the same. 2 and 2 make 4."],
+  ["You have 1 biscuit for 2 children. What do you do?",["break it in half","eat it yourself"],"Then each gets half a biscuit. Two halves make one whole."]],
+ [["20 biscuits for 4 children. How many does each get?","5","20 ÷ 4 = 5, because 4 × 5 = 20. Dividing is the opposite of multiplying."],
+  ["Which division goes with 6 × 7 = 42?",["42 ÷ 7 = 6","7 ÷ 42 = 6","42 ÷ 6 = 6"],"If you know the times table fact, you know the division too: 42 ÷ 7 = 6 and 42 ÷ 6 = 7."]],
+ [["A cake is shared out: 1/2 for the class, 1/4 for the teacher. What fraction is left?",["1/4","1/3","1/8"],"A half is two quarters. Two quarters plus one quarter is three quarters. One quarter is left."],
+  ["Three children share € 10 fairly. How much does each get, rounded to whole cents? Type it like 3.33","3.33|3,33","10 ÷ 3 = 3.333… It never stops. With money you round to two decimal places; 1 cent is left over."]]],
+hoogte:[
+ [["Which is taller?",["a tree","a bike"],"You compare tall and short by imagining the things side by side."],
+  ["Who is taller: you or the door?",["the door","me"],"A door is about 2 metres. You fit underneath it easily."]],
+ [["About how tall is an ordinary door?",["2 metres","5 metres","50 centimetres"],"A 2-metre door makes a handy measuring stick: how many doors stacked up would reach the roof?"],
+  ["A lamp post is about 3 doors tall. How tall is that in metres?","6","3 × 2 = 6 metres. You estimate with something whose size you know."]],
+ [["A 1 m stick casts a 2 m shadow. At the same moment a tree casts a 16 m shadow. How tall is the tree, in metres?","8","The shadow is twice as long as the object. 16 ÷ 2 = 8 metres. That way you measure height without climbing."],
+  ["You estimate a tower at 40 metres. It is 50 metres. By what percentage of the real height were you off?","20","You were 10 metres out. 10 out of 50 is a fifth: 20%."]]],
+vormen:[
+ [["Which shape has no corners?",["a circle","a square"],"A circle is completely round. A wheel has to be round to roll."],
+  ["How many sides does a square have?",["4","3"],"Four sides that are all the same length."]],
+ [["What is the difference between a square and a rectangle?",["In a square all sides are the same length","A rectangle has more corners","A square has slanting corners"],"Both have four right angles. A square is a rectangle with four equal sides."],
+  ["How many degrees is a right angle?","90","The corner of a paving slab, a door or a book is 90 degrees."]],
+ [["How many degrees do the three angles of a triangle add up to?","180","Always 180 degrees, for every triangle. Tear the corners off a paper triangle and put them side by side: a straight line."],
+  ["A round road sign has a diameter of 60 cm. About how long is the edge? (use pi = 3)","180","Circumference = pi × diameter = 3 × 60 = 180 cm. With 3.14 you get just over 188 cm."]]],
+getallenjacht:[
+ [["Which number is bigger?",["15","12"],"Both have 1 ten. Then you look at the ones: 5 is more than 2."],
+  ["Which number is between 9 and 11?",["10","12"],"9, 10, 11. The neighbours of 10 are 9 and 11."]],
+ [["What is the digit 4 worth in 347?",["40","4","400"],"347 is 3 hundreds, 4 tens and 7 ones. The place of a digit decides its value."],
+  ["Round 468 to the nearest hundred.","500","468 is between 400 and 500. The tens digit is 6, which is 5 or more, so round up."]],
+ [["What is 0.75 as a fraction?",["3/4","7/5","1/75"],"0.75 is 75 hundredths. 75/100 simplifies to 3/4. It is also 75%."],
+  ["A sign says 'max. 3.5 t'. How many kilograms is that?","3500|3,500","A tonne is 1000 kilograms. 3.5 × 1000 = 3500 kg."]]],
+schaal:[
+ [["What do you see on a map?",["the streets from above","the streets from the side"],"A map is drawn as if you are flying over it like a bird."],
+  ["On the map, what is closest to school?",["the playground","the next town"],"What is close in real life is also close on the map."]],
+ [["On the map, 1 cm is 50 metres in real life. The park is 6 cm away. How many metres is that?","300","6 × 50 = 300 metres."],
+  ["Why is a map drawn to scale?",["Because the real world does not fit on paper","Because it looks nicer","Because streets keep changing"],"To scale means everything is made the same number of times smaller. The proportions stay right."]],
+ [["Scale 1:25,000. How many metres in real life is 4 cm on the map?","1000|1,000","4 × 25,000 = 100,000 cm. That is 1000 metres, exactly 1 kilometre."],
+  ["A playground is 30 m long in real life. You draw it to a scale of 1:200. How long will it be on paper, in centimetres?","15","30 m = 3000 cm. 3000 ÷ 200 = 15 cm."]]],
+verdiepingen:[
+ [["You are on floor 2 and go up 1 flight of stairs. Where are you?",["floor 3","floor 1"],"Up means adding: 2 + 1 = 3."],
+  ["What is the lowest floor called?",["the ground floor","the roof"],"The ground floor is level with the street. You start counting above it."]],
+ [["A staircase has 15 steps per floor. You walk up 3 floors. How many steps?","45","3 × 15 = 3 × 10 + 3 × 5 = 30 + 15 = 45."],
+  ["The lift is on floor 2. The car park is on −1. How many floors does the lift go down?","3","From 2 to 1, to 0, to −1: three steps. Below zero you simply keep counting."]],
+ [["A tower is 96 metres tall and has 32 floors. How tall is one floor, in metres?","3","96 ÷ 32 = 3. Check: 32 × 3 = 96."],
+  ["A lift goes 2 metres a second. How many seconds does the ride to 96 metres take?","48","Time = distance divided by speed: 96 ÷ 2 = 48 seconds."]]]
+};D.S.forEach(function(m){if(M[m.id])m.more=M[m.id]})})(window.RK_DATA);

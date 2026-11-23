@@ -186,3 +186,105 @@ return{lang:"nl",T:T,TYPES:TYPES,TIK:TIK,NOOR:NOOR,NUL:NUL,ROOMS:ROOMS,OPEN:OPEN
     doelen:"Groep 7–8 (SLO rekenen): grote getallen, kommagetallen, procenten en breuken, verhoudingen en schaal, oppervlakte, gemiddelde, afronden, meten en schatten met referentiematen, rekenen in context."}
   ]}
 })();
+
+/* ===== Verdieping per station (shared/meer.js): per niveau twee extra stappen met uitleg. Goede antwoord staat eerst. ===== */
+(function(D){var M={
+stappen:[
+ [["Je zet 6 stappen en dan nog 3. Hoeveel stappen samen?",["9","8"],"6 en 3 is 9. Tel maar door vanaf 6: zeven, acht, negen."],
+  ["Wat is langer?",["10 grote stappen","10 kleine stappen"],"Met grote stappen kom je verder. Daarom meten we met een meetlint: dat is voor iedereen even lang."]],
+ [["Hoeveel centimeter is 1 meter?",["100","10","1000"],"Centi betekent honderdste. In 1 meter passen 100 centimeters."],
+  ["Een stap is 50 cm. Het plein is 40 stappen lang. Hoeveel meter is dat?","20","Twee stappen is 1 meter, dus 40 stappen is 20 meter. Of: 40 × 50 = 2000 cm = 20 m."]],
+ [["Jouw stap is 0,6 m. Het is 150 meter naar de bushalte. Hoeveel stappen zijn dat?","250","150 : 0,6 = 1500 : 6 = 250. Maak van een kommagetal een heel getal door allebei keer 10 te doen."],
+  ["Waarom is de meter overal ter wereld even lang?",["Hij is internationaal afgesproken en vastgelegd","Omdat iedereen even grote stappen zet","Omdat elk land hem zelf opmeet"],"Vroeger mat elke stad met een eigen voet of el. Sinds 1799 is de meter de vaste maat, zodat iedereen hetzelfde bedoelt."]]],
+ramen:[
+ [["Er zijn 5 ramen. 2 staan open. Hoeveel zijn er dicht?",["3","4"],"5 − 2 = 3. Je kunt 5 splitsen in 2 en 3."],
+  ["Wat is het dubbele van 4?",["8","6"],"Dubbel is twee keer hetzelfde: 4 + 4 = 8."]],
+ [["Een gevel heeft 4 rijen van 6 ramen. Hoeveel ramen zijn dat?","24","4 × 6 = 24. Rijen en kolommen tel je niet één voor één: je vermenigvuldigt."],
+  ["Je weet 5 × 6 = 30. Hoe reken je 6 × 6 dan handig uit?",["30 + 6","30 + 5","30 × 6"],"6 × 6 is één groepje van 6 meer dan 5 × 6. Zo bouw je een tafel op vanuit een som die je al kent."]],
+ [["Een flat heeft 12 verdiepingen met elk 15 ramen. Hoeveel ramen?","180","12 × 15 = 10 × 15 + 2 × 15 = 150 + 30 = 180. Splits het getal in tientallen en eenheden."],
+  ["Van de 180 ramen brandt achter 45 ramen licht. Welk deel is dat?",["Een kwart","Een derde","De helft"],"45 is de helft van 90 en 90 is de helft van 180. De helft van de helft is een kwart: 25%."]]],
+nummer:[
+ [["Welk getal komt na 19?",["20","18"],"Na 19 komt 20: een nieuw tiental."],
+  ["Welk getal is even?",["8","7"],"Even getallen kun je eerlijk in tweeën delen: 2, 4, 6, 8, 10."]],
+ [["Aan de ene kant van de straat staan 2, 4, 6, 8. Welk nummer komt daarna?","10","De even nummers staan aan één kant en gaan met sprongen van 2 omhoog."],
+  ["Hoe zie je aan een groot getal of het even is?",["Aan het laatste cijfer","Aan het eerste cijfer","Aan het aantal cijfers"],"Eindigt het op 0, 2, 4, 6 of 8, dan is het even. 1357 is dus oneven en 1358 even."]],
+ [["Welk van deze huisnummers is een priemgetal?",["37","39","33"],"39 = 3 × 13 en 33 = 3 × 11. Alleen 37 is door niets te delen behalve 1 en zichzelf."],
+  ["Een straat heeft de huisnummers 1 tot en met 100. Hoe vaak is het cijfer 7 geschilderd?","20","Tien keer als eenheid (7, 17, 27 … 97) en tien keer als tiental (70 tot en met 79). Het nummer 77 telt dus twee keer."]]],
+palen:[
+ [["Tel verder met sprongen van 2: 2, 4, 6, …",["8","7"],"Bij sprongen van 2 sla je steeds één getal over."],
+  ["Er staan 10 palen. 4 lampen zijn aan. Hoeveel zijn er uit?",["6","5"],"4 en 6 zijn samen 10. Dat zijn 'verliefde harten'."]],
+ [["Het patroon is: aan, uit, uit, aan, uit, uit … Is de 9e lamp aan of uit?",["Uit","Aan"],"Het patroon is 3 lang. De lampen 1, 4, 7 en 10 zijn aan; nummer 9 is de laatste van een groepje en is uit."],
+  ["Er staan 6 palen op een rij. Hoeveel tussenruimtes zijn er?","5","Er is altijd één tussenruimte minder dan er palen zijn. Teken het maar: tussen 2 palen zit 1 ruimte."]],
+ [["Een straat van 240 meter krijgt aan het begin en het eind een paal, en verder om de 30 meter. Hoeveel palen?","9","240 : 30 = 8 tussenruimtes, en dan 1 paal extra: 9. Dit heet het hekpalenprobleem."],
+  ["Een lamp van 20 watt brandt 10 uur per nacht. Hoeveel wattuur is dat in 30 nachten?","6000|6.000","20 × 10 × 30 = 6000 wattuur, dat is 6 kilowattuur. Een oude lamp van 100 watt gebruikte vijf keer zoveel."]]],
+klok:[
+ [["Hoeveel wijzers heeft deze klok?",["2","1"],"De korte wijzer wijst het uur aan, de lange de minuten."],
+  ["Welke wijzer wijst het uur aan?",["de korte","de lange"],"De korte wijzer loopt langzaam: hij doet 12 uur over één rondje."]],
+ [["Hoeveel minuten zitten er in een uur?","60","Een uur is 60 minuten. Een kwartier is een kwart daarvan: 15 minuten."],
+  ["Het is kwart voor vier. Hoeveel minuten duurt het nog tot vier uur?","15","Kwart voor betekent: nog een kwartier. Een kwartier is 15 minuten."]],
+ [["De les begint om 10:45 en duurt 50 minuten. Hoe laat is de les afgelopen? Typ als uu:mm.","11:35|1135","Eerst 15 minuten tot 11:00, dan nog 35 minuten erbij: 11:35."],
+  ["Hoeveel graden draait de grote wijzer in een kwartier?","90","Een heel rondje is 360 graden. Een kwart daarvan is 90 graden: een rechte hoek."]]],
+kassa:[
+ [["Je hebt 5 euro. Een ijsje kost 2 euro. Hoeveel houd je over?",["3 euro","2 euro"],"5 − 2 = 3."],
+  ["Wat is meer waard?",["één munt van 2 euro","één munt van 1 euro"],"Kijk naar het getal op de munt, niet naar hoe groot hij is."]],
+ [["Hoeveel cent is € 2,50?","250","Een euro is 100 cent. 2 euro is 200 cent, plus 50 cent is 250."],
+  ["Iets kost € 3,99. Hoeveel is dat ongeveer?",["4 euro","3 euro","39 euro"],"Het scheelt maar 1 cent met 4 euro. Winkels doen dat expres: 3,99 lijkt goedkoper dan 4."]],
+ [["Een jas van € 80 is 25% afgeprijsd. Wat betaal je?","60","25% is een kwart: 80 : 4 = 20 euro korting. 80 − 20 = 60."],
+  ["Wat is goedkoper per stuk?",["6 flesjes voor € 4,20","4 flesjes voor € 3,20","Ze zijn even duur"],"4,20 : 6 = 0,70 per flesje. 3,20 : 4 = 0,80 per flesje. Reken altijd terug naar de prijs per stuk."]]],
+tegels:[
+ [["Welke vorm heeft een stoeptegel?",["een vierkant","een cirkel"],"Een vierkant heeft vier even lange zijden en vier hoeken."],
+  ["Je legt 2 rijen van 3 tegels. Hoeveel tegels?",["6","5"],"3 en 3 is 6. Twee rijen van drie."]],
+ [["Een tegel is 30 cm breed. Hoe breed zijn 5 tegels naast elkaar, in centimeters?","150","5 × 30 = 150 cm, dat is anderhalve meter."],
+  ["Wat reken je uit met lengte keer breedte?",["De oppervlakte","De omtrek","De hoogte"],"Oppervlakte is hoeveel er op past. De omtrek is de rand eromheen: die tel je op."]],
+ [["Hoeveel tegels van 30 bij 30 cm gaan er ongeveer in 1 m²?",["11","9","3"],"Eén tegel is 0,3 × 0,3 = 0,09 m². 1 : 0,09 is ruim 11. Er passen er 3 naast elkaar in 90 cm, dus 9 is net te weinig."],
+  ["Een terras is 4,5 m bij 6 m. Hoeveel m² is dat?","27","4 × 6 = 24 en een half × 6 = 3. Samen 27 m²."]]],
+verkeer:[
+ [["Je telt 4 auto's en 3 fietsen. Hoeveel samen?",["7","6"],"4 + 3 = 7."],
+  ["Er rijden 6 fietsen en 2 auto's voorbij. Waar zijn er meer van?",["fietsen","auto's"],"6 is meer dan 2."]],
+ [["Hoe houd je bij het tellen de stand handig bij?",["Met turven: streepjes in groepjes van 5","Alles onthouden","Elk voertuig tekenen"],"Bij turven zet je vier streepjes en de vijfde er dwars doorheen. Groepjes van 5 tel je daarna snel op."],
+  ["In 5 minuten tel je 12, 8, 10, 9 en 11 voertuigen. Hoeveel is dat gemiddeld per minuut?","10","Samen 50, gedeeld door 5 minuten is 10. Het gemiddelde is alles eerlijk verdeeld."]],
+ [["Een auto rijdt 30 km per uur. Hoeveel meter legt hij af in 1 minuut?","500","30 km is 30.000 meter in 60 minuten. 30.000 : 60 = 500 meter per minuut."],
+  ["Je telt één minuut op maandagochtend om 8:15. Waarom zegt dat weinig over de hele week?",["De steekproef is te klein en op één moment","Je hebt verkeerd geteld","Auto's rijden op maandag harder"],"In de spits is het drukker dan 's nachts. Voor een eerlijk beeld tel je op meer momenten en neem je het gemiddelde."]]],
+koekjes:[
+ [["4 koekjes voor 2 kinderen. Hoeveel krijgt ieder?",["2","3"],"Eerlijk delen: ieder evenveel. 2 en 2 is samen 4."],
+  ["Je hebt 1 koekje voor 2 kinderen. Wat doe je?",["doormidden breken","zelf opeten"],"Dan krijgt ieder een half koekje. Twee helften zijn samen één hele."]],
+ [["20 koekjes voor 4 kinderen. Hoeveel krijgt ieder?","5","20 : 4 = 5, want 4 × 5 = 20. Delen is het omgekeerde van vermenigvuldigen."],
+  ["Welke deelsom hoort bij 6 × 7 = 42?",["42 : 7 = 6","7 : 42 = 6","42 : 6 = 6"],"Ken je de tafelsom, dan ken je de deelsom ook: 42 : 7 = 6 en 42 : 6 = 7."]],
+ [["Een taart wordt verdeeld: 1/2 voor de klas, 1/4 voor de juf. Welk deel blijft over?",["1/4","1/3","1/8"],"Een half is twee kwart. Twee kwart plus één kwart is drie kwart. Er blijft één kwart over."],
+  ["Drie kinderen delen € 10 eerlijk. Hoeveel krijgt ieder, afgerond op hele centen? Typ als 3,33.","3,33|3.33","10 : 3 = 3,333… Het houdt nooit op. In geld rond je af op twee cijfers achter de komma; 1 cent blijft over."]]],
+hoogte:[
+ [["Wat is hoger?",["een boom","een fiets"],"Hoog en laag vergelijk je door de dingen naast elkaar te denken."],
+  ["Wie is langer: jij of de deur?",["de deur","ik"],"Een deur is ongeveer 2 meter. Jij past er makkelijk onderdoor."]],
+ [["Hoe hoog is een gewone deur ongeveer?",["2 meter","5 meter","50 centimeter"],"Een deur van 2 meter is een handig meetlint: hoeveel deuren passen er op elkaar tot aan het dak?"],
+  ["Een lantaarnpaal is ongeveer 3 deuren hoog. Hoe hoog is dat in meters?","6","3 × 2 = 6 meter. Schatten doe je met iets waarvan je de maat kent."]],
+ [["Een stok van 1 m heeft een schaduw van 2 m. Een boom heeft op hetzelfde moment een schaduw van 16 m. Hoe hoog is de boom, in meters?","8","De schaduw is twee keer zo lang als het ding zelf. 16 : 2 = 8 meter. Zo meet je hoogte zonder te klimmen."],
+  ["Je schat een toren op 40 meter. Hij is 50 meter. Hoeveel procent zat je ernaast, van de echte hoogte?","20","Je zat 10 meter mis. 10 van de 50 is een vijfde: 20%."]]],
+vormen:[
+ [["Welke vorm heeft geen hoeken?",["een cirkel","een vierkant"],"Een cirkel is helemaal rond. Een wiel moet rond zijn om te rollen."],
+  ["Hoeveel zijden heeft een vierkant?",["4","3"],"Vier zijden die allemaal even lang zijn."]],
+ [["Wat is het verschil tussen een vierkant en een rechthoek?",["Bij een vierkant zijn alle zijden even lang","Een rechthoek heeft meer hoeken","Een vierkant heeft schuine hoeken"],"Allebei hebben ze vier rechte hoeken. Een vierkant is een rechthoek met vier gelijke zijden."],
+  ["Hoeveel graden is een rechte hoek?","90","De hoek van een tegel, een deur of een schrift is 90 graden."]],
+ [["Hoeveel graden zijn de drie hoeken van een driehoek samen?","180","Altijd 180 graden, bij elke driehoek. Scheur de hoeken van een papieren driehoek af en leg ze naast elkaar: een rechte lijn."],
+  ["Een rond verkeersbord heeft een diameter van 60 cm. Hoe lang is de rand ongeveer? (neem pi = 3)","180","Omtrek = pi × diameter = 3 × 60 = 180 cm. Met 3,14 kom je op ruim 188 cm."]]],
+getallenjacht:[
+ [["Welk getal is groter?",["15","12"],"Allebei hebben ze 1 tiental. Dan kijk je naar de eenheden: 5 is meer dan 2."],
+  ["Welk getal zit tussen 9 en 11?",["10","12"],"9, 10, 11. De buren van 10 zijn 9 en 11."]],
+ [["Hoeveel is het cijfer 4 waard in 347?",["40","4","400"],"347 is 3 honderdtallen, 4 tientallen en 7 eenheden. De plek van het cijfer bepaalt de waarde."],
+  ["Rond 468 af op honderdtallen.","500","468 ligt tussen 400 en 500. Het tiental is 6, dat is 5 of meer, dus naar boven."]],
+ [["Wat is 0,75 als breuk?",["3/4","7/5","1/75"],"0,75 is 75 honderdsten. 75/100 kun je vereenvoudigen tot 3/4. Het is ook 75%."],
+  ["Op een bord staat 'max. 3,5 t'. Hoeveel kilogram is dat?","3500|3.500","Een ton is 1000 kilogram. 3,5 × 1000 = 3500 kg."]]],
+schaal:[
+ [["Wat zie je op een plattegrond?",["de straten van bovenaf","de straten van opzij"],"Een kaart is getekend alsof je er als een vogel boven vliegt."],
+  ["Wat is op de kaart het dichtst bij school?",["het schoolplein","de andere stad"],"Wat in het echt dichtbij is, ligt op de kaart ook dichtbij."]],
+ [["Op de kaart is 1 cm in het echt 50 meter. Het park ligt 6 cm verder. Hoeveel meter is dat?","300","6 × 50 = 300 meter."],
+  ["Waarom is een kaart op schaal getekend?",["Omdat de echte wereld niet op papier past","Omdat het mooier staat","Omdat straten steeds veranderen"],"Op schaal betekent: alles is even veel keer kleiner gemaakt. De verhoudingen blijven kloppen."]],
+ [["Schaal 1:25.000. Hoeveel meter is 4 cm op de kaart in het echt?","1000|1.000","4 × 25.000 = 100.000 cm. Dat is 1000 meter, precies 1 kilometer."],
+  ["Een speelplein is in het echt 30 m lang. Je tekent het op schaal 1:200. Hoe lang wordt het op papier, in centimeters?","15","30 m = 3000 cm. 3000 : 200 = 15 cm."]]],
+verdiepingen:[
+ [["Je staat op verdieping 2 en gaat 1 trap omhoog. Waar ben je?",["verdieping 3","verdieping 1"],"Omhoog is erbij: 2 + 1 = 3."],
+  ["Wat is de onderste verdieping?",["de begane grond","het dak"],"De begane grond is gelijk met de straat. Daarboven begin je te tellen."]],
+ [["Een trap heeft 15 treden per verdieping. Je loopt 3 verdiepingen omhoog. Hoeveel treden?","45","3 × 15 = 3 × 10 + 3 × 5 = 30 + 15 = 45."],
+  ["De lift staat op verdieping 2. De parkeergarage is op −1. Hoeveel verdiepingen moet de lift omlaag?","3","Van 2 naar 1, naar 0, naar −1: drie stappen. Onder nul tel je gewoon door."]],
+ [["Een toren is 96 meter hoog en heeft 32 verdiepingen. Hoe hoog is één verdieping, in meters?","3","96 : 32 = 3. Controle: 32 × 3 = 96."],
+  ["Een lift gaat 2 meter per seconde. Hoeveel seconden duurt de rit naar 96 meter hoogte?","48","Tijd = afstand gedeeld door snelheid: 96 : 2 = 48 seconden."]]]
+};D.S.forEach(function(m){if(M[m.id])m.more=M[m.id]})})(window.RK_DATA);
