@@ -84,4 +84,4 @@ Alle speurtochten op de wandelmotor (feestjes én educatie) hebben op het starts
 - Per ronde 5/6/8 sommen (`FLN`); in ronde 3 komen twee sommen van de vorige plek bij. Een foute som komt terug (maximaal drie keer). Sterren: 90% in één keer goed is drie, 70% twee, anders één. Niemand loopt vast.
 - Geen verdiepingsvragen in het spel. `truc`, `act`, `tip` en `more` staan alleen op het begeleidersblad (uitleg, beweegidee, weetje, napraatvragen).
 - Finale: de getallen (veelvouden van één tafel, `TAFELS` per niveau) van klein naar groot.
-- Klokkijken zit er bewust niet in (krijgt een eigen wandeling). Artwork: `games/vlot/ARTWORK.md`; de hubtegel `assets/cover-vm.webp` is een tijdelijke.
+- Klokkijken zit er bewust niet in (krijgt een eigen wandeling). Artwork compleet (23 nov 2026), lijst in `games/vlot/ARTWORK.md`.
