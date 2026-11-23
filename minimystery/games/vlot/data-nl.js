@@ -1,81 +1,76 @@
-/* De Vergeetmist – MiniMystery Educatie (automatiseren, groep 3–8). Teksten en flitsstations (NL).
-   Over de school hangt een grijze mist. Wie erin loopt, vergeet wat hij allang wist: 3 + 7, de tafel van 5, hoe je 'school' schrijft.
-   Wat je écht vlot kent, pakt de mist niet af. Dus trainen de teams op flitsstations rond (of in) de school tot het vanzelf gaat.
-   Opbouw van elk station (zo werkt automatiseren): eerst begrijpen (de truc), dan bewegend oefenen, dan een flitsronde op tempo
-   waarin foute sommen terugkomen tot ze goed zijn, met drie opfrissers van het vorige station, en daarna de verdieping (shared/meer.js).
-   Elk station geeft een flitslamp met een getal uit één tafelrij; in de finale zetten de teams de rij op volgorde en trekt de mist op.
+/* De Sommensprint – MiniMystery Educatie (automatiseren, groep 3–8). Teksten en oefenplekken (NL).
+   Herzien op 23 nov 2026 na Kellies test: veel minder leestekst, geen mistverhaal, de nadruk op oefenen.
+   Verhaal in twee zinnen: de fiets van meneer Tik zit op slot; elke plek geeft één getal van de code.
+   Elke plek: één korte regel (kort[niveau]) → ronde 1 typen → even bewegen (doe) → ronde 2 goed of fout → ronde 3 kiezen → sterren → getal.
+   Een foute som komt terug tot hij goed is. In ronde 3 komen twee sommen van de vorige plek terug.
+   Alleen op het begeleidersblad: de uitgebreide truc (truc), het beweegidee (act), het weetje (tip) en de napraatvragen (more).
    Klokkijken zit hier bewust niet in: dat krijgt een eigen wandeling.
-   Niveaus: 0 = groep 3–4 (splitsen en sommen tot 10 en 20, dubbelen, sprongen, tafels van 1, 2, 5 en 10, klankzuivere woorden)
-            1 = groep 5–6 (tot 100, alle tafels en deeltafels, keer 10 en 100, helft en kwart, verdubbelen of niet in woorden)
-            2 = groep 7–8 (tot 1000 en kommagetallen, grote tafels, breuk-procent-komma, werkwoordspelling)
-   Per station: intro, truc[3], act {out,in}, fl[3] (maakt één flitssom uit het toeval r), lvl[3] {kind:"flits",hint}, tip[3], more[3]. */
+   Niveaus: 0 = groep 3–4, 1 = groep 5–6, 2 = groep 7–8. fl[niveau](r) maakt één som of woordkeuze uit het toeval r. */
 window.VM_DATA=(function(){
 var T={
   today:"Start de zaak van vandaag",extra:"Extra zaak",voice:"Voorlezen",voiceOn:"Voorlezen staat aan",voiceOff:"Voorlezen staat uit",
-  start:"Open het flitsstation",next:"Verder ▸",back:"Terug",close:"Sluiten",cancel:"Annuleren",ok:"Controleer ▸",listen:"Voorlezen",
-  loc:"Waar zijn jullie? De telefoon vraagt om je locatie.",pois:"Juf Noor zoekt flitsstations in de buurt…",nomap:"De kaartdienst is druk. We spelen op een getekende plattegrond.",
+  start:"Open de plek",next:"Verder ▸",back:"Terug",close:"Sluiten",cancel:"Annuleren",ok:"Controleer ▸",listen:"Voorlezen",
+  loc:"Waar zijn jullie? De telefoon vraagt om je locatie.",pois:"Juf Noor zoekt plekken in de buurt…",nomap:"De kaartdienst is druk. We spelen op een getekende plattegrond.",
   noGps:"Deze telefoon heeft geen gps.",denied:"De locatie staat uit. Zet hem aan in de instellingen, of speel zonder kaart.",fail:"Dat lukte niet",
-  corner:"Hoek",task:"Station {i} van {n}",clue:"Flitslamp {n} van {t}",
-  near:"Volgend station op {d} m",warm:"Warm! Nog {d} m",hot:"Heet! Hier staat een station",radarAll:"Alle flitslampen! Zet de rij op volgorde.",
-  here:"Hier is een flitsstation",look:"Open het station",walk:"Loop erheen",gps:"We staan er echt (gps twijfelt)",
-  notebook:"Flitsboekje",nbK:"Flitslampen",nbM:"Jullie flitsrondes",nbNone:"Nog niets gevonden. Loop naar het eerste station.",
+  corner:"Hoek",task:"Plek {i} van {n}",clue:"Getal {n} van {t}",
+  near:"Volgende plek op {d} m",warm:"Warm! Nog {d} m",hot:"Heet! Hier is een plek",radarAll:"Alle getallen! Maak het slot open.",
+  here:"Hier is een plek",look:"Open de plek",walk:"Loop erheen",gps:"We staan er echt (gps twijfelt)",
+  notebook:"Scorekaart",nbK:"Jullie getallen",nbM:"Jullie sterren",nbNone:"Nog niets. Loop naar de eerste plek.",
   menu:"Menu",mBack:"Terug naar de zaak",mHome:"Pauze, later verder",mWipe:"Deze zaak wissen",mLead:"Begeleidersblad",saved:"Opgeslagen. Je kunt later verdergaan.",
   wipe:"Wissen",wipeY:"Deze zaak wissen",wipeAll:"Alles wissen (ook het archief)",wipeQ:"Zaak wissen?",wipeT:"De voortgang is dan weg.",allQ:"Alles wissen?",allT:"Zaak, archief en instellingen worden gewist.",allY:"Ja, alles wissen",wiped:"Gewist",
-  dH:"Zaakcode invullen",dT:"Met een zaakcode spelen meer telefoons dezelfde zaak: dezelfde plekken, dezelfde stations, dezelfde sommen. Elke klas of groep krijgt zo één zaak voor alle teams.",dGo:"Zaak ophalen",dBad:"Die code kennen we niet. Codes beginnen met VM.",
+  dH:"Zaakcode invullen",dT:"Met een zaakcode spelen meer telefoons dezelfde zaak: dezelfde plekken en dezelfde sommen. Elke klas of groep krijgt zo één zaak voor alle teams.",dGo:"Zaak ophalen",dBad:"Die code kennen we niet. Codes beginnen met VM.",
   demoCase:"Proefronde · getekende stad",demoTip:"Tik op een plek op de kaart: jullie groepje loopt er vanzelf heen.",
   howH:"Hoe werkt het?",
-  won:"De mist is weg",dipBtn:"Diploma (A4)",dipH:"Diploma Mistverdrijver",dipNote:"Printen of opslaan. Eén per team, of print er voor elk kind een.",leadBtn:"Begeleidersblad",home:"Naar het begin",dl:"Opslaan",shareBtn:"Delen",copied:"Gekopieerd",
-  shareTxt:"Wij hebben de Vergeetmist verdreven! Zaak {c} · {s} · {m} min. ",missed1:"Zonder hints: drie sterren.",
+  won:"Het slot is open",dipBtn:"Diploma (A4)",dipH:"Diploma Sommensprinter",dipNote:"Printen of opslaan. Eén per team, of print er voor elk kind een.",leadBtn:"Begeleidersblad",home:"Naar het begin",dl:"Opslaan",shareBtn:"Delen",copied:"Gekopieerd",
+  shareTxt:"Wij hebben het fietsslot van meneer Tik open! Zaak {c} · {s} · {m} min. ",missed1:"Oefen nog eens voor drie sterren.",
   pzT:"Overleg samen. Eén iemand typt.",wrong:"Nog niet goed. Reken nog eens samen.",wrongHint:"Nog niet goed. Pak de hint, of reken nog eens samen.",hintBtn:"💡 Lees de truc nog eens",hintUsed:"Truc bekeken",
   countGo:"Ingevuld ▸",photoGo:"📷 Maak de foto",photoAgain:"Nog een keer",photoOk:"Dit is hem! ▸",photoKeep:"De foto blijft op deze telefoon.",
-  keyGet:"Een flitslamp:",tipH:"Wist je dat…",
-  finH:"De rij van licht",finT:"Jullie flitslampen zijn samen {t}. Tik ze aan in de goede volgorde, van klein naar groot, en zeg de rij hardop mee.",finT0:"De lampen zijn samen {t}. Tik eerst het kleinste getal aan, dan steeds de volgende sprong. Zeg hardop mee!",finBad:"Die komt nog niet. Begin opnieuw en tel in sprongen.",finHint:"Het is een tafelrij: elk getal is één sprong verder dan het vorige.",finHint0:"Begin bij het kleinste getal. Tel dan in sprongen verder.",finNot:"Eerst alle stations doen. Nog {n} te gaan.",finOk:"De lampen branden op een rij. De mist trekt op!",
-  stripT:"Zaak {c}",keysBar:"Flitslampen",
+  keyGet:"Jullie getal:",tipH:"Wist je dat…",
+  finH:"Het slot",finT:"Zet de getallen van klein naar groot. Dan gaat het slot open.",finT0:"Tik eerst het kleinste getal. Dan het volgende.",finBad:"Nee, die nog niet. Begin opnieuw.",finHint:"Begin bij het kleinste getal.",finHint0:"Begin bij het kleinste getal.",finNot:"Eerst alle plekken doen. Nog {n} te gaan.",finOk:"Klik! Het slot is open!",
+  stripT:"Zaak {c}",keysBar:"Getallen",
   gbH:"In het gebouw",gbT:"Kies de plekken in jullie school. De begeleider hangt op elke plek een kaartje met een code (printen via het begeleidersblad). Teams gaan naar de plek en typen de code.",gbNoCards:"Zonder kaartjes (teams drukken zelf op 'We zijn er')",gbGo:"Zaak starten",gbMin:"Kies minstens {n} plekken (of de plekken worden herhaald).",
-  gbGoto:"Ga naar:",gbCode:"Typ de code van het kaartje op die plek",gbHere:"We zijn er ▸",gbBad:"Die code hoort niet bij deze plek. Kijk nog eens op het kaartje.",gbCards:"Plekkaartjes (ophangen)",gbCardT:"Flitsstation",
-  leadH:"Begeleidersblad",leadT:"Alleen voor de begeleider. Dit blad hoort bij deze zaakcode: alle teams met deze code krijgen precies deze stations en dezelfde sommen.",leadTeams:"Teamstand (zelf bijhouden)",leadTeam:"Team",leadDone:"Klaar om",leadPrint:"Printen",leadCode:"Zaakcode",
+  gbGoto:"Ga naar:",gbCode:"Typ de code van het kaartje op die plek",gbHere:"We zijn er ▸",gbBad:"Die code hoort niet bij deze plek. Kijk nog eens op het kaartje.",gbCards:"Plekkaartjes (ophangen)",gbCardT:"Oefenplek",
+  leadH:"Begeleidersblad",leadT:"Alleen voor de begeleider. Dit blad hoort bij deze zaakcode: alle teams met deze code krijgen dezelfde plekken en dezelfde sommen.",leadTeams:"Teamstand (zelf bijhouden)",leadTeam:"Team",leadDone:"Klaar om",leadPrint:"Printen",leadCode:"Zaakcode",
   lvl:["groep 3–4","groep 5–6","groep 7–8"],
   nw:{6:"zes",8:"acht",10:"tien"},
-  /* flitsronde */
-  trucH:"De truc",actH:"Eerst bewegen",
-  flH:"Flitsronde",flT:"{n} flitsen. Eerst goed, dan snel. Een foute som komt terug tot hij goed is. Haal er {k} in één keer goed, dan gaat de lamp aan.",flT0:"{n} flitsen. Denk rustig na en tik het antwoord. Haal er {k} in één keer goed, dan gaat de lamp aan.",
-  flRev:"De eerste drie zijn opfrissers van het vorige station: weten jullie ze nog?",flTurn:"Om de beurt: wie de telefoon vasthoudt, geeft antwoord. Na elke flits doorgeven.",
-  flGo:"▶ Start de flitsronde",flAgain:"↻ Nog een rondje",flSkip:"Toch verder (later nog oefenen)",flRevTag:"🔁 opfrisser",flBack:"↩ komt terug",flWas:"Het was",
-  flOk:"De lamp gaat aan!",flOkT:"{g} van de {n} in één keer goed, in {t}.",flFast:"⚡ Vlot! Gemiddeld {s} seconden per flits.",flSlow:"Goed gedaan. Nog niet vlot? Dat komt met herhalen: morgen weer een rondje.",
-  flNo:"Bijna. De mist hangt er nog.",flNoT:"{g} van de {n} in één keer goed. Jullie hebben er {k} nodig. Lees de truc nog eens en doe een nieuw rondje.",flMiss:"Deze kwamen terug:",
-  flPad:"Tik het antwoord",flDel:"wis",flEnter:"OK",flLead:"Flitsronde (eerste rondje)",flLeadRev:"plus drie opfrissers van het station ervoor",flObs:"{g}/{n} in {t}",flObsLater:"{g}/{n} · nog oefenen",
+  /* rondes */
+  trucH:"Zo doe je het",actH:"Extra beweegidee",
+  rd:["Typ het antwoord","Goed of fout?","Kies het goede antwoord"],rdN:"Ronde {k} van 3",
+  flGo:"▶ Start",flAgain:"↻ Nog een keer",flRevTag:"🔁 van de vorige plek",flBack:"↩ nog een keer",flWas:"Het is",
+  flYes:"Goed",flNo:"Fout",doeH:"Even bewegen!",doeGo:"Gedaan ▸",
+  flDone:"Klaar!",flScore:"{g} van de {n} in één keer goed",flDel:"wis",flEnter:"OK",flLead:"De sommen (ronde 1, 2 en 3)",flLeadRev:"in ronde 3 komen er twee van de vorige plek bij",leadDoe:"Bewegen tussendoor",leadTalk:"Napraten (klassikaal)",
   kv:{fp:["Fietsenstalling","Bushalte","Speeltuin","Schoolplein","Brug","Park","Kerk","Plein","Winkel","Brievenbus","Kiosk","Bankje"],
-    all:"Alle flitslampen! Zet de rij op volgorde.",near:"Station op {d} m",cold:"Koud… loop een andere kant op",cool:"Lauw. Dichterbij komt-ie",warm:"Warm! Goed zo!",hot:"HEET! Kijk om je heen!",here:"Hier is het station!",first:"Loop maar, het kompas wijst de weg",noDir:"Loop een stukje, dan weet het kompas de richting",
+    all:"Alle getallen! Maak het slot open.",near:"Plek op {d} m",cold:"Koud… loop een andere kant op",cool:"Lauw. Dichterbij komt-ie",warm:"Warm! Goed zo!",hot:"HEET! Kijk om je heen!",here:"Hier is de plek!",first:"Loop maar, het kompas wijst de weg",noDir:"Loop een stukje, dan weet het kompas de richting",
     map:"Plattegrond",kids:"Verhaalkaart",mapTip:"De echte plattegrond. Tik op Verhaalkaart voor de kindertekening.",goDemo:"We lopen (nep) naar {p}…",inSteps:"Nog {n} stappen",
-    mNoMap:"Verder zonder kaart (zelfde zaak)",switched:"Verder zonder kaart. Dezelfde zaak, dezelfde stations.",virtOut:"Geen plattegrond van de buurt gevonden. Jullie lopen op de verhaalkaart: de pijl en warm/koud wijzen de weg.",
-    noMapQ:"Geen locatie vandaag?",noMapT:"De telefoon geeft geen locatie door. Jullie kunnen dezelfde zaak zonder kaart spelen: de stations komen dan achter elkaar en jullie lopen zelf naar een nieuwe plek.",noMapGo:"Verder zonder kaart",
+    mNoMap:"Verder zonder kaart (zelfde zaak)",switched:"Verder zonder kaart. Dezelfde zaak, dezelfde plekken.",virtOut:"Geen plattegrond van de buurt gevonden. Jullie lopen op de verhaalkaart: de pijl en warm/koud wijzen de weg.",
+    noMapQ:"Geen locatie vandaag?",noMapT:"De telefoon geeft geen locatie door. Jullie kunnen dezelfde zaak zonder kaart spelen: de plekken komen dan achter elkaar en jullie lopen zelf naar een nieuwe plek.",noMapGo:"Verder zonder kaart",
     inH:"Binnen: lopen op de plaats",inT:"Jullie lopen op de verhaalkaart. Loop op de plaats (of door de ruimte) met de telefoon in je hand; elke stap telt. Lukt dat niet, dan lopen de stappen vanzelf.",inSensor:"Echte stappen tellen",inTempo:"Stappen lopen vanzelf",inNoSensor:"Geen bewegingssensor gevonden. De stappen lopen nu vanzelf."}
 };
 var TYPES={kerk:"de kerk",hotel:"het hotel",bank:"de bank",apotheek:"de apotheek",cafe:"het café",bieb:"de bibliotheek",park:"het park",school:"de school",kunst:"het kunstwerk",tank:"het tankstation",winkel:"de winkel",halte:"de bushalte",post:"de brievenbus",bankje:"het bankje",hoek:"de hoek"};
 var TIK="Meneer Tik",NOOR="Juf Noor";
 var ROOMS=["De hal bij de ingang","De aula","De gymzaal","De bibliotheek of leeshoek","De trap","Bij de lerarenkamer","De keuken","Het schoolplein","Een kleuterlokaal","Een bovenbouwlokaal","Bij de directiekamer","De fietsenstalling","Het speellokaal","De kapstokken"];
 var OPEN={
-  school:"Vanmorgen hing er een grijze mist om de school. Geen gewone mist. Meneer Tik liep erdoorheen en wist ineens de code van zijn fietsslot niet meer. De kok stond bij de oven: \"Zes keer zeven… ik wist het gisteren nog.\" Het is de Vergeetmist. Alles wat je moet uitrekenen, pakt hij af. \"Maar,\" zegt juf Noor, \"wat je zó goed kent dat het vanzelf gaat, daar kan de mist niet bij. Dat heet automatiseren. Dus gaan wij trainen.\" Op {N} plekken staat een flitsstation. Daar leren jullie eerst de truc, dan oefenen jullie met je hele lijf, en dan komt de flitsronde. Elk station geeft een flitslamp. Met alle lampen op een rij trekt de mist op.",
-  bso:"Er hangt een rare grijze mist om de school. Wie erdoor loopt, vergeet dingen! Meneer Tik weet de code van zijn fietsslot niet meer. De kok weet niet meer hoeveel zes keer zeven is. Het is de Vergeetmist! \"Wat je supersnel weet, pakt de mist niet af,\" zegt juf Noor. \"Dus gaan we trainen, net als sporters.\" Op {N} plekken staat een flitsstation. Eerst de truc, dan springen, klappen of stampen, en dan de flitsronde. Elk station geeft een flitslamp. Alle lampen op een rij: weg mist!"
+  school:"De fiets van meneer Tik zit op slot. En hij is de code kwijt! Op {N} plekken oefenen jullie sommen. Elke plek geeft één getal van de code. Alle getallen? Dan gaat het slot open.",
+  bso:"De fiets van meneer Tik zit op slot. En hij is de code kwijt! Op {N} plekken oefenen jullie sommen. Elke plek geeft één getal van de code. Alle getallen? Dan gaat het slot open."
 };
 var OPEN0={
-  school:"Er hangt een grijze mist om de school. Het is de Vergeetmist! Wie erdoor loopt, vergeet sommen en woordjes. Meneer Tik weet niet meer hoeveel 2 en 2 is. Maar wat je heel snel weet, pakt de mist niet af. Dus gaan jullie oefenen. Op {N} plekken staat een flitsstation. Eerst leer je de truc. Dan ga je bewegen. Dan komt de flitsronde. Elk station geeft een lamp. Alle lampen op een rij: dan gaat de mist weg.",
-  bso:"Er hangt een grijze mist om de school. Het is de Vergeetmist! Wie erdoor loopt, vergeet sommen en woordjes. Meneer Tik weet niet meer hoeveel 2 en 2 is. Maar wat je heel snel weet, pakt de mist niet af! Op {N} plekken staat een flitsstation. Eerst de truc. Dan springen en klappen. Dan de flitsronde. Elk station geeft een lamp. Alle lampen op een rij: weg mist!"
+  school:"De fiets van meneer Tik zit op slot. Hij is de code kwijt! Jullie gaan sommen oefenen. Elke plek geeft een getal. Met alle getallen gaat het slot open.",
+  bso:"De fiets van meneer Tik zit op slot. Hij is de code kwijt! Jullie gaan sommen oefenen. Elke plek geeft een getal. Met alle getallen gaat het slot open."
 };
-var CLIFF=["De mist wordt al dunner. Zien jullie het?","Wat je vlot weet, raak je niet meer kwijt.","Weer een lamp. Bewaar hem in het flitsboekje.","Zo trainen sporters ook: kort, vaak en steeds iets sneller.","Meneer Tik weet zijn fietsslotcode alweer voor de helft.","Op naar het volgende station!"];
-var CLIFFLAST="Dat was het laatste station! Nu alle flitslampen op een rij: zeg de tafel op en de mist trekt weg.";
+var CLIFF=["Goed zo!"];
+var CLIFFLAST="Alle getallen! Nu het slot.";
 var REVEAL={
-  school:"<p>De laatste lamp floept aan. Eén voor één lichten ze op, in de volgorde van de rij, en de Vergeetmist wijkt. Eerst zie je de fietsenstalling weer, dan het plein, dan de hele school.</p><p>Meneer Tik komt aanlopen. \"4-8-1-2!\" roept hij. \"Mijn fietsslot! Ik weet het weer.\" In de keuken klinkt gejuich: \"Tweeënveertig! Zes keer zeven is tweeënveertig!\"</p><p>Juf Noor kijkt in jullie flitsboekje. \"Zien jullie wat er gebeurd is? Eerst moesten jullie nadenken. Toen kwam de truc. En na een paar rondjes ging het vanzelf. Dat is alles: begrijpen, oefenen, herhalen. Wie dat morgen weer vijf minuten doet, krijgt geen mist meer in zijn hoofd.\"</p>",
-  bso:"<p>FLITS! De laatste lamp gaat aan. Alle lampen branden op een rij en de Vergeetmist waait weg. Daar is het plein weer, en de school!</p><p>Meneer Tik komt aanrennen. \"4-8-1-2! Mijn fietsslot! Ik weet het weer!\" Uit de keuken roept de kok: \"Tweeënveertig! Zes keer zeven is tweeënveertig!\"</p><p>\"Zien jullie?\" lacht juf Noor. \"Eerst moest je nadenken. Nu gaat het vanzelf. Net als fietsen: als je het eenmaal kunt, vergeet je het nooit meer.\"</p>"
+  school:"<p>Klik! Het slot springt open. Meneer Tik stapt op zijn fiets. \"Dank jullie wel!\" roept hij.</p><p>\"Zien jullie?\" zegt juf Noor. \"Elke dag even oefenen, en het gaat vanzelf.\"</p>",
+  bso:"<p>Klik! Het slot springt open. Meneer Tik stapt op zijn fiets. \"Dank jullie wel!\" roept hij.</p><p>\"Knap gedaan,\" zegt juf Noor. \"Morgen weer?\"</p>"
 };
 var REVEAL0={
-  school:"<p>De laatste lamp gaat aan. Alle lampen branden op een rij. De mist gaat weg!</p><p>Meneer Tik roept: \"Twee en twee is vier! Ik weet het weer!\" Juf Noor lacht. \"Zien jullie? Eerst moest je tellen. Nu weet je het zomaar. Morgen weer even oefenen, dan blijft de mist weg.\"</p>",
-  bso:"<p>FLITS! De laatste lamp gaat aan. Alle lampen branden op een rij. Weg mist!</p><p>Meneer Tik roept: \"Twee en twee is vier! Ik weet het weer!\" Juf Noor lacht. \"Eerst moest je tellen. Nu weet je het zomaar. Knap gedaan!\"</p>"
+  school:"<p>Klik! Het slot is open. Meneer Tik fietst weg. \"Dank jullie wel!\" Knap gedaan!</p>",
+  bso:"<p>Klik! Het slot is open. Meneer Tik fietst weg. \"Dank jullie wel!\" Knap gedaan!</p>"
 };
-/* tafelrijen voor de flitslampen (finale), per niveau */
+/* de getallen van het slot zijn een tafelrij, per niveau */
 var TAFELS=[[2,5,10],[3,4,6,7,8,9],[11,12,15,25]];
 
-/* ---------- gereedschap voor de flitssommen ---------- */
+/* ---------- gereedschap voor de sommen ---------- */
 var ri=function(r,a,b){return a+Math.floor(r()*(b-a+1))},pk=function(r,a){return a[Math.floor(r()*a.length)]};
 var fmt=function(v){return String(parseFloat((+v).toFixed(4))).replace(".",",")};
 var N=function(q,a){return{q:q,a:typeof a==="string"?a:fmt(a).replace("-","−")}};
@@ -87,8 +82,7 @@ var BPK=[["1/2","50","0,5"],["1/4","25","0,25"],["3/4","75","0,75"],["1/5","20",
 var fl=function(h0,h1,h2){return[{kind:"flits",hint:h0},{kind:"flits",hint:h1},{kind:"flits",hint:h2}]};
 
 var S=[
-{id:"splits",ico:"💛",dom:"splitsen",title:"De verliefde harten",
- intro:"Hier is de mist het dikst bij de splitsingen. Welke twee getallen zijn samen 10? Vroeger wist iedereen dat zonder nadenken. Splitsen is het fundament: wie de vriendjes van 10 kent, rekent alle andere sommen sneller.",
+{id:"splits",ico:"💛",dom:"splitsen",title:"Samen tien",
  truc:["De verliefde harten zijn altijd samen 10: 1 en 9, 2 en 8, 3 en 7, 4 en 6, 5 en 5. Steek tien vingers op en vouw er een paar om: wat je ziet en wat weg is, zijn samen 10.",
        "De vriendjes van 10 werken ook voor 100: 30 en 70 zijn samen 100. Bij 35 + … = 100 vul je eerst aan tot het tiental (35 + 5 = 40) en dan tot 100 (40 + 60). Samen 65.",
        "Aanvullen in twee sprongen werkt altijd: bij 1000 − 375 ga je van 375 naar 400 (25) en van 400 naar 1000 (600). Bij kommagetallen net zo: 0,35 naar 0,4 is 0,05 en dan naar 1 is 0,6. Samen 0,65."],
@@ -105,8 +99,7 @@ var S=[
    ["Waarom is splitsen handig bij 8 + 6?",["Je splitst 6 in 2 en 4: eerst naar 10, dan 4 erbij","Je telt 6 keer 1 erbij","Je draait de som om"],"8 + 2 = 10 en dan nog 4: 14. Dat heet rekenen via het tiental, en het lukt alleen vlot als je de splitsingen kent."]],
   [["Je betaalt € 6,35 met een briefje van € 10. Hoe reken je het wisselgeld het snelst uit?",["Aanvullen: 6,35 → 7 → 10","Onder elkaar zetten en lenen","Schatten is genoeg"],"65 cent naar 7 euro en dan 3 euro naar 10: € 3,65. Aanvullen is minder foutgevoelig dan lenen."],
    ["Welke twee procenten zijn samen altijd het geheel?",["Bijvoorbeeld 35% en 65%","Bijvoorbeeld 35% en 75%","Bijvoorbeeld 50% en 100%"],"Procenten zijn splitsingen van 100. Is 35% op, dan is er 65% over."]]]},
-{id:"dubbel",ico:"👯",dom:"dubbelen en halveren",title:"De dubbelgangers",
- intro:"In deze hoek ziet iedereen dubbel, maar niemand weet meer hoeveel dat is. Dubbelen en halveren zijn de snelste sommen die er bestaan. Wie ze vlot kent, heeft er bij optellen, tafels en breuken plezier van.",
+{id:"dubbel",ico:"👯",dom:"dubbelen en halveren",title:"Dubbel en de helft",
  truc:["Dubbel is twee keer hetzelfde. Kijk naar je handen: 5 vingers en nog eens 5 is 10. De helft is eerlijk delen met z'n tweeën. Ken je 4 + 4 = 8, dan weet je ook: de helft van 8 is 4.",
        "Dubbel een groot getal in stukjes: het dubbele van 35 is het dubbele van 30 (60) plus het dubbele van 5 (10): 70. Halveren gaat net zo: de helft van 70 is 30 + 5.",
        "Dubbelen en halveren maakt lastige sommen makkelijk: 16 × 25 is hetzelfde als 8 × 50 en als 4 × 100. Halveer de ene kant, verdubbel de andere."],
@@ -123,8 +116,7 @@ var S=[
    ["Hoe reken je 4 × 15 handig met dubbelen?",["Dubbel 15 is 30, dubbel 30 is 60","15 + 4","Dubbel 4 is 8"],"Keer 4 is twee keer verdubbelen. Keer 8 is drie keer verdubbelen."]],
   [["Wat is 12 × 50, slim uitgerekend?",["6 × 100 = 600","12 × 5 = 60","10 × 50 + 50 = 550"],"Halveer de 12, verdubbel de 50. Het product blijft gelijk."],
    ["Delen door 4 kun je doen door…",["twee keer te halveren","te halveren en dan te verdubbelen","er 4 af te trekken"],"De helft van de helft is een kwart. 360 : 4 is 180 en dan 90."]]]},
-{id:"tien",ico:"🌉",dom:"optellen",title:"De brug over tien",
- intro:"Bij deze brug raken mensen de tel kwijt zodra een som over het tiental gaat. 8 + 5? Stilte. Toch is er een vaste route over de brug: eerst naar de tien, dan verder.",
+{id:"tien",ico:"🌉",dom:"optellen",title:"Over de tien",
  truc:["Bij 8 + 5 maak je eerst 10: 8 + 2 = 10. Van de 5 heb je er nu 2 gebruikt, er zijn er nog 3. Dus 10 + 3 = 13. Eerst vol maken, dan de rest.",
        "Bij 47 + 8 spring je eerst naar het tiental: 47 + 3 = 50, dan nog 5 erbij: 55. Eraf gaat net zo: 63 − 7 is 63 − 3 = 60 en dan nog 4 eraf: 56.",
        "Bij 398 + 25 is 398 bijna 400. Reken 400 + 25 = 425 en haal de 2 die je te veel nam er weer af: 423. Dat heet compenseren."],
@@ -141,8 +133,7 @@ var S=[
    ["74 − 6: hoeveel haal je er eerst af om bij het tiental te komen?","4","74 − 4 = 70. Van de 6 zijn er nog 2 over: 68."]],
   [["Hoe reken je 503 − 198 handig?",["503 − 200 + 2","500 − 198 − 3","503 − 100 − 98"],"Haal 200 eraf, dat is 2 te veel, dus 2 er weer bij: 305."],
    ["Wat is 2,98 + 4,50?","7,48","3 + 4,50 = 7,50 en dan 2 cent eraf. Compenseren werkt net zo met kommagetallen."]]]},
-{id:"min",ico:"🪜",dom:"aftrekken",title:"De trap naar beneden",
- intro:"Op deze trap durft niemand meer naar beneden: aftrekken is weggemist. Toch hoeft dat nergens voor. Elke minsom is een plussom die je al kent, alleen andersom.",
+{id:"min",ico:"🪜",dom:"aftrekken",title:"Eraf",
  truc:["Erbij en eraf horen bij elkaar. Weet je 3 + 4 = 7, dan weet je ook 7 − 4 = 3 en 7 − 3 = 4. Bij 9 − 7 tel je niet terug: je denkt 7 en hoeveel is 9? Twee.",
        "Liggen de getallen dicht bij elkaar, vul dan aan: 82 − 79 is van 79 naar 82, dus 3. Liggen ze ver uit elkaar, haal dan eraf in sprongen: 83 − 40 is acht tientallen min vier tientallen.",
        "Aftrekken is het verschil bepalen. 1000 − 275: van 275 naar 300 is 25, van 300 naar 1000 is 700. Samen 725. Bij 5 − 0,7 net zo: van 0,7 naar 1 is 0,3 en dan nog 4."],
@@ -159,8 +150,7 @@ var S=[
    ["Hoe controleer je of 83 − 47 = 36 klopt?",["36 + 47 moet 83 zijn","83 + 47 uitrekenen","36 − 47 uitrekenen"],"Optellen is de controle van aftrekken. Zo vang je je eigen fouten."]],
   [["De temperatuur gaat van 4 graden naar −3 graden. Hoeveel graden is het gedaald?","7","Van 4 naar 0 is 4, van 0 naar −3 is nog 3. Het verschil is 7."],
    ["Waarom reken je 2000 − 1 liever uit je hoofd dan onder elkaar?",["Onder elkaar moet je drie keer lenen, en dat is foutgevoelig","Omdat het antwoord te groot is","Omdat je nullen mag weglaten"],"Kijk eerst naar de getallen voordat je een methode kiest. Hoofdrekenen is hier sneller en veiliger dan cijferen."]]]},
-{id:"sprong",ico:"🦘",dom:"tellen met sprongen",title:"De sprongenbaan",
- intro:"Op deze baan sprong iedereen vroeger met grote sprongen vooruit: 5, 10, 15, 20. Nu telt iedereen weer één voor één, en dat duurt uren. Sprongen zijn het begin van de tafels.",
+{id:"sprong",ico:"🦘",dom:"tellen met sprongen",title:"Sprongen",
  truc:["Met sprongen van 2 sla je steeds één getal over: 2, 4, 6, 8, 10. Met sprongen van 5 eindig je om en om op een 5 en een 0. Met sprongen van 10 verandert alleen het eerste cijfer.",
        "Een rij met sprongen is een tafel in vermomming: 3, 6, 9, 12 is de tafel van 3. Sprongen van 25 gaan als kwartjes: 25, 50, 75, 100. Vier sprongen van 25 is steeds 100 erbij.",
        "Kijk altijd eerst naar het verschil tussen twee buren in de rij: dat is de sprong. Een sprong kan ook een kommagetal zijn (0,25) of achteruit gaan (min 3). Vier sprongen van 0,25 is precies 1."],
@@ -180,8 +170,7 @@ var S=[
    ["De rij 25, 50, 75, 100 ken je van…",["kwartjes: vier in een euro","de tafel van 20","de klok"],"Vier keer 25 is 100. Daarom is een kwart 25%."]],
   [["De rij is 7, 11, 15, 19. Wat is het tiende getal?","43","Begin 7, sprong 4. Het tiende getal is 7 + 9 × 4 = 43: negen sprongen, want het eerste getal is de start."],
    ["Een rij groeit met gelijke sprongen. Hoe heet zo'n verband?",["Lineair","Exponentieel","Willekeurig"],"Bij een lineair verband komt er steeds evenveel bij. In een grafiek is dat een rechte lijn."]]]},
-{id:"tafela",ico:"⚡",dom:"tafels",title:"De flitstafels",
- intro:"Hier hingen vroeger de tafels aan de muur. De mist heeft ze uitgewist. Begin met de makkelijkste: die geven houvast voor alle andere.",
+{id:"tafela",ico:"⚡",dom:"tafels",title:"De makkelijke tafels",
  truc:["Keer 1 verandert niets. Keer 2 is dubbel. Keer 10 is een 0 erachter. Keer 5 is de helft van keer 10: 6 × 10 = 60, dus 6 × 5 = 30.",
        "Je hoeft maar de helft te leren: 3 × 4 is hetzelfde als 4 × 3. Keer 4 is dubbel en nog eens dubbel. Keer 5 is de helft van keer 10. Keer 3 is dubbel plus nog één keer.",
        "Elke tafelsom haal je uit een steunsom: 12 × 7 is 10 × 7 plus 2 × 7. Keer 9 is keer 10 min één keer. Keer 11 is keer 10 plus één keer."],
@@ -199,7 +188,6 @@ var S=[
   [["Hoe reken je 12 × 8 uit je hoofd?",["10 × 8 + 2 × 8","12 + 8 × 2","8 × 8 + 12"],"80 + 16 = 96. Splitsen in een makkelijk en een klein stuk heet de verdeeleigenschap."],
    ["Wat is 9 × 15, via een steunsom?","135","10 × 15 = 150, en één keer 15 eraf: 135."]]]},
 {id:"tafelb",ico:"🧗",dom:"tafels",title:"De lastige tafels",
- intro:"Verderop zit de mist het hardnekkigst: bij 6 × 7, 7 × 8 en 8 × 9. Dat zijn de sommen die iedereen het langst lastig vindt. Voor elk daarvan bestaat een ezelsbruggetje.",
  truc:["Een keersom is groepjes maken. 3 × 4 is 3 groepjes van 4: 4, 8, 12. Leg ze neer of teken ze. Ken je 2 × 4 = 8, dan is 3 × 4 gewoon nog één groepje erbij.",
        "Van de lastige tafels blijven er maar een paar echt over. 7 × 8 = 56: denk aan 5, 6, 7, 8. Keer 9 doe je met je vingers: vouw bij 4 × 9 je vierde vinger om, links 3 en rechts 6: 36. Keer 6 is keer 5 plus één keer.",
        "Grote tafels bouw je uit kleine. Keer 12 is keer 10 plus keer 2. Keer 15 is keer 10 plus de helft daarvan. Keer 25 is keer 100 gedeeld door 4. Keer 11 onder de 10: het cijfer twee keer (7 × 11 = 77)."],
@@ -217,7 +205,6 @@ var S=[
   [["Wat is 16 × 25, slim uitgerekend?","400","Vier keer 25 is 100. In 16 zitten vier vieren, dus 4 × 100."],
    ["Welke kwadraten liggen tussen 60 en 90?",["64 en 81","49 en 64","72 en 81"],"8 × 8 = 64 en 9 × 9 = 81. Kwadraten zijn handige ankers in de tafels."]]]},
 {id:"deel",ico:"🍕",dom:"delen",title:"De deeltafels",
- intro:"In de kantine weet niemand meer hoe je eerlijk verdeelt. Twaalf boterhammen voor drie kinderen? Geen idee. Terwijl elke deelsom gewoon een tafelsom is die je achterstevoren leest.",
  truc:["Delen is eerlijk verdelen. Bij 10 : 2 geef je om de beurt: één voor jou, één voor mij, tot alles op is. Ieder krijgt er 5. Je kunt het ook vragen als: hoeveel keer 2 is 10?",
        "Elke deelsom is een tafelsom achterstevoren. Bij 42 : 7 vraag je: hoeveel keer 7 is 42? Zes keer. Eén tafelsom geeft je vier sommen: 6 × 7, 7 × 6, 42 : 7 en 42 : 6.",
        "Delen door een groter getal doe je met een steunsom: 108 : 12, hoeveel keer 12 is 108? 10 × 12 = 120, dat is er één te veel, dus 9. Controleer altijd met de keersom."],
@@ -234,8 +221,7 @@ var S=[
    ["Je verdeelt 20 knikkers over 6 kinderen. Hoeveel blijven er over?","2","6 × 3 = 18. Ieder krijgt er 3 en er blijven er 2 over. Dat heet de rest."]],
   [["Hoe reken je 144 : 12 uit?",["Hoeveel keer 12 is 144? 12 keer","144 − 12","12 : 144"],"12 × 12 = 144. Een kwadraat achterstevoren heet een wortel: de wortel van 144 is 12."],
    ["Wat is 3 : 4 als kommagetal?","0,75","Een breuk is een deelsom. Drie kwart is 0,75, ofwel 75%."]]]},
-{id:"nul",ico:"🚀",dom:"keer 10, 100 en 1000",title:"De nullenraket",
- intro:"Op de startbaan staat een raket die niet weg kan: niemand weet nog hoe je snel met tientallen en nullen rekent. Terwijl dat de makkelijkste sommen van allemaal zijn, als je doorhebt wat er gebeurt.",
+{id:"nul",ico:"🚀",dom:"keer 10, 100 en 1000",title:"Tientallen en nullen",
  truc:["Tientallen tel je als gewone getallen: 3 + 2 = 5, dus 30 + 20 = 50. En 10 meer dan 47? Alleen het eerste cijfer gaat één omhoog: 57.",
        "Bij keer 10 schuiven alle cijfers één plaats naar links: 47 wordt 470. Bij keer 100 twee plaatsen: 4700. Bij delen door 10 schuiven ze terug: 470 wordt 47.",
        "De cijfers schuiven, de komma blijft staan. Keer 10: één plaats naar links, dus 3,4 wordt 34. Gedeeld door 100: twee plaatsen naar rechts, dus 47 wordt 0,47. 'Een nul erachter' werkt bij kommagetallen niet."],
@@ -252,8 +238,7 @@ var S=[
    ["Hoeveel is 20 × 30?","600","2 × 3 = 6, en twee keer een tiental geeft honderdtallen: 600."]],
   [["Waarom klopt 'een nul erachter' niet bij 2,5 × 10?",["2,50 is evenveel als 2,5; de cijfers moeten opschuiven","Omdat 2,5 te klein is","Omdat je kommagetallen niet kunt vermenigvuldigen"],"2,5 × 10 = 25. Een nul achter een kommagetal verandert niets aan de waarde."],
    ["Hoeveel meter is 3,2 kilometer?","3200","Kilo is keer 1000: de cijfers schuiven drie plaatsen op."]]]},
-{id:"weet",ico:"🗄️",dom:"vaste weetjes",title:"De weetjeskast",
- intro:"Deze kast zat vol weetjes die je gewoon paraat hebt: dat een kwart van 100 precies 25 is, dat 6 + 7 dertien is. De mist heeft de laden leeggehaald. Vul ze weer.",
+{id:"weet",ico:"🗄️",dom:"vaste weetjes",title:"Slim rekenen",
  truc:["Bijna-dubbel: 6 + 7 is 6 + 6 en nog 1. Je kent de dubbelen al, dus je kent deze ook. 8 + 9 is 8 + 8 en nog 1: 17.",
        "De helft is delen door 2, een kwart is de helft van de helft. Een kwart van 100 is 25, een kwart van 60 is 15. Drie kwart is drie van die stukken.",
        "Breuk, procent en kommagetal zijn drie namen voor hetzelfde. Een half is 50% is 0,5. Een kwart is 25% is 0,25. Een vijfde is 20% is 0,2. Een tiende is 10% is 0,1. Bij 75% van 80 neem je drie keer een kwart: 3 × 20."],
@@ -270,8 +255,7 @@ var S=[
    ["Hoeveel kwarten zitten er in een hele?","4","Vier kwarten maken één hele. Daarom is een kwartier een vierde uur: 15 minuten."]],
   [["Hoe reken je 15% van 80 uit je hoofd?",["10% is 8, 5% is 4: samen 12","80 : 15","80 − 15"],"Bouw procenten op uit 10% en de helft daarvan. Zo reken je ook een fooi of korting uit."],
    ["Wat is het grootst?",["3/4","0,7","60%"],"3/4 is 0,75. Zet alles in dezelfde vorm, dan vergelijk je eerlijk."]]]},
-{id:"woord",ico:"🔤",dom:"spelling",title:"De woordenflits",
- intro:"De mist pakt niet alleen sommen. Op het bord bij de ingang staat 'sgool'. Ook woorden moet je zo vaak goed gezien hebben dat je hand ze vanzelf schrijft. Dat heet een woordbeeld.",
+{id:"woord",ico:"🔤",dom:"spelling",title:"Woorden",
  truc:["Zeg het woord langzaam en luister naar elke klank. Hoor je een lange klank in een kort woord, dan schrijf je twee letters: boom, maan, vuur. Hoor je een korte klank, dan één: bom, man.",
        "Hak het woord in klankgroepen. Eindigt het eerste stuk op een lange klank, dan schrijf je één letter: bo-men, lo-pen. Hoor je een korte klank, dan verdubbel je de medeklinker: kat-ten, bak-ker. Aan het eind d of t? Maak het langer: honden, dus hond.",
        "Bij werkwoorden schrijf je in de tegenwoordige tijd ik-vorm + t: hij wordt, zij vindt. Staat jij of je erachter, dan vervalt de t: vind jij. Voltooid deelwoord: maak het langer of gebruik 't kofschip: gewerkt (k), verhuisd (z van verhuizen). Bij twijfel: vervang door 'lopen'. Loopt hij, dan krijgt jouw werkwoord ook een t."],
@@ -288,8 +272,7 @@ var S=[
    ["Paard of paart? Wat is de truc?",["Langer maken: paarden, dus een d","Goed luisteren","Het is altijd een t"],"Aan het eind hoor je geen verschil tussen d en t. De verlengingsregel beslist."]],
   [["'Hij word/wordt ziek.' Vervang door lopen. Wat hoor je?",["Hij loopt: dus wordt","Hij loop: dus word"],"Je hoort de t bij loopt, dus schrijf je hem ook bij wordt: stam word + t."],
    ["'Het is gebeur…' Welke letter, en waarom?",["d, want de r zit niet in 't kofschip","t, want het is tegenwoordige tijd","dt, voor de zekerheid"],"Een voltooid deelwoord (met is of heeft) eindigt nooit op dt. De stam gebeur eindigt op een r: gebeurd."]]]},
-{id:"buur",ico:"🏘️",dom:"getalbegrip",title:"De buren van het getal",
- intro:"In deze straat zijn de huisnummers door de mist van hun plek geraakt. Niemand weet meer wie naast wie woont. Wie de buren van een getal kent, kan schatten, afronden en controleren of een antwoord kan kloppen.",
+{id:"buur",ico:"🏘️",dom:"getalbegrip",title:"De buren van een getal",
  truc:["Elk getal heeft twee buren: één ervoor en één erna. De buren van 14 zijn 13 en 15. Na 19 komt een nieuw tiental: 20. Voor 30 komt 29.",
        "Afronden is kijken bij welke ronde buur een getal het dichtst woont. 47 ligt tussen 40 en 50, en het dichtst bij 50. Is het laatste cijfer 5 of meer, dan ga je naar boven.",
        "Kijk bij afronden alleen naar het cijfer rechts van de plek waar je afrondt. 3,47 op één decimaal: de 7 beslist, dus 3,5. 46.800 op duizendtallen: de 8 beslist, dus 47.000."],
@@ -306,8 +289,7 @@ var S=[
    ["Tussen welke twee honderdtallen ligt 468?",["400 en 500","460 en 470","300 en 400"],"En het ligt dichter bij 500, want 68 is meer dan de helft van 100."]],
   [["Een rekenmachine zegt 49 × 21 = 10.029. Hoe zie je meteen dat dat fout is?",["50 × 20 = 1000, dus het moet rond de 1000 liggen","Het antwoord is oneven","Het antwoord heeft te weinig cijfers"],"Schatten kost twee tellen en vangt typefouten. Het juiste antwoord is 1029."],
    ["Je rondt 2,449 af op één decimaal. Wat wordt het?",["2,4","2,5"],"Alleen het eerste cijfer na de afrondplek telt: de 4. Je mag niet eerst naar 2,45 afronden en dan nog eens."]]]},
-{id:"mix",ico:"🌪️",dom:"alles door elkaar",title:"Het oog van de mist",
- intro:"Midden in de mist draait alles door elkaar: plus, min, keer, delen. Hier laat je zien dat je het niet alleen op een rijtje kent, maar ook als de sommen kriskras komen. Pas dan heb je het echt paraat.",
+{id:"mix",ico:"🌪️",dom:"alles door elkaar",title:"Alles door elkaar",
  truc:["Kijk eerst naar het teken: is het erbij of eraf? Kies dan je truc: verliefde harten, dubbelen of eerst naar 10.",
        "Kijk eerst wat voor som het is. Keer: zoek de tafelsom of draai hem om. Delen: welke keersom hoort erbij? Niet raden: weet je hem niet, reken hem dan uit via een som die je wel kent.",
        "Door elkaar oefenen is moeilijker dan op een rijtje, en juist daardoor onthoud je het beter. Kijk naar het teken, kies de steunsom, en controleer een deelsom met de keersom."],
@@ -325,18 +307,35 @@ var S=[
   [["Waarom helpt het bij een lastig vraagstuk als je de tafels paraat hebt?",["Je werkgeheugen blijft vrij voor het redeneren","Dan hoef je het vraagstuk niet te lezen","Dan is het antwoord altijd een heel getal"],"Je werkgeheugen kan maar een paar dingen tegelijk vasthouden. Wat geautomatiseerd is, neemt daar geen plek in."],
    ["Welke oefenplanning onthoudt het best?",["Vier keer vijf minuten, verspreid over de week","Eén keer twintig minuten","Alleen de avond voor de toets"],"Gespreid oefenen wint het in elk onderzoek van stampen. Even vergeten en weer ophalen maakt het geheugenspoor sterker."]]]}
 ];
+/* Wat de kinderen zien: één korte regel (kort[niveau]) en één beweegzin tussen ronde 1 en 2 (doe). De lange truc, act, tip en more staan alleen op het begeleidersblad. */
+var KORT={
+ splits:{t:["Samen 10: 7 en 3. Of 6 en 4.","Samen 100: 30 en 70. Net als 3 en 7.","Vul aan in twee sprongen: 375 → 400 → 1000."],doe:"Steek samen 10 vingers op. Vouw er 3 om!"},
+ dubbel:{t:["Dubbel is twee keer hetzelfde: 4 + 4 = 8.","Dubbel 35: eerst 30, dan 5. Samen 70.","Splits het getal: dubbel 2,5 is 4 + 1 = 5."],doe:"Spring 4 keer. Nu het dubbele!"},
+ tien:{t:["8 + 5: eerst naar 10, dan de rest. Dat is 13.","47 + 8: eerst naar 50, dan nog 5. Dat is 55.","398 + 25: reken 400 + 25, en dan 2 eraf."],doe:"Spring 8 keer. Dan tot 10. En nog 3!"},
+ min:{t:["9 − 7: denk 7 en hoeveel is 9? Dat is 2.","100 − 37: vul aan. 37 → 40 → 100. Dat is 63.","1000 − 275: 275 → 300 → 1000. Dat is 725."],doe:"Loop 10 stappen. Nu 4 terug. Waar sta je?"},
+ sprong:{t:["Hoe groot is de sprong? 5, 10, 15, 20.","Hoe groot is de sprong? 25, 50, 75, 100.","Zoek de sprong. Hij kan ook terug: 10, 7, 4, 1."],doe:"Spring en tel: 5, 10, 15, 20, 25!"},
+ tafela:{t:["Keer 2 is dubbel. Keer 10: een 0 erachter.","Draai om als dat makkelijker is: 3 × 4 = 4 × 3.","12 × 7 = 10 × 7 + 2 × 7 = 84."],doe:"Stamp de tafel van 2, tot 20."},
+ tafelb:{t:["3 × 4 is 3 groepjes van 4: 4, 8, 12.","7 × 8 = 56. Denk aan 5, 6, 7, 8.","Keer 12 is keer 10 plus keer 2."],doe:"Klap de tafel van 3, tot 30."},
+ deel:{t:["10 : 2 is eerlijk delen. Ieder krijgt 5.","42 : 7? Hoeveel keer 7 is 42? 6 keer.","108 : 12? Hoeveel keer 12 is 108? 9 keer."],doe:"Verdeel jullie groep eerlijk in tweeën."},
+ nul:{t:["3 + 2 = 5, dus 30 + 20 = 50.","Keer 10: de cijfers schuiven op. 47 wordt 470.","Keer 10: 3,4 wordt 34. Gedeeld door 100: 47 wordt 0,47."],doe:"Tel met tienen tot 100. Bij elke tien een sprong!"},
+ weet:{t:["6 + 7 is 6 + 6 en nog 1. Dat is 13.","Een kwart is de helft van de helft. Kwart van 60 is 15.","1/4 = 25% = 0,25. En 1/5 = 20% = 0,2."],doe:"De helft van de groep gaat zitten."},
+ woord:{t:["Lange klank: twee letters. Boom, maan, vuur.","Bo-men: één o. Kat-ten: dubbele t.","Past 'loopt'? Dan komt er een t bij: hij wordt."],doe:"Schrijf je naam groot in de lucht."},
+ buur:{t:["Voor 14 komt 13. Na 14 komt 15.","47 ligt het dichtst bij 50. Bij 5 of meer: omhoog.","Kijk naar het cijfer erachter: 3,47 wordt 3,5."],doe:"Ga op een rij staan, van klein naar groot."},
+ mix:{t:["Kijk eerst: is het plus of min?","Kijk eerst: is het keer of delen?","Kijk eerst naar het teken. Gebruik een som die je kent."],doe:"Tien sprongen op de plaats. Tel hardop!"}
+};
+S.forEach(function(m){m.kort=KORT[m.id].t;m.doe=KORT[m.id].doe});
 var KERN={kort:["splits","dubbel","tien","sprong","tafela","woord"],vast:["splits","tafela","woord"]};
-return{lang:"nl",T:T,TYPES:TYPES,TIK:TIK,NOOR:NOOR,ROOMS:ROOMS,OPEN:OPEN,OPEN0:OPEN0,CLIFF:CLIFF,CLIFFLAST:CLIFFLAST,REVEAL:REVEAL,REVEAL0:REVEAL0,S:S,KORT:KERN.kort,VAST:KERN.vast,TAFELS:TAFELS,FLN:[8,10,12],FREE:false,
-  LEADNOTE:"Tip: doe de korte introductieles vooraf (zie onder). Spreek het speelgebied af (buiten: alles binnen ongeveer 300 meter) en een eindtijd. Laat de telefoon bij elke flits doorgeven, zodat ieder kind aan de beurt komt. Een team dat de flitsronde twee keer niet haalt, mag toch verder; in het flitsboekje staat dan 'nog oefenen'. Gebruik dat voor de nabespreking. De sommen horen bij de zaakcode: alle teams krijgen dezelfde.",
+return{lang:"nl",T:T,TYPES:TYPES,TIK:TIK,NOOR:NOOR,ROOMS:ROOMS,OPEN:OPEN,OPEN0:OPEN0,CLIFF:CLIFF,CLIFFLAST:CLIFFLAST,REVEAL:REVEAL,REVEAL0:REVEAL0,S:S,KORT:KERN.kort,VAST:KERN.vast,TAFELS:TAFELS,FLN:[5,6,8],FREE:false,
+  LEADNOTE:"De kinderen hoeven bijna niets te lezen: per plek één korte regel en dan drie rondes oefenen. Zet voorlezen aan voor groep 3–4. Laat de telefoon na elke som doorgeven, zodat ieder kind aan de beurt komt. Een foute som komt vanzelf terug. Op de scorekaart staan de sterren per plek: één ster betekent nog oefenen. De uitleg, beweegideeën en napraatvragen hieronder zijn voor jou.",
   LES:[
-   {intro:["Vertel het verhaal van de Vergeetmist en vraag: welke som weet jij zonder te tellen? Laat een paar kinderen er een noemen. Dat heet: iets vlot weten.","Oefen samen de verliefde harten met tien vingers: steek er een paar op, de klas roept hoeveel er omgevouwen zijn.","Teams van 3–5 met een volwassene, één telefoon per team, zaakcode invullen. Zet voorlezen aan. Afspraak: om de beurt antwoord geven, en helpen mag pas als iemand erom vraagt."],
-    na:["Welke truc vonden jullie het handigst? Laat een kind hem voordoen.","Kijk in de flitsboekjes: bij welk station stond 'nog oefenen'? Kies er met de klas één uit en oefen die deze week elke dag drie minuten.","Flitskaartjes maken: ieder kind schrijft drie sommen die nog niet vanzelf gaan op een kaartje, met het antwoord achterop. Oefenen in tweetallen.","Thuisopdracht: doe de verliefde harten voor aan iemand thuis, en vraag welke som díe nog moet uittellen."],
+   {intro:["Vertel van het fietsslot van meneer Tik en vraag: welke som weet jij zonder te tellen? Laat een paar kinderen er een noemen. Dat heet: iets vlot weten.","Oefen samen de verliefde harten met tien vingers: steek er een paar op, de klas roept hoeveel er omgevouwen zijn.","Teams van 3–5 met een volwassene, één telefoon per team, zaakcode invullen. Zet voorlezen aan. Afspraak: om de beurt antwoord geven, en helpen mag pas als iemand erom vraagt."],
+    na:["Welke truc vonden jullie het handigst? Laat een kind hem voordoen.","Kijk op de scorekaarten: bij welke plek stond maar één ster? Kies er met de klas één uit en oefen die deze week elke dag drie minuten.","Oefenkaartjes maken: ieder kind schrijft drie sommen die nog niet vanzelf gaan op een kaartje, met het antwoord achterop. Oefenen in tweetallen.","Thuisopdracht: doe de verliefde harten voor aan iemand thuis, en vraag welke som díe nog moet uittellen."],
     doelen:"Groep 3–4 (SLO rekenen-wiskunde, basisbewerkingen; kerndoel 26/27): splitsingen tot 10 memoriseren, optellen en aftrekken tot 10 gememoriseerd en tot 20 geautomatiseerd, dubbelen en halveren, tellen met sprongen van 2, 5 en 10, eerste tafels (1, 2, 5, 10), buurgetallen. Taal (spelling): klankzuivere woorden, lange en korte klank."},
-   {intro:["Vraag: wat is het verschil tussen een som uitrekenen en een som weten? Laat 7 × 8 eerst uitrekenen (hoe doe je dat?) en vertel dan het ezelsbruggetje 5-6-7-8.","Leg de opbouw van een station uit: eerst de truc begrijpen, dan bewegend oefenen, dan de flitsronde. Een foute som komt terug: dat is geen straf maar precies de bedoeling.","Teams van 3–5, één telefoon per team, zaakcode invullen. Afspraak: de telefoon gaat na elke flits door, en eerst goed, dan snel."],
-    na:["Zet de flitsrondes van de teams naast elkaar: bij welk station ging het het vlotst, bij welk het moeizaamst? Dat is het oefenprogramma voor de komende weken.","Laat teams een steunsom uitleggen: hoe kom je van een som die je weet bij een som die je niet weet?","Maak een tafelkaart per kind: kleur groen wat direct gaat, oranje wat via een steunsom gaat, rood wat nog niet lukt. Herhaal na twee weken.","Verdieping: laat kinderen een eigen ezelsbruggetje bedenken voor hun lastigste tafelsom en hang ze op."],
+   {intro:["Vraag: wat is het verschil tussen een som uitrekenen en een som weten? Laat 7 × 8 eerst uitrekenen (hoe doe je dat?) en vertel dan het ezelsbruggetje 5-6-7-8.","Leg uit: op elke plek drie rondes (typen, goed of fout, kiezen). Een foute som komt terug: dat is geen straf maar precies de bedoeling.","Teams van 3–5, één telefoon per team, zaakcode invullen. Afspraak: de telefoon gaat na elke som door, en eerst goed, dan snel."],
+    na:["Zet de sterren van de teams naast elkaar: bij welke plek ging het het vlotst, bij welke het moeizaamst? Dat is het oefenprogramma voor de komende weken.","Laat teams een steunsom uitleggen: hoe kom je van een som die je weet bij een som die je niet weet?","Maak een tafelkaart per kind: kleur groen wat direct gaat, oranje wat via een steunsom gaat, rood wat nog niet lukt. Herhaal na twee weken.","Verdieping: laat kinderen een eigen ezelsbruggetje bedenken voor hun lastigste tafelsom en hang ze op."],
     doelen:"Groep 5–6 (SLO rekenen-wiskunde, basisbewerkingen; kerndoel 27): optellen en aftrekken tot 100 geautomatiseerd, tafels van 1 tot en met 10 gememoriseerd, deeltafels geautomatiseerd, vermenigvuldigen en delen met 10 en 100, helft en kwart, afronden op tientallen en honderdtallen. Taal (spelling): klankgroepen (open en gesloten lettergreep), verlengingsregel, tweetekenklanken."},
-   {intro:["Vraag: waarom zou je in groep 7 of 8 nog tafels oefenen? Laat een redactiesom zien en bespreek waar het werkgeheugen vol raakt als je de basis moet uitrekenen.","Bespreek gespreid oefenen: vijf minuten per dag werkt beter dan een half uur per week. Laat leerlingen voorspellen bij welk station ze het vlotst zijn.","Teams van 3–5, één telefoon per team, zaakcode invullen. Afspraak: de telefoon gaat na elke flits door; wie niet aan de beurt is, schat of het antwoord kan kloppen."],
-    na:["Vergelijk de voorspelling met het resultaat: bij welk station zat het verschil? Wat zegt dat over wat je denkt te kunnen en wat je paraat hebt?","Leg de tabel breuk-procent-kommagetal samen aan (1/2, 1/4, 3/4, 1/5, 1/10, 1/8) en hang hem op. Welke gebruik je bij korting, welke bij kansen?","Werkwoordspelling: laat teams hun eigen beslisschema tekenen en test het op vijf zinnen van een ander team.","Verdieping: maak een persoonlijk oefenplan voor twee weken (wat, hoe vaak, hoe controleer je) en evalueer het daarna."],
+   {intro:["Vraag: waarom zou je in groep 7 of 8 nog tafels oefenen? Laat een redactiesom zien en bespreek waar het werkgeheugen vol raakt als je de basis moet uitrekenen.","Bespreek gespreid oefenen: vijf minuten per dag werkt beter dan een half uur per week. Laat leerlingen voorspellen bij welke plek ze het vlotst zijn.","Teams van 3–5, één telefoon per team, zaakcode invullen. Afspraak: de telefoon gaat na elke som door; wie niet aan de beurt is, schat of het antwoord kan kloppen."],
+    na:["Vergelijk de voorspelling met het resultaat: bij welke plek zat het verschil? Wat zegt dat over wat je denkt te kunnen en wat je paraat hebt?","Leg de tabel breuk-procent-kommagetal samen aan (1/2, 1/4, 3/4, 1/5, 1/10, 1/8) en hang hem op. Welke gebruik je bij korting, welke bij kansen?","Werkwoordspelling: laat teams hun eigen beslisschema tekenen en test het op vijf zinnen van een ander team.","Verdieping: maak een persoonlijk oefenplan voor twee weken (wat, hoe vaak, hoe controleer je) en evalueer het daarna."],
     doelen:"Groep 7–8 (SLO rekenen-wiskunde; kerndoel 27/28 en referentieniveau 1F/1S): basisbewerkingen tot 1000 en met eenvoudige kommagetallen vlot uit het hoofd, tafels tot en met 12 en steunsommen, vermenigvuldigen en delen met 10, 100 en 1000, veelvoorkomende breuken, procenten en kommagetallen in elkaar omzetten, afronden en schattend controleren. Taal (spelling, 1F/2F): werkwoordspelling tegenwoordige tijd en voltooid deelwoord."}
   ]}
 })();

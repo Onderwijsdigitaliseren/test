@@ -1,7 +1,7 @@
-/* De Vergeetmist – MiniMystery Educatie (automatiseren). Opzet gelijk aan games/reken. Op de wandelmotor van MiniMystery (platform.js, walk.js, kidsmap.js).
-   Drie standen buiten/binnen/gebouw zoals de andere vak-wandelingen. 6, 8 of 10 flitsstations; elk station: de truc → bewegen → flitsronde (kind "flits",
-   sommen uit de seed, fout = komt terug, drie opfrissers van het vorige station) → verdieping (shared/meer.js) → flitslamp.
-   Finale: de flitslampen op volgorde van de tafelrij. Zaakcode VM…: dezelfde stations en dezelfde sommen op alle telefoons. */
+/* De Sommensprint – MiniMystery Educatie (automatiseren). Opzet gelijk aan games/reken. Op de wandelmotor van MiniMystery (platform.js, walk.js, kidsmap.js).
+   Herzien 23 nov 2026: weinig leestekst, nadruk op oefenen. Elke plek: één korte regel → ronde 1 typen → even bewegen → ronde 2 goed of fout → ronde 3 kiezen → sterren → getal.
+   Sommen komen uit de seed (zaakcode VM…: dezelfde plekken en sommen op alle telefoons). Fout = komt terug. Geen verdiepingsvragen in het spel; die staan op het begeleidersblad.
+   Finale: de getallen van klein naar groot (het fietsslot van meneer Tik). */
 (function(){
 "use strict";
 var MW=window.MW,Wk=MW.Walk,LS=MW.LS,D=window.VM_DATA,T=D.T,L=D.lang,esc=MW.esc,fill=MW.fill,$=function(s){return document.querySelector(s)},$$=function(s){return [].slice.call(document.querySelectorAll(s))};
@@ -29,7 +29,7 @@ function say(t){if(!VOICE||!t)return;t=String(t).replace(/<[^>]+>/g,"");if(windo
 function hush(){if(window.MMVoice)return MMVoice.hush();try{window.speechSynthesis&&window.speechSynthesis.cancel()}catch(e){}}
 /* artwork van Kellie in games/vlot/img wint waar het er is (zie games/vlot/ARTWORK.md); anders getekende/tekst-versies */
 var IMGROOT=MW.root+"games/vlot/img/",IM={};
-["hero","noor","tik","mist","zon","diploma-stempel"].concat(D.S.map(function(m){return "st-"+m.id})).forEach(function(k){var im=new Image();im.src=IMGROOT+k+".webp?v=1";IM[k]=im;im.addEventListener("error",function(){im._bad=1})});
+["hero","noor","tik","slot","open","diploma-stempel"].concat(D.S.map(function(m){return "st-"+m.id})).forEach(function(k){var im=new Image();im.src=IMGROOT+k+".webp?v=1";IM[k]=im;im.addEventListener("error",function(){im._bad=1})});
 function ok(k){var im=IM[k];return !!(im&&im.complete&&im.naturalWidth)}
 /* plaatje meteen tonen (ook als het nog laadt); mislukt het, dan verdwijnt het en blijft de tekening */
 function okI(k){var im=IM[k];return !!im&&!im._bad}
@@ -167,8 +167,8 @@ function build(seed,mode,pois,ways,origin,daily,len,virt){len=LENN[len]?len:"nor
   brief()}
 function brief(){
   $("#bfNo").textContent=(G.mode==="demo"?T.demoCase:"");
-  $("#bfOpen").innerHTML=(picTag("mist","erapic"))+bubble(fill(openOf(modus()),{N:T.nw[NN()]||NN()}),D.NOOR,"big")+
-    '<div class="chips"><span class="chip">'+esc(T.lvl[ageI()])+'</span><span class="chip">'+(modus()==="bso"?"BSO-modus":"Schoolmodus")+'</span><span class="chip">'+NN()+' stations</span><span class="chip">'+(inBuilding()?"in het gebouw":G.mode==="street"?"zonder kaart":BANK()?"op de bank":G.mode==="in"?"binnen op de plaats":"met kaart")+'</span></div>';
+  $("#bfOpen").innerHTML=(picTag("slot","erapic"))+bubble(fill(openOf(modus()),{N:T.nw[NN()]||NN()}),D.NOOR,"big")+
+    '<div class="chips"><span class="chip">'+esc(T.lvl[ageI()])+'</span><span class="chip">'+(modus()==="bso"?"BSO-modus":"Schoolmodus")+'</span><span class="chip">'+NN()+' plekken</span><span class="chip">'+(inBuilding()?"in het gebouw":G.mode==="street"?"zonder kaart":BANK()?"op de bank":G.mode==="in"?"binnen op de plaats":"met kaart")+'</span></div>';
   $("#bfTip").innerHTML=MW.codeBox(L,G.code,"zaak");MW.bindCodeBox($("#bfTip"),L);
   show("brief")}
 $("#bGo").onclick=function(){if(!G.t0){G.t0=Date.now();if(G.mode==="map"||G.mode==="street")MW.pro.setFree(ID)}save();hush();enter()};
@@ -181,14 +181,14 @@ function enter(){fixG(G);if(G.mode==="map"||G.mode==="demo"||G.mode==="in")enter
 function tilesHTML(){var out="";G.c.slots.forEach(function(s,i){var got=!!G.ph[i];out+='<i class="tl'+(got?" on":"")+'">'+(got?s.key.s:"")+'</i>'});return out}
 function hud(){if(!G)return;var n=done();$("#hT").textContent=mmss(Date.now()-G.t0);$("#hS").textContent=n+"/"+NN();$("#hM").innerHTML=tilesHTML()}
 function render(){hud();while(G.i<NN()&&G.ph[G.i])G.i++;var i=G.i,box=$("#card"),N=NN();
-  if(i>=N){box.innerHTML='<div class="pol done"><div class="big">💡</div></div>'+bubble(T.radarAll,D.NOOR)+'<button type="button" class="btn red" id="bAcc">'+T.finH+'</button>';$("#bAcc").onclick=toFinale;return}
+  if(i>=N){box.innerHTML='<div class="pol done"><div class="big">🔒</div></div>'+bubble(T.radarAll,D.NOOR)+'<button type="button" class="btn red" id="bAcc">'+T.finH+'</button>';$("#bAcc").onclick=toFinale;return}
   var s=G.c.slots[i],m=MBY[s.m];
   if(inBuilding()){var room=D.ROOMS[G.roomOrder[i]];
     box.innerHTML='<div class="pol empty"><div class="ph">🚪'+picTag("st-"+m.id,"phimg")+'</div><p class="cap">'+esc(fill(T.task,{i:i+1,n:N}))+'</p></div><div class="goto"><em>'+esc(T.gbGoto)+'</em><b>'+esc(room)+'</b></div>'+
       (G.nocards?'<button type="button" class="btn" id="bHere">'+esc(T.gbHere)+'</button>':'<p class="q">'+esc(T.gbCode)+'</p><input class="inp code" id="rc" inputmode="numeric" maxlength="3" autocomplete="off" placeholder="000"><div id="fb"></div><button type="button" class="btn" id="bHere">'+T.ok+'</button>');
     var go=function(){if(!G.nocards){var v=($("#rc").value||"").replace(/\D/g,"");if(v!==String(roomCode(G.seed,G.roomOrder[i]))){G.wrong++;save();beep(180,.2);$("#fb").innerHTML='<div class="fb no">'+esc(T.gbBad)+'</div>';$("#rc").select();return}}buzz([60,40,60]);beep(660,.2);taskSheet(i)};
     $("#bHere").onclick=go;if($("#rc"))$("#rc").onkeydown=function(e){if(e.key==="Enter")go()};return}
-  box.innerHTML='<div class="pol empty"><div class="ph">'+m.ico+picTag("st-"+m.id,"phimg")+'</div><p class="cap">'+esc(fill(T.task,{i:i+1,n:N}))+'</p></div>'+bubble("Loop samen naar een nieuwe plek in de buurt: een hoek, een gebouw, een stoep of een plein. Daar staat het volgende flitsstation: <b>"+esc(m.title)+"</b>.",D.NOOR)+'<button type="button" class="btn" id="bOpen">▶ '+T.start+'</button>';
+  box.innerHTML='<div class="pol empty"><div class="ph">'+m.ico+picTag("st-"+m.id,"phimg")+'</div><p class="cap">'+esc(fill(T.task,{i:i+1,n:N}))+'</p></div>'+bubble("Loop samen naar een nieuwe plek in de buurt: een hoek, een gebouw, een stoep of een plein. Daar is de volgende plek: <b>"+esc(m.title)+"</b>.",D.NOOR)+'<button type="button" class="btn" id="bOpen">▶ '+T.start+'</button>';
   $("#bOpen").onclick=function(){taskSheet(i)}}
 
 /* ---------- spelen met kaart ---------- */
@@ -237,64 +237,74 @@ function revealOf(md){return ageI()===0&&D.REVEAL0?D.REVEAL0[md]:D.REVEAL[md]}
 function taskSheet(i,spot){walkTo=null;
   if(G.mode==="demo"&&!G.ph[i]&&done()>=(window.MMTrial?MMTrial.max:2)&&window.MMTrial&&locked()){var _GK=GK;return MMTrial.end({buy:proSheet,home:function(){leavePlay();try{localStorage.removeItem(_GK)}catch(e){}}})}
   var s=G.c.slots[i],m=MBY[s.m],p=puzzleOf(s),n=done()+1,md=modus(),sch=md==="school",act=(ageI()===0&&m.act0?m.act0:m.act)[inBuilding()||G.mode==="in"?"in":"out"];cur={i:i,spot:spot||null};
-  var head='<div class="eyebrow">'+esc(fill(T.task,{i:n,n:NN()}))+(spot?' · '+esc(spot.name):'')+'</div>'+eraPic(m)+'<div class="era" style="--c:#3a9be6"><span class="ico">'+m.ico+'</span><div><b>'+esc(m.title)+'</b><small>'+esc(m.dom)+'</small></div></div>'+
-    bubble(introOf(m),sch?D.NOOR:D.TIK,"",sch?NOORAV:TIKAV)+
-    '<div class="feit truc"><em>💡 '+esc(T.trucH)+'</em><p>'+esc(m.truc[ageI()])+'</p></div>'+
-    '<div class="act"><span class="ico">🤸</span><div><b>'+esc(T.actH)+'</b><br>'+esc(act)+'</div></div>';
+  var head='<div class="eyebrow">'+esc(fill(T.task,{i:n,n:NN()}))+(spot?' · '+esc(spot.name):'')+'</div>'+eraPic(m)+'<div class="era" style="--c:#3a9be6"><span class="ico">'+m.ico+'</span><div><b>'+esc(m.title)+'</b></div></div>'+
+    '<div class="kort" id="kort">'+esc(m.kort[ageI()])+'</div>';
   sheet(head+'<div id="pz"></div><button type="button" class="btn ghost dk" id="shX">'+T.back+'</button>',true);
   $("#shX").onclick=function(){G.force=null;closeSheet()};
-  say(m.title+". "+introOf(m)+" "+T.trucH+": "+m.truc[ageI()]+" "+T.actH+": "+act);
+  say(m.title+". "+m.kort[ageI()]);
   renderPuzzle(s,p,i)}
 function hintBox(s,p){var used=!!G.hints[s.m];return '<div id="fb">'+(used?'<div class="fb hint">💡 '+esc(p.hint)+'</div>':'')+'</div><button type="button" class="btn ghost dk sm" id="bHint"'+(used?' disabled':'')+'>'+(used?T.hintUsed:T.hintBtn)+'</button>'}
 function bindHint(s,p){var b=$("#bHint");if(!b)return;b.onclick=function(){G.hints[s.m]=1;save();b.disabled=true;b.textContent=T.hintUsed;$("#fb").innerHTML='<div class="fb hint">💡 '+esc(p.hint)+'</div>';say(p.hint)}}
 function wrong(s,p){G.wrong++;save();beep(180,.2);buzz(120);var used=!!G.hints[s.m];$("#fb").innerHTML='<div class="fb no">'+esc(used?T.wrong:T.wrongHint)+'</div>'+(used?'<div class="fb hint">💡 '+esc(p.hint)+'</div>':'');var a=$("#ans");if(a)a.select()}
-/* ---------- flitsronde: op tempo oefenen; een foute flits komt terug tot hij goed is; drie opfrissers van het vorige station ---------- */
 var FLCUR=null;
-function flN(){return (D.FLN||[8,10,12])[ageI()]}
+/* ---------- drie rondes per plek: typen, goed of fout, kiezen. Fout = komt terug (maximaal drie keer). ---------- */
+function flN(){return (D.FLN||[5,6,8])[ageI()]}
 function flItems(m,age,seed,round,n){var r=rngOf((seed^hashStr("fl|"+m.id+"|"+age+"|"+round))>>>0),out=[],seen={},guard=0;
   while(out.length<n&&guard++<n*40){var it=m.fl[age](r),key=it.q+"|"+(it.c?it.c[0]:it.a);if(seen[key])continue;seen[key]=1;
     if(it.c){it.opts=r()<.5?[it.c[1],it.c[0]]:[it.c[0],it.c[1]];it.a=it.c[0]}out.push(it)}return out}
-function flText(it){return it.c?(/\?$/.test(it.q)?it.a:it.q.replace("…",it.a)+(it.q.indexOf("…")<0?" → "+it.a:"")):it.q.replace(/ · …$/," · "+it.a).replace(/…$/,it.a)+(/…/.test(it.q)?"":" = "+it.a)}
-function prevStation(i){for(var k=G.order.length-1;k>=0;k--)if(G.order[k]!==i)return MBY[G.c.slots[G.order[k]].m];return null}
+function flText(it,ans){var a=ans==null?it.a:ans;return it.c?(/\?$/.test(it.q)?a:it.q.replace("…",a)+(it.q.indexOf("…")<0?" "+a:"")):it.q.replace(/ · …$/," · "+a).replace(/…$/,a)+(/…/.test(it.q)?"":" = "+a)}
 function nv(x){x=String(x).replace(/\./g,",").replace(/-/g,"−").trim();if(x.charAt(0)===",")x="0"+x;if(x.indexOf(",")>=0)x=x.replace(/0+$/,"").replace(/,$/,"");x=x.replace(/^(−?)0+(?=\d)/,"$1");return x}
 function tafLab(t,age){return (age===0?"sprongen van ":"de tafel van ")+t}
-function renderFlits(s,p,box,i){var m=MBY[s.m],lv=ageI(),n=flN();if(!G.fl)G.fl={};var st=G.fl[s.m]||(G.fl[s.m]={round:0,fails:0}),prev=prevStation(i);
-  var rev=prev?flItems(prev,lv,G.seed,90+st.round,3).map(function(x){x.rev=1;return x}):[],total=n+rev.length,need=Math.ceil(total*.8);
-  box.innerHTML='<div class="flits"><div class="eyebrow">⚡ '+esc(T.flH)+(st.round?' · '+(st.round+1):'')+'</div><p class="q">'+esc(fill(lv===0?T.flT0:T.flT,{n:total,k:need}))+'</p>'+(rev.length?'<p class="note">🔁 '+esc(T.flRev)+'</p>':'')+'<p class="note">'+esc(T.flTurn)+'</p>'+hintBox(s,p)+'<button type="button" class="btn" id="flGo">'+esc(T.flGo)+'</button></div>';
-  bindHint(s,p);$("#flGo").onclick=function(){hush();runFlits(s,p,box,i,rev.concat(flItems(m,lv,G.seed,st.round,n)),need)}}
-function runFlits(s,p,box,i,items,need){var m=MBY[s.m],lv=ageI(),q=items.slice(),total=items.length,good=0,doneN=0,missed=[],t0=Date.now(),it=null,val="",lock=false;
-  var neg=items.some(function(x){return !x.c&&String(x.a).charAt(0)==="−"}),dec=lv===2;
-  items.forEach(function(x){x.tries=0});
-  var timer=setInterval(function(){var e=$("#flT");if(!e||!box.isConnected){stop();return}e.textContent=mmss(Date.now()-t0)},500);
-  function key(e){if(!box.isConnected||!$("#flA")){stop();return}if(lock||!it||it.c)return;var k=e.key;if(/^\d$/.test(k))press(k);else if(k===","||k===".")press(",");else if(k==="-")press("−");else if(k==="Backspace")press("del");else if(k==="Enter")press("ok");else return;e.preventDefault()}
-  function stop(){clearInterval(timer);document.removeEventListener("keydown",key);var sb=$("#sheetBody");if(sb)sb.classList.remove("flrun")}
-  document.addEventListener("keydown",key);$("#sheetBody").classList.add("flrun");$("#sheetBody").scrollTop=0;$("#sheet").scrollTop=0;
-  function press(k){if(lock)return;if(k==="del")val=val.slice(0,-1);else if(k==="ok"){if(val!=="")check(nv(val)===nv(it.a));return}else if(k==="−"){val=val.charAt(0)==="−"?val.slice(1):"−"+val}else if(k===","){if(val.indexOf(",")<0)val+=val===""||val==="−"?"0,":","}else if(val.replace(/\D/g,"").length<7)val+=k;
+function numOf(a){return parseFloat(String(a).replace(",",".").replace("−","-"))}
+function fmtN(v){return String(parseFloat((+v).toFixed(3))).replace(".",",").replace("-","−")}
+function wrongs(it,r){var v=numOf(it.a),dec=String(it.a).indexOf(",")>=0,c=dec?[v+.1,v-.1,v*10,v/10,v+1]:[v+1,v-1,v+10,v-10,v+2,v-2,v*10],s=String(Math.abs(v));
+  if(!dec&&s.length===2&&s.charAt(0)!==s.charAt(1)&&s.charAt(1)!=="0")c.push(+(s.charAt(1)+s.charAt(0)),+(s.charAt(1)+s.charAt(0)));
+  return shuffle(c,r).map(fmtN).filter(function(x,i,a){return x!==nv(it.a)&&a.indexOf(x)===i&&(v<0||x.charAt(0)!=="−")}).slice(0,2)}
+/* ronde k (0, 1, 2) van een plek, met de vorm erbij */
+function rdItems(m,age,seed,k,rep){var its=flItems(m,age,seed,k+3*(rep||0),(D.FLN||[5,6,8])[age]),r=rngOf((seed^hashStr("rd|"+m.id+"|"+k+"|"+(rep||0)))>>>0);
+  its.forEach(function(it){var form=it.c?["kies","klopt","kies"][k]:["typ","klopt","kies"][k];it.form=form;
+    if(form==="kies"&&!it.c)it.opts=shuffle([it.a].concat(wrongs(it,r)),r);
+    if(form==="klopt"){it.truth=r()<.5;it.stmt=flText(it,it.truth?it.a:(it.c?it.c[1]:wrongs(it,r)[0]))}});
+  return its}
+function prevStation(i){for(var k=G.order.length-1;k>=0;k--)if(G.order[k]!==i)return MBY[G.c.slots[G.order[k]].m];return null}
+function renderFlits(s,p,box,i){if(!G.fl)G.fl={};var st=G.fl[s.m]||(G.fl[s.m]={rep:0,st:0});
+  box.innerHTML='<div class="flits"><button type="button" class="btn big" id="flGo">'+esc(T.flGo)+'</button></div>';
+  $("#flGo").onclick=function(){hush();playStation(s,box,i)}}
+function playStation(s,box,i){var m=MBY[s.m],lv=ageI(),st=G.fl[s.m],prev=prevStation(i),good=0,total=0,k=0,q=[],n=0,doneN=0,it=null,val="",lock=false,alive=true;
+  var sb=$("#sheetBody");sb.classList.add("flrun");sb.scrollTop=0;$("#sheet").scrollTop=0;
+  function stop(){alive=false;document.removeEventListener("keydown",key);var b=$("#sheetBody");if(b)b.classList.remove("flrun")}
+  function key(e){if(!box.isConnected){stop();return}if(lock||!it||it.form!=="typ")return;var c=e.key;if(/^\d$/.test(c))press(c);else if(c===","||c===".")press(",");else if(c==="-")press("−");else if(c==="Backspace")press("del");else if(c==="Enter")press("ok");else return;e.preventDefault()}
+  document.addEventListener("keydown",key);
+  function round(){var its=rdItems(m,lv,G.seed,k,st.rep);
+    if(k===2&&prev)its=rdItems(prev,lv,G.seed,2,st.rep+1).slice(0,2).map(function(x){x.rev=1;return x}).concat(its);
+    its.forEach(function(x){x.tries=0});q=its;n=its.length;doneN=0;total+=n;next()}
+  function press(c){if(lock)return;if(c==="del")val=val.slice(0,-1);else if(c==="ok"){if(val!=="")check(nv(val)===nv(it.a));return}else if(c==="−"){val=val.charAt(0)==="−"?val.slice(1):"−"+val}else if(c===","){if(val.indexOf(",")<0)val+=val===""||val==="−"?"0,":","}else if(val.replace(/\D/g,"").length<7)val+=c;
     var a=$("#flA");if(a)a.textContent=val||" "}
   function check(ok){lock=true;var f=$("#flF"),qe=$("#flQ");
-    if(ok){if(it.tries===0)good++;doneN++;beep(700,.07);buzz(20);if(qe)qe.classList.add("ok");setTimeout(next,lv===0?450:260)}
-    else{it.tries++;G.wrong++;if(missed.indexOf(it)<0)missed.push(it);beep(180,.2);buzz(120);if(qe)qe.classList.add("no");
+    if(ok){if(it.tries===0)good++;doneN++;beep(700,.07);buzz(20);if(qe)qe.classList.add("ok");setTimeout(next,lv===0?500:300)}
+    else{it.tries++;G.wrong++;beep(180,.2);buzz(120);if(qe)qe.classList.add("no");
       if(f)f.innerHTML='<div class="fb no">'+esc(T.flWas)+': <b>'+esc(flText(it))+'</b></div>';
-      if(it.tries<3)q.push(it);else doneN++;setTimeout(next,lv===0?2600:1700)}}
-  function next(){if(!box.isConnected){stop();return}if(!q.length)return fin();it=q.shift();val="";lock=false;FLCUR=it;
-    var tag=it.tries?T.flBack:it.rev?T.flRevTag:"",h='<div class="flits run"><div class="flbar"><b>'+doneN+'/'+total+'</b><i class="fltrack"><i style="width:'+Math.round(doneN/total*100)+'%"></i></i><span id="flT">'+mmss(Date.now()-t0)+'</span></div><div class="fltag">'+esc(tag)+'</div><div class="flq'+(it.q.length>14||(it.c&&it.q.length>4)?' sm':'')+'" id="flQ">'+esc(it.q)+'</div>';
-    if(it.c)h+='<div class="choices flch" id="flC">'+it.opts.map(function(o,k){return '<button type="button" data-k="'+k+'">'+esc(o)+'</button>'}).join("")+'</div><span id="flA" hidden></span>';
+      if(it.tries<3)q.push(it);else doneN++;setTimeout(next,lv===0?2600:1800)}}
+  function next(){if(!alive)return;if(!box.isConnected){stop();return}
+    if(!q.length){k++;if(k===1)return doe();if(k<3)return round();return fin()}
+    it=q.shift();FLCUR=it;val="";lock=false;
+    var neg=!it.c&&String(it.a).charAt(0)==="−",dec=lv===2,tag=it.tries?T.flBack:it.rev?T.flRevTag:"",txt=it.form==="klopt"?it.stmt:it.q;
+    var h='<div class="flits run"><div class="flbar"><b>'+esc(fill(T.rdN,{k:k+1}))+'</b><i class="fltrack"><i style="width:'+Math.round(doneN/n*100)+'%"></i></i></div><div class="rdlab">'+esc(T.rd[it.form==="typ"?0:it.form==="klopt"?1:2])+'</div><div class="fltag">'+esc(tag)+'</div><div class="flq'+(txt.length>14||(it.c&&txt.length>6)?' sm':'')+'" id="flQ">'+esc(txt)+'</div>';
+    if(it.form==="klopt")h+='<div class="klopt" id="flK"><button type="button" class="ja" data-v="1">✔<small>'+esc(T.flYes)+'</small></button><button type="button" class="nee" data-v="0">✖<small>'+esc(T.flNo)+'</small></button></div>';
+    else if(it.form==="kies")h+='<div class="choices flch'+(it.opts.length>2?' drie':'')+'" id="flC">'+it.opts.map(function(o,j){return '<button type="button" data-k="'+j+'">'+esc(o)+'</button>'}).join("")+'</div>';
     else{var keys=["1","2","3","4","5","6","7","8","9",dec?",":(neg?"−":""),"0","del"];if(dec&&neg)keys.unshift("−","","");
-      h+='<div class="flans" id="flA" aria-live="polite"> </div><div class="flpad" id="flPad">'+keys.map(function(k){return k===""?'<span></span>':'<button type="button" data-k="'+k+'"'+(k==="del"?' aria-label="'+esc(T.flDel)+'"':'')+'>'+(k==="del"?"⌫":k)+'</button>'}).join("")+'<button type="button" class="ok" data-k="ok">'+esc(T.flEnter)+'</button></div>'}
+      h+='<div class="flans" id="flA" aria-live="polite"> </div><div class="flpad" id="flPad">'+keys.map(function(c){return c===""?'<span></span>':'<button type="button" data-k="'+c+'"'+(c==="del"?' aria-label="'+esc(T.flDel)+'"':'')+'>'+(c==="del"?"⌫":c)+'</button>'}).join("")+'<button type="button" class="ok" data-k="ok">'+esc(T.flEnter)+'</button></div>'}
     box.innerHTML=h+'<div id="flF"></div></div>';
-    if(it.c)$$("#flC button").forEach(function(b){b.onclick=function(){if(lock)return;var ok=it.opts[+b.dataset.k]===it.a;b.classList.add(ok?"ok":"no");check(ok)}});
-    else $("#flPad").onclick=function(e){var b=e.target.closest("button");if(b)press(b.dataset.k)};
-    if(lv===0&&it.c&&VOICE&&!it.tries)say(it.a)}
-  function fin(){stop();var ms=Date.now()-t0,st=G.fl[s.m],pass=good>=need,tt=mmss(ms),per=Math.round(ms/100/total)/10,fast=per<=[7,5,6][lv];
-    var ml=missed.length?'<p class="note">'+esc(T.flMiss)+'</p><ul class="ol small flmiss">'+missed.map(function(x){return '<li>'+esc(flText(x))+'</li>'}).join("")+'</ul>':'';
-    if(pass){G.obs[s.m]=fill(T.flObs,{g:good,n:total,t:tt});save();beep(660,.15);setTimeout(function(){beep(990,.25)},150);buzz([40,30,120]);
-      box.innerHTML='<div class="flits"><div class="flres ok"><span class="big">💡</span><b>'+esc(T.flOk)+'</b><p>'+esc(fill(T.flOkT,{g:good,n:total,t:tt}))+'</p><p class="note">'+esc(fast?fill(T.flFast,{s:String(per).replace(".",",")}):T.flSlow)+'</p></div>'+ml+'<button type="button" class="btn" id="flNext">'+T.next+'</button></div>';
-      say(T.flOk);$("#flNext").onclick=accept;return}
-    st.round++;st.fails++;save();
-    box.innerHTML='<div class="flits"><div class="flres no"><span class="big">🌫️</span><b>'+esc(T.flNo)+'</b><p>'+esc(fill(T.flNoT,{g:good,n:total,k:need}))+'</p></div>'+ml+'<div class="feit"><em>'+esc(T.trucH)+'</em><p>'+esc(m.truc[lv])+'</p></div><button type="button" class="btn" id="flRe">'+esc(T.flAgain)+'</button>'+(st.fails>=2?'<button type="button" class="btn ghost dk" id="flSk">'+esc(T.flSkip)+'</button>':'')+'</div>';
-    say(T.flNo+" "+m.truc[lv]);$("#flRe").onclick=function(){hush();renderFlits(s,p,box,i)};
-    if($("#flSk"))$("#flSk").onclick=function(){hush();G.obs[s.m]=fill(T.flObsLater,{g:good,n:total});save();accept()}}
-  next()}
+    if(it.form==="klopt")$$("#flK button").forEach(function(b){b.onclick=function(){if(lock)return;var ok=(b.dataset.v==="1")===it.truth;b.classList.add(ok?"ok":"no");check(ok)}});
+    else if(it.form==="kies")$$("#flC button").forEach(function(b){b.onclick=function(){if(lock)return;var ok=nv(it.opts[+b.dataset.k])===nv(it.a)||it.opts[+b.dataset.k]===it.a;b.classList.add(ok?"ok":"no");check(ok)}});
+    else $("#flPad").onclick=function(e){var b=e.target.closest("button");if(b)press(b.dataset.k)}}
+  function doe(){FLCUR=null;it=null;box.innerHTML='<div class="flits"><div class="flres"><span class="big">🤸</span><b>'+esc(T.doeH)+'</b><p class="doe">'+esc(m.doe)+'</p></div><button type="button" class="btn" id="flDoe">'+esc(T.doeGo)+'</button></div>';
+    say(m.doe);$("#flDoe").onclick=function(){hush();round()}}
+  function fin(){stop();FLCUR=null;var pct=good/total,stars=pct>=.9?3:pct>=.7?2:1;st.st=Math.max(st.st||0,stars);st.rep=(st.rep||0)+1;
+    G.obs[s.m]="★".repeat(st.st)+"☆".repeat(3-st.st)+" · "+good+"/"+total;save();beep(660,.15);setTimeout(function(){beep(990,.25)},150);buzz([40,30,120]);
+    box.innerHTML='<div class="flits"><div class="flres ok"><div class="stars">'+"★".repeat(stars)+"☆".repeat(3-stars)+'</div><b>'+esc(T.flDone)+'</b><p>'+esc(fill(T.flScore,{g:good,n:total}))+'</p></div><button type="button" class="btn" id="flNext">'+T.next+'</button>'+(stars<3?'<button type="button" class="btn ghost dk sm" id="flRe">'+esc(T.flAgain)+'</button>':'')+'</div>';
+    say(T.flDone);$("#flNext").onclick=accept;if($("#flRe"))$("#flRe").onclick=function(){hush();playStation(s,box,i)}}
+  round()}
 
 function renderPuzzle(s,p,i){var box=$("#pz"),h="";
   if(p.kind==="flits")return renderFlits(s,p,box,i);
@@ -332,13 +342,12 @@ function renderQ(s,p,box){var h='<p class="q">'+esc(p.q)+'</p>',ph=G.photos[s.m]
 $("#file").addEventListener("change",function(){var f=this.files&&this.files[0];if(!f||!cur)return;var img=new Image(),url=URL.createObjectURL(f);img.onload=function(){var mx=800,sc=Math.min(1,mx/Math.max(img.width,img.height)),c=document.createElement("canvas");c.width=Math.round(img.width*sc);c.height=Math.round(img.height*sc);c.getContext("2d").drawImage(img,0,0,c.width,c.height);var s=G.c.slots[cur.i];G.photos[s.m]=c.toDataURL("image/jpeg",.6);URL.revokeObjectURL(url);save();renderQ(s,puzzleOf(s),$("#pz"));toast("Bewaard in het logboek")};img.src=url});
 function moreOf(s){return MW.Meer?MW.Meer.steps(MBY[s.m],ageI()):[]}
 /* na de hoofdvraag: de verdieping (shared/meer.js), daarna pas de sleutel */
-function accept(){var s=G.c.slots[cur.i];if(G.ph[cur.i]||!MW.Meer)return award();MW.Meer.run({G:G,key:s.m,steps:moreOf(s),box:$("#pz"),age:ageI(),lang:L,say:say,save:save,beep:beep,buzz:buzz,done:award})}
+function accept(){return award()}
 function award(){var i=cur.i,s=G.c.slots[i],m=MBY[s.m];if(G.ph[i])return;G.ph[i]=1;G.order.push(i);if(cur.spot){cur.spot.done=true;cur.spot.doneAt=Date.now()}G.force=null;if(G.mode!=="map"&&G.mode!=="demo")G.i=i+1;save();buzz([40,30,80]);beep(520,.15);setTimeout(function(){beep(780,.2)},130);
-  var N=NN(),n=done(),last=n>=N,cliff=last?D.CLIFFLAST:D.CLIFF[(n-1+(G.seed%5))%D.CLIFF.length];
-  sheet('<div class="eyebrow">'+esc(fill(T.clue,{n:n,t:N}))+'</div><div class="reward"><p>'+esc(T.keyGet)+'</p><div class="numkey">'+esc(s.key.s)+'</div><p class="note">'+esc(m.title)+'</p><div class="tiles">'+tilesHTML()+'</div></div>'+
-    '<div class="feit"><em>'+esc(T.tipH)+'</em><p>'+esc(feitOf(m))+'</p></div>'+
-    bubble(cliff,D.TIK,"",TIKAV)+'<button type="button" class="btn" id="bNext">'+(last?T.finH:T.next)+'</button>',true);
-  say(T.keyGet+" "+s.key.s+". "+T.tipH+": "+feitOf(m)+" "+cliff);
+  var N=NN(),n=done(),last=n>=N,st=(G.fl[s.m]||{}).st||0;
+  sheet('<div class="eyebrow">'+esc(fill(T.clue,{n:n,t:N}))+'</div><div class="reward"><div class="stars">'+"★".repeat(st)+"☆".repeat(3-st)+'</div><p>'+esc(T.keyGet)+'</p><div class="numkey">'+esc(s.key.s)+'</div><div class="tiles">'+tilesHTML()+'</div></div>'+
+    '<button type="button" class="btn" id="bNext">'+(last?"🔓 "+T.finH:T.next)+'</button>',true);
+  say(T.keyGet+" "+s.key.s+"."+(last?" "+D.CLIFFLAST:""));
   $("#bNext").onclick=function(){save();closeSheet();sel=null;cur=null;if(G.mode==="map"||G.mode==="demo"||G.mode==="in")chip();else render();if(last)toFinale()}}
 
 /* ---------- logboek, menu ---------- */
@@ -360,19 +369,19 @@ function sortSheet(){var ks=G.c.slots.map(function(sl){return sl.key}).sort(func
     else{pos=0;G.wrong++;save();b.classList.add("shake");buzz(140);beep(180,.25);$("#fb").innerHTML='<div class="fb no">'+esc(T.finBad)+'</div>';setTimeout(paint,350)}};
   $("#fHint").onclick=function(){G.hints.sort=1;save();this.disabled=true;$("#fb").innerHTML='<div class="fb hint">💡 '+esc(lv===0?T.finHint0:T.finHint)+' Volgende: '+esc(ks[pos].s)+'.</div>';say(lv===0?T.finHint0:T.finHint)}}
 function revealSheet(){G.tEnd=G.tEnd||Date.now();save();var md=modus();
-  sheet('<div class="eyebrow">'+esc(T.won)+'</div><h2>De mist trekt op</h2>'+(picTag("zon","erapic"))+'<div class="msg">'+(md==="bso"?TIKAV:NOORAV)+'<div class="bub"><em>Op het schoolplein</em>'+revealOf(md)+'</div></div><button type="button" class="btn" id="bWin">'+T.next+'</button>',true);
+  sheet('<div class="eyebrow">'+esc(T.won)+'</div><h2>Het slot is open</h2>'+(picTag("open","erapic"))+'<div class="msg">'+(md==="bso"?TIKAV:NOORAV)+'<div class="bub"><em>Bij de fietsenstalling</em>'+revealOf(md)+'</div></div><button type="button" class="btn" id="bWin">'+T.next+'</button>',true);
   say(revealOf(md));$("#bWin").onclick=win}
 
 /* ---------- gewonnen ---------- */
 var RES=null;
-function win(){var min=((G.tEnd||Date.now())-G.t0)/60000,nh=Object.keys(G.hints).length,stars=nh===0?3:nh<=2?2:1,xp=100+stars*50;
-  var a=MW.profile.award({game:ID,xp:xp,stars:stars,gps:G.mode==="map",min:min,km:G.dist/1000,title:"De Vergeetmist",code:G.code});
+function win(){var min=((G.tEnd||Date.now())-G.t0)/60000,nh=Object.keys(G.hints).length,ss=G.c.slots.map(function(s){return (G.fl[s.m]||{}).st||1}),stars=Math.max(1,Math.min(3,Math.round(ss.reduce(function(a,b){return a+b},0)/ss.length))),xp=100+stars*50;
+  var a=MW.profile.award({game:ID,xp:xp,stars:stars,gps:G.mode==="map",min:min,km:G.dist/1000,title:"De Sommensprint",code:G.code});
   Wk.stopWatch();buzz([100,50,100,50,300]);
   var eras=G.c.slots.map(function(s){return s.key}).sort(function(a,b){return a.v-b.v}),sp=[];Object.keys(G.obs).forEach(function(k){if(MBY[k])sp.push({t:MBY[k].title,v:G.obs[k]})});
   RES={t:G.c.t,code:G.code,stars:stars,min:Math.round(min),secs:Math.round(((G.tEnd||Date.now())-G.t0)/1000),team:NAME,wrong:G.wrong,hints:nh,age:ageI(),modus:modus(),N:NN(),eras:eras,spoor:sp,slots:G.c.slots.slice(),mode:G.mode,rooms:G.rooms,roomOrder:G.roomOrder,nocards:G.nocards,seed:G.seed};
   LS.set("ss_vm_last",RES);winBack()}
-function winBack(){var r=RES;sheet('<div class="eyebrow">'+T.won+' · '+esc(r.code)+'</div><div class="stars">'+"★".repeat(r.stars)+"☆".repeat(3-r.stars)+'</div><h2>'+esc(r.team||"De Mistverdrijvers")+'</h2>'+
-    '<div class="tags"><i>'+r.min+' min</i><i>'+r.N+' stations</i><i>'+(r.hints?r.hints+" hint"+(r.hints>1?"s":""):"geen hints")+'</i>'+(r.spoor.length?'<i>'+r.spoor.length+' flitsrondes</i>':'')+'</div>'+(r.stars<3?'<p class="note">'+T.missed1+'</p>':'')+
+function winBack(){var r=RES;sheet('<div class="eyebrow">'+T.won+' · '+esc(r.code)+'</div><div class="stars">'+"★".repeat(r.stars)+"☆".repeat(3-r.stars)+'</div><h2>'+esc(r.team||"De Sommensprinters")+'</h2>'+
+    '<div class="tags"><i>'+r.min+' min</i><i>'+r.N+' plekken</i>'+'</div>'+(r.stars<3?'<p class="note">'+T.missed1+'</p>':'')+
     '<button type="button" class="btn" id="vDip">'+T.dipBtn+'</button><button type="button" class="btn ghost dk" id="vLead">'+T.leadBtn+'</button><button type="button" class="btn ghost dk" id="vShare">'+T.shareBtn+'</button><button type="button" class="btn ghost dk" id="vHome">'+T.home+'</button>',true);
   $("#vDip").onclick=dipShow;$("#vLead").onclick=function(){leadSheet(winBack)};
   var txt=fill(T.shareTxt,{c:r.code,s:"★".repeat(r.stars),m:r.min})+location.origin+location.pathname+"#z="+r.code;
@@ -383,7 +392,7 @@ function a4Sheet(title,note,fname,drawFn,back){sheet('<h2>'+esc(title)+'</h2><p 
   var cv=$("#a4");drawFn(cv);$("#a4Dl").onclick=function(){var a=document.createElement("a");a.href=cv.toDataURL("image/png");a.download=fname+".png";document.body.appendChild(a);a.click();a.remove()};
   $("#a4Pr").onclick=function(){document.body.classList.add("printA4");window.print();setTimeout(function(){document.body.classList.remove("printA4")},500)};
   $("#shX").onclick=back||closeSheet;if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){if(cv.isConnected)drawFn(cv)})}
-function dipShow(){a4Sheet(T.dipH,T.dipNote,"diploma-mistverdrijver",function(cv){drawDiploma(cv,RES)},winBack)}
+function dipShow(){a4Sheet(T.dipH,T.dipNote,"diploma-sommensprinter",function(cv){drawDiploma(cv,RES)},winBack)}
 function rr(g,x,y,w,h,r){g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath()}
 function fitText(g,t,x,y,maxW,size,font){g.font=font.replace("{s}",size+"px");while(g.measureText(t).width>maxW&&size>16){size-=2;g.font=font.replace("{s}",size+"px")}g.fillText(t,x,y)}
 function drawDiploma(cv,r){var g=cv.getContext("2d"),W2=cv.width,H=cv.height;
@@ -391,20 +400,20 @@ function drawDiploma(cv,r){var g=cv.getContext("2d"),W2=cv.width,H=cv.height;
   g.save();g.translate(W2/2,300);g.strokeStyle="#f5b800";g.lineWidth=10;g.lineCap="round";for(var q=0;q<12;q++){var an=q/12*Math.PI*2;g.beginPath();g.moveTo(Math.cos(an)*118,Math.sin(an)*118);g.lineTo(Math.cos(an)*148,Math.sin(an)*148);g.stroke()}
   g.beginPath();g.arc(0,0,100,0,Math.PI*2);g.fillStyle="#ffe27a";g.fill();g.lineWidth=10;g.strokeStyle="#13304f";g.stroke();g.fillStyle="#13304f";g.font="700 96px Fredoka,sans-serif";g.textAlign="center";g.textBaseline="middle";g.fillText("⚡",0,6);g.textBaseline="alphabetic";g.restore();
   g.textAlign="center";g.fillStyle="#7a5cd6";g.font="600 30px Fredoka,sans-serif";g.fillText("MINIMYSTERY EDUCATIE",W2/2,160);
-  g.fillStyle="#2b1f4a";g.font="700 84px Fredoka,sans-serif";g.fillText("Diploma Mistverdrijver",W2/2,520);
+  g.fillStyle="#2b1f4a";g.font="700 84px Fredoka,sans-serif";g.fillText("Diploma Sommensprinter",W2/2,520);
   g.fillStyle="#39436a";g.font="500 34px Nunito,sans-serif";g.fillText("Dit diploma is voor",W2/2,600);
-  g.fillStyle="#2b1f4a";fitText(g,r.team||"de mistverdrijvers",W2/2,690,W2-260,74,"700 {s} Fredoka,sans-serif");
-  g.fillStyle="#39436a";fitText(g,"die de Vergeetmist verdreven: begrepen, geoefend en herhaald tot het vanzelf ging. De rij van licht:",W2/2,760,W2-220,30,"500 {s} Nunito,sans-serif");
+  g.fillStyle="#2b1f4a";fitText(g,r.team||"de sommensprinters",W2/2,690,W2-260,74,"700 {s} Fredoka,sans-serif");
+  g.fillStyle="#39436a";fitText(g,"die het fietsslot van meneer Tik open kregen. De code:",W2/2,760,W2-220,30,"500 {s} Nunito,sans-serif");
   /* de getalsleutels op volgorde */
   var n=r.eras.length,cols=Math.min(n,5),rows=Math.ceil(n/cols),bw=Math.min(190,(W2-160)/cols),y0=820;
   r.eras.forEach(function(k,j){var cx=W2/2-(cols*bw)/2+(j%cols)*bw+bw/2,cy=y0+Math.floor(j/cols)*120;g.fillStyle="#f5b800";rr(g,cx-bw/2+10,cy,bw-20,80,14);g.fill();g.strokeStyle="#2b1f4a";g.lineWidth=4;g.stroke();g.fillStyle="#2b1f4a";g.font="700 40px Fredoka,sans-serif";g.fillText(k.s,cx,cy+54)});
   var y0b=y0+rows*120;
   var yy=y0b+40;
-  g.fillStyle="#39436a";g.font="500 30px Nunito,sans-serif";g.fillText("mist verdreven in "+r.min+" minuten · "+r.N+" flitsstations · "+(r.hints?r.hints+" hint"+(r.hints>1?"s":""):"zonder hints")+(r.spoor.length?" · "+r.spoor.length+" flitsrondes":""),W2/2,yy);
+  g.fillStyle="#39436a";g.font="500 30px Nunito,sans-serif";g.fillText("klaar in "+r.min+" minuten · "+r.N+" plekken geoefend",W2/2,yy);
   g.fillText(T.lvl[r.age]+" · "+(r.modus==="bso"?"BSO":"school")+" · zaak "+r.code,W2/2,yy+46);
   g.fillStyle="#f5b800";g.font="700 70px Fredoka,sans-serif";g.fillText("★".repeat(r.stars)+"☆".repeat(3-r.stars),W2/2,yy+140);
   var d=new Date();g.fillStyle="#39436a";g.font="500 30px Nunito,sans-serif";g.fillText(d.toLocaleDateString("nl-NL",{day:"numeric",month:"long",year:"numeric"}),W2/2,yy+200);
-  g.fillStyle="#e0584f";g.font="400 50px 'Permanent Marker',cursive";g.save();g.translate(W2/2,yy+310);g.rotate(-.03);g.fillText("Juf Noor en meneer Tik (met zijn fietsslot weer open)",0,0);g.restore();
+  g.fillStyle="#e0584f";g.font="400 50px 'Permanent Marker',cursive";g.save();g.translate(W2/2,yy+310);g.rotate(-.03);g.fillText("Juf Noor en meneer Tik",0,0);g.restore();
   if(ok("diploma-stempel")){g.save();g.translate(W2-235,295);g.rotate(.14);g.globalAlpha=.95;g.drawImage(IM["diploma-stempel"],-110,-110,220,220);g.restore()}
   g.fillStyle="#9aa3c0";g.font="500 24px Nunito,sans-serif";g.fillText("minimystery.nl/educatie",W2/2,H-120)}
 
@@ -413,17 +422,17 @@ function answerOf(p){if(p.kind==="choice")return typeof p.c[p.a]==="object"?p.c[
 function leadSheet(back){if(typeof back!=="function")back=null;var src=G||LS.get("ss_vm_last",null);if(!src||!(src.c||src.slots)){toast("Start eerst een zaak; het blad hoort bij een zaakcode.");return}
   var slots=src.c?src.c.slots:src.slots,age=Math.max(0,Math.min(2,+(src.age||0))),md=src.modus||"school",code=src.code,gb=src.mode==="gebouw",ro=src.roomOrder||[],seed=src.seed,LES=D.LES[age];
   var ct=G?clockTime():null;
-  var rows=slots.map(function(s,i){var m=MBY[s.m],p=m.lvl[age],act=m.act[gb?"in":"out"],its=flItems(m,age,seed,0,(D.FLN||[8,10,12])[age]);
-    return '<li><b>'+esc(m.title)+'</b> <small>('+esc(m.dom)+(gb&&ro[i]!=null?" · "+esc(D.ROOMS[ro[i]])+(src.nocards?"":" · code "+roomCode(seed,ro[i])):G&&G.st&&G.st[i]&&G.mode==="map"?" · "+esc(G.st[i].name):"")+')</small><br><i>'+esc(T.trucH)+':</i> '+esc(m.truc[age])+'<br><i>'+esc(T.actH)+':</i> '+esc(act)+'<br><i>'+esc(T.flLead)+':</i> '+its.map(function(x){return esc(flText(x))}).join(" · ")+' <small>('+esc(T.flLeadRev)+')</small><br>Flitslamp <b>'+esc(s.key.s)+'</b><br><small>Wist je dat: '+esc(m.tip[age])+'</small>'+(MW.Meer?MW.Meer.lead(MW.Meer.steps(m,age),L):'')+'</li>'}).join("");
+  var rows=slots.map(function(s,i){var m=MBY[s.m],act=m.act[gb?"in":"out"],its=[0,1,2].map(function(k){return rdItems(m,age,seed,k)}).reduce(function(a,b){return a.concat(b)},[]);
+    return '<li><b>'+esc(m.title)+'</b> <small>('+esc(m.dom)+(gb&&ro[i]!=null?" · "+esc(D.ROOMS[ro[i]])+(src.nocards?"":" · code "+roomCode(seed,ro[i])):G&&G.st&&G.st[i]&&G.mode==="map"?" · "+esc(G.st[i].name):"")+')</small> · getal <b>'+esc(s.key.s)+'</b><br><i>Op het scherm:</i> '+esc(m.kort[age])+'<br><i>'+esc(T.leadDoe)+':</i> '+esc(m.doe)+'<br><i>'+esc(T.flLead)+':</i> '+its.map(function(x){return esc(flText(x))}).join(" · ")+' <small>('+esc(T.flLeadRev)+')</small><br><i>Uitleg voor jou:</i> '+esc(m.truc[age])+'<br><i>'+esc(T.actH)+':</i> '+esc(act)+'<br><small>Wist je dat: '+esc(m.tip[age])+'</small>'+(MW.Meer?MW.Meer.lead(MW.Meer.steps(m,age),L).replace("Verdieping:",T.leadTalk+":"):'')+'</li>'}).join("");
   var tl=slots.map(function(s){return s.key}).sort(function(a,b){return a.v-b.v}).map(function(k){return '<span class="chip">'+esc(k.s)+'</span>'}).join(" ");
-  var cards="";if(gb&&!src.nocards){var seen={};ro.forEach(function(ri){if(seen[ri])return;seen[ri]=1;cards+='<div class="pcard"><em>'+esc(T.gbCardT)+' · De Vergeetmist</em><b>'+esc(D.ROOMS[ri])+'</b><span class="pc">'+roomCode(seed,ri)+'</span><small>Typ deze code in het spel als je team hier is.</small></div>'})}
+  var cards="";if(gb&&!src.nocards){var seen={};ro.forEach(function(ri){if(seen[ri])return;seen[ri]=1;cards+='<div class="pcard"><em>'+esc(T.gbCardT)+' · De Sommensprint</em><b>'+esc(D.ROOMS[ri])+'</b><span class="pc">'+roomCode(seed,ri)+'</span><small>Typ deze code in het spel als je team hier is.</small></div>'})}
   var teams="";for(var t=1;t<=8;t++)teams+='<tr><td>'+T.leadTeam+' '+t+'</td><td></td><td></td></tr>';
-  sheet('<div class="lead"><div class="eyebrow">'+esc(T.leadH)+' · '+esc(T.leadCode)+' '+esc(code)+'</div><h2>De Vergeetmist</h2><p class="note">'+esc(T.leadT)+'</p><p class="note">'+esc(D.LEADNOTE)+'</p>'+
-    '<div class="chips"><span class="chip">'+esc(T.lvl[age])+'</span><span class="chip">'+(md==="bso"?"BSO-modus":"Schoolmodus")+'</span><span class="chip">'+slots.length+' stations</span><span class="chip">'+(gb?"in het gebouw":"buiten")+'</span></div>'+
+  sheet('<div class="lead"><div class="eyebrow">'+esc(T.leadH)+' · '+esc(T.leadCode)+' '+esc(code)+'</div><h2>De Sommensprint</h2><p class="note">'+esc(T.leadT)+'</p><p class="note">'+esc(D.LEADNOTE)+'</p>'+
+    '<div class="chips"><span class="chip">'+esc(T.lvl[age])+'</span><span class="chip">'+(md==="bso"?"BSO-modus":"Schoolmodus")+'</span><span class="chip">'+slots.length+' plekken</span><span class="chip">'+(gb?"in het gebouw":"buiten")+'</span></div>'+
     '<h3>Lesbrief · vooraf (10 min)</h3><ol class="ol small">'+LES.intro.map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ol><p class="small"><b>Leerdoelen:</b> '+esc(LES.doelen)+'</p>'+
-    '<h3>De rij van licht (de oplossing van de finale): '+esc(tafLab(src.c?src.c.t:src.t,age))+'</h3><div class="chips tl">'+tl+'</div>'+
+    '<h3>De code van het slot (van klein naar groot; '+esc(tafLab(src.c?src.c.t:src.t,age))+')</h3><div class="chips tl">'+tl+'</div>'+
     '<h3>Het verhaal (voorlezen)</h3><p class="small">'+fill(age===0?D.OPEN0[md]:D.OPEN[md],{N:T.nw[slots.length]||slots.length})+'</p>'+
-    '<h3>De flitsstations, in de volgorde van het spel</h3><ol class="ol small">'+rows+'</ol>'+
+    '<h3>De plekken, in de volgorde van het spel</h3><ol class="ol small">'+rows+'</ol>'+
     '<h3>Lesbrief · nabespreking (20 min)</h3><ol class="ol small">'+LES.na.map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ol>'+
     '<h3>'+esc(T.leadTeams)+'</h3><table class="teams"><thead><tr><th>'+T.leadTeam+'</th><th>Teamnaam</th><th>'+T.leadDone+'</th></tr></thead><tbody>'+teams+'</tbody></table>'+
     (cards?'<h3 class="pbreak">'+esc(T.gbCards)+'</h3><p class="small noprint">Knip ze uit en hang ze op de plekken. De code hoort bij deze zaakcode.</p><div class="pcards">'+cards+'</div>':'')+'</div>'+

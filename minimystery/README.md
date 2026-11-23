@@ -76,9 +76,12 @@ Alle speurtochten op de wandelmotor (feestjes én educatie) hebben op het starts
 - Engels (sinds 23 nov 2026): ook onderaan `data-en.js` van natuur, reken, taal en tijd. The Letter Thief gaat over de Engelse taal, dus daar zijn het eigen Engelse taalvragen, geen vertaling. Staat er geen `more` in een datafile, dan speelt het station zoals voorheen.
 - In een `game.js`: `accept()` start de verdieping (`MW.Meer.run`), `award()` geeft daarna de sleutel. De shells laden `shared/meer.js` vóór de data.
 
-## De Vergeetmist (automatiseren, sinds 23 nov 2026, nog niet live)
-- `/de-vergeetmist.html` + `games/vlot/` (id `vm`, zaakcode VM…, alleen NL). Zelfde motor en standen als de andere vak-wandelingen.
-- Elk station: de truc (`truc[niveau]`) → bewegen (`act`) → flitsronde (`kind:"flits"`; `fl[niveau](r)` maakt één som of woordkeuze uit de seed) → verdieping → flitslamp.
-- Flitsronde: 8/10/12 flitsen (`FLN`) plus drie opfrissers van het vorige station; 80% in één keer goed is gehaald; een foute flits komt terug (maximaal drie keer); na twee mislukte rondes mag een team verder en staat er 'nog oefenen' in het flitsboekje.
-- Finale: de flitslampen zijn veelvouden van één tafel (`TAFELS` per niveau), op volgorde tikken.
+## De Sommensprint (automatiseren, sinds 23 nov 2026, op test, nog niet live)
+- Eerste versie heette De Vergeetmist. Herzien na Kellies test: veel minder leestekst, geen mistverhaal, nadruk op oefenen.
+- `/de-sommensprint.html` + `games/vlot/` (id `vm`, zaakcode VM…, alleen NL). Zelfde motor en standen als de andere vak-wandelingen.
+- Verhaal in twee zinnen: de fiets van meneer Tik zit op slot; elke plek geeft één getal van de code.
+- Elke plek: één korte regel (`kort[niveau]`) → ronde 1 typen → even bewegen (`doe`) → ronde 2 goed of fout → ronde 3 kiezen → sterren → getal. `fl[niveau](r)` maakt één som of woordkeuze uit de seed; `rdItems` geeft de vorm per ronde.
+- Per ronde 5/6/8 sommen (`FLN`); in ronde 3 komen twee sommen van de vorige plek bij. Een foute som komt terug (maximaal drie keer). Sterren: 90% in één keer goed is drie, 70% twee, anders één. Niemand loopt vast.
+- Geen verdiepingsvragen in het spel. `truc`, `act`, `tip` en `more` staan alleen op het begeleidersblad (uitleg, beweegidee, weetje, napraatvragen).
+- Finale: de getallen (veelvouden van één tafel, `TAFELS` per niveau) van klein naar groot.
 - Klokkijken zit er bewust niet in (krijgt een eigen wandeling). Artwork: `games/vlot/ARTWORK.md`; de hubtegel `assets/cover-vm.webp` is een tijdelijke.

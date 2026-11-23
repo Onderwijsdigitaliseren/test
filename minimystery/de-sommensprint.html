@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>De Sommensprint – automatiseren: sommen, tafels en spelling vlot leren | MiniMystery Educatie</title>
+<link rel="icon" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="description" content="Oefenspeurtocht voor groep 3–8 en BSO over automatiseren: splitsen, sommen, tafels, deeltafels en spelling. Weinig lezen, veel oefenen: op elke plek drie korte rondes. Drie niveaus, zaakcode, begeleidersblad met alle sommen, diploma.">
+<link rel="canonical" href="https://www.minimystery.nl/de-sommensprint.html">
+<meta property="og:site_name" content="MiniMystery">
+<meta property="og:title" content="MiniMystery Educatie – De Sommensprint">
+<meta property="og:description" content="De fiets van meneer Tik zit op slot. Oefen sommen, tafels en woorden en win de code. Voor groep 3–8 en BSO.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.minimystery.nl/de-sommensprint.html">
+<meta property="og:locale" content="nl_NL">
+<meta property="og:image" content="https://www.minimystery.nl/assets/og-image.jpg">
+<meta name="theme-color" content="#dde6f3">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Permanent+Marker&family=Nunito:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="shared/platform.css?v=2">
+<link rel="stylesheet" href="shared/kidsmap.css?v=8">
+<link rel="stylesheet" href="games/vlot/game.css?v=2">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"De Sommensprint","url":"https://www.minimystery.nl/de-sommensprint.html","description":"Oefenspeurtocht over automatiseren voor basisschool (groep 3–8) en BSO: sommen, tafels en spelling in drie korte rondes per plek, in de eigen buurt of in het schoolgebouw. Zaakcode, begeleidersblad, diploma.","inLanguage":"nl","gamePlatform":"Webbrowser","genre":["Kinderspel","Speurtocht","Educatie","Rekenen","Spelling"],"audience":{"@type":"EducationalAudience","educationalRole":"student"}}</script>
+</head>
+<body>
+<div id="app">
+  <section class="screen" id="home">
+    <div class="wrap">
+      <div class="row0"><div class="pills"><a class="pill" id="hub" href="educatie/">◂ Educatie</a></div></div>
+      <div class="hero" aria-hidden="true">
+        <svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="92" fill="#fff" stroke="#13304f" stroke-width="6"/><circle cx="100" cy="100" r="80" fill="#eef3fb" stroke="#f5b800" stroke-width="4" stroke-dasharray="6 10"/>
+        <path d="M70 92 V72 a30 30 0 0 1 60 0 V92" fill="none" stroke="#13304f" stroke-width="12" stroke-linecap="round"/>
+        <rect x="52" y="90" width="96" height="70" rx="14" fill="#ffd23f" stroke="#13304f" stroke-width="6"/>
+        <g font-family="Fredoka,sans-serif" font-weight="700" font-size="26" fill="#13304f" text-anchor="middle"><rect x="62" y="108" width="22" height="34" rx="5" fill="#fff" stroke="#13304f" stroke-width="3"/><rect x="89" y="108" width="22" height="34" rx="5" fill="#fff" stroke="#13304f" stroke-width="3"/><rect x="116" y="108" width="22" height="34" rx="5" fill="#fff" stroke="#13304f" stroke-width="3"/><text x="73" y="134">7</text><text x="100" y="134">×</text><text x="127" y="134">8</text></g></svg>
+      </div>
+      <div class="masthead">
+        <span class="eyebrow" style="color:#5a86c4">MiniMystery Educatie · automatiseren · groep 3–8</span>
+        <h1 id="ttl">De Sommensprint</h1><span class="tape">Weinig lezen, veel oefenen</span>
+      </div>
+      <p class="lead">De fiets van meneer Tik zit op slot en hij is de code kwijt. Op elke plek oefenen jullie drie korte rondes: typen, goed of fout, en kiezen. Elke plek geeft één getal van de code.</p>
+      <button class="btn ghost sm" id="bHow">Hoe werkt het?</button>
+      <div class="pline" hidden style="display:none"><b id="pRank">–</b><span><b id="pStreak">0</b> Dagen op rij</span><span><b id="pSolved">0</b> Opgelost</span></div>
+      <div class="namebox"><label for="name">Teamnaam (mag leeg, komt op het diploma)</label><input id="name" maxlength="24" autocomplete="off" placeholder="bijv. De Sommensprinters"></div>
+      <div class="seglbl">Voor wie</div>
+      <div class="seg two" id="route">
+        <button type="button" data-r="school" aria-pressed="true">School<small>licht educatief</small></button>
+        <button type="button" data-r="bso" aria-pressed="false">BSO<small>speels, meer bewegen</small></button>
+      </div>
+      <div class="seg" id="lvl">
+        <button type="button" data-l="0" aria-pressed="false">Groep 3–4<small>splitsen, tot 20</small></button>
+        <button type="button" data-l="1" aria-pressed="true">Groep 5–6<small>tafels, tot 100</small></button>
+        <button type="button" data-l="2" aria-pressed="false">Groep 7–8<small>komma, %, d/t</small></button>
+      </div>
+      <div class="seg" id="dur" aria-label="Lengte">
+        <button type="button" data-n="kort" aria-pressed="false">Kort<small>6 plekken · ±30 min</small></button>
+        <button type="button" data-n="normaal" aria-pressed="true">Normaal<small>8 plekken · ±40 min</small></button>
+        <button type="button" data-n="lang" aria-pressed="false">Lang<small>10 plekken · ±50 min</small></button>
+      </div>
+      <div class="seg ways" id="len">
+        <button type="button" data-m="map" aria-pressed="true">🚶 Buiten<small>met kaart (gps)</small></button>
+        <button type="button" data-m="street" aria-pressed="false">🚶 Buiten<small>zonder kaart</small></button>
+        <button type="button" data-m="gebouw" aria-pressed="false">🏫 In het gebouw<small>met plekkaartjes</small></button>
+        <button type="button" data-m="in" aria-pressed="false">👣 Binnen<small>lopen op de plaats</small></button>
+        <button type="button" data-m="bank" aria-pressed="false">🛋️ Op de bank<small>zonder lopen</small></button>
+      </div>
+      <button class="btn ghost sm" id="bVoice" aria-pressed="true">🔊 Voorlezen</button>
+      <button class="btn" id="bResume" hidden>Verder met de zaak</button>
+      <button class="btn" id="bGps">Start de zaak van vandaag</button>
+      <button class="btn ghost" id="bRandom">Extra zaak</button>
+      <button class="btn ghost" id="bCode">Zaakcode invullen</button>
+      <button class="btn ghost" id="bPro" hidden></button>
+      <p class="note" id="status"></p>
+      <div id="howT" hidden><ol class="how"><li><b>Voor de begeleider:</b> kies de groep en de lengte (6, 8 of 10 plekken) en start de zaak. In de briefing staat de <b>zaakcode</b>: elk team dat die invult, krijgt dezelfde plekken en dezelfde sommen.</li><li><b>Weinig lezen:</b> op elke plek staat één korte regel met een voorbeeld. Daarna drie rondes: <b>typ het antwoord</b>, <b>goed of fout?</b> en <b>kies het goede antwoord</b>. Tussendoor even bewegen. Een foute som komt terug tot hij goed is.</li><li><b>Dertien onderwerpen:</b> samen tien, dubbel en de helft, over de tien, eraf, sprongen, makkelijke en lastige tafels, deeltafels, tientallen en nullen, slim rekenen, woorden (spelling), buren van een getal en alles door elkaar. Klokkijken krijgt een eigen wandeling.</li><li><b>Drie niveaus:</b> groep 3–4 (tot 10 en 20, eerste tafels, korte woorden), groep 5–6 (tot 100, alle tafels en deeltafels) en groep 7–8 (tot 1000, kommagetallen, procenten, werkwoordspelling).</li><li><b>Slot open:</b> elke plek geeft sterren en één getal. Alle getallen van klein naar groot en het slot gaat open. Diploma als A4.</li><li><b>Begeleidersblad:</b> alle sommen met antwoord, per onderwerp een uitleg voor jou, een beweegidee en napraatvragen voor in de klas.</li></ol><p class="note">Tip: zet voorlezen aan voor groep 3–4 en laat de telefoon na elke som doorgeven. Buiten met of zonder kaart, in het gebouw, binnen op de plaats of op de bank.</p></div>
+      <button class="btn ghost sm" id="bDemo">Proefronde in de binnenstad van Eindhoven</button>
+      <button class="btn ghost" id="bArch">Opgeloste zaken</button>
+      <button class="btn ghost sm" id="bWipe">Wissen</button>
+    </div>
+  </section>
+
+  <section class="screen" id="brief" hidden>
+    <div class="wrap">
+      <div class="paper">
+        <div class="eyebrow" id="bfNo"></div>
+        <div id="bfTip"></div>
+        <h2>De fiets zit op slot!</h2>
+        <div id="bfOpen"></div>
+      </div>
+      <button class="btn" id="bGo">Start ▸</button>
+      <button class="btn ghost" id="bLead">🖨 Begeleidersblad (antwoorden)</button>
+      <button class="btn ghost" id="bBack">Terug</button>
+    </div>
+  </section>
+
+  <section class="screen" id="cards" hidden>
+    <div id="hud">
+      <div><b id="hT">0:00</b><span>Tijd</span></div>
+      <div><b id="hS">0</b><span>Plekken</span></div>
+      <div><div class="tiles" id="hM"></div><span>Getallen</span></div>
+      <button type="button" id="zM2" aria-label="Menu">☰</button>
+    </div>
+    <div id="card"></div>
+    <div id="bar">
+      <button type="button" id="bNote">Scorekaart</button>
+      <button type="button" id="bAcc2" class="red">Het slot</button>
+    </div>
+  </section>
+
+  <section class="screen" id="play" hidden>
+    <canvas id="map"></canvas>
+    <div id="mhud">
+      <div><b id="mT">0:00</b><span>Tijd</span></div>
+      <div><b id="mS">0</b><span>Plekken</span></div>
+      <div><div class="tiles" id="mM"></div><span>Getallen</span></div>
+      <button type="button" id="zM" aria-label="Menu">☰</button>
+    </div>
+    <div id="zoom">
+      <button type="button" id="zIn" aria-label="Inzoomen">+</button>
+      <button type="button" id="zOut" aria-label="Uitzoomen">−</button>
+      <button type="button" id="zMe" aria-label="Centreer op mij">◎</button>
+    </div>
+    <div id="low">
+      <div id="radar">Op weg naar de eerste plek</div>
+      <div id="chip" hidden>
+        <div class="row"><b id="cName"></b><span id="cDist"></span></div>
+        <span id="cHint" class="note"></span>
+        <button class="btn" id="cAct"></button>
+      </div>
+      <div id="mbar">
+        <button type="button" id="mNote">Scorekaart</button>
+        <button type="button" id="mAcc" class="red">Het slot</button>
+      </div>
+    </div>
+  </section>
+
+  <input type="file" id="file" accept="image/*" capture="environment" aria-label="Maak de foto">
+  <div class="sheet" id="sheet" hidden><div class="paper" id="sheetBody"></div></div>
+  <div id="load" hidden role="status"><div class="spin"></div><b id="loadT"></b><span>Dit duurt meestal 5 tot 30 seconden. Blijf op deze pagina.</span></div>
+  <div id="toast" hidden></div>
+</div>
+<script src="shared/platform.js?v=mm20"></script>
+<script src="shared/catalog.js?v=mm17"></script>
+<script src="shared/tiles.js?v=1"></script>
+<script src="shared/move.js?v=1"></script>
+<script src="shared/walk.js?v=6"></script>
+<script src="shared/kidsmap.js?v=15"></script>
+<script src="shared/steps.js?v=1"></script>
+<script src="shared/bonus.js?v=1"></script>
+<script src="shared/voice.js?v=1"></script>
+<script src="shared/meer.js?v=1"></script>
+<script src="games/vlot/data-nl.js?v=2"></script>
+<script src="games/vlot/game.js?v=2"></script>
+<script src="shared/start.js?v=9" data-game="vm"></script>
+<script id="mm-demo">if(/[?&]oefen\b/.test(location.search)){var b=document.getElementById("bDemo");if(b)setTimeout(function(){b.click()},50)}</script>
+</body>
+</html>

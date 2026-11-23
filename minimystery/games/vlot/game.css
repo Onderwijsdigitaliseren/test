@@ -244,33 +244,38 @@ h1,h2,h3{font-family:var(--f-type);font-weight:700}
 /* stationplaatje in de polaroid (valt terug op de tekening) */
 .pol .ph{position:relative;overflow:hidden}.pol .ph .phimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:3px}
 
-/* ---------- De Vergeetmist: de truc en de flitsronde ---------- */
-.feit.truc{background:#eef4ff;border:2px solid #5a86c4;border-style:solid}
-.feit.truc em{color:#2f558f}
+/* ---------- De Sommensprint: korte regel, drie rondes ---------- */
+.kort{font:700 24px/1.3 var(--f-type);color:var(--ink);background:#eef4ff;border:2px solid #5a86c4;border-radius:18px;padding:16px 14px;text-align:center;margin:10px 0 14px}
+.btn.big{font-size:26px;padding:22px 10px}
 .flits{display:flex;flex-direction:column;gap:12px}
-.flbar{display:flex;align-items:center;gap:10px;font:700 15px var(--f-type);color:var(--ink)}
-.flbar span{min-width:44px;text-align:right;font-variant-numeric:tabular-nums}
+.flbar{display:flex;align-items:center;gap:10px;font:700 14px var(--f-type);color:var(--ink);white-space:nowrap}
 .fltrack{flex:1;height:12px;border-radius:8px;background:#e3e8f2;overflow:hidden;display:block}
 .fltrack i{display:block;height:100%;background:var(--lamp);border-radius:8px;transition:width .25s}
-.fltag{min-height:18px;text-align:center;font:600 13px var(--f-type);color:#7a5c00;letter-spacing:.04em}
-.flq{font:700 56px/1.1 var(--f-type);text-align:center;color:var(--ink);padding:14px 6px;border-radius:20px;background:#fff;border:3px solid var(--ink);transition:background .15s}
-.flq.sm{font-size:30px;line-height:1.25;padding:18px 10px}
+.rdlab{text-align:center;font:700 17px var(--f-type);color:#2f558f}
+.fltag{min-height:18px;text-align:center;font:600 13px var(--f-type);color:#7a5c00}
+.flq{font:700 54px/1.1 var(--f-type);text-align:center;color:var(--ink);padding:16px 6px;border-radius:20px;background:#fff;border:3px solid var(--ink);transition:background .15s}
+.flq.sm{font-size:32px;line-height:1.25;padding:20px 10px}
 .flq.ok{background:#d8f5df;border-color:#1f6b3a}
 .flq.no{background:#fde8e6;border-color:#9a2f27}
-.flans{font:700 40px/1 var(--f-type);text-align:center;color:var(--ink);min-height:58px;padding:9px;border-radius:14px;background:#fff8dc;border:2px dashed #d9a400;white-space:pre;letter-spacing:.04em}
+.flans{font:700 40px/1 var(--f-type);text-align:center;color:var(--ink);min-height:58px;padding:9px;border-radius:14px;background:#fff8dc;border:2px dashed #d9a400;white-space:pre}
 .flpad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .flpad button{font:700 26px var(--f-type);padding:13px 0;border-radius:14px;border:2px solid var(--ink);background:#fff;color:var(--ink);box-shadow:0 3px 0 var(--ink);touch-action:manipulation}
 .flpad button:active{transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
 .flpad button.ok{grid-column:1/-1;background:var(--lamp)}
 .choices.flch{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.choices.flch button{text-align:center}
-.flch button{font-size:24px;padding:20px 8px}
-.flres{text-align:center;border-radius:18px;padding:16px;background:#fff8dc;border:2px solid #d9a400;color:var(--ink)}
-.flres.no{background:#eef1f6;border-color:#9aa8bd}
-.flres .big{display:block;font-size:52px;line-height:1.1}
-.flres b{display:block;font:700 22px var(--f-type);margin:4px 0}
-.flres p{margin:4px 0;font-size:16px}
-.flmiss{columns:2;margin-top:-4px}
+.choices.flch.drie{grid-template-columns:1fr 1fr 1fr}
+.choices.flch button{text-align:center;font-size:28px;padding:24px 4px}
+.klopt{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.klopt button{font:700 44px/1 var(--f-type);padding:18px 0 12px;border-radius:18px;border:3px solid var(--ink);color:#fff;box-shadow:0 4px 0 var(--ink);touch-action:manipulation}
+.klopt button small{display:block;font-size:16px;margin-top:6px}
+.klopt .ja{background:#2f9e56}.klopt .nee{background:#d9534a}
+.klopt button.ok{outline:5px solid #ffd23f}.klopt button.no{opacity:.45}
+.flres{text-align:center;border-radius:18px;padding:18px;background:#fff8dc;border:2px solid #d9a400;color:var(--ink)}
+.flres .big{display:block;font-size:56px;line-height:1.1}
+.flres b{display:block;font:700 24px var(--f-type);margin:4px 0}
+.flres p{margin:4px 0;font-size:17px}
+.flres p.doe{font:700 24px/1.3 var(--f-type)}
+.flres .stars,.reward .stars{font-size:46px;color:#f5b800;letter-spacing:4px}
 .meerlead{margin:2px 0 0 18px}
-@media (max-height:680px){.flq{font-size:44px;padding:8px 6px}.flpad button{padding:9px 0;font-size:22px}.flans{min-height:48px;font-size:32px}}
 #sheetBody.flrun>*:not(#pz):not(#shX){display:none}
+@media (max-height:680px){.flq{font-size:42px;padding:8px 6px}.flpad button{padding:9px 0;font-size:22px}.flans{min-height:48px;font-size:32px}}
