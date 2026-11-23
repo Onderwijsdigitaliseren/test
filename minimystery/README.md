@@ -76,7 +76,7 @@ Alle speurtochten op de wandelmotor (feestjes én educatie) hebben op het starts
 - Het begeleidersblad toont alle stappen met de volledige uitleg, om na te praten.
 - Staat in: natuur, reken, taal, tijd (NL en EN) en engels (NL). De verdwenen schoolklok is ongemoeid gelaten. The Letter Thief heeft eigen Engelse taalvragen, geen vertaling.
 
-## De Sommensprint (automatiseren, sinds 23 nov 2026, op test, nog niet live)
+## De Sommensprint (automatiseren, live sinds 23 nov 2026)
 - Eerste versie heette De Vergeetmist. Herzien na Kellies test: veel minder leestekst, geen mistverhaal, nadruk op oefenen.
 - `/de-sommensprint.html` + `games/vlot/` (id `vm`, zaakcode VM…, alleen NL). Zelfde motor en standen als de andere vak-wandelingen.
 - Verhaal in twee zinnen: de fiets van meneer Tik zit op slot; elke plek geeft één getal van de code.
