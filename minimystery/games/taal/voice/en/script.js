@@ -1,4 +1,4 @@
-/* Alle vaste zinnen die dit spel kan uitspreken (947). Gemaakt door _tools/stemscript.js uit data-en.js; k = sleutel uit shared/voice.js. Niet met de hand bewerken: draai het gereedschap opnieuw. */
+/* Alle vaste zinnen die dit spel kan uitspreken (949). Gemaakt door _tools/stemscript.js uit data-en.js; k = sleutel uit shared/voice.js. Niet met de hand bewerken: draai het gereedschap opnieuw. */
 window.MMV_SCRIPT=window.MMV_SCRIPT||{};window.MMV_SCRIPT["taal_en"]=[
 {"k":"46fd7dd9","wie":"verteller","waar":"T","t":"Start today's case"},
 {"k":"e8599cc7","wie":"verteller","waar":"T","t":"Extra case"},
@@ -946,5 +946,7 @@ window.MMV_SCRIPT=window.MMV_SCRIPT||{};window.MMV_SCRIPT["taal_en"]=[
 {"k":"1ba947b5","wie":"verteller","waar":"S 14","t":"Lots of exclamation marks"},
 {"k":"2826637e","wie":"verteller","waar":"S 14","t":"A letter that is as long as possible"},
 {"k":"f0fe2725","wie":"verteller","waar":"S 14","t":"Say what you want, why, and what the other person can do."},
-{"k":"fe0c715e","wie":"verteller","waar":"S 14","t":"Short and concrete works better than long and angry."}
+{"k":"fe0c715e","wie":"verteller","waar":"S 14","t":"Short and concrete works better than long and angry."},
+{"k":"fa65ca14","wie":"verteller","waar":"S 4","t":"Which one is written as two words?"},
+{"k":"a4910681","wie":"verteller","waar":"S 4","t":"You have to learn which compounds stay apart."}
 ];

@@ -1,4 +1,4 @@
-/* Alle vaste zinnen die dit spel kan uitspreken (909). Gemaakt door _tools/stemscript.js uit data-en.js; k = sleutel uit shared/voice.js. Niet met de hand bewerken: draai het gereedschap opnieuw. */
+/* Alle vaste zinnen die dit spel kan uitspreken (935). Gemaakt door _tools/stemscript.js uit data-en.js; k = sleutel uit shared/voice.js. Niet met de hand bewerken: draai het gereedschap opnieuw. */
 window.MMV_SCRIPT=window.MMV_SCRIPT||{};window.MMV_SCRIPT["reken_en"]=[
 {"k":"46fd7dd9","wie":"verteller","waar":"T","t":"Start today's case"},
 {"k":"e8599cc7","wie":"verteller","waar":"T","t":"Extra case"},
@@ -908,5 +908,31 @@ window.MMV_SCRIPT=window.MMV_SCRIPT||{};window.MMV_SCRIPT["reken_en"]=[
 {"k":"e4a52350","wie":"verteller","waar":"S 14","t":"Check: 32 × 3 = 96."},
 {"k":"3577ccc2","wie":"verteller","waar":"S 14","t":"A lift goes 2 metres a second."},
 {"k":"283777da","wie":"verteller","waar":"S 14","t":"How many seconds does the ride to 96 metres take?"},
-{"k":"d70399af","wie":"verteller","waar":"S 14","t":"Time = distance divided by speed: 96 ÷ 2 = 48 seconds."}
+{"k":"d70399af","wie":"verteller","waar":"S 14","t":"Time = distance divided by speed: 96 ÷ 2 = 48 seconds."},
+{"k":"82e7ff61","wie":"verteller","waar":"S 4","t":"On, off, off, on, off, off."},
+{"k":"f0d3bd57","wie":"verteller","waar":"S 4","t":"What comes next?"},
+{"k":"39090375","wie":"verteller","waar":"S 4","t":"The pattern is three long and then starts again."},
+{"k":"261a57e0","wie":"verteller","waar":"S 8","t":"What is a handy way to count with lines?"},
+{"k":"12699718","wie":"verteller","waar":"S 8","t":"In groups of 5"},
+{"k":"9142ab9f","wie":"verteller","waar":"S 8","t":"One long row"},
+{"k":"1969a21d","wie":"verteller","waar":"S 8","t":"In groups of 2"},
+{"k":"a438e3ef","wie":"verteller","waar":"S 8","t":"Groups of 5 are quick to add up."},
+{"k":"03405005","wie":"verteller","waar":"S 8","t":"That is a tally."},
+{"k":"7b298b5d","wie":"verteller","waar":"S 10","t":"You guess 40 metres."},
+{"k":"ac4576c2","wie":"verteller","waar":"S 10","t":"How far out were you?"},
+{"k":"108f4514","wie":"verteller","waar":"S 10","t":"10 metres"},
+{"k":"93214b1c","wie":"verteller","waar":"S 10","t":"90 metres"},
+{"k":"f542e535","wie":"verteller","waar":"S 10","t":"50 − 40 = 10."},
+{"k":"a2f8f688","wie":"verteller","waar":"S 10","t":"A guess does not need to be exact."},
+{"k":"18679d72","wie":"verteller","waar":"S 13","t":"Why is a map smaller than the real world?"},
+{"k":"1b18318d","wie":"verteller","waar":"S 13","t":"Or it would not fit on paper"},
+{"k":"6a72c099","wie":"verteller","waar":"S 13","t":"It looks nicer"},
+{"k":"77cef9c0","wie":"verteller","waar":"S 13","t":"It is cheaper"},
+{"k":"1dc6f06c","wie":"verteller","waar":"S 13","t":"Everything is made the same number of times smaller."},
+{"k":"41ca0dbe","wie":"verteller","waar":"S 13","t":"That is scale."},
+{"k":"9517218c","wie":"verteller","waar":"S 14","t":"3 flights of 10 steps."},
+{"k":"dd13632b","wie":"verteller","waar":"S 14","t":"How long does 20 metres take?"},
+{"k":"a339de11","wie":"verteller","waar":"S 14","t":"10 seconds"},
+{"k":"6f9e0760","wie":"verteller","waar":"S 14","t":"40 seconds"},
+{"k":"14a8721c","wie":"verteller","waar":"S 14","t":"22 seconds"}
 ];

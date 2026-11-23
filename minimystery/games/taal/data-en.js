@@ -292,3 +292,4 @@ brief:[
  [["You write to the council about a broken street lamp. Which sentence fits best?",["I would like to draw your attention to the broken street lamp on Church Street.","Oi, that lamp's broken!","You must fix that lamp now."],"Formal writing is polite and clear. If you say exactly what and where, you get help sooner."],
   ["What makes a request convincing?",["A clear question with a reason","Lots of exclamation marks","A letter that is as long as possible"],"Say what you want, why, and what the other person can do. Short and concrete works better than long and angry."]]]
 };D.S.forEach(function(m){if(M[m.id])m.more=M[m.id]})})(window.TL_DATA);
+(function(D){var K={"samen": {"1": ["Which one is written as two words?", ["ice cream", "football", "bedroom"], "You have to learn which compounds stay apart."]}};D.S.forEach(function(m){var k=K[m.id];if(k&&m.more)Object.keys(k).forEach(function(a){m.more[a].unshift(k[a].concat([1]))})})})(window.TL_DATA);

@@ -69,12 +69,12 @@ Alle speurtochten op de wandelmotor (feestjes én educatie) hebben op het starts
 - `index.html` en `en/index.html`: de vaste tekst komt uit `python3 _tools/hub_body.py` (NL en EN in één script). De spelkaarten tekent `shared/hub.js` uit de catalogus: plaatje, titel, één zin (`short`), leeftijd (`age`), duur, speelwijzen (`ways`) en twee knoppen; de lange `desc` zit achter "Meer over dit spel". Filter "Hoe wil je spelen?" werkt op `ways`.
 - `educatie/` en `en/education/`: lege schil + `shared/edu.js` en `shared/edu.css`. Elke wandeling met `"line":"educatie"` wordt vanzelf een kaart (plaatje, vak `subj`, groep `grp`, één zin `short`), met filter per vak. `"status":"soon"` = grijze kaart "Binnenkort"; `"isNew":true` = lintje "Nieuw". **Nieuwe educatieve wandeling = één regel in `shared/catalog.js` + cover**, de pagina hoeft niet aangepast.
 
-## Educatie: verdieping per station (sinds 23 nov 2026)
-- `shared/meer.js`: na de hoofdvraag van een station volgen extra stappen met uitleg; pas daarna komt de sleutel. Op het begeleidersblad staan ze met antwoord erbij.
-- Data: onderaan `games/<spel>/data-nl.js` staat een blok dat per station `more:[niveau0,niveau1,niveau2]` zet. Stap = `["vraag",["goed","fout","fout"],"uitleg"]` (goede antwoord eerst, het spel husselt), `["vraag","antwoord|alternatief","uitleg"]` (typen) of `["doe-opdracht"]`.
-- Staat in: natuur, reken, taal, tijd en engels (twee stappen per station per niveau). De verdwenen schoolklok is ongemoeid gelaten.
-- Engels (sinds 23 nov 2026): ook onderaan `data-en.js` van natuur, reken, taal en tijd. The Letter Thief gaat over de Engelse taal, dus daar zijn het eigen Engelse taalvragen, geen vertaling. Staat er geen `more` in een datafile, dan speelt het station zoals voorheen.
-- In een `game.js`: `accept()` start de verdieping (`MW.Meer.run`), `award()` geeft daarna de sleutel. De shells laden `shared/meer.js` vóór de data.
+## Educatie: bonusvraag per station (sinds 23 nov 2026)
+- `shared/meer.js`: na de hoofdvraag van een station krijgt het team **één korte bonusvraag** met één zin uitleg; daarna komt de sleutel. Bewust kort: de doelgroep is de basisschool en jonge kinderen lezen nog niet vlot.
+- Data: onderaan `games/<spel>/data-nl.js` en `data-en.js` staat per station `more:[niveau0,niveau1,niveau2]`. Stap = `["vraag",["goed","fout","fout"],"uitleg"]` (goede antwoord eerst, het spel husselt) of `["vraag","antwoord|alternatief","uitleg"]` (typen).
+- Het spel kiest per station de kortste stap (keuzevragen gaan voor) en toont alleen de eerste zin van de uitleg. Een stap met een vierde element `1` is de vaste kindervraag; die staan in het blok "kindervraag" onderaan de datafiles, voor de plekken waar de andere vragen te lang waren.
+- Het begeleidersblad toont alle stappen met de volledige uitleg, om na te praten.
+- Staat in: natuur, reken, taal, tijd (NL en EN) en engels (NL). De verdwenen schoolklok is ongemoeid gelaten. The Letter Thief heeft eigen Engelse taalvragen, geen vertaling.
 
 ## De Sommensprint (automatiseren, sinds 23 nov 2026, op test, nog niet live)
 - Eerste versie heette De Vergeetmist. Herzien na Kellies test: veel minder leestekst, geen mistverhaal, nadruk op oefenen.

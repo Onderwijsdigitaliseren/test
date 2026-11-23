@@ -1,4 +1,4 @@
-/* Alle vaste zinnen die dit spel kan uitspreken (896). Gemaakt door _tools/stemscript.js uit data-nl.js; k = sleutel uit shared/voice.js. Niet met de hand bewerken: draai het gereedschap opnieuw. */
+/* Alle vaste zinnen die dit spel kan uitspreken (922). Gemaakt door _tools/stemscript.js uit data-nl.js; k = sleutel uit shared/voice.js. Niet met de hand bewerken: draai het gereedschap opnieuw. */
 window.MMV_SCRIPT=window.MMV_SCRIPT||{};window.MMV_SCRIPT["reken_nl"]=[
 {"k":"52654da8","wie":"verteller","waar":"T","t":"Start de zaak van vandaag"},
 {"k":"06cdc8ca","wie":"verteller","waar":"T","t":"Extra zaak"},
@@ -895,5 +895,31 @@ window.MMV_SCRIPT=window.MMV_SCRIPT||{};window.MMV_SCRIPT["reken_nl"]=[
 {"k":"b0822302","wie":"verteller","waar":"S 14","t":"Controle: 32 × 3 = 96."},
 {"k":"396e0a22","wie":"verteller","waar":"S 14","t":"Een lift gaat 2 meter per seconde."},
 {"k":"92524456","wie":"verteller","waar":"S 14","t":"Hoeveel seconden duurt de rit naar 96 meter hoogte?"},
-{"k":"447c1f7d","wie":"verteller","waar":"S 14","t":"Tijd = afstand gedeeld door snelheid: 96 : 2 = 48 seconden."}
+{"k":"447c1f7d","wie":"verteller","waar":"S 14","t":"Tijd = afstand gedeeld door snelheid: 96 : 2 = 48 seconden."},
+{"k":"f5911b27","wie":"verteller","waar":"S 4","t":"Aan, uit, uit, aan, uit, uit."},
+{"k":"44708317","wie":"verteller","waar":"S 4","t":"Wat komt daarna?"},
+{"k":"cf13e62f","wie":"verteller","waar":"S 4","t":"Het patroon is drie lang en begint dan opnieuw."},
+{"k":"a106b501","wie":"verteller","waar":"S 8","t":"Hoe tel je handig met streepjes?"},
+{"k":"adf0b0fb","wie":"verteller","waar":"S 8","t":"In groepjes van 5"},
+{"k":"946a94cd","wie":"verteller","waar":"S 8","t":"Eén lange rij"},
+{"k":"b2f0b8da","wie":"verteller","waar":"S 8","t":"In groepjes van 2"},
+{"k":"51f036c0","wie":"verteller","waar":"S 8","t":"Dat heet turven."},
+{"k":"efe940f8","wie":"verteller","waar":"S 10","t":"Je schat 40 meter."},
+{"k":"a197ec6a","wie":"verteller","waar":"S 10","t":"Het is 50 meter."},
+{"k":"a39a044b","wie":"verteller","waar":"S 10","t":"Hoeveel zat je ernaast?"},
+{"k":"48324ef5","wie":"verteller","waar":"S 10","t":"10 meter"},
+{"k":"7565c6ed","wie":"verteller","waar":"S 10","t":"90 meter"},
+{"k":"f542e535","wie":"verteller","waar":"S 10","t":"50 − 40 = 10."},
+{"k":"b140166e","wie":"verteller","waar":"S 10","t":"Schatten hoeft niet precies."},
+{"k":"93132f27","wie":"verteller","waar":"S 13","t":"Waarom is een kaart kleiner dan de echte wereld?"},
+{"k":"035fa875","wie":"verteller","waar":"S 13","t":"Anders past hij niet op papier"},
+{"k":"74612ca1","wie":"verteller","waar":"S 13","t":"Dat is mooier"},
+{"k":"cdca9972","wie":"verteller","waar":"S 13","t":"Dat is goedkoper"},
+{"k":"8d67dfe3","wie":"verteller","waar":"S 13","t":"Alles is even veel keer kleiner gemaakt."},
+{"k":"5b5e0934","wie":"verteller","waar":"S 13","t":"Dat heet schaal."},
+{"k":"b6b4330e","wie":"verteller","waar":"S 14","t":"3 trappen van 10 treden."},
+{"k":"0ce52ff9","wie":"verteller","waar":"S 14","t":"Hoe lang doet hij over 20 meter?"},
+{"k":"53449c2b","wie":"verteller","waar":"S 14","t":"10 seconden"},
+{"k":"c3fcc804","wie":"verteller","waar":"S 14","t":"40 seconden"},
+{"k":"d6fed778","wie":"verteller","waar":"S 14","t":"22 seconden"}
 ];
