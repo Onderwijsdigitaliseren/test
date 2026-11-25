@@ -27,7 +27,7 @@ var CFG={
     dagen:61,
     url:{ // Ko-fi-product per wandeling; leeg = nog geen koopknop
       mw:"https://ko-fi.com/s/5962b8e3ad", vz:"https://ko-fi.com/s/1df0bd2f41", lb:"https://ko-fi.com/s/a673905cde", td:"https://ko-fi.com/s/7770091c97",
-      cc:"https://ko-fi.com/s/89746daae5", ng:"https://ko-fi.com/s/130f0d8b44", og:"https://ko-fi.com/s/5abf04c0a1", fj:"",
+      cc:"https://ko-fi.com/s/89746daae5", ng:"https://ko-fi.com/s/130f0d8b44", og:"https://ko-fi.com/s/5abf04c0a1", fj:"", sm:"https://ko-fi.com/s/00499b72a2",
       alle:"https://ko-fi.com/s/dc0dfbafe5" // tijdelijk: algemeen teamticket (oude groepspas-product) tot de producten per wandeling er zijn
     }
   },
