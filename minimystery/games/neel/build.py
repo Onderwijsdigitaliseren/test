@@ -295,7 +295,7 @@ if os.path.exists(os.path.join(SITE, 'shared', 'platform.js')):
                 '<meta property="og:title" content="%s">\n<meta property="og:description" content="%s">\n<meta property="og:image" content="%sassets/og-rn.jpg">\n<meta name="twitter:card" content="summary_large_image">\n<meta name="theme-color" content="#0a1a22">'
                 ) % (title, root, root, desc, U + (NLS if lang == 'nl' else ENS), U + NLS, U + ENS, title, desc, U)
         h = re.sub(r'<title>.*?</title>', lambda m: meta, h, count=1)
-        pre = '<script src="%sshared/platform.js?v=mm20"></script>\n<script src="%sshared/catalog.js?v=mm19"></script>\n' % (root, root)
+        pre = '<script src="%sshared/platform.js?v=mm21"></script>\n<script src="%sshared/catalog.js?v=mm19"></script>\n' % (root, root)
         return h + LOADER % {'pre': pre, 'b': base, 'v': V}
     open(os.path.join(SITE, NLS), 'w', encoding='utf-8').write(shell('nl', '', 'De Schat van Rosse Neel – schattenjacht met escape rooms in 3D voor het hele gezin', 'Volg het kompas van kaapvaarster Rosse Neel langs zes escape rooms in 3D en drie puzzelstops, en open haar schatkist. Buiten met gps, binnen op de plaats of vanaf de bank. Voor kinderen en voor het hele gezin. Proefronde gratis.'))
     open(os.path.join(SITE, ENS), 'w', encoding='utf-8').write(shell('en', '../', 'The Treasure of Red Nell – a treasure hunt with 3D escape rooms for the whole family', 'Follow the compass of privateer Red Nell through six 3D escape rooms and three puzzle stops, and open her treasure chest. Outdoors with GPS, indoors on the spot or from the sofa. For kids and for the whole family. Free trial.'))
