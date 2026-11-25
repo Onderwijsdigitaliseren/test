@@ -44,7 +44,7 @@ document.addEventListener("click",function(e){var b=e.target.closest(".spk");if(
 
 /* ---------- de tijdreis samenstellen (alleen uit de seed) ---------- */
 function genCase(seed,N,age){var r=rngOf(seed),ids;
-  if(N<=6)ids=D.KORT.slice();else{var rest=shuffle(D.S.map(function(m){return m.id}).filter(function(id){return D.VAST.indexOf(id)<0}),r);ids=D.VAST.concat(rest.slice(0,N-D.VAST.length))}
+  if(N<=6)ids=D.KORT.slice();else{var rest=shuffle(D.S.filter(function(m){return (m.from||0)<=age}).map(function(m){return m.id}).filter(function(id){return D.VAST.indexOf(id)<0}),r);ids=D.VAST.concat(rest.slice(0,N-D.VAST.length))}
   ids=shuffle(ids,r);var tf=D.TAFELS[age]||D.TAFELS[1],t=tf[Math.floor(r()*tf.length)],keys=[];for(var k=1;k<=N;k++)keys.push({s:String(k*t),v:k*t});keys=shuffle(keys,r);
   return{t:t,slots:ids.map(function(id,i){return{m:id,key:keys[i]}})}}
 function b36(n,len){var s=n.toString(36).toUpperCase();while(s.length<len)s="0"+s;return s}
@@ -252,7 +252,7 @@ function flN(){return (D.FLN||[5,6,8])[ageI()]}
 function flItems(m,age,seed,round,n){var r=rngOf((seed^hashStr("fl|"+m.id+"|"+age+"|"+round))>>>0),out=[],seen={},guard=0;
   while(out.length<n&&guard++<n*40){var it=m.fl[age](r),key=it.q+"|"+(it.c?it.c[0]:it.a);if(seen[key])continue;seen[key]=1;
     if(it.c){it.opts=r()<.5?[it.c[1],it.c[0]]:[it.c[0],it.c[1]];it.a=it.c[0]}out.push(it)}return out}
-function flText(it,ans){var a=ans==null?it.a:ans;return it.c?(/\?$/.test(it.q)?a:it.q.replace("…",a)+(it.q.indexOf("…")<0?" "+a:"")):it.q.replace(/ · …$/," · "+a).replace(/…$/,a)+(/…/.test(it.q)?"":" = "+a)}
+function flText(it,ans){var a=ans==null?it.a:ans;if(it.c)return /\?$/.test(it.q)?a:it.q.indexOf("…")>=0?it.q.replace("…",a):it.q+" "+a;return it.q.indexOf("…")>=0?it.q.replace("…",a):it.q+" = "+a}
 function nv(x){x=String(x).replace(/\./g,",").replace(/-/g,"−").trim();if(x.charAt(0)===",")x="0"+x;if(x.indexOf(",")>=0)x=x.replace(/0+$/,"").replace(/,$/,"");x=x.replace(/^(−?)0+(?=\d)/,"$1");return x}
 function tafLab(t,age){return (age===0?"sprongen van ":"de tafel van ")+t}
 function numOf(a){return parseFloat(String(a).replace(",",".").replace("−","-"))}

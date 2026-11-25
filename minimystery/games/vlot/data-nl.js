@@ -5,7 +5,8 @@
    Een foute som komt terug tot hij goed is. In ronde 3 komen twee sommen van de vorige plek terug.
    Alleen op het begeleidersblad: de uitgebreide truc (truc), het beweegidee (act), het weetje (tip) en de napraatvragen (more).
    Klokkijken zit hier bewust niet in: dat krijgt een eigen wandeling.
-   Niveaus: 0 = groep 3–4, 1 = groep 5–6, 2 = groep 7–8. fl[niveau](r) maakt één som of woordkeuze uit het toeval r. */
+   Niveaus: 0 = groep 3–4, 1 = groep 5–6, 2 = groep 7–8. Een plek met from:1 doet niet mee op niveau 0 (deeltafels en de tafels van 3 en 4 zijn te moeilijk voor groep 4).
+   Aangepast op 25 nov 2026 na Kellies vraag of groep 4 dit kan: som met het gat vooraan (7 + … = 10), 4 sommen per ronde op niveau 0, alleen klankzuivere woorden. fl[niveau](r) maakt één som of woordkeuze uit het toeval r. */
 window.VM_DATA=(function(){
 var T={
   today:"Start de zaak van vandaag",extra:"Extra zaak",voice:"Voorlezen",voiceOn:"Voorlezen staat aan",voiceOff:"Voorlezen staat uit",
@@ -75,7 +76,7 @@ var ri=function(r,a,b){return a+Math.floor(r()*(b-a+1))},pk=function(r,a){return
 var fmt=function(v){return String(parseFloat((+v).toFixed(4))).replace(".",",")};
 var N=function(q,a){return{q:q,a:typeof a==="string"?a:fmt(a).replace("-","−")}};
 var C=function(q,good,bad){return{q:q,c:[good,bad]}};
-var W0=[["🌳","boom","bom"],["🐟","vis","fis"],["🏠","huis","huiz"],["🚲","fiets","fits"],["🐱","kat","kad"],["🌙","maan","man"],["🐻","beer","ber"],["☀️","zon","son"],["🔥","vuur","vur"],["🧀","kaas","kas"],["📚","boek","bouk"],["🐭","muis","mijs"],["🦊","vos","fos"],["🚪","deur","duer"],["🪑","stoel","stol"],["👃","neus","nuis"],["🧦","sok","sog"],["🚂","trein","trijn"],["🧊","ijs","eis"],["🥚","ei","ij"],["🐷","big","bik"],["🌧️","regen","reegen"],["🍎","appel","apel"],["🦆","eend","eent"],["🐴","paard","paart"],["🛏️","bed","bet"],["🥛","melk","mellek"],["🏫","school","sgool"]];
+var W0=[["🌳","boom","bom"],["🐟","vis","fis"],["🏠","huis","huiz"],["🚲","fiets","fits"],["🐱","kat","kad"],["🌙","maan","man"],["🐻","beer","ber"],["☀️","zon","son"],["🔥","vuur","vur"],["🧀","kaas","kas"],["📚","boek","bouk"],["🐭","muis","mijs"],["🦊","vos","fos"],["🚪","deur","duer"],["🪑","stoel","stol"],["👃","neus","nuis"],["🧦","sok","sog"],["🐷","big","bik"],["🥛","melk","mellek"],["🏫","school","sgool"],["🐄","koe","koo"],["🌹","roos","ros"],["🍐","peer","per"],["🐑","schaap","schap"],["🦉","uil","ul"],["🥾","laars","lars"]];
 var W1=[["bomen","boomen"],["katten","katen"],["lopen","loopen"],["bakker","baker"],["appels","apels"],["straten","straaten"],["bellen","belen"],["vuren","vuuren"],["muren","muuren"],["bussen","busen"],["stenen","steenen"],["ramen","raamen"],["brillen","brilen"],["trein","trijn"],["klein","klijn"],["blauw","blouw"],["koud","kaud"],["paard","paart"],["hond","hont"],["feest","veest"],["zwemmen","zwemen"],["spelen","speelen"],["jassen","jasen"],["vogels","voogels"],["tafel","taffel"],["kussen","kusen"],["lezen","leezen"],["geit","gijt"],["prijs","preis"],["vrouw","vrauw"],["pauw","pouw"],["strand","strant"],["web","wep"],["dieren","diren"]];
 var W2=[["Hij … morgen tien jaar.","wordt","word"],["Ik … later piloot.","word","wordt"],["Het is gisteren …","gebeurd","gebeurt"],["Wat … er nu?","gebeurt","gebeurd"],["Zij … de bal mooi.","vindt","vind"],["Ik … het een goed plan.","vind","vindt"],["… jij het ook leuk?","Vind","Vindt"],["Hij heeft hard …","gewerkt","gewerkd"],["Wij hebben een uur …","gefietst","gefietsd"],["De juf … gisteren een verhaal.","vertelde","verteldde"],["Ik … gisteren naar huis.","fietste","fietsde"],["Hij … gisteren zijn hand.","brandde","brande"],["Het … nu hard.","regent","regend"],["Opa is vorig jaar …","verhuisd","verhuist"],["De hond … hard.","blaft","blafd"],["Ik heb het …","beloofd","belooft"],["Hij … het elke keer.","belooft","beloofd"],["Jij … veel te hard.","rijdt","rijd"],["… jij ook zo hard?","Rijd","Rijdt"],["Zij … haar huiswerk.","maakt","maakd"],["Gisteren … ik mijn sleutels.","zocht","zogt"],["De bakker … elke dag brood.","bakt","bakd"],["Ik heb de deur …","geverfd","geverft"],["Hij … gisteren een uur.","wachtte","wachte"],["Het is mij niet …","gelukt","gelukd"],["Zij … altijd haar best.","doet","doed"],["Wie … de rekening?","betaalt","betaald"],["De rekening is al …","betaald","betaalt"],["Ik … je morgen.","bel","belt"],["Hij … mij elke dag.","antwoordt","antwoord"]];
 var BPK=[["1/2","50","0,5"],["1/4","25","0,25"],["3/4","75","0,75"],["1/5","20","0,2"],["1/10","10","0,1"],["2/5","40","0,4"],["3/5","60","0,6"],["4/5","80","0,8"],["1/20","5","0,05"],["3/10","30","0,3"],["1/100","1","0,01"],["1/8","12,5","0,125"]];
@@ -87,9 +88,9 @@ var S=[
        "De vriendjes van 10 werken ook voor 100: 30 en 70 zijn samen 100. Bij 35 + … = 100 vul je eerst aan tot het tiental (35 + 5 = 40) en dan tot 100 (40 + 60). Samen 65.",
        "Aanvullen in twee sprongen werkt altijd: bij 1000 − 375 ga je van 375 naar 400 (25) en van 400 naar 1000 (600). Bij kommagetallen net zo: 0,35 naar 0,4 is 0,05 en dan naar 1 is 0,6. Samen 0,65."],
  act:{out:"Zoek tien dingen op een rij: tegels, spijlen van een hek, of leg tien steentjes neer. Eén kind springt naar een tegel en roept het getal. De rest roept zo snel mogelijk het vriendje: hoeveel tegels zijn er nog tot 10? Wissel vijf keer.",in:"Ga in een kring staan. Eén kind steekt een aantal vingers op. De rest steekt zo snel mogelijk het vriendje op, zodat het samen 10 is. Wissel vijf keer."},
- fl:[function(r){var t=r()<.7?10:ri(r,5,9),a=ri(r,0,t);return N(t+" = "+a+" + …",t-a)},
-     function(r){var a=r()<.5?ri(r,1,19)*5:ri(r,11,89);return N("100 = "+a+" + …",100-a)},
-     function(r){if(r()<.5){var a=ri(r,1,39)*25;return N("1000 = "+a+" + …",1000-a)}var x=ri(r,1,19)*5;return N("1 = "+fmt(x/100)+" + …",(100-x)/100)}],
+ fl:[function(r){var t=r()<.7?10:ri(r,5,9),a=ri(r,0,t);return N(a+" + … = "+t,t-a)},
+     function(r){var a=r()<.5?ri(r,1,19)*5:ri(r,11,89);return N(a+" + … = 100",100-a)},
+     function(r){if(r()<.5){var a=ri(r,1,39)*25;return N(a+" + … = 1000",1000-a)}var x=ri(r,1,19)*5;return N(fmt(x/100)+" + … = 1",(100-x)/100)}],
  lvl:fl("De verliefde harten: 1 en 9, 2 en 8, 3 en 7, 4 en 6, 5 en 5.","Eerst naar het tiental, dan naar 100.","Vul aan in twee sprongen: eerst naar het ronde getal, dan naar het eind."),
  tip:["Je tien vingers zijn je eerste rekenmachine. Daarom tellen we in tientallen.","Een kassamedewerker telt wisselgeld vaak op deze manier terug: aanvullen vanaf de prijs tot wat je gaf.","Computers trekken niet af zoals wij: ze tellen het 'aanvulgetal' erbij op. Aanvullen is dus ook voor een chip de snelste weg."],
  more:[
@@ -187,7 +188,7 @@ var S=[
    ["Waarom is 3 × 8 hetzelfde als 8 × 3?",["3 rijen van 8 is hetzelfde veld als 8 rijen van 3","Dat is toeval","Omdat 3 en 8 allebei klein zijn"],"Draai een rechthoek van tegels een kwartslag: er liggen er nog steeds evenveel. Dat heet de wisseleigenschap."]],
   [["Hoe reken je 12 × 8 uit je hoofd?",["10 × 8 + 2 × 8","12 + 8 × 2","8 × 8 + 12"],"80 + 16 = 96. Splitsen in een makkelijk en een klein stuk heet de verdeeleigenschap."],
    ["Wat is 9 × 15, via een steunsom?","135","10 × 15 = 150, en één keer 15 eraf: 135."]]]},
-{id:"tafelb",ico:"🧗",dom:"tafels",title:"De lastige tafels",
+{id:"tafelb",from:1,ico:"🧗",dom:"tafels",title:"De lastige tafels",
  truc:["Een keersom is groepjes maken. 3 × 4 is 3 groepjes van 4: 4, 8, 12. Leg ze neer of teken ze. Ken je 2 × 4 = 8, dan is 3 × 4 gewoon nog één groepje erbij.",
        "Van de lastige tafels blijven er maar een paar echt over. 7 × 8 = 56: denk aan 5, 6, 7, 8. Keer 9 doe je met je vingers: vouw bij 4 × 9 je vierde vinger om, links 3 en rechts 6: 36. Keer 6 is keer 5 plus één keer.",
        "Grote tafels bouw je uit kleine. Keer 12 is keer 10 plus keer 2. Keer 15 is keer 10 plus de helft daarvan. Keer 25 is keer 100 gedeeld door 4. Keer 11 onder de 10: het cijfer twee keer (7 × 11 = 77)."],
@@ -204,7 +205,7 @@ var S=[
    ["Welke som hoort bij het ezelsbruggetje 5-6-7-8?",["56 = 7 × 8","5 × 6 = 78","56 : 7 = 78"],"Vijf, zes, zeven, acht: zesenvijftig is zeven keer acht."]],
   [["Wat is 16 × 25, slim uitgerekend?","400","Vier keer 25 is 100. In 16 zitten vier vieren, dus 4 × 100."],
    ["Welke kwadraten liggen tussen 60 en 90?",["64 en 81","49 en 64","72 en 81"],"8 × 8 = 64 en 9 × 9 = 81. Kwadraten zijn handige ankers in de tafels."]]]},
-{id:"deel",ico:"🍕",dom:"delen",title:"De deeltafels",
+{id:"deel",from:1,ico:"🍕",dom:"delen",title:"De deeltafels",
  truc:["Delen is eerlijk verdelen. Bij 10 : 2 geef je om de beurt: één voor jou, één voor mij, tot alles op is. Ieder krijgt er 5. Je kunt het ook vragen als: hoeveel keer 2 is 10?",
        "Elke deelsom is een tafelsom achterstevoren. Bij 42 : 7 vraag je: hoeveel keer 7 is 42? Zes keer. Eén tafelsom geeft je vier sommen: 6 × 7, 7 × 6, 42 : 7 en 42 : 6.",
        "Delen door een groter getal doe je met een steunsom: 108 : 12, hoeveel keer 12 is 108? 10 × 12 = 120, dat is er één te veel, dus 9. Controleer altijd met de keersom."],
@@ -294,7 +295,7 @@ var S=[
        "Kijk eerst wat voor som het is. Keer: zoek de tafelsom of draai hem om. Delen: welke keersom hoort erbij? Niet raden: weet je hem niet, reken hem dan uit via een som die je wel kent.",
        "Door elkaar oefenen is moeilijker dan op een rijtje, en juist daardoor onthoud je het beter. Kijk naar het teken, kies de steunsom, en controleer een deelsom met de keersom."],
  act:{out:"Ga in een kring staan. Gooi (of wijs) een denkbeeldige bal naar iemand en roep een som. Die geeft antwoord en speelt door met een nieuwe som van een ander soort: na een plussom komt een minsom, na een keersom een deelsom. Houd het een minuut vol.",in:"Ga in een kring staan. Wijs iemand aan en roep een som. Die geeft antwoord en speelt door met een som van een ander soort. Houd het een minuut vol."},
- fl:[function(r){var k=ri(r,0,3),a,b;if(k===0){a=ri(r,0,10);return N("10 = "+a+" + …",10-a)}if(k===1){a=ri(r,1,10);return N("dubbel van "+a,2*a)}if(k===2){a=ri(r,2,9);b=ri(r,1,10-a);return N(a+" + "+b,a+b)}a=ri(r,4,10);b=ri(r,1,a);return N(a+" − "+b,a-b)},
+ fl:[function(r){var k=ri(r,0,3),a,b;if(k===0){a=ri(r,0,10);return N(a+" + … = 10",10-a)}if(k===1){a=ri(r,1,10);return N("dubbel van "+a,2*a)}if(k===2){a=ri(r,2,9);b=ri(r,1,10-a);return N(a+" + "+b,a+b)}a=ri(r,4,10);b=ri(r,1,a);return N(a+" − "+b,a-b)},
      function(r){var t=ri(r,2,10),k=ri(r,2,10);return r()<.5?N(k+" × "+t,k*t):N((k*t)+" : "+t,k)},
      function(r){var k=ri(r,0,2),t,n;if(k===0){n=ri(r,2,15);return N(n+" × "+n,n*n)}t=ri(r,6,12);n=ri(r,6,12);return k===1?N(n+" × "+t,n*t):N((n*t)+" : "+t,n)}],
  lvl:fl("Kijk eerst naar het teken. Kies dan je truc.","Wat voor som is het? Zoek de tafelsom die erbij hoort.","Kijk naar het teken, kies de steunsom en controleer."),
@@ -325,7 +326,7 @@ var KORT={
 };
 S.forEach(function(m){m.kort=KORT[m.id].t;m.doe=KORT[m.id].doe});
 var KERN={kort:["splits","dubbel","tien","sprong","tafela","woord"],vast:["splits","tafela","woord"]};
-return{lang:"nl",T:T,TYPES:TYPES,TIK:TIK,NOOR:NOOR,ROOMS:ROOMS,OPEN:OPEN,OPEN0:OPEN0,CLIFF:CLIFF,CLIFFLAST:CLIFFLAST,REVEAL:REVEAL,REVEAL0:REVEAL0,S:S,KORT:KERN.kort,VAST:KERN.vast,TAFELS:TAFELS,FLN:[5,6,8],FREE:false,
+return{lang:"nl",T:T,TYPES:TYPES,TIK:TIK,NOOR:NOOR,ROOMS:ROOMS,OPEN:OPEN,OPEN0:OPEN0,CLIFF:CLIFF,CLIFFLAST:CLIFFLAST,REVEAL:REVEAL,REVEAL0:REVEAL0,S:S,KORT:KERN.kort,VAST:KERN.vast,TAFELS:TAFELS,FLN:[4,6,8],FREE:false,
   LEADNOTE:"De kinderen hoeven bijna niets te lezen: per plek één korte regel en dan drie rondes oefenen. Zet voorlezen aan voor groep 3–4. Laat de telefoon na elke som doorgeven, zodat ieder kind aan de beurt komt. Een foute som komt vanzelf terug. Op de scorekaart staan de sterren per plek: één ster betekent nog oefenen. De uitleg, beweegideeën en napraatvragen hieronder zijn voor jou.",
   LES:[
    {intro:["Vertel van het fietsslot van meneer Tik en vraag: welke som weet jij zonder te tellen? Laat een paar kinderen er een noemen. Dat heet: iets vlot weten.","Oefen samen de verliefde harten met tien vingers: steek er een paar op, de klas roept hoeveel er omgevouwen zijn.","Teams van 3–5 met een volwassene, één telefoon per team, zaakcode invullen. Zet voorlezen aan. Afspraak: om de beurt antwoord geven, en helpen mag pas als iemand erom vraagt."],
